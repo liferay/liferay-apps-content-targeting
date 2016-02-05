@@ -16,6 +16,8 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.model.Tactic;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -25,6 +27,11 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for Tactic. Methods of this
@@ -50,13 +57,10 @@ public interface TacticService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TacticServiceUtil} to access the tactic remote service. Add custom service methods to {@link com.liferay.content.targeting.service.impl.TacticServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.content.targeting.model.Tactic addTactic(long userId,
-		long campaignId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long[] userSegmentsIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public Tactic addTactic(long userId, long campaignId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, long[] userSegmentsIds,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -66,14 +70,10 @@ public interface TacticService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
-		long campaignId) throws PortalException;
+	public List<Tactic> getTactics(long campaignId) throws PortalException;
 
-	public com.liferay.content.targeting.model.Tactic updateTactic(
-		long tacticId, long campaignId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long[] userSegmentsIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public Tactic updateTactic(long tacticId, long campaignId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, long[] userSegmentsIds,
+		ServiceContext serviceContext) throws PortalException;
 }

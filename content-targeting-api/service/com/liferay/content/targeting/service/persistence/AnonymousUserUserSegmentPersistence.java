@@ -16,9 +16,12 @@ package com.liferay.content.targeting.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 import com.liferay.content.targeting.model.AnonymousUserUserSegment;
 
 import com.liferay.portal.service.persistence.BasePersistence;
+
+import java.util.Date;
 
 /**
  * The persistence interface for the anonymous user user segment service.
@@ -116,7 +119,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	public AnonymousUserUserSegment findByAnonymousUserId_First(
 		long anonymousUserId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and active = &#63;.
@@ -142,7 +145,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	public AnonymousUserUserSegment findByAnonymousUserId_Last(
 		long anonymousUserId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and active = &#63;.
@@ -169,7 +172,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	public AnonymousUserUserSegment[] findByAnonymousUserId_PrevAndNext(
 		long anonymousUserUserSegmentId, long anonymousUserId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Removes all the anonymous user user segments where anonymousUserId = &#63; and active = &#63; from the database.
@@ -264,7 +267,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	public AnonymousUserUserSegment findByUserSegmentIds_First(
 		long userSegmentId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the first anonymous user user segment in the ordered set where userSegmentId = &#63; and active = &#63;.
@@ -290,7 +293,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	public AnonymousUserUserSegment findByUserSegmentIds_Last(
 		long userSegmentId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the last anonymous user user segment in the ordered set where userSegmentId = &#63; and active = &#63;.
@@ -317,7 +320,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	public AnonymousUserUserSegment[] findByUserSegmentIds_PrevAndNext(
 		long anonymousUserUserSegmentId, long userSegmentId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns all the anonymous user user segments where userSegmentId = any &#63; and active = &#63;.
@@ -489,7 +492,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	public AnonymousUserUserSegment findByA_U_First(long anonymousUserId,
 		long userSegmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
@@ -515,7 +518,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	public AnonymousUserUserSegment findByA_U_Last(long anonymousUserId,
 		long userSegmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
@@ -543,7 +546,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 		long anonymousUserUserSegmentId, long anonymousUserId,
 		long userSegmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Removes all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63; from the database.
@@ -571,7 +574,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @return the matching anonymous user user segments
 	*/
 	public java.util.List<AnonymousUserUserSegment> findByC_LtD_M(
-		long companyId, java.util.Date modifiedDate, boolean manual);
+		long companyId, Date modifiedDate, boolean manual);
 
 	/**
 	* Returns a range of all the anonymous user user segments where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
@@ -588,8 +591,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @return the range of matching anonymous user user segments
 	*/
 	public java.util.List<AnonymousUserUserSegment> findByC_LtD_M(
-		long companyId, java.util.Date modifiedDate, boolean manual, int start,
-		int end);
+		long companyId, Date modifiedDate, boolean manual, int start, int end);
 
 	/**
 	* Returns an ordered range of all the anonymous user user segments where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
@@ -607,8 +609,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @return the ordered range of matching anonymous user user segments
 	*/
 	public java.util.List<AnonymousUserUserSegment> findByC_LtD_M(
-		long companyId, java.util.Date modifiedDate, boolean manual, int start,
-		int end,
+		long companyId, Date modifiedDate, boolean manual, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
 
 	/**
@@ -628,8 +629,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @return the ordered range of matching anonymous user user segments
 	*/
 	public java.util.List<AnonymousUserUserSegment> findByC_LtD_M(
-		long companyId, java.util.Date modifiedDate, boolean manual, int start,
-		int end,
+		long companyId, Date modifiedDate, boolean manual, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -644,9 +644,9 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public AnonymousUserUserSegment findByC_LtD_M_First(long companyId,
-		java.util.Date modifiedDate, boolean manual,
+		Date modifiedDate, boolean manual,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the first anonymous user user segment in the ordered set where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
@@ -658,7 +658,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @return the first matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
 	*/
 	public AnonymousUserUserSegment fetchByC_LtD_M_First(long companyId,
-		java.util.Date modifiedDate, boolean manual,
+		Date modifiedDate, boolean manual,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
 
 	/**
@@ -672,9 +672,9 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public AnonymousUserUserSegment findByC_LtD_M_Last(long companyId,
-		java.util.Date modifiedDate, boolean manual,
+		Date modifiedDate, boolean manual,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the last anonymous user user segment in the ordered set where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
@@ -686,7 +686,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @return the last matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
 	*/
 	public AnonymousUserUserSegment fetchByC_LtD_M_Last(long companyId,
-		java.util.Date modifiedDate, boolean manual,
+		Date modifiedDate, boolean manual,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
 
 	/**
@@ -701,10 +701,10 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public AnonymousUserUserSegment[] findByC_LtD_M_PrevAndNext(
-		long anonymousUserUserSegmentId, long companyId,
-		java.util.Date modifiedDate, boolean manual,
+		long anonymousUserUserSegmentId, long companyId, Date modifiedDate,
+		boolean manual,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Removes all the anonymous user user segments where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63; from the database.
@@ -713,7 +713,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param modifiedDate the modified date
 	* @param manual the manual
 	*/
-	public void removeByC_LtD_M(long companyId, java.util.Date modifiedDate,
+	public void removeByC_LtD_M(long companyId, Date modifiedDate,
 		boolean manual);
 
 	/**
@@ -724,8 +724,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param manual the manual
 	* @return the number of matching anonymous user user segments
 	*/
-	public int countByC_LtD_M(long companyId, java.util.Date modifiedDate,
-		boolean manual);
+	public int countByC_LtD_M(long companyId, Date modifiedDate, boolean manual);
 
 	/**
 	* Caches the anonymous user user segment in the entity cache if it is enabled.
@@ -758,7 +757,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public AnonymousUserUserSegment remove(long anonymousUserUserSegmentId)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	public AnonymousUserUserSegment updateImpl(
 		AnonymousUserUserSegment anonymousUserUserSegment);
@@ -772,7 +771,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	*/
 	public AnonymousUserUserSegment findByPrimaryKey(
 		long anonymousUserUserSegmentId)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
+		throws NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the anonymous user user segment with the primary key or returns <code>null</code> if it could not be found.

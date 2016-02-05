@@ -16,6 +16,10 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
+import com.liferay.content.targeting.model.AnonymousUserUserSegment;
+import com.liferay.content.targeting.model.UserSegment;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -25,6 +29,9 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for AnonymousUserUserSegment. Methods of this
@@ -50,31 +57,29 @@ public interface AnonymousUserUserSegmentService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnonymousUserUserSegmentServiceUtil} to access the anonymous user user segment remote service. Add custom service methods to {@link com.liferay.content.targeting.service.impl.AnonymousUserUserSegmentServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment addAnonymousUserUserSegment(
+	public AnonymousUserUserSegment addAnonymousUserUserSegment(
 		long anonymousUserId, long userSegmentId, boolean manual,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentId(
-		long userSegmentId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public List<AnonymousUser> getAnonymousUsersByUserSegmentId(
+		long userSegmentId, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnonymousUsersByUserSegmentIdCount(long userSegmentId,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentIds(
-		long[] userSegmentIds, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public List<AnonymousUser> getAnonymousUsersByUserSegmentIds(
+		long[] userSegmentIds, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnonymousUsersByUserSegmentIdsCount(long[] userSegmentIds,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -85,26 +90,24 @@ public interface AnonymousUserUserSegmentService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByAnonymousUserId(
-		long anonymousUserId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public List<UserSegment> getUserSegmentsByAnonymousUserId(
+		long anonymousUserId, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserSegmentsByAnonymousUserIdCount(long anonymousUserId,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUserId(
-		long userId, boolean active) throws PortalException;
+	public List<UserSegment> getUserSegmentsByUserId(long userId, boolean active)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserSegmentsByUserIdCount(long userId, boolean active)
 		throws PortalException;
 
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
-		long anonymousUserUserSegmentId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public AnonymousUserUserSegment updateAnonymousUserUserSegment(
+		long anonymousUserUserSegmentId, ServiceContext serviceContext)
 		throws PortalException;
 }

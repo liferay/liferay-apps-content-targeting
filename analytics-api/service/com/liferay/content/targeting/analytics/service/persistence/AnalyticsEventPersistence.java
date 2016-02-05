@@ -16,9 +16,12 @@ package com.liferay.content.targeting.analytics.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 
 import com.liferay.portal.service.persistence.BasePersistence;
+
+import java.util.Date;
 
 /**
  * The persistence interface for the analytics event service.
@@ -109,7 +112,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	*/
 	public AnalyticsEvent findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the first analytics event in the ordered set where companyId = &#63;.
@@ -131,7 +134,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	*/
 	public AnalyticsEvent findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the last analytics event in the ordered set where companyId = &#63;.
@@ -155,7 +158,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	public AnalyticsEvent[] findByCompanyId_PrevAndNext(long analyticsEventId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Removes all the analytics events where companyId = &#63; from the database.
@@ -180,7 +183,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByC_GtD(long companyId,
-		java.util.Date createDate);
+		Date createDate);
 
 	/**
 	* Returns a range of all the analytics events where companyId = &#63; and createDate &gt; &#63;.
@@ -196,7 +199,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the range of matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByC_GtD(long companyId,
-		java.util.Date createDate, int start, int end);
+		Date createDate, int start, int end);
 
 	/**
 	* Returns an ordered range of all the analytics events where companyId = &#63; and createDate &gt; &#63;.
@@ -213,7 +216,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the ordered range of matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByC_GtD(long companyId,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -232,7 +235,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the ordered range of matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByC_GtD(long companyId,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -245,10 +248,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the first matching analytics event
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public AnalyticsEvent findByC_GtD_First(long companyId,
-		java.util.Date createDate,
+	public AnalyticsEvent findByC_GtD_First(long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the first analytics event in the ordered set where companyId = &#63; and createDate &gt; &#63;.
@@ -258,8 +260,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
-	public AnalyticsEvent fetchByC_GtD_First(long companyId,
-		java.util.Date createDate,
+	public AnalyticsEvent fetchByC_GtD_First(long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -271,10 +272,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the last matching analytics event
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public AnalyticsEvent findByC_GtD_Last(long companyId,
-		java.util.Date createDate,
+	public AnalyticsEvent findByC_GtD_Last(long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the last analytics event in the ordered set where companyId = &#63; and createDate &gt; &#63;.
@@ -284,8 +284,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
-	public AnalyticsEvent fetchByC_GtD_Last(long companyId,
-		java.util.Date createDate,
+	public AnalyticsEvent fetchByC_GtD_Last(long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -299,9 +298,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public AnalyticsEvent[] findByC_GtD_PrevAndNext(long analyticsEventId,
-		long companyId, java.util.Date createDate,
+		long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Removes all the analytics events where companyId = &#63; and createDate &gt; &#63; from the database.
@@ -309,7 +308,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param companyId the company ID
 	* @param createDate the create date
 	*/
-	public void removeByC_GtD(long companyId, java.util.Date createDate);
+	public void removeByC_GtD(long companyId, Date createDate);
 
 	/**
 	* Returns the number of analytics events where companyId = &#63; and createDate &gt; &#63;.
@@ -318,7 +317,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @return the number of matching analytics events
 	*/
-	public int countByC_GtD(long companyId, java.util.Date createDate);
+	public int countByC_GtD(long companyId, Date createDate);
 
 	/**
 	* Returns all the analytics events where companyId = &#63; and createDate &lt; &#63;.
@@ -328,7 +327,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByC_LtD(long companyId,
-		java.util.Date createDate);
+		Date createDate);
 
 	/**
 	* Returns a range of all the analytics events where companyId = &#63; and createDate &lt; &#63;.
@@ -344,7 +343,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the range of matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByC_LtD(long companyId,
-		java.util.Date createDate, int start, int end);
+		Date createDate, int start, int end);
 
 	/**
 	* Returns an ordered range of all the analytics events where companyId = &#63; and createDate &lt; &#63;.
@@ -361,7 +360,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the ordered range of matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByC_LtD(long companyId,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -380,7 +379,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the ordered range of matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByC_LtD(long companyId,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -393,10 +392,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the first matching analytics event
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public AnalyticsEvent findByC_LtD_First(long companyId,
-		java.util.Date createDate,
+	public AnalyticsEvent findByC_LtD_First(long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the first analytics event in the ordered set where companyId = &#63; and createDate &lt; &#63;.
@@ -406,8 +404,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
-	public AnalyticsEvent fetchByC_LtD_First(long companyId,
-		java.util.Date createDate,
+	public AnalyticsEvent fetchByC_LtD_First(long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -419,10 +416,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the last matching analytics event
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public AnalyticsEvent findByC_LtD_Last(long companyId,
-		java.util.Date createDate,
+	public AnalyticsEvent findByC_LtD_Last(long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the last analytics event in the ordered set where companyId = &#63; and createDate &lt; &#63;.
@@ -432,8 +428,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
-	public AnalyticsEvent fetchByC_LtD_Last(long companyId,
-		java.util.Date createDate,
+	public AnalyticsEvent fetchByC_LtD_Last(long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -447,9 +442,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public AnalyticsEvent[] findByC_LtD_PrevAndNext(long analyticsEventId,
-		long companyId, java.util.Date createDate,
+		long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Removes all the analytics events where companyId = &#63; and createDate &lt; &#63; from the database.
@@ -457,7 +452,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param companyId the company ID
 	* @param createDate the create date
 	*/
-	public void removeByC_LtD(long companyId, java.util.Date createDate);
+	public void removeByC_LtD(long companyId, Date createDate);
 
 	/**
 	* Returns the number of analytics events where companyId = &#63; and createDate &lt; &#63;.
@@ -466,7 +461,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @return the number of matching analytics events
 	*/
-	public int countByC_LtD(long companyId, java.util.Date createDate);
+	public int countByC_LtD(long companyId, Date createDate);
 
 	/**
 	* Returns all the analytics events where classPK &ne; &#63; and createDate &gt; &#63;.
@@ -476,7 +471,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByNotC_GtD(long classPK,
-		java.util.Date createDate);
+		Date createDate);
 
 	/**
 	* Returns a range of all the analytics events where classPK &ne; &#63; and createDate &gt; &#63;.
@@ -492,7 +487,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the range of matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByNotC_GtD(long classPK,
-		java.util.Date createDate, int start, int end);
+		Date createDate, int start, int end);
 
 	/**
 	* Returns an ordered range of all the analytics events where classPK &ne; &#63; and createDate &gt; &#63;.
@@ -509,7 +504,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the ordered range of matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByNotC_GtD(long classPK,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -528,7 +523,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the ordered range of matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByNotC_GtD(long classPK,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -541,10 +536,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the first matching analytics event
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public AnalyticsEvent findByNotC_GtD_First(long classPK,
-		java.util.Date createDate,
+	public AnalyticsEvent findByNotC_GtD_First(long classPK, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the first analytics event in the ordered set where classPK &ne; &#63; and createDate &gt; &#63;.
@@ -554,8 +548,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
-	public AnalyticsEvent fetchByNotC_GtD_First(long classPK,
-		java.util.Date createDate,
+	public AnalyticsEvent fetchByNotC_GtD_First(long classPK, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -567,10 +560,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the last matching analytics event
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public AnalyticsEvent findByNotC_GtD_Last(long classPK,
-		java.util.Date createDate,
+	public AnalyticsEvent findByNotC_GtD_Last(long classPK, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the last analytics event in the ordered set where classPK &ne; &#63; and createDate &gt; &#63;.
@@ -580,8 +572,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
-	public AnalyticsEvent fetchByNotC_GtD_Last(long classPK,
-		java.util.Date createDate,
+	public AnalyticsEvent fetchByNotC_GtD_Last(long classPK, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -595,9 +586,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public AnalyticsEvent[] findByNotC_GtD_PrevAndNext(long analyticsEventId,
-		long classPK, java.util.Date createDate,
+		long classPK, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Removes all the analytics events where classPK &ne; &#63; and createDate &gt; &#63; from the database.
@@ -605,7 +596,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param classPK the class p k
 	* @param createDate the create date
 	*/
-	public void removeByNotC_GtD(long classPK, java.util.Date createDate);
+	public void removeByNotC_GtD(long classPK, Date createDate);
 
 	/**
 	* Returns the number of analytics events where classPK &ne; &#63; and createDate &gt; &#63;.
@@ -614,7 +605,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @return the number of matching analytics events
 	*/
-	public int countByNotC_GtD(long classPK, java.util.Date createDate);
+	public int countByNotC_GtD(long classPK, Date createDate);
 
 	/**
 	* Returns all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
@@ -700,7 +691,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	public AnalyticsEvent findByC_C_E_First(java.lang.String className,
 		long classPK, java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the first analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63;.
@@ -728,7 +719,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	public AnalyticsEvent findByC_C_E_Last(java.lang.String className,
 		long classPK, java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the last analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63;.
@@ -757,7 +748,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	public AnalyticsEvent[] findByC_C_E_PrevAndNext(long analyticsEventId,
 		java.lang.String className, long classPK, java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Removes all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; from the database.
@@ -789,8 +780,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the matching analytics events
 	*/
 	public java.util.List<AnalyticsEvent> findByE_E_GtD(
-		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate);
+		java.lang.String elementId, java.lang.String eventType, Date createDate);
 
 	/**
 	* Returns a range of all the analytics events where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
@@ -808,7 +798,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	*/
 	public java.util.List<AnalyticsEvent> findByE_E_GtD(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate, int start, int end);
+		Date createDate, int start, int end);
 
 	/**
 	* Returns an ordered range of all the analytics events where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
@@ -827,7 +817,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	*/
 	public java.util.List<AnalyticsEvent> findByE_E_GtD(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -848,7 +838,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	*/
 	public java.util.List<AnalyticsEvent> findByE_E_GtD(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -863,9 +853,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public AnalyticsEvent findByE_E_GtD_First(java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate,
+		java.lang.String eventType, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the first analytics event in the ordered set where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
@@ -877,7 +867,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
 	public AnalyticsEvent fetchByE_E_GtD_First(java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate,
+		java.lang.String eventType, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -891,9 +881,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public AnalyticsEvent findByE_E_GtD_Last(java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate,
+		java.lang.String eventType, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the last analytics event in the ordered set where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
@@ -905,7 +895,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
 	public AnalyticsEvent fetchByE_E_GtD_Last(java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate,
+		java.lang.String eventType, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -921,9 +911,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	*/
 	public AnalyticsEvent[] findByE_E_GtD_PrevAndNext(long analyticsEventId,
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate,
+		Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Removes all the analytics events where elementId = &#63; and eventType = &#63; and createDate &gt; &#63; from the database.
@@ -933,7 +923,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	*/
 	public void removeByE_E_GtD(java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate);
+		java.lang.String eventType, Date createDate);
 
 	/**
 	* Returns the number of analytics events where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
@@ -944,7 +934,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the number of matching analytics events
 	*/
 	public int countByE_E_GtD(java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate);
+		java.lang.String eventType, Date createDate);
 
 	/**
 	* Returns all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
@@ -1035,7 +1025,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	public AnalyticsEvent findByA_C_C_E_First(long anonymousUserId,
 		java.lang.String className, long classPK, java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the first analytics event in the ordered set where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
@@ -1065,7 +1055,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	public AnalyticsEvent findByA_C_C_E_Last(long anonymousUserId,
 		java.lang.String className, long classPK, java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the last analytics event in the ordered set where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
@@ -1097,7 +1087,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 		long anonymousUserId, java.lang.String className, long classPK,
 		java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Removes all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; from the database.
@@ -1133,7 +1123,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	*/
 	public java.util.List<AnalyticsEvent> findByC_C_E_GtD(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate);
+		Date createDate);
 
 	/**
 	* Returns a range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
@@ -1152,7 +1142,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	*/
 	public java.util.List<AnalyticsEvent> findByC_C_E_GtD(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate, int start, int end);
+		Date createDate, int start, int end);
 
 	/**
 	* Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
@@ -1172,7 +1162,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	*/
 	public java.util.List<AnalyticsEvent> findByC_C_E_GtD(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -1194,7 +1184,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	*/
 	public java.util.List<AnalyticsEvent> findByC_C_E_GtD(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -1210,9 +1200,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public AnalyticsEvent findByC_C_E_GtD_First(java.lang.String className,
-		long classPK, java.lang.String eventType, java.util.Date createDate,
+		long classPK, java.lang.String eventType, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the first analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
@@ -1225,7 +1215,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
 	public AnalyticsEvent fetchByC_C_E_GtD_First(java.lang.String className,
-		long classPK, java.lang.String eventType, java.util.Date createDate,
+		long classPK, java.lang.String eventType, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -1240,9 +1230,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public AnalyticsEvent findByC_C_E_GtD_Last(java.lang.String className,
-		long classPK, java.lang.String eventType, java.util.Date createDate,
+		long classPK, java.lang.String eventType, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the last analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
@@ -1255,7 +1245,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
 	public AnalyticsEvent fetchByC_C_E_GtD_Last(java.lang.String className,
-		long classPK, java.lang.String eventType, java.util.Date createDate,
+		long classPK, java.lang.String eventType, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator);
 
 	/**
@@ -1272,9 +1262,9 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	*/
 	public AnalyticsEvent[] findByC_C_E_GtD_PrevAndNext(long analyticsEventId,
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate,
+		Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsEvent> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Removes all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63; from the database.
@@ -1285,7 +1275,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	*/
 	public void removeByC_C_E_GtD(java.lang.String className, long classPK,
-		java.lang.String eventType, java.util.Date createDate);
+		java.lang.String eventType, Date createDate);
 
 	/**
 	* Returns the number of analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
@@ -1297,7 +1287,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @return the number of matching analytics events
 	*/
 	public int countByC_C_E_GtD(java.lang.String className, long classPK,
-		java.lang.String eventType, java.util.Date createDate);
+		java.lang.String eventType, Date createDate);
 
 	/**
 	* Caches the analytics event in the entity cache if it is enabled.
@@ -1329,7 +1319,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public AnalyticsEvent remove(long analyticsEventId)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	public AnalyticsEvent updateImpl(AnalyticsEvent analyticsEvent);
 
@@ -1341,7 +1331,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public AnalyticsEvent findByPrimaryKey(long analyticsEventId)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException;
+		throws NoSuchAnalyticsEventException;
 
 	/**
 	* Returns the analytics event with the primary key or returns <code>null</code> if it could not be found.

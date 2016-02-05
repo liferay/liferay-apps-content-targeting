@@ -183,10 +183,14 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		analyticsEventId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
+
 		anonymousUserId = objectInput.readLong();
 		className = objectInput.readUTF();
+
 		classPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
 		eventType = objectInput.readUTF();
@@ -202,8 +206,11 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(analyticsEventId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
+
 		objectOutput.writeLong(anonymousUserId);
 
 		if (className == null) {

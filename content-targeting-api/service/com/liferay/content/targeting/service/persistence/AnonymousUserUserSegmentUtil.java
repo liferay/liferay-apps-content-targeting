@@ -26,6 +26,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -774,7 +775,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @return the matching anonymous user user segments
 	*/
 	public static List<AnonymousUserUserSegment> findByC_LtD_M(long companyId,
-		java.util.Date modifiedDate, boolean manual) {
+		Date modifiedDate, boolean manual) {
 		return getPersistence().findByC_LtD_M(companyId, modifiedDate, manual);
 	}
 
@@ -793,7 +794,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @return the range of matching anonymous user user segments
 	*/
 	public static List<AnonymousUserUserSegment> findByC_LtD_M(long companyId,
-		java.util.Date modifiedDate, boolean manual, int start, int end) {
+		Date modifiedDate, boolean manual, int start, int end) {
 		return getPersistence()
 				   .findByC_LtD_M(companyId, modifiedDate, manual, start, end);
 	}
@@ -814,7 +815,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @return the ordered range of matching anonymous user user segments
 	*/
 	public static List<AnonymousUserUserSegment> findByC_LtD_M(long companyId,
-		java.util.Date modifiedDate, boolean manual, int start, int end,
+		Date modifiedDate, boolean manual, int start, int end,
 		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
 		return getPersistence()
 				   .findByC_LtD_M(companyId, modifiedDate, manual, start, end,
@@ -838,7 +839,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @return the ordered range of matching anonymous user user segments
 	*/
 	public static List<AnonymousUserUserSegment> findByC_LtD_M(long companyId,
-		java.util.Date modifiedDate, boolean manual, int start, int end,
+		Date modifiedDate, boolean manual, int start, int end,
 		OrderByComparator<AnonymousUserUserSegment> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -857,7 +858,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public static AnonymousUserUserSegment findByC_LtD_M_First(long companyId,
-		java.util.Date modifiedDate, boolean manual,
+		Date modifiedDate, boolean manual,
 		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
 		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException {
 		return getPersistence()
@@ -875,7 +876,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @return the first matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
 	*/
 	public static AnonymousUserUserSegment fetchByC_LtD_M_First(
-		long companyId, java.util.Date modifiedDate, boolean manual,
+		long companyId, Date modifiedDate, boolean manual,
 		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_M_First(companyId, modifiedDate, manual,
@@ -893,7 +894,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public static AnonymousUserUserSegment findByC_LtD_M_Last(long companyId,
-		java.util.Date modifiedDate, boolean manual,
+		Date modifiedDate, boolean manual,
 		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
 		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException {
 		return getPersistence()
@@ -911,7 +912,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @return the last matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
 	*/
 	public static AnonymousUserUserSegment fetchByC_LtD_M_Last(long companyId,
-		java.util.Date modifiedDate, boolean manual,
+		Date modifiedDate, boolean manual,
 		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_M_Last(companyId, modifiedDate, manual,
@@ -930,8 +931,8 @@ public class AnonymousUserUserSegmentUtil {
 	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public static AnonymousUserUserSegment[] findByC_LtD_M_PrevAndNext(
-		long anonymousUserUserSegmentId, long companyId,
-		java.util.Date modifiedDate, boolean manual,
+		long anonymousUserUserSegmentId, long companyId, Date modifiedDate,
+		boolean manual,
 		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
 		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException {
 		return getPersistence()
@@ -946,8 +947,8 @@ public class AnonymousUserUserSegmentUtil {
 	* @param modifiedDate the modified date
 	* @param manual the manual
 	*/
-	public static void removeByC_LtD_M(long companyId,
-		java.util.Date modifiedDate, boolean manual) {
+	public static void removeByC_LtD_M(long companyId, Date modifiedDate,
+		boolean manual) {
 		getPersistence().removeByC_LtD_M(companyId, modifiedDate, manual);
 	}
 
@@ -959,8 +960,8 @@ public class AnonymousUserUserSegmentUtil {
 	* @param manual the manual
 	* @return the number of matching anonymous user user segments
 	*/
-	public static int countByC_LtD_M(long companyId,
-		java.util.Date modifiedDate, boolean manual) {
+	public static int countByC_LtD_M(long companyId, Date modifiedDate,
+		boolean manual) {
 		return getPersistence().countByC_LtD_M(companyId, modifiedDate, manual);
 	}
 

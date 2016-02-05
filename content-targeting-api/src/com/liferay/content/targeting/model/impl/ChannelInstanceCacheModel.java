@@ -168,15 +168,21 @@ public class ChannelInstanceCacheModel implements CacheModel<ChannelInstance>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		channelInstanceId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		channelKey = objectInput.readUTF();
+
 		campaignId = objectInput.readLong();
+
 		tacticId = objectInput.readLong();
 		alias = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
@@ -193,8 +199,11 @@ public class ChannelInstanceCacheModel implements CacheModel<ChannelInstance>,
 		}
 
 		objectOutput.writeLong(channelInstanceId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -215,6 +224,7 @@ public class ChannelInstanceCacheModel implements CacheModel<ChannelInstance>,
 		}
 
 		objectOutput.writeLong(campaignId);
+
 		objectOutput.writeLong(tacticId);
 
 		if (alias == null) {

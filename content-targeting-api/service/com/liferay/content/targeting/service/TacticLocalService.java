@@ -16,14 +16,34 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.model.Tactic;
+import com.liferay.content.targeting.util.BaseModelSearchResult;
+
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for Tactic. Methods of this
@@ -54,26 +74,20 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param tactic the tactic
 	* @return the tactic that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.Tactic addTactic(
-		com.liferay.content.targeting.model.Tactic tactic);
+	@Indexable(type = IndexableType.REINDEX)
+	public Tactic addTactic(Tactic tactic);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.Tactic addTactic(long userId,
-		long campaignId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long[] userSegmentsIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	@Indexable(type = IndexableType.REINDEX)
+	public Tactic addTactic(long userId, long campaignId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, long[] userSegmentsIds,
+		ServiceContext serviceContext) throws PortalException;
 
-	public void addUserSegmentTactic(long userSegmentId,
-		com.liferay.content.targeting.model.Tactic tactic);
+	public void addUserSegmentTactic(long userSegmentId, Tactic tactic);
 
 	public void addUserSegmentTactic(long userSegmentId, long tacticId);
 
-	public void addUserSegmentTactics(long userSegmentId,
-		java.util.List<com.liferay.content.targeting.model.Tactic> Tactics);
+	public void addUserSegmentTactics(long userSegmentId, List<Tactic> Tactics);
 
 	public void addUserSegmentTactics(long userSegmentId, long[] tacticIds);
 
@@ -85,15 +99,13 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param tacticId the primary key for the new tactic
 	* @return the new tactic
 	*/
-	public com.liferay.content.targeting.model.Tactic createTactic(
-		long tacticId);
+	public Tactic createTactic(long tacticId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -103,10 +115,8 @@ public interface TacticLocalService extends BaseLocalService,
 	* @return the tactic that was removed
 	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.Tactic deleteTactic(
-		com.liferay.content.targeting.model.Tactic tactic)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Tactic deleteTactic(Tactic tactic) throws PortalException;
 
 	/**
 	* Deletes the tactic with the primary key from the database. Also notifies the appropriate model listeners.
@@ -115,21 +125,19 @@ public interface TacticLocalService extends BaseLocalService,
 	* @return the tactic that was removed
 	* @throws PortalException if a tactic with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.Tactic deleteTactic(
-		long tacticId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Tactic deleteTactic(long tacticId) throws PortalException;
 
-	public void deleteUserSegmentTactic(long userSegmentId,
-		com.liferay.content.targeting.model.Tactic tactic);
+	public void deleteUserSegmentTactic(long userSegmentId, Tactic tactic);
 
 	public void deleteUserSegmentTactic(long userSegmentId, long tacticId);
 
 	public void deleteUserSegmentTactics(long userSegmentId,
-		java.util.List<com.liferay.content.targeting.model.Tactic> Tactics);
+		List<Tactic> Tactics);
 
 	public void deleteUserSegmentTactics(long userSegmentId, long[] tacticIds);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -137,8 +145,7 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -152,8 +159,7 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -169,10 +175,8 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -180,8 +184,7 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -190,12 +193,11 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.Tactic fetchTactic(long tacticId);
+	public Tactic fetchTactic(long tacticId);
 
 	/**
 	* Returns the tactic matching the UUID and group.
@@ -205,18 +207,18 @@ public interface TacticLocalService extends BaseLocalService,
 	* @return the matching tactic, or <code>null</code> if a matching tactic could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.Tactic fetchTacticByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public Tactic fetchTacticByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -227,8 +229,8 @@ public interface TacticLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the tactic with the primary key.
@@ -238,8 +240,7 @@ public interface TacticLocalService extends BaseLocalService,
 	* @throws PortalException if a tactic with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.Tactic getTactic(long tacticId)
-		throws PortalException;
+	public Tactic getTactic(long tacticId) throws PortalException;
 
 	/**
 	* Returns the tactic matching the UUID and group.
@@ -250,18 +251,15 @@ public interface TacticLocalService extends BaseLocalService,
 	* @throws PortalException if a matching tactic could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.Tactic getTacticByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
-		long campaignId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
-		long campaignId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+	public Tactic getTacticByUuidAndGroupId(java.lang.String uuid, long groupId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Tactic> getTactics(long campaignId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Tactic> getTactics(long campaignId, int start, int end,
+		OrderByComparator obc) throws PortalException;
 
 	/**
 	* Returns a range of all the tactics.
@@ -275,8 +273,7 @@ public interface TacticLocalService extends BaseLocalService,
 	* @return the range of tactics
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
-		int start, int end);
+	public List<Tactic> getTactics(int start, int end);
 
 	/**
 	* Returns all the tactics matching the UUID and company.
@@ -286,8 +283,8 @@ public interface TacticLocalService extends BaseLocalService,
 	* @return the matching tactics, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getTacticsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<Tactic> getTacticsByUuidAndCompanyId(java.lang.String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of tactics matching the UUID and company.
@@ -300,9 +297,9 @@ public interface TacticLocalService extends BaseLocalService,
 	* @return the range of matching tactics, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getTacticsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.Tactic> orderByComparator);
+	public List<Tactic> getTacticsByUuidAndCompanyId(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<Tactic> orderByComparator);
 
 	/**
 	* Returns the number of tactics.
@@ -325,17 +322,15 @@ public interface TacticLocalService extends BaseLocalService,
 	public long[] getUserSegmentPrimaryKeys(long tacticId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getUserSegmentTactics(
-		long userSegmentId);
+	public List<Tactic> getUserSegmentTactics(long userSegmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getUserSegmentTactics(
-		long userSegmentId, int start, int end);
+	public List<Tactic> getUserSegmentTactics(long userSegmentId, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getUserSegmentTactics(
-		long userSegmentId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.Tactic> orderByComparator);
+	public List<Tactic> getUserSegmentTactics(long userSegmentId, int start,
+		int end, OrderByComparator<Tactic> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserSegmentTacticsCount(long userSegmentId);
@@ -347,13 +342,13 @@ public interface TacticLocalService extends BaseLocalService,
 	public boolean hasUserSegmentTactics(long userSegmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
-		long campaignId, long groupId, java.lang.String keywords, int start,
-		int end) throws PortalException;
+	public BaseModelSearchResult<Tactic> searchTactics(long campaignId,
+		long groupId, java.lang.String keywords, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
-		long groupId, java.lang.String keywords, int start, int end)
+	public BaseModelSearchResult<Tactic> searchTactics(long groupId,
+		java.lang.String keywords, int start, int end)
 		throws PortalException;
 
 	public void setUserSegmentTactics(long userSegmentId, long[] tacticIds);
@@ -364,16 +359,12 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param tactic the tactic
 	* @return the tactic that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.Tactic updateTactic(
-		com.liferay.content.targeting.model.Tactic tactic);
+	@Indexable(type = IndexableType.REINDEX)
+	public Tactic updateTactic(Tactic tactic);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.Tactic updateTactic(
-		long tacticId, long campaignId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long[] userSegmentsIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	@Indexable(type = IndexableType.REINDEX)
+	public Tactic updateTactic(long tacticId, long campaignId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, long[] userSegmentsIds,
+		ServiceContext serviceContext) throws PortalException;
 }

@@ -16,14 +16,35 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.model.UserSegment;
+import com.liferay.content.targeting.util.BaseModelSearchResult;
+
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for UserSegment. Methods of this
@@ -47,32 +68,29 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserSegmentLocalServiceUtil} to access the user segment local service. Add custom service methods to {@link com.liferay.content.targeting.service.impl.UserSegmentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addCampaignUserSegment(long campaignId,
-		com.liferay.content.targeting.model.UserSegment userSegment);
+	public void addCampaignUserSegment(long campaignId, UserSegment userSegment);
 
 	public void addCampaignUserSegment(long campaignId, long userSegmentId);
 
 	public void addCampaignUserSegments(long campaignId,
-		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments);
+		List<UserSegment> UserSegments);
 
 	public void addCampaignUserSegments(long campaignId, long[] userSegmentIds);
 
-	public void addTacticUserSegment(long tacticId,
-		com.liferay.content.targeting.model.UserSegment userSegment);
+	public void addTacticUserSegment(long tacticId, UserSegment userSegment);
 
 	public void addTacticUserSegment(long tacticId, long userSegmentId);
 
 	public void addTacticUserSegments(long tacticId,
-		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments);
+		List<UserSegment> UserSegments);
 
 	public void addTacticUserSegments(long tacticId, long[] userSegmentIds);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.UserSegment addUserSegment(
-		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	@Indexable(type = IndexableType.REINDEX)
+	public UserSegment addUserSegment(long userId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the user segment to the database. Also notifies the appropriate model listeners.
@@ -80,17 +98,14 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @param userSegment the user segment
 	* @return the user segment that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.UserSegment addUserSegment(
-		com.liferay.content.targeting.model.UserSegment userSegment);
+	@Indexable(type = IndexableType.REINDEX)
+	public UserSegment addUserSegment(UserSegment userSegment);
 
-	public void addUserSegmentResources(
-		com.liferay.content.targeting.model.UserSegment userSegment,
+	public void addUserSegmentResources(UserSegment userSegment,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addUserSegmentResources(
-		com.liferay.content.targeting.model.UserSegment userSegment,
+	public void addUserSegmentResources(UserSegment userSegment,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
@@ -104,16 +119,15 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @param userSegmentId the primary key for the new user segment
 	* @return the new user segment
 	*/
-	public com.liferay.content.targeting.model.UserSegment createUserSegment(
-		long userSegmentId);
+	public UserSegment createUserSegment(long userSegmentId);
 
 	public void deleteCampaignUserSegment(long campaignId,
-		com.liferay.content.targeting.model.UserSegment userSegment);
+		UserSegment userSegment);
 
 	public void deleteCampaignUserSegment(long campaignId, long userSegmentId);
 
 	public void deleteCampaignUserSegments(long campaignId,
-		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments);
+		List<UserSegment> UserSegments);
 
 	public void deleteCampaignUserSegments(long campaignId,
 		long[] userSegmentIds);
@@ -122,17 +136,15 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteTacticUserSegment(long tacticId,
-		com.liferay.content.targeting.model.UserSegment userSegment);
+	public void deleteTacticUserSegment(long tacticId, UserSegment userSegment);
 
 	public void deleteTacticUserSegment(long tacticId, long userSegmentId);
 
 	public void deleteTacticUserSegments(long tacticId,
-		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments);
+		List<UserSegment> UserSegments);
 
 	public void deleteTacticUserSegments(long tacticId, long[] userSegmentIds);
 
@@ -143,9 +155,8 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @return the user segment that was removed
 	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
-		com.liferay.content.targeting.model.UserSegment userSegment)
+	@Indexable(type = IndexableType.DELETE)
+	public UserSegment deleteUserSegment(UserSegment userSegment)
 		throws PortalException;
 
 	/**
@@ -155,13 +166,13 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @return the user segment that was removed
 	* @throws PortalException if a user segment with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
-		long userSegmentId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public UserSegment deleteUserSegment(long userSegmentId)
+		throws PortalException;
 
 	public void deleteUserSegments(long groupId) throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -169,8 +180,7 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -184,8 +194,7 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -201,10 +210,8 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -212,8 +219,7 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -222,17 +228,15 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.UserSegment fetchUserSegment(
-		long userSegmentId);
+	public UserSegment fetchUserSegment(long userSegmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.UserSegment fetchUserSegmentByAssetCategoryId(
-		long assetCategoryId) throws PortalException;
+	public UserSegment fetchUserSegmentByAssetCategoryId(long assetCategoryId)
+		throws PortalException;
 
 	/**
 	* Returns the user segment matching the UUID and group.
@@ -242,11 +246,11 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.UserSegment fetchUserSegmentByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public UserSegment fetchUserSegmentByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the campaignIds of the campaigns associated with the user segment.
@@ -258,27 +262,25 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	public long[] getCampaignPrimaryKeys(long userSegmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getCampaignUserSegments(
-		long campaignId);
+	public List<UserSegment> getCampaignUserSegments(long campaignId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getCampaignUserSegments(
-		long campaignId, int start, int end);
+	public List<UserSegment> getCampaignUserSegments(long campaignId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getCampaignUserSegments(
-		long campaignId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.UserSegment> orderByComparator);
+	public List<UserSegment> getCampaignUserSegments(long campaignId,
+		int start, int end, OrderByComparator<UserSegment> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCampaignUserSegmentsCount(long campaignId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -289,8 +291,8 @@ public interface UserSegmentLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the tacticIds of the tactics associated with the user segment.
@@ -302,17 +304,15 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	public long[] getTacticPrimaryKeys(long userSegmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
-		long tacticId);
+	public List<UserSegment> getTacticUserSegments(long tacticId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
-		long tacticId, int start, int end);
+	public List<UserSegment> getTacticUserSegments(long tacticId, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
-		long tacticId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.UserSegment> orderByComparator);
+	public List<UserSegment> getTacticUserSegments(long tacticId, int start,
+		int end, OrderByComparator<UserSegment> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTacticUserSegmentsCount(long tacticId);
@@ -325,8 +325,8 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @throws PortalException if a user segment with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.UserSegment getUserSegment(
-		long userSegmentId) throws PortalException;
+	public UserSegment getUserSegment(long userSegmentId)
+		throws PortalException;
 
 	/**
 	* Returns the user segment matching the UUID and group.
@@ -337,28 +337,24 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @throws PortalException if a matching user segment could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.UserSegment getUserSegmentByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
+	public UserSegment getUserSegmentByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+	public List<UserSegment> getUserSegments(long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long[] groupIds) throws PortalException;
+	public List<UserSegment> getUserSegments(long groupId, int start, int end,
+		OrderByComparator obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+	public List<UserSegment> getUserSegments(long[] groupIds)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserSegment> getUserSegments(long[] groupIds, int start,
+		int end, OrderByComparator obc) throws PortalException;
 
 	/**
 	* Returns a range of all the user segments.
@@ -372,8 +368,7 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @return the range of user segments
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		int start, int end);
+	public List<UserSegment> getUserSegments(int start, int end);
 
 	/**
 	* Returns all the user segments matching the UUID and company.
@@ -383,7 +378,7 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @return the matching user segments, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUuidAndCompanyId(
+	public List<UserSegment> getUserSegmentsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -397,9 +392,9 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @return the range of matching user segments, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUuidAndCompanyId(
+	public List<UserSegment> getUserSegmentsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.UserSegment> orderByComparator);
+		OrderByComparator<UserSegment> orderByComparator);
 
 	/**
 	* Returns the number of user segments.
@@ -428,13 +423,12 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	public boolean hasTacticUserSegments(long tacticId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.Hits search(long groupId,
-		java.lang.String keywords, int start, int end)
-		throws PortalException;
+	public Hits search(long groupId, java.lang.String keywords, int start,
+		int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.UserSegment> searchUserSegments(
-		long groupId, java.lang.String keywords, int start, int end)
+	public BaseModelSearchResult<UserSegment> searchUserSegments(long groupId,
+		java.lang.String keywords, int start, int end)
 		throws PortalException;
 
 	public void setCampaignUserSegments(long campaignId, long[] userSegmentIds);
@@ -447,20 +441,16 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @param userSegment the user segment
 	* @return the user segment that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.UserSegment updateUserSegment(
-		com.liferay.content.targeting.model.UserSegment userSegment);
+	@Indexable(type = IndexableType.REINDEX)
+	public UserSegment updateUserSegment(UserSegment userSegment);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.UserSegment updateUserSegment(
-		long userSegmentId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	@Indexable(type = IndexableType.REINDEX)
+	public UserSegment updateUserSegment(long userSegmentId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		ServiceContext serviceContext) throws PortalException;
 
-	public void updateUserSegmentResources(
-		com.liferay.content.targeting.model.UserSegment userSegment,
+	public void updateUserSegmentResources(UserSegment userSegment,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 }

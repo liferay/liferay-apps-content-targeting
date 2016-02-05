@@ -155,13 +155,18 @@ public class TacticCacheModel implements CacheModel<Tactic>, Externalizable {
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		tacticId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
 		campaignId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -178,8 +183,11 @@ public class TacticCacheModel implements CacheModel<Tactic>, Externalizable {
 		}
 
 		objectOutput.writeLong(tacticId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -191,6 +199,7 @@ public class TacticCacheModel implements CacheModel<Tactic>, Externalizable {
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
 		objectOutput.writeLong(campaignId);
 
 		if (name == null) {

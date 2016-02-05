@@ -16,6 +16,8 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.model.TrackingActionInstance;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -25,6 +27,9 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for TrackingActionInstance. Methods of this
@@ -50,33 +55,31 @@ public interface TrackingActionInstanceService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TrackingActionInstanceServiceUtil} to access the tracking action instance remote service. Add custom service methods to {@link com.liferay.content.targeting.service.impl.TrackingActionInstanceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
-		long userId, long reportInstanceId, java.lang.String trackingActionKey,
+	public TrackingActionInstance addTrackingActionInstance(long userId,
+		long reportInstanceId, java.lang.String trackingActionKey,
 		long campaignId, java.lang.String alias,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType,
-		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
 	* @deprecated As of 2.0.0
 	*/
 	@java.lang.Deprecated
-	public com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
-		long userId, java.lang.String trackingActionKey, long campaignId,
+	public TrackingActionInstance addTrackingActionInstance(long userId,
+		java.lang.String trackingActionKey, long campaignId,
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.content.targeting.model.TrackingActionInstance deleteTrackingActionInstance(
+	public TrackingActionInstance deleteTrackingActionInstance(
 		long trackingActionInstanceId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstance(
-		long campaignId, java.lang.String alias) throws java.lang.Exception;
+	public TrackingActionInstance fetchTrackingActionInstance(long campaignId,
+		java.lang.String alias) throws java.lang.Exception;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -86,21 +89,20 @@ public interface TrackingActionInstanceService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
+	public List<TrackingActionInstance> getTrackingActionInstances(
 		long campaignId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
+	public List<TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
 		long reportInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTrackingActionInstancesCount(long campaignId);
 
-	public com.liferay.content.targeting.model.TrackingActionInstance updateTrackingActionInstance(
+	public TrackingActionInstance updateTrackingActionInstance(
 		long trackingActionInstanceId, long reportInstanceId,
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 }

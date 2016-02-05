@@ -16,6 +16,7 @@ package com.liferay.content.targeting.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.exception.NoSuchTacticException;
 import com.liferay.content.targeting.model.Tactic;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -109,7 +110,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	*/
 	public Tactic findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Returns the first tactic in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	*/
 	public Tactic findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Returns the last tactic in the ordered set where uuid = &#63;.
@@ -155,7 +156,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	public Tactic[] findByUuid_PrevAndNext(long tacticId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Removes all the tactics where uuid = &#63; from the database.
@@ -181,7 +182,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	* @throws NoSuchTacticException if a matching tactic could not be found
 	*/
 	public Tactic findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Returns the tactic where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +212,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	* @return the tactic that was removed
 	*/
 	public Tactic removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Returns the number of tactics where uuid = &#63; and groupId = &#63;.
@@ -297,7 +298,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	*/
 	public Tactic findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Returns the first tactic in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -321,7 +322,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	*/
 	public Tactic findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Returns the last tactic in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -347,7 +348,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	public Tactic[] findByUuid_C_PrevAndNext(long tacticId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Removes all the tactics where uuid = &#63; and companyId = &#63; from the database.
@@ -434,7 +435,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	*/
 	public Tactic findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Returns the first tactic in the ordered set where groupId = &#63;.
@@ -456,7 +457,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	*/
 	public Tactic findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Returns the last tactic in the ordered set where groupId = &#63;.
@@ -479,7 +480,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	*/
 	public Tactic[] findByGroupId_PrevAndNext(long tacticId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Returns all the tactics that the user has permission to view where groupId = &#63;.
@@ -533,7 +534,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	public Tactic[] filterFindByGroupId_PrevAndNext(long tacticId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Removes all the tactics where groupId = &#63; from the database.
@@ -627,7 +628,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	*/
 	public Tactic findByCampaignId_First(long campaignId,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Returns the first tactic in the ordered set where campaignId = &#63;.
@@ -649,7 +650,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	*/
 	public Tactic findByCampaignId_Last(long campaignId,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Returns the last tactic in the ordered set where campaignId = &#63;.
@@ -673,7 +674,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	public Tactic[] findByCampaignId_PrevAndNext(long tacticId,
 		long campaignId,
 		com.liferay.portal.kernel.util.OrderByComparator<Tactic> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+		throws NoSuchTacticException;
 
 	/**
 	* Removes all the tactics where campaignId = &#63; from the database.
@@ -719,8 +720,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	* @return the tactic that was removed
 	* @throws NoSuchTacticException if a tactic with the primary key could not be found
 	*/
-	public Tactic remove(long tacticId)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+	public Tactic remove(long tacticId) throws NoSuchTacticException;
 
 	public Tactic updateImpl(Tactic tactic);
 
@@ -731,8 +731,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 	* @return the tactic
 	* @throws NoSuchTacticException if a tactic with the primary key could not be found
 	*/
-	public Tactic findByPrimaryKey(long tacticId)
-		throws com.liferay.content.targeting.exception.NoSuchTacticException;
+	public Tactic findByPrimaryKey(long tacticId) throws NoSuchTacticException;
 
 	/**
 	* Returns the tactic with the primary key or returns <code>null</code> if it could not be found.

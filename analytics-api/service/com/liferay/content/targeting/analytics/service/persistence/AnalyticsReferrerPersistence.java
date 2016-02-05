@@ -16,6 +16,7 @@ package com.liferay.content.targeting.analytics.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
 import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -111,7 +112,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	public AnalyticsReferrer findByAnalyticsEventId_First(
 		long analyticsEventId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsReferrer> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
+		throws NoSuchAnalyticsReferrerException;
 
 	/**
 	* Returns the first analytics referrer in the ordered set where analyticsEventId = &#63;.
@@ -135,7 +136,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	public AnalyticsReferrer findByAnalyticsEventId_Last(
 		long analyticsEventId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsReferrer> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
+		throws NoSuchAnalyticsReferrerException;
 
 	/**
 	* Returns the last analytics referrer in the ordered set where analyticsEventId = &#63;.
@@ -160,7 +161,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	public AnalyticsReferrer[] findByAnalyticsEventId_PrevAndNext(
 		long analyticsReferrerId, long analyticsEventId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsReferrer> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
+		throws NoSuchAnalyticsReferrerException;
 
 	/**
 	* Removes all the analytics referrers where analyticsEventId = &#63; from the database.
@@ -256,7 +257,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	public AnalyticsReferrer findByR_R_First(
 		java.lang.String referrerClassName, long referrerClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsReferrer> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
+		throws NoSuchAnalyticsReferrerException;
 
 	/**
 	* Returns the first analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
@@ -282,7 +283,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	public AnalyticsReferrer findByR_R_Last(
 		java.lang.String referrerClassName, long referrerClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsReferrer> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
+		throws NoSuchAnalyticsReferrerException;
 
 	/**
 	* Returns the last analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
@@ -309,7 +310,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	public AnalyticsReferrer[] findByR_R_PrevAndNext(long analyticsReferrerId,
 		java.lang.String referrerClassName, long referrerClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsReferrer> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
+		throws NoSuchAnalyticsReferrerException;
 
 	/**
 	* Removes all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63; from the database.
@@ -415,7 +416,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	public AnalyticsReferrer findByA_R_R_First(long analyticsEventId,
 		java.lang.String referrerClassName, long referrerClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsReferrer> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
+		throws NoSuchAnalyticsReferrerException;
 
 	/**
 	* Returns the first analytics referrer in the ordered set where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
@@ -443,7 +444,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	public AnalyticsReferrer findByA_R_R_Last(long analyticsEventId,
 		java.lang.String referrerClassName, long referrerClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsReferrer> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
+		throws NoSuchAnalyticsReferrerException;
 
 	/**
 	* Returns the last analytics referrer in the ordered set where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
@@ -473,7 +474,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 		long analyticsReferrerId, long analyticsEventId,
 		java.lang.String referrerClassName, long referrerClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AnalyticsReferrer> orderByComparator)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
+		throws NoSuchAnalyticsReferrerException;
 
 	/**
 	* Returns all the analytics referrers where analyticsEventId = any &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
@@ -614,7 +615,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public AnalyticsReferrer remove(long analyticsReferrerId)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
+		throws NoSuchAnalyticsReferrerException;
 
 	public AnalyticsReferrer updateImpl(AnalyticsReferrer analyticsReferrer);
 
@@ -626,7 +627,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public AnalyticsReferrer findByPrimaryKey(long analyticsReferrerId)
-		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
+		throws NoSuchAnalyticsReferrerException;
 
 	/**
 	* Returns the analytics referrer with the primary key or returns <code>null</code> if it could not be found.

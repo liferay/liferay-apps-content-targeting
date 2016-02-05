@@ -155,10 +155,15 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		userSegmentId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		assetCategoryId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -178,9 +183,13 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 		}
 
 		objectOutput.writeLong(userSegmentId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(assetCategoryId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {

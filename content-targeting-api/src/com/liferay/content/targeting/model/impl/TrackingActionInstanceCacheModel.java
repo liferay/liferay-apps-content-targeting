@@ -199,18 +199,25 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		trackingActionInstanceId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		trackingActionKey = objectInput.readUTF();
+
 		campaignId = objectInput.readLong();
+
 		reportInstanceId = objectInput.readLong();
 		alias = objectInput.readUTF();
 		referrerClassName = objectInput.readUTF();
+
 		referrerClassPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
 		eventType = objectInput.readUTF();
@@ -228,8 +235,11 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		}
 
 		objectOutput.writeLong(trackingActionInstanceId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -250,6 +260,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		}
 
 		objectOutput.writeLong(campaignId);
+
 		objectOutput.writeLong(reportInstanceId);
 
 		if (alias == null) {

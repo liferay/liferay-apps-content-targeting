@@ -113,11 +113,16 @@ public class AnonymousUserUserSegmentCacheModel implements CacheModel<AnonymousU
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		anonymousUserUserSegmentId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
 		anonymousUserId = objectInput.readLong();
+
 		userSegmentId = objectInput.readLong();
+
 		manual = objectInput.readBoolean();
+
 		active = objectInput.readBoolean();
 	}
 
@@ -125,11 +130,16 @@ public class AnonymousUserUserSegmentCacheModel implements CacheModel<AnonymousU
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(anonymousUserUserSegmentId);
+
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(modifiedDate);
+
 		objectOutput.writeLong(anonymousUserId);
+
 		objectOutput.writeLong(userSegmentId);
+
 		objectOutput.writeBoolean(manual);
+
 		objectOutput.writeBoolean(active);
 	}
 

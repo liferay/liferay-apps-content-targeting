@@ -16,6 +16,7 @@ package com.liferay.content.targeting.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -110,7 +111,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	*/
 	public TrackingActionInstance findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the first tracking action instance in the ordered set where uuid = &#63;.
@@ -132,7 +133,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	*/
 	public TrackingActionInstance findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the last tracking action instance in the ordered set where uuid = &#63;.
@@ -156,7 +157,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance[] findByUuid_PrevAndNext(
 		long trackingActionInstanceId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Removes all the tracking action instances where uuid = &#63; from the database.
@@ -182,8 +183,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public TrackingActionInstance findByUUID_G(java.lang.String uuid,
-		long groupId)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		long groupId) throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the tracking action instance where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -214,8 +214,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	* @return the tracking action instance that was removed
 	*/
 	public TrackingActionInstance removeByUUID_G(java.lang.String uuid,
-		long groupId)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		long groupId) throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the number of tracking action instances where uuid = &#63; and groupId = &#63;.
@@ -302,7 +301,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the first tracking action instance in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -328,7 +327,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the last tracking action instance in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -355,7 +354,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance[] findByUuid_C_PrevAndNext(
 		long trackingActionInstanceId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Removes all the tracking action instances where uuid = &#63; and companyId = &#63; from the database.
@@ -443,7 +442,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	*/
 	public TrackingActionInstance findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the first tracking action instance in the ordered set where groupId = &#63;.
@@ -465,7 +464,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	*/
 	public TrackingActionInstance findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the last tracking action instance in the ordered set where groupId = &#63;.
@@ -489,7 +488,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance[] findByGroupId_PrevAndNext(
 		long trackingActionInstanceId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Removes all the tracking action instances where groupId = &#63; from the database.
@@ -576,7 +575,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	*/
 	public TrackingActionInstance findByCampaignId_First(long campaignId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the first tracking action instance in the ordered set where campaignId = &#63;.
@@ -598,7 +597,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	*/
 	public TrackingActionInstance findByCampaignId_Last(long campaignId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the last tracking action instance in the ordered set where campaignId = &#63;.
@@ -622,7 +621,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance[] findByCampaignId_PrevAndNext(
 		long trackingActionInstanceId, long campaignId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Removes all the tracking action instances where campaignId = &#63; from the database.
@@ -710,7 +709,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance findByReportInstanceId_First(
 		long reportInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the first tracking action instance in the ordered set where reportInstanceId = &#63;.
@@ -734,7 +733,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance findByReportInstanceId_Last(
 		long reportInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the last tracking action instance in the ordered set where reportInstanceId = &#63;.
@@ -759,7 +758,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance[] findByReportInstanceId_PrevAndNext(
 		long trackingActionInstanceId, long reportInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Removes all the tracking action instances where reportInstanceId = &#63; from the database.
@@ -785,8 +784,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public TrackingActionInstance findByC_A(long campaignId,
-		java.lang.String alias)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		java.lang.String alias) throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the tracking action instance where campaignId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -817,8 +815,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	* @return the tracking action instance that was removed
 	*/
 	public TrackingActionInstance removeByC_A(long campaignId,
-		java.lang.String alias)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		java.lang.String alias) throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the number of tracking action instances where campaignId = &#63; and alias = &#63;.
@@ -838,8 +835,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public TrackingActionInstance findByR_A(long reportInstanceId,
-		java.lang.String alias)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		java.lang.String alias) throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -870,8 +866,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	* @return the tracking action instance that was removed
 	*/
 	public TrackingActionInstance removeByR_A(long reportInstanceId,
-		java.lang.String alias)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		java.lang.String alias) throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the number of tracking action instances where reportInstanceId = &#63; and alias = &#63;.
@@ -966,7 +961,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance findByC_E_E_First(long campaignId,
 		java.lang.String elementId, java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the first tracking action instance in the ordered set where campaignId = &#63; and elementId = &#63; and eventType = &#63;.
@@ -994,7 +989,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance findByC_E_E_Last(long campaignId,
 		java.lang.String elementId, java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the last tracking action instance in the ordered set where campaignId = &#63; and elementId = &#63; and eventType = &#63;.
@@ -1024,7 +1019,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 		long trackingActionInstanceId, long campaignId,
 		java.lang.String elementId, java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Removes all the tracking action instances where campaignId = &#63; and elementId = &#63; and eventType = &#63; from the database.
@@ -1132,7 +1127,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance findByR_E_E_First(long reportInstanceId,
 		java.lang.String elementId, java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
@@ -1160,7 +1155,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public TrackingActionInstance findByR_E_E_Last(long reportInstanceId,
 		java.lang.String elementId, java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
@@ -1190,7 +1185,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 		long trackingActionInstanceId, long reportInstanceId,
 		java.lang.String elementId, java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Removes all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63; from the database.
@@ -1304,7 +1299,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the first tracking action instance in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
@@ -1336,7 +1331,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the last tracking action instance in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
@@ -1370,7 +1365,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Removes all the tracking action instances where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63; from the database.
@@ -1488,7 +1483,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
@@ -1520,7 +1515,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
@@ -1554,7 +1549,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType,
 		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Removes all the tracking action instances where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63; from the database.
@@ -1612,7 +1607,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	*/
 	public TrackingActionInstance remove(long trackingActionInstanceId)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	public TrackingActionInstance updateImpl(
 		TrackingActionInstance trackingActionInstance);
@@ -1626,7 +1621,7 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	*/
 	public TrackingActionInstance findByPrimaryKey(
 		long trackingActionInstanceId)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+		throws NoSuchTrackingActionInstanceException;
 
 	/**
 	* Returns the tracking action instance with the primary key or returns <code>null</code> if it could not be found.

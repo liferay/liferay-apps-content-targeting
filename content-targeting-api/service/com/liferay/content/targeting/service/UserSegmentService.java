@@ -16,6 +16,8 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.model.UserSegment;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -25,6 +27,11 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for UserSegment. Methods of this
@@ -50,14 +57,13 @@ public interface UserSegmentService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserSegmentServiceUtil} to access the user segment remote service. Add custom service methods to {@link com.liferay.content.targeting.service.impl.UserSegmentServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.content.targeting.model.UserSegment addUserSegment(
-		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public UserSegment addUserSegment(long userId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
-		long userSegmentId) throws PortalException;
+	public UserSegment deleteUserSegment(long userSegmentId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -67,12 +73,12 @@ public interface UserSegmentService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long groupId) throws PortalException;
+	public List<UserSegment> getUserSegments(long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long[] groupIds) throws PortalException;
+	public List<UserSegment> getUserSegments(long[] groupIds)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserSegmentsCount(long groupId) throws PortalException;
@@ -80,10 +86,8 @@ public interface UserSegmentService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserSegmentsCount(long[] groupIds) throws PortalException;
 
-	public com.liferay.content.targeting.model.UserSegment updateUserSegment(
-		long userSegmentId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public UserSegment updateUserSegment(long userSegmentId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		ServiceContext serviceContext) throws PortalException;
 }

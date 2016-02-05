@@ -16,6 +16,8 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.model.RuleInstance;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -25,6 +27,9 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for RuleInstance. Methods of this
@@ -50,14 +55,12 @@ public interface RuleInstanceService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RuleInstanceServiceUtil} to access the rule instance remote service. Add custom service methods to {@link com.liferay.content.targeting.service.impl.RuleInstanceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.content.targeting.model.RuleInstance addRuleInstance(
-		long userId, java.lang.String ruleKey, long userSegmentId,
-		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public RuleInstance addRuleInstance(long userId, java.lang.String ruleKey,
+		long userSegmentId, java.lang.String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
-		long ruleInstanceId) throws PortalException;
+	public RuleInstance deleteRuleInstance(long ruleInstanceId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -67,15 +70,13 @@ public interface RuleInstanceService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		long userSegmentId);
+	public List<RuleInstance> getRuleInstances(long userSegmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getRuleInstancesCount(long userSegmentId)
 		throws PortalException;
 
-	public com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
-		long ruleInstanceId, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public RuleInstance updateRuleInstance(long ruleInstanceId,
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -16,6 +16,8 @@ package com.liferay.content.targeting.analytics.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -25,6 +27,9 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Provides the remote service interface for AnalyticsEvent. Methods of this
@@ -51,18 +56,17 @@ public interface AnalyticsEventService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AnalyticsEventServiceUtil} to access the analytics event remote service. Add custom service methods to {@link com.liferay.content.targeting.analytics.service.impl.AnalyticsEventServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate) throws PortalException;
+	public List<AnalyticsEvent> getAnalyticsEvents(java.lang.String className,
+		long classPK, java.lang.String eventType, Date createDate)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
-		long companyId, java.util.Date createDate) throws PortalException;
+	public List<AnalyticsEvent> getAnalyticsEvents(long companyId,
+		Date createDate) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
-		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate) throws PortalException;
+	public List<AnalyticsEvent> getAnalyticsEvents(java.lang.String elementId,
+		java.lang.String eventType, Date createDate) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

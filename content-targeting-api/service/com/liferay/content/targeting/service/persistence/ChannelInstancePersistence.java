@@ -16,6 +16,7 @@ package com.liferay.content.targeting.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
 import com.liferay.content.targeting.model.ChannelInstance;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -109,7 +110,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	*/
 	public ChannelInstance findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the first channel instance in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	*/
 	public ChannelInstance findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the last channel instance in the ordered set where uuid = &#63;.
@@ -155,7 +156,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance[] findByUuid_PrevAndNext(long channelInstanceId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Removes all the channel instances where uuid = &#63; from the database.
@@ -181,7 +182,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public ChannelInstance findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the channel instance where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +212,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	* @return the channel instance that was removed
 	*/
 	public ChannelInstance removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the number of channel instances where uuid = &#63; and groupId = &#63;.
@@ -298,7 +299,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the first channel instance in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -324,7 +325,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the last channel instance in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -351,7 +352,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance[] findByUuid_C_PrevAndNext(long channelInstanceId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Removes all the channel instances where uuid = &#63; and companyId = &#63; from the database.
@@ -440,7 +441,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	*/
 	public ChannelInstance findByChannelKey_First(java.lang.String channelKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the first channel instance in the ordered set where channelKey = &#63;.
@@ -463,7 +464,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	*/
 	public ChannelInstance findByChannelKey_Last(java.lang.String channelKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the last channel instance in the ordered set where channelKey = &#63;.
@@ -487,7 +488,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance[] findByChannelKey_PrevAndNext(
 		long channelInstanceId, java.lang.String channelKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Removes all the channel instances where channelKey = &#63; from the database.
@@ -573,7 +574,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	*/
 	public ChannelInstance findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the first channel instance in the ordered set where groupId = &#63;.
@@ -595,7 +596,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	*/
 	public ChannelInstance findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the last channel instance in the ordered set where groupId = &#63;.
@@ -619,7 +620,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance[] findByGroupId_PrevAndNext(long channelInstanceId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Removes all the channel instances where groupId = &#63; from the database.
@@ -705,7 +706,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	*/
 	public ChannelInstance findByCampaignId_First(long campaignId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the first channel instance in the ordered set where campaignId = &#63;.
@@ -727,7 +728,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	*/
 	public ChannelInstance findByCampaignId_Last(long campaignId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the last channel instance in the ordered set where campaignId = &#63;.
@@ -751,7 +752,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance[] findByCampaignId_PrevAndNext(
 		long channelInstanceId, long campaignId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Removes all the channel instances where campaignId = &#63; from the database.
@@ -837,7 +838,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	*/
 	public ChannelInstance findByTacticId_First(long tacticId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the first channel instance in the ordered set where tacticId = &#63;.
@@ -859,7 +860,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	*/
 	public ChannelInstance findByTacticId_Last(long tacticId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the last channel instance in the ordered set where tacticId = &#63;.
@@ -883,7 +884,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance[] findByTacticId_PrevAndNext(
 		long channelInstanceId, long tacticId,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Removes all the channel instances where tacticId = &#63; from the database.
@@ -976,7 +977,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance findByC_K_First(long campaignId,
 		java.lang.String channelKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the first channel instance in the ordered set where campaignId = &#63; and channelKey = &#63;.
@@ -1002,7 +1003,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance findByC_K_Last(long campaignId,
 		java.lang.String channelKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the last channel instance in the ordered set where campaignId = &#63; and channelKey = &#63;.
@@ -1029,7 +1030,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance[] findByC_K_PrevAndNext(long channelInstanceId,
 		long campaignId, java.lang.String channelKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Removes all the channel instances where campaignId = &#63; and channelKey = &#63; from the database.
@@ -1057,7 +1058,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public ChannelInstance findByT_A(long tacticId, java.lang.String alias)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the channel instance where tacticId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1087,7 +1088,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	* @return the channel instance that was removed
 	*/
 	public ChannelInstance removeByT_A(long tacticId, java.lang.String alias)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the number of channel instances where tacticId = &#63; and alias = &#63;.
@@ -1174,7 +1175,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance findByT_K_First(long tacticId,
 		java.lang.String channelKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the first channel instance in the ordered set where tacticId = &#63; and channelKey = &#63;.
@@ -1200,7 +1201,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance findByT_K_Last(long tacticId,
 		java.lang.String channelKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the last channel instance in the ordered set where tacticId = &#63; and channelKey = &#63;.
@@ -1227,7 +1228,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	public ChannelInstance[] findByT_K_PrevAndNext(long channelInstanceId,
 		long tacticId, java.lang.String channelKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Removes all the channel instances where tacticId = &#63; and channelKey = &#63; from the database.
@@ -1276,7 +1277,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	*/
 	public ChannelInstance remove(long channelInstanceId)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	public ChannelInstance updateImpl(ChannelInstance channelInstance);
 
@@ -1288,7 +1289,7 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	*/
 	public ChannelInstance findByPrimaryKey(long channelInstanceId)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
+		throws NoSuchChannelInstanceException;
 
 	/**
 	* Returns the channel instance with the primary key or returns <code>null</code> if it could not be found.

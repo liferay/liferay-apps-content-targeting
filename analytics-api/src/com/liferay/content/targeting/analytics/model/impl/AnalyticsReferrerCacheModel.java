@@ -103,8 +103,10 @@ public class AnalyticsReferrerCacheModel implements CacheModel<AnalyticsReferrer
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		analyticsReferrerId = objectInput.readLong();
+
 		analyticsEventId = objectInput.readLong();
 		referrerClassName = objectInput.readUTF();
+
 		referrerClassPK = objectInput.readLong();
 	}
 
@@ -112,6 +114,7 @@ public class AnalyticsReferrerCacheModel implements CacheModel<AnalyticsReferrer
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(analyticsReferrerId);
+
 		objectOutput.writeLong(analyticsEventId);
 
 		if (referrerClassName == null) {

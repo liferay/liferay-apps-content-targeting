@@ -16,6 +16,8 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.model.ChannelInstance;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -25,6 +27,9 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for ChannelInstance. Methods of this
@@ -50,22 +55,21 @@ public interface ChannelInstanceService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ChannelInstanceServiceUtil} to access the channel instance remote service. Add custom service methods to {@link com.liferay.content.targeting.service.impl.ChannelInstanceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.content.targeting.model.ChannelInstance addChannelInstance(
-		long userId, long tacticId, java.lang.String channelKey,
-		long campaignId, java.lang.String alias, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public ChannelInstance addChannelInstance(long userId, long tacticId,
+		java.lang.String channelKey, long campaignId, java.lang.String alias,
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
-		long channelInstanceId) throws PortalException;
+	public ChannelInstance deleteChannelInstance(long channelInstanceId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
-		long campaignId, long tacticId) throws PortalException;
+	public List<ChannelInstance> getChannelInstances(long campaignId,
+		long tacticId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
-		long tacticId, java.lang.String channelKey) throws PortalException;
+	public List<ChannelInstance> getChannelInstances(long tacticId,
+		java.lang.String channelKey) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -74,9 +78,7 @@ public interface ChannelInstanceService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.content.targeting.model.ChannelInstance updateChannelInstance(
-		long channelInstanceId, java.lang.String alias,
-		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public ChannelInstance updateChannelInstance(long channelInstanceId,
+		java.lang.String alias, java.lang.String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 }

@@ -16,6 +16,7 @@ package com.liferay.content.targeting.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 import com.liferay.content.targeting.model.RuleInstance;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -109,7 +110,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	*/
 	public RuleInstance findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the first rule instance in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	*/
 	public RuleInstance findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the last rule instance in the ordered set where uuid = &#63;.
@@ -155,7 +156,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	public RuleInstance[] findByUuid_PrevAndNext(long ruleInstanceId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Removes all the rule instances where uuid = &#63; from the database.
@@ -181,7 +182,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	*/
 	public RuleInstance findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the rule instance where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +212,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @return the rule instance that was removed
 	*/
 	public RuleInstance removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the number of rule instances where uuid = &#63; and groupId = &#63;.
@@ -298,7 +299,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	public RuleInstance findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the first rule instance in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -324,7 +325,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	public RuleInstance findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the last rule instance in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -351,7 +352,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	public RuleInstance[] findByUuid_C_PrevAndNext(long ruleInstanceId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Removes all the rule instances where uuid = &#63; and companyId = &#63; from the database.
@@ -439,7 +440,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	*/
 	public RuleInstance findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the first rule instance in the ordered set where groupId = &#63;.
@@ -461,7 +462,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	*/
 	public RuleInstance findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the last rule instance in the ordered set where groupId = &#63;.
@@ -485,7 +486,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	public RuleInstance[] findByGroupId_PrevAndNext(long ruleInstanceId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Removes all the rule instances where groupId = &#63; from the database.
@@ -571,7 +572,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	*/
 	public RuleInstance findByUserSegmentId_First(long userSegmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the first rule instance in the ordered set where userSegmentId = &#63;.
@@ -593,7 +594,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	*/
 	public RuleInstance findByUserSegmentId_Last(long userSegmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the last rule instance in the ordered set where userSegmentId = &#63;.
@@ -617,7 +618,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	public RuleInstance[] findByUserSegmentId_PrevAndNext(long ruleInstanceId,
 		long userSegmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Removes all the rule instances where userSegmentId = &#63; from the database.
@@ -710,7 +711,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	public RuleInstance findByR_U_First(java.lang.String ruleKey,
 		long userSegmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the first rule instance in the ordered set where ruleKey = &#63; and userSegmentId = &#63;.
@@ -736,7 +737,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	public RuleInstance findByR_U_Last(java.lang.String ruleKey,
 		long userSegmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the last rule instance in the ordered set where ruleKey = &#63; and userSegmentId = &#63;.
@@ -763,7 +764,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	public RuleInstance[] findByR_U_PrevAndNext(long ruleInstanceId,
 		java.lang.String ruleKey, long userSegmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Removes all the rule instances where ruleKey = &#63; and userSegmentId = &#63; from the database.
@@ -812,7 +813,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	*/
 	public RuleInstance remove(long ruleInstanceId)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	public RuleInstance updateImpl(RuleInstance ruleInstance);
 
@@ -824,7 +825,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	*/
 	public RuleInstance findByPrimaryKey(long ruleInstanceId)
-		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
+		throws NoSuchRuleInstanceException;
 
 	/**
 	* Returns the rule instance with the primary key or returns <code>null</code> if it could not be found.

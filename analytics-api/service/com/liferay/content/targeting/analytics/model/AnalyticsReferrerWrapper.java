@@ -16,8 +16,13 @@ package com.liferay.content.targeting.analytics.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.service.ServiceContext;
+
+import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -119,7 +124,7 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _analyticsReferrer.getExpandoBridge();
 	}
 
@@ -134,7 +139,7 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _analyticsReferrer.getPrimaryKeyObj();
 	}
 
@@ -215,14 +220,12 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_analyticsReferrer.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_analyticsReferrer.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -242,7 +245,7 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_analyticsReferrer.setPrimaryKeyObj(primaryKeyObj);
 	}
 

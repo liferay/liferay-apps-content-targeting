@@ -16,14 +16,31 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.model.RuleInstance;
+
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for RuleInstance. Methods of this
@@ -54,15 +71,12 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @param ruleInstance the rule instance
 	* @return the rule instance that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.RuleInstance addRuleInstance(
-		com.liferay.content.targeting.model.RuleInstance ruleInstance);
+	@Indexable(type = IndexableType.REINDEX)
+	public RuleInstance addRuleInstance(RuleInstance ruleInstance);
 
-	public com.liferay.content.targeting.model.RuleInstance addRuleInstance(
-		long userId, java.lang.String ruleKey, long userSegmentId,
-		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public RuleInstance addRuleInstance(long userId, java.lang.String ruleKey,
+		long userSegmentId, java.lang.String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new rule instance with the primary key. Does not add the rule instance to the database.
@@ -70,15 +84,13 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @param ruleInstanceId the primary key for the new rule instance
 	* @return the new rule instance
 	*/
-	public com.liferay.content.targeting.model.RuleInstance createRuleInstance(
-		long ruleInstanceId);
+	public RuleInstance createRuleInstance(long ruleInstanceId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -88,9 +100,8 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @return the rule instance that was removed
 	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
-		com.liferay.content.targeting.model.RuleInstance ruleInstance)
+	@Indexable(type = IndexableType.DELETE)
+	public RuleInstance deleteRuleInstance(RuleInstance ruleInstance)
 		throws PortalException;
 
 	/**
@@ -100,11 +111,11 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @return the rule instance that was removed
 	* @throws PortalException if a rule instance with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
-		long ruleInstanceId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public RuleInstance deleteRuleInstance(long ruleInstanceId)
+		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -112,8 +123,7 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -127,8 +137,7 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -144,10 +153,8 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -155,8 +162,7 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -165,13 +171,11 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.RuleInstance fetchRuleInstance(
-		long ruleInstanceId);
+	public RuleInstance fetchRuleInstance(long ruleInstanceId);
 
 	/**
 	* Returns the rule instance matching the UUID and group.
@@ -181,18 +185,18 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @return the matching rule instance, or <code>null</code> if a matching rule instance could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.RuleInstance fetchRuleInstanceByUuidAndGroupId(
+	public RuleInstance fetchRuleInstanceByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -203,8 +207,8 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the rule instance with the primary key.
@@ -214,8 +218,8 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @throws PortalException if a rule instance with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.RuleInstance getRuleInstance(
-		long ruleInstanceId) throws PortalException;
+	public RuleInstance getRuleInstance(long ruleInstanceId)
+		throws PortalException;
 
 	/**
 	* Returns the rule instance matching the UUID and group.
@@ -226,12 +230,12 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @throws PortalException if a matching rule instance could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.RuleInstance getRuleInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public RuleInstance getRuleInstanceByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		java.lang.String ruleKey, long userSegmentId);
+	public List<RuleInstance> getRuleInstances(java.lang.String ruleKey,
+		long userSegmentId);
 
 	/**
 	* Returns a range of all the rule instances.
@@ -245,12 +249,10 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @return the range of rule instances
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		int start, int end);
+	public List<RuleInstance> getRuleInstances(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		long userSegmentId);
+	public List<RuleInstance> getRuleInstances(long userSegmentId);
 
 	/**
 	* Returns all the rule instances matching the UUID and company.
@@ -260,7 +262,7 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @return the matching rule instances, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstancesByUuidAndCompanyId(
+	public List<RuleInstance> getRuleInstancesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -274,9 +276,9 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @return the range of matching rule instances, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstancesByUuidAndCompanyId(
+	public List<RuleInstance> getRuleInstancesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.RuleInstance> orderByComparator);
+		OrderByComparator<RuleInstance> orderByComparator);
 
 	/**
 	* Returns the number of rule instances.
@@ -300,12 +302,10 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @param ruleInstance the rule instance
 	* @return the rule instance that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
-		com.liferay.content.targeting.model.RuleInstance ruleInstance);
+	@Indexable(type = IndexableType.REINDEX)
+	public RuleInstance updateRuleInstance(RuleInstance ruleInstance);
 
-	public com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
-		long ruleInstanceId, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public RuleInstance updateRuleInstance(long ruleInstanceId,
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 }

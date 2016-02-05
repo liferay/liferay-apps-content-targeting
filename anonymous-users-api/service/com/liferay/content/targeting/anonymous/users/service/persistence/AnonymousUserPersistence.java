@@ -16,9 +16,12 @@ package com.liferay.content.targeting.anonymous.users.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 
 import com.liferay.portal.service.persistence.BasePersistence;
+
+import java.util.Date;
 
 /**
  * The persistence interface for the anonymous user service.
@@ -109,7 +112,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	*/
 	public AnonymousUser findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Returns the first anonymous user in the ordered set where uuid = &#63;.
@@ -131,7 +134,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	*/
 	public AnonymousUser findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Returns the last anonymous user in the ordered set where uuid = &#63;.
@@ -155,7 +158,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	public AnonymousUser[] findByUuid_PrevAndNext(long anonymousUserId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Removes all the anonymous users where uuid = &#63; from the database.
@@ -248,7 +251,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	public AnonymousUser findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Returns the first anonymous user in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -274,7 +277,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	public AnonymousUser findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Returns the last anonymous user in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -301,7 +304,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	public AnonymousUser[] findByUuid_C_PrevAndNext(long anonymousUserId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Removes all the anonymous users where uuid = &#63; and companyId = &#63; from the database.
@@ -389,7 +392,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	*/
 	public AnonymousUser findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Returns the first anonymous user in the ordered set where userId = &#63;.
@@ -411,7 +414,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	*/
 	public AnonymousUser findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Returns the last anonymous user in the ordered set where userId = &#63;.
@@ -435,7 +438,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	public AnonymousUser[] findByUserId_PrevAndNext(long anonymousUserId,
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Removes all the anonymous users where userId = &#63; from the database.
@@ -460,7 +463,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @return the matching anonymous users
 	*/
 	public java.util.List<AnonymousUser> findByC_LtD(long companyId,
-		java.util.Date createDate);
+		Date createDate);
 
 	/**
 	* Returns a range of all the anonymous users where companyId = &#63; and createDate &lt; &#63;.
@@ -476,7 +479,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @return the range of matching anonymous users
 	*/
 	public java.util.List<AnonymousUser> findByC_LtD(long companyId,
-		java.util.Date createDate, int start, int end);
+		Date createDate, int start, int end);
 
 	/**
 	* Returns an ordered range of all the anonymous users where companyId = &#63; and createDate &lt; &#63;.
@@ -493,7 +496,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @return the ordered range of matching anonymous users
 	*/
 	public java.util.List<AnonymousUser> findByC_LtD(long companyId,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator);
 
 	/**
@@ -512,7 +515,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @return the ordered range of matching anonymous users
 	*/
 	public java.util.List<AnonymousUser> findByC_LtD(long companyId,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -525,10 +528,9 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @return the first matching anonymous user
 	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
-	public AnonymousUser findByC_LtD_First(long companyId,
-		java.util.Date createDate,
+	public AnonymousUser findByC_LtD_First(long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Returns the first anonymous user in the ordered set where companyId = &#63; and createDate &lt; &#63;.
@@ -538,8 +540,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
 	*/
-	public AnonymousUser fetchByC_LtD_First(long companyId,
-		java.util.Date createDate,
+	public AnonymousUser fetchByC_LtD_First(long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator);
 
 	/**
@@ -551,10 +552,9 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @return the last matching anonymous user
 	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
-	public AnonymousUser findByC_LtD_Last(long companyId,
-		java.util.Date createDate,
+	public AnonymousUser findByC_LtD_Last(long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Returns the last anonymous user in the ordered set where companyId = &#63; and createDate &lt; &#63;.
@@ -564,8 +564,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
 	*/
-	public AnonymousUser fetchByC_LtD_Last(long companyId,
-		java.util.Date createDate,
+	public AnonymousUser fetchByC_LtD_Last(long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator);
 
 	/**
@@ -579,9 +578,9 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public AnonymousUser[] findByC_LtD_PrevAndNext(long anonymousUserId,
-		long companyId, java.util.Date createDate,
+		long companyId, Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Removes all the anonymous users where companyId = &#63; and createDate &lt; &#63; from the database.
@@ -589,7 +588,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param companyId the company ID
 	* @param createDate the create date
 	*/
-	public void removeByC_LtD(long companyId, java.util.Date createDate);
+	public void removeByC_LtD(long companyId, Date createDate);
 
 	/**
 	* Returns the number of anonymous users where companyId = &#63; and createDate &lt; &#63;.
@@ -598,7 +597,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param createDate the create date
 	* @return the number of matching anonymous users
 	*/
-	public int countByC_LtD(long companyId, java.util.Date createDate);
+	public int countByC_LtD(long companyId, Date createDate);
 
 	/**
 	* Caches the anonymous user in the entity cache if it is enabled.
@@ -630,7 +629,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public AnonymousUser remove(long anonymousUserId)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	public AnonymousUser updateImpl(AnonymousUser anonymousUser);
 
@@ -642,7 +641,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public AnonymousUser findByPrimaryKey(long anonymousUserId)
-		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
+		throws NoSuchAnonymousUserException;
 
 	/**
 	* Returns the anonymous user with the primary key or returns <code>null</code> if it could not be found.

@@ -26,6 +26,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -281,7 +282,7 @@ public class AnalyticsEventUtil {
 	* @return the matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByC_GtD(long companyId,
-		java.util.Date createDate) {
+		Date createDate) {
 		return getPersistence().findByC_GtD(companyId, createDate);
 	}
 
@@ -299,7 +300,7 @@ public class AnalyticsEventUtil {
 	* @return the range of matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByC_GtD(long companyId,
-		java.util.Date createDate, int start, int end) {
+		Date createDate, int start, int end) {
 		return getPersistence().findByC_GtD(companyId, createDate, start, end);
 	}
 
@@ -318,7 +319,7 @@ public class AnalyticsEventUtil {
 	* @return the ordered range of matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByC_GtD(long companyId,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByC_GtD(companyId, createDate, start, end,
@@ -341,7 +342,7 @@ public class AnalyticsEventUtil {
 	* @return the ordered range of matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByC_GtD(long companyId,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -359,8 +360,7 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByC_GtD_First(long companyId,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator)
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_GtD_First(companyId, createDate, orderByComparator);
@@ -375,8 +375,7 @@ public class AnalyticsEventUtil {
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent fetchByC_GtD_First(long companyId,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator) {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_GtD_First(companyId, createDate, orderByComparator);
 	}
@@ -391,8 +390,7 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByC_GtD_Last(long companyId,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator)
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_GtD_Last(companyId, createDate, orderByComparator);
@@ -407,8 +405,7 @@ public class AnalyticsEventUtil {
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent fetchByC_GtD_Last(long companyId,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator) {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_GtD_Last(companyId, createDate, orderByComparator);
 	}
@@ -424,7 +421,7 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByC_GtD_PrevAndNext(
-		long analyticsEventId, long companyId, java.util.Date createDate,
+		long analyticsEventId, long companyId, Date createDate,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
@@ -438,7 +435,7 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param createDate the create date
 	*/
-	public static void removeByC_GtD(long companyId, java.util.Date createDate) {
+	public static void removeByC_GtD(long companyId, Date createDate) {
 		getPersistence().removeByC_GtD(companyId, createDate);
 	}
 
@@ -449,7 +446,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @return the number of matching analytics events
 	*/
-	public static int countByC_GtD(long companyId, java.util.Date createDate) {
+	public static int countByC_GtD(long companyId, Date createDate) {
 		return getPersistence().countByC_GtD(companyId, createDate);
 	}
 
@@ -461,7 +458,7 @@ public class AnalyticsEventUtil {
 	* @return the matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByC_LtD(long companyId,
-		java.util.Date createDate) {
+		Date createDate) {
 		return getPersistence().findByC_LtD(companyId, createDate);
 	}
 
@@ -479,7 +476,7 @@ public class AnalyticsEventUtil {
 	* @return the range of matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByC_LtD(long companyId,
-		java.util.Date createDate, int start, int end) {
+		Date createDate, int start, int end) {
 		return getPersistence().findByC_LtD(companyId, createDate, start, end);
 	}
 
@@ -498,7 +495,7 @@ public class AnalyticsEventUtil {
 	* @return the ordered range of matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByC_LtD(long companyId,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByC_LtD(companyId, createDate, start, end,
@@ -521,7 +518,7 @@ public class AnalyticsEventUtil {
 	* @return the ordered range of matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByC_LtD(long companyId,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -539,8 +536,7 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByC_LtD_First(long companyId,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator)
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_LtD_First(companyId, createDate, orderByComparator);
@@ -555,8 +551,7 @@ public class AnalyticsEventUtil {
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent fetchByC_LtD_First(long companyId,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator) {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_First(companyId, createDate, orderByComparator);
 	}
@@ -571,8 +566,7 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByC_LtD_Last(long companyId,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator)
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_LtD_Last(companyId, createDate, orderByComparator);
@@ -587,8 +581,7 @@ public class AnalyticsEventUtil {
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent fetchByC_LtD_Last(long companyId,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator) {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_Last(companyId, createDate, orderByComparator);
 	}
@@ -604,7 +597,7 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByC_LtD_PrevAndNext(
-		long analyticsEventId, long companyId, java.util.Date createDate,
+		long analyticsEventId, long companyId, Date createDate,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
@@ -618,7 +611,7 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param createDate the create date
 	*/
-	public static void removeByC_LtD(long companyId, java.util.Date createDate) {
+	public static void removeByC_LtD(long companyId, Date createDate) {
 		getPersistence().removeByC_LtD(companyId, createDate);
 	}
 
@@ -629,7 +622,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @return the number of matching analytics events
 	*/
-	public static int countByC_LtD(long companyId, java.util.Date createDate) {
+	public static int countByC_LtD(long companyId, Date createDate) {
 		return getPersistence().countByC_LtD(companyId, createDate);
 	}
 
@@ -641,7 +634,7 @@ public class AnalyticsEventUtil {
 	* @return the matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByNotC_GtD(long classPK,
-		java.util.Date createDate) {
+		Date createDate) {
 		return getPersistence().findByNotC_GtD(classPK, createDate);
 	}
 
@@ -659,7 +652,7 @@ public class AnalyticsEventUtil {
 	* @return the range of matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByNotC_GtD(long classPK,
-		java.util.Date createDate, int start, int end) {
+		Date createDate, int start, int end) {
 		return getPersistence().findByNotC_GtD(classPK, createDate, start, end);
 	}
 
@@ -678,7 +671,7 @@ public class AnalyticsEventUtil {
 	* @return the ordered range of matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByNotC_GtD(long classPK,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByNotC_GtD(classPK, createDate, start, end,
@@ -701,7 +694,7 @@ public class AnalyticsEventUtil {
 	* @return the ordered range of matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByNotC_GtD(long classPK,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -719,8 +712,7 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByNotC_GtD_First(long classPK,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator)
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByNotC_GtD_First(classPK, createDate, orderByComparator);
@@ -735,8 +727,7 @@ public class AnalyticsEventUtil {
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent fetchByNotC_GtD_First(long classPK,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator) {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByNotC_GtD_First(classPK, createDate, orderByComparator);
 	}
@@ -751,8 +742,7 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByNotC_GtD_Last(long classPK,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator)
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByNotC_GtD_Last(classPK, createDate, orderByComparator);
@@ -767,8 +757,7 @@ public class AnalyticsEventUtil {
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent fetchByNotC_GtD_Last(long classPK,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator) {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByNotC_GtD_Last(classPK, createDate, orderByComparator);
 	}
@@ -784,7 +773,7 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByNotC_GtD_PrevAndNext(
-		long analyticsEventId, long classPK, java.util.Date createDate,
+		long analyticsEventId, long classPK, Date createDate,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
@@ -798,7 +787,7 @@ public class AnalyticsEventUtil {
 	* @param classPK the class p k
 	* @param createDate the create date
 	*/
-	public static void removeByNotC_GtD(long classPK, java.util.Date createDate) {
+	public static void removeByNotC_GtD(long classPK, Date createDate) {
 		getPersistence().removeByNotC_GtD(classPK, createDate);
 	}
 
@@ -809,7 +798,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @return the number of matching analytics events
 	*/
-	public static int countByNotC_GtD(long classPK, java.util.Date createDate) {
+	public static int countByNotC_GtD(long classPK, Date createDate) {
 		return getPersistence().countByNotC_GtD(classPK, createDate);
 	}
 
@@ -1021,8 +1010,7 @@ public class AnalyticsEventUtil {
 	* @return the matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByE_E_GtD(
-		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate) {
+		java.lang.String elementId, java.lang.String eventType, Date createDate) {
 		return getPersistence().findByE_E_GtD(elementId, eventType, createDate);
 	}
 
@@ -1042,7 +1030,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static List<AnalyticsEvent> findByE_E_GtD(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate, int start, int end) {
+		Date createDate, int start, int end) {
 		return getPersistence()
 				   .findByE_E_GtD(elementId, eventType, createDate, start, end);
 	}
@@ -1064,7 +1052,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static List<AnalyticsEvent> findByE_E_GtD(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByE_E_GtD(elementId, eventType, createDate, start, end,
@@ -1089,7 +1077,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static List<AnalyticsEvent> findByE_E_GtD(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1109,8 +1097,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static AnalyticsEvent findByE_E_GtD_First(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator)
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByE_E_GtD_First(elementId, eventType, createDate,
@@ -1128,8 +1115,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static AnalyticsEvent fetchByE_E_GtD_First(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator) {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByE_E_GtD_First(elementId, eventType, createDate,
 			orderByComparator);
@@ -1147,8 +1133,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static AnalyticsEvent findByE_E_GtD_Last(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator)
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByE_E_GtD_Last(elementId, eventType, createDate,
@@ -1166,8 +1151,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static AnalyticsEvent fetchByE_E_GtD_Last(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator) {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByE_E_GtD_Last(elementId, eventType, createDate,
 			orderByComparator);
@@ -1186,7 +1170,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static AnalyticsEvent[] findByE_E_GtD_PrevAndNext(
 		long analyticsEventId, java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate,
+		java.lang.String eventType, Date createDate,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
@@ -1202,7 +1186,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	*/
 	public static void removeByE_E_GtD(java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate) {
+		java.lang.String eventType, Date createDate) {
 		getPersistence().removeByE_E_GtD(elementId, eventType, createDate);
 	}
 
@@ -1215,7 +1199,7 @@ public class AnalyticsEventUtil {
 	* @return the number of matching analytics events
 	*/
 	public static int countByE_E_GtD(java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate) {
+		java.lang.String eventType, Date createDate) {
 		return getPersistence().countByE_E_GtD(elementId, eventType, createDate);
 	}
 
@@ -1447,7 +1431,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static List<AnalyticsEvent> findByC_C_E_GtD(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate) {
+		Date createDate) {
 		return getPersistence()
 				   .findByC_C_E_GtD(className, classPK, eventType, createDate);
 	}
@@ -1469,7 +1453,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static List<AnalyticsEvent> findByC_C_E_GtD(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate, int start, int end) {
+		Date createDate, int start, int end) {
 		return getPersistence()
 				   .findByC_C_E_GtD(className, classPK, eventType, createDate,
 			start, end);
@@ -1493,7 +1477,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static List<AnalyticsEvent> findByC_C_E_GtD(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByC_C_E_GtD(className, classPK, eventType, createDate,
@@ -1519,7 +1503,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static List<AnalyticsEvent> findByC_C_E_GtD(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1540,8 +1524,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static AnalyticsEvent findByC_C_E_GtD_First(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator)
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_C_E_GtD_First(className, classPK, eventType,
@@ -1560,8 +1543,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static AnalyticsEvent fetchByC_C_E_GtD_First(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator) {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_E_GtD_First(className, classPK, eventType,
 			createDate, orderByComparator);
@@ -1580,8 +1562,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static AnalyticsEvent findByC_C_E_GtD_Last(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator)
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_C_E_GtD_Last(className, classPK, eventType,
@@ -1600,8 +1581,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static AnalyticsEvent fetchByC_C_E_GtD_Last(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate,
-		OrderByComparator<AnalyticsEvent> orderByComparator) {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_E_GtD_Last(className, classPK, eventType,
 			createDate, orderByComparator);
@@ -1621,7 +1601,7 @@ public class AnalyticsEventUtil {
 	*/
 	public static AnalyticsEvent[] findByC_C_E_GtD_PrevAndNext(
 		long analyticsEventId, java.lang.String className, long classPK,
-		java.lang.String eventType, java.util.Date createDate,
+		java.lang.String eventType, Date createDate,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
@@ -1638,7 +1618,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	*/
 	public static void removeByC_C_E_GtD(java.lang.String className,
-		long classPK, java.lang.String eventType, java.util.Date createDate) {
+		long classPK, java.lang.String eventType, Date createDate) {
 		getPersistence()
 			.removeByC_C_E_GtD(className, classPK, eventType, createDate);
 	}
@@ -1653,7 +1633,7 @@ public class AnalyticsEventUtil {
 	* @return the number of matching analytics events
 	*/
 	public static int countByC_C_E_GtD(java.lang.String className,
-		long classPK, java.lang.String eventType, java.util.Date createDate) {
+		long classPK, java.lang.String eventType, Date createDate) {
 		return getPersistence()
 				   .countByC_C_E_GtD(className, classPK, eventType, createDate);
 	}

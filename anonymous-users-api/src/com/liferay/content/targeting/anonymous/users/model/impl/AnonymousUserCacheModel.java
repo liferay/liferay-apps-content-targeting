@@ -149,8 +149,11 @@ public class AnonymousUserCacheModel implements CacheModel<AnonymousUser>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		anonymousUserId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -170,7 +173,9 @@ public class AnonymousUserCacheModel implements CacheModel<AnonymousUser>,
 		}
 
 		objectOutput.writeLong(anonymousUserId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {

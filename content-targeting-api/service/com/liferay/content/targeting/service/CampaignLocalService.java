@@ -16,14 +16,36 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.util.BaseModelSearchResult;
+
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for Campaign. Methods of this
@@ -54,46 +76,38 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @param campaign the campaign
 	* @return the campaign that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.Campaign addCampaign(
-		com.liferay.content.targeting.model.Campaign campaign);
+	@Indexable(type = IndexableType.REINDEX)
+	public Campaign addCampaign(Campaign campaign);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.Campaign addCampaign(
-		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Date startDate, java.util.Date endDate, int priority,
-		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	@Indexable(type = IndexableType.REINDEX)
+	public Campaign addCampaign(long userId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, Date startDate,
+		Date endDate, int priority, boolean active, long[] userSegmentIds,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public Campaign addCampaign(long userId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, Date startDate,
+		Date endDate, java.lang.String timeZoneId, int priority,
+		boolean active, long[] userSegmentIds, ServiceContext serviceContext)
 		throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.Campaign addCampaign(
-		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Date startDate, java.util.Date endDate,
-		java.lang.String timeZoneId, int priority, boolean active,
-		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	public void addCampaignResources(
-		com.liferay.content.targeting.model.Campaign campaign,
+	public void addCampaignResources(Campaign campaign,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addCampaignResources(
-		com.liferay.content.targeting.model.Campaign campaign,
+	public void addCampaignResources(Campaign campaign,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
-	public void addUserSegmentCampaign(long userSegmentId,
-		com.liferay.content.targeting.model.Campaign campaign);
+	public void addUserSegmentCampaign(long userSegmentId, Campaign campaign);
 
 	public void addUserSegmentCampaign(long userSegmentId, long campaignId);
 
 	public void addUserSegmentCampaigns(long userSegmentId,
-		java.util.List<com.liferay.content.targeting.model.Campaign> Campaigns);
+		List<Campaign> Campaigns);
 
 	public void addUserSegmentCampaigns(long userSegmentId, long[] campaignIds);
 
@@ -105,8 +119,7 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @param campaignId the primary key for the new campaign
 	* @return the new campaign
 	*/
-	public com.liferay.content.targeting.model.Campaign createCampaign(
-		long campaignId);
+	public Campaign createCampaign(long campaignId);
 
 	/**
 	* Deletes the campaign from the database. Also notifies the appropriate model listeners.
@@ -115,10 +128,8 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @return the campaign that was removed
 	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.Campaign deleteCampaign(
-		com.liferay.content.targeting.model.Campaign campaign)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Campaign deleteCampaign(Campaign campaign) throws PortalException;
 
 	/**
 	* Deletes the campaign with the primary key from the database. Also notifies the appropriate model listeners.
@@ -127,9 +138,8 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @return the campaign that was removed
 	* @throws PortalException if a campaign with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.Campaign deleteCampaign(
-		long campaignId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Campaign deleteCampaign(long campaignId) throws PortalException;
 
 	public void deleteCampaigns(long groupId) throws PortalException;
 
@@ -137,22 +147,20 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteUserSegmentCampaign(long userSegmentId,
-		com.liferay.content.targeting.model.Campaign campaign);
+	public void deleteUserSegmentCampaign(long userSegmentId, Campaign campaign);
 
 	public void deleteUserSegmentCampaign(long userSegmentId, long campaignId);
 
 	public void deleteUserSegmentCampaigns(long userSegmentId,
-		java.util.List<com.liferay.content.targeting.model.Campaign> Campaigns);
+		List<Campaign> Campaigns);
 
 	public void deleteUserSegmentCampaigns(long userSegmentId,
 		long[] campaignIds);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -160,8 +168,7 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -175,8 +182,7 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -192,10 +198,8 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -203,8 +207,7 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -213,13 +216,11 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.Campaign fetchCampaign(
-		long campaignId);
+	public Campaign fetchCampaign(long campaignId);
 
 	/**
 	* Returns the campaign matching the UUID and group.
@@ -229,15 +230,15 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @return the matching campaign, or <code>null</code> if a matching campaign could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.Campaign fetchCampaignByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public Campaign fetchCampaignByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.Campaign fetchCurrentMaxPriorityCampaign(
-		long[] groupIds, long[] userSegmentIds);
+	public Campaign fetchCurrentMaxPriorityCampaign(long[] groupIds,
+		long[] userSegmentIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the campaign with the primary key.
@@ -247,8 +248,7 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @throws PortalException if a campaign with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.Campaign getCampaign(
-		long campaignId) throws PortalException;
+	public Campaign getCampaign(long campaignId) throws PortalException;
 
 	/**
 	* Returns the campaign matching the UUID and group.
@@ -259,32 +259,27 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @throws PortalException if a matching campaign could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.Campaign getCampaignByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+	public Campaign getCampaignByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+	public List<Campaign> getCampaigns(long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Campaign> getCampaigns(long groupId, int start, int end,
+		OrderByComparator obc) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Campaign> getCampaigns(long[] groupIds)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long[] groupIds) throws PortalException;
+	public List<Campaign> getCampaigns(long[] groupIds, int start, int end,
+		OrderByComparator obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+	public List<Campaign> getCampaigns(long[] groupIds, long[] userSegmentIds)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long[] groupIds, long[] userSegmentIds) throws PortalException;
 
 	/**
 	* Returns a range of all the campaigns.
@@ -298,8 +293,7 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @return the range of campaigns
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		int start, int end);
+	public List<Campaign> getCampaigns(int start, int end);
 
 	/**
 	* Returns all the campaigns matching the UUID and company.
@@ -309,7 +303,7 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @return the matching campaigns, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaignsByUuidAndCompanyId(
+	public List<Campaign> getCampaignsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -323,9 +317,9 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @return the range of matching campaigns, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaignsByUuidAndCompanyId(
+	public List<Campaign> getCampaignsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.Campaign> orderByComparator);
+		OrderByComparator<Campaign> orderByComparator);
 
 	/**
 	* Returns the number of campaigns.
@@ -342,11 +336,11 @@ public interface CampaignLocalService extends BaseLocalService,
 	public int getCampaignsCount(long[] groupIds) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -357,21 +351,19 @@ public interface CampaignLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getUserSegmentCampaigns(
-		long userSegmentId);
+	public List<Campaign> getUserSegmentCampaigns(long userSegmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getUserSegmentCampaigns(
-		long userSegmentId, int start, int end);
+	public List<Campaign> getUserSegmentCampaigns(long userSegmentId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getUserSegmentCampaigns(
-		long userSegmentId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.Campaign> orderByComparator);
+	public List<Campaign> getUserSegmentCampaigns(long userSegmentId,
+		int start, int end, OrderByComparator<Campaign> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserSegmentCampaignsCount(long userSegmentId);
@@ -392,13 +384,12 @@ public interface CampaignLocalService extends BaseLocalService,
 	public boolean hasUserSegmentCampaigns(long userSegmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.Hits search(long groupId,
-		java.lang.String keywords, int start, int end)
-		throws PortalException;
+	public Hits search(long groupId, java.lang.String keywords, int start,
+		int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Campaign> searchCampaigns(
-		long groupId, java.lang.String keywords, int start, int end)
+	public BaseModelSearchResult<Campaign> searchCampaigns(long groupId,
+		java.lang.String keywords, int start, int end)
 		throws PortalException;
 
 	public void setUserSegmentCampaigns(long userSegmentId, long[] campaignIds);
@@ -409,33 +400,25 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @param campaign the campaign
 	* @return the campaign that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.Campaign updateCampaign(
-		com.liferay.content.targeting.model.Campaign campaign);
+	@Indexable(type = IndexableType.REINDEX)
+	public Campaign updateCampaign(Campaign campaign);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.Campaign updateCampaign(
-		long campaignId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Date startDate, java.util.Date endDate, int priority,
-		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	@Indexable(type = IndexableType.REINDEX)
+	public Campaign updateCampaign(long campaignId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, Date startDate,
+		Date endDate, int priority, boolean active, long[] userSegmentIds,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public Campaign updateCampaign(long campaignId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, Date startDate,
+		Date endDate, java.lang.String timeZoneId, int priority,
+		boolean active, long[] userSegmentIds, ServiceContext serviceContext)
 		throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.Campaign updateCampaign(
-		long campaignId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Date startDate, java.util.Date endDate,
-		java.lang.String timeZoneId, int priority, boolean active,
-		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	public void updateCampaignResources(
-		com.liferay.content.targeting.model.Campaign campaign,
+	public void updateCampaignResources(Campaign campaign,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 }

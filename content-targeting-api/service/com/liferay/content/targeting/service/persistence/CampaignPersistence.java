@@ -16,6 +16,7 @@ package com.liferay.content.targeting.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.exception.NoSuchCampaignException;
 import com.liferay.content.targeting.model.Campaign;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -109,7 +110,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	*/
 	public Campaign findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Returns the first campaign in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	*/
 	public Campaign findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Returns the last campaign in the ordered set where uuid = &#63;.
@@ -155,7 +156,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	public Campaign[] findByUuid_PrevAndNext(long campaignId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Removes all the campaigns where uuid = &#63; from the database.
@@ -181,7 +182,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	* @throws NoSuchCampaignException if a matching campaign could not be found
 	*/
 	public Campaign findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Returns the campaign where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +212,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	* @return the campaign that was removed
 	*/
 	public Campaign removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Returns the number of campaigns where uuid = &#63; and groupId = &#63;.
@@ -297,7 +298,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	*/
 	public Campaign findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Returns the first campaign in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -321,7 +322,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	*/
 	public Campaign findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Returns the last campaign in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -347,7 +348,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	public Campaign[] findByUuid_C_PrevAndNext(long campaignId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Removes all the campaigns where uuid = &#63; and companyId = &#63; from the database.
@@ -435,7 +436,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	*/
 	public Campaign findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Returns the first campaign in the ordered set where groupId = &#63;.
@@ -457,7 +458,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	*/
 	public Campaign findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Returns the last campaign in the ordered set where groupId = &#63;.
@@ -480,7 +481,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	*/
 	public Campaign[] findByGroupId_PrevAndNext(long campaignId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Returns all the campaigns that the user has permission to view where groupId = &#63;.
@@ -534,7 +535,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	public Campaign[] filterFindByGroupId_PrevAndNext(long campaignId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Returns all the campaigns that the user has permission to view where groupId = any &#63;.
@@ -707,8 +708,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	* @return the campaign that was removed
 	* @throws NoSuchCampaignException if a campaign with the primary key could not be found
 	*/
-	public Campaign remove(long campaignId)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+	public Campaign remove(long campaignId) throws NoSuchCampaignException;
 
 	public Campaign updateImpl(Campaign campaign);
 
@@ -720,7 +720,7 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	* @throws NoSuchCampaignException if a campaign with the primary key could not be found
 	*/
 	public Campaign findByPrimaryKey(long campaignId)
-		throws com.liferay.content.targeting.exception.NoSuchCampaignException;
+		throws NoSuchCampaignException;
 
 	/**
 	* Returns the campaign with the primary key or returns <code>null</code> if it could not be found.

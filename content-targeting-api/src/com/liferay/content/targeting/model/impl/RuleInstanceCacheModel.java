@@ -156,14 +156,19 @@ public class RuleInstanceCacheModel implements CacheModel<RuleInstance>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		ruleInstanceId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		ruleKey = objectInput.readUTF();
+
 		userSegmentId = objectInput.readLong();
 		typeSettings = objectInput.readUTF();
 	}
@@ -179,8 +184,11 @@ public class RuleInstanceCacheModel implements CacheModel<RuleInstance>,
 		}
 
 		objectOutput.writeLong(ruleInstanceId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {

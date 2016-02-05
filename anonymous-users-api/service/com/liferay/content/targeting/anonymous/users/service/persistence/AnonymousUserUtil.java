@@ -26,6 +26,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -607,7 +608,7 @@ public class AnonymousUserUtil {
 	* @return the matching anonymous users
 	*/
 	public static List<AnonymousUser> findByC_LtD(long companyId,
-		java.util.Date createDate) {
+		Date createDate) {
 		return getPersistence().findByC_LtD(companyId, createDate);
 	}
 
@@ -625,7 +626,7 @@ public class AnonymousUserUtil {
 	* @return the range of matching anonymous users
 	*/
 	public static List<AnonymousUser> findByC_LtD(long companyId,
-		java.util.Date createDate, int start, int end) {
+		Date createDate, int start, int end) {
 		return getPersistence().findByC_LtD(companyId, createDate, start, end);
 	}
 
@@ -644,7 +645,7 @@ public class AnonymousUserUtil {
 	* @return the ordered range of matching anonymous users
 	*/
 	public static List<AnonymousUser> findByC_LtD(long companyId,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		OrderByComparator<AnonymousUser> orderByComparator) {
 		return getPersistence()
 				   .findByC_LtD(companyId, createDate, start, end,
@@ -667,7 +668,7 @@ public class AnonymousUserUtil {
 	* @return the ordered range of matching anonymous users
 	*/
 	public static List<AnonymousUser> findByC_LtD(long companyId,
-		java.util.Date createDate, int start, int end,
+		Date createDate, int start, int end,
 		OrderByComparator<AnonymousUser> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -685,8 +686,7 @@ public class AnonymousUserUtil {
 	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public static AnonymousUser findByC_LtD_First(long companyId,
-		java.util.Date createDate,
-		OrderByComparator<AnonymousUser> orderByComparator)
+		Date createDate, OrderByComparator<AnonymousUser> orderByComparator)
 		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException {
 		return getPersistence()
 				   .findByC_LtD_First(companyId, createDate, orderByComparator);
@@ -701,8 +701,7 @@ public class AnonymousUserUtil {
 	* @return the first matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
 	*/
 	public static AnonymousUser fetchByC_LtD_First(long companyId,
-		java.util.Date createDate,
-		OrderByComparator<AnonymousUser> orderByComparator) {
+		Date createDate, OrderByComparator<AnonymousUser> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_First(companyId, createDate, orderByComparator);
 	}
@@ -717,8 +716,7 @@ public class AnonymousUserUtil {
 	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public static AnonymousUser findByC_LtD_Last(long companyId,
-		java.util.Date createDate,
-		OrderByComparator<AnonymousUser> orderByComparator)
+		Date createDate, OrderByComparator<AnonymousUser> orderByComparator)
 		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException {
 		return getPersistence()
 				   .findByC_LtD_Last(companyId, createDate, orderByComparator);
@@ -733,8 +731,7 @@ public class AnonymousUserUtil {
 	* @return the last matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
 	*/
 	public static AnonymousUser fetchByC_LtD_Last(long companyId,
-		java.util.Date createDate,
-		OrderByComparator<AnonymousUser> orderByComparator) {
+		Date createDate, OrderByComparator<AnonymousUser> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_Last(companyId, createDate, orderByComparator);
 	}
@@ -750,7 +747,7 @@ public class AnonymousUserUtil {
 	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public static AnonymousUser[] findByC_LtD_PrevAndNext(
-		long anonymousUserId, long companyId, java.util.Date createDate,
+		long anonymousUserId, long companyId, Date createDate,
 		OrderByComparator<AnonymousUser> orderByComparator)
 		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException {
 		return getPersistence()
@@ -764,7 +761,7 @@ public class AnonymousUserUtil {
 	* @param companyId the company ID
 	* @param createDate the create date
 	*/
-	public static void removeByC_LtD(long companyId, java.util.Date createDate) {
+	public static void removeByC_LtD(long companyId, Date createDate) {
 		getPersistence().removeByC_LtD(companyId, createDate);
 	}
 
@@ -775,7 +772,7 @@ public class AnonymousUserUtil {
 	* @param createDate the create date
 	* @return the number of matching anonymous users
 	*/
-	public static int countByC_LtD(long companyId, java.util.Date createDate) {
+	public static int countByC_LtD(long companyId, Date createDate) {
 		return getPersistence().countByC_LtD(companyId, createDate);
 	}
 

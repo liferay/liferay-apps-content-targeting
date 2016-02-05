@@ -16,14 +16,31 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
+import com.liferay.content.targeting.model.AnonymousUserUserSegment;
+import com.liferay.content.targeting.model.UserSegment;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Provides the local service interface for AnonymousUserUserSegment. Methods of this
@@ -47,9 +64,9 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnonymousUserUserSegmentLocalServiceUtil} to access the anonymous user user segment local service. Add custom service methods to {@link com.liferay.content.targeting.service.impl.AnonymousUserUserSegmentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment addAnonymousUserUserSegment(
+	public AnonymousUserUserSegment addAnonymousUserUserSegment(
 		long anonymousUserId, long userSegmentId, boolean manual,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -58,9 +75,9 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param anonymousUserUserSegment the anonymous user user segment
 	* @return the anonymous user user segment that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment addAnonymousUserUserSegment(
-		com.liferay.content.targeting.model.AnonymousUserUserSegment anonymousUserUserSegment);
+	@Indexable(type = IndexableType.REINDEX)
+	public AnonymousUserUserSegment addAnonymousUserUserSegment(
+		AnonymousUserUserSegment anonymousUserUserSegment);
 
 	public void checkAnonymousUserUserSegments() throws PortalException;
 
@@ -70,7 +87,7 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param anonymousUserUserSegmentId the primary key for the new anonymous user user segment
 	* @return the new anonymous user user segment
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment createAnonymousUserUserSegment(
+	public AnonymousUserUserSegment createAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId);
 
 	/**
@@ -79,9 +96,9 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param anonymousUserUserSegment the anonymous user user segment
 	* @return the anonymous user user segment that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment deleteAnonymousUserUserSegment(
-		com.liferay.content.targeting.model.AnonymousUserUserSegment anonymousUserUserSegment);
+	@Indexable(type = IndexableType.DELETE)
+	public AnonymousUserUserSegment deleteAnonymousUserUserSegment(
+		AnonymousUserUserSegment anonymousUserUserSegment);
 
 	/**
 	* Deletes the anonymous user user segment with the primary key from the database. Also notifies the appropriate model listeners.
@@ -90,19 +107,18 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @return the anonymous user user segment that was removed
 	* @throws PortalException if a anonymous user user segment with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment deleteAnonymousUserUserSegment(
+	@Indexable(type = IndexableType.DELETE)
+	public AnonymousUserUserSegment deleteAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId) throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -110,8 +126,7 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -125,8 +140,7 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -142,10 +156,8 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -153,8 +165,7 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -163,16 +174,15 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment fetchAnonymousUserUserSegment(
+	public AnonymousUserUserSegment fetchAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the anonymous user user segment with the primary key.
@@ -182,11 +192,11 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @throws PortalException if a anonymous user user segment with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment getAnonymousUserUserSegment(
+	public AnonymousUserUserSegment getAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> getAnonymousUserUserSegments(
+	public List<AnonymousUserUserSegment> getAnonymousUserUserSegments(
 		long anonymousUserId, long userSegmentId) throws PortalException;
 
 	/**
@@ -201,7 +211,7 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @return the range of anonymous user user segments
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> getAnonymousUserUserSegments(
+	public List<AnonymousUserUserSegment> getAnonymousUserUserSegments(
 		int start, int end);
 
 	/**
@@ -213,7 +223,7 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	public int getAnonymousUserUserSegmentsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentId(
+	public List<AnonymousUser> getAnonymousUsersByUserSegmentId(
 		long userSegmentId, boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -221,7 +231,7 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 		boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentIds(
+	public List<AnonymousUser> getAnonymousUsersByUserSegmentIds(
 		long[] userSegmentIds, boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -229,10 +239,10 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 		boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date getMaxAge() throws PortalException;
+	public Date getMaxAge() throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -243,11 +253,11 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByAnonymousUserId(
+	public List<UserSegment> getUserSegmentsByAnonymousUserId(
 		long anonymousUserId, boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -255,8 +265,8 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 		boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUserId(
-		long userId, boolean active) throws PortalException;
+	public List<UserSegment> getUserSegmentsByUserId(long userId, boolean active)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserSegmentsByUserIdCount(long userId, boolean active)
@@ -268,15 +278,14 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param anonymousUserUserSegment the anonymous user user segment
 	* @return the anonymous user user segment that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
-		com.liferay.content.targeting.model.AnonymousUserUserSegment anonymousUserUserSegment);
+	@Indexable(type = IndexableType.REINDEX)
+	public AnonymousUserUserSegment updateAnonymousUserUserSegment(
+		AnonymousUserUserSegment anonymousUserUserSegment);
 
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
-		long anonymousUserUserSegmentId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public AnonymousUserUserSegment updateAnonymousUserUserSegment(
+		long anonymousUserUserSegmentId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void updateAnonymousUserUserSegments(long companyId,
-		java.util.Date modifiedDate) throws PortalException;
+		Date modifiedDate) throws PortalException;
 }

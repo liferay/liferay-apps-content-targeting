@@ -16,6 +16,8 @@ package com.liferay.content.targeting.analytics.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -25,6 +27,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for AnalyticsReferrer. Methods of this
@@ -51,8 +55,7 @@ public interface AnalyticsReferrerService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AnalyticsReferrerServiceUtil} to access the analytics referrer remote service. Add custom service methods to {@link com.liferay.content.targeting.analytics.service.impl.AnalyticsReferrerServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
-		long analyticsEventId);
+	public List<AnalyticsReferrer> getAnalyticsReferrers(long analyticsEventId);
 
 	/**
 	* Returns the OSGi service identifier.
