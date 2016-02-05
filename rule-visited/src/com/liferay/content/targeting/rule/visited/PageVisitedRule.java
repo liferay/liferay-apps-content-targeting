@@ -182,8 +182,9 @@ public class PageVisitedRule extends BaseRule {
 			values.get("privateLayout"), false);
 
 		try {
+			long liveGroupId = themeDisplay.getSiteGroupIdOrLiveGroupId();
 			Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-				themeDisplay.getScopeGroupId(), privateLayout, friendlyURL);
+				liveGroupId, privateLayout, friendlyURL);
 
 			if (layout != null) {
 				return String.valueOf(layout.getPlid());
@@ -193,10 +194,10 @@ public class PageVisitedRule extends BaseRule {
 					"a-page-with-this-friendly-url-could-not-be-found");
 			}
 		}
-		catch (SystemException e) {
+		catch (Exception e) {
+			throw new InvalidRuleException(
+					"a-page-with-this-friendly-url-could-not-be-found");
 		}
-
-		return StringPool.BLANK;
 	}
 
 	@Reference
