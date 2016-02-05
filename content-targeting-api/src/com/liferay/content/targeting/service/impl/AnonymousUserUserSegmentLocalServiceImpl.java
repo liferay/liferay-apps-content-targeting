@@ -23,8 +23,8 @@ import com.liferay.content.targeting.util.PortletPropsValues;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.persistence.CompanyActionableDynamicQuery;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
@@ -79,20 +79,22 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 
 	@Override
 	public void checkAnonymousUserUserSegments() throws PortalException {
+
 		ActionableDynamicQuery actionableDynamicQuery =
-			new CompanyActionableDynamicQuery() {
+			CompanyLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Company>() {
 
 				@Override
-				protected void performAction(Object object)
+				public void performAction(Company company)
 					throws PortalException {
-
-					Company company = (Company)object;
 
 					updateAnonymousUserUserSegments(
 						company.getCompanyId(), getMaxAge());
 				}
-
-			};
+			}
+		);
 
 		actionableDynamicQuery.performActions();
 	}
