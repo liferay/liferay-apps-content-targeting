@@ -20,45 +20,45 @@ package com.liferay.content.targeting.portlet;
 public class ContentTargetingPath {
 
 	public static final String ADD_ASSET_REDIRECT =
-		"html/add_asset_redirect.ftl";
+		"/html/add_asset_redirect.ftl";
 
 	public static final String EDIT_CAMPAIGN =
-		"html/content_targeting/edit_campaign.ftl";
+		"/html/content_targeting/edit_campaign.ftl";
 
 	public static final String EDIT_REPORT =
-		"html/content_targeting/edit_report.ftl";
+		"/html/content_targeting/edit_report.ftl";
 
 	public static final String EDIT_TACTIC =
-		"html/content_targeting/edit_tactic.ftl";
+		"/html/content_targeting/edit_tactic.ftl";
 
 	public static final String EDIT_USER_SEGMENT =
-		"html/content_targeting/edit_user_segment.ftl";
+		"/html/content_targeting/edit_user_segment.ftl";
 
-	public static final String ERROR = "html/error.ftl";
+	public static final String ERROR = "/html/error.ftl";
 
-	public static final String VIEW = "html/content_targeting/view.ftl";
+	public static final String VIEW = "/html/content_targeting/view.ftl";
 
 	public static final String VIEW_CAMPAIGNS_RESOURCES =
-			"html/content_targeting/view_campaigns_resources.ftl";
+		"/html/content_targeting/view_campaigns_resources.ftl";
 
 	public static final String VIEW_REPORT =
-			"html/content_targeting/view_report.ftl";
+		"/html/content_targeting/view_report.ftl";
 
 	public static final String VIEW_REPORTS =
-		"html/content_targeting/view_reports.ftl";
+		"/html/content_targeting/view_reports.ftl";
 
 	public static final String VIEW_REPORTS_RESOURCES =
-		"html/content_targeting/view_reports_resources.ftl";
+		"/html/content_targeting/view_reports_resources.ftl";
 
 	public static final String VIEW_TACTICS =
-		"html/content_targeting/view_tactics.ftl";
+		"/html/content_targeting/view_tactics.ftl";
 
 	public static final String VIEW_TACTICS_RESOURCES =
-		"html/content_targeting/view_tactics_resources.ftl";
+		"/html/content_targeting/view_tactics_resources.ftl";
 
 	public static final String VIEW_USER_SEGMENTS_RESOURCES =
-		"html/content_targeting/view_user_segments_resources.ftl";
+		"/html/content_targeting/view_user_segments_resources.ftl";
 
-	public static final String WARNING_RESTART = "html/warning_restart.ftl";
+	public static final String WARNING_RESTART = "/html/warning_restart.ftl";
 
 }

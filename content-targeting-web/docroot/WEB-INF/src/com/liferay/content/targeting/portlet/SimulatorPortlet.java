@@ -21,17 +21,17 @@ import com.liferay.content.targeting.portlet.util.UnavailableServiceException;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 
 import freemarker.ext.beans.BeansWrapper;
 
@@ -42,46 +42,49 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
+import javax.portlet.Portlet;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.UnavailableException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.control-panel-entry-category=site_administration.configuration",
+		"com.liferay.portlet.control-panel-entry-class=com.liferay.content.targeting.portlet.SimulatorControlPanelEntry",
+		"com.liferay.portlet.control-panel-entry-weight=100",
+		"com.liferay.portlet.css-class-wrapper=content-targeting-simulator-portlet",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.header-portlet-css=/css/content_targeting/warning_restart.css",
+		"com.liferay.portlet.header-portlet-css=/css/ct_simulator/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/ct_simulator/simulator.js",
+		"com.liferay.portlet.icon=/icons/icon.png",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.scopeable=true",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Audience Targeting Simulator" + PortletKeys.CT_SIMULATOR,
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.add-process-action-success-action=false",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/html/ct_simulator/view.ftl",
+		"javax.portlet.name=", "javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = {SimulatorPortlet.class, Portlet.class}
+)
 public class SimulatorPortlet extends CTFreeMarkerPortlet {
-
-	@Override
-	public void init() throws PortletException {
-		super.init();
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		if (bundle == null) {
-			throw new UnavailableException(
-				"Can't find a reference to the OSGi bundle") {
-
-				@Override
-				public boolean isPermanent() {
-					return true;
-				}
-			};
-		}
-
-		_campaignLocalService = ServiceTrackerUtil.getService(
-			CampaignLocalService.class, bundle.getBundleContext());
-		_userSegmentLocalService = ServiceTrackerUtil.getService(
-			UserSegmentLocalService.class, bundle.getBundleContext());
-		_userSegmentSimulator = ServiceTrackerUtil.getService(
-			UserSegmentSimulator.class, bundle.getBundleContext());
-	}
 
 	public void simulateUserSegment(
 			ActionRequest request, ActionResponse response)
@@ -177,7 +180,7 @@ public class SimulatorPortlet extends CTFreeMarkerPortlet {
 		List<Campaign> availableCampaigns = _campaignLocalService.getCampaigns(
 			groupIds);
 
-		List<Campaign> notMatchedCampaigns = new ArrayList<Campaign>();
+		List<Campaign> notMatchedCampaigns = new ArrayList<>();
 
 		for (Campaign campaign : availableCampaigns) {
 			if (!campaigns.contains(campaign)) {
@@ -204,7 +207,7 @@ public class SimulatorPortlet extends CTFreeMarkerPortlet {
 
 		template.put("isSimulatedUserSegments", isSimulatedUserSegments);
 
-		List<UserSegment> userSegments = new ArrayList<UserSegment>();
+		List<UserSegment> userSegments = new ArrayList<>();
 
 		if (originalUserSegmentIds != null) {
 			for (long userSegmentId : originalUserSegmentIds) {
@@ -218,7 +221,7 @@ public class SimulatorPortlet extends CTFreeMarkerPortlet {
 		List<UserSegment> availableUserSegments =
 			_userSegmentLocalService.getUserSegments(groupIds);
 
-		List<UserSegment> notMatchedUserSegments = new ArrayList<UserSegment>();
+		List<UserSegment> notMatchedUserSegments = new ArrayList<>();
 
 		for (UserSegment userSegment : availableUserSegments) {
 			if (!userSegments.contains(userSegment)) {
@@ -244,12 +247,45 @@ public class SimulatorPortlet extends CTFreeMarkerPortlet {
 		template.put("refreshURL", HtmlUtil.escapeJS(refreshURL));
 	}
 
+	@Reference(unbind = "unsetCampaignLocalService")
+	protected void setCampaignLocalService(
+		CampaignLocalService campaignLocalService) {
+
+		_campaignLocalService = campaignLocalService;
+	}
+
+	@Reference(unbind = "unsetUserSegmentLocalService")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
+	@Reference(unbind = "unsetUserSegmentSimulator")
+	protected void setUserSegmentSimulator(
+		UserSegmentSimulator userSegmentSimulator) {
+
+		_userSegmentSimulator = userSegmentSimulator;
+	}
+
+	protected void unsetCampaignLocalService() {
+		_campaignLocalService = null;
+	}
+
+	protected void unsetUserSegmentLocalService() {
+		_userSegmentLocalService = null;
+	}
+
+	protected void unsetUserSegmentSimulator() {
+		_userSegmentSimulator = null;
+	}
+
 	private static final int _SHOW_SEARCH_LIMIT = 10;
 
 	private static Log _log = LogFactoryUtil.getLog(SimulatorPortlet.class);
 
-	private CampaignLocalService _campaignLocalService;
-	private UserSegmentLocalService _userSegmentLocalService;
-	private UserSegmentSimulator _userSegmentSimulator;
+	private volatile CampaignLocalService _campaignLocalService;
+	private volatile UserSegmentLocalService _userSegmentLocalService;
+	private volatile UserSegmentSimulator _userSegmentSimulator;
 
 }

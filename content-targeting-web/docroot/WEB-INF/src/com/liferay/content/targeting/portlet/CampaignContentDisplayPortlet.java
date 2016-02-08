@@ -14,31 +14,28 @@
 
 package com.liferay.content.targeting.portlet;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.portlet.util.CampaignQueryRule;
 import com.liferay.content.targeting.portlet.util.CampaignQueryRuleUtil;
 import com.liferay.content.targeting.portlet.util.QueryRule;
-import com.liferay.content.targeting.portlet.util.UnavailableServiceException;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 
 import freemarker.ext.beans.BeansWrapper;
 
@@ -49,42 +46,46 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
+import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.UnavailableException;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=campaign-content-display-portlet",
+		"com.liferay.portlet.display-category=category.ct",
+		"com.liferay.portlet.header-portlet-css=/css/campaign_content_display/main.css",
+		"com.liferay.portlet.header-portlet-css=/css/content_targeting/rules_panel.css",
+		"com.liferay.portlet.header-portlet-css=/css/content_targeting/thumbnails_preview.css",
+		"com.liferay.portlet.header-portlet-css=/css/content_targeting/warning_restart.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/content_targeting/thumbnails_preview.js",
+		"com.liferay.portlet.icon=/icons/campaign_content_display.png",
+		"com.liferay.portlet.instanceable=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=1",
+		"com.liferay.portlet.scopeable=true",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Campaign Content Display" + PortletKeys.CT_CAMPAIGN_DISPLAY,
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.config-template=/html/campaign_content_display/configuration.ftl",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/html/campaign_content_display/view.ftl",
+		"javax.portlet.name=", "javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = {CampaignContentDisplayPortlet.class, Portlet.class}
+)
 public class CampaignContentDisplayPortlet extends CTFreeMarkerDisplayPortlet {
-
-	@Override
-	public void init() throws PortletException {
-		super.init();
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		if (bundle == null) {
-			throw new UnavailableException(
-				"Can't find a reference to the OSGi bundle") {
-
-				@Override
-				public boolean isPermanent() {
-					return true;
-				}
-			};
-		}
-
-		_campaignLocalService = ServiceTrackerUtil.getService(
-			CampaignLocalService.class, bundle.getBundleContext());
-		_campaignService = ServiceTrackerUtil.getService(
-			CampaignService.class, bundle.getBundleContext());
-	}
 
 	public void updatePreferences(
 			ActionRequest request, ActionResponse response)
@@ -109,7 +110,7 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerDisplayPortlet {
 			return;
 		}
 
-		List<CampaignQueryRule> queryRules = new ArrayList<CampaignQueryRule>();
+		List<CampaignQueryRule> queryRules = new ArrayList<>();
 
 		for (int queryRulesIndex : queryRulesIndexes) {
 			QueryRule queryRule = CampaignQueryRuleUtil.getQueryRule(
@@ -163,13 +164,6 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerDisplayPortlet {
 			PortletResponse portletResponse, Template template)
 		throws Exception {
 
-		try {
-			_campaignLocalService.getCampaigns(0, 1);
-		}
-		catch (Exception e) {
-			throw new UnavailableServiceException(CampaignLocalService.class);
-		}
-
 		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
 		TemplateHashModel staticModels = wrapper.getStaticModels();
@@ -201,9 +195,9 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerDisplayPortlet {
 		long companyId) {
 
 		List<AssetRendererFactory> selectableAssetRendererFactories =
-			new ArrayList<AssetRendererFactory>();
+			new ArrayList<>();
 
-		List<AssetRendererFactory> assetRendererFactories =
+		List<AssetRendererFactory<?>> assetRendererFactories =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
 				companyId);
 
@@ -267,7 +261,7 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerDisplayPortlet {
 
 			template.put("campaignClassName", Campaign.class.getName());
 
-			List<AssetEntry> results = new ArrayList<AssetEntry>();
+			List<AssetEntry> results = new ArrayList<>();
 
 			if ((queryRule != null) && (queryRule.getAssetEntry() != null)) {
 				results.add(queryRule.getAssetEntry());
@@ -320,8 +314,25 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerDisplayPortlet {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		CampaignContentDisplayPortlet.class);
+	@Reference(unbind = "unsetCampaignLocalService")
+	protected void setCampaignLocalService(
+		CampaignLocalService campaignLocalService) {
+
+		_campaignLocalService = campaignLocalService;
+	}
+
+	@Reference(unbind = "unsetCampaignService")
+	protected void setCampaignService(CampaignService campaignService) {
+		_campaignService = campaignService;
+	}
+
+	protected void unsetCampaignLocalService() {
+		_campaignLocalService = null;
+	}
+
+	protected void unsetCampaignService() {
+		_campaignService = null;
+	}
 
 	private CampaignLocalService _campaignLocalService;
 	private CampaignService _campaignService;

@@ -14,33 +14,34 @@
 
 package com.liferay.content.targeting.portlet;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
+import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ClassName;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
-import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 
 import freemarker.ext.beans.BeansWrapper;
 
@@ -52,13 +53,42 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=user-segment-content-list-portlet",
+		"com.liferay.portlet.display-category=category.ct",
+		"com.liferay.portlet.header-portlet-css=/css/content_targeting/warning_restart.css",
+		"com.liferay.portlet.header-portlet-css=/css/user_segment_content_list/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/content_targeting/thumbnails_preview.js",
+		"com.liferay.portlet.icon=/icons/user_segment_content_list.png",
+		"com.liferay.portlet.instanceable=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=1",
+		"com.liferay.portlet.scopeable=true",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=User Segment Content List" + PortletKeys.CT_USERSEGMENT_LIST,
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.config-template=/html/user_segment_content_list/configuration.ftl",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/html/user_segment_content_list/view.ftl",
+		"javax.portlet.name=", "javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = {UserSegmentContentListPortlet.class, Portlet.class}
+)
 public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 
 	public void updatePreferences(
@@ -151,7 +181,9 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 	}
 
 	@Override
-	protected String getPath(PortletRequest portletRequest) {
+	protected String getPath(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		String strutsPath = ParamUtil.getString(
 			portletRequest, "struts_action");
 
@@ -159,7 +191,7 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 			return UserSegmentContentListPath.VIEW_CONTENT;
 		}
 
-		return super.getPath(portletRequest);
+		return super.getPath(portletRequest, portletResponse);
 	}
 
 	protected void populateViewContext(
@@ -191,7 +223,7 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
 
-			List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
+			List<AssetEntry> assetEntries = new ArrayList<>();
 
 			if (ArrayUtil.isNotEmpty(userSegmentIds)) {
 				AssetEntryQuery entryQuery = new AssetEntryQuery();
@@ -207,10 +239,11 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 				portletRequest.setAttribute(
 					"view.jsp-results", new ArrayList());
 				portletRequest.setAttribute(
-					"view.jsp-assetEntryIndex", new Integer(0));
-				portletRequest.setAttribute("view.jsp-show", new Boolean(true));
+					"view.jsp-assetEntryIndex", Integer.valueOf(0));
 				portletRequest.setAttribute(
-					"view.jsp-print", new Boolean(false));
+					"view.jsp-show", Boolean.valueOf(true));
+				portletRequest.setAttribute(
+					"view.jsp-print", Boolean.valueOf(false));
 			}
 
 			template.put("assetEntries", assetEntries);
@@ -244,7 +277,7 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 
 			portletRequest.setAttribute("view.jsp-results", new ArrayList());
 			portletRequest.setAttribute(
-				"view.jsp-assetEntryIndex", new Integer(0));
+				"view.jsp-assetEntryIndex", Integer.valueOf(0));
 			portletRequest.setAttribute("view.jsp-assetEntry", assetEntry);
 			portletRequest.setAttribute(
 				"view.jsp-assetRendererFactory", assetRendererFactory);
@@ -253,11 +286,13 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 			portletRequest.setAttribute(
 				"view.jsp-title",
 				assetEntry.getTitle(themeDisplay.getLocale()));
-			portletRequest.setAttribute("view.jsp-show", new Boolean(false));
-			portletRequest.setAttribute("view.jsp-print", new Boolean(false));
+			portletRequest.setAttribute(
+				"view.jsp-show", Boolean.valueOf(false));
+			portletRequest.setAttribute(
+				"view.jsp-print", Boolean.valueOf(false));
 		}
 		else if (path.equals(UserSegmentContentListPath.CONFIGURATION)) {
-			List<KeyValuePair> typesLeftList = new ArrayList<KeyValuePair>();
+			List<KeyValuePair> typesLeftList = new ArrayList<>();
 
 			for (long classNameId : classNameIds) {
 				String className = PortalUtil.getClassName(classNameId);
@@ -269,11 +304,11 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 							themeDisplay.getLocale(), className)));
 			}
 
-			List<KeyValuePair> typesRightList = new ArrayList<KeyValuePair>();
+			List<KeyValuePair> typesRightList = new ArrayList<>();
 
 			Arrays.sort(classNameIds);
 
-			List<String> modelResources = new ArrayList<String>();
+			List<String> modelResources = new ArrayList<>();
 
 			for (long classNameId : availableClassNameIds) {
 				ClassName className = ClassNameLocalServiceUtil.getClassName(

@@ -14,28 +14,29 @@
 
 package com.liferay.content.targeting.portlet;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.portlet.util.UserSegmentQueryRule;
 import com.liferay.content.targeting.portlet.util.UserSegmentQueryRuleUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 
 import freemarker.ext.beans.BeansWrapper;
 
@@ -46,13 +47,46 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.css-class-wrapper=user-segment-content-display-portlet",
+		"com.liferay.portlet.display-category=category.ct",
+		"com.liferay.portlet.header-portlet-css=/css/content_targeting/rules_panel.css",
+		"com.liferay.portlet.header-portlet-css=/css/content_targeting/thumbnails_preview.css",
+		"com.liferay.portlet.header-portlet-css=/css/content_targeting/warning_restart.css",
+		"com.liferay.portlet.header-portlet-css=/css/user_segment_content_display/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/content_targeting/thumbnails_preview.js",
+		"com.liferay.portlet.icon=/icons/user_segment_content_display.png",
+		"com.liferay.portlet.instanceable=true",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=1",
+		"com.liferay.portlet.scopeable=true",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=User Segment Content Display" + PortletKeys.CT_USERSEGMENT_DISPLAY,
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.config-template=/html/user_segment_content_display/configuration.ftl",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/html/user_segment_content_display/view.ftl",
+		"javax.portlet.name=", "javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = {UserSegmentContentDisplayPortlet.class, Portlet.class}
+)
 public class UserSegmentContentDisplayPortlet
 	extends CTFreeMarkerDisplayPortlet {
 
@@ -79,13 +113,11 @@ public class UserSegmentContentDisplayPortlet
 			return;
 		}
 
-		List<UserSegmentQueryRule> queryRules =
-			new ArrayList<UserSegmentQueryRule>();
+		List<UserSegmentQueryRule> queryRules = new ArrayList<>();
 
 		for (int queryRulesIndex : queryRulesIndexes) {
-			QueryRule queryRule =
-				UserSegmentQueryRuleUtil.getQueryRule(
-						request, queryRulesIndex, themeDisplay.getLocale());
+			QueryRule queryRule = UserSegmentQueryRuleUtil.getQueryRule(
+				request, queryRulesIndex, themeDisplay.getLocale());
 
 			if (!queryRule.isValid()) {
 				continue;
@@ -165,11 +197,11 @@ public class UserSegmentContentDisplayPortlet
 		long companyId) {
 
 		List<AssetRendererFactory> selectableAssetRendererFactories =
-			new ArrayList<AssetRendererFactory>();
+			new ArrayList<>();
 
-		List<AssetRendererFactory> assetRendererFactories =
+		List<AssetRendererFactory<?>> assetRendererFactories =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-					companyId);
+				companyId);
 
 		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
 			if (!rendererFactory.isSelectable()) {
@@ -226,7 +258,7 @@ public class UserSegmentContentDisplayPortlet
 			template.put(
 				"selectedIndex", userSegmentQueryRules.indexOf(queryRule));
 
-			List<AssetEntry> results = new ArrayList<AssetEntry>();
+			List<AssetEntry> results = new ArrayList<>();
 
 			if ((queryRule != null) && (queryRule.getAssetEntry() != null)) {
 				results.add(queryRule.getAssetEntry());

@@ -20,14 +20,14 @@ package com.liferay.content.targeting.portlet;
 public class UserSegmentContentDisplayPath {
 
 	public static final String CONFIGURATION =
-		"html/user_segment_content_display/configuration.ftl";
+		"/html/user_segment_content_display/configuration.ftl";
 
 	public static final String EDIT_QUERY_RULE =
-		"html/user_segment_content_display/edit_query_rule.ftl";
+		"/html/user_segment_content_display/edit_query_rule.ftl";
 
 	public static final String ERROR = "html/error.ftl";
 
 	public static final String VIEW =
-		"html/user_segment_content_display/view.ftl";
+		"/html/user_segment_content_display/view.ftl";
 
 }
