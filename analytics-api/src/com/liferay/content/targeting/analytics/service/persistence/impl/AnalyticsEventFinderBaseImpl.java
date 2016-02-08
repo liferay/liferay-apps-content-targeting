@@ -18,7 +18,7 @@ import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
 /**
  * @author Brian Wing Shun Chan

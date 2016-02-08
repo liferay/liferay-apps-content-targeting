@@ -79,7 +79,6 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 
 	@Override
 	public void checkAnonymousUserUserSegments() throws PortalException {
-
 		ActionableDynamicQuery actionableDynamicQuery =
 			CompanyLocalServiceUtil.getActionableDynamicQuery();
 
@@ -93,6 +92,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 					updateAnonymousUserUserSegments(
 						company.getCompanyId(), getMaxAge());
 				}
+
 			}
 		);
 

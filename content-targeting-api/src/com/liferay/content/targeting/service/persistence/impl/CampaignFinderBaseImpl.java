@@ -18,7 +18,7 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.service.persistence.CampaignPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
 import java.util.Set;
 

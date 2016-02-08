@@ -16,6 +16,9 @@ package com.liferay.content.targeting.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence;
+import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
+
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.persistence.AnonymousUserUserSegmentPersistence;
@@ -52,6 +55,7 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
@@ -60,10 +64,6 @@ import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.portal.util.PortalUtil;
-
-import com.liferay.portlet.asset.service.persistence.AssetCategoryPersistence;
-import com.liferay.portlet.asset.service.persistence.AssetVocabularyPersistence;
 
 import java.io.Serializable;
 
@@ -1216,7 +1216,7 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 *
 	 * @return the asset category local service
 	 */
-	public com.liferay.portlet.asset.service.AssetCategoryLocalService getAssetCategoryLocalService() {
+	public com.liferay.asset.kernel.service.AssetCategoryLocalService getAssetCategoryLocalService() {
 		return assetCategoryLocalService;
 	}
 
@@ -1226,7 +1226,7 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param assetCategoryLocalService the asset category local service
 	 */
 	public void setAssetCategoryLocalService(
-		com.liferay.portlet.asset.service.AssetCategoryLocalService assetCategoryLocalService) {
+		com.liferay.asset.kernel.service.AssetCategoryLocalService assetCategoryLocalService) {
 		this.assetCategoryLocalService = assetCategoryLocalService;
 	}
 
@@ -1254,7 +1254,7 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 *
 	 * @return the asset vocabulary local service
 	 */
-	public com.liferay.portlet.asset.service.AssetVocabularyLocalService getAssetVocabularyLocalService() {
+	public com.liferay.asset.kernel.service.AssetVocabularyLocalService getAssetVocabularyLocalService() {
 		return assetVocabularyLocalService;
 	}
 
@@ -1264,7 +1264,7 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param assetVocabularyLocalService the asset vocabulary local service
 	 */
 	public void setAssetVocabularyLocalService(
-		com.liferay.portlet.asset.service.AssetVocabularyLocalService assetVocabularyLocalService) {
+		com.liferay.asset.kernel.service.AssetVocabularyLocalService assetVocabularyLocalService) {
 		this.assetVocabularyLocalService = assetVocabularyLocalService;
 	}
 
@@ -1393,12 +1393,12 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	protected com.liferay.portal.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@ServiceReference(type = com.liferay.portlet.asset.service.AssetCategoryLocalService.class)
-	protected com.liferay.portlet.asset.service.AssetCategoryLocalService assetCategoryLocalService;
+	@ServiceReference(type = com.liferay.asset.kernel.service.AssetCategoryLocalService.class)
+	protected com.liferay.asset.kernel.service.AssetCategoryLocalService assetCategoryLocalService;
 	@ServiceReference(type = AssetCategoryPersistence.class)
 	protected AssetCategoryPersistence assetCategoryPersistence;
-	@ServiceReference(type = com.liferay.portlet.asset.service.AssetVocabularyLocalService.class)
-	protected com.liferay.portlet.asset.service.AssetVocabularyLocalService assetVocabularyLocalService;
+	@ServiceReference(type = com.liferay.asset.kernel.service.AssetVocabularyLocalService.class)
+	protected com.liferay.asset.kernel.service.AssetVocabularyLocalService assetVocabularyLocalService;
 	@ServiceReference(type = AssetVocabularyPersistence.class)
 	protected AssetVocabularyPersistence assetVocabularyPersistence;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
