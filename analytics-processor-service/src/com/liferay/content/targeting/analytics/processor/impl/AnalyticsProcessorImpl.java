@@ -20,13 +20,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.CompanyLocalService;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,11 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Garcia
  */
-@Component(
-	property = {
-		"service.ranking:Integer=100"
-	}
-)
+@Component(property = {"service.ranking:Integer=100"})
 public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 
 	@Override
@@ -243,7 +239,7 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 		if (Validator.isNotNull(referrerClassName) &&
 			Validator.isNotNull(referrerClassPKs)) {
 
-			Map<String, long[]> referrers = new HashMap<String, long[]>();
+			Map<String, long[]> referrers = new HashMap<>();
 
 			referrers.put(referrerClassName, referrerClassPKs);
 
@@ -263,10 +259,10 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 	private static final Pattern _LINK_PATTERN_HTML = Pattern.compile(
 		"(<a\\s+.*?href=\")([^\"]+)(\")");
 
+	private static final String _TRACK_PATH = "/o/analytics-processor/track";
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AnalyticsProcessorImpl.class);
-
-	private final static String _TRACK_PATH = "/o/analytics-processor/track";
 
 	private CompanyLocalService _companyLocalService;
 

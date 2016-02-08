@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
@@ -23,8 +25,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
 import java.util.List;
 import java.util.Locale;

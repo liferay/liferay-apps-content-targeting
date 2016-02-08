@@ -187,12 +187,12 @@ public class CampaignIndexer extends BaseIndexer {
 							addDocuments(document);
 						}
 					}
-					catch (PortalException e) {
+					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Unable to index campaign: " +
 									campaign.getCampaignId(),
-								e);
+								pe);
 						}
 					}
 				}

@@ -16,11 +16,11 @@ package com.liferay.content.targeting.internal;
 
 import com.liferay.content.targeting.api.model.UserSegmentSimulator;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortalPreferences;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,8 +157,8 @@ public class PortalPreferencesUserSegmentSimulator
 			return PortletPreferencesFactoryUtil.getPortalPreferences(
 				null, userId, userId > 0);
 		}
-		catch (SystemException e) {
-			e.printStackTrace();
+		catch (SystemException se) {
+			se.printStackTrace();
 		}
 
 		return null;

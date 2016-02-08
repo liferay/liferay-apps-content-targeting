@@ -14,14 +14,11 @@
 
 package com.liferay.content.targeting.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Julio Camarero
  */
-@ProviderType
 public class InvalidTrackingActionException extends PortalException {
 
 	public InvalidTrackingActionException() {
@@ -35,8 +32,14 @@ public class InvalidTrackingActionException extends PortalException {
 		super(msg, cause);
 	}
 
-	public InvalidTrackingActionException(Throwable cause) {
-		super(cause);
+	public String getTrackingActionGuid() {
+		return _trackingActionGuid;
 	}
+
+	public void setTrackingActionGuid(String trackingActionGuid) {
+		_trackingActionGuid = trackingActionGuid;
+	}
+
+	private String _trackingActionGuid;
 
 }

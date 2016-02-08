@@ -14,6 +14,12 @@
 
 package com.liferay.content.targeting.hook;
 
+import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyDisplay;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.asset.kernel.service.AssetVocabularyServiceWrapper;
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -24,12 +30,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceWrapper;
-import com.liferay.portlet.asset.exception.NoSuchVocabularyException;
-import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.model.AssetVocabularyDisplay;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetVocabularyService;
-import com.liferay.portlet.asset.service.AssetVocabularyServiceWrapper;
 
 import java.util.ArrayList;
 import java.util.List;

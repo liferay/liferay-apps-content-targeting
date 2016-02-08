@@ -186,12 +186,12 @@ public class TacticIndexer extends BaseIndexer {
 							addDocuments(document);
 						}
 					}
-					catch (PortalException e) {
+					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Unable to index tactic: " +
 									tactic.getTacticId(),
-								e);
+								pe);
 						}
 					}
 				}

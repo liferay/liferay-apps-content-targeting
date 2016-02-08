@@ -14,12 +14,12 @@
 
 package com.liferay.content.targeting.lar;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.StagedGroupedModel;
-import com.liferay.portlet.asset.model.AssetEntry;
 
 import java.io.Serializable;
 

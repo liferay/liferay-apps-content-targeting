@@ -14,14 +14,11 @@
 
 package com.liferay.content.targeting.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Eduardo Garcia
  */
-@ProviderType
 public class InvalidChannelException extends PortalException {
 
 	public InvalidChannelException() {
@@ -35,8 +32,14 @@ public class InvalidChannelException extends PortalException {
 		super(msg, cause);
 	}
 
-	public InvalidChannelException(Throwable cause) {
-		super(cause);
+	public String getChannelGuid() {
+		return _channelGuid;
 	}
+
+	public void setChannelGuid(String channelGuid) {
+		_channelGuid = channelGuid;
+	}
+
+	private String _channelGuid;
 
 }

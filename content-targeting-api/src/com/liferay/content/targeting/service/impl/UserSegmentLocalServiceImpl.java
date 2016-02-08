@@ -14,6 +14,10 @@
 
 package com.liferay.content.targeting.service.impl;
 
+import com.liferay.asset.kernel.exception.DuplicateCategoryException;
+import com.liferay.asset.kernel.exception.NoSuchCategoryException;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.content.targeting.exception.InvalidNameException;
 import com.liferay.content.targeting.exception.UsedUserSegmentException;
 import com.liferay.content.targeting.model.Campaign;
@@ -45,10 +49,6 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.asset.exception.DuplicateCategoryException;
-import com.liferay.portlet.asset.exception.NoSuchCategoryException;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetCategoryConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -474,7 +474,7 @@ public class UserSegmentLocalServiceImpl
 		try {
 			assetCategoryLocalService.deleteCategory(assetCategory);
 		}
-		catch (NoSuchCategoryException nsace) {
+		catch (NoSuchCategoryException nsce) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Category " + assetCategoryId + "could not be deleted");

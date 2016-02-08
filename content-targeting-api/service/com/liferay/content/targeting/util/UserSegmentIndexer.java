@@ -189,12 +189,12 @@ public class UserSegmentIndexer extends BaseIndexer {
 							addDocuments(document);
 						}
 					}
-					catch (PortalException e) {
+					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Unable to index user segment: " +
 									userSegment.getUserSegmentId(),
-								e);
+								pe);
 						}
 					}
 				}

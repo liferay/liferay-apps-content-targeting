@@ -14,6 +14,12 @@
 
 package com.liferay.content.targeting.lar;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.persistence.AssetVocabularyUtil;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
@@ -30,12 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetCategoryConstants;
-import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 
 import java.util.List;
 import java.util.Map;

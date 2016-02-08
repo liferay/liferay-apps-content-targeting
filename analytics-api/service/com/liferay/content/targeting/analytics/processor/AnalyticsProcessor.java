@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.analytics.processor;
 
 /**
- *
  * @author Eduardo Garcia
  */
 public interface AnalyticsProcessor {

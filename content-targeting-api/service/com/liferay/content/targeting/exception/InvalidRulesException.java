@@ -14,17 +14,27 @@
 
 package com.liferay.content.targeting.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
- * @author Brian Wing Shun Chan
+ * @author Julio Camarero
  */
-@ProviderType
 public class InvalidRulesException extends PortalException {
 
 	public InvalidRulesException() {
+	}
+
+	public InvalidRulesException(List<InvalidRuleException> exceptions) {
+		if ((exceptions != null) && !exceptions.isEmpty()) {
+			InvalidRuleException exception = exceptions.get(0);
+
+			_exceptionsMap.put(exception.getRuleGuid(), exceptions);
+		}
 	}
 
 	public InvalidRulesException(String msg) {
@@ -35,8 +45,24 @@ public class InvalidRulesException extends PortalException {
 		super(msg, cause);
 	}
 
-	public InvalidRulesException(Throwable cause) {
-		super(cause);
+	public void add(InvalidRuleException exception) {
+		List<InvalidRuleException> exceptions = _exceptionsMap.get(
+			exception.getRuleGuid());
+
+		if (exceptions == null) {
+			exceptions = new ArrayList<>();
+		}
+
+		exceptions.add(exception);
+
+		_exceptionsMap.put(exception.getRuleGuid(), exceptions);
 	}
+
+	public List<InvalidRuleException> getRuleExceptions(String ruleId) {
+		return _exceptionsMap.get(ruleId);
+	}
+
+	private Map<String, List<InvalidRuleException>> _exceptionsMap =
+		new HashMap<>();
 
 }

@@ -14,6 +14,9 @@
 
 package com.liferay.content.targeting.util;
 
+import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,9 +32,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.asset.exception.NoSuchVocabularyException;
-import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -120,7 +120,7 @@ public class UserSegmentUtil {
 
 				vocabularyIds.add(vocabulary.getVocabularyId());
 			}
-			catch (NoSuchVocabularyException e) {
+			catch (NoSuchVocabularyException nsve) {
 			}
 		}
 

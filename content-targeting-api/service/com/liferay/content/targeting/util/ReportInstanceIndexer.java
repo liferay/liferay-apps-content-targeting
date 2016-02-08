@@ -219,12 +219,12 @@ public class ReportInstanceIndexer extends BaseIndexer {
 							addDocuments(document);
 						}
 					}
-					catch (PortalException e) {
+					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Unable to index report instance: " +
 									reportInstance.getReportInstanceId(),
-								e);
+								pe);
 						}
 					}
 				}

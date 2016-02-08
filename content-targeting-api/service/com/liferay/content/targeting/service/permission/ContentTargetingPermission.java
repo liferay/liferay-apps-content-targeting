@@ -60,7 +60,7 @@ public class ContentTargetingPermission extends BaseResourcePermissionChecker {
 
 			return true;
 		}
-		catch (PortalException e) {
+		catch (PortalException pe) {
 		}
 
 		return false;

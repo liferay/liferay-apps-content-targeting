@@ -14,16 +14,16 @@
 
 package com.liferay.content.targeting.hook.upgrade.v1_0_0;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import java.util.List;
 

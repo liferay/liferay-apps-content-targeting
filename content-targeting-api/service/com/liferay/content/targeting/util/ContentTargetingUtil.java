@@ -14,6 +14,9 @@
 
 package com.liferay.content.targeting.util;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -36,9 +39,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
 

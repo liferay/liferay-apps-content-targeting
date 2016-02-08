@@ -17,7 +17,7 @@ package com.liferay.content.targeting.util;
 /**
  * @author Eudaldo Alonso
  */
-public class PortletKeys extends com.liferay.portal.util.PortletKeys {
+public class PortletKeys extends com.liferay.portal.kernel.util.PortletKeys {
 
 	public static final String CT_ADMIN =
 		"com_liferay_content_targeting_portlet_ContentTargetingPortlet";

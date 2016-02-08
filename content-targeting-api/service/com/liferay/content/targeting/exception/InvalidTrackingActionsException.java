@@ -14,17 +14,29 @@
 
 package com.liferay.content.targeting.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
- * @author Brian Wing Shun Chan
+ * @author Julio Camarero
  */
-@ProviderType
 public class InvalidTrackingActionsException extends PortalException {
 
 	public InvalidTrackingActionsException() {
+	}
+
+	public InvalidTrackingActionsException(
+		List<InvalidTrackingActionException> exceptions) {
+
+		if ((exceptions != null) && !exceptions.isEmpty()) {
+			InvalidTrackingActionException exception = exceptions.get(0);
+
+			_exceptionsMap.put(exception.getTrackingActionGuid(), exceptions);
+		}
 	}
 
 	public InvalidTrackingActionsException(String msg) {
@@ -35,8 +47,26 @@ public class InvalidTrackingActionsException extends PortalException {
 		super(msg, cause);
 	}
 
-	public InvalidTrackingActionsException(Throwable cause) {
-		super(cause);
+	public void add(InvalidTrackingActionException exception) {
+		List<InvalidTrackingActionException> exceptions = _exceptionsMap.get(
+			exception.getTrackingActionGuid());
+
+		if (exceptions == null) {
+			exceptions = new ArrayList<>();
+		}
+
+		exceptions.add(exception);
+
+		_exceptionsMap.put(exception.getTrackingActionGuid(), exceptions);
 	}
+
+	public List<InvalidTrackingActionException> getExceptions(
+		String trackingActionId) {
+
+		return _exceptionsMap.get(trackingActionId);
+	}
+
+	private Map<String, List<InvalidTrackingActionException>> _exceptionsMap =
+		new HashMap<>();
 
 }

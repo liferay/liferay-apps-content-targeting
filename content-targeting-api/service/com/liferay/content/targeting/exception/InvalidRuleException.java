@@ -14,14 +14,11 @@
 
 package com.liferay.content.targeting.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Julio Camarero
  */
-@ProviderType
 public class InvalidRuleException extends PortalException {
 
 	public InvalidRuleException() {
@@ -35,8 +32,14 @@ public class InvalidRuleException extends PortalException {
 		super(msg, cause);
 	}
 
-	public InvalidRuleException(Throwable cause) {
-		super(cause);
+	public String getRuleGuid() {
+		return _ruleGuid;
 	}
+
+	public void setRuleGuid(String ruleGuid) {
+		_ruleGuid = ruleGuid;
+	}
+
+	private String _ruleGuid;
 
 }
