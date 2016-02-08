@@ -38,6 +38,21 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>dynamic-include</name>
+		<tag-class>com.liferay.taglib.util.DynamicIncludeTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>ascendingPriority</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>key</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>get-url</name>
 		<tag-class>com.liferay.taglib.util.GetUrlTag</tag-class>
 		<tei-class>com.liferay.taglib.util.GetUrlTei</tei-class>
@@ -132,5 +147,10 @@
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+	</tag>
+	<tag>
+		<name>whitespace-remover</name>
+		<tag-class>com.liferay.taglib.util.WhitespaceRemoverTag</tag-class>
+		<body-content>JSP</body-content>
 	</tag>
 </taglib>

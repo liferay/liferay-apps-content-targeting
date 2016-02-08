@@ -135,51 +135,6 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
-		<name>icon-close</name>
-		<tag-class>com.liferay.taglib.portletext.IconCloseTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
-		<name>icon-configuration</name>
-		<tag-class>com.liferay.taglib.portletext.IconConfigurationTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
-		<name>icon-edit</name>
-		<tag-class>com.liferay.taglib.portletext.IconEditTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
-		<name>icon-edit-defaults</name>
-		<tag-class>com.liferay.taglib.portletext.IconEditDefaultsTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
-		<name>icon-edit-guest</name>
-		<tag-class>com.liferay.taglib.portletext.IconEditGuestTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
-		<name>icon-export-import</name>
-		<tag-class>com.liferay.taglib.portletext.IconExportImportTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
-		<name>icon-help</name>
-		<tag-class>com.liferay.taglib.portletext.IconHelpTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
-		<name>icon-maximize</name>
-		<tag-class>com.liferay.taglib.portletext.IconMaximizeTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
-		<name>icon-minimize</name>
-		<tag-class>com.liferay.taglib.portletext.IconMinimizeTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
 		<name>icon-options</name>
 		<tag-class>com.liferay.taglib.portletext.IconOptionsTag</tag-class>
 		<body-content>JSP</body-content>
@@ -189,25 +144,30 @@
 		<tag-class>com.liferay.taglib.portletext.IconPortletTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>ariaRole</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>portlet</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-	</tag>
-	<tag>
-		<name>icon-portlet-css</name>
-		<tag-class>com.liferay.taglib.portletext.IconPortletCssTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
-		<name>icon-print</name>
-		<tag-class>com.liferay.taglib.portletext.IconPrintTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
-		<name>icon-refresh</name>
-		<tag-class>com.liferay.taglib.portletext.IconRefreshTag</tag-class>
-		<body-content>JSP</body-content>
+		<attribute>
+			<name>url</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>param</name>
@@ -372,8 +332,13 @@
 		<tag-class>com.liferay.taglib.portlet.RenderURLParamsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>portletURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>varImpl</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -505,12 +470,32 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>instanceId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>portletName</name>
-			<required>true</required>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>portletProviderClassName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>portletProviderAction</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>queryString</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>settingsScope</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
