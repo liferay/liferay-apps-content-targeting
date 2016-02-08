@@ -25,19 +25,55 @@
 
 <@invalidChannelsException />
 
-<@portlet["actionURL"] name="updateTactic" var="addTacticURL" />
+<@portlet["actionURL"]
+	name="updateTactic"
+	var="addTacticURL"
+/>
 
 <@aui["form"] action="${addTacticURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
-	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
-	<@aui["input"] name="campaignId" type="hidden" value="${campaignId}" />
-	<@aui["input"] name="campaignUserSegmentsIds" type="hidden" value="${campaignUserSegmentsIds}" />
-	<@aui["input"] name="vocabularyGroupIds" type="hidden" value="${vocabularyGroupIds}" />
-	<@aui["input"] name="vocabularyIds" type="hidden" value="${vocabularyIds}" />
-	<@aui["input"] name="tacticId" type="hidden" value="${tacticId}" />
-	<@aui["input"] name="tacticChannels" type="hidden" />
-	<@aui["input"] name="saveAndContinue" type="hidden" />
+	<@aui["input"]
+		name="redirect"
+		type="hidden"
+		value="${redirect}"
+	/>
+	<@aui["input"]
+		name="campaignId"
+		type="hidden"
+		value="${campaignId}"
+	/>
+	<@aui["input"]
+		name="campaignUserSegmentsIds"
+		type="hidden"
+		value="${campaignUserSegmentsIds}"
+	/>
+	<@aui["input"]
+		name="vocabularyGroupIds"
+		type="hidden"
+		value="${vocabularyGroupIds}"
+	/>
+	<@aui["input"]
+		name="vocabularyIds"
+		type="hidden"
+		value="${vocabularyIds}"
+	/>
+	<@aui["input"]
+		name="tacticId"
+		type="hidden"
+		value="${tacticId}"
+	/>
+	<@aui["input"]
+		name="tacticChannels"
+		type="hidden"
+	/>
+	<@aui["input"]
+		name="saveAndContinue"
+		type="hidden"
+	/>
 
-	<@aui["model-context"] bean=tactic model=tacticClass />
+	<@aui["model-context"]
+		bean=tactic
+		model=tacticClass
+	/>
 
 	<@invalidNameException />
 
@@ -58,8 +94,8 @@
 	<span class="slider-holder"></span>
 
 	<@liferay_ui["panel"] cssClass="channel-panel" collapsible=false defaultState="open" extended=false id="channelPanel" helpMessage="channels-help" persistState=true title="channels">
-		<div class="component diagram-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
-			<div class="diagram-builder-content form-builder-content" id="formBuilderCB">
+		<div class="component property-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
+			<div class="property-builder-content form-builder-content" id="formBuilderCB">
 				<div class="tabbable">
 					<div class="tabbable-content">
 						<ul class="nav nav-tabs">
@@ -74,20 +110,25 @@
 										<i class="icon-search"></i>
 
 										<div class="search-panels-bar">
-											<@aui["input"] cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
+											<@aui["input"]
+												cssClass="search-panels-input search-query"
+												label=""
+												name="searchPanel"
+												type="text"
+											/>
 										</div>
 									</div>
 								</div>
 
-								<ul class="clearfix diagram-builder-fields-container form-builder-fields-container">
+								<ul class="clearfix property-builder-fields-container form-builder-fields-container">
 									<#list channelTemplates as template>
 										<#assign channel = template.getChannel()>
 										<#assign templateKey = template.getTemplateKey()>
 
-										<li class="diagram-builder-field form-builder-field hide" data-icon="${channel.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!channel.isInstantiable())?string}">
-											<span class="diagram-builder-field-icon icon ${channel.getIcon()}"></span>
+										<li class="property-builder-field form-builder-field hide" data-icon="${channel.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!channel.isInstantiable())?string}">
+											<span class="property-builder-field-icon icon ${channel.getIcon()}"></span>
 
-											<div class="diagram-builder-field-label">
+											<div class="property-builder-field-label">
 												<div class="row">
 													<div class="field-title">${channel.getName(locale)}</div>
 													<div class="field-description">${channel.getDescription(locale)}</div>
@@ -104,19 +145,19 @@
 					</div>
 				</div>
 
-				<div class="diagram-builder-content-container form-builder-content-container">
+				<div class="property-builder-content-container form-builder-content-container">
 					<#assign cssHasItemsClass = "">
 
 					<#if (addedChannelTemplates?size > 0)>
 						<#assign cssHasItemsClass = "has-items">
 					</#if>
 
-					<div class="diagram-builder-canvas form-builder-canvas ${cssHasItemsClass}">
+					<div class="property-builder-canvas form-builder-canvas ${cssHasItemsClass}">
 						<div class="alert alert-info alert-no-items">
 							<@liferay_ui["message"] key="drag-and-drop-the-different-channels-you-want-to-use-for-this-promotion" />
 						</div>
 
-						<div class="diagram-builder-drop-container form-builder-drop-container">
+						<div class="property-builder-drop-container form-builder-drop-container">
 							<#list addedChannelTemplates as template>
 								<#assign channel = template.getChannel()>
 								<#assign templateKey = template.getTemplateKey()>
@@ -148,11 +189,23 @@
 	</@>
 
 	<@aui["button-row"]>
-		<@aui["button"] cssClass="control-button" type="submit" />
+		<@aui["button"]
+			cssClass="control-button"
+			type="submit"
+		/>
 
-		<@aui["button"] cssClass="control-button" type="button" value="save-and-continue" onClick="saveAndContinue();" />
+		<@aui["button"]
+			cssClass="control-button"
+			type="button"
+			value="save-and-continue"
+			onClick="saveAndContinue();"
+		/>
 
-		<@aui["button"] cssClass="control-button" href="${redirect}" type="cancel" />
+		<@aui["button"]
+			cssClass="control-button"
+			href="${redirect}"
+			type="cancel"
+		/>
 	</@>
 
 	<@aui["script"]>
@@ -192,4 +245,7 @@
 
 <@fieldHeaderListener fieldName="alias" />
 
-<@closeConfirm confirmMessage="leaving-this-window-deletes-all-unsaved-data" controlCssClasses=["control-button", "tab"] />
+<@closeConfirm
+	confirmMessage="leaving-this-window-deletes-all-unsaved-data"
+	controlCssClasses=["control-button", "tab"]
+/>

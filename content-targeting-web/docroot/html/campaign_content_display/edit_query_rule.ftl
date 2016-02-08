@@ -23,7 +23,10 @@
 
 <div class="field-row query-row">
 	<#if !queryRule.isDefaultRule()>
-		<@aui["input"] name="queryIndex${index}" type="hidden" />
+		<@aui["input"]
+			name="queryIndex${index}"
+			type="hidden"
+		/>
 	</#if>
 
 	<#assign fullViewClass = "">
@@ -42,7 +45,13 @@
 				<div class="campaign-selector">
 					<@aui["select"] label="" name="campaignId${index}">
 						<#list campaigns as campaign>
-							<@aui["option"] label="${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" selected=(queryRule.getCampaignId() == campaign.getCampaignId()) value="${campaign.getCampaignId()}" />
+							<@aui["option"]
+								label="${campaign.getNameWithGroupName(locale,
+								themeDisplay.getScopeGroupId())}"
+								selected=(queryRule.getCampaignId()
+								== campaign.getCampaignId())
+								value="${campaign.getCampaignId()}"
+							/>
 						</#list>
 					</@>
 				</div>
@@ -52,7 +61,10 @@
 				<div class="select-asset-selector">
 					<span class="query-and-operator-text"><@liferay_ui["message"] key="display-this-content" /></span>
 
-					<@renderAssetEntrySelector queryRule=queryRule index=index />
+					<@renderAssetEntrySelector
+						queryRule=queryRule
+						index=index
+					/>
 				</div>
 			</@>
 		</div>

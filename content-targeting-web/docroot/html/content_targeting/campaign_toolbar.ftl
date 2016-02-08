@@ -18,20 +18,41 @@
 
 <@aui["nav"]>
 	<#if contentTargetingPermission.contains(permissionChecker, scopeGroupId, actionKeys.ADD_CAMPAIGN)>
-		<@portlet["renderURL"] var="redirectURL">
-			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
-			<@portlet["param"] name="tabs1" value="campaigns" />
+		<@portlet["renderURL"] copyCurrentRenderParameters=false var="redirectURL">
+			<@portlet["param"]
+				name="mvcPath"
+				value="${contentTargetingPath.VIEW}"
+			/>
+			<@portlet["param"]
+				name="tabs1"
+				value="campaigns"
+			/>
 		</@>
 
-		<@portlet["renderURL"] var="addCampaignURL">
-			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-			<@portlet["param"] name="redirect" value="${redirectURL}" />
+		<@portlet["renderURL"] copyCurrentRenderParameters=false var="addCampaignURL">
+			<@portlet["param"]
+				name="mvcPath"
+				value="${contentTargetingPath.EDIT_CAMPAIGN}"
+			/>
+			<@portlet["param"]
+				name="redirect"
+				value="${redirectURL}"
+			/>
 		</@>
 
-		<@aui["nav-item"] href="${addCampaignURL}" iconCssClass="icon-plus" label='${languageUtil.get(portletConfig, locale, "add-campaign")}' />
+		<@aui["nav-item"]
+			href="${addCampaignURL}"
+			iconCssClass="icon-plus"
+			label='${languageUtil.get(portletConfig.getResourceBundle(locale), "add-campaign")}'
+		/>
 	</#if>
 
 	<#if campaignPermission.contains(permissionChecker, scopeGroupId, scopeGroupId, actionKeys.DELETE)>
-		<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteCampaigns" label='${languageUtil.get(portletConfig, locale, "delete")}' />
+		<@aui["nav-item"]
+			cssClass="hide"
+			iconCssClass="icon-remove"
+			id="deleteCampaigns"
+			label='${languageUtil.get(portletConfig.getResourceBundle(locale), "delete")}'
+		/>
 	</#if>
 </@>

@@ -37,8 +37,14 @@
 			</#if>
 
 			<@liferay_util["include"] page="/html/common/analytics/track_content.jsp">
-				<@liferay_util["param"] name="analyticsClassName" value=queryRule.getAssetClassName() />
-				<@liferay_util["param"] name="analyticsClassPK" value=queryRule.getAssetClassPK()?string />
+				<@liferay_util["param"]
+					name="analyticsClassName"
+					value=queryRule.getAssetClassName()
+				/>
+				<@liferay_util["param"]
+					name="analyticsClassPK"
+					value=queryRule.getAssetClassPK()?string
+				/>
 			</@>
 		<#else>
 			<div class="alert alert-info">
@@ -48,7 +54,10 @@
 	</div>
 
 	<#if showPreview>
-		<@renderThumbnailsPreview queryRules=userSegmentQueryRules selectedIndex=selectedIndex />
+		<@renderThumbnailsPreview
+			queryRules=userSegmentQueryRules
+			selectedIndex=selectedIndex
+		/>
 	</#if>
 </div>
 

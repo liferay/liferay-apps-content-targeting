@@ -61,10 +61,10 @@ AUI.add(
 							instance._parseFields();
 
 							if (instance.get('searchBox')) {
-								fieldsFilter = instance._createItemFilter();
+								//fieldsFilter = instance._createItemFilter();
 
 								eventHandles.push(
-									fieldsFilter.on('results', instance._onItemFilterResults, instance),
+									//fieldsFilter.on('results', instance._onItemFilterResults, instance),
 									instance.on('fieldsChange', instance._onFieldsChange, instance),
 									instance.on({
 										'drag:mouseDown': instance._onDragMouseDown,
@@ -81,89 +81,9 @@ AUI.add(
 								);
 							}
 
-							instance.after(instance._afterUiSetAvailableFields, instance, '_uiSetAvailableFields');
-
-							var togglerDelegate = new A.TogglerDelegate(
-								{
-									animated: true,
-									closeAllOnExpand: true,
-									container: A.one('.diagram-builder-drop-container'),
-									content: '.field-editor',
-									expanded: false,
-									header: '.field-header',
-									transition: {
-										duration: 0.2,
-										easing: 'cubic-bezier(0, 0.1, 0, 1)'
-									}
-								}
-							);
-
-							A.Do.before(
-								function(header) {
-									Liferay.fire(
-										'beforeTogglerCreate',
-										{
-											header: header
-										}
-									)
-								},
-								togglerDelegate,
-								'_create'
-							);
-
-							A.Do.after(
-								function(header) {
-									Liferay.fire(
-										'afterTogglerCreate',
-										{
-											toggler: A.Do.originalRetVal,
-											header: header
-										}
-									)
-								},
-								togglerDelegate,
-								'_create'
-							);
-
-							instance.set('fieldsTogglerDelegate', togglerDelegate);
+							instance.onceAfter(instance._afterUiSetAvailableFields, instance, '_uiSetAvailableFields');
 
 							instance._eventHandles = eventHandles;
-
-							Liferay.after(
-								'form:registered',
-								function(data) {
-									togglerDelegate.createAll();
-
-									var formValidator = data.form.formValidator;
-
-									if (formValidator) {
-										A.Do.after(
-											function() {
-												for (var errorFieldName in formValidator.errors) {
-													var fieldToggler = A.one('#' + errorFieldName).ancestor('.form-builder-field-content').one('.field-header').getData().toggler;
-
-													if (fieldToggler) {
-														fieldToggler.expand();
-													}
-												}
-											},
-											formValidator,
-											'validate'
-										);
-									}
-
-									A.on(
-										'domready',
-										function() {
-											var fieldHeader = A.one('.field-header');
-
-											if (fieldHeader) {
-												fieldHeader.getData().toggler.expand();
-											}
-										}
-									);
-								}
-							);
 						},
 
 						destructor: function() {
@@ -174,7 +94,7 @@ AUI.add(
 
 						_afterUiSetAvailableFields: function(event) {
 							var instance = this,
-								fieldsContainer = A.one('.diagram-builder-fields-container'),
+								fieldsContainer = A.one('.property-builder-fields-container'),
 								searchBox = instance.get('searchBox');
 
 							if (searchBox) {
@@ -189,6 +109,8 @@ AUI.add(
 							A.Array.each(
 								instance.get('availableFields'),
 								function(item) {
+									item.labelNode.setContent(item.get('label'));
+
 									var title = item.labelNode.one('.field-title').text();
 
 									var itemNode = item.get('node');
@@ -234,7 +156,7 @@ AUI.add(
 												config.name = item.get('name');
 											}
 
-											if ((item instanceof A.AvailableField) && !item.get('draggable')) {
+											if ((item instanceof A.PropertyBuilderAvailableField) && !item.get('draggable')) {
 												return;
 											}
 
@@ -247,6 +169,93 @@ AUI.add(
 							);
 
 							instance._groupFields(categories, fieldsContainer);
+
+							if (!instance._doNothing) {
+
+								var togglerDelegate = new A.TogglerDelegate(
+									{
+										animated: true,
+										closeAllOnExpand: true,
+										container: A.one('.property-builder-drop-container'),
+										content: '.field-editor',
+										expanded: false,
+										header: '.field-header',
+										toggleEvent: 'click',
+										transition: {
+											duration: 0.2,
+											easing: 'cubic-bezier(0, 0.1, 0, 1)'
+										}
+									}
+								);
+
+								A.Do.before(
+									function (header) {
+										Liferay.fire(
+											'beforeTogglerCreate',
+											{
+												header: header
+											}
+										)
+									},
+									togglerDelegate,
+									'_create'
+								);
+
+								A.Do.after(
+									function (header) {
+										Liferay.fire(
+											'afterTogglerCreate',
+											{
+												toggler: A.Do.originalRetVal,
+												header: header
+											}
+										)
+									},
+									togglerDelegate,
+									'_create'
+								);
+
+								instance.set('fieldsTogglerDelegate', togglerDelegate);
+
+								Liferay.after(
+									'form:registered',
+									function (data) {
+										togglerDelegate.createAll();
+
+										var formValidator = data.form.formValidator;
+
+										if (formValidator) {
+											A.Do.after(
+												function () {
+													for (var errorFieldName in formValidator.errors) {
+														var fieldToggler = A.one('#' + errorFieldName).ancestor('.form-builder-field-content').one('.field-header').getData().toggler;
+
+														if (fieldToggler) {
+															fieldToggler.expand();
+														}
+													}
+												},
+												formValidator,
+												'validate'
+											);
+										}
+
+										A.on(
+											'domready',
+											function () {
+												var fieldHeader = A.one('.field-header');
+
+												if (fieldHeader) {
+													fieldHeader.getData().toggler.expand();
+												}
+											}
+										);
+									}
+								);
+
+								instance._doNothing = true;
+							}
+
 						},
 
 						_beforeInsertField: function(field) {
@@ -349,9 +358,9 @@ AUI.add(
 
 						_onDragMouseDown: function(event) {
 							var dragNode = event.target.get('node'),
-								availableField = A.AvailableField.getAvailableFieldByNode(dragNode);
+								availableField = A.PropertyBuilderAvailableField.getAvailableFieldByNode(dragNode);
 
-							if ((availableField instanceof A.AvailableField) && !availableField.get('draggable')) {
+							if ((availableField instanceof A.PropertyBuilderAvailableField) && !availableField.get('draggable')) {
 								event.halt();
 
 								return;
@@ -378,10 +387,13 @@ AUI.add(
 							var instance = this;
 
 							instance.get('canvas').toggleClass('has-items', instance.get('fields').size());
+							instance.get('canvas').one('.alert-no-items').toggleClass('hide', instance.get('fields').size());
 						},
 
 						_onInsertField: function(field) {
 							var instance = this;
+
+							field.get('labelNode').setContent('');
 
 							var togglerDelegate = instance.get('fieldsTogglerDelegate');
 
@@ -397,7 +409,9 @@ AUI.add(
 
 							var toggler = fieldHeader.getData().toggler;
 
-							toggler.expand();
+							if (toggler) {
+								toggler.expand();
+							}
 
 							instance.simulateFocusField(field, field.get('boundingBox'));
 						},
@@ -405,7 +419,7 @@ AUI.add(
 						_onItemFilterResults: function(event) {
 							var instance = this,
 								contentBox = instance.get('contentBox'),
-								availableFieldsContainer = contentBox.one('.diagram-builder-fields-container'),
+								availableFieldsContainer = contentBox.one('.property-builder-fields-container'),
 								categories = availableFieldsContainer.all('.category-wrapper'),
 								query = event.query;
 
@@ -424,7 +438,7 @@ AUI.add(
 							}
 
 							if (!query) {
-								availableFieldsContainer.all('.category-wrapper, .diagram-builder-field').removeClass('hide');
+								availableFieldsContainer.all('.category-wrapper, .property-builder-field').removeClass('hide');
 
 								if (instance._collapsedCategories) {
 									A.each(
@@ -446,12 +460,12 @@ AUI.add(
 								}
 							}
 							else {
-								availableFieldsContainer.all('.category-wrapper, .diagram-builder-field').addClass('hide');
+								availableFieldsContainer.all('.category-wrapper, .property-builder-field').addClass('hide');
 
 								A.Array.each(
 									event.results,
 									function(result) {
-										result.raw.node.ancestor('.diagram-builder-field').removeClass('hide');
+										result.raw.node.ancestor('.property-builder-field').removeClass('hide');
 
 										var category = result.raw.node.ancestor('.category-wrapper');
 
@@ -472,7 +486,7 @@ AUI.add(
 						_parseFields: function() {
 							var instance = this,
 								contentBox = instance.get('contentBox'),
-								availableFieldsContainer = contentBox.one('.diagram-builder-fields-container'),
+								availableFieldsContainer = contentBox.one('.property-builder-fields-container'),
 								availableFields = [],
 								fieldsContainer = contentBox.one('.form-builder-drop-container'),
 								fields = [];
@@ -704,7 +718,7 @@ AUI.add(
 								{
 									cssCollapseClass: field.cssCollapseClass,
 									description: field.description,
-									editor: field.editor.replace(/(_7b_|[\{%7B&#x25;]+)ct_+field_+guid(_7d_|[\}%7D&#x25;]+)/ig, fieldId),
+									editor: field.editor.replace(/(\-|_7b_|[\{%7B&#x25;]+)ct_+field_+guid(\-|_7d_|[\}%7D&#x25;]+)/ig, fieldId),
 									icon: field.icon,
 									name: field.name,
 									shortDescription: field.shortDescription
@@ -727,30 +741,15 @@ AUI.add(
 
 			A['CT'+ field.key + 'ItemField'] = ctFormField;
 
-			if (!A.FormBuilder.types[field.key]) {
-				A.FormBuilder.types[field.key] = ctFormField;
+			if (!A.FormBuilderField[field.key]) {
+				A.FormBuilderField.types[field.key] = ctFormField;
 			}
 		};
 
 		A.LiferayCTFormBuilder = LiferayCTFormBuilder;
-
-		// AUI-1850
-
-		A.mix(
-			A.AvailableField.prototype,
-			{
-				_uiSetLabel: function(val) {
-					var instance = this;
-
-					instance.get('node').attr('title', val);
-					instance.labelNode.setContent(val);
-				}
-			},
-			true
-		);
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'aui-parse-content', 'aui-toggler', 'autocomplete-base', 'autocomplete-filters']
+		requires: ['aui-form-builder-deprecated', 'aui-parse-content', 'aui-toggler', 'autocomplete-base', 'autocomplete-filters']
 	}
 );

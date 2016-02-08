@@ -17,7 +17,10 @@
 <#include "../init.ftl" />
 
 <@liferay_portlet["actionURL"] name="updatePreferences" var="configurationURL">
-	<@portlet["param"] name="redirect" value="${currentURL}" />
+	<@portlet["param"]
+		name="redirect"
+		value="${currentURL}"
+	/>
 </@>
 
 <@aui["form"] action="${configurationURL}" method="post" name="fm" onSubmit="event.preventDefault();">
@@ -30,7 +33,11 @@
 		<@liferay_ui["section"]>
 			<@aui["fieldset"] label="asset-entry-type">
 				<@aui["select"] label="" name="anyAssetType">
-					<@aui["option"] label="any" selected=anyAssetType value=true />
+					<@aui["option"]
+						label="any"
+						selected=anyAssetType
+						value=true
+					/>
 
 					<#assign selectedValue = false>
 
@@ -38,7 +45,11 @@
 						<#assign selectedValue = true>
 					</#if>
 
-					<@aui["option"] label='${languageUtil.get(portletConfig, locale, "select-more-than-one")}...' selected=selectedValue value=false />
+					<@aui["option"]
+						label='${languageUtil.get(portletConfig.getResourceBundle(locale), "select-more-than-one")}...'
+						selected=selectedValue
+						value=false
+					/>
 
 					<optgroup label="<@liferay_ui["message"] key="asset-type" />">
 						<#assign i = 0>
@@ -50,14 +61,21 @@
 								<#assign selectedValue = true>
 							</#if>
 
-							<@aui["option"] label=modelResources[i] selected=selectedValue value=classNameId />
+							<@aui["option"]
+								label=modelResources[i]
+								selected=selectedValue
+								value=classNameId
+							/>
 
 							<#assign i = i + 1>
 						</#list>
 					</optgroup>
 				</@>
 
-				<@aui["input"] name="classNameIds" type="hidden" />
+				<@aui["input"]
+					name="classNameIds"
+					type="hidden"
+				/>
 
 				<#assign cssClass = "">
 
@@ -81,8 +99,8 @@
 
 		<@liferay_ui["section"]>
 			<div class="display-template">
-				<@liferay_ui["ddm-template-selector"]
-					classNameId=portalUtil.getClassNameId(templateHandler.getClassName())
+				<@liferay_ddm["template-selector"]
+					className=templateHandler.getClassName()
 					displayStyle=displayStyle
 					displayStyleGroupId=displayStyleGroupId
 					displayStyles=displayStyles
@@ -96,7 +114,10 @@
 	<@aui["button-row"]>
 		<#assign onClickValue = renderResponse.getNamespace() + "saveSelectBoxes();">
 
-		<@aui["button"] onClick=onClickValue type="submit" />
+		<@aui["button"]
+			onClick=onClickValue
+			type="submit"
+		/>
 	</@>
 </@>
 

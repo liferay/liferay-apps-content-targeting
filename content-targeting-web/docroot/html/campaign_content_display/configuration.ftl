@@ -17,7 +17,10 @@
 <#include "../init.ftl" />
 
 <@liferay_portlet["actionURL"] name="updatePreferences" var="configurationURL">
-	<@portlet["param"] name="redirect" value="${currentURL}" />
+	<@portlet["param"]
+		name="redirect"
+		value="${currentURL}"
+	/>
 </@>
 
 <@aui["form"] action="${configurationURL}" method="post" name="fm">
@@ -51,11 +54,11 @@
 				</div>
 			</div>
 		</@>
-
+<
 		<@liferay_ui["section"]>
 			<div class="display-template">
-				<@liferay_ui["ddm-template-selector"]
-					classNameId=portalUtil.getClassNameId(templateHandler.getClassName())
+				<@liferay_ddm["template-selector"]
+					classNameId=templateHandler.getClassName()
 					displayStyle=displayStyle
 					displayStyleGroupId=displayStyleGroupId
 					displayStyles=displayStyles
@@ -67,12 +70,18 @@
 	</@>
 
 	<@aui["button-row"]>
-		<@aui["button"] type="submit" value="save" />
+		<@aui["button"]
+			type="submit"
+			value="save"
+		/>
 	</@>
 </@>
 
-<@portlet["renderURL"] var="newUserSegmentRuleURL" windowState=windowStateFactory.getWindowState("EXCLUSIVE").toString()>
-	<@portlet["param"] name="mvcPath" value="${campaignContentDisplayPath.EDIT_QUERY_RULE}" />
+<@portlet["renderURL"] copyCurrentRenderParameters=false var="newUserSegmentRuleURL" windowState=windowStateFactory.getWindowState("EXCLUSIVE").toString()>
+	<@portlet["param"]
+		name="mvcPath"
+		value="${campaignContentDisplayPath.EDIT_QUERY_RULE}"
+	/>
 </@>
 
 <@aui["script"] use="aui-base,liferay-auto-fields">

@@ -23,7 +23,10 @@
 
 <div class="field-row query-row">
 	<#if !queryRule.isDefaultRule()>
-		<@aui["input"] name="queryIndex${index}" type="hidden" />
+		<@aui["input"]
+			name="queryIndex${index}"
+			type="hidden"
+		/>
 	</#if>
 
 	<#assign fullViewClass = "">
@@ -39,17 +42,41 @@
 			<@aui["column"] columnWidth=15>
 				<span class="query-contains-text"><@liferay_ui["message"] key="if-the-user" /></span>
 
-				<@aui["input"] checked=queryRule.isContains() label="belongs" name="queryContains${index}" type="radio" value=true />
+				<@aui["input"]
+					checked=queryRule.isContains()
+					label="belongs"
+					name="queryContains${index}"
+					type="radio"
+					value=true
+				/>
 
-				<@aui["input"] checked=!queryRule.isContains() label="does-not-belong" name="queryContains${index}" type="radio" value=false />
+				<@aui["input"]
+					checked=!queryRule.isContains()
+					label="does-not-belong"
+					name="queryContains${index}"
+					type="radio"
+					value=false
+				/>
 			</@>
 
 			<@aui["column"] columnWidth=15>
 				<span class="query-and-operator-text"><@liferay_ui["message"] key="to" /></span>
 
-				<@aui["input"] checked=!queryRule.isAndOperator() label="any" name="queryAndOperator${index}" type="radio" value=false />
+				<@aui["input"]
+					checked=!queryRule.isAndOperator()
+					label="any"
+					name="queryAndOperator${index}"
+					type="radio"
+					value=false
+				/>
 
-				<@aui["input"] checked=queryRule.isAndOperator() label="all" name="queryAndOperator${index}" type="radio" value=true />
+				<@aui["input"]
+					checked=queryRule.isAndOperator()
+					label="all"
+					name="queryAndOperator${index}"
+					type="radio"
+					value=true
+				/>
 			</@>
 
 			<@aui["column"] columnWidth=30>
@@ -57,7 +84,11 @@
 					<span class="query-and-operator-text"><@liferay_ui["message"] key="of-the-following-user-segments" /></span>
 
 					<div class="lfr-tags-selector-content" id="<@portlet["namespace"] />assetCategoriesSelector${index}">
-						<@aui["input"] name="userSegmentAssetCategoryIds${index}" type="hidden" value="${queryRule.getUserSegmentAssetCategoryIdsAsString()}" />
+						<@aui["input"]
+							name="userSegmentAssetCategoryIds${index}"
+							type="hidden"
+							value="${queryRule.getUserSegmentAssetCategoryIdsAsString()}"
+						/>
 					</div>
 
 					<@aui["script"] use="liferay-asset-categories-selector">
@@ -87,7 +118,10 @@
 				<div class="select-asset-selector">
 					<span class="query-and-operator-text"><@liferay_ui["message"] key="display-this-content" /></span>
 
-					<@renderAssetEntrySelector queryRule=queryRule index=index />
+					<@renderAssetEntrySelector
+						queryRule=queryRule
+						index=index
+					/>
 				</div>
 			</@>
 		</div>

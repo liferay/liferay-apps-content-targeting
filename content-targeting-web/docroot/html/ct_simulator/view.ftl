@@ -16,13 +16,19 @@
 
 <#include "../init.ftl" />
 
-<@aui["button"] cssClass="close pull-right" name="closePanelSimulator" value="&times;" />
+<script src="${simulatorJS}"></script>
 
-<h1><@liferay_ui["message"] key="simulator" /></h1>
+<@aui["button"]
+	cssClass="close pull-right"
+	name="closePanelSimulator"
+	value="&times;"
+/>
 
-<#assign campaignsLabel = languageUtil.get(portletConfig, locale, "campaigns") />
+<h1><@liferay_ui["message"] key="category.ct" /></h1>
 
-<#assign userSegmentsLabel = languageUtil.get(portletConfig, locale, "user-segments") />
+<#assign campaignsLabel = languageUtil.get(portletConfig.getResourceBundle(locale), "campaigns") />
+
+<#assign userSegmentsLabel = languageUtil.get(portletConfig.getResourceBundle(locale), "user-segments") />
 
 <div class="content-targeting-simulator">
 	<@liferay_ui["tabs"]
@@ -40,12 +46,3 @@
 		</@>
 	</@>
 </div>
-
-<@aui["script"] use="liferay-dockbar">
-	A.one('#<@portlet["namespace"] />closePanelSimulator').on(
-		'click',
-		function(event) {
-			Liferay.Dockbar._togglePanel('simulatorPanel');
-		}
-	);
-</@>

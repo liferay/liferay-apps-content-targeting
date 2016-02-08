@@ -25,20 +25,53 @@
 
 <@invalidReportException />
 
-<@portlet["actionURL"] name="updateReportInstance" var="addReportInstanceURL" />
+<@portlet["actionURL"]
+	name="updateReportInstance"
+	var="addReportInstanceURL"
+/>
 
 <@aui["form"] action="${addReportInstanceURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
-	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
-	<@aui["input"] name="backURL" type="hidden" value="${backURL}" />
-	<@aui["input"] name="className" type="hidden" value="${className}" />
-	<@aui["input"] name="classPK" type="hidden" value="${classPK}" />
-	<@aui["input"] name="reportInstanceId" type="hidden" value="${reportInstanceId}" />
-	<@aui["input"] name="reportKey" type="hidden" value="${reportKey}" />
-	<@aui["input"] name="saveAndContinue" type="hidden" />
+	<@aui["input"]
+		name="redirect"
+		type="hidden"
+		value="${redirect}"
+	/>
+	<@aui["input"]
+		name="backURL"
+		type="hidden"
+		value="${backURL}"
+	/>
+	<@aui["input"]
+		name="className"
+		type="hidden"
+		value="${className}"
+	/>
+	<@aui["input"]
+		name="classPK"
+		type="hidden"
+		value="${classPK}"
+	/>
+	<@aui["input"]
+		name="reportInstanceId"
+		type="hidden"
+		value="${reportInstanceId}"
+	/>
+	<@aui["input"]
+		name="reportKey"
+		type="hidden"
+		value="${reportKey}"
+	/>
+	<@aui["input"]
+		name="saveAndContinue"
+		type="hidden"
+	/>
 
 	<@invalidNameException />
 
-	<@aui["model-context"] bean=reportInstance model=reportInstanceClass />
+	<@aui["model-context"]
+		bean=reportInstance
+		model=reportInstanceClass
+	/>
 
 	<@invalidNameException />
 
@@ -49,11 +82,23 @@
 	${reportEditHtml}
 
 	<@aui["button-row"]>
-		<@aui["button"] cssClass="control-button" type="submit" />
+		<@aui["button"]
+			cssClass="control-button"
+			type="submit"
+		/>
 
-		<@aui["button"] cssClass="control-button" type="button" value="save-and-continue" onClick="saveAndContinue();" />
+		<@aui["button"]
+			cssClass="control-button"
+			type="button"
+			value="save-and-continue"
+			onClick="saveAndContinue();"
+		/>
 
-		<@aui["button"] cssClass="control-button" href="${redirect}" type="cancel" />
+		<@aui["button"]
+			cssClass="control-button"
+			href="${redirect}"
+			type="cancel"
+		/>
 	</@>
 
 	<@aui["script"] use="aui-toggler,liferay-ct-form-builder">
@@ -73,4 +118,7 @@
 
 <@fieldHeaderListener fieldName="alias" />
 
-<@closeConfirm confirmMessage="leaving-this-window-deletes-all-unsaved-data" controlCssClasses=["control-button", "tab"] />
+<@closeConfirm
+	confirmMessage="leaving-this-window-deletes-all-unsaved-data"
+	controlCssClasses=["control-button", "tab"]
+/>

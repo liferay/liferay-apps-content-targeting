@@ -33,13 +33,31 @@
 			modelVar="reportInstance"
 		>
 
-			<@portlet["renderURL"] varImpl="viewReportURL">
-				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORT}" />
-				<@portlet["param"] name="className" value="${className}" />
-				<@portlet["param"] name="classPK" value="${classPK?string}" />
-				<@portlet["param"] name="redirect" value="${viewReportsURL}" />
-				<@portlet["param"] name="reportKey" value="${reportInstance.getReportKey()}" />
-				<@portlet["param"] name="reportInstanceId" value="${reportInstance.getReportInstanceId()?string}" />
+			<@portlet["renderURL"] copyCurrentRenderParameters=false varImpl="viewReportURL">
+				<@portlet["param"]
+					name="mvcPath"
+					value="${contentTargetingPath.VIEW_REPORT}"
+				/>
+				<@portlet["param"]
+					name="className"
+					value="${className}"
+				/>
+				<@portlet["param"]
+					name="classPK"
+					value="${classPK?string}"
+				/>
+				<@portlet["param"]
+					name="redirect"
+					value="${viewReportsURL}"
+				/>
+				<@portlet["param"]
+					name="reportKey"
+					value="${reportInstance.getReportKey()}"
+				/>
+				<@portlet["param"]
+					name="reportInstanceId"
+					value="${reportInstance.getReportInstanceId()?string}"
+				/>
 			</@>
 
 			<@liferay_ui["search-container-column-text"]
@@ -71,13 +89,31 @@
 			>
 				<@liferay_ui["icon-menu"]>
 					<#if reportInstance.isInstantiable()>
-						<@portlet["renderURL"] var="editReportURL">
-							<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_REPORT}" />
-							<@portlet["param"] name="className" value="${className}" />
-							<@portlet["param"] name="classPK" value="${classPK?string}" />
-							<@portlet["param"] name="redirect" value="${viewReportsURL}" />
-							<@portlet["param"] name="reportInstanceId" value="${reportInstance.getReportInstanceId()?string}" />
-							<@portlet["param"] name="reportKey" value="${reportInstance.getReportKey()}" />
+						<@portlet["renderURL"] copyCurrentRenderParameters=false var="editReportURL">
+							<@portlet["param"]
+								name="mvcPath"
+								value="${contentTargetingPath.EDIT_REPORT}"
+							/>
+							<@portlet["param"]
+								name="className"
+								value="${className}"
+							/>
+							<@portlet["param"]
+								name="classPK"
+								value="${classPK?string}"
+							/>
+							<@portlet["param"]
+								name="redirect"
+								value="${viewReportsURL}"
+							/>
+							<@portlet["param"]
+								name="reportInstanceId"
+								value="${reportInstance.getReportInstanceId()?string}"
+							/>
+							<@portlet["param"]
+								name="reportKey"
+								value="${reportInstance.getReportKey()}"
+							/>
 						</@>
 
 						<#if editReportURL??>
@@ -89,8 +125,14 @@
 						</#if>
 
 						<@portlet["actionURL"] name="deleteReportInstance" var="deleteReportURL">
-							<@portlet["param"] name="redirect" value="${viewReportsURL}" />
-							<@portlet["param"] name="reportInstanceId" value="${reportInstance.getReportInstanceId()?string}" />
+							<@portlet["param"]
+								name="redirect"
+								value="${viewReportsURL}"
+							/>
+							<@portlet["param"]
+								name="reportInstanceId"
+								value="${reportInstance.getReportInstanceId()?string}"
+							/>
 						</@>
 
 						<@liferay_ui["icon-delete"]
@@ -107,10 +149,22 @@
 					/>
 
 					<@portlet["actionURL"] name="updateReport" var="updateReportURL">
-						<@portlet["param"] name="redirect" value="${viewReportsURL}" />
-						<@portlet["param"] name="reportInstanceId" value="${reportInstance.getReportInstanceId()?string}" />
-						<@portlet["param"] name="reportKey" value="${reportInstance.getReportKey()}" />
-						<@portlet["param"] name="classPK" value="${classPK?string}" />
+						<@portlet["param"]
+							name="redirect"
+							value="${viewReportsURL}"
+						/>
+						<@portlet["param"]
+							name="reportInstanceId"
+							value="${reportInstance.getReportInstanceId()?string}"
+						/>
+						<@portlet["param"]
+							name="reportKey"
+							value="${reportInstance.getReportKey()}"
+						/>
+						<@portlet["param"]
+							name="classPK"
+							value="${classPK?string}"
+						/>
 					</@>
 
 					<@liferay_ui["icon"]
@@ -132,7 +186,7 @@
 	var deleteReports = A.one('#<@portlet["namespace"] />deleteReports');
 
 	if (deleteReports) {
-		A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').on(
+		A.one('#<@portlet["namespace"] />${searchContainerReference.getId(request)}SearchContainer').on(
 			'click',
 			function() {
 				var hide = (Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmReports, '<@portlet["namespace"] />allRowIds').length == 0);
@@ -149,7 +203,10 @@
 					document.<@portlet["namespace"] />fmReports.<@portlet["namespace"] />reportInstanceIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmReports, '<@portlet["namespace"] />allRowIds');
 
 					<@portlet["actionURL"] name="deleteReportInstance" var="deleteReportsURL">
-						<@portlet["param"] name="redirect" value="${viewReportsURL}" />
+						<@portlet["param"]
+							name="redirect"
+							value="${viewReportsURL}"
+						/>
 					</@>
 
 					submitForm(document.<@portlet["namespace"] />fmReports, '${deleteReportsURL}');

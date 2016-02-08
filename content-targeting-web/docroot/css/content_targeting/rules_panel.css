@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 
 .rules-panel {
 	background-color: #EEE;
@@ -19,7 +19,7 @@
 			border-color: #009AE5;
 			border-width: 1px 1px 1px 4px;
 
-			@include box-shadow(0 5px 0 -1px #DDD);
+			box-shadow: 0 5px 0 -1px #DDD;
 
 			.row-fields .field-row {
 				border-left-color: #009AE5;

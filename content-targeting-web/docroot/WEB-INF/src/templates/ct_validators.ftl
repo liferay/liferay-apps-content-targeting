@@ -14,9 +14,9 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
+<#assign aui = PortletJspTagLibs["/WEB-INF/tld/aui.tld"] />
+<#assign liferay_ui = PortletJspTagLibs["/WEB-INF/tld/liferay-ui.tld"] />
+<#assign portlet = PortletJspTagLibs["/WEB-INF/tld/liferay-portlet.tld"] />
 
 <@aui["script"] use="aui-base,aui-form-validator">
 	var form = Liferay.Form.get('<@portlet["namespace"] />fm');

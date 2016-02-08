@@ -19,22 +19,55 @@
 <@aui["nav"]>
 
 	<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
-		<@portlet["renderURL"] var="redirectURL">
-			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-			<@portlet["param"] name="campaignId" value="${campaignId}" />
-			<@portlet["param"] name="className" value="${campaignClass.getName()}" />
-			<@portlet["param"] name="classPK" value="${campaignId}" />
-			<@portlet["param"] name="tabs2" value="promotions" />
+		<@portlet["renderURL"] copyCurrentRenderParameters=false var="redirectURL">
+			<@portlet["param"]
+				name="mvcPath"
+				value="${contentTargetingPath.EDIT_CAMPAIGN}"
+			/>
+			<@portlet["param"]
+				name="campaignId"
+				value="${campaignId}"
+			/>
+			<@portlet["param"]
+				name="className"
+				value="${campaignClass.getName()}"
+			/>
+			<@portlet["param"]
+				name="classPK"
+				value="${campaignId}"
+			/>
+			<@portlet["param"]
+				name="campaignTabs"
+				value="promotions"
+			/>
 		</@>
 
-		<@portlet["renderURL"] var="addTacticURL">
-			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_TACTIC}" />
-			<@portlet["param"] name="campaignId" value="${campaignId}" />
-			<@portlet["param"] name="redirect" value="${redirectURL}" />
+		<@portlet["renderURL"] copyCurrentRenderParameters=false var="addTacticURL">
+			<@portlet["param"]
+				name="mvcPath"
+				value="${contentTargetingPath.EDIT_TACTIC}"
+			/>
+			<@portlet["param"]
+				name="campaignId"
+				value="${campaignId}"
+			/>
+			<@portlet["param"]
+				name="redirect"
+				value="${redirectURL}"
+			/>
 		</@>
 
-		<@aui["nav-item"] href="${addTacticURL}" iconCssClass="icon-plus" label='${languageUtil.get(portletConfig, locale, "add-promotion")}' />
+		<@aui["nav-item"]
+			href="${addTacticURL}"
+			iconCssClass="icon-plus"
+			label='${languageUtil.get(portletConfig.getResourceBundle(locale), "add-promotion")}'
+		/>
 
-		<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteTactics" label='${languageUtil.get(portletConfig, locale, "delete")}' />
+		<@aui["nav-item"]
+			cssClass="hide"
+			iconCssClass="icon-remove"
+			id="deleteTactics"
+			label='${languageUtil.get(portletConfig.getResourceBundle(locale), "delete")}'
+		/>
 	</#if>
 </@>

@@ -19,9 +19,15 @@
 <#include "../macros_exceptions.ftl" />
 
 <#if validator.isNull(backURL)>
-	<@portlet["renderURL"] var="backURL">
-		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
-		<@portlet["param"] name="tabs1" value="campaigns" />
+	<@portlet["renderURL"] copyCurrentRenderParameters=false var="backURL">
+		<@portlet["param"]
+			name="mvcPath"
+			value="${contentTargetingPath.VIEW}"
+		/>
+		<@portlet["param"]
+			name="tabs1"
+			value="campaigns"
+		/>
 	</@>
 </#if>
 
@@ -30,23 +36,33 @@
 	title='${(campaign.getName(locale))!"new-campaign"}'
 />
 
+<#assign classPK = campaignId>
+<#assign className = campaignClass.getName()>
+
 <#if (campaignId > 0)>
-	<#assign campaignTabs="details,promotions,reports">
+	<#assign pills ="details,promotions,reports">
 <#else>
-	<#assign campaignTabs="details">
+	<#assign pills ="details">
 </#if>
 
-<@portlet["renderURL"] var="portletURL">
-	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-	<@portlet["param"] name="campaignId" value="${campaignId}" />
+<@portlet["renderURL"] copyCurrentRenderParameters=false varImpl="switchTabsURL">
+	<@portlet["param"]
+		name="mvcPath"
+		value="${contentTargetingPath.EDIT_CAMPAIGN}"
+	/>
+	<@portlet["param"]
+		name="campaignId"
+		value="${campaignId}"
+	/>
 </@>
 
 <@liferay_ui["tabs"]
-	names="${campaignTabs}"
-	param="tabs2"
+	names="${pills}"
+	param="campaignTabs"
+	portletURL=switchTabsURL
+	refresh=true
 	type="pills"
-	url=portletURL
-	value="${tabs2}"
+	value="${campaignTabs}"
 >
 	<@liferay_ui["section"]>
 		<#include "campaign_details.ftl" />

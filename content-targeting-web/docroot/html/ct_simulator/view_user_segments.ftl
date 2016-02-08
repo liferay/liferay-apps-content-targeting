@@ -17,12 +17,19 @@
 <#include "../init.ftl" />
 <#include "macros.ftl" />
 
-<@portlet["actionURL"] name="simulateUserSegment" var="simulateUserSegmentURL" />
-
 <div id="<@portlet["namespace"] />userSegmentContainer">
 	<@aui["form"] action="${simulateUserSegmentURL}" method="post" name="fm" onSubmit="event.preventDefault(); ${renderResponse.getNamespace()}saveUserSegments();">
-		<@aui["input"] name="selectedUserSegmentIds" type="hidden" />
-		<@aui["input"] name="stopSimulation" type="hidden" value="false" />
+		<@aui["input"]
+			name="${portletNamespace}selectedUserSegmentIds"
+			type="hidden"
+			useNamespace=false
+		/>
+		<@aui["input"]
+			name="${portletNamespace}stopSimulation"
+			type="hidden"
+			value="false"
+			useNamespace=false
+		/>
 
 		<@renderSimulatorLists
 			containerId="userSegmentContainer"
@@ -35,15 +42,21 @@
 		/>
 
 		<@aui["button-row"] cssClass="button-holder">
-			<@aui["button"] type="submit" value="simulate" />
-			<@aui["button"] name="stopSimulationButton" value="stop-simulation" />
+			<@aui["button"]
+				type="submit"
+				value="simulate"
+			/>
+			<@aui["button"]
+				name="stopSimulationButton"
+				value="stop-simulation"
+			/>
 		</@>
 	</@>
 </div>
 
 <@aui["script"] use="aui-toggler,liferay-simulator-search,liferay-util-list-fields">
 	<@portlet["namespace"] />saveUserSegments = function() {
-		document.<@portlet["namespace"] />fm.<@portlet["namespace"] />selectedUserSegmentIds.value = Liferay.Util.listChecked(document.<@portlet["namespace"] />fm);
+		document.<@portlet["namespace"] />fm.${portletNamespace}selectedUserSegmentIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fm);
 
 		submitUserSegments();
 	}
@@ -61,8 +74,6 @@
 
 	submitUserSegments = function() {
 		var loadingMask = A.getBody().plug(A.LoadingMask).loadingmask;
-
-		Liferay.Dockbar._togglePanel('simulatorPanel');
 
 		loadingMask.show();
 
@@ -85,8 +96,6 @@
 					},
 					failure: function(event) {
 						loadingMask.hide();
-
-						Liferay.Dockbar._togglePanel('simulatorPanel');
 					}
 				}
 			}

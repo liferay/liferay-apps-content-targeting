@@ -15,7 +15,10 @@
 -->
 
 <#macro invalidDateRangeException>
-	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidDateRangeException" message="please-enter-valid-date-range" />
+	<@liferay_ui["error"]
+		key="com.liferay.content.targeting.InvalidDateRangeException"
+		message="please-enter-valid-date-range"
+	/>
 </#macro>
 
 <#macro invalidNameException>
@@ -31,19 +34,31 @@
 </#macro>
 
 <#macro invalidChannelsException>
-	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidChannelsException" message="there-is-an-error-in-one-of-your-channels" />
+	<@liferay_ui["error"]
+		key="com.liferay.content.targeting.InvalidChannelsException"
+		message="there-is-an-error-in-one-of-your-channels"
+	/>
 </#macro>
 
 <#macro invalidReportException>
-	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidReportException" message="there-is-an-error-in-one-of-your-report-elements" />
+	<@liferay_ui["error"]
+		key="com.liferay.content.targeting.InvalidReportException"
+		message="there-is-an-error-in-one-of-your-report-elements"
+	/>
 </#macro>
 
 <#macro invalidRulesException>
-	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidRulesException" message="there-is-an-error-in-one-of-your-rules" />
+	<@liferay_ui["error"]
+		key="com.liferay.content.targeting.InvalidRulesException"
+		message="there-is-an-error-in-one-of-your-rules"
+	/>
 </#macro>
 
 <#macro invalidTrackingActionsException>
-	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidTrackingActionsException" message="there-is-an-error-in-one-of-your-metrics" />
+	<@liferay_ui["error"]
+		key="com.liferay.content.targeting.InvalidTrackingActionsException"
+		message="there-is-an-error-in-one-of-your-metrics"
+	/>
 </#macro>
 
 <#macro usedUserSegmentException>

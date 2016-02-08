@@ -16,21 +16,38 @@
 
 <#include "../init.ftl" />
 
-<@portlet["renderURL"] var="searchURL">
-	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
-	<@portlet["param"] name="tabs1" value="campaigns" />
+<@portlet["renderURL"] copyCurrentRenderParameters=false var="searchURL">
+	<@portlet["param"]
+		name="mvcPath"
+		value="${contentTargetingPath.VIEW}"
+	/>
+	<@portlet["param"]
+		name="tabs1"
+		value="campaigns"
+	/>
 </@>
 
 <@aui["form"] action="${searchURL}" method="post" name="fmCampaigns">
-	<@aui["input"] name="redirect" type="hidden" value="${currentURL}" />
-	<@aui["input"] name="campaignsIds" type="hidden" />
+	<@aui["input"]
+		name="redirect"
+		type="hidden"
+		value="${currentURL}"
+	/>
+	<@aui["input"]
+		name="campaignsIds"
+		type="hidden"
+	/>
 
 	<@aui["nav-bar"]>
 		<#include "campaign_toolbar.ftl" />
 
 		<@aui["nav-bar-search"] cssClass="pull-right">
 			<div class="form-search">
-				<@liferay_ui["input-search"] id="campaignKeywords" name="campaignKeywords" placeholder='${languageUtil.get(portletConfig, locale, "keywords")}' />
+				<@liferay_ui["input-search"]
+					id="campaignKeywords"
+					name="campaignKeywords"
+					placeholder='${languageUtil.get(portletConfig.getResourceBundle(locale), "keywords")}'
+				/>
 			</div>
 		</@>
 	</@>

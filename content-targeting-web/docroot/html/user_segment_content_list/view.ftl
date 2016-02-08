@@ -23,7 +23,11 @@
 	<#else>
 		<#list assetEntries as assetEntry>
 			<div class="asset-entry">
-				<@renderAssetEntry assetEntry=assetEntry displayStyle="abstracts" showEditLink=true />
+				<@renderAssetEntry
+					assetEntry=assetEntry
+					displayStyle="abstracts"
+					showEditLink=true
+				/>
 			</div>
 		</#list>
 	</#if>

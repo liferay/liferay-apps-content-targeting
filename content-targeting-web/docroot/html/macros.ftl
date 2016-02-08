@@ -15,24 +15,32 @@
 -->
 
 <#macro breadcrumb>
-	<@liferay_ui["breadcrumb"] showCurrentGroup=false showCurrentPortlet=false showLayout=false />
+	<@liferay_ui["breadcrumb"]
+		showCurrentGroup=false
+		showCurrentPortlet=false
+		showLayout=false
+	/>
 </#macro>
 
 <#macro closeConfirm
 	confirmMessage
 	controlCssClasses=[]
 >
-	<#assign controlCssClassesSelector="">
+	<#assign controlCssClassesSelector ="">
 
 	<#list controlCssClasses as controlCssClass>
 		<#if (controlCssClassesSelector?length > 0)>
-			<#assign controlCssClassesSelector=controlCssClassesSelector + ",">
+			<#assign controlCssClassesSelector = controlCssClassesSelector + ",">
 		</#if>
 
-		<#assign controlCssClassesSelector=controlCssClassesSelector + "." + controlCssClass>
+		<#assign controlCssClassesSelector = controlCssClassesSelector + "." + controlCssClass>
 	</#list>
 
-	<@aui["input"] type="hidden" name="closeConfirm" value="true" />
+	<@aui["input"]
+		type="hidden"
+		name="closeConfirm"
+		value="true"
+	/>
 
 	<@aui["script"] use="aui-base">
 		A.all('${controlCssClassesSelector}').on(
@@ -117,9 +125,15 @@
 	<#assign assetRenderer = assetEntry.getAssetRenderer() />
 
 	<#if assetRenderer.hasEditPermission(permissionChecker)>
-		<@portlet["renderURL"] varImpl="redirectURL" windowState=windowStateFactory.getWindowState("pop_up").toString()>
-			<@portlet["param"] name="mvcPath" value="html/add_asset_redirect.ftl" />
-			<@portlet["param"] name="redirect" value="${currentURL}" />
+		<@portlet["renderURL"] copyCurrentRenderParameters=false varImpl="redirectURL" windowState=windowStateFactory.getWindowState("pop_up").toString()>
+			<@portlet["param"]
+				name="mvcPath"
+				value="html/add_asset_redirect.ftl"
+			/>
+			<@portlet["param"]
+				name="redirect"
+				value="${currentURL}"
+			/>
 		</@>
 
 		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("pop_up"), redirectURL)!"" />
@@ -164,7 +178,11 @@
 								<#assign cssClass = "hide" />
 							</#if>
 
-							<@getEditIconLink assetEntry=queryRule.getAssetEntry() cssClass=cssClass index=queryRule_index />
+							<@getEditIconLink
+								assetEntry=queryRule.getAssetEntry()
+								cssClass=cssClass
+								index=queryRule_index
+							/>
 						</#if>
 					</#list>
 				</div>
@@ -190,20 +208,7 @@
 	</#if>
 
 	<#if displayStyle == "full-content">
-		<#assign path = assetRenderer.render(renderRequest, renderResponse, "full_content") />
-
-		<div class="asset-content">
-			<@liferay_util["include"] page=path>
-				<@liferay_util["param"] name="showEditURL" value=showEditLink?string />
-				<@liferay_util["param"] name="showExtraInfo" value="false" />
-				<@liferay_util["param"] name="showHeader" value="false" />
-			</@>
-		</div>
-	<#else>
-		<@liferay_util["include"] page="/html/portlet/asset_publisher/display/${stringUtil.replace(displayStyle, '-', '_')}.jsp">
-			<@liferay_util["param"] name="showEditURL" value=showEditLink?string />
-			<@liferay_util["param"] name="showExtraInfo" value="false" />
-		</@>
+		<#assign renderResult = assetRenderer.include(request, response, "full_content")>
 	</#if>
 </#macro>
 
@@ -229,9 +234,13 @@
 	</div>
 
 	<div class="edit-controls lfr-meta-actions">
-		<@aui["input"] name="assetEntryId${index}" type="hidden" value=queryRule.getAssetEntryId() />
+		<@aui["input"]
+			name="assetEntryId${index}"
+			type="hidden"
+			value=queryRule.getAssetEntryId()
+		/>
 
-		<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" message=languageUtil.get(portletConfig, locale, "select-content") showWhenSingleIcon=true>
+		<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" message=languageUtil.get(portletConfig.getResourceBundle(locale), "select-content") showWhenSingleIcon=true>
 			<#list assetRendererFactories as assetRendererFactory>
 				<@liferay_ui["icon"]
 					cssClass="asset-selector"
@@ -256,13 +265,30 @@
 			</@>
 
 			<@aui["column"] columnWidth=40>
-				<@aui["input"] checked=!queryRule.hasAssetEntry() id="contentDefaultValueDont" label="dont-display-anything" name="contentDefaultValue" type="radio" value=false />
+				<@aui["input"]
+					checked=!queryRule.hasAssetEntry()
+					id="contentDefaultValueDont"
+					label="dont-display-anything"
+					name="contentDefaultValue"
+					type="radio"
+					value=false
+				/>
 
-				<@aui["input"] checked=queryRule.hasAssetEntry() id="contentDefaultValueDo" label="display-this-content" name="contentDefaultValue" type="radio" value=true />
+				<@aui["input"]
+					checked=queryRule.hasAssetEntry()
+					id="contentDefaultValueDo"
+					label="display-this-content"
+					name="contentDefaultValue"
+					type="radio"
+					value=true
+				/>
 
 				<div id="<@portlet["namespace"] />contentDefaultBox">
 					<div class="select-asset-selector">
-						<@renderAssetEntrySelector queryRule=queryRule index="Default" />
+						<@renderAssetEntrySelector
+							queryRule=queryRule
+							index="Default"
+						/>
 					</div>
 				</div>
 			</@>
@@ -347,9 +373,15 @@
 	warningMessage
 	filterIds=""
 >
-	<@portlet["renderURL"] var="viewUserSegments">
-		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
-		<@portlet["param"] name="tabs1" value="user-segments" />
+	<@portlet["renderURL"] copyCurrentRenderParameters=false var="viewUserSegments">
+		<@portlet["param"]
+			name="mvcPath"
+			value="${contentTargetingPath.VIEW}"
+		/>
+		<@portlet["param"]
+			name="tabs1"
+			value="user-segments"
+		/>
 	</@>
 
 	<div class="user-segment-selector">
@@ -364,7 +396,11 @@
 		/>
 
 		<div class="lfr-tags-selector-content" id="<@portlet["namespace"] />assetCategorySelector">
-			<@aui["input"] name="${hiddenInput}" type="hidden" value="${assetCategoryIds}" />
+			<@aui["input"]
+				name="${hiddenInput}"
+				type="hidden"
+				value="${assetCategoryIds}"
+			/>
 		</div>
 
 		<@aui["script"] use="liferay-asset-categories-selector">

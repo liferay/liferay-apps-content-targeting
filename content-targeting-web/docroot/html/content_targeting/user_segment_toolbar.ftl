@@ -18,20 +18,41 @@
 
 <@aui["nav"]>
 	<#if contentTargetingPermission.contains(permissionChecker, scopeGroupId, actionKeys.ADD_USER_SEGMENT)>
-		<@portlet["renderURL"] var="redirectURL">
-			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
-			<@portlet["param"] name="tabs1" value="user-segments" />
+		<@portlet["renderURL"] copyCurrentRenderParameters=false var="redirectURL">
+			<@portlet["param"]
+				name="mvcPath"
+				value="${contentTargetingPath.VIEW}"
+			/>
+			<@portlet["param"]
+				name="tabs1"
+				value="user-segments"
+			/>
 		</@>
 
-		<@portlet["renderURL"] var="addUserSegmentURL">
-			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-			<@portlet["param"] name="redirect" value="${redirectURL}" />
+		<@portlet["renderURL"] copyCurrentRenderParameters=false var="addUserSegmentURL">
+			<@portlet["param"]
+				name="mvcPath"
+				value="${contentTargetingPath.EDIT_USER_SEGMENT}"
+			/>
+			<@portlet["param"]
+				name="redirect"
+				value="${redirectURL}"
+			/>
 		</@>
 
-		<@aui["nav-item"] href="${addUserSegmentURL}" iconCssClass="icon-plus" label='${languageUtil.get(portletConfig, locale, "add-user-segment")}' />
+		<@aui["nav-item"]
+			href="${addUserSegmentURL}"
+			iconCssClass="icon-plus"
+			label='${languageUtil.get(portletConfig.getResourceBundle(locale), "add-user-segment")}'
+		/>
 	</#if>
 
 	<#if userSegmentPermission.contains(permissionChecker, scopeGroupId, scopeGroupId, actionKeys.DELETE)>
-		<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteUserSegments" label='${languageUtil.get(portletConfig, locale, "delete")}' />
+		<@aui["nav-item"]
+			cssClass="hide"
+			iconCssClass="icon-remove"
+			id="deleteUserSegments"
+			label='${languageUtil.get(portletConfig.getResourceBundle(locale), "delete")}'
+		/>
 	</#if>
 </@>

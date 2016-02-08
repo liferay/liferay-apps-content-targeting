@@ -26,7 +26,7 @@
 			<#if redirect??>
 				redirect: '${htmlUtil.escapeJS(redirect)}'
 			<#else>
-				refresh: '${portletDisplay.getId()}'
+				refresh: '${portletDisplay.getId(request)}'
 			</#if>
 		}
 	);

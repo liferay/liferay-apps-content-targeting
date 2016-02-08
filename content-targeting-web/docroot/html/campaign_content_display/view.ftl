@@ -37,10 +37,22 @@
 			</#if>
 
 			<@liferay_util["include"] page="/html/common/analytics/track_content.jsp">
-				<@liferay_util["param"] name="analyticsClassName" value=queryRule.getAssetClassName() />
-				<@liferay_util["param"] name="analyticsClassPK" value=queryRule.getAssetClassPK()?string />
-				<@liferay_util["param"] name="analyticsReferrerClassName" value=campaignClassName />
-				<@liferay_util["param"] name="analyticsReferrerClassPKs" value=queryRule.getCampaignId()?string />
+				<@liferay_util["param"]
+					name="analyticsClassName"
+					value=queryRule.getAssetClassName()
+				/>
+				<@liferay_util["param"]
+					name="analyticsClassPK"
+					value=queryRule.getAssetClassPK()?string
+				/>
+				<@liferay_util["param"]
+					name="analyticsReferrerClassName"
+					value=campaignClassName
+				/>
+				<@liferay_util["param"]
+					name="analyticsReferrerClassPKs"
+					value=queryRule.getCampaignId()?string
+				/>
 			</@>
 		<#else>
 			<div class="alert alert-info">
@@ -50,7 +62,10 @@
 	</div>
 
 	<#if showPreview>
-		<@renderThumbnailsPreview queryRules=campaignQueryRules selectedIndex=selectedIndex />
+		<@renderThumbnailsPreview
+			queryRules=campaignQueryRules
+			selectedIndex=selectedIndex
+		/>
 	</#if>
 </div>
 

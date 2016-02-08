@@ -18,15 +18,35 @@
 <#include "../macros.ftl" />
 <#include "../macros_exceptions.ftl" />
 
-<@portlet["actionURL"] name="updateCampaign" var="addCampaignURL" />
+<@portlet["actionURL"]
+	name="updateCampaign"
+	var="addCampaignURL"
+/>
 
 <@aui["form"] action="${addCampaignURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
-	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
-	<@aui["input"] name="campaignId" type="hidden" value=campaignId />
-	<@aui["input"] name="campaignTrackingActions" type="hidden" />
-	<@aui["input"] name="saveAndContinue" type="hidden" />
+	<@aui["input"]
+		name="redirect"
+		type="hidden"
+		value="${redirect}"
+	/>
+	<@aui["input"]
+		name="campaignId"
+		type="hidden"
+		value=campaignId
+	/>
+	<@aui["input"]
+		name="campaignTrackingActions"
+		type="hidden"
+	/>
+	<@aui["input"]
+		name="saveAndContinue"
+		type="hidden"
+	/>
 
-	<@aui["model-context"] bean=campaign model=campaignClass />
+	<@aui["model-context"]
+		bean=campaign
+		model=campaignClass
+	/>
 
 	<@invalidNameException />
 
@@ -43,28 +63,64 @@
 		warningMessage="editing-user-segments-deletes-all-unsaved-campaign-data"
 	/>
 
-	<@aui["input"] cssClass="slider-input" helpMessage="priority-help" inlineField=true name="priority" size="2" maxlength="3" type="text" value="${priority}" />
+	<@aui["input"]
+		cssClass="slider-input"
+		helpMessage="priority-help"
+		inlineField=true
+		name="priority"
+		size="2"
+		maxlength="3"
+		type="text"
+		value="${priority}"
+	/>
 
 	<span class="slider-holder"></span>
 
-	<@aui["input"] name="active" value=true />
+	<@aui["input"]
+		name="active"
+		value=true
+	/>
 
 	<@liferay_ui["panel"] cssClass="dates-panel" collapsible=true defaultState="open" extended=false id="datesPanel" helpMessage="" persistState=true title="Dates">
 		<@invalidDateRangeException />
 
-		<@aui["input"] name="startDate" value=startDate />
+		<@aui["input"]
+			name="startDate"
+			value=startDate
+		/>
 
-		<@aui["input"] name="endDate" value=endDate />
+		<@aui["input"]
+			name="endDate"
+			value=endDate
+		/>
 
-		<@aui["input"] helpMessage="time-zone-help" label="time-zone" name="timeZoneId" type="timeZone" value=timeZoneId />
+		<@aui["input"]
+			helpMessage="time-zone-help"
+			label="time-zone"
+			name="timeZoneId"
+			type="timeZone"
+			value=timeZoneId
+		/>
 	</@>
 
 	<@aui["button-row"]>
-		<@aui["button"] cssClass="control-button" type="submit" />
+		<@aui["button"]
+			cssClass="control-button"
+			type="submit"
+		/>
 
-		<@aui["button"] cssClass="control-button" type="button" value="save-and-continue" onClick="saveAndContinue();" />
+		<@aui["button"]
+			cssClass="control-button"
+			type="button"
+			value="save-and-continue"
+			onClick="saveAndContinue();"
+		/>
 
-		<@aui["button"] cssClass="control-button" href="${redirect}" type="cancel" />
+		<@aui["button"]
+			cssClass="control-button"
+			href="${redirect}"
+			type="cancel"
+		/>
 	</@>
 
 	<@aui["script"] use="liferay-input-slider">
@@ -88,4 +144,7 @@
 	</@>
 </@>
 
-<@closeConfirm confirmMessage="leaving-this-window-deletes-all-unsaved-data" controlCssClasses=["control-button"] />
+<@closeConfirm
+	confirmMessage="leaving-this-window-deletes-all-unsaved-data"
+	controlCssClasses=["control-button", "tab"]
+/>

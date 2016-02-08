@@ -18,8 +18,11 @@
 <#include "../macros.ftl" />
 
 <#if validator.isNull(redirect)>
-	<@portlet["renderURL"] var="redirect">
-		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+	<@portlet["renderURL"] copyCurrentRenderParameters=false var="redirect">
+		<@portlet["param"]
+			name="mvcPath"
+			value="${contentTargetingPath.VIEW}"
+		/>
 	</@>
 </#if>
 
@@ -33,29 +36,69 @@
 	</div>
 </#if>
 
-<@portlet["renderURL"] varImpl="viewReportsURL">
-	<@portlet["param"] name="redirect" value="${redirect}" />
-	<@portlet["param"] name="backURL" value="${backURL}" />
+<@portlet["renderURL"] copyCurrentRenderParameters=false varImpl="viewReportsURL">
+	<@portlet["param"]
+		name="redirect"
+		value="${redirect}"
+	/>
+	<@portlet["param"]
+		name="backURL"
+		value="${backURL}"
+	/>
 
 	<#if className == campaignClass.getName()>
-		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-		<@portlet["param"] name="campaignId" value="${classPK?string}" />
-		<@portlet["param"] name="tabs2" value="reports" />
+		<@portlet["param"]
+			name="mvcPath"
+			value="${contentTargetingPath.EDIT_CAMPAIGN}"
+		/>
+		<@portlet["param"]
+			name="campaignId"
+			value="${classPK?string}"
+		/>
+		<@portlet["param"]
+			name="campaignTabs"
+			value="reports"
+		/>
 	<#elseif className == userSegmentClass.getName()>
-		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-		<@portlet["param"] name="userSegmentId" value="${classPK?string}" />
-		<@portlet["param"] name="tabs2" value="reports" />
+		<@portlet["param"]
+			name="mvcPath"
+			value="${contentTargetingPath.EDIT_USER_SEGMENT}"
+		/>
+		<@portlet["param"]
+			name="userSegmentId"
+			value="${classPK?string}"
+		/>
+		<@portlet["param"]
+			name="userSegmentTabs"
+			value="reports"
+		/>
 	<#else>
-		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
+		<@portlet["param"]
+			name="mvcPath"
+			value="${contentTargetingPath.VIEW_REPORTS}"
+		/>
 	</#if>
 
-	<@portlet["param"] name="className" value="${className}" />
-	<@portlet["param"] name="classPK" value="${classPK?string}" />
+	<@portlet["param"]
+		name="className"
+		value="${className}"
+	/>
+	<@portlet["param"]
+		name="classPK"
+		value="${classPK?string}"
+	/>
 </@>
 
 <@aui["form"] action="${viewReportsURL}" method="post" name="fmReports">
-	<@aui["input"] name="redirect" type="hidden" value="${viewReportsURL}" />
-	<@aui["input"] name="reportInstanceIds" type="hidden" />
+	<@aui["input"]
+		name="redirect"
+		type="hidden"
+		value="${viewReportsURL}"
+	/>
+	<@aui["input"]
+		name="reportInstanceIds"
+		type="hidden"
+	/>
 
 	<div id="<@portlet["namespace"] />reportsPanel">
 		<#include "report_toolbar.ftl" />

@@ -16,9 +16,15 @@
 
 <#include "../init.ftl" />
 
-<@portlet["renderURL"] varImpl="viewUserSegmentsURL">
-	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
-	<@portlet["param"] name="tabs1" value="user-segments" />
+<@portlet["renderURL"] copyCurrentRenderParameters=false varImpl="viewUserSegmentsURL">
+	<@portlet["param"]
+		name="mvcPath"
+		value="${contentTargetingPath.VIEW}"
+	/>
+	<@portlet["param"]
+		name="tabs1"
+		value="user-segments"
+	/>
 </@>
 
 <@liferay_ui["search-container"]
@@ -38,10 +44,19 @@
 	>
 
 		<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.UPDATE)>
-			<@portlet["renderURL"] var="editUserSegmentURL">
-				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-				<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
-				<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+			<@portlet["renderURL"] copyCurrentRenderParameters=false var="editUserSegmentURL">
+				<@portlet["param"]
+					name="mvcPath"
+					value="${contentTargetingPath.EDIT_USER_SEGMENT}"
+				/>
+				<@portlet["param"]
+					name="redirect"
+					value="${viewUserSegmentsURL}"
+				/>
+				<@portlet["param"]
+					name="userSegmentId"
+					value="${userSegment.getUserSegmentId()?string}"
+				/>
 			</@>
 		</#if>
 
@@ -70,13 +85,31 @@
 					/>
 
 					<#if (reportsCount > 0)>
-						<@portlet["renderURL"] var="viewUserSegmentReportsURL">
-							<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-							<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
-							<@portlet["param"] name="className" value="${userSegmentClass.getName()}" />
-							<@portlet["param"] name="classPK" value="${userSegment.getUserSegmentId()?string}" />
-							<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-							<@portlet["param"] name="tabs2" value="reports" />
+						<@portlet["renderURL"] copyCurrentRenderParameters=false var="viewUserSegmentReportsURL">
+							<@portlet["param"]
+								name="mvcPath"
+								value="${contentTargetingPath.EDIT_USER_SEGMENT}"
+							/>
+							<@portlet["param"]
+								name="redirect"
+								value="${viewUserSegmentsURL}"
+							/>
+							<@portlet["param"]
+								name="className"
+								value="${userSegmentClass.getName()}"
+							/>
+							<@portlet["param"]
+								name="classPK"
+								value="${userSegment.getUserSegmentId()?string}"
+							/>
+							<@portlet["param"]
+								name="userSegmentId"
+								value="${userSegment.getUserSegmentId()?string}"
+							/>
+							<@portlet["param"]
+								name="userSegmentTabs"
+								value="reports"
+							/>
 						</@>
 
 						<@liferay_ui["icon"]
@@ -91,8 +124,14 @@
 
 				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.DELETE)>
 					<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
-						<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
-						<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+						<@portlet["param"]
+							name="redirect"
+							value="${viewUserSegmentsURL}"
+						/>
+						<@portlet["param"]
+							name="userSegmentId"
+							value="${userSegment.getUserSegmentId()?string}"
+						/>
 					</@>
 
 					<@liferay_ui["icon-delete"]
@@ -127,7 +166,7 @@
 	var deleteUserSegments = A.one('#<@portlet["namespace"] />deleteUserSegments');
 
 	if (deleteUserSegments) {
-		A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').on(
+		A.one('#<@portlet["namespace"] />${searchContainerReference.getId(request)}SearchContainer').on(
 			'click',
 			function() {
 				var hide = (Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmUserSegment, '<@portlet["namespace"] />allRowIds').length == 0);
@@ -143,13 +182,22 @@
 				if (confirm('<@liferay_ui["message"] key="are-you-sure-you-want-to-delete-this" />')) {
 					document.<@portlet["namespace"] />fmUserSegment.<@portlet["namespace"] />userSegmentIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmUserSegment, '<@portlet["namespace"] />allRowIds');
 
-					<@portlet["renderURL"] var="redirectURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
-						<@portlet["param"] name="tabs1" value="user-segments" />
+					<@portlet["renderURL"] copyCurrentRenderParameters=false var="redirectURL">
+						<@portlet["param"]
+							name="mvcPath"
+							value="${contentTargetingPath.VIEW}"
+						/>
+						<@portlet["param"]
+							name="tabs1"
+							value="user-segments"
+						/>
 					</@>
 
 					<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
-						<@portlet["param"] name="redirect" value="${redirectURL}" />
+						<@portlet["param"]
+							name="redirect"
+							value="${redirectURL}"
+						/>
 					</@>
 
 					submitForm(document.<@portlet["namespace"] />fmUserSegment, '${deleteUserSegmentURL}');

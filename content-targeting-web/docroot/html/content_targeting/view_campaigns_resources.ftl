@@ -16,9 +16,15 @@
 
 <#include "../init.ftl" />
 
-<@portlet["renderURL"] varImpl="viewCampaignsURL">
-	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
-	<@portlet["param"] name="tabs1" value="campaigns" />
+<@portlet["renderURL"] copyCurrentRenderParameters=false varImpl="viewCampaignsURL">
+	<@portlet["param"]
+		name="mvcPath"
+		value="${contentTargetingPath.VIEW}"
+	/>
+	<@portlet["param"]
+		name="tabs1"
+		value="campaigns"
+	/>
 </@>
 
 <@liferay_ui["search-container"]
@@ -38,10 +44,19 @@
 	>
 
 		<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
-			<@portlet["renderURL"] var="editCampaignURL">
-				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-				<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
-				<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
+			<@portlet["renderURL"] copyCurrentRenderParameters=false var="editCampaignURL">
+				<@portlet["param"]
+					name="mvcPath"
+					value="${contentTargetingPath.EDIT_CAMPAIGN}"
+				/>
+				<@portlet["param"]
+					name="redirect"
+					value="${viewCampaignsURL}"
+				/>
+				<@portlet["param"]
+					name="campaignId"
+					value="${campaign.getCampaignId()?string}"
+				/>
 			</@>
 		</#if>
 
@@ -93,13 +108,31 @@
 					/>
 
 					<#if (reportsCount > 0)>
-						<@portlet["renderURL"] var="viewCampaignReportsURL">
-							<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-							<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
-							<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
-							<@portlet["param"] name="className" value="${campaignClass.getName()}" />
-							<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
-							<@portlet["param"] name="tabs2" value="reports" />
+						<@portlet["renderURL"] copyCurrentRenderParameters=false var="viewCampaignReportsURL">
+							<@portlet["param"]
+								name="mvcPath"
+								value="${contentTargetingPath.EDIT_CAMPAIGN}"
+							/>
+							<@portlet["param"]
+								name="redirect"
+								value="${viewCampaignsURL}"
+							/>
+							<@portlet["param"]
+								name="campaignId"
+								value="${campaign.getCampaignId()?string}"
+							/>
+							<@portlet["param"]
+								name="className"
+								value="${campaignClass.getName()}"
+							/>
+							<@portlet["param"]
+								name="classPK"
+								value="${campaign.getCampaignId()?string}"
+							/>
+							<@portlet["param"]
+								name="campaignTabs"
+								value="reports"
+							/>
 						</@>
 
 						<@liferay_ui["icon"]
@@ -112,13 +145,31 @@
 					</#if>
 
 					<#if (channelsCount > 0)>
-						<@portlet["renderURL"] var="viewCampaignTacticsURL">
-							<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-							<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
-							<@portlet["param"] name="className" value="${campaignClass.getName()}" />
-							<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
-							<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
-							<@portlet["param"] name="tabs2" value="promotions" />
+						<@portlet["renderURL"] copyCurrentRenderParameters=false var="viewCampaignTacticsURL">
+							<@portlet["param"]
+								name="mvcPath"
+								value="${contentTargetingPath.EDIT_CAMPAIGN}"
+							/>
+							<@portlet["param"]
+								name="redirect"
+								value="${viewCampaignsURL}"
+							/>
+							<@portlet["param"]
+								name="className"
+								value="${campaignClass.getName()}"
+							/>
+							<@portlet["param"]
+								name="classPK"
+								value="${campaign.getCampaignId()?string}"
+							/>
+							<@portlet["param"]
+								name="campaignId"
+								value="${campaign.getCampaignId()?string}"
+							/>
+							<@portlet["param"]
+								name="campaignTabs"
+								value="promotions"
+							/>
 						</@>
 
 						<@liferay_ui["icon"]
@@ -133,8 +184,14 @@
 
 				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.DELETE)>
 					<@portlet["actionURL"] name="deleteCampaign" var="deleteCampaignURL">
-						<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
-						<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
+						<@portlet["param"]
+							name="redirect"
+							value="${viewCampaignsURL}"
+						/>
+						<@portlet["param"]
+							name="campaignId"
+							value="${campaign.getCampaignId()?string}"
+						/>
 					</@>
 
 					<@liferay_ui["icon-delete"]
@@ -169,7 +226,7 @@
 	var deleteCampaigns = A.one('#<@portlet["namespace"] />deleteCampaigns');
 
 	if (deleteCampaigns) {
-		A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').on(
+		A.one('#<@portlet["namespace"] />${searchContainerReference.getId(request)}SearchContainer').on(
 			'click',
 			function() {
 				var hide = (Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmCampaigns, '<@portlet["namespace"] />allRowIds').length == 0);
@@ -185,13 +242,22 @@
 				if (confirm('<@liferay_ui["message"] key="are-you-sure-you-want-to-delete-this" />')) {
 					document.<@portlet["namespace"] />fmCampaigns.<@portlet["namespace"] />campaignsIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmCampaigns, '<@portlet["namespace"] />allRowIds');
 
-					<@portlet["renderURL"] var="redirectURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
-						<@portlet["param"] name="tabs1" value="campaigns" />
+					<@portlet["renderURL"] copyCurrentRenderParameters=false var="redirectURL">
+						<@portlet["param"]
+							name="mvcPath"
+							value="${contentTargetingPath.VIEW}"
+						/>
+						<@portlet["param"]
+							name="tabs1"
+							value="campaigns"
+						/>
 					</@>
 
 					<@portlet["actionURL"] name="deleteCampaign" var="deleteCampaignsURL">
-						<@portlet["param"] name="redirect" value="${redirectURL}" />
+						<@portlet["param"]
+							name="redirect"
+							value="${redirectURL}"
+						/>
 					</@>
 
 					submitForm(document.<@portlet["namespace"] />fmCampaigns, '${deleteCampaignsURL}');

@@ -28,7 +28,12 @@
 			<i class="search-panel-icon"></i>
 
 			<div class="search-panels-bar">
-				<@aui["input"] cssClass="search-panels-input search-query span12" label="" name="search${name}Panel" type="text" />
+				<@aui["input"]
+					cssClass="search-panels-input search-query span12"
+					label=""
+					name="search${name}Panel"
+					type="text"
+				/>
 			</div>
 		</div>
 	</#if>
@@ -51,7 +56,14 @@
 		<div class="category-content">
 			<#if userSegments?has_content>
 				<#list elements as element>
-					<@aui["input"] cssClass="element matched" label="${element.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="element${element.getPrimaryKey()}" type="checkbox" checked=simulatedElementsPKs?seq_contains(element.getPrimaryKey()) value=element.getPrimaryKey() />
+					<@aui["input"]
+						cssClass="element matched checkbox"
+						label="${element.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}"
+						name="element${element.getPrimaryKey()}"
+						type="checkbox"
+						checked=simulatedElementsPKs?seq_contains(element.getPrimaryKey())
+						value=element.getPrimaryKey()
+					/>
 				</#list>
 			<#else>
 				<div class="alert alert-info">
@@ -78,7 +90,14 @@
 
 		<div class="category-content">
 			<#list notMatchedElements as notMatchedElement>
-				<@aui["input"] cssClass="element not-matched" label="${notMatchedElement.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="notMatchedElement${notMatchedElement.getPrimaryKey()}" type="checkbox" checked=simulatedElementsPKs?seq_contains(notMatchedElement.getPrimaryKey()) value=notMatchedElement.getPrimaryKey() />
+				<@aui["input"]
+					cssClass="element not-matched checkbox"
+					label="${notMatchedElement.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}"
+					name="notMatchedElement${notMatchedElement.getPrimaryKey()}"
+					type="checkbox"
+					checked=simulatedElementsPKs?seq_contains(notMatchedElement.getPrimaryKey())
+					value=notMatchedElement.getPrimaryKey()
+				/>
 			</#list>
 		</div>
 
