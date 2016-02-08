@@ -18,13 +18,13 @@ import com.liferay.content.targeting.portlet.util.UnavailableServiceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CTFreeMarkerPortlet extends FreeMarkerPortlet {
 
 	protected Map<String, Object> cloneTemplateContext(Template template) {
-		Map<String, Object> context = new HashMap<String, Object>();
+		Map<String, Object> context = new HashMap<>();
 
 		for (String key : template.getKeys()) {
 			context.put(key, template.get(key));

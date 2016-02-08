@@ -14,17 +14,20 @@
 
 package com.liferay.content.targeting.portlet;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.content.targeting.portlet.util.PortletDisplayTemplateUtil;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -34,10 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.asset.model.AssetEntry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -68,10 +67,9 @@ public class CTFreeMarkerDisplayPortlet extends CTFreeMarkerPortlet {
 
 		String displayStyle = GetterUtil.getString(
 			portletPreferences.getValue("displayStyle", defaultDisplayStyle));
-		long displayStyleGroupId =
-			GetterUtil.getLong(
-				portletPreferences.getValue("displayStyleGroupId", null),
-				defaultDisplayStyleGroupId);
+		long displayStyleGroupId = GetterUtil.getLong(
+			portletPreferences.getValue("displayStyleGroupId", null),
+			defaultDisplayStyleGroupId);
 
 		template.put("displayStyle", displayStyle);
 		template.put("displayStyleGroupId", displayStyleGroupId);
@@ -97,8 +95,8 @@ public class CTFreeMarkerDisplayPortlet extends CTFreeMarkerPortlet {
 
 		long portletDisplayDDMTemplateId =
 			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(
-					(Long) template.get("displayStyleGroupId"),
-					(String) template.get("displayStyle"));
+					(Long)template.get("displayStyleGroupId"),
+					(String)template.get("displayStyle"));
 
 		if (portletDisplayDDMTemplateId > 0) {
 			String portletDisplayTemplateHtml =
@@ -132,7 +130,7 @@ public class CTFreeMarkerDisplayPortlet extends CTFreeMarkerPortlet {
 	}
 
 	protected boolean showPreview(ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -163,7 +161,7 @@ public class CTFreeMarkerDisplayPortlet extends CTFreeMarkerPortlet {
 		throws Exception {
 
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
-			request, DefaultConfigurationAction.PREFERENCES_PREFIX);
+			request, ParameterMapSettings.PREFERENCES_PREFIX);
 
 		for (Map.Entry<String, String> entry : properties.entrySet()) {
 			String name = entry.getKey();

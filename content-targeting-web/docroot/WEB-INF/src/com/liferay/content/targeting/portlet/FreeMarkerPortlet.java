@@ -17,19 +17,16 @@ package com.liferay.content.targeting.portlet;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
-import com.liferay.portal.kernel.template.TemplateTaglibSupportProvider;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
-import com.liferay.portal.util.PortalUtil;
-
-import freemarker.ext.servlet.HttpRequestHashModel;
-
-import freemarker.template.ObjectWrapper;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -40,16 +37,19 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponseWrapper;
-
 /**
- * This class fixes some issues in the FreeMarkerPortlet class.
- *
- * @author Eudaldo Alonso
+ * @author Raymond Augé
  */
-public class FreeMarkerPortlet
-	extends com.liferay.util.bridges.freemarker.FreeMarkerPortlet {
+public class FreeMarkerPortlet extends MVCPortlet {
+
+	@Override
+	public void destroy() {
+		super.destroy();
+
+		Class<?> clazz = getClass();
+
+		TemplateManagerUtil.destroy(clazz.getClassLoader());
+	}
 
 	@Override
 	protected void include(
@@ -61,6 +61,10 @@ public class FreeMarkerPortlet
 
 		String servletContextName = portletContext.getPortletContextName();
 
+		if (path == null) {
+			path = "";
+		}
+
 		String resourcePath = servletContextName.concat(
 			TemplateConstants.SERVLET_SEPARATOR).concat(path);
 
@@ -71,7 +75,7 @@ public class FreeMarkerPortlet
 				TemplateConstants.LANG_TYPE_FTL, resourcePath);
 		}
 		catch (TemplateException te) {
-			throw new IOException(te.getMessage());
+			throw new IOException(te);
 		}
 
 		if (!resourceExists) {
@@ -83,34 +87,33 @@ public class FreeMarkerPortlet
 					TemplateResourceLoaderUtil.getTemplateResource(
 						TemplateConstants.LANG_TYPE_FTL, resourcePath);
 
+				TemplateManager templateManager =
+					TemplateManagerUtil.getTemplateManager(
+						TemplateConstants.LANG_TYPE_FTL);
+
 				Template template = TemplateManagerUtil.getTemplate(
 					TemplateConstants.LANG_TYPE_FTL, templateResource, false);
 
-				TemplateTaglibSupportProvider templateTaglibSupportProvider =
-					getTaglibSupportProvider();
+				templateManager.addTaglibApplication(
+					template, "Application", getServletContext());
+				templateManager.addTaglibRequest(
+					template, "Request",
+					PortalUtil.getHttpServletRequest(portletRequest),
+					PortalUtil.getHttpServletResponse(portletResponse));
 
-				if (templateTaglibSupportProvider != null) {
-					templateTaglibSupportProvider.addTaglibSupport(
-						template, servletContextName, portletRequest,
-						portletResponse);
-				}
-
-				// LPS-43725
-
-				HttpServletRequestWrapper httpServletRequestWrapper =
-					new HttpServletRequestWrapper(
-						PortalUtil.getHttpServletRequest(portletRequest));
-
-				HttpServletResponseWrapper httpServletResponseWrapper =
-					new HttpServletResponseWrapper(
-						PortalUtil.getHttpServletResponse(portletResponse));
-
-				HttpRequestHashModel httpRequestHashModel =
-					new HttpRequestHashModel(
-						httpServletRequestWrapper, httpServletResponseWrapper,
-						ObjectWrapper.DEFAULT_WRAPPER);
-
-				template.put("Request", httpRequestHashModel);
+				template.put("portletContext", getPortletContext());
+				template.put(
+					"PortletJspTagLibs",
+					new TaglibFactoryWrapper(getServletContext()));
+				template.put(
+					"request",
+					PortalUtil.getHttpServletRequest(portletRequest));
+				template.put(
+					"response",
+					PortalUtil.getHttpServletResponse(portletResponse));
+				template.put(
+					"userInfo",
+					portletRequest.getAttribute(PortletRequest.USER_INFO));
 
 				populateContext(
 					path, portletRequest, portletResponse, template);
@@ -147,6 +150,7 @@ public class FreeMarkerPortlet
 		throws Exception {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(FreeMarkerPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		FreeMarkerPortlet.class);
 
 }
