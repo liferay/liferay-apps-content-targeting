@@ -14,7 +14,7 @@
 
 package com.liferay.content.targeting.portlet.util;
 
-import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetEntry;
 
 import javax.portlet.PortletRequest;
 
@@ -33,8 +33,7 @@ public interface QueryRule extends Comparable<QueryRule> {
 
 	long getAssetEntryId();
 
-	String getAssetImage(PortletRequest portletRequest)
-		throws Exception;
+	String getAssetImage(PortletRequest portletRequest) throws Exception;
 
 	String getAssetTitle();
 

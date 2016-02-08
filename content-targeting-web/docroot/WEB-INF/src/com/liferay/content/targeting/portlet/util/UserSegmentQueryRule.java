@@ -14,16 +14,15 @@
 
 package com.liferay.content.targeting.portlet.util;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
 import java.util.Locale;
 
@@ -34,14 +33,14 @@ import javax.portlet.PortletConfig;
  */
 public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 
-	public UserSegmentQueryRule() throws PortalException, SystemException {
+	public UserSegmentQueryRule() throws PortalException {
 		this(true, true, 0, null, 0, null);
 	}
 
 	public UserSegmentQueryRule(
 			boolean andOperator, boolean contains, long assetEntryId,
 			long[] userSegmentAssetCategoryIds, int index, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		super(assetEntryId, index, locale);
 
@@ -102,11 +101,10 @@ public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 		return false;
 	}
 
-	public String getSummary(PortletConfig portletConfig, Locale locale)
-		throws SystemException {
-
+	public String getSummary(PortletConfig portletConfig, Locale locale) {
 		if (ArrayUtil.isEmpty(_userSegmentAssetCategoryIds)) {
-			return LanguageUtil.get(portletConfig, locale, "default");
+			return LanguageUtil.get(
+				portletConfig.getResourceBundle(locale), "default");
 		}
 
 		String summary = StringPool.BLANK;
@@ -134,14 +132,12 @@ public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 		return StringUtil.merge(_userSegmentAssetCategoryIds);
 	}
 
-	public String getUserSegmentAssetCategoryNames(Locale locale)
-		throws SystemException {
-
+	public String getUserSegmentAssetCategoryNames(Locale locale) {
 		return ContentTargetingUtil.getAssetCategoryNames(
 			_userSegmentAssetCategoryIds, locale);
 	}
 
-	public String getUserSegmentNames(Locale locale) throws SystemException {
+	public String getUserSegmentNames(Locale locale) {
 		return ContentTargetingUtil.getAssetCategoryNames(
 			_userSegmentAssetCategoryIds, locale, StringPool.COMMA_AND_SPACE);
 	}

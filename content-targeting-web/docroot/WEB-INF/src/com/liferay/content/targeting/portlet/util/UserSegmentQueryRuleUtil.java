@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,7 +33,7 @@ public class UserSegmentQueryRuleUtil {
 
 	public static QueryRule getQueryRule(
 			ActionRequest request, int queryRulesIndex, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		boolean andOperator = ParamUtil.getBoolean(
 			request, "queryAndOperator" + queryRulesIndex);
@@ -56,7 +55,7 @@ public class UserSegmentQueryRuleUtil {
 	public static QueryRule getQueryRule(
 			PortletPreferences portletPreferences, int queryRulesIndex,
 			Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		boolean andOperator = GetterUtil.getBoolean(
 			portletPreferences.getValue(
@@ -81,9 +80,9 @@ public class UserSegmentQueryRuleUtil {
 	public static List<QueryRule> getUserSegmentQueryRules(
 			PortletPreferences portletPreferences, Locale locale,
 			boolean includeEmptyQueryRule)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<QueryRule> userSegmentQueryRules = new ArrayList<QueryRule>();
+		List<QueryRule> userSegmentQueryRules = new ArrayList<>();
 
 		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
 			portletPreferences.getValues("queryLogicIndexes", null),
@@ -91,7 +90,7 @@ public class UserSegmentQueryRuleUtil {
 
 		for (int queryRulesIndex : queryRulesIndexes) {
 			QueryRule userSegmentQueryRule = getQueryRule(
-					portletPreferences, queryRulesIndex, locale);
+				portletPreferences, queryRulesIndex, locale);
 
 			if (userSegmentQueryRule.isValid()) {
 				userSegmentQueryRules.add(userSegmentQueryRule);
@@ -122,7 +121,7 @@ public class UserSegmentQueryRuleUtil {
 
 	protected static QueryRule getDefaultQueryRule(
 			PortletPreferences portletPreferences, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long assetEntryIdDefault = GetterUtil.getLong(
 			portletPreferences.getValue("assetEntryIdDefault", null));

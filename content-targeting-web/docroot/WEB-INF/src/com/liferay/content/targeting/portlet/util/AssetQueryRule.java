@@ -14,23 +14,22 @@
 
 package com.liferay.content.targeting.portlet.util;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -47,7 +46,7 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class AssetQueryRule implements QueryRule {
 
 	public AssetQueryRule(long assetEntryId, int index, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_assetEntryId = assetEntryId;
 		_index = index;
@@ -171,15 +170,16 @@ public abstract class AssetQueryRule implements QueryRule {
 			WebKeys.THEME_DISPLAY);
 
 		portletRequest.setAttribute("view.jsp-results", new ArrayList());
-		portletRequest.setAttribute("view.jsp-assetEntryIndex", new Integer(0));
+		portletRequest.setAttribute(
+			"view.jsp-assetEntryIndex", Integer.valueOf(0));
 		portletRequest.setAttribute("view.jsp-assetEntry", _assetEntry);
 		portletRequest.setAttribute(
 			"view.jsp-assetRendererFactory", _assetRendererFactory);
 		portletRequest.setAttribute("view.jsp-assetRenderer", _assetRenderer);
 		portletRequest.setAttribute(
 			"view.jsp-title", _assetEntry.getTitle(themeDisplay.getLocale()));
-		portletRequest.setAttribute("view.jsp-show", new Boolean(false));
-		portletRequest.setAttribute("view.jsp-print", new Boolean(false));
+		portletRequest.setAttribute("view.jsp-show", Boolean.valueOf(false));
+		portletRequest.setAttribute("view.jsp-print", Boolean.valueOf(false));
 	}
 
 	@Override
@@ -226,7 +226,8 @@ public abstract class AssetQueryRule implements QueryRule {
 		String cssClass = "query-operator";
 
 		if ((andOperator == null) && !contains) {
-			sb.append(LanguageUtil.get(portletConfig, locale, "not"));
+			sb.append(LanguageUtil.get(
+				portletConfig.getResourceBundle(locale), "not"));
 			sb.append(StringPool.SPACE);
 
 			cssClass += " first";
@@ -236,13 +237,17 @@ public abstract class AssetQueryRule implements QueryRule {
 
 			sb.append(
 				andOperator ?
-					LanguageUtil.get(portletConfig, locale, "and") :
-					LanguageUtil.get(portletConfig, locale, "or"));
+					LanguageUtil.get(
+						portletConfig.getResourceBundle(locale), "and") :
+					LanguageUtil.get(
+						portletConfig.getResourceBundle(locale), "or"));
 
 			sb.append(StringPool.SPACE);
 
 			if (!contains) {
-				sb.append(LanguageUtil.get(portletConfig, locale, "not"));
+				sb.append(
+					LanguageUtil.get(
+						portletConfig.getResourceBundle(locale), "not"));
 				sb.append(StringPool.SPACE);
 			}
 		}
@@ -258,9 +263,7 @@ public abstract class AssetQueryRule implements QueryRule {
 		return html.toString();
 	}
 
-	protected void initAssetEntry(Locale locale)
-		throws PortalException, SystemException {
-
+	protected void initAssetEntry(Locale locale) throws PortalException {
 		try {
 
 			// See LPS-55480
