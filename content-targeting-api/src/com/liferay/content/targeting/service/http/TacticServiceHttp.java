@@ -60,7 +60,7 @@ public class TacticServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TacticServiceUtil.class,
@@ -129,7 +129,7 @@ public class TacticServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TacticServiceUtil.class,
@@ -164,13 +164,13 @@ public class TacticServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(TacticServiceHttp.class);
 	private static final Class<?>[] _addTacticParameterTypes0 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			long[].class, com.liferay.portal.service.ServiceContext.class
+			long[].class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _getTacticsParameterTypes1 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _updateTacticParameterTypes2 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			long[].class, com.liferay.portal.service.ServiceContext.class
+			long[].class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

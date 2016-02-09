@@ -58,7 +58,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 	public static com.liferay.content.targeting.model.AnonymousUserUserSegment addAnonymousUserUserSegment(
 		HttpPrincipal httpPrincipal, long anonymousUserId, long userSegmentId,
 		boolean manual, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
@@ -93,7 +93,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 
 	public static java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentId(
 		HttpPrincipal httpPrincipal, long userSegmentId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
@@ -127,7 +127,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 
 	public static int getAnonymousUsersByUserSegmentIdCount(
 		HttpPrincipal httpPrincipal, long userSegmentId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
@@ -161,7 +161,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 
 	public static java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentIds(
 		HttpPrincipal httpPrincipal, long[] userSegmentIds, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
@@ -195,7 +195,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 
 	public static int getAnonymousUsersByUserSegmentIdsCount(
 		HttpPrincipal httpPrincipal, long[] userSegmentIds, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
@@ -229,7 +229,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 
 	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByAnonymousUserId(
 		HttpPrincipal httpPrincipal, long anonymousUserId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
@@ -263,7 +263,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 
 	public static int getUserSegmentsByAnonymousUserIdCount(
 		HttpPrincipal httpPrincipal, long anonymousUserId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
@@ -363,7 +363,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 
 	public static com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
 		HttpPrincipal httpPrincipal, long anonymousUserUserSegmentId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
@@ -398,37 +398,37 @@ public class AnonymousUserUserSegmentServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(AnonymousUserUserSegmentServiceHttp.class);
 	private static final Class<?>[] _addAnonymousUserUserSegmentParameterTypes0 = new Class[] {
 			long.class, long.class, boolean.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _getAnonymousUsersByUserSegmentIdParameterTypes1 =
 		new Class[] {
 			long.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _getAnonymousUsersByUserSegmentIdCountParameterTypes2 =
 		new Class[] {
 			long.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _getAnonymousUsersByUserSegmentIdsParameterTypes3 =
 		new Class[] {
 			long[].class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _getAnonymousUsersByUserSegmentIdsCountParameterTypes4 =
 		new Class[] {
 			long[].class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _getUserSegmentsByAnonymousUserIdParameterTypes5 =
 		new Class[] {
 			long.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _getUserSegmentsByAnonymousUserIdCountParameterTypes6 =
 		new Class[] {
 			long.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _getUserSegmentsByUserIdParameterTypes7 = new Class[] {
 			long.class, boolean.class
@@ -436,5 +436,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 	private static final Class<?>[] _getUserSegmentsByUserIdCountParameterTypes8 =
 		new Class[] { long.class, boolean.class };
 	private static final Class<?>[] _updateAnonymousUserUserSegmentParameterTypes9 =
-		new Class[] { long.class, com.liferay.portal.service.ServiceContext.class };
+		new Class[] {
+			long.class, com.liferay.portal.kernel.service.ServiceContext.class
+		};
 }

@@ -16,7 +16,7 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ReportInstanceService}.
@@ -40,7 +40,7 @@ public class ReportInstanceServiceWrapper implements ReportInstanceService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _reportInstanceService.addReportInstance(userId, reportKey,
 			className, classPK, nameMap, descriptionMap, typeSettings,
@@ -55,7 +55,7 @@ public class ReportInstanceServiceWrapper implements ReportInstanceService,
 	public com.liferay.content.targeting.model.ReportInstance addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _reportInstanceService.addReportInstance(userId, reportKey,
 			className, classPK, typeSettings, serviceContext);
@@ -110,7 +110,7 @@ public class ReportInstanceServiceWrapper implements ReportInstanceService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _reportInstanceService.updateReportInstance(reportInstanceId,
 			userId, reportKey, className, classPK, nameMap, descriptionMap,

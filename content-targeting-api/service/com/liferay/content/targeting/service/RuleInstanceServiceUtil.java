@@ -44,7 +44,7 @@ public class RuleInstanceServiceUtil {
 	public static com.liferay.content.targeting.model.RuleInstance addRuleInstance(
 		long userId, java.lang.String ruleKey, long userSegmentId,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRuleInstance(userId, ruleKey, userSegmentId,
@@ -78,7 +78,7 @@ public class RuleInstanceServiceUtil {
 
 	public static com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRuleInstance(ruleInstanceId, typeSettings,

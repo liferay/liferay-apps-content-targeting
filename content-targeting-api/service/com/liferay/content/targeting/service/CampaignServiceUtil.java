@@ -46,7 +46,7 @@ public class CampaignServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCampaign(userId, nameMap, descriptionMap, startDate,
@@ -59,7 +59,7 @@ public class CampaignServiceUtil {
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCampaign(userId, nameMap, descriptionMap, startDate,
@@ -105,7 +105,7 @@ public class CampaignServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCampaign(campaignId, nameMap, descriptionMap,
@@ -119,7 +119,7 @@ public class CampaignServiceUtil {
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCampaign(campaignId, nameMap, descriptionMap,

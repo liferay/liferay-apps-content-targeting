@@ -16,7 +16,7 @@ package com.liferay.content.targeting.anonymous.users.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link AnonymousUserLocalService}.
@@ -49,7 +49,7 @@ public class AnonymousUserLocalServiceWrapper
 	@Override
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser addAnonymousUser(
 		long userId, java.lang.String lastIp, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserLocalService.addAnonymousUser(userId, lastIp,
 			typeSettings, serviceContext);
@@ -111,8 +111,8 @@ public class AnonymousUserLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserLocalService.deletePersistedModel(persistedModel);
 	}
@@ -318,7 +318,7 @@ public class AnonymousUserLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserLocalService.getPersistedModel(primaryKeyObj);
@@ -340,7 +340,7 @@ public class AnonymousUserLocalServiceWrapper
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser updateAnonymousUser(
 		long anonymousUserId, long userId, java.lang.String lastIp,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserLocalService.updateAnonymousUser(anonymousUserId,
 			userId, lastIp, typeSettings, serviceContext);

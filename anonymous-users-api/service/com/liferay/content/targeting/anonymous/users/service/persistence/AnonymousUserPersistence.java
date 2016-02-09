@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
 

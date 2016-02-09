@@ -58,7 +58,7 @@ public class RuleInstanceServiceHttp {
 	public static com.liferay.content.targeting.model.RuleInstance addRuleInstance(
 		HttpPrincipal httpPrincipal, long userId, java.lang.String ruleKey,
 		long userSegmentId, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RuleInstanceServiceUtil.class,
@@ -184,7 +184,7 @@ public class RuleInstanceServiceHttp {
 	public static com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
 		HttpPrincipal httpPrincipal, long ruleInstanceId,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RuleInstanceServiceUtil.class,
@@ -219,7 +219,7 @@ public class RuleInstanceServiceHttp {
 	private static final Class<?>[] _addRuleInstanceParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, long.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteRuleInstanceParameterTypes1 = new Class[] {
 			long.class
@@ -232,6 +232,6 @@ public class RuleInstanceServiceHttp {
 		};
 	private static final Class<?>[] _updateRuleInstanceParameterTypes4 = new Class[] {
 			long.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

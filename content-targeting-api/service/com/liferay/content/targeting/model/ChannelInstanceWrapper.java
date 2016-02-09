@@ -20,9 +20,9 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
-import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -436,7 +436,7 @@ public class ChannelInstanceWrapper implements ChannelInstance,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_channelInstance.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -556,7 +556,7 @@ public class ChannelInstanceWrapper implements ChannelInstance,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.model.ChannelInstance> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.content.targeting.model.ChannelInstance> toCacheModel() {
 		return _channelInstance.toCacheModel();
 	}
 

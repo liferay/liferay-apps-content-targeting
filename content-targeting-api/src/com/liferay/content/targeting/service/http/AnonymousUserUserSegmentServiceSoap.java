@@ -67,7 +67,8 @@ import java.rmi.RemoteException;
 public class AnonymousUserUserSegmentServiceSoap {
 	public static com.liferay.content.targeting.model.AnonymousUserUserSegmentSoap addAnonymousUserUserSegment(
 		long anonymousUserId, long userSegmentId, boolean manual,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.AnonymousUserUserSegment returnValue =
@@ -85,7 +86,7 @@ public class AnonymousUserUserSegmentServiceSoap {
 
 	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUserSoap[] getAnonymousUsersByUserSegmentId(
 		long userSegmentId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> returnValue =
@@ -103,7 +104,7 @@ public class AnonymousUserUserSegmentServiceSoap {
 
 	public static int getAnonymousUsersByUserSegmentIdCount(
 		long userSegmentId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			int returnValue = AnonymousUserUserSegmentServiceUtil.getAnonymousUsersByUserSegmentIdCount(userSegmentId,
@@ -120,7 +121,7 @@ public class AnonymousUserUserSegmentServiceSoap {
 
 	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUserSoap[] getAnonymousUsersByUserSegmentIds(
 		long[] userSegmentIds, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> returnValue =
@@ -138,7 +139,7 @@ public class AnonymousUserUserSegmentServiceSoap {
 
 	public static int getAnonymousUsersByUserSegmentIdsCount(
 		long[] userSegmentIds, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			int returnValue = AnonymousUserUserSegmentServiceUtil.getAnonymousUsersByUserSegmentIdsCount(userSegmentIds,
@@ -155,7 +156,7 @@ public class AnonymousUserUserSegmentServiceSoap {
 
 	public static com.liferay.content.targeting.model.UserSegmentSoap[] getUserSegmentsByAnonymousUserId(
 		long anonymousUserId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.content.targeting.model.UserSegment> returnValue =
@@ -173,7 +174,7 @@ public class AnonymousUserUserSegmentServiceSoap {
 
 	public static int getUserSegmentsByAnonymousUserIdCount(
 		long anonymousUserId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			int returnValue = AnonymousUserUserSegmentServiceUtil.getUserSegmentsByAnonymousUserIdCount(anonymousUserId,
@@ -221,7 +222,7 @@ public class AnonymousUserUserSegmentServiceSoap {
 
 	public static com.liferay.content.targeting.model.AnonymousUserUserSegmentSoap updateAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.AnonymousUserUserSegment returnValue =

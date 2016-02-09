@@ -76,7 +76,7 @@ public class CampaignServiceSoap {
 		java.lang.String[] descriptionMapValues, java.util.Date startDate,
 		java.util.Date endDate, int priority, boolean active,
 		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -104,7 +104,7 @@ public class CampaignServiceSoap {
 		java.lang.String[] descriptionMapValues, java.util.Date startDate,
 		java.util.Date endDate, java.lang.String timeZoneId, int priority,
 		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -189,7 +189,7 @@ public class CampaignServiceSoap {
 		java.lang.String[] descriptionMapValues, java.util.Date startDate,
 		java.util.Date endDate, int priority, boolean active,
 		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -217,7 +217,7 @@ public class CampaignServiceSoap {
 		java.lang.String[] descriptionMapValues, java.util.Date startDate,
 		java.util.Date endDate, java.lang.String timeZoneId, int priority,
 		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,

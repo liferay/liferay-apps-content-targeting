@@ -59,7 +59,7 @@ public class UserSegmentServiceHttp {
 		HttpPrincipal httpPrincipal, long userId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserSegmentServiceUtil.class,
@@ -250,7 +250,7 @@ public class UserSegmentServiceHttp {
 		HttpPrincipal httpPrincipal, long userSegmentId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserSegmentServiceUtil.class,
@@ -284,7 +284,7 @@ public class UserSegmentServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(UserSegmentServiceHttp.class);
 	private static final Class<?>[] _addUserSegmentParameterTypes0 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteUserSegmentParameterTypes1 = new Class[] {
 			long.class
@@ -303,6 +303,6 @@ public class UserSegmentServiceHttp {
 		};
 	private static final Class<?>[] _updateUserSegmentParameterTypes6 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

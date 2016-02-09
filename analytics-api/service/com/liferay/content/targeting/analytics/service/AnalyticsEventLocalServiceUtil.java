@@ -59,7 +59,7 @@ public class AnalyticsEventLocalServiceUtil {
 		java.lang.String clientIP, java.lang.String userAgent,
 		java.lang.String languageId, java.lang.String URL,
 		java.lang.String additionalInfo,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAnalyticsEvent(userId, anonymousUserId, className,
@@ -74,7 +74,7 @@ public class AnalyticsEventLocalServiceUtil {
 		java.lang.String eventType, java.lang.String clientIP,
 		java.lang.String userAgent, java.lang.String languageId,
 		java.lang.String URL, java.lang.String additionalInfo,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAnalyticsEvent(userId, anonymousUserId, className,
@@ -89,7 +89,7 @@ public class AnalyticsEventLocalServiceUtil {
 		java.lang.String clientIP, java.lang.String userAgent,
 		java.lang.String languageId, java.lang.String URL,
 		java.lang.String additionalInfo,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAnalyticsEvent(userId, anonymousUserId, className,
@@ -146,8 +146,8 @@ public class AnalyticsEventLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -421,7 +421,7 @@ public class AnalyticsEventLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);

@@ -16,7 +16,7 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link UserSegmentService}.
@@ -36,7 +36,7 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 	public com.liferay.content.targeting.model.UserSegment addUserSegment(
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.addUserSegment(userId, nameMap,
 			descriptionMap, serviceContext);
@@ -90,7 +90,7 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 		long userSegmentId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.updateUserSegment(userSegmentId, nameMap,
 			descriptionMap, serviceContext);

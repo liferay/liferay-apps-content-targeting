@@ -16,7 +16,7 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ChannelInstanceService}.
@@ -37,7 +37,7 @@ public class ChannelInstanceServiceWrapper implements ChannelInstanceService,
 	public com.liferay.content.targeting.model.ChannelInstance addChannelInstance(
 		long userId, long tacticId, java.lang.String channelKey,
 		long campaignId, java.lang.String alias, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _channelInstanceService.addChannelInstance(userId, tacticId,
 			channelKey, campaignId, alias, typeSettings, serviceContext);
@@ -78,7 +78,7 @@ public class ChannelInstanceServiceWrapper implements ChannelInstanceService,
 	public com.liferay.content.targeting.model.ChannelInstance updateChannelInstance(
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _channelInstanceService.updateChannelInstance(channelInstanceId,
 			alias, typeSettings, serviceContext);

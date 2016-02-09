@@ -61,7 +61,7 @@ public class CampaignServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CampaignServiceUtil.class,
@@ -100,7 +100,7 @@ public class CampaignServiceHttp {
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CampaignServiceUtil.class,
@@ -260,7 +260,7 @@ public class CampaignServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CampaignServiceUtil.class,
@@ -299,7 +299,7 @@ public class CampaignServiceHttp {
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CampaignServiceUtil.class,
@@ -335,13 +335,13 @@ public class CampaignServiceHttp {
 	private static final Class<?>[] _addCampaignParameterTypes0 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Date.class, java.util.Date.class, int.class, boolean.class,
-			long[].class, com.liferay.portal.service.ServiceContext.class
+			long[].class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCampaignParameterTypes1 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Date.class, java.util.Date.class, java.lang.String.class,
 			int.class, boolean.class, long[].class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCampaignParameterTypes2 = new Class[] {
 			long.class
@@ -357,12 +357,12 @@ public class CampaignServiceHttp {
 	private static final Class<?>[] _updateCampaignParameterTypes6 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Date.class, java.util.Date.class, int.class, boolean.class,
-			long[].class, com.liferay.portal.service.ServiceContext.class
+			long[].class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCampaignParameterTypes7 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Date.class, java.util.Date.class, java.lang.String.class,
 			int.class, boolean.class, long[].class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

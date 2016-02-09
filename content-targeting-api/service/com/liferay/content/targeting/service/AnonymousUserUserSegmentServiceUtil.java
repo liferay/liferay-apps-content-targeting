@@ -43,7 +43,8 @@ public class AnonymousUserUserSegmentServiceUtil {
 	 */
 	public static com.liferay.content.targeting.model.AnonymousUserUserSegment addAnonymousUserUserSegment(
 		long anonymousUserId, long userSegmentId, boolean manual,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAnonymousUserUserSegment(anonymousUserId, userSegmentId,
@@ -52,7 +53,7 @@ public class AnonymousUserUserSegmentServiceUtil {
 
 	public static java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentId(
 		long userSegmentId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnonymousUsersByUserSegmentId(userSegmentId, active,
@@ -61,7 +62,7 @@ public class AnonymousUserUserSegmentServiceUtil {
 
 	public static int getAnonymousUsersByUserSegmentIdCount(
 		long userSegmentId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnonymousUsersByUserSegmentIdCount(userSegmentId,
@@ -70,7 +71,7 @@ public class AnonymousUserUserSegmentServiceUtil {
 
 	public static java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentIds(
 		long[] userSegmentIds, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnonymousUsersByUserSegmentIds(userSegmentIds, active,
@@ -79,7 +80,7 @@ public class AnonymousUserUserSegmentServiceUtil {
 
 	public static int getAnonymousUsersByUserSegmentIdsCount(
 		long[] userSegmentIds, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnonymousUsersByUserSegmentIdsCount(userSegmentIds,
@@ -97,7 +98,7 @@ public class AnonymousUserUserSegmentServiceUtil {
 
 	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByAnonymousUserId(
 		long anonymousUserId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getUserSegmentsByAnonymousUserId(anonymousUserId, active,
@@ -106,7 +107,7 @@ public class AnonymousUserUserSegmentServiceUtil {
 
 	public static int getUserSegmentsByAnonymousUserIdCount(
 		long anonymousUserId, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getUserSegmentsByAnonymousUserIdCount(anonymousUserId,
@@ -126,7 +127,7 @@ public class AnonymousUserUserSegmentServiceUtil {
 
 	public static com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateAnonymousUserUserSegment(anonymousUserUserSegmentId,

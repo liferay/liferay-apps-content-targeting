@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.content.targeting.exception.NoSuchChannelInstanceException;
 import com.liferay.content.targeting.model.ChannelInstance;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the channel instance service.

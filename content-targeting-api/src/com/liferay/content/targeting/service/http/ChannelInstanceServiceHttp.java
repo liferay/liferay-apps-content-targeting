@@ -59,7 +59,7 @@ public class ChannelInstanceServiceHttp {
 		HttpPrincipal httpPrincipal, long userId, long tacticId,
 		java.lang.String channelKey, long campaignId, java.lang.String alias,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ChannelInstanceServiceUtil.class,
@@ -191,7 +191,7 @@ public class ChannelInstanceServiceHttp {
 	public static com.liferay.content.targeting.model.ChannelInstance updateChannelInstance(
 		HttpPrincipal httpPrincipal, long channelInstanceId,
 		java.lang.String alias, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ChannelInstanceServiceUtil.class,
@@ -227,7 +227,7 @@ public class ChannelInstanceServiceHttp {
 	private static final Class<?>[] _addChannelInstanceParameterTypes0 = new Class[] {
 			long.class, long.class, java.lang.String.class, long.class,
 			java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteChannelInstanceParameterTypes1 = new Class[] {
 			long.class
@@ -240,6 +240,6 @@ public class ChannelInstanceServiceHttp {
 		};
 	private static final Class<?>[] _updateChannelInstanceParameterTypes4 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

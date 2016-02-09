@@ -44,7 +44,7 @@ public class UserSegmentServiceUtil {
 	public static com.liferay.content.targeting.model.UserSegment addUserSegment(
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUserSegment(userId, nameMap, descriptionMap,
@@ -92,7 +92,7 @@ public class UserSegmentServiceUtil {
 		long userSegmentId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateUserSegment(userSegmentId, nameMap, descriptionMap,

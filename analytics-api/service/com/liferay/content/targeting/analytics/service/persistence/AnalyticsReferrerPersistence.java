@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
 import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the analytics referrer service.

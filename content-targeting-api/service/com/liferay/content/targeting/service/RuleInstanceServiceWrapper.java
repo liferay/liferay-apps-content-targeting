@@ -16,7 +16,7 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link RuleInstanceService}.
@@ -36,7 +36,7 @@ public class RuleInstanceServiceWrapper implements RuleInstanceService,
 	public com.liferay.content.targeting.model.RuleInstance addRuleInstance(
 		long userId, java.lang.String ruleKey, long userSegmentId,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceService.addRuleInstance(userId, ruleKey,
 			userSegmentId, typeSettings, serviceContext);
@@ -74,7 +74,7 @@ public class RuleInstanceServiceWrapper implements RuleInstanceService,
 	@Override
 	public com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceService.updateRuleInstance(ruleInstanceId,
 			typeSettings, serviceContext);

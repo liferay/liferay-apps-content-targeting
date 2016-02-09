@@ -16,7 +16,7 @@ package com.liferay.content.targeting.analytics.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link AnalyticsEventLocalService}.
@@ -53,7 +53,7 @@ public class AnalyticsEventLocalServiceWrapper
 		java.lang.String clientIP, java.lang.String userAgent,
 		java.lang.String languageId, java.lang.String URL,
 		java.lang.String additionalInfo,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _analyticsEventLocalService.addAnalyticsEvent(userId,
 			anonymousUserId, className, classPK, elementId, eventType,
@@ -68,7 +68,7 @@ public class AnalyticsEventLocalServiceWrapper
 		java.lang.String eventType, java.lang.String clientIP,
 		java.lang.String userAgent, java.lang.String languageId,
 		java.lang.String URL, java.lang.String additionalInfo,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _analyticsEventLocalService.addAnalyticsEvent(userId,
 			anonymousUserId, className, classPK, referrerClassName,
@@ -84,7 +84,7 @@ public class AnalyticsEventLocalServiceWrapper
 		java.lang.String clientIP, java.lang.String userAgent,
 		java.lang.String languageId, java.lang.String URL,
 		java.lang.String additionalInfo,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _analyticsEventLocalService.addAnalyticsEvent(userId,
 			anonymousUserId, className, classPK, referrers, elementId,
@@ -146,8 +146,8 @@ public class AnalyticsEventLocalServiceWrapper
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _analyticsEventLocalService.deletePersistedModel(persistedModel);
 	}
@@ -449,7 +449,7 @@ public class AnalyticsEventLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _analyticsEventLocalService.getPersistedModel(primaryKeyObj);

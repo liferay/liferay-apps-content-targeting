@@ -16,7 +16,7 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link RuleInstanceLocalService}.
@@ -49,7 +49,7 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 	public com.liferay.content.targeting.model.RuleInstance addRuleInstance(
 		long userId, java.lang.String ruleKey, long userSegmentId,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceLocalService.addRuleInstance(userId, ruleKey,
 			userSegmentId, typeSettings, serviceContext);
@@ -71,8 +71,8 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceLocalService.deletePersistedModel(persistedModel);
 	}
@@ -237,7 +237,7 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceLocalService.getPersistedModel(primaryKeyObj);
@@ -373,7 +373,7 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 	@Override
 	public com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceLocalService.updateRuleInstance(ruleInstanceId,
 			typeSettings, serviceContext);

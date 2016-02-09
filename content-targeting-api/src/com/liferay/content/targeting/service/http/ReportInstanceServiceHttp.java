@@ -61,7 +61,7 @@ public class ReportInstanceServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ReportInstanceServiceUtil.class,
@@ -97,7 +97,7 @@ public class ReportInstanceServiceHttp {
 		HttpPrincipal httpPrincipal, long userId, java.lang.String reportKey,
 		java.lang.String className, long classPK,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ReportInstanceServiceUtil.class,
@@ -244,7 +244,7 @@ public class ReportInstanceServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ReportInstanceServiceUtil.class,
@@ -309,12 +309,12 @@ public class ReportInstanceServiceHttp {
 			long.class, java.lang.String.class, java.lang.String.class,
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addReportInstanceParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			long.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _fetchReportInstanceParameterTypes2 = new Class[] {
 			long.class
@@ -332,7 +332,7 @@ public class ReportInstanceServiceHttp {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, long.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateReportInstanceParameterTypes7 = new Class[] {
 			com.liferay.content.targeting.model.ReportInstance.class

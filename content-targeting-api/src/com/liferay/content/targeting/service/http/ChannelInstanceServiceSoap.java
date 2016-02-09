@@ -68,7 +68,7 @@ public class ChannelInstanceServiceSoap {
 	public static com.liferay.content.targeting.model.ChannelInstanceSoap addChannelInstance(
 		long userId, long tacticId, java.lang.String channelKey,
 		long campaignId, java.lang.String alias, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.ChannelInstance returnValue = ChannelInstanceServiceUtil.addChannelInstance(userId,
@@ -133,7 +133,7 @@ public class ChannelInstanceServiceSoap {
 	public static com.liferay.content.targeting.model.ChannelInstanceSoap updateChannelInstance(
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.ChannelInstance returnValue = ChannelInstanceServiceUtil.updateChannelInstance(channelInstanceId,

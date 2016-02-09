@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 import com.liferay.content.targeting.model.AnonymousUserUserSegment;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.Date;
 

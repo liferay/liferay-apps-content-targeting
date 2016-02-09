@@ -61,7 +61,7 @@ public class TrackingActionInstanceServiceHttp {
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrackingActionInstanceServiceUtil.class,
@@ -101,7 +101,7 @@ public class TrackingActionInstanceServiceHttp {
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrackingActionInstanceServiceUtil.class,
@@ -291,7 +291,7 @@ public class TrackingActionInstanceServiceHttp {
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrackingActionInstanceServiceUtil.class,
@@ -331,14 +331,14 @@ public class TrackingActionInstanceServiceHttp {
 			java.lang.String.class, java.lang.String.class, long.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addTrackingActionInstanceParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, long.class,
 			java.lang.String.class, java.lang.String.class, long.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteTrackingActionInstanceParameterTypes2 =
 		new Class[] { long.class };
@@ -357,6 +357,6 @@ public class TrackingActionInstanceServiceHttp {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

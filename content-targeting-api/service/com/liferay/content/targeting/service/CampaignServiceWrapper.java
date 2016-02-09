@@ -16,7 +16,7 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link CampaignService}.
@@ -38,7 +38,7 @@ public class CampaignServiceWrapper implements CampaignService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignService.addCampaign(userId, nameMap, descriptionMap,
 			startDate, endDate, priority, active, userSegmentIds, serviceContext);
@@ -51,7 +51,7 @@ public class CampaignServiceWrapper implements CampaignService,
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignService.addCampaign(userId, nameMap, descriptionMap,
 			startDate, endDate, timeZoneId, priority, active, userSegmentIds,
@@ -102,7 +102,7 @@ public class CampaignServiceWrapper implements CampaignService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignService.updateCampaign(campaignId, nameMap,
 			descriptionMap, startDate, endDate, priority, active,
@@ -117,7 +117,7 @@ public class CampaignServiceWrapper implements CampaignService,
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignService.updateCampaign(campaignId, nameMap,
 			descriptionMap, startDate, endDate, timeZoneId, priority, active,

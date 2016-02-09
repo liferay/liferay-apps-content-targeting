@@ -68,7 +68,7 @@ public class RuleInstanceServiceSoap {
 	public static com.liferay.content.targeting.model.RuleInstanceSoap addRuleInstance(
 		long userId, java.lang.String ruleKey, long userSegmentId,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.RuleInstance returnValue = RuleInstanceServiceUtil.addRuleInstance(userId,
@@ -128,7 +128,7 @@ public class RuleInstanceServiceSoap {
 
 	public static com.liferay.content.targeting.model.RuleInstanceSoap updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.RuleInstance returnValue = RuleInstanceServiceUtil.updateRuleInstance(ruleInstanceId,

@@ -16,7 +16,7 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link CampaignLocalService}.
@@ -51,7 +51,7 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.addCampaign(userId, nameMap,
 			descriptionMap, startDate, endDate, priority, active,
@@ -65,7 +65,7 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.addCampaign(userId, nameMap,
 			descriptionMap, startDate, endDate, timeZoneId, priority, active,
@@ -167,8 +167,8 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.deletePersistedModel(persistedModel);
 	}
@@ -473,7 +473,7 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.getPersistedModel(primaryKeyObj);
@@ -566,7 +566,7 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.updateCampaign(campaignId, nameMap,
 			descriptionMap, startDate, endDate, priority, active,
@@ -581,7 +581,7 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.updateCampaign(campaignId, nameMap,
 			descriptionMap, startDate, endDate, timeZoneId, priority, active,

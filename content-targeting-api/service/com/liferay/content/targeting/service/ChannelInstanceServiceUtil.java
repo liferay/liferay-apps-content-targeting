@@ -44,7 +44,7 @@ public class ChannelInstanceServiceUtil {
 	public static com.liferay.content.targeting.model.ChannelInstance addChannelInstance(
 		long userId, long tacticId, java.lang.String channelKey,
 		long campaignId, java.lang.String alias, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addChannelInstance(userId, tacticId, channelKey,
@@ -81,7 +81,7 @@ public class ChannelInstanceServiceUtil {
 	public static com.liferay.content.targeting.model.ChannelInstance updateChannelInstance(
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateChannelInstance(channelInstanceId, alias,
