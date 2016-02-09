@@ -19,7 +19,7 @@ import com.liferay.content.targeting.service.base.ChannelInstanceServiceBaseImpl
 import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 

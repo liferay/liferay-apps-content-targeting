@@ -14,8 +14,8 @@
 
 package com.liferay.content.targeting.anonymous.users.model.impl;
 
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 /**
  * The extended model implementation for the AnonymousUser service. Represents a row in the &quot;AU_AnonymousUser&quot; database table, with each column mapped to a property of this class.
