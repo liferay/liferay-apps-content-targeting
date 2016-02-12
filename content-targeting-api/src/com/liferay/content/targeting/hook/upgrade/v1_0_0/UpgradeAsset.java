@@ -21,9 +21,9 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.util.List;
 

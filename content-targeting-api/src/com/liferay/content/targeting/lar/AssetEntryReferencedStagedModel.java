@@ -17,9 +17,9 @@ package com.liferay.content.targeting.lar;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.io.Serializable;
 

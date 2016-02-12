@@ -19,8 +19,8 @@ import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalServic
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 
 import java.util.Calendar;
 import java.util.List;

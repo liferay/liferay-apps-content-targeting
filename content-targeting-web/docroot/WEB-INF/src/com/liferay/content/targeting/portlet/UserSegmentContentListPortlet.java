@@ -26,8 +26,10 @@ import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -40,8 +42,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ClassName;
-import com.liferay.portal.service.ClassNameLocalServiceUtil;
 
 import freemarker.ext.beans.BeansWrapper;
 

@@ -21,10 +21,10 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.Locale;

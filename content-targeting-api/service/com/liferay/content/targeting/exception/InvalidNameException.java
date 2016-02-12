@@ -14,29 +14,40 @@
 
 package com.liferay.content.targeting.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class InvalidNameException extends PortalException {
 
+	public static final int DUPLICATED = 2;
+
+	public static final int EMPTY = 1;
+
 	public InvalidNameException() {
+	}
+
+	public InvalidNameException(int type) {
+		_type = type;
 	}
 
 	public InvalidNameException(String msg) {
 		super(msg);
 	}
 
-	public InvalidNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	public int getType() {
+		return _type;
 	}
 
-	public InvalidNameException(Throwable cause) {
-		super(cause);
+	public boolean isDuplicated() {
+		return _type == DUPLICATED;
 	}
+
+	public boolean isEmpty() {
+		return _type == EMPTY;
+	}
+
+	private int _type;
 
 }

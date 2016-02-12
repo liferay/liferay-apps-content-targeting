@@ -17,14 +17,14 @@ package com.liferay.content.targeting.portlet;
 import com.liferay.content.targeting.portlet.util.UnavailableServiceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.Map;

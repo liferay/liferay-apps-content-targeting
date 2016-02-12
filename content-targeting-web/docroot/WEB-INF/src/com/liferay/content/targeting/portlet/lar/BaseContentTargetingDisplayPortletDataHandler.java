@@ -26,12 +26,12 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 
 import java.util.Enumeration;
 import java.util.List;

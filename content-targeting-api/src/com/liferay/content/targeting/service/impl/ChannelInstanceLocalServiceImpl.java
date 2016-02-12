@@ -22,13 +22,13 @@ import com.liferay.content.targeting.service.base.ChannelInstanceLocalServiceBas
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
