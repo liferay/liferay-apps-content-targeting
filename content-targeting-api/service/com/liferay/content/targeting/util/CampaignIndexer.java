@@ -17,6 +17,7 @@ package com.liferay.content.targeting.util;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.CampaignPermission;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -40,13 +41,12 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Indexer.class)
-public class CampaignIndexer extends BaseIndexer {
+public class CampaignIndexer extends BaseIndexer<Campaign> {
 
 	public static final String[] CLASS_NAMES = {Campaign.class.getName()};
 
@@ -80,7 +80,7 @@ public class CampaignIndexer extends BaseIndexer {
 
 		Campaign campaign = CampaignLocalServiceUtil.getCampaign(entryClassPK);
 
-		return _campaignPermission.contains(
+		return CampaignPermission.contains(
 			permissionChecker, campaign, ActionKeys.VIEW);
 	}
 
@@ -95,9 +95,7 @@ public class CampaignIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		Campaign campaign = (Campaign)obj;
-
+	protected void doDelete(Campaign campaign) throws Exception {
 		Document document = new DocumentImpl();
 
 		document.addUID(PORTLET_ID, campaign.getCampaignId());
@@ -108,9 +106,7 @@ public class CampaignIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		Campaign campaign = (Campaign)obj;
-
+	protected Document doGetDocument(Campaign campaign) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Indexing campaign " + campaign);
 		}
@@ -140,9 +136,7 @@ public class CampaignIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		Campaign campaign = (Campaign)obj;
-
+	protected void doReindex(Campaign campaign) throws Exception {
 		Document document = getDocument(campaign);
 
 		if (document != null) {
@@ -173,18 +167,21 @@ public class CampaignIndexer extends BaseIndexer {
 	protected void reindexCampaigns(final long companyId)
 		throws PortalException {
 
-		IndexableActionableDynamicQuery actionableDynamicQuery =
-			new IndexableActionableDynamicQuery() {
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			CampaignLocalServiceUtil.getIndexableActionableDynamicQuery();
+
+		actionableDynamicQuery.setCompanyId(companyId);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Campaign>() {
 
 				@Override
-				protected void performAction(Object object) {
-					Campaign campaign = (Campaign)object;
-
+				public void performAction(Campaign campaign) {
 					try {
 						Document document = getDocument(campaign);
 
 						if (document != null) {
-							addDocuments(document);
+							actionableDynamicQuery.addDocuments(document);
 						}
 					}
 					catch (PortalException pe) {
@@ -197,27 +194,13 @@ public class CampaignIndexer extends BaseIndexer {
 					}
 				}
 
-			};
+			});
 
-		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind ="unsetCampaignPermission")
-	protected void setCampaignPermission(
-		CampaignPermission campaignPermission) {
-
-		_campaignPermission = campaignPermission;
-	}
-
-	protected void unsetCampaignPermission() {
-		_campaignPermission = null;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(CampaignIndexer.class);
-
-	private CampaignPermission _campaignPermission;
 
 }

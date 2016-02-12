@@ -20,6 +20,7 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -48,7 +49,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Indexer.class)
-public class ReportInstanceIndexer extends BaseIndexer {
+public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 
 	public static final String[] CLASS_NAMES = {ReportInstance.class.getName()};
 
@@ -94,9 +95,7 @@ public class ReportInstanceIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		ReportInstance reportInstance = (ReportInstance)obj;
-
+	protected void doDelete(ReportInstance reportInstance) throws Exception {
 		Document document = new DocumentImpl();
 
 		document.addUID(PORTLET_ID, reportInstance.getReportInstanceId());
@@ -107,8 +106,8 @@ public class ReportInstanceIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		ReportInstance reportInstance = (ReportInstance)obj;
+	protected Document doGetDocument(ReportInstance reportInstance)
+		throws Exception {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Indexing reportInstance " + reportInstance);
@@ -143,9 +142,7 @@ public class ReportInstanceIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		ReportInstance reportInstance = (ReportInstance)obj;
-
+	protected void doReindex(ReportInstance reportInstance) throws Exception {
 		Document document = getDocument(reportInstance);
 
 		if (document != null) {
@@ -177,13 +174,16 @@ public class ReportInstanceIndexer extends BaseIndexer {
 	protected void reindexReportInstances(final long companyId)
 		throws PortalException {
 
-		IndexableActionableDynamicQuery actionableDynamicQuery =
-			new IndexableActionableDynamicQuery() {
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			ReportInstanceLocalServiceUtil.getIndexableActionableDynamicQuery();
+
+		actionableDynamicQuery.setCompanyId(companyId);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<ReportInstance>() {
 
 				@Override
-				protected void performAction(Object object) {
-					ReportInstance reportInstance = (ReportInstance)object;
-
+				public void performAction(ReportInstance reportInstance) {
 					if (reportInstance.getGroupId() == 0) {
 						try {
 							String className = reportInstance.getClassName();
@@ -216,7 +216,7 @@ public class ReportInstanceIndexer extends BaseIndexer {
 						Document document = getDocument(reportInstance);
 
 						if (document != null) {
-							addDocuments(document);
+							actionableDynamicQuery.addDocuments(document);
 						}
 					}
 					catch (PortalException pe) {
@@ -229,9 +229,8 @@ public class ReportInstanceIndexer extends BaseIndexer {
 					}
 				}
 
-			};
+			});
 
-		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		actionableDynamicQuery.performActions();

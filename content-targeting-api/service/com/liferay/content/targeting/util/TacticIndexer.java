@@ -17,6 +17,7 @@ package com.liferay.content.targeting.util;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.TacticPermission;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -40,13 +41,12 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Indexer.class)
-public class TacticIndexer extends BaseIndexer {
+public class TacticIndexer extends BaseIndexer<Tactic> {
 
 	public static final String[] CLASS_NAMES = {Tactic.class.getName()};
 
@@ -80,7 +80,7 @@ public class TacticIndexer extends BaseIndexer {
 
 		Tactic tactic = TacticLocalServiceUtil.getTactic(entryClassPK);
 
-		return _tacticPermission.contains(
+		return TacticPermission.contains(
 			permissionChecker, tactic, ActionKeys.VIEW);
 	}
 
@@ -95,9 +95,7 @@ public class TacticIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		Tactic tactic = (Tactic)obj;
-
+	protected void doDelete(Tactic tactic) throws Exception {
 		Document document = new DocumentImpl();
 
 		document.addUID(PORTLET_ID, tactic.getTacticId());
@@ -108,9 +106,7 @@ public class TacticIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		Tactic tactic = (Tactic)obj;
-
+	protected Document doGetDocument(Tactic tactic) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Indexing tactic " + tactic);
 		}
@@ -141,18 +137,6 @@ public class TacticIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		Tactic tactic = (Tactic)obj;
-
-		Document document = getDocument(tactic);
-
-		if (document != null) {
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), tactic.getCompanyId(), document);
-		}
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		Tactic tactic = TacticLocalServiceUtil.getTactic(classPK);
 
@@ -167,23 +151,36 @@ public class TacticIndexer extends BaseIndexer {
 	}
 
 	@Override
+	protected void doReindex(Tactic tactic) throws Exception {
+		Document document = getDocument(tactic);
+
+		if (document != null) {
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), tactic.getCompanyId(), document);
+		}
+	}
+
+	@Override
 	protected String getPortletId(SearchContext searchContext) {
 		return PORTLET_ID;
 	}
 
 	protected void reindexTactics(final long companyId) throws PortalException {
-		IndexableActionableDynamicQuery actionableDynamicQuery =
-			new IndexableActionableDynamicQuery() {
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			TacticLocalServiceUtil.getIndexableActionableDynamicQuery();
+
+		actionableDynamicQuery.setCompanyId(companyId);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Tactic>() {
 
 				@Override
-				protected void performAction(Object object) {
-					Tactic tactic = (Tactic)object;
-
+				public void performAction(Tactic tactic) {
 					try {
 						Document document = getDocument(tactic);
 
 						if (document != null) {
-							addDocuments(document);
+							actionableDynamicQuery.addDocuments(document);
 						}
 					}
 					catch (PortalException pe) {
@@ -196,25 +193,13 @@ public class TacticIndexer extends BaseIndexer {
 					}
 				}
 
-			};
+			});
 
-		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind ="unsetTacticPermission")
-	protected void setTacticPermission(TacticPermission tacticPermission) {
-		_tacticPermission = tacticPermission;
-	}
-
-	protected void unsetTacticPermission() {
-		_tacticPermission = null;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(TacticIndexer.class);
-
-	private TacticPermission _tacticPermission;
 
 }
