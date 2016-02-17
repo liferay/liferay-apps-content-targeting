@@ -17,16 +17,17 @@ package com.liferay.content.targeting.portlet.action;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.portlet.util.CampaignQueryRule;
+import com.liferay.content.targeting.portlet.util.CampaignQueryRuleUtil;
 import com.liferay.content.targeting.portlet.util.QueryRule;
-import com.liferay.content.targeting.portlet.util.UserSegmentQueryRule;
-import com.liferay.content.targeting.portlet.util.UserSegmentQueryRuleUtil;
+import com.liferay.content.targeting.service.CampaignLocalService;
+import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
-import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -51,21 +52,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.CT_USERSEGMENT_DISPLAY},
+	property = {"javax.portlet.name=" + PortletKeys.CT_CAMPAIGN_DISPLAY},
 	service = ConfigurationAction.class
 )
-public class UserSegmentDisplayConfigurationAction
+public class CampaignDisplayConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {
-		return "/html/user_segment_content_display/configuration.jsp";
+		return "/html/campaign_content_display/configuration.jsp";
 	}
 
 	@Override
@@ -99,42 +101,32 @@ public class UserSegmentDisplayConfigurationAction
 		request.setAttribute(
 			"displayStyles", ListUtil.fromString("full-content"));
 
-		List<QueryRule> userSegmentQueryRules =
-			UserSegmentQueryRuleUtil.getUserSegmentQueryRules(
+		List<QueryRule> campaignQueryRules =
+			CampaignQueryRuleUtil.getCampaignQueryRules(
 				portletPreferences, themeDisplay.getLocale(), false);
 
-		request.setAttribute("userSegmentQueryRules", userSegmentQueryRules);
+		request.setAttribute("campaignQueryRules", campaignQueryRules);
+
+		CampaignQueryRule campaignQueryRule =
+			(CampaignQueryRule)portletRequest.getAttribute(
+				"configuration.queryRule");
+
+		if (campaignQueryRule == null) {
+			campaignQueryRule = new CampaignQueryRule();
+		}
+
+		request.setAttribute("queryRule", campaignQueryRule);
 
 		request.setAttribute(
 			"assetRendererFactories",
 			getSelectableAssetRendererFactories(themeDisplay.getCompanyId()));
 
-		ServiceContext serviceContext = new ServiceContext();
+		long[] groupIds = ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+			themeDisplay.getScopeGroupId());
 
-		serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
+		List<Campaign> campaigns = _campaignLocalService.getCampaigns(groupIds);
 
-		long[] vocabularyGroupIds = new long[1];
-		long[] vocabularyIds = new long[1];
-
-		if (themeDisplay.getScopeGroupId() ==
-				themeDisplay.getCompanyGroupId()) {
-
-			vocabularyGroupIds[0] = themeDisplay.getCompanyGroupId();
-
-			vocabularyIds[0] = UserSegmentUtil.getAssetVocabularyId(
-				themeDisplay.getUserId(), serviceContext);
-		}
-		else {
-			vocabularyGroupIds =
-				ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
-					themeDisplay.getSiteGroupId());
-			vocabularyIds = UserSegmentUtil.getAssetVocabularyIds(
-				vocabularyGroupIds);
-		}
-
-		request.setAttribute(
-			"vocabularyGroupIds", StringUtil.merge(vocabularyGroupIds));
-		request.setAttribute("vocabularyIds", StringUtil.merge(vocabularyIds));
+		request.setAttribute("campaigns", campaigns);
 
 		super.include(portletConfig, request, response);
 	}
@@ -163,17 +155,17 @@ public class UserSegmentDisplayConfigurationAction
 			return;
 		}
 
-		List<UserSegmentQueryRule> queryRules = new ArrayList<>();
+		List<CampaignQueryRule> queryRules = new ArrayList<>();
 
 		for (int queryRulesIndex : queryRulesIndexes) {
-			QueryRule queryRule = UserSegmentQueryRuleUtil.getQueryRule(
+			QueryRule queryRule = CampaignQueryRuleUtil.getQueryRule(
 				actionRequest, queryRulesIndex, themeDisplay.getLocale());
 
 			if (!queryRule.isValid()) {
 				continue;
 			}
 
-			queryRules.add((UserSegmentQueryRule)queryRule);
+			queryRules.add((CampaignQueryRule)queryRule);
 		}
 
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
@@ -182,48 +174,29 @@ public class UserSegmentDisplayConfigurationAction
 			portletPreferences.getValues("queryLogicIndexes", null));
 
 		for (int queryRulesIndex : oldQueryRulesIndexes) {
-			setPreference(
-				actionRequest, "queryContains" + queryRulesIndex,
-				StringPool.BLANK);
-			setPreference(
-				actionRequest, "queryAndOperator" + queryRulesIndex,
-				StringPool.BLANK);
-			setPreference(
-				actionRequest, "userSegmentAssetCategoryIds" + queryRulesIndex,
-				new String[0]);
-			setPreference(
-				actionRequest, "assetEntryId" + queryRulesIndex,
-				StringPool.BLANK);
+			portletPreferences.setValue(
+				"campaignId" + queryRulesIndex, StringPool.BLANK);
+			portletPreferences.setValue(
+				"assetEntryId" + queryRulesIndex, StringPool.BLANK);
 		}
 
-		setPreference(
-			actionRequest, "enableSocialBookmarks", String.valueOf(false));
+		portletPreferences.setValue(
+			"enableSocialBookmarks", String.valueOf(false));
 		portletPreferences.setValue("showAssetTitle", String.valueOf(false));
 
-		setPreference(
-			actionRequest, "assetEntryIdDefault",
-			String.valueOf(assetEntryIdDefault));
-		setPreference(
-			actionRequest, "contentDefaultValue",
-			String.valueOf(contentDefaultValue));
-		setPreference(
-			actionRequest, "queryLogicIndexes",
-			ArrayUtil.toStringArray(queryRulesIndexes));
+		portletPreferences.setValue(
+			"assetEntryIdDefault", String.valueOf(assetEntryIdDefault));
+		portletPreferences.setValue(
+			"contentDefaultValue", String.valueOf(contentDefaultValue));
+		portletPreferences.setValues(
+			"queryLogicIndexes", ArrayUtil.toStringArray(queryRulesIndexes));
 
-		for (UserSegmentQueryRule queryRule : queryRules) {
-			setPreference(
-				actionRequest, "queryContains" + queryRule.getIndex(),
-				String.valueOf(queryRule.isContains()));
-			setPreference(
-				actionRequest, "queryAndOperator" + queryRule.getIndex(),
-				String.valueOf(queryRule.isAndOperator()));
-			setPreference(
-				actionRequest,
-				"userSegmentAssetCategoryIds" + queryRule.getIndex(),
-				ArrayUtil.toStringArray(
-					queryRule.getUserSegmentAssetCategoryIds()));
-			setPreference(
-				actionRequest, "assetEntryId" + queryRule.getIndex(),
+		for (CampaignQueryRule queryRule : queryRules) {
+			portletPreferences.setValue(
+				"campaignId" + queryRule.getIndex(),
+				String.valueOf(queryRule.getCampaignId()));
+			portletPreferences.setValue(
+				"assetEntryId" + queryRule.getIndex(),
 				String.valueOf(queryRule.getAssetEntryId()));
 		}
 
@@ -251,8 +224,31 @@ public class UserSegmentDisplayConfigurationAction
 		return selectableAssetRendererFactories;
 	}
 
+	@Reference(unbind = "unsetCampaignLocalService")
+	protected void setCampaignLocalService(
+		CampaignLocalService campaignLocalService) {
+
+		_campaignLocalService = campaignLocalService;
+	}
+
+	@Reference(unbind = "unsetCampaignService")
+	protected void setCampaignService(CampaignService campaignService) {
+		_campaignService = campaignService;
+	}
+
+	protected void unsetCampaignLocalService() {
+		_campaignLocalService = null;
+	}
+
+	protected void unsetCampaignService() {
+		_campaignService = null;
+	}
+
 	@Override
 	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
 	}
+
+	private CampaignLocalService _campaignLocalService;
+	private CampaignService _campaignService;
 
 }
