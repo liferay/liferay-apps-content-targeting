@@ -30,11 +30,21 @@
 			<#assign enableLocationLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationLabel + "</a>" />
 		</#if>
 
-		<@liferay_ui["message"] arguments=enableLocationLabel key="it-can-be-enabled-in-x" />
+		<@liferay_ui["message"]
+			arguments=enableLocationLabel
+			key="it-can-be-enabled-in-x"
+		/>
 	</div>
 </#if>
 
-<@aui["input"] cssClass="slider-input" inlineField=true name="olderThan" size="2" maxlength="3" value=olderThan />
+<@aui["input"]
+	cssClass="slider-input"
+	inlineField=true
+	name="olderThan"
+	size="2"
+	maxlength="3"
+	value=olderThan
+/>
 
 <span class="slider-holder older"></span>
 
