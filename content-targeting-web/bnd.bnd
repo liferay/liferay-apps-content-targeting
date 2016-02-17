@@ -12,13 +12,19 @@ Export-Package:\
 Import-Package:\
 	!com.caucho.quercus.servlet,\
 	!com.caucho.vfs,\
+	\
+	!com.liferay.util.dao.orm,\
+	\
 	!com.sun.org.apache.xml.internal.utils,\
 	!com.sun.org.apache.xpath.internal,\
 	!com.sun.org.apache.xpath.internal.objects,\
+	\
 	!com.swabunga.spell.engine,\
 	!com.swabunga.spell.event,\
+	\
 	!net.fortuna.ical4j.model,\
 	!net.fortuna.ical4j.model.property,\
+	\
 	!org.apache.axis,\
 	!org.apache.axis.soap,\
 	!org.apache.axis.tools.ant.wsdl,\
@@ -31,11 +37,15 @@ Import-Package:\
 	!org.apache.poi.ss.usermodel,\
 	!org.apache.portals.bridges.common,\
 	!org.apache.portals.bridges.struts,\
+	\
 	!org.aspectj.lang.*,\
+	\
 	!org.mozilla.javascript.*,\
+	\
 	!org.python.*,\
+	\
 	!org.zeroturnaround.*,\
-	!com.liferay.util.dao.orm,\
+	\
 	com.liferay.content.targeting.api.model,\
 	com.liferay.content.targeting.internal,\
 	com.liferay.content.targeting.service,\
@@ -54,7 +64,9 @@ Import-Package:\
 	com.liferay.portal.servlet.filters.dynamiccss,\
 	com.liferay.portal.webserver,\
 	com.liferay.portlet,\
+	\
 	freemarker.ext.servlet,\
+	\
 	freemarker.template,\
 	*
 Include-Resource:\

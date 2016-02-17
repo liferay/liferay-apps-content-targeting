@@ -15,12 +15,8 @@
 package com.liferay.content.targeting.portlet;
 
 import com.liferay.content.targeting.api.model.UserSegmentSimulator;
-import com.liferay.content.targeting.service.CampaignLocalService;
-import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
