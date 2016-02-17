@@ -14,7 +14,7 @@
  */
 -->
 
-<#assign liferay_ui = PortletJspTagLibs["/WEB-INF/tld/liferay-ui.tld"] />
+<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
 
 <#list exceptions as exception>
 	<div class="alert alert-error">
