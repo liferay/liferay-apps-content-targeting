@@ -16,6 +16,9 @@ package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 
+import java.util.Locale;
+
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 
 /**
@@ -23,50 +26,52 @@ import javax.portlet.PortletRequest;
  */
 public interface QueryRule extends Comparable<QueryRule> {
 
-	boolean evaluate(long[] ids);
+	public boolean evaluate(long[] ids);
 
-	String getAssetClassName();
+	public String getAssetClassName();
 
-	long getAssetClassPK();
+	public long getAssetClassPK();
 
-	AssetEntry getAssetEntry();
+	public AssetEntry getAssetEntry();
 
-	long getAssetEntryId();
+	public long getAssetEntryId();
 
-	String getAssetImage(PortletRequest portletRequest) throws Exception;
+	public String getAssetImage(PortletRequest portletRequest) throws Exception;
 
-	String getAssetTitle();
+	public String getAssetTitle();
 
-	String getAssetType();
+	public String getAssetType();
 
-	String getCssClass(int position);
+	public String getCssClass(int position);
 
-	long getGroupId(long scopeGroupId);
+	public long getGroupId(long scopeGroupId);
 
-	boolean hasAssetEntry();
+	public int getIndex();
 
-	int getIndex();
+	public String getSummary(PortletConfig portletConfig, Locale locale);
 
-	String getTemplate();
+	public String getTemplate();
 
-	boolean isDefaultRule();
+	public boolean hasAssetEntry();
 
-	boolean isValid();
+	public boolean isDefaultRule();
 
-	void setAssetAttributes(PortletRequest portletRequest);
+	public boolean isValid();
 
-	void setAssetClassName(String assetClassName);
+	public void setAssetAttributes(PortletRequest portletRequest);
 
-	void setAssetClassPK(long assetClassPK);
+	public void setAssetClassName(String assetClassName);
 
-	void setAssetEntryId(long assetEntryId);
+	public void setAssetClassPK(long assetClassPK);
 
-	void setAssetTitle(String assetTitle);
+	public void setAssetEntryId(long assetEntryId);
 
-	void setAssetType(String assetType);
+	public void setAssetTitle(String assetTitle);
 
-	void setIndex(int index);
+	public void setAssetType(String assetType);
 
-	void setTemplate(String template);
+	public void setIndex(int index);
+
+	public void setTemplate(String template);
 
 }
