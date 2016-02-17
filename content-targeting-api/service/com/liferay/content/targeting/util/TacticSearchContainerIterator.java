@@ -45,7 +45,8 @@ public class TacticSearchContainerIterator
 	@Override
 	public List<Tactic> getResults(int start, int end) throws PortalException {
 		if (Validator.isNull(keywords)) {
-			return TacticLocalServiceUtil.getTactics(start, end);
+			return TacticLocalServiceUtil.getTactics(
+				_campaignId, start, end, null);
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =
@@ -73,7 +74,7 @@ public class TacticSearchContainerIterator
 	@Override
 	public int getTotal() throws PortalException {
 		if (Validator.isNull(keywords)) {
-			return TacticLocalServiceUtil.getTacticsCount();
+			return TacticLocalServiceUtil.getTacticsCount(_campaignId);
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =

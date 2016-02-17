@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -35,12 +34,12 @@ public class CampaignQueryRuleUtilTest {
 		QueryRule queryRule1 = new CampaignQueryRuleMock(20, 1, 0);
 		QueryRule queryRuleDefault = new CampaignQueryRuleMock(10, 0, -1);
 
-		List<QueryRule> queryRules = new ArrayList<QueryRule>();
+		List<QueryRule> queryRules = new ArrayList<>();
 
 		queryRules.add(queryRule1);
 		queryRules.add(queryRuleDefault);
 
-		long[] campaignIds = new long[] {};
+		long[] campaignIds = new long[0];
 
 		QueryRule queryRule = CampaignQueryRuleUtil.match(
 			campaignIds, queryRules);
@@ -59,15 +58,14 @@ public class CampaignQueryRuleUtilTest {
 	private class CampaignQueryRuleMock extends CampaignQueryRule {
 
 		public CampaignQueryRuleMock(
-			long assetEntryId, long campaignId, int index)
-		throws PortalException, SystemException {
+				long assetEntryId, long campaignId, int index)
+			throws PortalException {
 
-		super (assetEntryId, campaignId, index, LocaleUtil.getDefault());
+			super(assetEntryId, campaignId, index, LocaleUtil.getDefault());
 		}
 
 		@Override
-		protected void initAssetEntry(Locale locale)
-			throws PortalException, SystemException {
+		protected void initAssetEntry(Locale locale) throws PortalException {
 		}
 
 		@Override

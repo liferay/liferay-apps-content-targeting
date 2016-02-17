@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -87,7 +86,7 @@ public class UserSegmentQueryRuleUtilTest {
 		_queryRules.add(queryRuleNot1and2);
 		_queryRules.add(_queryRuleDefault);
 
-		long[] userSegmentAssetCategoryIds = new long[] {};
+		long[] userSegmentAssetCategoryIds = new long[0];
 
 		QueryRule queryRule = UserSegmentQueryRuleUtil.match(
 			userSegmentAssetCategoryIds, _queryRules);
@@ -130,18 +129,22 @@ public class UserSegmentQueryRuleUtilTest {
 	}
 
 	private QueryRule _queryRuleDefault;
-	private List<QueryRule> _queryRules = new ArrayList<QueryRule>();
+	private List<QueryRule> _queryRules = new ArrayList<>();
 
 	private class UserSegmentQueryRuleMock extends UserSegmentQueryRule {
 
 		public UserSegmentQueryRuleMock(
-			boolean andOperator, boolean contains, long assetEntryId,
-			long[] userSegmentAssetCategoryIds, int index)
-		throws PortalException, SystemException {
+				boolean andOperator, boolean contains, long assetEntryId,
+				long[] userSegmentAssetCategoryIds, int index)
+			throws PortalException {
 
-		super (
-			andOperator, contains, assetEntryId, userSegmentAssetCategoryIds,
-			index, LocaleUtil.getDefault());
+			super(
+				andOperator, contains, assetEntryId,
+				userSegmentAssetCategoryIds, index, LocaleUtil.getDefault());
+		}
+
+		@Override
+		protected void initAssetEntry(Locale locale) throws PortalException {
 		}
 
 		@Override
@@ -149,11 +152,6 @@ public class UserSegmentQueryRuleUtilTest {
 			long[] userSegmentAssetCategoryIds) {
 
 			return userSegmentAssetCategoryIds;
-		}
-
-		@Override
-		protected void initAssetEntry(Locale locale)
-			throws PortalException, SystemException {
 		}
 
 	}
