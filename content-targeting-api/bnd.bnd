@@ -24,21 +24,18 @@ Include-Resource:\
 	classes,\
 	WEB-INF/classes/META-INF=classes/META-INF/,\
 	WEB-INF/classes/META-INF/spring=classes/META-INF/spring,\
-	WEB-INF/liferay-display.xml=META-INF/liferay-display.xml,\
 	WEB-INF/liferay-plugin-package.properties=META-INF/liferay-plugin-package.properties,\
-	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
-	WEB-INF/liferay-portlet.xml=META-INF/liferay-portlet.xml,\
-	WEB-INF/portlet.xml=META-INF/portlet.xml,\
 	META-INF/sql=sql,\
 	resource-actions=src/META-INF/resource-actions,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
 	@lib/com.liferay.content.targeting.api-service.jar
 Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0.3)(!(version>=2.0)))"
 Service-Component: com.liferay.content.targeting.*
-Spring-Context: META-INF/spring
 Web-ContextPath: /content-targeting-api
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

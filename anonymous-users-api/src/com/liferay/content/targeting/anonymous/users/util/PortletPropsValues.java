@@ -21,6 +21,9 @@ import com.liferay.util.portlet.PortletProps;
  */
 public class PortletPropsValues {
 
+	public static final int ANONYMOUS_USERS_CHECK_INTERVAL = Integer.decode(
+		PortletProps.get(PortletPropsKeys.ANONYMOUS_USERS_CHECK_INTERVAL));
+
 	public static final int ANONYMOUS_USERS_MAX_AGE = Integer.decode(
 		PortletProps.get(PortletPropsKeys.ANONYMOUS_USERS_MAX_AGE));
 

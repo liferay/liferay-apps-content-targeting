@@ -19,6 +19,9 @@ package com.liferay.content.targeting.anonymous.users.util;
  */
 public class PortletPropsKeys {
 
+	public static final String ANONYMOUS_USERS_CHECK_INTERVAL =
+		"anonymous.users.check.interval";
+
 	public static final String ANONYMOUS_USERS_MAX_AGE =
 		"anonymous.users.max.age";
 

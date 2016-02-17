@@ -14,20 +14,73 @@
 
 package com.liferay.content.targeting.messaging;
 
-import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalServiceUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService;
+import com.liferay.content.targeting.util.PortletPropsValues;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
  */
+@Component(
+	immediate = true,
+	service = CheckAnonymousUserUserSegmentsMessageListener.class
+)
 public class CheckAnonymousUserUserSegmentsMessageListener
-	extends BaseMessageListener {
+	extends BaseSchedulerEntryMessageListener {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		schedulerEntryImpl.setTrigger(
+			TriggerFactoryUtil.createTrigger(
+				getEventListenerClass(), getEventListenerClass(),
+				PortletPropsValues.ANONYMOUS_USER_USER_SEGMENTS_CHECK_INTERVAL,
+				TimeUnit.DAY));
+
+		_schedulerEngineHelper.register(
+			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		AnonymousUserUserSegmentLocalServiceUtil.
-			checkAnonymousUserUserSegments();
+		_anonymousUserUserSegmentLocalService.checkAnonymousUserUserSegments();
 	}
+
+	@Reference(unbind = "-")
+	protected void setAnonymousUserUserSegmentLocalService(
+		AnonymousUserUserSegmentLocalService
+			anonymousUserUserSegmentLocalService) {
+
+		_anonymousUserUserSegmentLocalService =
+			anonymousUserUserSegmentLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTriggerFactory(TriggerFactory triggerFactory) {
+	}
+
+	private AnonymousUserUserSegmentLocalService
+		_anonymousUserUserSegmentLocalService;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }
