@@ -35,8 +35,8 @@
 <%@ page import="com.liferay.portal.kernel.util.PropertiesParamUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringPool" %>
 <%@ page import="com.liferay.portal.kernel.util.UnicodeProperties" %>
-<%@ page import="com.liferay.portal.model.*" %>
-<%@ page import="com.liferay.portal.model.impl.*" %>
+<%@ page import="com.liferay.portal.kernel.model.*" %>
+<%@ page import="com.liferay.portal.kernel.model.impl.*" %>
 
 <liferay-theme:defineObjects />
 
