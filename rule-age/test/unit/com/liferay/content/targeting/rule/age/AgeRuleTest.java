@@ -64,6 +64,7 @@ public class AgeRuleTest extends PowerMockito {
 
 					return new JSONObjectImpl((String)args[0]);
 				}
+
 			}
 		);
 

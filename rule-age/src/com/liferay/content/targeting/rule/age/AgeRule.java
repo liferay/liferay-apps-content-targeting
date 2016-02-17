@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -129,7 +129,7 @@ public class AgeRule extends BaseRule {
 					locale, "users-older-than-x-years-old", olderThan);
 			}
 		}
-		catch (JSONException jse) {
+		catch (JSONException jsone) {
 		}
 
 		return summary;
@@ -192,7 +192,7 @@ public class AgeRule extends BaseRule {
 				youngerThan = jsonObj.getInt("youngerThan");
 				olderThan = jsonObj.getInt("olderThan");
 			}
-			catch (JSONException jse) {
+			catch (JSONException jsone) {
 			}
 		}
 
@@ -221,7 +221,7 @@ public class AgeRule extends BaseRule {
 						context, PortletKeys.PORTAL_SETTINGS);
 
 			if (hasPortalSettingsViewPermission) {
-				Map<String, String> params = new HashMap<String, String>();
+				Map<String, String> params = new HashMap<>();
 
 				params.put("historyKey", "_130_users");
 
