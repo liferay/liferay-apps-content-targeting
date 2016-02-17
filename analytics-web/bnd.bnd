@@ -4,9 +4,8 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.content.targeting.web.filter,\
 	com.liferay.content.targeting.web.servlet.taglib
-Import-Package: *
 Include-Resource: classes
-JS-Config: /js/analytics/config.js
+Liferay-JS-Config: /js/analytics/config.js
 Private-Package: com.liferay.content.targeting.analytics.web.*
 Service-Component: com.liferay.content.targeting.analytics.web.*
 Web-ContextPath: /analytics-web
