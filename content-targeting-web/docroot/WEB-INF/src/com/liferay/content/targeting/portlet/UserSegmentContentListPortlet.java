@@ -26,37 +26,28 @@ import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.KeyValuePairComparator;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import freemarker.ext.beans.BeansWrapper;
-
-import freemarker.template.TemplateHashModel;
+import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -80,53 +71,109 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=User Segment Content List" + PortletKeys.CT_USERSEGMENT_LIST,
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.config-template=/html/user_segment_content_list/configuration.ftl",
+		"javax.portlet.init-param.config-template=/html/user_segment_content_list/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/html/user_segment_content_list/view.ftl",
+		"javax.portlet.init-param.view-template=/html/user_segment_content_list/view.jsp",
 		"javax.portlet.name=", "javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {UserSegmentContentListPortlet.class, Portlet.class}
+	service = Portlet.class
 )
-public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
-
-	public void updatePreferences(
-			ActionRequest request, ActionResponse response)
-		throws Exception {
-
-		String anyAssetType = ParamUtil.getString(request, "anyAssetType");
-		String[] classNameIds = StringUtil.split(
-			ParamUtil.getString(request, "classNameIds"));
-
-		PortletPreferences portletPreferences = request.getPreferences();
-
-		portletPreferences.setValue(
-			"anyAssetType", String.valueOf(anyAssetType));
-
-		if (!ArrayUtil.isEmpty(classNameIds)) {
-			portletPreferences.setValues("classNameIds", classNameIds);
-		}
-
-		super.updatePreferences(request, response, portletPreferences);
-	}
+public class UserSegmentContentListPortlet extends MVCPortlet {
 
 	@Override
-	protected void doPopulateContext(
-			String path, PortletRequest portletRequest,
-			PortletResponse portletResponse, Template template)
-		throws Exception {
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
-		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		TemplateHashModel staticModels = wrapper.getStaticModels();
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
-		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
-		template.put(
-			"redirect", ParamUtil.getString(portletRequest, "redirect"));
+		long[] availableClassNameIds = getAvailableClassNameIds(
+			themeDisplay.getCompanyId());
 
-		populateViewContext(
-			path, portletRequest, portletResponse, template, staticModels);
+		long[] classNameIds = getClassNameIds(
+			portletPreferences, availableClassNameIds);
+
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(
+				AssetEntry.class.getName());
+
+		renderRequest.setAttribute("templateHandler", templateHandler);
+
+		long[] userSegmentIds = (long[])renderRequest.getAttribute(
+			WebKeys.USER_SEGMENT_IDS);
+
+		List<AssetEntry> assetEntries = new ArrayList<>();
+
+		try {
+			if (ArrayUtil.isNotEmpty(userSegmentIds)) {
+				AssetEntryQuery entryQuery = new AssetEntryQuery();
+
+				entryQuery.setAnyCategoryIds(
+					ContentTargetingUtil.getAssetCategoryIds(
+						themeDisplay.getScopeGroupId(), userSegmentIds));
+				entryQuery.setClassNameIds(classNameIds);
+				entryQuery.setEnablePermissions(true);
+
+				assetEntries = AssetEntryServiceUtil.getEntries(entryQuery);
+
+				renderRequest.setAttribute("view.jsp-results", new ArrayList());
+				renderRequest.setAttribute(
+					"view.jsp-assetEntryIndex", Integer.valueOf(0));
+				renderRequest.setAttribute(
+					"view.jsp-show", Boolean.valueOf(true));
+				renderRequest.setAttribute(
+					"view.jsp-print", Boolean.valueOf(false));
+			}
+
+			renderRequest.setAttribute("assetEntries", assetEntries);
+
+			if (assetEntries.isEmpty()) {
+				renderRequest.setAttribute(
+					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+			}
+
+			long assetEntryId = ParamUtil.getLong(
+				renderRequest, "assetEntryId");
+
+			if (assetEntryId > 0) {
+				AssetEntry assetEntry =
+					AssetEntryLocalServiceUtil.fetchAssetEntry(assetEntryId);
+
+				AssetRendererFactory assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassName(
+							assetEntry.getClassName());
+
+				AssetRenderer assetRenderer =
+					assetRendererFactory.getAssetRenderer(
+						assetEntry.getClassPK());
+
+				renderRequest.setAttribute("view.jsp-results", new ArrayList());
+				renderRequest.setAttribute(
+					"view.jsp-assetEntryIndex", Integer.valueOf(0));
+				renderRequest.setAttribute("view.jsp-assetEntry", assetEntry);
+				renderRequest.setAttribute(
+					"view.jsp-assetRendererFactory", assetRendererFactory);
+				renderRequest.setAttribute(
+					"view.jsp-assetRenderer", assetRenderer);
+				renderRequest.setAttribute(
+					"view.jsp-title",
+					assetEntry.getTitle(themeDisplay.getLocale()));
+				renderRequest.setAttribute(
+					"view.jsp-show", Boolean.valueOf(false));
+				renderRequest.setAttribute(
+					"view.jsp-print", Boolean.valueOf(false));
+			}
+		}
+		catch (Exception e) {
+		}
+
+		super.render(renderRequest, renderResponse);
 	}
 
 	protected long[] getAvailableClassNameIds(long companyId) {
@@ -192,155 +239,6 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 		}
 
 		return super.getPath(portletRequest, portletResponse);
-	}
-
-	protected void populateViewContext(
-			String path, PortletRequest portletRequest,
-			PortletResponse portletResponse, Template template,
-			TemplateHashModel staticModels)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletPreferences portletPreferences = portletRequest.getPreferences();
-
-		long[] availableClassNameIds = getAvailableClassNameIds(
-			themeDisplay.getCompanyId());
-
-		long[] classNameIds = getClassNameIds(
-			portletPreferences, availableClassNameIds);
-
-		populatePortletDisplayTemplateContext(
-			template, portletPreferences, themeDisplay.getScopeGroupId(),
-			"abstracts");
-
-		if (Validator.isNull(path) ||
-			path.equals(UserSegmentContentListPath.VIEW)) {
-
-			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
-
-			long[] userSegmentIds = (long[])portletRequest.getAttribute(
-				WebKeys.USER_SEGMENT_IDS);
-
-			List<AssetEntry> assetEntries = new ArrayList<>();
-
-			if (ArrayUtil.isNotEmpty(userSegmentIds)) {
-				AssetEntryQuery entryQuery = new AssetEntryQuery();
-
-				entryQuery.setAnyCategoryIds(
-					ContentTargetingUtil.getAssetCategoryIds(
-						themeDisplay.getScopeGroupId(), userSegmentIds));
-				entryQuery.setClassNameIds(classNameIds);
-				entryQuery.setEnablePermissions(true);
-
-				assetEntries = AssetEntryServiceUtil.getEntries(entryQuery);
-
-				portletRequest.setAttribute(
-					"view.jsp-results", new ArrayList());
-				portletRequest.setAttribute(
-					"view.jsp-assetEntryIndex", Integer.valueOf(0));
-				portletRequest.setAttribute(
-					"view.jsp-show", Boolean.valueOf(true));
-				portletRequest.setAttribute(
-					"view.jsp-print", Boolean.valueOf(false));
-			}
-
-			template.put("assetEntries", assetEntries);
-			template.put(
-				"assetRendererFactoryRegistryUtilClass",
-				staticModels.get(
-					AssetRendererFactoryRegistryUtil.class.getName()));
-
-			if (assetEntries.isEmpty()) {
-				portletRequest.setAttribute(
-					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
-			}
-
-			populatePortletDisplayTemplateViewContext(
-				template, portletRequest, themeDisplay, assetEntries, null);
-		}
-		else if (path.equals(UserSegmentContentListPath.VIEW_CONTENT)) {
-			long assetEntryId = ParamUtil.getLong(
-				portletRequest, "assetEntryId");
-
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
-				assetEntryId);
-
-			AssetRendererFactory assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						assetEntry.getClassName());
-
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-				assetEntry.getClassPK());
-
-			portletRequest.setAttribute("view.jsp-results", new ArrayList());
-			portletRequest.setAttribute(
-				"view.jsp-assetEntryIndex", Integer.valueOf(0));
-			portletRequest.setAttribute("view.jsp-assetEntry", assetEntry);
-			portletRequest.setAttribute(
-				"view.jsp-assetRendererFactory", assetRendererFactory);
-			portletRequest.setAttribute(
-				"view.jsp-assetRenderer", assetRenderer);
-			portletRequest.setAttribute(
-				"view.jsp-title",
-				assetEntry.getTitle(themeDisplay.getLocale()));
-			portletRequest.setAttribute(
-				"view.jsp-show", Boolean.valueOf(false));
-			portletRequest.setAttribute(
-				"view.jsp-print", Boolean.valueOf(false));
-		}
-		else if (path.equals(UserSegmentContentListPath.CONFIGURATION)) {
-			List<KeyValuePair> typesLeftList = new ArrayList<>();
-
-			for (long classNameId : classNameIds) {
-				String className = PortalUtil.getClassName(classNameId);
-
-				typesLeftList.add(
-					new KeyValuePair(
-						String.valueOf(classNameId),
-						ResourceActionsUtil.getModelResource(
-							themeDisplay.getLocale(), className)));
-			}
-
-			List<KeyValuePair> typesRightList = new ArrayList<>();
-
-			Arrays.sort(classNameIds);
-
-			List<String> modelResources = new ArrayList<>();
-
-			for (long classNameId : availableClassNameIds) {
-				ClassName className = ClassNameLocalServiceUtil.getClassName(
-					classNameId);
-
-				if (Arrays.binarySearch(classNameIds, classNameId) < 0) {
-					typesRightList.add(
-						new KeyValuePair(
-							String.valueOf(classNameId),
-							ResourceActionsUtil.getModelResource(
-								themeDisplay.getLocale(),
-								className.getValue())));
-				}
-
-				modelResources.add(
-					ResourceActionsUtil.getModelResource(
-						themeDisplay.getLocale(), className.getValue()));
-			}
-
-			typesRightList = ListUtil.sort(
-				typesRightList, new KeyValuePairComparator(false, true));
-
-			boolean anyAssetType = GetterUtil.getBoolean(
-				portletPreferences.getValue("anyAssetType", null), true);
-
-			template.put("anyAssetType", anyAssetType);
-			template.put("availableClassNameIds", availableClassNameIds);
-			template.put("classNameIds", classNameIds);
-			template.put("modelResources", modelResources);
-			template.put("typesLeftList", typesLeftList);
-			template.put("typesRightList", typesRightList);
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

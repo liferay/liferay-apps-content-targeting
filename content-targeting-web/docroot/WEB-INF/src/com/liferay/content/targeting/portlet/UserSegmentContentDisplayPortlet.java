@@ -18,41 +18,41 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.content.targeting.portlet.util.QueryRule;
-import com.liferay.content.targeting.portlet.util.UserSegmentQueryRule;
 import com.liferay.content.targeting.portlet.util.UserSegmentQueryRuleUtil;
+import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.content.targeting.util.WebKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import freemarker.ext.beans.BeansWrapper;
-
-import freemarker.template.TemplateHashModel;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -78,172 +78,48 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=User Segment Content Display" + PortletKeys.CT_USERSEGMENT_DISPLAY,
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.config-template=/html/user_segment_content_display/configuration.ftl",
+		"javax.portlet.init-param.config-template=/html/user_segment_content_display/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/html/user_segment_content_display/view.ftl",
+		"javax.portlet.init-param.view-template=/html/user_segment_content_display/view.jsp",
 		"javax.portlet.name=", "javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {UserSegmentContentDisplayPortlet.class, Portlet.class}
+	service = Portlet.class
 )
-public class UserSegmentContentDisplayPortlet
-	extends CTFreeMarkerDisplayPortlet {
-
-	public void updatePreferences(
-			ActionRequest request, ActionResponse response)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long assetEntryIdDefault = ParamUtil.getLong(
-			request, "assetEntryIdDefault");
-		boolean contentDefaultValue = ParamUtil.getBoolean(
-			request, "contentDefaultValue");
-
-		if (!contentDefaultValue) {
-			assetEntryIdDefault = 0;
-		}
-
-		int[] queryRulesIndexes = StringUtil.split(
-			ParamUtil.getString(request, "queryLogicIndexes"), 0);
-
-		if (ArrayUtil.isEmpty(queryRulesIndexes)) {
-			return;
-		}
-
-		List<UserSegmentQueryRule> queryRules = new ArrayList<>();
-
-		for (int queryRulesIndex : queryRulesIndexes) {
-			QueryRule queryRule = UserSegmentQueryRuleUtil.getQueryRule(
-				request, queryRulesIndex, themeDisplay.getLocale());
-
-			if (!queryRule.isValid()) {
-				continue;
-			}
-
-			queryRules.add((UserSegmentQueryRule)queryRule);
-		}
-
-		PortletPreferences portletPreferences = request.getPreferences();
-
-		int[] oldQueryRulesIndexes = GetterUtil.getIntegerValues(
-			portletPreferences.getValues("queryLogicIndexes", null));
-
-		for (int queryRulesIndex : oldQueryRulesIndexes) {
-			portletPreferences.setValue(
-				"queryContains" + queryRulesIndex, StringPool.BLANK);
-			portletPreferences.setValue(
-				"queryAndOperator" + queryRulesIndex, StringPool.BLANK);
-			portletPreferences.setValues(
-				"userSegmentAssetCategoryIds" + queryRulesIndex, new String[0]);
-			portletPreferences.setValue(
-				"assetEntryId" + queryRulesIndex, StringPool.BLANK);
-		}
-
-		portletPreferences.setValue(
-			"enableSocialBookmarks", String.valueOf(false));
-		portletPreferences.setValue("showAssetTitle", String.valueOf(false));
-
-		portletPreferences.setValue(
-			"assetEntryIdDefault", String.valueOf(assetEntryIdDefault));
-		portletPreferences.setValue(
-			"contentDefaultValue", String.valueOf(contentDefaultValue));
-		portletPreferences.setValues(
-			"queryLogicIndexes", ArrayUtil.toStringArray(queryRulesIndexes));
-
-		for (UserSegmentQueryRule queryRule : queryRules) {
-			portletPreferences.setValue(
-				"queryContains" + queryRule.getIndex(),
-				String.valueOf(queryRule.isContains()));
-			portletPreferences.setValue(
-				"queryAndOperator" + queryRule.getIndex(),
-				String.valueOf(queryRule.isAndOperator()));
-			portletPreferences.setValues(
-				"userSegmentAssetCategoryIds" + queryRule.getIndex(),
-				ArrayUtil.toStringArray(
-					queryRule.getUserSegmentAssetCategoryIds()));
-			portletPreferences.setValue(
-				"assetEntryId" + queryRule.getIndex(),
-				String.valueOf(queryRule.getAssetEntryId()));
-		}
-
-		super.updatePreferences(request, response, portletPreferences);
-	}
+public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 
 	@Override
-	protected void doPopulateContext(
-			String path, PortletRequest portletRequest,
-			PortletResponse portletResponse, Template template)
-		throws Exception {
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
-		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
-
-		TemplateHashModel staticModels = wrapper.getStaticModels();
-
-		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
-		template.put(
-			"redirect", ParamUtil.getString(portletRequest, "redirect"));
-		template.put(
-			"userSegmentContentDisplayPath",
-			staticModels.get(UserSegmentContentDisplayPath.class.getName()));
-
-		populateViewContext(
-			path, portletRequest, portletResponse, template, staticModels);
-	}
-
-	protected List<AssetRendererFactory> getSelectableAssetRendererFactories(
-		long companyId) {
-
-		List<AssetRendererFactory> selectableAssetRendererFactories =
-			new ArrayList<>();
-
-		List<AssetRendererFactory<?>> assetRendererFactories =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				companyId);
-
-		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
-			if (!rendererFactory.isSelectable()) {
-				continue;
-			}
-
-			selectableAssetRendererFactories.add(rendererFactory);
-		}
-
-		return selectableAssetRendererFactories;
-	}
-
-	protected void populateViewContext(
-			String path, PortletRequest portletRequest,
-			PortletResponse portletResponse, Template template,
-			TemplateHashModel staticModels)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletPreferences portletPreferences = portletRequest.getPreferences();
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
-		populatePortletDisplayTemplateContext(
-			template, portletPreferences, themeDisplay.getScopeGroupId(),
-			"full-content");
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(
+				AssetEntry.class.getName());
 
-		if (Validator.isNull(path) ||
-			path.equals(UserSegmentContentDisplayPath.VIEW)) {
+		renderRequest.setAttribute("templateHandler", templateHandler);
 
-			template.put(
+		renderRequest.setAttribute(
+			"analyticsServletContext", _analyticsServletContext);
+
+		try {
+			renderRequest.setAttribute(
 				"isNotConfigured", portletPreferences.getMap().isEmpty());
-
-			template.put("showPreview", showPreview(themeDisplay));
 
 			List<QueryRule> userSegmentQueryRules =
 				UserSegmentQueryRuleUtil.getUserSegmentQueryRules(
 					portletPreferences, themeDisplay.getLocale(), false);
 
-			template.put("userSegmentQueryRules", userSegmentQueryRules);
+			renderRequest.setAttribute(
+				"userSegmentQueryRules", userSegmentQueryRules);
 
-			long[] userSegmentIds = (long[])portletRequest.getAttribute(
+			long[] userSegmentIds = (long[])renderRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
 
 			long[] userSegmentAssetCategoryIds =
@@ -253,52 +129,33 @@ public class UserSegmentContentDisplayPortlet
 			QueryRule queryRule = UserSegmentQueryRuleUtil.match(
 				userSegmentAssetCategoryIds, userSegmentQueryRules);
 
-			template.put("queryRule", queryRule);
+			renderRequest.setAttribute("queryRule", queryRule);
 
-			template.put(
+			renderRequest.setAttribute(
 				"selectedIndex", userSegmentQueryRules.indexOf(queryRule));
 
 			List<AssetEntry> results = new ArrayList<>();
 
+			populatePortletDisplayTemplateViewContext(
+				renderRequest, themeDisplay, results, userSegmentQueryRules);
+
 			if ((queryRule != null) && (queryRule.getAssetEntry() != null)) {
 				results.add(queryRule.getAssetEntry());
 
-				queryRule.setAssetAttributes(portletRequest);
+				queryRule.setAssetAttributes(renderRequest);
 			}
 			else {
-				portletRequest.setAttribute(
+				renderRequest.setAttribute(
 					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 			}
 
-			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
+			renderRequest.setAttribute(
+				"showPreview", showPreview(themeDisplay));
 
-			populatePortletDisplayTemplateViewContext(
-				template, portletRequest, themeDisplay, results,
-				userSegmentQueryRules);
-		}
-		else if (path.equals(UserSegmentContentDisplayPath.EDIT_QUERY_RULE) ||
-				 path.equals(UserSegmentContentDisplayPath.CONFIGURATION)) {
-
-			template.put(
+			renderRequest.setAttribute(
 				"assetRendererFactories",
 				getSelectableAssetRendererFactories(
 					themeDisplay.getCompanyId()));
-
-			List<QueryRule> userSegmentQueryRules =
-				UserSegmentQueryRuleUtil.getUserSegmentQueryRules(
-					portletPreferences, themeDisplay.getLocale(), true);
-
-			template.put("userSegmentQueryRules", userSegmentQueryRules);
-
-			UserSegmentQueryRule userSegmentQueryRule =
-				(UserSegmentQueryRule)portletRequest.getAttribute(
-					"configuration.queryRule");
-
-			if (userSegmentQueryRule == null) {
-				userSegmentQueryRule = new UserSegmentQueryRule();
-			}
-
-			template.put("queryRule", userSegmentQueryRule);
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -323,13 +180,76 @@ public class UserSegmentContentDisplayPortlet
 					vocabularyGroupIds);
 			}
 
-			template.put(
+			renderRequest.setAttribute(
 				"vocabularyGroupIds", StringUtil.merge(vocabularyGroupIds));
-			template.put("vocabularyIds", StringUtil.merge(vocabularyIds));
+			renderRequest.setAttribute(
+				"vocabularyIds", StringUtil.merge(vocabularyIds));
 		}
+		catch (Exception e) {
+			_log.error("Error in rendering user segment display portlet", e);
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	protected List<AssetRendererFactory> getSelectableAssetRendererFactories(
+		long companyId) {
+
+		List<AssetRendererFactory> selectableAssetRendererFactories =
+			new ArrayList<>();
+
+		List<AssetRendererFactory<?>> assetRendererFactories =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				companyId);
+
+		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
+			if (!rendererFactory.isSelectable()) {
+				continue;
+			}
+
+			selectableAssetRendererFactories.add(rendererFactory);
+		}
+
+		return selectableAssetRendererFactories;
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.analytics.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		_analyticsServletContext = servletContext;
+	}
+
+	protected boolean showPreview(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (portletDisplay.isShowConfigurationIcon()) {
+			return true;
+		}
+
+		Group group = themeDisplay.getScopeGroup();
+		Layout layout = themeDisplay.getLayout();
+
+		if (!group.hasStagingGroup()) {
+			return false;
+		}
+
+		group = group.getStagingGroup();
+
+		layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layout.getUuid(), group.getGroupId(), layout.isPrivateLayout());
+
+		return PortletPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), layout.getPlid(),
+			portletDisplay.getPortletName(), ActionKeys.CONFIGURATION);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		UserSegmentContentDisplayPortlet.class);
+
+	private ServletContext _analyticsServletContext;
 
 }

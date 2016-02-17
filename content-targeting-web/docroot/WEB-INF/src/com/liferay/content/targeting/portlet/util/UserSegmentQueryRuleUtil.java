@@ -45,7 +45,8 @@ public class UserSegmentQueryRuleUtil {
 
 		long[] userSegmentAssetCategoryIds = StringUtil.split(
 			ParamUtil.getString(
-				request, "userSegmentAssetCategoryIds" + queryRulesIndex), 0L);
+				request, "userSegmentAssetCategoryIds" + queryRulesIndex),
+			0L);
 
 		return new UserSegmentQueryRule(
 			andOperator, contains, assetEntryId, userSegmentAssetCategoryIds,
@@ -62,7 +63,8 @@ public class UserSegmentQueryRuleUtil {
 				"queryAndOperator" + queryRulesIndex, null));
 		boolean contains = GetterUtil.getBoolean(
 			portletPreferences.getValue(
-				"queryContains" + queryRulesIndex, null), true);
+				"queryContains" + queryRulesIndex, null),
+			true);
 
 		long assetEntryId = GetterUtil.getLong(
 			portletPreferences.getValue(

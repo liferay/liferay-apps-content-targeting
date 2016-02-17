@@ -88,6 +88,7 @@ public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 		return super.getGroupId(scopeGroupId);
 	}
 
+	@Override
 	public String getSummary(PortletConfig portletConfig, Locale locale) {
 		if (_campaign == null) {
 			return LanguageUtil.get(

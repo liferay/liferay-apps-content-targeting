@@ -101,6 +101,7 @@ public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 		return false;
 	}
 
+	@Override
 	public String getSummary(PortletConfig portletConfig, Locale locale) {
 		if (ArrayUtil.isEmpty(_userSegmentAssetCategoryIds)) {
 			return LanguageUtil.get(
@@ -110,8 +111,7 @@ public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 		String summary = StringPool.BLANK;
 
 		if (!_contains) {
-			summary = summary + htmlOperator(
-				null, _contains, portletConfig, locale);
+			summary += htmlOperator(null, _contains, portletConfig, locale);
 		}
 
 		return summary +

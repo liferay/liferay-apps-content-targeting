@@ -5,16 +5,18 @@ Bundle-SymbolicName: com.liferay.content.targeting.web-portlet
 Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.content.targeting.portlet,\
+	com.liferay.content.targeting.portlet.action,\
+	com.liferay.content.targeting.portlet.application.list,\
 	com.liferay.content.targeting.portlet.lar,\
 	com.liferay.content.targeting.portlet.util
 Import-Package:\
 	!com.caucho.quercus.servlet,\
 	!com.caucho.vfs,\
-	!com.swabunga.spell.engine,\
-	!com.swabunga.spell.event,\
 	!com.sun.org.apache.xml.internal.utils,\
 	!com.sun.org.apache.xpath.internal,\
 	!com.sun.org.apache.xpath.internal.objects,\
+	!com.swabunga.spell.engine,\
+	!com.swabunga.spell.event,\
 	!net.fortuna.ical4j.model,\
 	!net.fortuna.ical4j.model.property,\
 	!org.apache.axis,\
@@ -33,25 +35,44 @@ Import-Package:\
 	!org.mozilla.javascript.*,\
 	!org.python.*,\
 	!org.zeroturnaround.*,\
+	!com.liferay.util.dao.orm,\
+	com.liferay.content.targeting.api.model,\
+	com.liferay.content.targeting.internal,\
+	com.liferay.content.targeting.service,\
+	com.liferay.exportimport.kernel.lar,\
+	com.liferay.ip.geocoder,\
+	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.language,\
+	com.liferay.portal.kernel.portlet,\
+	com.liferay.portal.kernel.security.auth,\
+	com.liferay.portal.kernel.security.permission,\
+	com.liferay.portal.kernel.servlet,\
+	com.liferay.portal.kernel.servlet.filters.invoker,\
+	com.liferay.portal.model,\
+	com.liferay.portal.service,\
+	com.liferay.portal.servlet.filters.aggregate,\
+	com.liferay.portal.servlet.filters.dynamiccss,\
+	com.liferay.portal.webserver,\
+	com.liferay.portlet,\
+	freemarker.ext.servlet,\
+	freemarker.template,\
 	*
 Include-Resource:\
+	docroot/WEB-INF/classes,\
 	resource-actions=docroot/WEB-INF/src/META-INF/resource-actions,\
 	META-INF/resources/css=docroot/css,\
+	META-INF/resources/html=docroot/html,\
 	META-INF/resources/images=docroot/images,\
 	META-INF/resources/js=docroot/js,\
-	WEB-INF/tld/aui.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-aui.tld,\
-	WEB-INF/tld/liferay-ui.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-ui.tld,\
+	META-INF/aui.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-aui.tld,\
+	META-INF/liferay-ddm.tld=docroot/WEB-INF/tld/liferay-ddm.tld,\
+	META-INF/liferay-portlet.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-portlet.tld,\
+	META-INF/liferay-security.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-security.tld,\
+	META-INF/liferay-theme.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-theme.tld,\
+	META-INF/liferay-ui.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-ui.tld,\
 	@${app.server.portal.dir}/WEB-INF/lib/portal-impl.jar!/com/liferay/portal/freemarker/FreeMarkerUtil.class,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
-JS-Config: /js/config.js
-Service-Component: com.liferay.content.targeting.portlet.*
-Servlet-Context-Name: content-targeting-web
+Liferay-JS-Config: /js/config.js
 Web-ContextPath: /content-targeting-web
--baseline: *;version="1.0.0"
--wab: docroot
--wablib: \
-	docroot/WEB-INF/lib/com.liferay.freemarker.osgi.bridge.jar,\
-	${app.server.portal.dir}/WEB-INF/lib/util-bridges.jar,\
-	${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar

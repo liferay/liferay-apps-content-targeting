@@ -95,8 +95,8 @@ public class CTFreeMarkerDisplayPortlet extends CTFreeMarkerPortlet {
 
 		long portletDisplayDDMTemplateId =
 			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(
-					(Long)template.get("displayStyleGroupId"),
-					(String)template.get("displayStyle"));
+				(Long)template.get("displayStyleGroupId"),
+				(String)template.get("displayStyle"));
 
 		if (portletDisplayDDMTemplateId > 0) {
 			String portletDisplayTemplateHtml =
