@@ -48,7 +48,6 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +60,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(
-	property = {"servletName=Analytics Processor", "urlPattern=/track"},
+	immediate = true,
+	property = {
+		"osgi.http.whiteboard.context.select=analytics-processor",
+		"osgi.http.whiteboard.servlet.name=Analytics Processor Servlet",
+		"osgi.http.whiteboard.servlet.pattern=/track"
+	},
 	service = Servlet.class
 )
 public class AnalyticsProcessorServlet extends HttpServlet {
@@ -129,12 +133,6 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		AnonymousUsersManager anonymousUsersManager) {
 
 		_anonymousUsersManager = anonymousUsersManager;
-	}
-
-	// Needed only for http service in 6.2
-
-	@Reference (target ="(Web-ContextPath=/o/analytics-processor)")
-	public void setServletContext(ServletContext servletContext) {
 	}
 
 	protected void processEvent(
