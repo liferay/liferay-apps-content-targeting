@@ -82,6 +82,7 @@ Include-Resource:\
 	META-INF/liferay-security.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-security.tld,\
 	META-INF/liferay-theme.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-theme.tld,\
 	META-INF/liferay-ui.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-ui.tld,\
+    META-INF/liferay-util.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-util.tld,\
 	@${app.server.portal.dir}/WEB-INF/lib/portal-impl.jar!/com/liferay/portal/freemarker/FreeMarkerUtil.class,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
