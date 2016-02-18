@@ -21,10 +21,10 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.SessionAttributesRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -319,7 +320,9 @@ public class DeviceRule extends BaseRule {
 
 		params.put("includeGlobalScope", Boolean.TRUE);
 
-		long groupId = GetterUtil.getLong(context.get("scopeGroupId"));
+		Group scopeGroup = (Group)context.get("scopeGroup");
+
+		long groupId = (scopeGroup != null) ? scopeGroup.getGroupId() : 0;
 
 		List<MDRRuleGroup> mdrRuleGroups = new ArrayList<>();
 
@@ -339,13 +342,13 @@ public class DeviceRule extends BaseRule {
 
 		boolean hasMDRViewPermission =
 			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-				context, PortletKeys.MOBILE_DEVICE_SITE_ADMIN);
+				context, MDRPortletKeys.MOBILE_DEVICE_RULES);
 
 		if (hasMDRViewPermission) {
 			context.put(
 				"mDRURL",
 				ContentTargetingContextUtil.getSiteAdministrationPortletURL(
-					context, PortletKeys.MOBILE_DEVICE_SITE_ADMIN, null));
+					context, MDRPortletKeys.MOBILE_DEVICE_RULES, null));
 		}
 	}
 

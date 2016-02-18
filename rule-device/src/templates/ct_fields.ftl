@@ -21,7 +21,7 @@
 <#setting number_format="computer">
 
 <@liferay_util["buffer"] var="infoMessage" >
-	<#assign enableLocationLabel = languageUtil.get(locale, "site-administration-mdr") />
+	<#assign enableLocationLabel = languageUtil.get(request, "site-administration-mdr") />
 
 	<#if mDRURL??>
 		<#assign enableLocationLabel = "<a href=\"" + mDRURL + "\">" + enableLocationLabel + "</a>" />
