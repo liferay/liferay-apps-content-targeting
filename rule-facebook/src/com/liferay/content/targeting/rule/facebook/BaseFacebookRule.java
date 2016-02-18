@@ -18,8 +18,8 @@ import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.PortletKeys;
+import com.liferay.portal.facebook.FacebookConnectUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
 import com.liferay.portal.kernel.model.Company;
 
 import java.util.HashMap;

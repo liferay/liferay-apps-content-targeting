@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -71,7 +71,8 @@ public class FacebookFriendsRule extends BaseFacebookRule {
 			anonymousUser.getTypeSettings());
 
 		long friendsCount = FacebookUtil.getFriendsCount(
-			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
+			typeSettings.getString(
+				FacebookConnectWebKeys.FACEBOOK_ACCESS_TOKEN));
 
 		if (selector.equals("more") && (friendsCount >= numberOfFriends)) {
 			return true;

@@ -22,7 +22,7 @@ import com.liferay.content.targeting.rule.facebook.util.FacebookUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -64,7 +64,7 @@ public class FacebookLikeRule extends BaseFacebookRule {
 			anonymousUser.getTypeSettings());
 
 		String accessToken = typeSettings.getString(
-			WebKeys.FACEBOOK_ACCESS_TOKEN);
+			FacebookConnectWebKeys.FACEBOOK_ACCESS_TOKEN);
 
 		return FacebookUtil.isUserLikes(
 			accessToken, ruleInstance.getTypeSettings());

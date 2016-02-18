@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
 
 import com.restfb.types.User;
 
@@ -79,7 +79,8 @@ public class FacebookEducationRule extends BaseFacebookRule {
 			anonymousUser.getTypeSettings());
 
 		User user = FacebookUtil.getFacebookUser(
-			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
+			typeSettings.getString(
+				FacebookConnectWebKeys.FACEBOOK_ACCESS_TOKEN));
 
 		if (matchEducationLevel(user, educationLevel) &&
 			matchEducationName(user, schoolName)) {

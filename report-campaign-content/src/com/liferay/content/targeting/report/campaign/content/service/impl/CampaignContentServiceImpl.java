@@ -31,5 +31,4 @@ import com.liferay.content.targeting.report.campaign.content.service.base.Campai
  * @see com.liferay.content.targeting.report.campaign.content.service.CampaignContentServiceUtil
  */
 public class CampaignContentServiceImpl extends CampaignContentServiceBaseImpl {
-
 }

@@ -15,7 +15,6 @@
 -->
 
 <#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_portlet = PortletJspTagLibs["/META-INF/liferay-portlet-ext.tld"] />
 <#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
 <#assign liferay_util = PortletJspTagLibs["/META-INF/liferay-util.tld"] />
 <#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
@@ -26,7 +25,7 @@
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-rule-will-not-work-properly-because-login-through-facebook-is-not-enabled" /></strong>
 
-		<#assign enableLocationLabel = languageUtil.get(locale, "portal-settings-authentication") />
+		<#assign enableLocationLabel = languageUtil.get(request, "portal-settings-authentication") />
 
 		<#if portalSettingsURL??>
 			<#assign enableLocationLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationLabel + "</a>" />
