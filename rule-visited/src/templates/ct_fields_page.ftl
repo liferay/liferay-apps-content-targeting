@@ -44,9 +44,25 @@
 	</div>
 </#if>
 
-<@aui["input"] inlineField=true checked=!privateLayout label="public-pages" name="privateLayout" onChange="if (this.checked) {${renderResponse.getNamespace()}updateFriendlyURL('${htmlUtil.escape(friendlyURLPublicBase)}');}" type="radio" value=false />
+<@aui["input"]
+	inlineField=true
+	checked=!privateLayout
+	label="public-pages"
+	name="privateLayout"
+	onChange="if (this.checked) {${renderResponse.getNamespace()}updateFriendlyURL('${htmlUtil.escape(friendlyURLPublicBase)}');}"
+	type="radio"
+	value=false
+/>
 
-<@aui["input"] inlineField=true checked=privateLayout label="private-pages" name="privateLayout" onChange="if (this.checked) {${renderResponse.getNamespace()}updateFriendlyURL('${htmlUtil.escape(friendlyURLPrivateBase)}');}" type="radio" value=true />
+<@aui["input"]
+	inlineField=true
+	checked=privateLayout
+	label="private-pages"
+	name="privateLayout"
+	onChange="if (this.checked) {${renderResponse.getNamespace()}updateFriendlyURL('${htmlUtil.escape(friendlyURLPrivateBase)}');}"
+	type="radio"
+	value=true
+/>
 
 <@aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" prefix=friendlyURLBase style="width: auto;" type="text" value=friendlyURL>
 	<@aui["validator"] name="required" />

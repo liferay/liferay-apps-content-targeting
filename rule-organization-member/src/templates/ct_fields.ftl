@@ -29,12 +29,19 @@
 			<#assign enableLocationLabel = "<a href=\"" + usersAdminURL + "\">" + enableLocationLabel + "</a>" />
 		</#if>
 
-		<@liferay_ui["message"] arguments=enableLocationLabel key="organizations-can-be-managed-in-x" />
+		<@liferay_ui["message"]
+			arguments=enableLocationLabel
+			key="organizations-can-be-managed-in-x"
+		/>
 	</div>
 <#else>
 	<@aui["select"] label="" name="organizationId">
 		<#list organizations as organization>
-			<@aui["option"] label="${organization.getName()}" selected=(organization.getOrganizationId() == organizationId) value=organization.getOrganizationId() />
+			<@aui["option"]
+				label="${organization.getName()}"
+				selected=(organization.getOrganizationId()
+				== organizationId) value=organization.getOrganizationId()
+			/>
 		</#list>
 	</@>
 </#if>

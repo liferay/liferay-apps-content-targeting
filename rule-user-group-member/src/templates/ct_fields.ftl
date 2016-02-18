@@ -29,12 +29,19 @@
 			<#assign enableLocationLabel = "<a href=\"" + userGroupsAdminURL + "\">" + enableLocationLabel + "</a>" />
 		</#if>
 
-		<@liferay_ui["message"] arguments=enableLocationLabel key="user-groups-can-be-managed-in-x" />
+		<@liferay_ui["message"]
+			arguments=enableLocationLabel
+			key="user-groups-can-be-managed-in-x"
+		/>
 	</div>
 <#else>
 	<@aui["select"] label="" name="userGroupId">
 		<#list userGroups as userGroup>
-			<@aui["option"] label="${userGroup.getName()}" selected=(userGroup.getUserGroupId() == userGroupId) value=userGroup.getUserGroupId() />
+			<@aui["option"]
+				label="${userGroup.getName()}"
+				selected=(userGroup.getUserGroupId()
+				== userGroupId) value=userGroup.getUserGroupId()
+			/>
 		</#list>
 	</@>
 </#if>

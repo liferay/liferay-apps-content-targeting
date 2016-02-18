@@ -49,7 +49,11 @@
 		<#assign cssClass = "hide">
 	</#if>
 
-	<@aui["input"] name="assetEntryId" type="hidden" value=assetEntryId />
+	<@aui["input"]
+		name="assetEntryId"
+		type="hidden"
+		value=assetEntryId
+	/>
 
 	<div class="asset-preview ${cssClass}" id="<@portlet["namespace"] />assetPreview">
 		<@aui["column"]>

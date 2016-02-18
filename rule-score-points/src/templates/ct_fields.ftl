@@ -43,7 +43,10 @@
 
 <div class="alert alert-info">
 	<#if userSegment??>
-		<@liferay_ui["message"] arguments=userSegment.getName(locale) key="users-will-receive-1-point-for-this-user-segment-every-time-they-visit-a-page-or-content-categorized-under-x" />
+		<@liferay_ui["message"]
+			arguments=userSegment.getName(locale)
+			key="users-will-receive-1-point-for-this-user-segment-every-time-they-visit-a-page-or-content-categorized-under-x"
+		/>
 	<#else>
 		<@liferay_ui["message"] key="users-will-receive-1-point-for-this-user-segment-every-time-they-visit-a-page-or-content-categorized-under-this-user-segment" />
 	</#if>

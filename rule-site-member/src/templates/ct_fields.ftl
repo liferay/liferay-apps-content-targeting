@@ -29,12 +29,19 @@
 			<#assign enableLocationLabel = "<a href=\"" + sitesAdminURL + "\">" + enableLocationLabel + "</a>" />
 		</#if>
 
-		<@liferay_ui["message"] arguments=enableLocationLabel key="sites-can-be-managed-in-x" />
+		<@liferay_ui["message"]
+			arguments=enableLocationLabel
+			key="sites-can-be-managed-in-x"
+		/>
 	</div>
 <#else>
 	<@aui["select"] label="" name="siteId">
 		<#list sites as site>
-			<@aui["option"] label="${site.getDescriptiveName(locale)}" selected=(site.getGroupId() == siteId) value=site.getGroupId() />
+			<@aui["option"]
+				label="${site.getDescriptiveName(locale)}"
+				selected=(site.getGroupId()
+				== siteId) value=site.getGroupId()
+			/>
 		</#list>
 	</@>
 </#if>

@@ -27,7 +27,10 @@
 		<#assign enableLocationLabel = "<a href=\"" + mDRURL + "\">" + enableLocationLabel + "</a>" />
 	</#if>
 
-	<@liferay_ui["message"] arguments=enableLocationLabel key="device-families-can-be-managed-in-x" />
+	<@liferay_ui["message"]
+		arguments=enableLocationLabel
+		key="device-families-can-be-managed-in-x"
+	/>
 </@>
 
 <#if !mdrRuleGroups?has_content >
@@ -41,7 +44,11 @@
 
 	<@aui["select"] label="device-family" name="mdrRuleGroupId">
 		<#list mdrRuleGroups as mdrRuleGroup>
-			<@aui["option"] label="${mdrRuleGroup.getName(locale)}" selected=(mdrRuleGroupId == mdrRuleGroup.getRuleGroupId()) value=mdrRuleGroup.getRuleGroupId() />
+			<@aui["option"]
+				label="${mdrRuleGroup.getName(locale)}"
+				selected=(mdrRuleGroupId
+				== mdrRuleGroup.getRuleGroupId()) value=mdrRuleGroup.getRuleGroupId()
+			/>
 		</#list>
 	</@>
 </#if>

@@ -21,6 +21,10 @@
 
 <@aui["select"] label="" name="browser">
 	<#list browsers as curBrowser>
-		<@aui["option"] label="${curBrowser}" selected=(curBrowser == browser) value=curBrowser />
+		<@aui["option"]
+			label="${curBrowser}"
+			selected=(curBrowser == browser)
+			value=curBrowser
+		/>
 	</#list>
 </@>

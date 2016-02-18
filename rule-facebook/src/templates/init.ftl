@@ -32,7 +32,10 @@
 			<#assign enableLocationLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationLabel + "</a>" />
 		</#if>
 
-		<@liferay_ui["message"] arguments=enableLocationLabel key="it-can-be-enabled-in-x" />
+		<@liferay_ui["message"]
+			arguments=enableLocationLabel
+			key="it-can-be-enabled-in-x"
+		/>
 	</div>
 <#else>
 	<div class="alert alert-info">

@@ -21,6 +21,10 @@
 
 <@aui["select"] label="" name="os">
 	<#list operatingSystems as operatingSystem>
-		<@aui["option"] label="${operatingSystem}" selected=(operatingSystem == os) value=operatingSystem />
+		<@aui["option"]
+			label="${operatingSystem}"
+			selected=(operatingSystem
+			== os) value=operatingSystem
+		/>
 	</#list>
 </@>

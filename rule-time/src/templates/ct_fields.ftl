@@ -22,7 +22,10 @@
 <#assign nowTime = now?time />
 
 <div class="alert alert-info">
-	<@liferay_ui["message"] arguments=nowTime?string.short key="this-rule-checks-the-server-time-which-currently-is-x" />
+	<@liferay_ui["message"]
+		arguments=nowTime?string.short
+		key="this-rule-checks-the-server-time-which-currently-is-x"
+	/>
 </div>
 
 <@aui["fieldset"] cssClass="time-selector" label="start-time">

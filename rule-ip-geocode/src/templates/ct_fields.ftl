@@ -20,9 +20,15 @@
 
 <#setting number_format="computer">
 
-<@aui["select"] label="country" name="countryId" />
+<@aui["select"]
+	label="country"
+	name="countryId"
+/>
 
-<@aui["select"] label="region" name="regionId" />
+<@aui["select"]
+	label="region"
+	name="regionId"
+/>
 
 <@aui["script"] use="liferay-dynamic-select">
 	new Liferay.DynamicSelect(

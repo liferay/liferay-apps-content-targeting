@@ -21,6 +21,10 @@
 
 <@aui["select"] label="" name="roleId">
 	<#list roles as role>
-		<@aui["option"] label="${role.getTitle(locale)}" selected=(role.getRoleId() == roleId) value=role.getRoleId() />
+		<@aui["option"]
+			label="${role.getTitle(locale)}"
+			selected=(role.getRoleId()
+			== roleId) value=role.getRoleId()
+		/>
 	</#list>
 </@>
