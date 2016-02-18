@@ -99,9 +99,15 @@ public class UserSegmentDisplayConfigurationAction
 		request.setAttribute(
 			"displayStyles", ListUtil.fromString("full-content"));
 
+		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
+			portletPreferences.getValues("queryLogicIndexes", null),
+			new int[0]);
+
+		boolean addEmptyRule = (queryRulesIndexes.length == 0);
+
 		List<QueryRule> userSegmentQueryRules =
 			UserSegmentQueryRuleUtil.getUserSegmentQueryRules(
-				portletPreferences, themeDisplay.getLocale(), false);
+				portletPreferences, themeDisplay.getLocale(), addEmptyRule);
 
 		request.setAttribute("userSegmentQueryRules", userSegmentQueryRules);
 
