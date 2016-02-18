@@ -21,7 +21,7 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.SessionAttributesRuleCategory;
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
-import com.liferay.portal.NoSuchRegionException;
+import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
