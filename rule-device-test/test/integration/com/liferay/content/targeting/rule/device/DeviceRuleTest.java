@@ -24,22 +24,20 @@ import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.content.targeting.service.test.util.GroupTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.mobile.device.Device;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -48,15 +46,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleException;
+import org.osgi.service.component.annotations.Reference;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -65,23 +60,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 @RunWith(Arquillian.class)
 public class DeviceRuleTest {
-
-	@Before
-	public void setUp() {
-		try {
-			_bundle.start();
-		}
-		catch (BundleException e) {
-			e.printStackTrace();
-		}
-
-		_anonymousUserLocalService = ServiceTrackerUtil.getService(
-			AnonymousUserLocalService.class, _bundle.getBundleContext());
-		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
-			RuleInstanceLocalService.class, _bundle.getBundleContext());
-		_rulesRegistry = ServiceTrackerUtil.getService(
-			RulesRegistry.class, _bundle.getBundleContext());
-	}
 
 	@Test
 	public void testMatchingDeviceRule() throws Exception {
@@ -137,9 +115,9 @@ public class DeviceRuleTest {
 
 	protected long addMDRRuleGroup(
 			String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
 
@@ -148,8 +126,8 @@ public class DeviceRuleTest {
 
 		MDRRuleLocalServiceUtil.addRule(
 			mdrRuleGroup.getRuleGroupId(), nameMap, nameMap,
-			"com.liferay.portal.mobile.device.rulegroup.rule.impl." +
-				"SimpleRuleHandler", typeSettings, serviceContext);
+			"com.liferay.mobile.device.rules.rule.group.rule.SimpleRuleHandler",
+			typeSettings, serviceContext);
 
 		return mdrRuleGroup.getRuleGroupId();
 	}
@@ -176,11 +154,26 @@ public class DeviceRuleTest {
 		return jsonObj.toString();
 	}
 
+	@Reference(unbind = "-")
+	protected void setAnonymousUserLocalService(
+		AnonymousUserLocalService anonymousUserLocalService) {
+
+		_anonymousUserLocalService = anonymousUserLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRuleInstanceLocalService(
+		RuleInstanceLocalService ruleInstanceLocalService) {
+
+		_ruleInstanceLocalService = ruleInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
+		_rulesRegistry = rulesRegistry;
+	}
+
 	private AnonymousUserLocalService _anonymousUserLocalService;
-
-	@ArquillianResource
-	private Bundle _bundle;
-
 	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RulesRegistry _rulesRegistry;
 

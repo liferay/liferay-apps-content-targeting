@@ -21,15 +21,15 @@ import com.liferay.ip.geocoder.IPInfo;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CountryServiceUtil;
+import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.model.Country;
-import com.liferay.portal.model.Region;
-import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.CountryImpl;
 import com.liferay.portal.model.impl.RegionImpl;
-import com.liferay.portal.service.CountryServiceUtil;
-import com.liferay.portal.service.RegionServiceUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -49,10 +49,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Julio Camarero
  * @author Eudaldo Alonso
  */
-@PrepareForTest( {
-	CalendarFactoryUtil.class, CountryServiceUtil.class, HttpUtil.class,
-	JSONFactoryUtil.class, RegionServiceUtil.class
-})
+@PrepareForTest(
+	{
+		CalendarFactoryUtil.class, CountryServiceUtil.class, HttpUtil.class,
+		JSONFactoryUtil.class, RegionServiceUtil.class
+	}
+)
 @RunWith(PowerMockRunner.class)
 public class IpGeocodeRuleTest extends PowerMockito {
 
@@ -79,6 +81,7 @@ public class IpGeocodeRuleTest extends PowerMockito {
 
 					return new JSONObjectImpl((String)args[0]);
 				}
+
 			}
 		);
 

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 

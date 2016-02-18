@@ -28,13 +28,13 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.CountryServiceUtil;
+import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Country;
-import com.liferay.portal.model.Region;
-import com.liferay.portal.service.CountryServiceUtil;
-import com.liferay.portal.service.RegionServiceUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -80,8 +80,7 @@ public class IpGeocodeRule extends BaseRule {
 		if (ipInfo == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Couldn't get ipInfo from " +
-						ip + ", evaluation failed.");
+					"Couldn't get ipInfo from " + ip + ", evaluation failed.");
 			}
 
 			return false;
@@ -239,7 +238,7 @@ public class IpGeocodeRule extends BaseRule {
 				countryId = jsonObj.getLong("countryId");
 				regionId = jsonObj.getLong("regionId");
 			}
-			catch (JSONException jse) {
+			catch (JSONException jsone) {
 			}
 		}
 

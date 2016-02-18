@@ -24,20 +24,20 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -100,7 +100,7 @@ public class PageVisitedRule extends BaseRule {
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
-		if (layout != null ) {
+		if (layout != null) {
 			ruleInstance.setTypeSettings(layout.getUuid());
 
 			portletDataContext.addReferenceElement(
@@ -135,7 +135,7 @@ public class PageVisitedRule extends BaseRule {
 		try {
 			layout = LayoutLocalServiceUtil.fetchLayout(plid);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		if (layout != null) {
@@ -156,7 +156,7 @@ public class PageVisitedRule extends BaseRule {
 		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndCompanyId(
 			layoutUuid, portletDataContext.getCompanyId());
 
-		if (layout != null ) {
+		if (layout != null) {
 			ruleInstance.setTypeSettings(String.valueOf(layout.getPlid()));
 
 			return;
@@ -194,9 +194,7 @@ public class PageVisitedRule extends BaseRule {
 					"a-page-with-this-friendly-url-could-not-be-found");
 			}
 		}
-		catch (Exception e) {
-			throw new InvalidRuleException(
-					"a-page-with-this-friendly-url-could-not-be-found");
+		catch (SystemException se) {
 		}
 	}
 
@@ -250,7 +248,7 @@ public class PageVisitedRule extends BaseRule {
 					privateLayout = layout.isPrivateLayout();
 				}
 			}
-			catch (SystemException e) {
+			catch (SystemException se) {
 			}
 		}
 

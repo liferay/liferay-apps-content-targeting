@@ -19,11 +19,13 @@ import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalS
 import com.liferay.content.targeting.anonymous.users.util.AnonymousUsersManager;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -32,16 +34,13 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Contact;
-import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.util.Calendar;
@@ -199,8 +198,7 @@ public class CTFacebookConnectionAction extends BaseStrutsAction {
 		throws Exception {
 
 		JSONObject jsonObject = FacebookConnectUtil.getGraphResources(
-				companyId, "/me", token,
-				"id,email,first_name,last_name,gender");
+			companyId, "/me", token, "id,email,first_name,last_name,gender");
 
 		if ((jsonObject == null) ||
 			(jsonObject.getJSONObject("error") != null)) {
@@ -236,7 +234,7 @@ public class CTFacebookConnectionAction extends BaseStrutsAction {
 
 		if ((user == null) && Validator.isNotNull(emailAddress)) {
 			user = UserLocalServiceUtil.fetchUserByEmailAddress(
-					companyId, emailAddress);
+				companyId, emailAddress);
 
 			if ((user != null) &&
 				(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
@@ -269,7 +267,7 @@ public class CTFacebookConnectionAction extends BaseStrutsAction {
 
 	protected void updateAnonymousUserFacebookAccessToken(
 			HttpServletRequest request, long userId, String token)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (_anonymousUsersManager == null) {
 			_initAnonymousUserManager();

@@ -63,6 +63,7 @@ public class FacebookCityRuleTest extends PowerMockito {
 
 					return new JSONObjectImpl((String)args[0]);
 				}
+
 			}
 		);
 

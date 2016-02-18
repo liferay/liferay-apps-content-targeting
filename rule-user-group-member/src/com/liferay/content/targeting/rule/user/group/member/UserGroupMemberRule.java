@@ -22,16 +22,16 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.PortletKeys;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +89,7 @@ public class UserGroupMemberRule extends BaseRule {
 		UserGroup userGroup = UserGroupLocalServiceUtil.fetchUserGroup(
 			userGroupId);
 
-		if (userGroup != null ) {
+		if (userGroup != null) {
 			ruleInstance.setTypeSettings(userGroup.getUuid());
 
 			portletDataContext.addReferenceElement(
@@ -146,9 +146,9 @@ public class UserGroupMemberRule extends BaseRule {
 
 		UserGroup userGroup =
 			UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
-					userGroupUuid, portletDataContext.getCompanyId());
+				userGroupUuid, portletDataContext.getCompanyId());
 
-		if (userGroup != null ) {
+		if (userGroup != null) {
 			ruleInstance.setTypeSettings(
 				String.valueOf(userGroup.getUserGroupId()));
 
@@ -187,7 +187,7 @@ public class UserGroupMemberRule extends BaseRule {
 
 		Company company = (Company)context.get("company");
 
-		List<UserGroup> userGroups = new ArrayList<UserGroup>();
+		List<UserGroup> userGroups = new ArrayList<>();
 
 		try {
 
@@ -196,7 +196,7 @@ public class UserGroupMemberRule extends BaseRule {
 			userGroups = UserGroupLocalServiceUtil.getUserGroups(
 				company.getCompanyId());
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		context.put("userGroups", userGroups);

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;

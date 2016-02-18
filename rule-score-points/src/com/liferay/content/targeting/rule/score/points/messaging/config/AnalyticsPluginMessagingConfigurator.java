@@ -49,7 +49,8 @@ public class AnalyticsPluginMessagingConfigurator
 				_log.warn(
 					"Cannot register analytics message listener for Score " +
 						"Points Rule because destination " +
-						_analyticsMessageDestination + " does not exist yet");
+						_analyticsMessageDestination +
+						" does not exist yet");
 			}
 		}
 

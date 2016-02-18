@@ -52,12 +52,12 @@ public class AnalyticsMessageListener implements MessageListener {
 				public boolean isPermanent() {
 					return true;
 				}
+
 			};
 		}
 
-		ScorePointsAssigner scorePointsAssigner =
-			ServiceTrackerUtil.getService(
-				ScorePointsAssigner.class, bundle.getBundleContext());
+		ScorePointsAssigner scorePointsAssigner = ServiceTrackerUtil.getService(
+			ScorePointsAssigner.class, bundle.getBundleContext());
 
 		String className = message.getString("className");
 		long classPK = message.getLong("classPK");

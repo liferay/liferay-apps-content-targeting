@@ -22,46 +22,25 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
 
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleException;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
 public class UserGroupMemberRuleTest {
-
-	@Before
-	public void setUp() {
-		try {
-			_bundle.start();
-		}
-		catch (BundleException e) {
-			e.printStackTrace();
-		}
-
-		_anonymousUserLocalService = ServiceTrackerUtil.getService(
-			AnonymousUserLocalService.class, _bundle.getBundleContext());
-		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
-			RuleInstanceLocalService.class, _bundle.getBundleContext());
-		_rulesRegistry = ServiceTrackerUtil.getService(
-			RulesRegistry.class, _bundle.getBundleContext());
-	}
 
 	@Test
 	public void testUserGroupMemberRule() throws Exception {
@@ -74,11 +53,10 @@ public class UserGroupMemberRuleTest {
 
 		Rule rule = _rulesRegistry.getRule("UserGroupMemberRule");
 
-		UserGroup userGroup =
-			UserGroupLocalServiceUtil.addUserGroup(
-				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-				StringUtil.randomString(), StringUtil.randomString(),
-				new ServiceContext());
+		UserGroup userGroup = UserGroupLocalServiceUtil.addUserGroup(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			new ServiceContext());
 
 		UserGroupLocalServiceUtil.addUserUserGroup(
 			TestPropsValues.getUserId(), userGroup.getUserGroupId());
@@ -90,11 +68,26 @@ public class UserGroupMemberRuleTest {
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
 	}
 
+	@Reference(unbind = "-")
+	protected void setAnonymousUserLocalService(
+		AnonymousUserLocalService anonymousUserLocalService) {
+
+		_anonymousUserLocalService = anonymousUserLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRuleInstanceLocalService(
+		RuleInstanceLocalService ruleInstanceLocalService) {
+
+		_ruleInstanceLocalService = ruleInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
+		_rulesRegistry = rulesRegistry;
+	}
+
 	private AnonymousUserLocalService _anonymousUserLocalService;
-
-	@ArquillianResource
-	private Bundle _bundle;
-
 	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RulesRegistry _rulesRegistry;
 

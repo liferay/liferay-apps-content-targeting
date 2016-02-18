@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import com.restfb.types.User;
 
@@ -124,7 +124,7 @@ public class FacebookAgeRule extends BaseFacebookRule {
 					locale, "users-older-than-x-years-old", olderThan);
 			}
 		}
-		catch (JSONException jse) {
+		catch (JSONException jsone) {
 		}
 
 		return summary;
@@ -168,7 +168,7 @@ public class FacebookAgeRule extends BaseFacebookRule {
 				youngerThan = jsonObj.getInt("fbYoungerThan");
 				olderThan = jsonObj.getInt("fbOlderThan");
 			}
-			catch (JSONException jse) {
+			catch (JSONException jsone) {
 			}
 		}
 

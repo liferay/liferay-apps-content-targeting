@@ -19,7 +19,6 @@ import com.liferay.content.targeting.rule.score.points.model.ScorePoint;
 import com.liferay.content.targeting.rule.score.points.service.base.ScorePointLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -50,8 +49,7 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 
 	@Override
 	public ScorePoint addScorePoints(
-			long anonymousUserId, long userSegmentId, long points)
-		throws SystemException {
+		long anonymousUserId, long userSegmentId, long points) {
 
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
 			anonymousUserId, userSegmentId);
@@ -79,9 +77,7 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 	}
 
 	@Override
-	public long getPoints(long anonymousUserId, long userSegmentId)
-		throws SystemException {
-
+	public long getPoints(long anonymousUserId, long userSegmentId) {
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
 			anonymousUserId, userSegmentId);
 
@@ -93,16 +89,13 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<ScorePoint> getScorePoints(long userSegmentId)
-		throws SystemException {
-
+	public List<ScorePoint> getScorePoints(long userSegmentId) {
 		return scorePointPersistence.findByUserSegmentId(userSegmentId);
 	}
 
 	@Override
 	public long incrementPoints(
-			long anonymousUserId, long userSegmentId, long points)
-		throws SystemException {
+		long anonymousUserId, long userSegmentId, long points) {
 
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
 			anonymousUserId, userSegmentId);
@@ -132,8 +125,7 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 
 	@Override
 	public ScorePoint updateScorePoints(
-			long anonymousUserId, long userSegmentId, long points)
-		throws SystemException {
+		long anonymousUserId, long userSegmentId, long points) {
 
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
 			anonymousUserId, userSegmentId);

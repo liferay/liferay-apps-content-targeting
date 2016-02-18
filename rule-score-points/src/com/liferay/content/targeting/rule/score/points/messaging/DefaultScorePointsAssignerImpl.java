@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.rule.score.points.messaging;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.score.points.api.model.ScorePointsAssigner;
 import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalService;
@@ -23,8 +25,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.List;
 
@@ -80,7 +80,8 @@ public class DefaultScorePointsAssignerImpl implements ScorePointsAssigner {
 							"Not possible to increment " + points +
 								" points for anonymousUserId " +
 								anonymousUserId + " and userSegmentId " +
-								userSegment.getUserSegmentId(), se);
+								userSegment.getUserSegmentId(),
+							se);
 					}
 				}
 			}

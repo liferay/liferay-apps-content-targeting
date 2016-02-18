@@ -22,7 +22,6 @@ import com.liferay.portal.NoSuchModelException;
 public class NoSuchScorePointException extends NoSuchModelException {
 
 	public NoSuchScorePointException() {
-		super();
 	}
 
 	public NoSuchScorePointException(String msg) {

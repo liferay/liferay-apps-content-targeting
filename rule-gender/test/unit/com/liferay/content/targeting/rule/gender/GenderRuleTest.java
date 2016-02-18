@@ -16,8 +16,8 @@ package com.liferay.content.targeting.rule.gender;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.model.RuleInstance;
-import com.liferay.portal.model.User;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import org.junit.Assert;
 import org.junit.Before;

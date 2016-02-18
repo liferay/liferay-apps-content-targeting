@@ -14,6 +14,10 @@
 
 package com.liferay.content.targeting.rule.visited;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
@@ -24,26 +28,18 @@ import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.content.targeting.service.test.util.GroupTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleException;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -51,31 +47,12 @@ import org.osgi.framework.BundleException;
 @RunWith(Arquillian.class)
 public class ContentVisitedRuleTest {
 
-	@Before
-	public void setUp() {
-		try {
-			_bundle.start();
-		}
-		catch (BundleException e) {
-			e.printStackTrace();
-		}
-
-		_analyticsEventLocalService = ServiceTrackerUtil.getService(
-			AnalyticsEventLocalService.class, _bundle.getBundleContext());
-		_anonymousUserLocalService = ServiceTrackerUtil.getService(
-			AnonymousUserLocalService.class, _bundle.getBundleContext());
-		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
-			RuleInstanceLocalService.class, _bundle.getBundleContext());
-		_rulesRegistry = ServiceTrackerUtil.getService(
-			RulesRegistry.class, _bundle.getBundleContext());
-	}
-
 	@Test
 	public void testNotVisitedContentRule() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
@@ -134,12 +111,34 @@ public class ContentVisitedRuleTest {
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
 	}
 
+	@Reference(unbind = "-")
+	protected void setAnalyticsEventLocalService(
+		AnalyticsEventLocalService analyticsEventLocalService) {
+
+		_analyticsEventLocalService = analyticsEventLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAnonymousUserLocalService(
+		AnonymousUserLocalService anonymousUserLocalService) {
+
+		_anonymousUserLocalService = anonymousUserLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRuleInstanceLocalService(
+		RuleInstanceLocalService ruleInstanceLocalService) {
+
+		_ruleInstanceLocalService = ruleInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
+		_rulesRegistry = rulesRegistry;
+	}
+
 	private AnalyticsEventLocalService _analyticsEventLocalService;
 	private AnonymousUserLocalService _anonymousUserLocalService;
-
-	@ArquillianResource
-	private Bundle _bundle;
-
 	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RulesRegistry _rulesRegistry;
 

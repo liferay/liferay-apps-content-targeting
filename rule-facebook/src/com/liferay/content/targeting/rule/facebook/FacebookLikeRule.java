@@ -22,7 +22,7 @@ import com.liferay.content.targeting.rule.facebook.util.FacebookUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.Map;

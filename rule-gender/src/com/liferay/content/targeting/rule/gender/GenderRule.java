@@ -23,10 +23,10 @@ import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.User;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -74,7 +74,7 @@ public class GenderRule extends BaseRule {
 		String gender = ruleInstance.getTypeSettings();
 
 		if ((user.isMale() && gender.equals("male")) ||
-			!user.isMale() && gender.equals("female")) {
+			(!user.isMale() && gender.equals("female"))) {
 
 			return true;
 		}
@@ -99,8 +99,8 @@ public class GenderRule extends BaseRule {
 
 	@Override
 	public String processRule(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values) {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
 		return values.get("gender");
 	}
@@ -142,7 +142,7 @@ public class GenderRule extends BaseRule {
 						context, PortletKeys.PORTAL_SETTINGS);
 
 			if (hasPortalSettingsViewPermission) {
-				Map<String, String> params = new HashMap<String, String>();
+				Map<String, String> params = new HashMap<>();
 
 				params.put("historyKey", "_130_users");
 

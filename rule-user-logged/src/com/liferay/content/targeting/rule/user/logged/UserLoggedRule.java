@@ -19,8 +19,8 @@ import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.User;
 
 import java.util.Locale;
 import java.util.Map;
