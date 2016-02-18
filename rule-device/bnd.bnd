@@ -13,7 +13,6 @@ Import-Package:\
 	*;resolution:="optional"
 Include-Resource:\
  	classes,\
-	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar
 Private-Package: com.liferay.content.targeting.rule.device.*
 Service-Component: com.liferay.content.targeting.rule.device.*

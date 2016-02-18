@@ -21,7 +21,6 @@ Include-Resource:\
 	classes,\
 	WEB-INF/classes/META-INF=classes/META-INF/,\
 	WEB-INF/sql=sql,\
-	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	@lib/com.liferay.content.targeting.rule.score.points-service.jar
 Service-Component: com.liferay.content.targeting.rule.score.points.*
