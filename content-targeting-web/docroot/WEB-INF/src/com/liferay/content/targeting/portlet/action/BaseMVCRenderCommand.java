@@ -27,6 +27,7 @@ import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.CampaignConstants;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -134,6 +135,9 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 			"contentTargetingPermission",
 			staticModels.get(ContentTargetingPermission.class.getName()));
 		context.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
+		context.put(
+			"languageUtil",
+			staticModels.get(LanguageUtil.class.getName()));
 		context.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 		context.put("portletConfig", portletConfig);
 		context.put(
