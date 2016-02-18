@@ -341,13 +341,13 @@ public class SiteRoleRule extends BaseRule {
 			boolean hasSitesAdminViewPermission =
 				ContentTargetingContextUtil.
 					hasControlPanelPortletViewPermission(
-						context, PortletKeys.SITES_ADMIN);
+						context, PortletKeys.SITE_ADMIN);
 
 			if (hasSitesAdminViewPermission) {
 				context.put(
 					"sitesAdminURL",
 					ContentTargetingContextUtil.getControlPanelPortletURL(
-						context, PortletKeys.SITES_ADMIN, null));
+						context, PortletKeys.SITE_ADMIN, null));
 			}
 		}
 	}

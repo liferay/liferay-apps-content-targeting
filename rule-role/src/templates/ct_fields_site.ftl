@@ -23,7 +23,7 @@
 	<div class="alert alert-warning">
 		<strong><@liferay_ui["message"] key="there-are-no-sites-available" /></strong>
 
-		<#assign enableLocationLabel = languageUtil.get(locale, "control-panel-sites") />
+		<#assign enableLocationLabel = languageUtil.get(request, "control-panel-sites") />
 
 		<#if sitesAdminURL??>
 			<#assign enableLocationLabel = "<a href=\"" + sitesAdminURL + "\">" + enableLocationLabel + "</a>" />

@@ -23,7 +23,7 @@
 	<div class="alert alert-warning">
 		<strong><@liferay_ui["message"] key="there-are-no-organizations-available" /></strong>
 
-		<#assign enableLocationLabel = languageUtil.get(locale, "control-panel-users-and-organizations") />
+		<#assign enableLocationLabel = languageUtil.get(request, "control-panel-users-and-organizations") />
 
 		<#if usersAdminURL??>
 			<#assign enableLocationLabel = "<a href=\"" + usersAdminURL + "\">" + enableLocationLabel + "</a>" />
