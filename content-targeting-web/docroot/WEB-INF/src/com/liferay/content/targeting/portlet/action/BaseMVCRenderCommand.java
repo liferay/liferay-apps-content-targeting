@@ -136,9 +136,9 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 			staticModels.get(ContentTargetingPermission.class.getName()));
 		context.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
 		context.put(
-			"languageUtil",
-			staticModels.get(LanguageUtil.class.getName()));
+			"languageUtil", staticModels.get(LanguageUtil.class.getName()));
 		context.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
+		context.put("locale", themeDisplay.getLocale());
 		context.put("portletConfig", portletConfig);
 		context.put(
 			"portletContext",
