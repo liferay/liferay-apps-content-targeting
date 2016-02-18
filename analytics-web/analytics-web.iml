@@ -71,5 +71,6 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="analytics-api" />
   </component>
 </module>
