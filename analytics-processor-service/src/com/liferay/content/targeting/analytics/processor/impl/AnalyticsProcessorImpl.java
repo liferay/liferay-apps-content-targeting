@@ -19,14 +19,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -153,6 +153,11 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 			trackingLinkURL, "redirect", redirect);
 
 		return trackingLinkURL;
+	}
+
+	@Override
+	public String getTrackingPath() {
+		return _TRACK_PATH;
 	}
 
 	@Override

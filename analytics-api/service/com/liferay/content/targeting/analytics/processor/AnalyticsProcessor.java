@@ -39,6 +39,8 @@ public interface AnalyticsProcessor {
 		long classPK, String referrerClassName, long[] referrerClassPKs,
 		String elementId, String redirect);
 
+	public String getTrackingPath();
+
 	public String replaceLinks(
 		long companyId, long userId, long anonymousUserId, String className,
 		long classPK, String referrerClassName, long[] referrerClassPKs,

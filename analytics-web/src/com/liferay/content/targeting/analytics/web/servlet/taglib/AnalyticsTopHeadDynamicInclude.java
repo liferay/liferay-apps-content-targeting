@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.analytics.web.servlet.taglib;
 
+import com.liferay.content.targeting.analytics.processor.AnalyticsProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
@@ -45,6 +46,9 @@ public class AnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(_JSP_PATH);
 
+		request.setAttribute(
+			"analyticsProcessorURI", _analyticsProcessor.getTrackingPath());
+
 		try {
 			requestDispatcher.include(request, response);
 		}
@@ -61,6 +65,13 @@ public class AnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
 			"/html/common/themes/top_head.jsp#post");
 	}
 
+	@Reference(unbind = "-")
+	protected void setAnalyticsProcessor(
+		AnalyticsProcessor analyticsProcessor) {
+
+		_analyticsProcessor = analyticsProcessor;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.content.targeting.analytics.web)",
 		unbind = "-"
@@ -75,6 +86,7 @@ public class AnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsTopHeadDynamicInclude.class);
 
+	private AnalyticsProcessor _analyticsProcessor;
 	private volatile ServletContext _servletContext;
 
 }
