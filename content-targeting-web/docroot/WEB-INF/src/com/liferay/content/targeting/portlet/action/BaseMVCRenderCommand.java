@@ -42,7 +42,9 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -135,16 +137,20 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 			"contentTargetingPermission",
 			staticModels.get(ContentTargetingPermission.class.getName()));
 		context.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
+		context.put("htmlUtil", staticModels.get(HtmlUtil.class.getName()));
 		context.put(
 			"languageUtil", staticModels.get(LanguageUtil.class.getName()));
+		context.put("listUtil", staticModels.get(ListUtil.class.getName()));
 		context.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 		context.put("locale", themeDisplay.getLocale());
+		context.put("portalUtil", staticModels.get(PortalUtil.class.getName()));
 		context.put("portletConfig", portletConfig);
 		context.put(
 			"portletContext",
 			portletRequest.getPortletSession().getPortletContext());
 		context.put("reportInstanceClass", ReportInstance.class);
 		context.put("tacticClass", Tactic.class);
+		context.put("themeDisplay", themeDisplay);
 		context.put(
 			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
 		context.put("userSegmentClass", UserSegment.class);
@@ -155,6 +161,7 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 			"userPermissionUtil",
 			staticModels.get(UserPermissionUtil.class.getName()));
 		context.put("scopeGroup", scopeGroup);
+		context.put("scopeGroupId", scopeGroup.getGroupId());
 	}
 
 	@Override
