@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
 <service-builder package-path="com.liferay.content.targeting.report.campaign.tracking.action">
 	<namespace>CT_CTA</namespace>
@@ -34,14 +34,22 @@
 
 		<!-- Finder methods -->
 
-		<finder name="R_GtD" return-type="Collection">
+		<finder name="CampaignId" return-type="Collection">
+			<finder-column name="campaignId" />
+		</finder>
+
+		<finder name="ReportInstanceId" return-type="Collection">
 			<finder-column name="reportInstanceId" />
-			<finder-column name="modifiedDate" comparator="&gt;" />
 		</finder>
 
 		<finder name="R_E" return-type="Collection">
 			<finder-column name="reportInstanceId" />
 			<finder-column name="elementId" />
+		</finder>
+
+		<finder name="R_GtD" return-type="Collection">
+			<finder-column name="reportInstanceId" />
+			<finder-column name="modifiedDate" comparator="&gt;" />
 		</finder>
 
 		<finder name="R_R_R" return-type="Collection">
@@ -59,9 +67,6 @@
 			<finder-column name="eventType" />
 		</finder>
 
-		<finder name="ReportInstanceId" return-type="Collection">
-			<finder-column name="reportInstanceId" />
-		</finder>
 	</entity>
 
 	<entity name="CTActionTotal" local-service="true" remote-service="true">
@@ -94,6 +99,14 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CampaignId" return-type="Collection">
+			<finder-column name="campaignId" />
+		</finder>
+
+		<finder name="ReportInstanceId" return-type="Collection">
+			<finder-column name="reportInstanceId" />
+		</finder>
+
 		<finder name="R_GtD" return-type="Collection">
 			<finder-column name="reportInstanceId" />
 			<finder-column name="modifiedDate" comparator="&gt;" />
@@ -107,8 +120,5 @@
 			<finder-column name="eventType" />
 		</finder>
 
-		<finder name="ReportInstanceId" return-type="Collection">
-			<finder-column name="reportInstanceId" />
-		</finder>
 	</entity>
 </service-builder>
