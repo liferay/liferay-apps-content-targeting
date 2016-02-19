@@ -14,23 +14,19 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
-
 <#setting number_format="computer">
 
-<@aui["select"]
+<@liferay_aui["select"]
 	label="country"
 	name="countryId"
 />
 
-<@aui["select"]
+<@liferay_aui["select"]
 	label="region"
 	name="regionId"
 />
 
-<@aui["script"] use="liferay-dynamic-select">
+<@liferay_aui["script"] use="liferay-dynamic-select">
 	new Liferay.DynamicSelect(
 		[
 			{

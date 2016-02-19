@@ -14,9 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-
 <#setting number_format="computer">
 
 <#if !trackingFormEnabled >
@@ -41,24 +38,24 @@
 	</div>
 </#if>
 
-<@aui["input"] helpMessage="name-help" label="name" name="{ct_field_guid}alias" type="text" value=alias >
-	<@aui["validator"] name="required" />
+<@liferay_aui["input"] helpMessage="name-help" label="name" name="{ct_field_guid}alias" type="text" value=alias >
+	<@liferay_aui["validator"] name="required" />
 </@>
 
-<@aui["input"] helpMessage="enter-the-id-of-the-form-to-be-tracked" label="form-id" name="{ct_field_guid}elementId" type="text" value=elementId>
-	<@aui["validator"] name="required" />
+<@liferay_aui["input"] helpMessage="enter-the-id-of-the-form-to-be-tracked" label="form-id" name="{ct_field_guid}elementId" type="text" value=elementId>
+	<@liferay_aui["validator"] name="required" />
 </@>
 
 <#if eventTypes?has_content && (eventTypes?size > 1)>
-	<@aui["select"] label="event-type" name="{ct_field_guid}eventType">
-		<@aui["option"]
+	<@liferay_aui["select"] label="event-type" name="{ct_field_guid}eventType">
+		<@liferay_aui["option"]
 			label="all"
 			selected=(eventType
 			== "all") value="all"
 		/>
 
 		<#list eventTypes as curEventType>
-			<@aui["option"]
+			<@liferay_aui["option"]
 				label="${curEventType}"
 				selected=(eventType
 				== curEventType) value=curEventType
@@ -67,7 +64,7 @@
 	</@>
 <#else>
 	<#list eventTypes as curEventType>
-		<@aui["input"]
+		<@liferay_aui["input"]
 			disabled=true
 			label="event-type"
 			name="{ct_field_guid}eventType"

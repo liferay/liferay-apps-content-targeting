@@ -22,7 +22,7 @@
 	}
 </style>
 
-<@aui["script"] use="charts">
+<@liferay_aui["script"] use="charts">
 	var ctActionTotalArray = [
 		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as ctActionTotal>
 			<#assign userSegmentNames ="">

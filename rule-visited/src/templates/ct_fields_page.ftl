@@ -14,10 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
-
 <@portlet["defineObjects"] />
 
 <#setting number_format="computer">
@@ -44,7 +40,7 @@
 	</div>
 </#if>
 
-<@aui["input"]
+<@liferay_aui["input"]
 	inlineField=true
 	checked=!privateLayout
 	label="public-pages"
@@ -54,7 +50,7 @@
 	value=false
 />
 
-<@aui["input"]
+<@liferay_aui["input"]
 	inlineField=true
 	checked=privateLayout
 	label="private-pages"
@@ -64,11 +60,11 @@
 	value=true
 />
 
-<@aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" prefix=friendlyURLBase style="width: auto;" type="text" value=friendlyURL>
-	<@aui["validator"] name="required" />
+<@liferay_aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" prefix=friendlyURLBase style="width: auto;" type="text" value=friendlyURL>
+	<@liferay_aui["validator"] name="required" />
 </@>
 
-<@aui["script"]>
+<@liferay_aui["script"]>
 	function <@portlet["namespace"] />updateFriendlyURL(value) {
 		var A = AUI();
 

@@ -14,11 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_theme = PortletJspTagLibs["/META-INF/liferay-theme.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
-
 <@portlet["defineObjects"] />
 
 <@liferay_theme["defineObjects"] />
@@ -27,7 +22,7 @@
 
 <#setting number_format="computer">
 
-<@aui["input"]
+<@liferay_aui["input"]
 	name="reportTrackingActions"
 	type="hidden"
 />
@@ -49,7 +44,7 @@
 									<i class="icon-search"></i>
 
 									<div class="search-panels-bar">
-										<@aui["input"]
+										<@liferay_aui["input"]
 											cssClass="search-panels-input search-query"
 											label=""
 											name="searchPanel"
@@ -129,7 +124,7 @@
 	</div>
 </@>
 
-<@aui["script"] use="liferay-ct-form-builder">
+<@liferay_aui["script"] use="liferay-ct-form-builder">
 	var reportBuilder = new A.LiferayCTFormBuilder(
 		{
 			boundingBox: '#formBuilderBB',

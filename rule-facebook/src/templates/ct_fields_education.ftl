@@ -16,26 +16,26 @@
 
 <#include "init.ftl" />
 
-<@aui["fieldset"]>
-	<@aui["select"] name="educationLevel">
-		<@aui["option"]
+<@liferay_aui["fieldset"]>
+	<@liferay_aui["select"] name="educationLevel">
+		<@liferay_aui["option"]
 			label="any"
 			selected=(educationLevel
 			== "") value=""
 		/>
-		<@aui["option"]
+		<@liferay_aui["option"]
 			label="high-school"
 			selected=(educationLevel
 			== "high-school")
 		/>
-		<@aui["option"]
+		<@liferay_aui["option"]
 			label="college"
 			selected=(educationLevel
 			== "college")
 		/>
 	</@>
 
-	<@aui["input"]
+	<@liferay_aui["input"]
 		label="college-high-school-name"
 		name="schoolName"
 		type="text"

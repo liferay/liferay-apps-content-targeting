@@ -14,10 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign liferay_util = PortletJspTagLibs["/META-INF/liferay-util.tld"] />
-
 <#setting number_format="computer">
 
 <@liferay_util["buffer"] var="infoMessage" >
@@ -42,9 +38,9 @@
 <#else>
 	<div class="alert alert-info">${infoMessage}</div>
 
-	<@aui["select"] label="device-family" name="mdrRuleGroupId">
+	<@liferay_aui["select"] label="device-family" name="mdrRuleGroupId">
 		<#list mdrRuleGroups as mdrRuleGroup>
-			<@aui["option"]
+			<@liferay_aui["option"]
 				label="${mdrRuleGroup.getName(locale)}"
 				selected=(mdrRuleGroupId
 				== mdrRuleGroup.getRuleGroupId()) value=mdrRuleGroup.getRuleGroupId()

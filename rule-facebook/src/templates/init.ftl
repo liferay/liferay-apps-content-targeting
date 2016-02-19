@@ -14,11 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign liferay_util = PortletJspTagLibs["/META-INF/liferay-util.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
-
 <#setting number_format="computer">
 
 <#if !isFbLoginEnabled >

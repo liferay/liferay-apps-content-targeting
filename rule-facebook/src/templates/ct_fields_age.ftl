@@ -16,7 +16,7 @@
 
 <#include "init.ftl" />
 
-<@aui["input"]
+<@liferay_aui["input"]
 	cssClass="slider-input"
 	inlineField=true
 	label="older-than"
@@ -26,7 +26,7 @@
 	value=fbOlderThan
 /> <span class="older slider-holder"></span>
 
-<@aui["input"]
+<@liferay_aui["input"]
 	cssClass="slider-input"
 	inlineField=true
 	label="younger-than"
@@ -36,7 +36,7 @@
 	value=fbYoungerThan
 /> <span class="slider-holder younger"></span>
 
-<@aui["script"] use="liferay-input-slider">
+<@liferay_aui["script"] use="liferay-input-slider">
 	new Liferay.InputSlider(
 		{
 			inputNode: '#<@portlet["namespace"] />fbOlderThan'

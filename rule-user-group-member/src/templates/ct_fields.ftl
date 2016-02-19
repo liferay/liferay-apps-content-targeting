@@ -14,9 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-
 <#setting number_format="computer">
 
 <#if !userGroups?has_content >
@@ -35,9 +32,9 @@
 		/>
 	</div>
 <#else>
-	<@aui["select"] label="" name="userGroupId">
+	<@liferay_aui["select"] label="" name="userGroupId">
 		<#list userGroups as userGroup>
-			<@aui["option"]
+			<@liferay_aui["option"]
 				label="${userGroup.getName()}"
 				selected=(userGroup.getUserGroupId()
 				== userGroupId) value=userGroup.getUserGroupId()

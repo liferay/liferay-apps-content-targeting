@@ -14,10 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
-
 <@portlet["defineObjects"] />
 
 <#setting number_format="computer">
@@ -44,11 +40,11 @@
 	</div>
 </#if>
 
-<@aui["input"] helpMessage="name-help" label="name" name="{ct_field_guid}alias" type="text" value=alias>
-	<@aui["validator"] name="required" />
+<@liferay_aui["input"] helpMessage="name-help" label="name" name="{ct_field_guid}alias" type="text" value=alias>
+	<@liferay_aui["validator"] name="required" />
 </@>
 
-<@aui["input"]
+<@liferay_aui["input"]
 	inlineField=true
 	checked=!privateLayout
 	label="public-pages"
@@ -58,7 +54,7 @@
 	value=false
 />
 
-<@aui["input"]
+<@liferay_aui["input"]
 	inlineField=true
 	checked=privateLayout
 	label="private-pages"
@@ -68,14 +64,14 @@
 	value=true
 />
 
-<@aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" prefix=friendlyURLBase style="width: auto;" type="text" value=friendlyURL>
-	<@aui["validator"] name="required" />
+<@liferay_aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" prefix=friendlyURLBase style="width: auto;" type="text" value=friendlyURL>
+	<@liferay_aui["validator"] name="required" />
 </@>
 
 <#if eventTypes?has_content && (eventTypes?size > 1)>
-	<@aui["select"] label="event-type" name="{ct_field_guid}eventType">
+	<@liferay_aui["select"] label="event-type" name="{ct_field_guid}eventType">
 		<#list eventTypes as curEventType>
-			<@aui["option"]
+			<@liferay_aui["option"]
 				label="${curEventType}"
 				selected=(eventType
 				== curEventType) value=curEventType
@@ -84,7 +80,7 @@
 	</@>
 <#else>
 	<#list eventTypes as curEventType>
-		<@aui["input"]
+		<@liferay_aui["input"]
 			disabled=true
 			label="event-type"
 			name="{ct_field_guid}eventType"
@@ -92,7 +88,7 @@
 			value=curEventType
 		/>
 
-		<@aui["input"]
+		<@liferay_aui["input"]
 			disabled=true
 			label="event-type"
 			name="{ct_field_guid}eventTypeTranslate"
@@ -102,7 +98,7 @@
 	</#list>
 </#if>
 
-<@aui["script"]>
+<@liferay_aui["script"]>
 	function <@portlet["namespace"] />updateFriendlyURL(value) {
 		var A = AUI();
 

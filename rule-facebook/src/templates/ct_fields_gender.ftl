@@ -18,7 +18,7 @@
 
 <#assign isMale = gender?string == "male" />
 
-<@aui["input"]
+<@liferay_aui["input"]
 	checked=isMale
 	label="male"
 	name="fbGender"
@@ -28,7 +28,7 @@
 
 <#assign isFemale = gender?string == "female" />
 
-<@aui["input"]
+<@liferay_aui["input"]
 	checked=isFemale
 	label="female"
 	name="fbGender"
@@ -38,7 +38,7 @@
 
 <#assign isCustom = gender?string == "custom" />
 
-<@aui["input"]
+<@liferay_aui["input"]
 	checked=isCustom
 	label="custom-or-not-specified"
 	name="fbGender"

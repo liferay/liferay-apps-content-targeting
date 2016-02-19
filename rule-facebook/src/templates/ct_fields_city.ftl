@@ -16,6 +16,6 @@
 
 <#include "init.ftl" />
 
-<@aui["input"] label="" name="cityName" type="text" value=cityName>
-	<@aui["validator"] name="required" />
+<@liferay_aui["input"] label="" name="cityName" type="text" value=cityName>
+	<@liferay_aui["validator"] name="required" />
 </@>

@@ -22,7 +22,7 @@
 	}
 </style>
 
-<@aui["script"] use="charts">
+<@liferay_aui["script"] use="charts">
 	var campaignContentChartDataValues = [
 		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as campaignContent>
 			{content:'${campaignContent.getTitle(locale)}', count:${campaignContent.getCount()}}<#if campaignContent_has_next>,</#if>

@@ -14,10 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
-
 <#setting number_format="computer">
 
 <#if !trackingContentEnabled >
@@ -49,17 +45,17 @@
 		<#assign cssClass = "hide">
 	</#if>
 
-	<@aui["input"]
+	<@liferay_aui["input"]
 		name="assetEntryId"
 		type="hidden"
 		value=assetEntryId
 	/>
 
 	<div class="asset-preview ${cssClass}" id="<@portlet["namespace"] />assetPreview">
-		<@aui["col"]>
+		<@liferay_aui["col"]>
 			<img class="asset-image" id="<@portlet["namespace"] />assetImage" src="${assetImage}" />
 		</@>
-		<@aui["col"]>
+		<@liferay_aui["col"]>
 			<div class="asset-title" id="<@portlet["namespace"] />assetTitleInfo">${assetTitle}</div>
 			<div class="asset-type" id="<@portlet["namespace"] />assetTypeInfo"><@liferay_ui["message"] key="type" />: ${assetType}</div>
 		</@>
@@ -81,7 +77,7 @@
 	</div>
 </div>
 
-<@aui["script"] use="aui-base">
+<@liferay_aui["script"] use="aui-base">
 	A.getBody().delegate(
 		'click',
 		function(event) {

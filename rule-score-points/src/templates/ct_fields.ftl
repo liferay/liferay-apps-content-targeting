@@ -14,9 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-
 <#setting number_format="computer">
 
 <#if !trackingContentEnabled || !trackingPageEnabled>
@@ -52,6 +49,6 @@
 	</#if>
 </div>
 
-<@aui["input"] helpMessage="set-a-threshold-of-points-that-users-should-meet-in-order-to-be-assigned-to-this-user-segment" label="score-points-threshold" name="scorePoints" type="text" value=scorePoints>
-	<@aui["validator"] name="number" />
+<@liferay_aui["input"] helpMessage="set-a-threshold-of-points-that-users-should-meet-in-order-to-be-assigned-to-this-user-segment" label="score-points-threshold" name="scorePoints" type="text" value=scorePoints>
+	<@liferay_aui["validator"] name="number" />
 </@>

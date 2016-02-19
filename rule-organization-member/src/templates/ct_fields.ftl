@@ -14,9 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-
 <#setting number_format="computer">
 
 <#if !organizations?has_content >
@@ -35,9 +32,9 @@
 		/>
 	</div>
 <#else>
-	<@aui["select"] label="" name="organizationId">
+	<@liferay_aui["select"] label="" name="organizationId">
 		<#list organizations as organization>
-			<@aui["option"]
+			<@liferay_aui["option"]
 				label="${organization.getName()}"
 				selected=(organization.getOrganizationId()
 				== organizationId) value=organization.getOrganizationId()

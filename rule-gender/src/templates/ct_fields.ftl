@@ -14,9 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-
 <#setting number_format="computer">
 
 <#if !genderEnabled >
@@ -38,7 +35,7 @@
 
 <#assign isMale = gender?string == "male" />
 
-<@aui["input"]
+<@liferay_aui["input"]
 	checked=isMale
 	label="male"
 	name="gender"
@@ -48,7 +45,7 @@
 
 <#assign isFemale = gender?string == "female" />
 
-<@aui["input"]
+<@liferay_aui["input"]
 	checked=isFemale
 	label="female"
 	name="gender"
