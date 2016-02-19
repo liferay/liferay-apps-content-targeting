@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.rule.score.points.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.rule.score.points.model.ScorePoint;
 import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the ScorePoint service. Represents a row in the &quot;CT_ScorePoints_ScorePoint&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see ScorePointImpl
- * @see com.liferay.content.targeting.rule.score.points.model.ScorePoint
+ * @see ScorePoint
  * @generated
  */
+@ProviderType
 public abstract class ScorePointBaseImpl extends ScorePointModelImpl
 	implements ScorePoint {
 	/*
@@ -39,7 +40,7 @@ public abstract class ScorePointBaseImpl extends ScorePointModelImpl
 	 * Never modify or reference this class directly. All methods that expect a score point model instance should use the {@link ScorePoint} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			ScorePointLocalServiceUtil.addScorePoint(this);
 		}

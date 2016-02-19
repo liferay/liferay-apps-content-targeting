@@ -12,45 +12,45 @@
  * details.
  */
 
-package com.liferay.content.targeting.rule.score.points.service.persistence;
+package com.liferay.content.targeting.rule.score.points.service.persistence.impl;
 
-import com.liferay.content.targeting.rule.score.points.NoSuchScorePointException;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.content.targeting.rule.score.points.exception.NoSuchScorePointException;
 import com.liferay.content.targeting.rule.score.points.model.ScorePoint;
 import com.liferay.content.targeting.rule.score.points.model.impl.ScorePointImpl;
 import com.liferay.content.targeting.rule.score.points.model.impl.ScorePointModelImpl;
+import com.liferay.content.targeting.rule.score.points.service.persistence.ScorePointPersistence;
 
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.service.persistence.CompanyProvider;
+import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -62,9 +62,10 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see ScorePointPersistence
- * @see ScorePointUtil
+ * @see com.liferay.content.targeting.rule.score.points.service.persistence.ScorePointUtil
  * @generated
  */
+@ProviderType
 public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	implements ScorePointPersistence {
 	/*
@@ -111,10 +112,9 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 *
 	 * @param uuid the uuid
 	 * @return the matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ScorePoint> findByUuid(String uuid) throws SystemException {
+	public List<ScorePoint> findByUuid(String uuid) {
 		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -122,18 +122,16 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * Returns a range of all the score points where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.rule.score.points.model.impl.ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of score points
 	 * @param end the upper bound of the range of score points (not inclusive)
 	 * @return the range of matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ScorePoint> findByUuid(String uuid, int start, int end)
-		throws SystemException {
+	public List<ScorePoint> findByUuid(String uuid, int start, int end) {
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -141,7 +139,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * Returns an ordered range of all the score points where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.rule.score.points.model.impl.ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -149,11 +147,31 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param end the upper bound of the range of score points (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ScorePoint> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<ScorePoint> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the score points where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of score points
+	 * @param end the upper bound of the range of score points (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching score points
+	 */
+	@Override
+	public List<ScorePoint> findByUuid(String uuid, int start, int end,
+		OrderByComparator<ScorePoint> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -169,15 +187,19 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<ScorePoint> list = (List<ScorePoint>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ScorePoint> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ScorePoint scorePoint : list) {
-				if (!Validator.equals(uuid, scorePoint.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<ScorePoint>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (ScorePoint scorePoint : list) {
+					if (!Validator.equals(uuid, scorePoint.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -187,7 +209,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -239,7 +261,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ScorePoint>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ScorePoint>)QueryUtil.list(q, getDialect(),
@@ -248,10 +270,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -269,13 +291,12 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching score point
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a matching score point could not be found
 	 */
 	@Override
 	public ScorePoint findByUuid_First(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchScorePointException, SystemException {
+		OrderByComparator<ScorePoint> orderByComparator)
+		throws NoSuchScorePointException {
 		ScorePoint scorePoint = fetchByUuid_First(uuid, orderByComparator);
 
 		if (scorePoint != null) {
@@ -300,11 +321,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching score point, or <code>null</code> if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ScorePoint fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<ScorePoint> orderByComparator) {
 		List<ScorePoint> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -320,13 +340,12 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching score point
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a matching score point could not be found
 	 */
 	@Override
 	public ScorePoint findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchScorePointException, SystemException {
+		OrderByComparator<ScorePoint> orderByComparator)
+		throws NoSuchScorePointException {
 		ScorePoint scorePoint = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (scorePoint != null) {
@@ -351,11 +370,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching score point, or <code>null</code> if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ScorePoint fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<ScorePoint> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -379,13 +397,12 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next score point
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a score point with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a score point with the primary key could not be found
 	 */
 	@Override
 	public ScorePoint[] findByUuid_PrevAndNext(long scorePointId, String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchScorePointException, SystemException {
+		OrderByComparator<ScorePoint> orderByComparator)
+		throws NoSuchScorePointException {
 		ScorePoint scorePoint = findByPrimaryKey(scorePointId);
 
 		Session session = null;
@@ -415,12 +432,13 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 	protected ScorePoint getByUuid_PrevAndNext(Session session,
 		ScorePoint scorePoint, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ScorePoint> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -536,10 +554,9 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * Removes all the score points where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid(String uuid) throws SystemException {
+	public void removeByUuid(String uuid) {
 		for (ScorePoint scorePoint : findByUuid(uuid, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(scorePoint);
@@ -551,16 +568,14 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 *
 	 * @param uuid the uuid
 	 * @return the number of matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid(String uuid) throws SystemException {
+	public int countByUuid(String uuid) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -598,10 +613,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -644,11 +659,9 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ScorePoint> findByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public List<ScorePoint> findByUuid_C(String uuid, long companyId) {
 		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -657,7 +670,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * Returns a range of all the score points where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.rule.score.points.model.impl.ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -665,11 +678,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param start the lower bound of the range of score points
 	 * @param end the upper bound of the range of score points (not inclusive)
 	 * @return the range of matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ScorePoint> findByUuid_C(String uuid, long companyId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -677,7 +689,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * Returns an ordered range of all the score points where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.rule.score.points.model.impl.ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -686,12 +698,32 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param end the upper bound of the range of score points (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ScorePoint> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator<ScorePoint> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the score points where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of score points
+	 * @param end the upper bound of the range of score points (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching score points
+	 */
+	@Override
+	public List<ScorePoint> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<ScorePoint> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -711,16 +743,20 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 				};
 		}
 
-		List<ScorePoint> list = (List<ScorePoint>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ScorePoint> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ScorePoint scorePoint : list) {
-				if (!Validator.equals(uuid, scorePoint.getUuid()) ||
-						(companyId != scorePoint.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<ScorePoint>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (ScorePoint scorePoint : list) {
+					if (!Validator.equals(uuid, scorePoint.getUuid()) ||
+							(companyId != scorePoint.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -730,7 +766,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -786,7 +822,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ScorePoint>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ScorePoint>)QueryUtil.list(q, getDialect(),
@@ -795,10 +831,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -817,13 +853,12 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching score point
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a matching score point could not be found
 	 */
 	@Override
 	public ScorePoint findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchScorePointException, SystemException {
+		OrderByComparator<ScorePoint> orderByComparator)
+		throws NoSuchScorePointException {
 		ScorePoint scorePoint = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -853,11 +888,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching score point, or <code>null</code> if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ScorePoint fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<ScorePoint> orderByComparator) {
 		List<ScorePoint> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -875,13 +909,12 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching score point
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a matching score point could not be found
 	 */
 	@Override
 	public ScorePoint findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchScorePointException, SystemException {
+		OrderByComparator<ScorePoint> orderByComparator)
+		throws NoSuchScorePointException {
 		ScorePoint scorePoint = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -911,11 +944,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching score point, or <code>null</code> if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ScorePoint fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<ScorePoint> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -940,13 +972,13 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next score point
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a score point with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a score point with the primary key could not be found
 	 */
 	@Override
 	public ScorePoint[] findByUuid_C_PrevAndNext(long scorePointId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
-		throws NoSuchScorePointException, SystemException {
+		String uuid, long companyId,
+		OrderByComparator<ScorePoint> orderByComparator)
+		throws NoSuchScorePointException {
 		ScorePoint scorePoint = findByPrimaryKey(scorePointId);
 
 		Session session = null;
@@ -976,15 +1008,16 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 	protected ScorePoint getByUuid_C_PrevAndNext(Session session,
 		ScorePoint scorePoint, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ScorePoint> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_SCOREPOINT_WHERE);
@@ -1102,11 +1135,9 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public void removeByUuid_C(String uuid, long companyId) {
 		for (ScorePoint scorePoint : findByUuid_C(uuid, companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(scorePoint);
@@ -1119,17 +1150,14 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the number of matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public int countByUuid_C(String uuid, long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1171,10 +1199,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1217,11 +1245,9 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 *
 	 * @param userSegmentId the user segment ID
 	 * @return the matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ScorePoint> findByUserSegmentId(long userSegmentId)
-		throws SystemException {
+	public List<ScorePoint> findByUserSegmentId(long userSegmentId) {
 		return findByUserSegmentId(userSegmentId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1230,18 +1256,17 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * Returns a range of all the score points where userSegmentId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.rule.score.points.model.impl.ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param userSegmentId the user segment ID
 	 * @param start the lower bound of the range of score points
 	 * @param end the upper bound of the range of score points (not inclusive)
 	 * @return the range of matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ScorePoint> findByUserSegmentId(long userSegmentId, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByUserSegmentId(userSegmentId, start, end, null);
 	}
 
@@ -1249,7 +1274,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * Returns an ordered range of all the score points where userSegmentId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.rule.score.points.model.impl.ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param userSegmentId the user segment ID
@@ -1257,11 +1282,32 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param end the upper bound of the range of score points (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ScorePoint> findByUserSegmentId(long userSegmentId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator<ScorePoint> orderByComparator) {
+		return findByUserSegmentId(userSegmentId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the score points where userSegmentId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userSegmentId the user segment ID
+	 * @param start the lower bound of the range of score points
+	 * @param end the upper bound of the range of score points (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching score points
+	 */
+	@Override
+	public List<ScorePoint> findByUserSegmentId(long userSegmentId, int start,
+		int end, OrderByComparator<ScorePoint> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1281,15 +1327,19 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 				};
 		}
 
-		List<ScorePoint> list = (List<ScorePoint>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ScorePoint> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ScorePoint scorePoint : list) {
-				if ((userSegmentId != scorePoint.getUserSegmentId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<ScorePoint>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (ScorePoint scorePoint : list) {
+					if ((userSegmentId != scorePoint.getUserSegmentId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1299,7 +1349,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1337,7 +1387,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ScorePoint>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ScorePoint>)QueryUtil.list(q, getDialect(),
@@ -1346,10 +1396,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1367,13 +1417,12 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching score point
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a matching score point could not be found
 	 */
 	@Override
 	public ScorePoint findByUserSegmentId_First(long userSegmentId,
-		OrderByComparator orderByComparator)
-		throws NoSuchScorePointException, SystemException {
+		OrderByComparator<ScorePoint> orderByComparator)
+		throws NoSuchScorePointException {
 		ScorePoint scorePoint = fetchByUserSegmentId_First(userSegmentId,
 				orderByComparator);
 
@@ -1399,11 +1448,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching score point, or <code>null</code> if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ScorePoint fetchByUserSegmentId_First(long userSegmentId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<ScorePoint> orderByComparator) {
 		List<ScorePoint> list = findByUserSegmentId(userSegmentId, 0, 1,
 				orderByComparator);
 
@@ -1420,13 +1468,12 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching score point
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a matching score point could not be found
 	 */
 	@Override
 	public ScorePoint findByUserSegmentId_Last(long userSegmentId,
-		OrderByComparator orderByComparator)
-		throws NoSuchScorePointException, SystemException {
+		OrderByComparator<ScorePoint> orderByComparator)
+		throws NoSuchScorePointException {
 		ScorePoint scorePoint = fetchByUserSegmentId_Last(userSegmentId,
 				orderByComparator);
 
@@ -1452,11 +1499,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching score point, or <code>null</code> if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ScorePoint fetchByUserSegmentId_Last(long userSegmentId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<ScorePoint> orderByComparator) {
 		int count = countByUserSegmentId(userSegmentId);
 
 		if (count == 0) {
@@ -1480,13 +1526,12 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next score point
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a score point with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a score point with the primary key could not be found
 	 */
 	@Override
 	public ScorePoint[] findByUserSegmentId_PrevAndNext(long scorePointId,
-		long userSegmentId, OrderByComparator orderByComparator)
-		throws NoSuchScorePointException, SystemException {
+		long userSegmentId, OrderByComparator<ScorePoint> orderByComparator)
+		throws NoSuchScorePointException {
 		ScorePoint scorePoint = findByPrimaryKey(scorePointId);
 
 		Session session = null;
@@ -1516,12 +1561,13 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 	protected ScorePoint getByUserSegmentId_PrevAndNext(Session session,
 		ScorePoint scorePoint, long userSegmentId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<ScorePoint> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -1623,11 +1669,9 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * Removes all the score points where userSegmentId = &#63; from the database.
 	 *
 	 * @param userSegmentId the user segment ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUserSegmentId(long userSegmentId)
-		throws SystemException {
+	public void removeByUserSegmentId(long userSegmentId) {
 		for (ScorePoint scorePoint : findByUserSegmentId(userSegmentId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(scorePoint);
@@ -1639,17 +1683,14 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 *
 	 * @param userSegmentId the user segment ID
 	 * @return the number of matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUserSegmentId(long userSegmentId)
-		throws SystemException {
+	public int countByUserSegmentId(long userSegmentId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERSEGMENTID;
 
 		Object[] finderArgs = new Object[] { userSegmentId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1673,10 +1714,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1701,17 +1742,16 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the score point where anonymousUserId = &#63; and userSegmentId = &#63; or throws a {@link com.liferay.content.targeting.rule.score.points.NoSuchScorePointException} if it could not be found.
+	 * Returns the score point where anonymousUserId = &#63; and userSegmentId = &#63; or throws a {@link NoSuchScorePointException} if it could not be found.
 	 *
 	 * @param anonymousUserId the anonymous user ID
 	 * @param userSegmentId the user segment ID
 	 * @return the matching score point
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a matching score point could not be found
 	 */
 	@Override
 	public ScorePoint findByC_U(long anonymousUserId, long userSegmentId)
-		throws NoSuchScorePointException, SystemException {
+		throws NoSuchScorePointException {
 		ScorePoint scorePoint = fetchByC_U(anonymousUserId, userSegmentId);
 
 		if (scorePoint == null) {
@@ -1743,11 +1783,9 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param anonymousUserId the anonymous user ID
 	 * @param userSegmentId the user segment ID
 	 * @return the matching score point, or <code>null</code> if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ScorePoint fetchByC_U(long anonymousUserId, long userSegmentId)
-		throws SystemException {
+	public ScorePoint fetchByC_U(long anonymousUserId, long userSegmentId) {
 		return fetchByC_U(anonymousUserId, userSegmentId, true);
 	}
 
@@ -1756,19 +1794,18 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 *
 	 * @param anonymousUserId the anonymous user ID
 	 * @param userSegmentId the user segment ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching score point, or <code>null</code> if a matching score point could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ScorePoint fetchByC_U(long anonymousUserId, long userSegmentId,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { anonymousUserId, userSegmentId };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_U,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_U,
 					finderArgs, this);
 		}
 
@@ -1808,8 +1845,8 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 				List<ScorePoint> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_U, finderArgs,
+						list);
 				}
 				else {
 					ScorePoint scorePoint = list.get(0);
@@ -1820,14 +1857,13 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 					if ((scorePoint.getAnonymousUserId() != anonymousUserId) ||
 							(scorePoint.getUserSegmentId() != userSegmentId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_U,
 							finderArgs, scorePoint);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_U, finderArgs);
 
 				throw processException(e);
 			}
@@ -1850,11 +1886,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param anonymousUserId the anonymous user ID
 	 * @param userSegmentId the user segment ID
 	 * @return the score point that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ScorePoint removeByC_U(long anonymousUserId, long userSegmentId)
-		throws NoSuchScorePointException, SystemException {
+		throws NoSuchScorePointException {
 		ScorePoint scorePoint = findByC_U(anonymousUserId, userSegmentId);
 
 		return remove(scorePoint);
@@ -1866,17 +1901,14 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @param anonymousUserId the anonymous user ID
 	 * @param userSegmentId the user segment ID
 	 * @return the number of matching score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_U(long anonymousUserId, long userSegmentId)
-		throws SystemException {
+	public int countByC_U(long anonymousUserId, long userSegmentId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_U;
 
 		Object[] finderArgs = new Object[] { anonymousUserId, userSegmentId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1904,10 +1936,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1933,10 +1965,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 */
 	@Override
 	public void cacheResult(ScorePoint scorePoint) {
-		EntityCacheUtil.putResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
 			ScorePointImpl.class, scorePoint.getPrimaryKey(), scorePoint);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_U,
 			new Object[] {
 				scorePoint.getAnonymousUserId(), scorePoint.getUserSegmentId()
 			}, scorePoint);
@@ -1952,7 +1984,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	@Override
 	public void cacheResult(List<ScorePoint> scorePoints) {
 		for (ScorePoint scorePoint : scorePoints) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						ScorePointModelImpl.ENTITY_CACHE_ENABLED,
 						ScorePointImpl.class, scorePoint.getPrimaryKey()) == null) {
 				cacheResult(scorePoint);
@@ -1967,91 +1999,87 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * Clears the cache for all score points.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(ScorePointImpl.class.getName());
-		}
+		entityCache.clearCache(ScorePointImpl.class);
 
-		EntityCacheUtil.clearCache(ScorePointImpl.class.getName());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the score point.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(ScorePoint scorePoint) {
-		EntityCacheUtil.removeResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
 			ScorePointImpl.class, scorePoint.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(scorePoint);
+		clearUniqueFindersCache((ScorePointModelImpl)scorePoint);
 	}
 
 	@Override
 	public void clearCache(List<ScorePoint> scorePoints) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (ScorePoint scorePoint : scorePoints) {
-			EntityCacheUtil.removeResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
 				ScorePointImpl.class, scorePoint.getPrimaryKey());
 
-			clearUniqueFindersCache(scorePoint);
+			clearUniqueFindersCache((ScorePointModelImpl)scorePoint);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ScorePoint scorePoint) {
-		if (scorePoint.isNew()) {
+	protected void cacheUniqueFindersCache(
+		ScorePointModelImpl scorePointModelImpl, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
-					scorePoint.getAnonymousUserId(),
-					scorePoint.getUserSegmentId()
+					scorePointModelImpl.getAnonymousUserId(),
+					scorePointModelImpl.getUserSegmentId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_U, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U, args, scorePoint);
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_U, args,
+				scorePointModelImpl);
 		}
 		else {
-			ScorePointModelImpl scorePointModelImpl = (ScorePointModelImpl)scorePoint;
-
 			if ((scorePointModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						scorePoint.getAnonymousUserId(),
-						scorePoint.getUserSegmentId()
+						scorePointModelImpl.getAnonymousUserId(),
+						scorePointModelImpl.getUserSegmentId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_U, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U, args,
-					scorePoint);
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_U, args,
+					scorePointModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(ScorePoint scorePoint) {
-		ScorePointModelImpl scorePointModelImpl = (ScorePointModelImpl)scorePoint;
-
+	protected void clearUniqueFindersCache(
+		ScorePointModelImpl scorePointModelImpl) {
 		Object[] args = new Object[] {
-				scorePoint.getAnonymousUserId(), scorePoint.getUserSegmentId()
+				scorePointModelImpl.getAnonymousUserId(),
+				scorePointModelImpl.getUserSegmentId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_U, args);
 
 		if ((scorePointModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_U.getColumnBitmask()) != 0) {
@@ -2060,8 +2088,8 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 					scorePointModelImpl.getOriginalUserSegmentId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_U, args);
 		}
 	}
 
@@ -2082,6 +2110,8 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 		scorePoint.setUuid(uuid);
 
+		scorePoint.setCompanyId(companyProvider.getCompanyId());
+
 		return scorePoint;
 	}
 
@@ -2090,12 +2120,11 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 *
 	 * @param scorePointId the primary key of the score point
 	 * @return the score point that was removed
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a score point with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a score point with the primary key could not be found
 	 */
 	@Override
 	public ScorePoint remove(long scorePointId)
-		throws NoSuchScorePointException, SystemException {
+		throws NoSuchScorePointException {
 		return remove((Serializable)scorePointId);
 	}
 
@@ -2104,12 +2133,11 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 *
 	 * @param primaryKey the primary key of the score point
 	 * @return the score point that was removed
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a score point with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a score point with the primary key could not be found
 	 */
 	@Override
 	public ScorePoint remove(Serializable primaryKey)
-		throws NoSuchScorePointException, SystemException {
+		throws NoSuchScorePointException {
 		Session session = null;
 
 		try {
@@ -2141,8 +2169,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	}
 
 	@Override
-	protected ScorePoint removeImpl(ScorePoint scorePoint)
-		throws SystemException {
+	protected ScorePoint removeImpl(ScorePoint scorePoint) {
 		scorePoint = toUnwrappedModel(scorePoint);
 
 		Session session = null;
@@ -2174,9 +2201,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	}
 
 	@Override
-	public ScorePoint updateImpl(
-		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint)
-		throws SystemException {
+	public ScorePoint updateImpl(ScorePoint scorePoint) {
 		scorePoint = toUnwrappedModel(scorePoint);
 
 		boolean isNew = scorePoint.isNew();
@@ -2200,7 +2225,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 				scorePoint.setNew(false);
 			}
 			else {
-				session.merge(scorePoint);
+				scorePoint = (ScorePoint)session.merge(scorePoint);
 			}
 		}
 		catch (Exception e) {
@@ -2210,10 +2235,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !ScorePointModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2223,14 +2248,14 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 						scorePointModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { scorePointModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -2241,8 +2266,8 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 						scorePointModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -2250,8 +2275,8 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 						scorePointModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -2261,25 +2286,27 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 						scorePointModelImpl.getOriginalUserSegmentId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERSEGMENTID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERSEGMENTID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERSEGMENTID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERSEGMENTID,
 					args);
 
 				args = new Object[] { scorePointModelImpl.getUserSegmentId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERSEGMENTID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERSEGMENTID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERSEGMENTID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERSEGMENTID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
-			ScorePointImpl.class, scorePoint.getPrimaryKey(), scorePoint);
+		entityCache.putResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
+			ScorePointImpl.class, scorePoint.getPrimaryKey(), scorePoint, false);
 
-		clearUniqueFindersCache(scorePoint);
-		cacheUniqueFindersCache(scorePoint);
+		clearUniqueFindersCache(scorePointModelImpl);
+		cacheUniqueFindersCache(scorePointModelImpl, isNew);
+
+		scorePoint.resetOriginalValues();
 
 		return scorePoint;
 	}
@@ -2305,16 +2332,15 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	}
 
 	/**
-	 * Returns the score point with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the score point with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the score point
 	 * @return the score point
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a score point with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a score point with the primary key could not be found
 	 */
 	@Override
 	public ScorePoint findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchScorePointException, SystemException {
+		throws NoSuchScorePointException {
 		ScorePoint scorePoint = fetchByPrimaryKey(primaryKey);
 
 		if (scorePoint == null) {
@@ -2330,16 +2356,15 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	}
 
 	/**
-	 * Returns the score point with the primary key or throws a {@link com.liferay.content.targeting.rule.score.points.NoSuchScorePointException} if it could not be found.
+	 * Returns the score point with the primary key or throws a {@link NoSuchScorePointException} if it could not be found.
 	 *
 	 * @param scorePointId the primary key of the score point
 	 * @return the score point
-	 * @throws com.liferay.content.targeting.rule.score.points.NoSuchScorePointException if a score point with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchScorePointException if a score point with the primary key could not be found
 	 */
 	@Override
 	public ScorePoint findByPrimaryKey(long scorePointId)
-		throws NoSuchScorePointException, SystemException {
+		throws NoSuchScorePointException {
 		return findByPrimaryKey((Serializable)scorePointId);
 	}
 
@@ -2348,12 +2373,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 *
 	 * @param primaryKey the primary key of the score point
 	 * @return the score point, or <code>null</code> if a score point with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ScorePoint fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
-		ScorePoint scorePoint = (ScorePoint)EntityCacheUtil.getResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
+	public ScorePoint fetchByPrimaryKey(Serializable primaryKey) {
+		ScorePoint scorePoint = (ScorePoint)entityCache.getResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
 				ScorePointImpl.class, primaryKey);
 
 		if (scorePoint == _nullScorePoint) {
@@ -2373,12 +2396,12 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 					cacheResult(scorePoint);
 				}
 				else {
-					EntityCacheUtil.putResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
 						ScorePointImpl.class, primaryKey, _nullScorePoint);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
 					ScorePointImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2396,22 +2419,111 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 *
 	 * @param scorePointId the primary key of the score point
 	 * @return the score point, or <code>null</code> if a score point with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ScorePoint fetchByPrimaryKey(long scorePointId)
-		throws SystemException {
+	public ScorePoint fetchByPrimaryKey(long scorePointId) {
 		return fetchByPrimaryKey((Serializable)scorePointId);
+	}
+
+	@Override
+	public Map<Serializable, ScorePoint> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, ScorePoint> map = new HashMap<Serializable, ScorePoint>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			ScorePoint scorePoint = fetchByPrimaryKey(primaryKey);
+
+			if (scorePoint != null) {
+				map.put(primaryKey, scorePoint);
+			}
+
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			ScorePoint scorePoint = (ScorePoint)entityCache.getResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
+					ScorePointImpl.class, primaryKey);
+
+			if (scorePoint == null) {
+				if (uncachedPrimaryKeys == null) {
+					uncachedPrimaryKeys = new HashSet<Serializable>();
+				}
+
+				uncachedPrimaryKeys.add(primaryKey);
+			}
+			else {
+				map.put(primaryKey, scorePoint);
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
+			return map;
+		}
+
+		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
+				1);
+
+		query.append(_SQL_SELECT_SCOREPOINT_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : uncachedPrimaryKeys) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (ScorePoint scorePoint : (List<ScorePoint>)q.list()) {
+				map.put(scorePoint.getPrimaryKeyObj(), scorePoint);
+
+				cacheResult(scorePoint);
+
+				uncachedPrimaryKeys.remove(scorePoint.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				entityCache.putResult(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
+					ScorePointImpl.class, primaryKey, _nullScorePoint);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
 	 * Returns all the score points.
 	 *
 	 * @return the score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ScorePoint> findAll() throws SystemException {
+	public List<ScorePoint> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2419,17 +2531,15 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * Returns a range of all the score points.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.rule.score.points.model.impl.ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of score points
 	 * @param end the upper bound of the range of score points (not inclusive)
 	 * @return the range of score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ScorePoint> findAll(int start, int end)
-		throws SystemException {
+	public List<ScorePoint> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2437,18 +2547,37 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * Returns an ordered range of all the score points.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.rule.score.points.model.impl.ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of score points
 	 * @param end the upper bound of the range of score points (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ScorePoint> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<ScorePoint> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the score points.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ScorePointModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of score points
+	 * @param end the upper bound of the range of score points (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of score points
+	 */
+	@Override
+	public List<ScorePoint> findAll(int start, int end,
+		OrderByComparator<ScorePoint> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2464,8 +2593,12 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<ScorePoint> list = (List<ScorePoint>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<ScorePoint> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ScorePoint>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2473,7 +2606,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_SCOREPOINT);
 
@@ -2503,7 +2636,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<ScorePoint>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<ScorePoint>)QueryUtil.list(q, getDialect(),
@@ -2512,10 +2645,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2530,10 +2663,9 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	/**
 	 * Removes all the score points from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (ScorePoint scorePoint : findAll()) {
 			remove(scorePoint);
 		}
@@ -2543,11 +2675,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * Returns the number of score points.
 	 *
 	 * @return the number of score points
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+	public int countAll() {
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2560,11 +2691,11 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2578,56 +2709,47 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ScorePointModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**
 	 * Initializes the score point persistence.
 	 */
 	public void afterPropertiesSet() {
-		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(
-					com.liferay.util.service.ServiceProps.get(
-						"value.object.listener.com.liferay.content.targeting.rule.score.points.model.ScorePoint")));
-
-		if (listenerClassNames.length > 0) {
-			try {
-				List<ModelListener<ScorePoint>> listenersList = new ArrayList<ModelListener<ScorePoint>>();
-
-				for (String listenerClassName : listenerClassNames) {
-					listenersList.add((ModelListener<ScorePoint>)InstanceFactory.newInstance(
-							getClassLoader(), listenerClassName));
-				}
-
-				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(ScorePointImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(ScorePointImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = CompanyProviderWrapper.class)
+	protected CompanyProvider companyProvider;
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_SCOREPOINT = "SELECT scorePoint FROM ScorePoint scorePoint";
+	private static final String _SQL_SELECT_SCOREPOINT_WHERE_PKS_IN = "SELECT scorePoint FROM ScorePoint scorePoint WHERE scorePointId IN (";
 	private static final String _SQL_SELECT_SCOREPOINT_WHERE = "SELECT scorePoint FROM ScorePoint scorePoint WHERE ";
 	private static final String _SQL_COUNT_SCOREPOINT = "SELECT COUNT(scorePoint) FROM ScorePoint scorePoint";
 	private static final String _SQL_COUNT_SCOREPOINT_WHERE = "SELECT COUNT(scorePoint) FROM ScorePoint scorePoint WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "scorePoint.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ScorePoint exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ScorePoint exists with the key {";
-	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
-	private static Log _log = LogFactoryUtil.getLog(ScorePointPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(ScorePointPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static ScorePoint _nullScorePoint = new ScorePointImpl() {
+	private static final ScorePoint _nullScorePoint = new ScorePointImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2639,7 +2761,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 			}
 		};
 
-	private static CacheModel<ScorePoint> _nullScorePointCacheModel = new CacheModel<ScorePoint>() {
+	private static final CacheModel<ScorePoint> _nullScorePointCacheModel = new CacheModel<ScorePoint>() {
 			@Override
 			public ScorePoint toEntityModel() {
 				return _nullScorePoint;

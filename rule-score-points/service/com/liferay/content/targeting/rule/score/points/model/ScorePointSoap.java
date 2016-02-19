@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.rule.score.points.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import java.util.List;
  * @see com.liferay.content.targeting.rule.score.points.service.http.ScorePointServiceSoap
  * @generated
  */
+@ProviderType
 public class ScorePointSoap implements Serializable {
 	public static ScorePointSoap toSoapModel(ScorePoint model) {
 		ScorePointSoap soapModel = new ScorePointSoap();

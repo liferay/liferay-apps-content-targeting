@@ -12,13 +12,16 @@
  * details.
  */
 
-package com.liferay.content.targeting.rule.score.points;
+package com.liferay.content.targeting.rule.score.points.exception;
 
-import com.liferay.portal.NoSuchModelException;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class NoSuchScorePointException extends NoSuchModelException {
 
 	public NoSuchScorePointException() {

@@ -14,7 +14,11 @@
 
 package com.liferay.content.targeting.rule.score.points.model;
 
-import com.liferay.portal.model.PersistedModel;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.Accessor;
 
 /**
  * The extended model interface for the ScorePoint service. Represents a row in the &quot;CT_ScorePoints_ScorePoint&quot; database table, with each column mapped to a property of this class.
@@ -25,10 +29,28 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.rule.score.points.model.impl.ScorePointModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.content.targeting.rule.score.points.model.impl.ScorePointImpl")
+@ProviderType
 public interface ScorePoint extends ScorePointModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.rule.score.points.model.impl.ScorePointImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ScorePoint, Long> SCORE_POINT_ID_ACCESSOR = new Accessor<ScorePoint, Long>() {
+			@Override
+			public Long get(ScorePoint scorePoint) {
+				return scorePoint.getScorePointId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ScorePoint> getTypeClass() {
+				return ScorePoint.class;
+			}
+		};
 }

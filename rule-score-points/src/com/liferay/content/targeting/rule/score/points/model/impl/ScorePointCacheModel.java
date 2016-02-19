@@ -14,11 +14,14 @@
 
 package com.liferay.content.targeting.rule.score.points.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.rule.score.points.model.ScorePoint;
 
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -32,8 +35,33 @@ import java.io.ObjectOutput;
  * @see ScorePoint
  * @generated
  */
+@ProviderType
 public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ScorePointCacheModel)) {
+			return false;
+		}
+
+		ScorePointCacheModel scorePointCacheModel = (ScorePointCacheModel)obj;
+
+		if (scorePointId == scorePointCacheModel.scorePointId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, scorePointId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);
@@ -80,10 +108,15 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		scorePointId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		anonymousUserId = objectInput.readLong();
+
 		userSegmentId = objectInput.readLong();
+
 		points = objectInput.readLong();
 	}
 
@@ -98,9 +131,13 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 		}
 
 		objectOutput.writeLong(scorePointId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(anonymousUserId);
+
 		objectOutput.writeLong(userSegmentId);
+
 		objectOutput.writeLong(points);
 	}
 
