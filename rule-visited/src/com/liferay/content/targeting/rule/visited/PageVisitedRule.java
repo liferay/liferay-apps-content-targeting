@@ -159,12 +159,12 @@ public class PageVisitedRule extends BaseRule {
 
 		Layout layout = null;
 
-		List<Layout> layouts =
-			LayoutLocalServiceUtil.getLayoutsByUuidAndCompanyId(
-				layoutUuid, portletDataContext.getCompanyId());
+		layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layoutUuid, portletDataContext.getGroupId(), false);
 
-		if (ListUtil.isNotEmpty(layouts)) {
-			layout = layouts.get(0);
+		if (layout == null) {
+			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layoutUuid, portletDataContext.getGroupId(), true);
 		}
 
 		if (layout != null) {
