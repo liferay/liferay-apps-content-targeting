@@ -25,7 +25,7 @@
 <@aui["script"] use="charts">
 	var ctActionTotalArray = [
 		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as ctActionTotal>
-			<#assign userSegmentNames="">
+			<#assign userSegmentNames ="">
 
 			<#list ctActionTotal.getViewsByUserSegment() as ctAction>
 				<#if (userSegmentNames?length == 0)>
@@ -35,12 +35,12 @@
 				</#if>
 			</#list>
 
-			<#assign eventType=ctActionTotal.getEventType()>
+			<#assign eventType = ctActionTotal.getEventType()>
 
 			<#if ctActionTotal.getEventType() == "sending">
-			    <#assign eventType="sent">
+			    <#assign eventType ="sent">
 			<#elseif ctActionTotal.getEventType() == "click">
-				<#assign eventType="link-clicks">
+				<#assign eventType ="link-clicks">
 			</#if>
 
 			{content:'${ctActionTotal.getAlias()}', event:'${eventType}', eventName:'${languageUtil.get(locale,eventType)}', count:${ctActionTotal.getCount()}, user_segments: '${userSegmentNames}'}<#if ctActionTotal_has_next>,</#if>

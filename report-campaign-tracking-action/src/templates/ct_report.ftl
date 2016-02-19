@@ -28,12 +28,30 @@
 <#setting number_format="computer">
 
 <@portlet["renderURL"] varImpl="portletURL">
-	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORT}" />
-	<@portlet["param"] name="redirect" value="${redirect}" />
-	<@portlet["param"] name="reportInstanceId" value="${reportInstanceId}" />
-	<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
-	<@portlet["param"] name="className" value="${className}" />
-	<@portlet["param"] name="classPK" value="${classPK?string}" />
+	<@portlet["param"]
+		name="mvcRenderCommandName"
+		value="${contentTargetingMVCCommand.VIEW_REPORT}"
+	/>
+	<@portlet["param"]
+		name="redirect"
+		value="${redirect}"
+	/>
+	<@portlet["param"]
+		name="reportInstanceId"
+		value="${reportInstanceId}"
+	/>
+	<@portlet["param"]
+		name="reportKey"
+		value="${report.getReportKey()}"
+	/>
+	<@portlet["param"]
+		name="className"
+		value="${className}"
+	/>
+	<@portlet["param"]
+		name="classPK"
+		value="${classPK?string}"
+	/>
 </@>
 
 <@liferay_ui["search-container"]
@@ -50,12 +68,12 @@
 		modelVar="ctActionTotal"
 	>
 
-		<#assign eventType=ctActionTotal.getEventType()>
+		<#assign eventType = ctActionTotal.getEventType()>
 
 		<#if ctActionTotal.getEventType() == "sending">
-			<#assign eventType="sent">
+			<#assign eventType ="sent">
 		<#elseif ctActionTotal.getEventType() == "click">
-			<#assign eventType="link-clicks">
+			<#assign eventType ="link-clicks">
 		</#if>
 
 		<@liferay_ui["search-container-column-text"]
@@ -103,7 +121,7 @@
 </@>
 
 <@aui["script"] use="aui-base,event-hover">
-	A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').delegate(
+	A.one('#<@portlet["namespace"] />${searchContainerReference.getId(request)}SearchContainer').delegate(
 		'hover',
 		function(event) {
 			var currentTarget = event.currentTarget;
