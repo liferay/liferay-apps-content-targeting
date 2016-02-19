@@ -15,17 +15,18 @@
 package com.liferay.content.targeting.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.util.*;
 
 import freemarker.cache.ClassTemplateLoader;
 
@@ -35,9 +36,13 @@ import freemarker.template.Template;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Julio Camarero
@@ -120,6 +125,57 @@ public class ContentTargetingContextUtil {
 			Class clazz, String templatePath, Map<String, Object> context)
 		throws Exception {
 
+		if (!templatePath.startsWith("/")) {
+			templatePath = "/" + templatePath;
+		}
+
+		URLTemplateResource urlTemplateResource = new URLTemplateResource(
+			templatePath, clazz.getResource(templatePath));
+
+		com.liferay.portal.kernel.template.Template template =
+			TemplateManagerUtil.getTemplate(
+				TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
+
+		HttpServletRequest request = (HttpServletRequest)context.get("request");
+		HttpServletResponse response = (HttpServletResponse)context.get(
+			"response");
+
+		// Default template context
+
+		template.prepare(request);
+
+		// Custom template context
+
+		template.putAll(context);
+
+		// Aggregate language bundles
+
+		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader(
+			request, clazz);
+
+		request.setAttribute(
+			WebKeys.RESOURCE_BUNDLE_LOADER,
+			getResourceBundleLoader(request, clazz));
+
+		String languageId = LanguageUtil.getLanguageId(request);
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			languageId);
+
+		template.put("resourceBundle", resourceBundle);
+
+		// Taglib support
+
+		TemplateManager templateManager =
+			TemplateManagerUtil.getTemplateManager(
+				TemplateConstants.LANG_TYPE_FTL);
+
+		templateManager.addTaglibSupport(template, request, response);
+
+		// Render template with custom configuration to support includes
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
 		Configuration configuration = new Configuration();
 
 		configuration.setObjectWrapper(new DefaultObjectWrapper());
@@ -127,11 +183,9 @@ public class ContentTargetingContextUtil {
 			new ClassTemplateLoader(clazz, StringPool.SLASH));
 		configuration.setTemplateUpdateDelay(Integer.MAX_VALUE);
 
-		Template template = configuration.getTemplate(templatePath);
+		Template freemarkerTemplate = configuration.getTemplate(templatePath);
 
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		template.process(context, unsyncStringWriter);
+		freemarkerTemplate.process(template, unsyncStringWriter);
 
 		return unsyncStringWriter.toString();
 	}
@@ -178,6 +232,22 @@ public class ContentTargetingContextUtil {
 				getSiteAdministrationPortletURL(
 					context, PortletKeys.PORTAL_SETTINGS, params));
 		}
+	}
+
+	protected static ResourceBundleLoader getResourceBundleLoader(
+		HttpServletRequest request, Class clazz) {
+
+		ResourceBundleLoader resourceBundleLoader =
+			(ResourceBundleLoader)request.getAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER);
+
+		if (resourceBundleLoader != null) {
+			resourceBundleLoader = new AggregateResourceBundleLoader(
+				resourceBundleLoader,
+				new ClassResourceBundleLoader("content.Language", clazz));
+		}
+
+		return resourceBundleLoader;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

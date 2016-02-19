@@ -20,7 +20,6 @@ import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.portlet.ContentTargetingPath;
-import com.liferay.content.targeting.portlet.TaglibFactoryWrapper;
 import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
 import com.liferay.content.targeting.service.permission.UserSegmentPermission;
@@ -32,21 +31,20 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateManager;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -85,14 +83,11 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
+		request.setAttribute(
+			WebKeys.RESOURCE_BUNDLE_LOADER, getResourceBundleLoader(request));
+
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
 			portletResponse);
-
-		TemplateManager templateManager =
-			TemplateManagerUtil.getTemplateManager(
-				TemplateConstants.LANG_TYPE_FTL);
-
-		templateManager.addTaglibSupport(context, request, response);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -103,24 +98,9 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 			(LiferayPortletConfig)portletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		Portlet portlet = portletConfig.getPortlet();
-
-		PortletApp portletApp = portlet.getPortletApp();
-
 		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
 		TemplateHashModel staticModels = wrapper.getStaticModels();
-
-		templateManager.addTaglibApplication(
-			context, "Application", portletApp.getServletContext());
-		templateManager.addTaglibRequest(context, "Request", request, response);
-
-		context.put(
-			"PortletJspTagLibs",
-			new TaglibFactoryWrapper(portletApp.getServletContext()));
-
-		context.put("request", request);
-		context.put("response", response);
 
 		context.put("actionKeys", staticModels.get(ActionKeys.class.getName()));
 		context.put("campaignClass", Campaign.class);
@@ -153,6 +133,10 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 			"portletContext",
 			portletRequest.getPortletSession().getPortletContext());
 		context.put("reportInstanceClass", ReportInstance.class);
+		context.put("request", request);
+		context.put("response", response);
+		context.put("scopeGroup", scopeGroup);
+		context.put("scopeGroupId", scopeGroup.getGroupId());
 		context.put("tacticClass", Tactic.class);
 		context.put("themeDisplay", themeDisplay);
 		context.put(
@@ -164,8 +148,6 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 		context.put(
 			"userPermissionUtil",
 			staticModels.get(UserPermissionUtil.class.getName()));
-		context.put("scopeGroup", scopeGroup);
-		context.put("scopeGroupId", scopeGroup.getGroupId());
 	}
 
 	@Override
@@ -197,8 +179,6 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 			context.put(attributeName, attributeValue);
 		}
 
-		context.put("request", PortalUtil.getHttpServletRequest(renderRequest));
-
 		try {
 			populateFreemarkerContext(context, renderRequest, portletResponse);
 		}
@@ -227,6 +207,22 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return values;
+	}
+
+	protected ResourceBundleLoader getResourceBundleLoader(
+		HttpServletRequest request) {
+
+		ResourceBundleLoader resourceBundleLoader =
+			(ResourceBundleLoader)request.getAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER);
+
+		if (resourceBundleLoader != null) {
+			return resourceBundleLoader;
+		}
+
+		return new AggregateResourceBundleLoader(
+			new ClassResourceBundleLoader("content.Language", getClass()),
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(BaseMVCRenderCommand.class);
