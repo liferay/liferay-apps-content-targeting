@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.api.model;
 
+import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -53,7 +54,8 @@ public abstract class BaseRuleCategory implements RuleCategory {
 	public String getDescription(Locale locale) {
 		String key = getClass().getName().concat(".description");
 
-		String description = ResourceActionsUtil.getModelResource(locale, key);
+		String description = ContentTargetingUtil.getModelResource(
+			locale, getClass(), key);
 
 		if (description.equals(key)) {
 			description = StringPool.BLANK;

@@ -17,6 +17,7 @@ package com.liferay.content.targeting.api.model;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
+import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -66,7 +67,8 @@ public abstract class BaseRule implements Rule {
 	public String getDescription(Locale locale) {
 		String key = getClass().getName().concat(".description");
 
-		String description = ResourceActionsUtil.getModelResource(locale, key);
+		String description = ContentTargetingUtil.getModelResource(
+			locale, getClass(), key);
 
 		if (description.endsWith(key)) {
 			description = getShortDescription(locale);
@@ -105,8 +107,8 @@ public abstract class BaseRule implements Rule {
 
 	@Override
 	public String getName(Locale locale) {
-		return ResourceActionsUtil.getModelResource(
-			locale, getClass().getName());
+		return ContentTargetingUtil.getModelResource(
+			locale, getClass(), getClass().getName());
 	}
 
 	@Override

@@ -26,11 +26,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -41,6 +43,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletURL;
@@ -196,6 +200,22 @@ public class ContentTargetingUtil {
 		data.put("type", typeName);
 
 		return data;
+	}
+
+	public static String getModelResource(
+		Locale locale, Class clazz, String name) {
+
+		String key = ResourceActionsUtil.getModelResourceNamePrefix() + name;
+
+		try {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, clazz);
+
+			return ResourceBundleUtil.getString(resourceBundle, key);
+		}
+		catch (MissingResourceException mre) {
+			return ResourceActionsUtil.getModelResource(locale, name);
+		}
 	}
 
 	public static boolean isStaged(long liveGroupId, String portletId)
