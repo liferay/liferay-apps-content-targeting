@@ -253,6 +253,11 @@ public class ReportInstanceLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.content.targeting.api.model.Report getReport(
+		java.lang.String reportKey) {
+		return getService().getReport(reportKey);
+	}
+
 	/**
 	* Returns the report instance with the primary key.
 	*

@@ -16,6 +16,7 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.ReportInstance;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -226,6 +227,9 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Report getReport(java.lang.String reportKey);
 
 	/**
 	* Returns the report instance with the primary key.

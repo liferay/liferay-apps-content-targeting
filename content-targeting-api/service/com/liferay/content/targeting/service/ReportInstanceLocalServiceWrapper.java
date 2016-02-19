@@ -270,6 +270,12 @@ public class ReportInstanceLocalServiceWrapper
 		return _reportInstanceLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.content.targeting.api.model.Report getReport(
+		java.lang.String reportKey) {
+		return _reportInstanceLocalService.getReport(reportKey);
+	}
+
 	/**
 	* Returns the report instance with the primary key.
 	*
