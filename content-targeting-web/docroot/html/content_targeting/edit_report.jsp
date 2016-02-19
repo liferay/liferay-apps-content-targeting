@@ -56,6 +56,13 @@ if (Validator.isNull(backURL)) {
 
 	backURL = backURLObject.toString();
 }
+
+Map<String, Object> templateContext = (Map<String, Object>)request.getAttribute("templateContext");
+templateContext.put("className", className);
+templateContext.put("classPK", classPK);
+templateContext.put("reportInstance", reportInstance);
+templateContext.put("reportInstanceId", reportInstanceId);
+templateContext.put("reportKey", reportKey);
 %>
 
 <liferay-ui:header
@@ -99,7 +106,7 @@ if (Validator.isNull(backURL)) {
 
 	<aui:input name="description" />
 
-	<%= report.getEditHTML(reportInstance, null) %>
+	<%= report.getEditHTML(reportInstance, templateContext) %>
 
 	<aui:button-row>
 		<aui:button cssClass="control-button" type="submit" />

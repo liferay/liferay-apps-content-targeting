@@ -37,8 +37,8 @@ for (Report report : reports) {
 				<c:if test="<%= CampaignPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE) && instantiableExists %>">
 					<liferay-portlet:renderURL var="redirectURL">
 						<portlet:param
-							name="mvcPath"
-							value="<%= ContentTargetingPath.EDIT_CAMPAIGN %>"
+							name="mvcRenderCommandName"
+							value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>"
 						/>
 						<portlet:param
 							name="backURL"
@@ -70,7 +70,7 @@ for (Report report : reports) {
 						%>
 
 							<liferay-portlet:renderURL var="addReportURL">
-								<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingPath.EDIT_REPORT %>" />
+								<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_REPORT %>" />
 								<portlet:param name="redirect" value="<%= redirect %>" />
 								<portlet:param name="campaignId" value="<%= String.valueOf(classPK) %>" />
 								<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
@@ -104,8 +104,8 @@ for (Report report : reports) {
 				<c:if test="<%= UserSegmentPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE) && instantiableExists %>">
 					<liferay-portlet:renderURL var="redirectURL">
 						<portlet:param
-							name="mvcPath"
-							value="<%= ContentTargetingPath.EDIT_USER_SEGMENT %>"
+							name="mvcRenderCommandName"
+							value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>"
 						/>
 						<portlet:param
 							name="backURL"
@@ -137,7 +137,7 @@ for (Report report : reports) {
 						%>
 
 							<liferay-portlet:renderURL var="addReportURL">
-								<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingPath.EDIT_REPORT %>" />
+								<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_REPORT %>" />
 								<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 								<portlet:param name="userSegmentId" value="<%= String.valueOf(classPK) %>" />
 								<portlet:param name="className" value="<%= UserSegment.class.getName() %>" />

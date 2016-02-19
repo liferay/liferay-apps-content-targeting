@@ -17,6 +17,8 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
+Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
+
 String backURL = ParamUtil.getString(request, "backURL");
 
 String redirect = ParamUtil.getString(request, "redirect", currentURL);
@@ -39,15 +41,19 @@ if (reportInstanceId > 0) {
 	reportInstance = ReportInstanceLocalServiceUtil.fetchReportInstance(reportInstanceId);
 }
 
-if (Validator.isNull(backURL)) {
+if (Validator.isBlank(backURL)) {
 	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
 
 	if (Campaign.class.getName().equals(className)) {
 		backURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_CAMPAIGN);
+		backURLObject.setParameter("className", Campaign.class.getName());
+		backURLObject.setParameter("classPK", String.valueOf(classPK));
 		backURLObject.setParameter("campaignId", String.valueOf(classPK));
 	}
 	else {
 		backURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_USER_SEGMENT);
+		backURLObject.setParameter("className", UserSegment.class.getName());
+		backURLObject.setParameter("classPK", String.valueOf(classPK));
 		backURLObject.setParameter("userSegmentId", String.valueOf(classPK));
 	}
 
@@ -55,6 +61,15 @@ if (Validator.isNull(backURL)) {
 
 	backURL = backURLObject.toString();
 }
+
+Map<String, Object> templateContext = (Map<String, Object>)request.getAttribute("templateContext");
+templateContext.put("className", className);
+templateContext.put("classPK", classPK);
+templateContext.put("redirect", redirect);
+templateContext.put("report", report);
+templateContext.put("reportInstance", reportInstance);
+templateContext.put("reportInstanceId", reportInstanceId);
+templateContext.put("reportKey", reportKey);
 %>
 
 <liferay-ui:breadcrumb
@@ -75,7 +90,7 @@ if (Validator.isNull(backURL)) {
 
 <liferay-portlet:actionURL name="updateReport" var="updateReportURL">
 	<portlet:param name="backURL" value="<%= backURL.toString() %>" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="reportInstanceId" value="<%= String.valueOf(reportInstanceId) %>" />
 	<portlet:param name="reportKey" value="<%= report.getReportKey() %>" />
 	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
@@ -94,4 +109,4 @@ if (Validator.isNull(backURL)) {
 	<%= report.getDescription(locale) %>
 </div>
 
-<%= report.getHTML(reportInstance, null) %>
+<%= report.getHTML(reportInstance, templateContext) %>

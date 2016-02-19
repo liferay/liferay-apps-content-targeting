@@ -43,8 +43,8 @@ SearchContainerIterator searchContainerIterator = new ReportSearchContainerItera
 
 			<liferay-portlet:renderURL varImpl="viewReportURL">
 				<portlet:param
-					name="mvcPath"
-					value="<%= ContentTargetingPath.VIEW_REPORT %>"
+					name="mvcRenderCommandName"
+					value="<%= ContentTargetingMVCCommand.VIEW_REPORT %>"
 				/>
 				<portlet:param
 					name="className"

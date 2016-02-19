@@ -16,6 +16,7 @@ package com.liferay.content.targeting.portlet.action;
 
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
+import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.portlet.ContentTargetingPath;
@@ -125,7 +126,7 @@ public class EditCampaignMVCActionCommand extends BaseMVCRenderCommand {
 				"userSegmentAssetCategoryNames", userSegmentAssetCategoryNames);
 
 			Map<String, Report> reports = _reportsRegistry.getReports(
-				UserSegment.class.getName());
+				Campaign.class.getName());
 
 			renderRequest.setAttribute("reports", reports.values());
 		}

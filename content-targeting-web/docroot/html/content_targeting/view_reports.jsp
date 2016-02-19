@@ -39,14 +39,14 @@ long classPK = ParamUtil.getLong(request, "classPK");
 
 	<c:choose>
 		<c:when test="<%= Campaign.class.getName().equals(className) %>">
-			<portlet:param name="mvcPath" value="<%= ContentTargetingPath.EDIT_CAMPAIGN %>" />
+			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
 			<portlet:param name="campaignId" value="<%= String.valueOf(classPK) %>" />
-			<portlet:param name="campaignTabs" value="reports" />
+			<portlet:param name="tabs2" value="reports" />
 		</c:when>
 		<c:when test="<%= UserSegment.class.getName().equals(className) %>">
-			<portlet:param name="mvcPath" value="<%= ContentTargetingPath.EDIT_USER_SEGMENT %>" />
+			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
 			<portlet:param name="userSegmentId" value="<%= String.valueOf(classPK) %>" />
-			<portlet:param name="userSegmentTabs" value="reports" />
+			<portlet:param name="tabs2" value="reports" />
 		</c:when>
 		<c:otherwise>
 			<portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW_REPORTS %>" />

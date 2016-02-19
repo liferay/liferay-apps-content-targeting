@@ -113,7 +113,7 @@ SearchContainerIterator searchContainerIterator = new UserSegmentSearchContainer
 								value="<%= String.valueOf(userSegment.getUserSegmentId()) %>"
 							/>
 							<portlet:param
-								name="userSegmentTabs"
+								name="tabs2"
 								value="reports"
 							/>
 						</liferay-portlet:renderURL>

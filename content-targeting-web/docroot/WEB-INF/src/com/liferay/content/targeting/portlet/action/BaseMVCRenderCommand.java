@@ -18,6 +18,7 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.UserSegment;
+import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.portlet.TaglibFactoryWrapper;
 import com.liferay.content.targeting.service.permission.CampaignPermission;
@@ -130,6 +131,9 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 			"campaignPermission",
 			staticModels.get(CampaignPermission.class.getName()));
 		context.put("company", themeDisplay.getCompany());
+		context.put(
+			"contentTargetingMVCCommand",
+			staticModels.get(ContentTargetingMVCCommand.class.getName()));
 		context.put(
 			"contentTargetingPath",
 			staticModels.get(ContentTargetingPath.class.getName()));

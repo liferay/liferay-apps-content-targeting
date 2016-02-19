@@ -118,8 +118,8 @@ SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIte
 					<c:if test="<%= reportsCount > 0 %>">
 						<liferay-portlet:renderURL var="viewCampaignReportsURL">
 							<portlet:param
-								name="mvcPath"
-								value="<%= ContentTargetingPath.EDIT_CAMPAIGN %>"
+								name="mvcRenderCommandName"
+								value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>"
 							/>
 							<portlet:param
 								name="redirect"
@@ -138,7 +138,7 @@ SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIte
 								value="<%= String.valueOf(campaign.getCampaignId()) %>"
 							/>
 							<portlet:param
-								name="campaignTabs"
+								name="tabs2"
 								value="reports"
 							/>
 						</liferay-portlet:renderURL>
@@ -155,8 +155,8 @@ SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIte
 					<c:if test="<%= channelsCount > 0 %>">
 						<liferay-portlet:renderURL var="viewCampaignTacticsURL">
 							<portlet:param
-								name="mvcPath"
-								value="<%= ContentTargetingPath.EDIT_CAMPAIGN %>"
+								name="mvcRenderCommandName"
+								value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>"
 							/>
 							<portlet:param
 								name="redirect"
@@ -175,7 +175,7 @@ SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIte
 								value="<%= String.valueOf(campaign.getCampaignId()) %>"
 							/>
 							<portlet:param
-								name="campaignTabs"
+								name="tabs2"
 								value="promotions"
 							/>
 						</liferay-portlet:renderURL>
