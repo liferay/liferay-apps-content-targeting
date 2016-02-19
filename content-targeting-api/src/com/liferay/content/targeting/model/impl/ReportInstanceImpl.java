@@ -15,14 +15,13 @@
 package com.liferay.content.targeting.model.impl;
 
 import com.liferay.content.targeting.api.model.Report;
-import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
+import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Locale;
 
@@ -38,7 +37,8 @@ import java.util.Locale;
 public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 
 	public String getReportName(Locale locale) {
-		Report report = _reportsRegistry.getReport(getReportKey());
+		Report report = ReportInstanceLocalServiceUtil.getReport(
+			getReportKey());
 
 		if (report == null) {
 			return StringPool.BLANK;
@@ -70,7 +70,8 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 	}
 
 	public String getTypeName(Locale locale) {
-		Report report = _reportsRegistry.getReport(getReportKey());
+		Report report = ReportInstanceLocalServiceUtil.getReport(
+			getReportKey());
 
 		if (report == null) {
 			return StringPool.BLANK;
@@ -84,7 +85,8 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 	}
 
 	public boolean isInstantiable() {
-		Report report = _reportsRegistry.getReport(getReportKey());
+		Report report = ReportInstanceLocalServiceUtil.getReport(
+			getReportKey());
 
 		if (report == null) {
 			return false;
@@ -92,8 +94,5 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 
 		return report.isInstantiable();
 	}
-
-	@ServiceReference(type = ReportsRegistry.class)
-	protected ReportsRegistry _reportsRegistry;
 
 }

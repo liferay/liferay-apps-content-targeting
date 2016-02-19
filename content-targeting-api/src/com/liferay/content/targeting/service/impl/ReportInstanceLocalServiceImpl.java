@@ -182,6 +182,11 @@ public class ReportInstanceLocalServiceImpl
 	}
 
 	@Override
+	public Report getReport(String reportKey) {
+		return _reportsRegistry.getReport(reportKey);
+	}
+
+	@Override
 	public int getReportInstanceCount(
 		String reportKey, String className, long classPK) {
 
