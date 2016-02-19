@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.tracking.action.page;
 
-import com.liferay.content.targeting.exception.InvalidTrackingActionException;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
+import com.liferay.content.targeting.exception.InvalidTrackingActionException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
