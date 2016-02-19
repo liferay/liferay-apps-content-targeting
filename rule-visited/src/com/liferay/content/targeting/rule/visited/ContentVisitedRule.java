@@ -19,12 +19,12 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.content.targeting.InvalidRuleException;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
+import com.liferay.content.targeting.exception.InvalidRuleException;
 import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
 import com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler;
 import com.liferay.content.targeting.model.RuleInstance;
@@ -279,7 +279,7 @@ public class ContentVisitedRule extends BaseRule {
 		List<AssetRendererFactory> selectableAssetRendererFactories =
 			new ArrayList<>();
 
-		List<AssetRendererFactory> assetRendererFactories =
+		List<AssetRendererFactory<?>> assetRendererFactories =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
 				companyId);
 
