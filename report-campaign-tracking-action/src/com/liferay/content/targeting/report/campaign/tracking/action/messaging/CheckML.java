@@ -14,21 +14,78 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.messaging;
 
-import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalServiceUtil;
-import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalServiceUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService;
+import com.liferay.content.targeting.report.campaign.tracking.action.util.PortletPropsValues;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
-public class CheckML extends BaseMessageListener {
+@Component(immediate = true, service = CheckML.class)
+public class CheckML extends BaseSchedulerEntryMessageListener {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		schedulerEntryImpl.setTrigger(
+			TriggerFactoryUtil.createTrigger(
+				getEventListenerClass(), getEventListenerClass(),
+				PortletPropsValues.
+					CAMPAIGN_TRACKING_ACTION_REPORT_CHECK_INTERVAL,
+				TimeUnit.HOUR));
+
+		_schedulerEngineHelper.register(
+			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		CTActionLocalServiceUtil.checkCTActionEvents();
+		_ctActionLocalService.checkCTActionEvents();
 
-		CTActionTotalLocalServiceUtil.checkCTActionTotalEvents();
+		_ctActionTotalLocalService.checkCTActionTotalEvents();
 	}
+
+	@Reference(unbind = "-")
+	protected void setCTActionLocalService(
+		CTActionLocalService ctActionLocalService) {
+
+		_ctActionLocalService = ctActionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCTActionTotalLocalService(
+		CTActionTotalLocalService ctActionTotalLocalService) {
+
+		_ctActionTotalLocalService = ctActionTotalLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTriggerFactory(TriggerFactory triggerFactory) {
+	}
+
+	private CTActionLocalService _ctActionLocalService;
+	private CTActionTotalLocalService _ctActionTotalLocalService;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }
