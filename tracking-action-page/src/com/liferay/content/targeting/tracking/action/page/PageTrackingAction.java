@@ -14,32 +14,33 @@
 
 package com.liferay.content.targeting.tracking.action.page;
 
-import com.liferay.content.targeting.InvalidTrackingActionException;
+import com.liferay.content.targeting.exception.InvalidTrackingActionException;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -88,7 +89,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 			portletDataContext.getScopeGroupId(), privateLayout, friendlyURL);
 
-		if (layout != null ) {
+		if (layout != null) {
 			portletDataContext.addReferenceElement(
 				trackingActionInstance, trackingActionInstanceElement, layout,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
@@ -118,9 +119,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 		String summary = LanguageUtil.format(
 			locale, "tracking-page-x",
-			new Object[] {
-				trackingActionInstance.getAlias(),
-			});
+			new Object[] {trackingActionInstance.getAlias()});
 
 		return summary;
 	}
@@ -141,7 +140,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 			portletDataContext.getScopeGroupId(), privateLayout, friendlyURL);
 
-		if (layout != null ) {
+		if (layout != null) {
 			trackingActionInstance.setReferrerClassPK(layout.getPlid());
 
 			return;
@@ -174,10 +173,19 @@ public class PageTrackingAction extends BaseTrackingAction {
 			Layout layout = null;
 
 			try {
+				LayoutSet layoutSet = themeDisplay.getLayoutSet();
+
+				boolean privateLayoutSet = layoutSet.isPrivateLayout();
+
+				layoutSet.setPrivateLayout(false);
 				friendlyURLPublicBase = PortalUtil.getGroupFriendlyURL(
-					themeDisplay.getScopeGroup(), false, themeDisplay);
+					layoutSet, themeDisplay);
+
+				layoutSet.setPrivateLayout(true);
 				friendlyURLPrivateBase = PortalUtil.getGroupFriendlyURL(
-					themeDisplay.getScopeGroup(), true, themeDisplay);
+					layoutSet, themeDisplay);
+
+				layoutSet.setPrivateLayout(privateLayoutSet);
 
 				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 					themeDisplay.getScopeGroupId(), privateLayout, friendlyURL);
@@ -237,8 +245,8 @@ public class PageTrackingAction extends BaseTrackingAction {
 				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 					scopeGroupId, privateLayout, friendlyURL);
 			}
-			catch (SystemException e) {
-				_log.error(e);
+			catch (SystemException se) {
+				_log.error(se);
 			}
 		}
 		else if (trackingActionInstance != null) {
@@ -249,8 +257,8 @@ public class PageTrackingAction extends BaseTrackingAction {
 			try {
 				layout = LayoutLocalServiceUtil.fetchLayout(referrerClassPK);
 			}
-			catch (SystemException e) {
-				_log.error(e);
+			catch (SystemException se) {
+				_log.error(se);
 			}
 		}
 
@@ -264,10 +272,19 @@ public class PageTrackingAction extends BaseTrackingAction {
 		String friendlyURLPublicBase = StringPool.BLANK;
 
 		try {
+			LayoutSet layoutSet = themeDisplay.getLayoutSet();
+
+			boolean privateLayoutSet = layoutSet.isPrivateLayout();
+
+			layoutSet.setPrivateLayout(false);
 			friendlyURLPublicBase = PortalUtil.getGroupFriendlyURL(
-				themeDisplay.getScopeGroup(), false, themeDisplay);
+				layoutSet, themeDisplay);
+
+			layoutSet.setPrivateLayout(true);
 			friendlyURLPrivateBase = PortalUtil.getGroupFriendlyURL(
-					themeDisplay.getScopeGroup(), true, themeDisplay);
+				layoutSet, themeDisplay);
+
+			layoutSet.setPrivateLayout(privateLayoutSet);
 		}
 		catch (Exception e) {
 			_log.error(e);

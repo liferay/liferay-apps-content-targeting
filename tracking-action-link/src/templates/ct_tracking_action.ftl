@@ -52,11 +52,21 @@
 <#if eventTypes?has_content && (eventTypes?size > 1)>
 	<@aui["select"] label="event-type" name="{ct_field_guid}eventType">
 		<#list eventTypes as curEventType>
-			<@aui["option"] label="${curEventType}" selected=(eventType == curEventType) value=curEventType />
+			<@aui["option"]
+				label="${curEventType}"
+				selected=(eventType
+				== curEventType) value=curEventType
+			/>
 		</#list>
 	</@>
 <#else>
 	<#list eventTypes as curEventType>
-		<@aui["input"] disabled=true label="event-type" name="{ct_field_guid}eventType" type="text" value=curEventType />
+		<@aui["input"]
+			disabled=true
+			label="event-type"
+			name="{ct_field_guid}eventType"
+			type="text"
+			value=curEventType
+		/>
 	</#list>
 </#if>

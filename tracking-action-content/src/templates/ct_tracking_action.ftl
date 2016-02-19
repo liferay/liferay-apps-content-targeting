@@ -50,7 +50,11 @@
 <div class="rules-panel" style="background-color:transparent; margin:0px;">
 	<div class="control-group select-asset-selector">
 		<div class="edit-controls lfr-meta-actions">
-			<@aui["input"] name="{ct_field_guid}assetEntryId" type="hidden" value=assetEntryId />
+			<@aui["input"]
+				name="{ct_field_guid}assetEntryId"
+				type="hidden"
+				value=assetEntryId
+			/>
 
 			<label class="control-label"><@liferay_ui["message"] key="select-the-content-to-be-tracked" /></label>
 
@@ -75,10 +79,10 @@
 		</#if>
 
 		<div class="asset-preview ${cssClass}" id="<@portlet["namespace"] />{ct_field_guid}selectedContentPreview">
-			<@aui["column"]>
+			<@aui["col"]>
 				<img class="asset-image" src="${assetImagePreview}" />
 			</@>
-			<@aui["column"]>
+			<@aui["col"]>
 				<div class="asset-title" id="<@portlet["namespace"] />{ct_field_guid}assetTitlePreview">${assetTitlePreview}</div>
 				<div class="asset-type" id="<@portlet["namespace"] />{ct_field_guid}assetTypePreview"><@liferay_ui["message"] key="type" />: ${assetTypePreview}</div>
 			</@>
@@ -89,12 +93,22 @@
 <#if eventTypes?has_content && (eventTypes?size > 1)>
 	<@aui["select"] label="event-type" name="{ct_field_guid}eventType">
 		<#list eventTypes as curEventType>
-			<@aui["option"] label="${curEventType}" selected=(eventType == curEventType) value=curEventType />
+			<@aui["option"]
+				label="${curEventType}"
+				selected=(eventType
+				== curEventType) value=curEventType
+			/>
 		</#list>
 	</@>
 <#else>
 	<#list eventTypes as curEventType>
-		<@aui["input"] disabled=true label="event-type" name="{ct_field_guid}eventType" type="text" value=curEventType />
+		<@aui["input"]
+			disabled=true
+			label="event-type"
+			name="{ct_field_guid}eventType"
+			type="text"
+			value=curEventType
+		/>
 	</#list>
 </#if>
 
