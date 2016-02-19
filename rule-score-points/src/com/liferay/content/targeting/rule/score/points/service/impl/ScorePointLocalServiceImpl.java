@@ -20,10 +20,9 @@ import com.liferay.content.targeting.rule.score.points.service.base.ScorePointLo
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the score point local service.
@@ -131,16 +130,10 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return scorePoint;
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserSegmentLocalService(
-		UserSegmentLocalService userSegmentLocalService) {
-
-		_userSegmentLocalService = userSegmentLocalService;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		ScorePointLocalServiceImpl.class);
 
+	@ServiceReference(type = UserSegmentLocalService.class)
 	private UserSegmentLocalService _userSegmentLocalService;
 
 }

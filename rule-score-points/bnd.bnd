@@ -21,6 +21,7 @@ Include-Resource:\
 	classes,\
 	WEB-INF/classes/META-INF=classes/META-INF/,\
 	WEB-INF/sql=sql,\
+	META-INF/sql=sql,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	@lib/com.liferay.content.targeting.rule.score.points-service.jar
 Liferay-Service: true
@@ -31,3 +32,4 @@ Require-Capability:\
 Service-Component: com.liferay.content.targeting.rule.score.points.*
 Web-ContextPath: /rule-score-points
 -baseline: *;version="1.0.0"
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference
