@@ -21,20 +21,16 @@ import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAct
 import com.liferay.content.targeting.report.campaign.tracking.action.service.base.CTActionTotalLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * The implementation of the campaign tracking action total local service.
@@ -53,15 +49,11 @@ import org.osgi.framework.FrameworkUtil;
 public class CTActionTotalLocalServiceImpl
 	extends CTActionTotalLocalServiceBaseImpl {
 
-	public CTActionTotalLocalServiceImpl() {
-		_initServices();
-	}
-
 	@Override
 	public CTActionTotal addCTActionTotal(
 			long reportInstanceId, String alias, String referrerClassName,
 			long referrerClassPK, String eventType, int count)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addCTActionTotal(
 			reportInstanceId, alias, referrerClassName, referrerClassPK,
@@ -72,7 +64,7 @@ public class CTActionTotalLocalServiceImpl
 	public CTActionTotal addCTActionTotal(
 			long reportInstanceId, String alias, String referrerClassName,
 			long referrerClassPK, String elementId, String eventType, int count)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CTActionTotal ctActionTotal = getCTActionTotal(
 			reportInstanceId, referrerClassName, referrerClassPK, elementId,
@@ -109,7 +101,7 @@ public class CTActionTotalLocalServiceImpl
 	public CTActionTotal addCTActionTotal(
 			long reportInstanceId, String alias, String elementId,
 			String eventType, int count)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addCTActionTotal(
 			reportInstanceId, alias, StringPool.BLANK, -1, elementId, eventType,
@@ -117,9 +109,7 @@ public class CTActionTotalLocalServiceImpl
 	}
 
 	@Override
-	public void checkCTActionTotalEvents()
-		throws PortalException, SystemException {
-
+	public void checkCTActionTotalEvents() throws PortalException {
 		try {
 			List<ReportInstance> reportInstances =
 				_reportInstanceLocalService.getReportInstances(
@@ -138,7 +128,7 @@ public class CTActionTotalLocalServiceImpl
 
 	@Override
 	public void checkCTActionTotalEvents(long reportInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date modifiedDate = null;
 
@@ -170,7 +160,7 @@ public class CTActionTotalLocalServiceImpl
 
 	@Override
 	public List<CTActionTotal> getCTActionsTotal(long reportInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ctActionTotalPersistence.findByReportInstanceId(
 			reportInstanceId);
@@ -179,7 +169,7 @@ public class CTActionTotalLocalServiceImpl
 	@Override
 	public List<CTActionTotal> getCTActionsTotal(
 			long reportInstanceId, Date modifiedDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ctActionTotalPersistence.findByR_GtD(
 			reportInstanceId, modifiedDate);
@@ -189,7 +179,7 @@ public class CTActionTotalLocalServiceImpl
 	public List<CTActionTotal> getCTActionsTotal(
 			long reportInstanceId, int start, int end,
 			OrderByComparator orderByComparator)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ctActionTotalPersistence.findByReportInstanceId(
 			reportInstanceId, start, end, orderByComparator);
@@ -197,7 +187,7 @@ public class CTActionTotalLocalServiceImpl
 
 	@Override
 	public int getCTActionsTotalCount(long reportInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ctActionTotalPersistence.countByReportInstanceId(
 			reportInstanceId);
@@ -207,7 +197,7 @@ public class CTActionTotalLocalServiceImpl
 	public CTActionTotal getCTActionTotal(
 			long reportInstanceId, String referrerClassName,
 			long referrerClassPK, String elementId, String eventType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ctActionTotalPersistence.fetchByR_R_R_E_E(
 			reportInstanceId, referrerClassName, referrerClassPK, elementId,
@@ -216,7 +206,7 @@ public class CTActionTotalLocalServiceImpl
 
 	protected void addCTActionsTotalFromAnalyticsWithClassName(
 			long reportInstanceId, Date date)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<Object[]> ctActionTotalAnalyticsList =
 			ctActionTotalFinder.findByAnalyticsWithClassName(date);
@@ -254,7 +244,7 @@ public class CTActionTotalLocalServiceImpl
 
 	protected void addCTActionsTotalFromAnalyticsWithElementId(
 			long reportInstanceId, Date date)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (date == null) {
 			date = _analyticsEventLocalService.getMaxAge();
@@ -293,23 +283,16 @@ public class CTActionTotalLocalServiceImpl
 		}
 	}
 
-	private void _initServices() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_analyticsEventLocalService = ServiceTrackerUtil.getService(
-			AnalyticsEventLocalService.class, bundle.getBundleContext());
-		_reportInstanceLocalService = ServiceTrackerUtil.getService(
-			ReportInstanceLocalService.class, bundle.getBundleContext());
-		_trackingActionInstaceLocalService = ServiceTrackerUtil.getService(
-			TrackingActionInstanceLocalService.class,
-			bundle.getBundleContext());
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		CTActionTotalLocalServiceImpl.class);
 
+	@ServiceReference(type = AnalyticsEventLocalService.class)
 	private AnalyticsEventLocalService _analyticsEventLocalService;
+
+	@ServiceReference(type = ReportInstanceLocalService.class)
 	private ReportInstanceLocalService _reportInstanceLocalService;
+
+	@ServiceReference(type = TrackingActionInstanceLocalService.class)
 	private TrackingActionInstanceLocalService
 		_trackingActionInstaceLocalService;
 
