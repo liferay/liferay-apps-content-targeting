@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the CTActionTotal service. Represents a row in the &quot;CT_CTA_CTActionTotal&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see CTActionTotalImpl
- * @see com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal
+ * @see CTActionTotal
  * @generated
  */
+@ProviderType
 public abstract class CTActionTotalBaseImpl extends CTActionTotalModelImpl
 	implements CTActionTotal {
 	/*
@@ -39,7 +40,7 @@ public abstract class CTActionTotalBaseImpl extends CTActionTotalModelImpl
 	 * Never modify or reference this class directly. All methods that expect a c t action total model instance should use the {@link CTActionTotal} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			CTActionTotalLocalServiceUtil.addCTActionTotal(this);
 		}

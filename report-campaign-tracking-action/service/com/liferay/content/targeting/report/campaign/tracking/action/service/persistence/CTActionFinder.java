@@ -14,9 +14,13 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Brian Wing Shun Chan
+ * @generated
  */
+@ProviderType
 public interface CTActionFinder {
 	public java.util.List<java.lang.Object[]> findByAnalyticsWithClassName(
 		long reportInstanceId, java.util.Date modifiedDate)

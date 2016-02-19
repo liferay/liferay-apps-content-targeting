@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link CTActionTotalService}.
@@ -23,6 +25,7 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see CTActionTotalService
  * @generated
  */
+@ProviderType
 public class CTActionTotalServiceWrapper implements CTActionTotalService,
 	ServiceWrapper<CTActionTotalService> {
 	public CTActionTotalServiceWrapper(
@@ -31,46 +34,13 @@ public class CTActionTotalServiceWrapper implements CTActionTotalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ctActionTotalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ctActionTotalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _ctActionTotalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public CTActionTotalService getWrappedCTActionTotalService() {
-		return _ctActionTotalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedCTActionTotalService(
-		CTActionTotalService ctActionTotalService) {
-		_ctActionTotalService = ctActionTotalService;
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ctActionTotalService.getOSGiServiceIdentifier();
 	}
 
 	@Override

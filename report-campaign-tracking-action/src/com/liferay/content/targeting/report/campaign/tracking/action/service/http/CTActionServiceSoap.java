@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * Provides the SOAP utility for the
  * {@link com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionServiceUtil} service utility. The
@@ -54,5 +56,6 @@ package com.liferay.content.targeting.report.campaign.tracking.action.service.ht
  * @see com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionServiceUtil
  * @generated
  */
+@ProviderType
 public class CTActionServiceSoap {
 }

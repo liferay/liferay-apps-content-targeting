@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionFinder;
@@ -22,21 +24,29 @@ import com.liferay.content.targeting.report.campaign.tracking.action.service.per
 import com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionTotalPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.PersistedModel;
-import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
-import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -56,8 +66,9 @@ import javax.sql.DataSource;
  * @see com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
-	implements CTActionLocalService, IdentifiableBean {
+	implements CTActionLocalService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -69,11 +80,10 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param ctAction the c t action
 	 * @return the c t action that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CTAction addCTAction(CTAction ctAction) throws SystemException {
+	public CTAction addCTAction(CTAction ctAction) {
 		ctAction.setNew(true);
 
 		return ctActionPersistence.update(ctAction);
@@ -96,12 +106,10 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param CTActionId the primary key of the c t action
 	 * @return the c t action that was removed
 	 * @throws PortalException if a c t action with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CTAction deleteCTAction(long CTActionId)
-		throws PortalException, SystemException {
+	public CTAction deleteCTAction(long CTActionId) throws PortalException {
 		return ctActionPersistence.remove(CTActionId);
 	}
 
@@ -110,11 +118,10 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param ctAction the c t action
 	 * @return the c t action that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CTAction deleteCTAction(CTAction ctAction) throws SystemException {
+	public CTAction deleteCTAction(CTAction ctAction) {
 		return ctActionPersistence.remove(ctAction);
 	}
 
@@ -131,12 +138,9 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return ctActionPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -151,12 +155,10 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return ctActionPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -172,46 +174,41 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return ctActionPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return ctActionPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return ctActionPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public CTAction fetchCTAction(long CTActionId) throws SystemException {
+	public CTAction fetchCTAction(long CTActionId) {
 		return ctActionPersistence.fetchByPrimaryKey(CTActionId);
 	}
 
@@ -221,17 +218,59 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param CTActionId the primary key of the c t action
 	 * @return the c t action
 	 * @throws PortalException if a c t action with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction getCTAction(long CTActionId)
-		throws PortalException, SystemException {
+	public CTAction getCTAction(long CTActionId) throws PortalException {
 		return ctActionPersistence.findByPrimaryKey(CTActionId);
 	}
 
 	@Override
+	public ActionableDynamicQuery getActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(CTAction.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("CTActionId");
+
+		return actionableDynamicQuery;
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+		indexableActionableDynamicQuery.setModelClass(CTAction.class);
+
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName("CTActionId");
+
+		return indexableActionableDynamicQuery;
+	}
+
+	protected void initActionableDynamicQuery(
+		ActionableDynamicQuery actionableDynamicQuery) {
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(CTAction.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("CTActionId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return ctActionLocalService.deleteCTAction((CTAction)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return ctActionPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -245,11 +284,9 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of c t actions
 	 * @param end the upper bound of the range of c t actions (not inclusive)
 	 * @return the range of c t actions
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTAction> getCTActions(int start, int end)
-		throws SystemException {
+	public List<CTAction> getCTActions(int start, int end) {
 		return ctActionPersistence.findAll(start, end);
 	}
 
@@ -257,10 +294,9 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns the number of c t actions.
 	 *
 	 * @return the number of c t actions
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getCTActionsCount() throws SystemException {
+	public int getCTActionsCount() {
 		return ctActionPersistence.countAll();
 	}
 
@@ -269,11 +305,10 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param ctAction the c t action
 	 * @return the c t action that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CTAction updateCTAction(CTAction ctAction) throws SystemException {
+	public CTAction updateCTAction(CTAction ctAction) {
 		return ctActionPersistence.update(ctAction);
 	}
 
@@ -282,7 +317,7 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the c t action local service
 	 */
-	public com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService getCTActionLocalService() {
+	public CTActionLocalService getCTActionLocalService() {
 		return ctActionLocalService;
 	}
 
@@ -292,27 +327,8 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param ctActionLocalService the c t action local service
 	 */
 	public void setCTActionLocalService(
-		com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService ctActionLocalService) {
+		CTActionLocalService ctActionLocalService) {
 		this.ctActionLocalService = ctActionLocalService;
-	}
-
-	/**
-	 * Returns the c t action remote service.
-	 *
-	 * @return the c t action remote service
-	 */
-	public com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionService getCTActionService() {
-		return ctActionService;
-	}
-
-	/**
-	 * Sets the c t action remote service.
-	 *
-	 * @param ctActionService the c t action remote service
-	 */
-	public void setCTActionService(
-		com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionService ctActionService) {
-		this.ctActionService = ctActionService;
 	}
 
 	/**
@@ -371,25 +387,6 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the c t action total remote service.
-	 *
-	 * @return the c t action total remote service
-	 */
-	public com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalService getCTActionTotalService() {
-		return ctActionTotalService;
-	}
-
-	/**
-	 * Sets the c t action total remote service.
-	 *
-	 * @param ctActionTotalService the c t action total remote service
-	 */
-	public void setCTActionTotalService(
-		com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalService ctActionTotalService) {
-		this.ctActionTotalService = ctActionTotalService;
-	}
-
-	/**
 	 * Returns the c t action total persistence.
 	 *
 	 * @return the c t action total persistence
@@ -431,7 +428,7 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -441,8 +438,46 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
+	}
+
+	/**
+	 * Returns the class name local service.
+	 *
+	 * @return the class name local service
+	 */
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
+		return classNameLocalService;
+	}
+
+	/**
+	 * Sets the class name local service.
+	 *
+	 * @param classNameLocalService the class name local service
+	 */
+	public void setClassNameLocalService(
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
+		this.classNameLocalService = classNameLocalService;
+	}
+
+	/**
+	 * Returns the class name persistence.
+	 *
+	 * @return the class name persistence
+	 */
+	public ClassNamePersistence getClassNamePersistence() {
+		return classNamePersistence;
+	}
+
+	/**
+	 * Sets the class name persistence.
+	 *
+	 * @param classNamePersistence the class name persistence
+	 */
+	public void setClassNamePersistence(
+		ClassNamePersistence classNamePersistence) {
+		this.classNamePersistence = classNamePersistence;
 	}
 
 	/**
@@ -450,7 +485,7 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.service.ResourceLocalService getResourceLocalService() {
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -460,7 +495,7 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.service.ResourceLocalService resourceLocalService) {
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -469,7 +504,7 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -479,27 +514,8 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param userLocalService the user local service
 	 */
 	public void setUserLocalService(
-		com.liferay.portal.service.UserLocalService userLocalService) {
+		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
 	}
 
 	/**
@@ -521,58 +537,23 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
-
-		PersistedModelLocalServiceRegistryUtil.register("com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction",
+		persistedModelLocalServiceRegistry.register("com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction",
 			ctActionLocalService);
 	}
 
 	public void destroy() {
-		PersistedModelLocalServiceRegistryUtil.unregister(
+		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction");
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
+	public String getOSGiServiceIdentifier() {
+		return CTActionLocalService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -584,13 +565,18 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Performs an SQL query.
+	 * Performs a SQL query.
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = ctActionPersistence.getDataSource();
+
+			DB db = DBManagerUtil.getDB();
+
+			sql = db.buildSQL(sql);
+			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -603,32 +589,29 @@ public abstract class CTActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@BeanReference(type = com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService.class)
-	protected com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService ctActionLocalService;
-	@BeanReference(type = com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionService.class)
-	protected com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionService ctActionService;
+	protected CTActionLocalService ctActionLocalService;
 	@BeanReference(type = CTActionPersistence.class)
 	protected CTActionPersistence ctActionPersistence;
 	@BeanReference(type = CTActionFinder.class)
 	protected CTActionFinder ctActionFinder;
 	@BeanReference(type = com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService.class)
 	protected com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService ctActionTotalLocalService;
-	@BeanReference(type = com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalService.class)
-	protected com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalService ctActionTotalService;
 	@BeanReference(type = CTActionTotalPersistence.class)
 	protected CTActionTotalPersistence ctActionTotalPersistence;
 	@BeanReference(type = CTActionTotalFinder.class)
 	protected CTActionTotalFinder ctActionTotalFinder;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
-	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
-	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
-	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = ClassNamePersistence.class)
+	protected ClassNamePersistence classNamePersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private String _beanIdentifier;
-	private ClassLoader _classLoader;
-	private CTActionLocalServiceClpInvoker _clpInvoker = new CTActionLocalServiceClpInvoker();
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

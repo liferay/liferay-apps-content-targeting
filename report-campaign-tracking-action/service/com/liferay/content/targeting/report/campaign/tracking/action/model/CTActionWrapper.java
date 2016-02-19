@@ -14,8 +14,15 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +37,7 @@ import java.util.Map;
  * @see CTAction
  * @generated
  */
+@ProviderType
 public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 	public CTActionWrapper(CTAction ctAction) {
 		_ctAction = ctAction;
@@ -140,124 +148,15 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 		}
 	}
 
-	/**
-	* Returns the primary key of this c t action.
-	*
-	* @return the primary key of this c t action
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _ctAction.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new CTActionWrapper((CTAction)_ctAction.clone());
 	}
 
-	/**
-	* Sets the primary key of this c t action.
-	*
-	* @param primaryKey the primary key of this c t action
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_ctAction.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the c t action ID of this c t action.
-	*
-	* @return the c t action ID of this c t action
-	*/
-	@Override
-	public long getCTActionId() {
-		return _ctAction.getCTActionId();
-	}
-
-	/**
-	* Sets the c t action ID of this c t action.
-	*
-	* @param CTActionId the c t action ID of this c t action
-	*/
-	@Override
-	public void setCTActionId(long CTActionId) {
-		_ctAction.setCTActionId(CTActionId);
-	}
-
-	/**
-	* Returns the company ID of this c t action.
-	*
-	* @return the company ID of this c t action
-	*/
-	@Override
-	public long getCompanyId() {
-		return _ctAction.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this c t action.
-	*
-	* @param companyId the company ID of this c t action
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_ctAction.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the campaign ID of this c t action.
-	*
-	* @return the campaign ID of this c t action
-	*/
-	@Override
-	public long getCampaignId() {
-		return _ctAction.getCampaignId();
-	}
-
-	/**
-	* Sets the campaign ID of this c t action.
-	*
-	* @param campaignId the campaign ID of this c t action
-	*/
-	@Override
-	public void setCampaignId(long campaignId) {
-		_ctAction.setCampaignId(campaignId);
-	}
-
-	/**
-	* Returns the report instance ID of this c t action.
-	*
-	* @return the report instance ID of this c t action
-	*/
-	@Override
-	public long getReportInstanceId() {
-		return _ctAction.getReportInstanceId();
-	}
-
-	/**
-	* Sets the report instance ID of this c t action.
-	*
-	* @param reportInstanceId the report instance ID of this c t action
-	*/
-	@Override
-	public void setReportInstanceId(long reportInstanceId) {
-		_ctAction.setReportInstanceId(reportInstanceId);
-	}
-
-	/**
-	* Returns the user segment ID of this c t action.
-	*
-	* @return the user segment ID of this c t action
-	*/
-	@Override
-	public long getUserSegmentId() {
-		return _ctAction.getUserSegmentId();
-	}
-
-	/**
-	* Sets the user segment ID of this c t action.
-	*
-	* @param userSegmentId the user segment ID of this c t action
-	*/
-	@Override
-	public void setUserSegmentId(long userSegmentId) {
-		_ctAction.setUserSegmentId(userSegmentId);
+	public int compareTo(
+		com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction ctAction) {
+		return _ctAction.compareTo(ctAction);
 	}
 
 	/**
@@ -271,93 +170,33 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 	}
 
 	/**
-	* Sets the alias of this c t action.
+	* Returns the c t action ID of this c t action.
 	*
-	* @param alias the alias of this c t action
+	* @return the c t action ID of this c t action
 	*/
 	@Override
-	public void setAlias(java.lang.String alias) {
-		_ctAction.setAlias(alias);
+	public long getCTActionId() {
+		return _ctAction.getCTActionId();
 	}
 
 	/**
-	* Returns the referrer class name of this c t action.
+	* Returns the campaign ID of this c t action.
 	*
-	* @return the referrer class name of this c t action
+	* @return the campaign ID of this c t action
 	*/
 	@Override
-	public java.lang.String getReferrerClassName() {
-		return _ctAction.getReferrerClassName();
+	public long getCampaignId() {
+		return _ctAction.getCampaignId();
 	}
 
 	/**
-	* Sets the referrer class name of this c t action.
+	* Returns the company ID of this c t action.
 	*
-	* @param referrerClassName the referrer class name of this c t action
+	* @return the company ID of this c t action
 	*/
 	@Override
-	public void setReferrerClassName(java.lang.String referrerClassName) {
-		_ctAction.setReferrerClassName(referrerClassName);
-	}
-
-	/**
-	* Returns the referrer class p k of this c t action.
-	*
-	* @return the referrer class p k of this c t action
-	*/
-	@Override
-	public long getReferrerClassPK() {
-		return _ctAction.getReferrerClassPK();
-	}
-
-	/**
-	* Sets the referrer class p k of this c t action.
-	*
-	* @param referrerClassPK the referrer class p k of this c t action
-	*/
-	@Override
-	public void setReferrerClassPK(long referrerClassPK) {
-		_ctAction.setReferrerClassPK(referrerClassPK);
-	}
-
-	/**
-	* Returns the element ID of this c t action.
-	*
-	* @return the element ID of this c t action
-	*/
-	@Override
-	public java.lang.String getElementId() {
-		return _ctAction.getElementId();
-	}
-
-	/**
-	* Sets the element ID of this c t action.
-	*
-	* @param elementId the element ID of this c t action
-	*/
-	@Override
-	public void setElementId(java.lang.String elementId) {
-		_ctAction.setElementId(elementId);
-	}
-
-	/**
-	* Returns the event type of this c t action.
-	*
-	* @return the event type of this c t action
-	*/
-	@Override
-	public java.lang.String getEventType() {
-		return _ctAction.getEventType();
-	}
-
-	/**
-	* Sets the event type of this c t action.
-	*
-	* @param eventType the event type of this c t action
-	*/
-	@Override
-	public void setEventType(java.lang.String eventType) {
-		_ctAction.setEventType(eventType);
+	public long getCompanyId() {
+		return _ctAction.getCompanyId();
 	}
 
 	/**
@@ -371,6 +210,171 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 	}
 
 	/**
+	* Returns the element ID of this c t action.
+	*
+	* @return the element ID of this c t action
+	*/
+	@Override
+	public java.lang.String getElementId() {
+		return _ctAction.getElementId();
+	}
+
+	/**
+	* Returns the event type of this c t action.
+	*
+	* @return the event type of this c t action
+	*/
+	@Override
+	public java.lang.String getEventType() {
+		return _ctAction.getEventType();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _ctAction.getExpandoBridge();
+	}
+
+	/**
+	* Returns the modified date of this c t action.
+	*
+	* @return the modified date of this c t action
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _ctAction.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this c t action.
+	*
+	* @return the primary key of this c t action
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _ctAction.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _ctAction.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the referrer class name of this c t action.
+	*
+	* @return the referrer class name of this c t action
+	*/
+	@Override
+	public java.lang.String getReferrerClassName() {
+		return _ctAction.getReferrerClassName();
+	}
+
+	/**
+	* Returns the referrer class p k of this c t action.
+	*
+	* @return the referrer class p k of this c t action
+	*/
+	@Override
+	public long getReferrerClassPK() {
+		return _ctAction.getReferrerClassPK();
+	}
+
+	/**
+	* Returns the report instance ID of this c t action.
+	*
+	* @return the report instance ID of this c t action
+	*/
+	@Override
+	public long getReportInstanceId() {
+		return _ctAction.getReportInstanceId();
+	}
+
+	/**
+	* Returns the user segment ID of this c t action.
+	*
+	* @return the user segment ID of this c t action
+	*/
+	@Override
+	public long getUserSegmentId() {
+		return _ctAction.getUserSegmentId();
+	}
+
+	@Override
+	public java.lang.String getUserSegmentName(java.util.Locale locale) {
+		return _ctAction.getUserSegmentName(locale);
+	}
+
+	@Override
+	public int hashCode() {
+		return _ctAction.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _ctAction.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _ctAction.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _ctAction.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_ctAction.persist();
+	}
+
+	/**
+	* Sets the alias of this c t action.
+	*
+	* @param alias the alias of this c t action
+	*/
+	@Override
+	public void setAlias(java.lang.String alias) {
+		_ctAction.setAlias(alias);
+	}
+
+	/**
+	* Sets the c t action ID of this c t action.
+	*
+	* @param CTActionId the c t action ID of this c t action
+	*/
+	@Override
+	public void setCTActionId(long CTActionId) {
+		_ctAction.setCTActionId(CTActionId);
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_ctAction.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the campaign ID of this c t action.
+	*
+	* @param campaignId the campaign ID of this c t action
+	*/
+	@Override
+	public void setCampaignId(long campaignId) {
+		_ctAction.setCampaignId(campaignId);
+	}
+
+	/**
+	* Sets the company ID of this c t action.
+	*
+	* @param companyId the company ID of this c t action
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_ctAction.setCompanyId(companyId);
+	}
+
+	/**
 	* Sets the count of this c t action.
 	*
 	* @param count the count of this c t action
@@ -381,13 +385,39 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 	}
 
 	/**
-	* Returns the modified date of this c t action.
+	* Sets the element ID of this c t action.
 	*
-	* @return the modified date of this c t action
+	* @param elementId the element ID of this c t action
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
-		return _ctAction.getModifiedDate();
+	public void setElementId(java.lang.String elementId) {
+		_ctAction.setElementId(elementId);
+	}
+
+	/**
+	* Sets the event type of this c t action.
+	*
+	* @param eventType the event type of this c t action
+	*/
+	@Override
+	public void setEventType(java.lang.String eventType) {
+		_ctAction.setEventType(eventType);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_ctAction.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_ctAction.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		_ctAction.setExpandoBridgeAttributes(serviceContext);
 	}
 
 	/**
@@ -396,13 +426,8 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 	* @param modifiedDate the modified date of this c t action
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_ctAction.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ctAction.isNew();
 	}
 
 	@Override
@@ -410,72 +435,63 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 		_ctAction.setNew(n);
 	}
 
+	/**
+	* Sets the primary key of this c t action.
+	*
+	* @param primaryKey the primary key of this c t action
+	*/
 	@Override
-	public boolean isCachedModel() {
-		return _ctAction.isCachedModel();
+	public void setPrimaryKey(long primaryKey) {
+		_ctAction.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ctAction.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ctAction.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _ctAction.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_ctAction.setPrimaryKeyObj(primaryKeyObj);
 	}
 
+	/**
+	* Sets the referrer class name of this c t action.
+	*
+	* @param referrerClassName the referrer class name of this c t action
+	*/
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _ctAction.getExpandoBridge();
+	public void setReferrerClassName(java.lang.String referrerClassName) {
+		_ctAction.setReferrerClassName(referrerClassName);
+	}
+
+	/**
+	* Sets the referrer class p k of this c t action.
+	*
+	* @param referrerClassPK the referrer class p k of this c t action
+	*/
+	@Override
+	public void setReferrerClassPK(long referrerClassPK) {
+		_ctAction.setReferrerClassPK(referrerClassPK);
+	}
+
+	/**
+	* Sets the report instance ID of this c t action.
+	*
+	* @param reportInstanceId the report instance ID of this c t action
+	*/
+	@Override
+	public void setReportInstanceId(long reportInstanceId) {
+		_ctAction.setReportInstanceId(reportInstanceId);
+	}
+
+	/**
+	* Sets the user segment ID of this c t action.
+	*
+	* @param userSegmentId the user segment ID of this c t action
+	*/
+	@Override
+	public void setUserSegmentId(long userSegmentId) {
+		_ctAction.setUserSegmentId(userSegmentId);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
-		_ctAction.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
-		_ctAction.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_ctAction.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CTActionWrapper((CTAction)_ctAction.clone());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction ctAction) {
-		return _ctAction.compareTo(ctAction);
-	}
-
-	@Override
-	public int hashCode() {
-		return _ctAction.hashCode();
-	}
-
-	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> toCacheModel() {
 		return _ctAction.toCacheModel();
 	}
 
@@ -485,29 +501,18 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 	}
 
 	@Override
-	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction toUnescapedModel() {
-		return new CTActionWrapper(_ctAction.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _ctAction.toString();
 	}
 
 	@Override
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction toUnescapedModel() {
+		return new CTActionWrapper(_ctAction.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _ctAction.toXmlString();
-	}
-
-	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_ctAction.persist();
-	}
-
-	@Override
-	public java.lang.String getUserSegmentName(java.util.Locale locale) {
-		return _ctAction.getUserSegmentName(locale);
 	}
 
 	@Override
@@ -529,16 +534,19 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	public CTAction getWrappedCTAction() {
+	@Override
+	public CTAction getWrappedModel() {
 		return _ctAction;
 	}
 
 	@Override
-	public CTAction getWrappedModel() {
-		return _ctAction;
+	public boolean isEntityCacheEnabled() {
+		return _ctAction.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _ctAction.isFinderCacheEnabled();
 	}
 
 	@Override
@@ -546,5 +554,5 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 		_ctAction.resetOriginalValues();
 	}
 
-	private CTAction _ctAction;
+	private final CTAction _ctAction;
 }

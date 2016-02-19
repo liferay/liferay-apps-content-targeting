@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link CTActionTotalLocalService}.
@@ -23,6 +25,7 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see CTActionTotalLocalService
  * @generated
  */
+@ProviderType
 public class CTActionTotalLocalServiceWrapper
 	implements CTActionTotalLocalService,
 		ServiceWrapper<CTActionTotalLocalService> {
@@ -36,13 +39,58 @@ public class CTActionTotalLocalServiceWrapper
 	*
 	* @param ctActionTotal the c t action total
 	* @return the c t action total that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
-		com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal ctActionTotal)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal ctActionTotal) {
 		return _ctActionTotalLocalService.addCTActionTotal(ctActionTotal);
+	}
+
+	@Override
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
+		long reportInstanceId, java.lang.String alias,
+		java.lang.String elementId, java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ctActionTotalLocalService.addCTActionTotal(reportInstanceId,
+			alias, elementId, eventType, count);
+	}
+
+	@Override
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
+		long reportInstanceId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ctActionTotalLocalService.addCTActionTotal(reportInstanceId,
+			alias, referrerClassName, referrerClassPK, elementId, eventType,
+			count);
+	}
+
+	@Override
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
+		long reportInstanceId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ctActionTotalLocalService.addCTActionTotal(reportInstanceId,
+			alias, referrerClassName, referrerClassPK, eventType, count);
+	}
+
+	@Override
+	public void checkCTActionTotalEvents()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ctActionTotalLocalService.checkCTActionTotalEvents();
+	}
+
+	@Override
+	public void checkCTActionTotalEvents(long reportInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ctActionTotalLocalService.checkCTActionTotalEvents(reportInstanceId);
 	}
 
 	/**
@@ -63,13 +111,11 @@ public class CTActionTotalLocalServiceWrapper
 	* @param CTActionTotalId the primary key of the c t action total
 	* @return the c t action total that was removed
 	* @throws PortalException if a c t action total with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal deleteCTActionTotal(
 		long CTActionTotalId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ctActionTotalLocalService.deleteCTActionTotal(CTActionTotalId);
 	}
 
@@ -78,13 +124,21 @@ public class CTActionTotalLocalServiceWrapper
 	*
 	* @param ctActionTotal the c t action total
 	* @return the c t action total that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal deleteCTActionTotal(
-		com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal ctActionTotal)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal ctActionTotal) {
 		return _ctActionTotalLocalService.deleteCTActionTotal(ctActionTotal);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ctActionTotalLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -97,13 +151,10 @@ public class CTActionTotalLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _ctActionTotalLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -118,13 +169,11 @@ public class CTActionTotalLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _ctActionTotalLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -140,55 +189,52 @@ public class CTActionTotalLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _ctActionTotalLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _ctActionTotalLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _ctActionTotalLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchCTActionTotal(
-		long CTActionTotalId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long CTActionTotalId) {
 		return _ctActionTotalLocalService.fetchCTActionTotal(CTActionTotalId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _ctActionTotalLocalService.getActionableDynamicQuery();
 	}
 
 	/**
@@ -197,22 +243,23 @@ public class CTActionTotalLocalServiceWrapper
 	* @param CTActionTotalId the primary key of the c t action total
 	* @return the c t action total
 	* @throws PortalException if a c t action total with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal getCTActionTotal(
 		long CTActionTotalId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ctActionTotalLocalService.getCTActionTotal(CTActionTotalId);
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal getCTActionTotal(
+		long reportInstanceId, java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionTotalLocalService.getPersistedModel(primaryKeyObj);
+		return _ctActionTotalLocalService.getCTActionTotal(reportInstanceId,
+			referrerClassName, referrerClassPK, elementId, eventType);
 	}
 
 	/**
@@ -225,12 +272,10 @@ public class CTActionTotalLocalServiceWrapper
 	* @param start the lower bound of the range of c t action totals
 	* @param end the upper bound of the range of c t action totals (not inclusive)
 	* @return the range of c t action totals
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> getCTActionTotals(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _ctActionTotalLocalService.getCTActionTotals(start, end);
 	}
 
@@ -238,101 +283,10 @@ public class CTActionTotalLocalServiceWrapper
 	* Returns the number of c t action totals.
 	*
 	* @return the number of c t action totals
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getCTActionTotalsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getCTActionTotalsCount() {
 		return _ctActionTotalLocalService.getCTActionTotalsCount();
-	}
-
-	/**
-	* Updates the c t action total in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ctActionTotal the c t action total
-	* @return the c t action total that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal updateCTActionTotal(
-		com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal ctActionTotal)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionTotalLocalService.updateCTActionTotal(ctActionTotal);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ctActionTotalLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ctActionTotalLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _ctActionTotalLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	@Override
-	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
-		long reportInstanceId, java.lang.String alias,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String eventType, int count)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionTotalLocalService.addCTActionTotal(reportInstanceId,
-			alias, referrerClassName, referrerClassPK, eventType, count);
-	}
-
-	@Override
-	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
-		long reportInstanceId, java.lang.String alias,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType, int count)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionTotalLocalService.addCTActionTotal(reportInstanceId,
-			alias, referrerClassName, referrerClassPK, elementId, eventType,
-			count);
-	}
-
-	@Override
-	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
-		long reportInstanceId, java.lang.String alias,
-		java.lang.String elementId, java.lang.String eventType, int count)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionTotalLocalService.addCTActionTotal(reportInstanceId,
-			alias, elementId, eventType, count);
-	}
-
-	@Override
-	public void checkCTActionTotalEvents()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_ctActionTotalLocalService.checkCTActionTotalEvents();
-	}
-
-	@Override
-	public void checkCTActionTotalEvents(long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_ctActionTotalLocalService.checkCTActionTotalEvents(reportInstanceId);
 	}
 
 	@Override
@@ -370,29 +324,37 @@ public class CTActionTotalLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal getCTActionTotal(
-		long reportInstanceId, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionTotalLocalService.getCTActionTotal(reportInstanceId,
-			referrerClassName, referrerClassPK, elementId, eventType);
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _ctActionTotalLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public CTActionTotalLocalService getWrappedCTActionTotalLocalService() {
-		return _ctActionTotalLocalService;
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ctActionTotalLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ctActionTotalLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedCTActionTotalLocalService(
-		CTActionTotalLocalService ctActionTotalLocalService) {
-		_ctActionTotalLocalService = ctActionTotalLocalService;
+	* Updates the c t action total in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ctActionTotal the c t action total
+	* @return the c t action total that was updated
+	*/
+	@Override
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal updateCTActionTotal(
+		com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal ctActionTotal) {
+		return _ctActionTotalLocalService.updateCTActionTotal(ctActionTotal);
 	}
 
 	@Override

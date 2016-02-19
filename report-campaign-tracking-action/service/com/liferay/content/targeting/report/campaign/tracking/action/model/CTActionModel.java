@@ -14,12 +14,15 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.service.ServiceContext;
+import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -38,7 +41,8 @@ import java.util.Date;
  * @see com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl
  * @generated
  */
-public interface CTActionModel extends BaseModel<CTAction> {
+@ProviderType
+public interface CTActionModel extends BaseModel<CTAction>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -78,6 +82,7 @@ public interface CTActionModel extends BaseModel<CTAction> {
 	 *
 	 * @return the company ID of this c t action
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -85,6 +90,7 @@ public interface CTActionModel extends BaseModel<CTAction> {
 	 *
 	 * @param companyId the company ID of this c t action
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -268,19 +274,20 @@ public interface CTActionModel extends BaseModel<CTAction> {
 	public Object clone();
 
 	@Override
-	public int compareTo(CTAction ctAction);
+	public int compareTo(
+		com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction ctAction);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<CTAction> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> toCacheModel();
 
 	@Override
-	public CTAction toEscapedModel();
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction toEscapedModel();
 
 	@Override
-	public CTAction toUnescapedModel();
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction toUnescapedModel();
 
 	@Override
 	public String toString();

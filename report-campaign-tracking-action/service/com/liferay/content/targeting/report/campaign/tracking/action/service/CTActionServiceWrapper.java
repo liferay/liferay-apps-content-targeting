@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link CTActionService}.
@@ -23,6 +25,7 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see CTActionService
  * @generated
  */
+@ProviderType
 public class CTActionServiceWrapper implements CTActionService,
 	ServiceWrapper<CTActionService> {
 	public CTActionServiceWrapper(CTActionService ctActionService) {
@@ -30,44 +33,13 @@ public class CTActionServiceWrapper implements CTActionService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ctActionService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ctActionService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _ctActionService.invokeMethod(name, parameterTypes, arguments);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public CTActionService getWrappedCTActionService() {
-		return _ctActionService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedCTActionService(CTActionService ctActionService) {
-		_ctActionService = ctActionService;
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ctActionService.getOSGiServiceIdentifier();
 	}
 
 	@Override

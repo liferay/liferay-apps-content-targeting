@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.content.targeting.report.campaign.tracking.action.service.http.CTActionTotalServiceSoap
  * @generated
  */
+@ProviderType
 public class CTActionTotalSoap implements Serializable {
 	public static CTActionTotalSoap toSoapModel(CTActionTotal model) {
 		CTActionTotalSoap soapModel = new CTActionTotalSoap();
