@@ -9,8 +9,10 @@ Export-Package:\
 Import-Package:\
 	!com.swabunga.spell.engine,\
 	!com.swabunga.spell.event,\
+	\
 	!net.fortuna.ical4j.model,\
 	!net.fortuna.ical4j.model.property,\
+	\
 	!org.apache.axis,\
 	!org.apache.axis.soap,\
 	!org.apache.axis.tools.ant.wsdl,\
@@ -31,6 +33,7 @@ Import-Package:\
 	!org.python.*,\
 	\
 	!org.zeroturnaround.*,\
+	\
 	com.liferay.content.targeting.analytics.model,\
 	com.liferay.content.targeting.analytics.service,\
 	com.liferay.content.targeting.analytics.service.messaging,\
@@ -42,8 +45,9 @@ Import-Package:\
 	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.messaging,\
 	com.liferay.content.targeting.util,\
-	com.liferay.osgi.util.service,\
 	com.liferay.exportimport.kernel.lar,\
+	com.liferay.osgi.util.service,\
+	\
 	javax.portlet,\
 	*
 Include-Resource:\
