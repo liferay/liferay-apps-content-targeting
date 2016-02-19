@@ -40,7 +40,7 @@
 				<isset property="app.plugins.includes" />
 			</not>
 			<then>
-				<property name="app.plugins.includes" value="${app.core}, ${app.rules}" />
+				<property name="app.plugins.includes" value="${app.core}, ${app.rules}, ${app.tracking.actions}" />
 			</then>
 		</if>
 
