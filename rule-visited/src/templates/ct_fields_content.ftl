@@ -56,10 +56,10 @@
 	/>
 
 	<div class="asset-preview ${cssClass}" id="<@portlet["namespace"] />assetPreview">
-		<@aui["column"]>
+		<@aui["col"]>
 			<img class="asset-image" id="<@portlet["namespace"] />assetImage" src="${assetImage}" />
 		</@>
-		<@aui["column"]>
+		<@aui["col"]>
 			<div class="asset-title" id="<@portlet["namespace"] />assetTitleInfo">${assetTitle}</div>
 			<div class="asset-type" id="<@portlet["namespace"] />assetTypeInfo"><@liferay_ui["message"] key="type" />: ${assetType}</div>
 		</@>
