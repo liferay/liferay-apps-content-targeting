@@ -18,14 +18,12 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.score.points.model.ScorePoint;
 import com.liferay.content.targeting.rule.score.points.service.base.ScorePointLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the score point local service.
@@ -42,10 +40,6 @@ import org.osgi.framework.FrameworkUtil;
  * @see com.liferay.content.targeting.rule.score.points.service.ScorePointLocalServiceUtil
  */
 public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
-
-	public ScorePointLocalServiceImpl() {
-		_initServices();
-	}
 
 	@Override
 	public ScorePoint addScorePoints(
@@ -137,11 +131,11 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return scorePoint;
 	}
 
-	private void _initServices() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+	@Reference(unbind = "-")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
 
-		_userSegmentLocalService = ServiceTrackerUtil.getService(
-			UserSegmentLocalService.class, bundle.getBundleContext());
+		_userSegmentLocalService = userSegmentLocalService;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
