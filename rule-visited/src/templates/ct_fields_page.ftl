@@ -22,21 +22,23 @@
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-rule-will-not-work-properly-because-page-tracking-is-not-enabled" /></strong>
 
-		<#assign enableLocationPortalLabel = languageUtil.get(locale, "portal-settings-content-targeting-analytics") />
+		<#assign enableLocationPortalLabel = languageUtil.get(resourceBundle, "portal-settings-content-targeting-analytics") />
 
 		<#if portalSettingsURL??>
 			<#assign enableLocationPortalLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationPortalLabel + "</a>" />
 		</#if>
 
-		<#assign enableLocationSiteLabel = languageUtil.get(locale, "site-settings-content-targeting-analytics") />
+		<#assign enableLocationSiteLabel = languageUtil.get(resourceBundle, "site-settings-content-targeting-analytics") />
 
 		<#if siteSettingsURL??>
 			<#assign enableLocationSiteLabel = "<a href=\"" + siteSettingsURL + "\">" + enableLocationSiteLabel + "</a>" />
 		</#if>
 
-		<#assign enableLocationLabels = [enableLocationPortalLabel, enableLocationSiteLabel] />
-
-		${languageUtil.format(locale, "it-can-be-enabled-in-x-or-in-x", enableLocationLabels)}
+		<@liferay_ui["message"]
+			arguments=stringUtil.split(enableLocationPortalLabel + "," + enableLocationSiteLabel)
+			key="it-can-be-enabled-in-x-or-in-x"
+			translateArguments=false
+		/>
 	</div>
 </#if>
 

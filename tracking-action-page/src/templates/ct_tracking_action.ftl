@@ -34,9 +34,11 @@
 			<#assign enableLocationSiteLabel = "<a href=\"" + siteSettingsURL + "\">" + enableLocationSiteLabel + "</a>" />
 		</#if>
 
-		<#assign enableLocationLabels = [enableLocationPortalLabel, enableLocationSiteLabel] />
-
-		${languageUtil.format(locale, "it-can-be-enabled-in-x-or-in-x", enableLocationLabels)}
+		<@liferay_ui["message"]
+			arguments=stringUtil.split(enableLocationPortalLabel + "," + enableLocationSiteLabel)
+			key="it-can-be-enabled-in-x-or-in-x"
+			translateArguments=false
+		/>
 	</div>
 </#if>
 
