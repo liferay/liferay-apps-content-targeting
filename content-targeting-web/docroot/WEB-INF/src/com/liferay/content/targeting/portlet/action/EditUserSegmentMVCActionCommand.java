@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -216,7 +217,8 @@ public class EditUserSegmentMVCActionCommand extends BaseMVCRenderCommand {
 			}
 		}
 
-		HttpServletRequest request = (HttpServletRequest)context.get("request");
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			renderRequest);
 
 		Map<String, List<ValidatorTag>> validatorTagsMap = new HashMap<>();
 

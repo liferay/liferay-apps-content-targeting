@@ -27,11 +27,9 @@ import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.CampaignConstants;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
@@ -39,9 +37,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
@@ -94,10 +89,6 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		LiferayPortletConfig portletConfig =
-			(LiferayPortletConfig)portletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
-
 		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
 		TemplateHashModel staticModels = wrapper.getStaticModels();
@@ -121,14 +112,7 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 			"contentTargetingPermission",
 			staticModels.get(ContentTargetingPermission.class.getName()));
 		context.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
-		context.put("htmlUtil", staticModels.get(HtmlUtil.class.getName()));
-		context.put(
-			"languageUtil", staticModels.get(LanguageUtil.class.getName()));
-		context.put("listUtil", staticModels.get(ListUtil.class.getName()));
 		context.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
-		context.put("locale", themeDisplay.getLocale());
-		context.put("portalUtil", staticModels.get(PortalUtil.class.getName()));
-		context.put("portletConfig", portletConfig);
 		context.put(
 			"portletContext",
 			portletRequest.getPortletSession().getPortletContext());
