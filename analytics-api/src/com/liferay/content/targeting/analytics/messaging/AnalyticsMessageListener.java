@@ -17,15 +17,19 @@ package com.liferay.content.targeting.analytics.messaging;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -34,18 +38,9 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = {"destination.name=liferay/analytics"},
 	service = MessageListener.class
 )
-public class AnalyticsMessageListener implements MessageListener {
+public class AnalyticsMessageListener extends BaseMessageListener {
 
 	@Override
-	public void receive(Message message) {
-		try {
-			doReceive(message);
-		}
-		catch (Exception e) {
-			_log.error("Unable to process message " + message, e);
-		}
-	}
-
 	protected void doReceive(Message message) throws Exception {
 		String additionalInfo = message.getString("additionalInfo");
 		long anonymousUserId = message.getLong("anonymousUserId");
@@ -56,6 +51,10 @@ public class AnalyticsMessageListener implements MessageListener {
 		String elementId = message.getString("elementId");
 		String eventType = message.getString("event");
 		String languageId = message.getString("languageId");
+
+		if (Validator.isNull(className) && Validator.isNull(elementId)) {
+			return;
+		}
 
 		Map<String, long[]> referrers = (Map<String, long[]>)message.get(
 			"referrers");
@@ -79,6 +78,10 @@ public class AnalyticsMessageListener implements MessageListener {
 			userId, anonymousUserId, className, classPK, referrers, elementId,
 			eventType, clientIP, userAgent, languageId, URL, additionalInfo,
 			serviceContext);
+	}
+
+	@Reference(target = "(destination.name=liferay/analytics)", unbind = "-")
+	protected void setDestination(Destination destination) {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
