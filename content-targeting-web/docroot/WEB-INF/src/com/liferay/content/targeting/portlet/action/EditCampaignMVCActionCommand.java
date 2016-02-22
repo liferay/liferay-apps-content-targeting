@@ -20,6 +20,7 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.portlet.ContentTargetingPath;
+import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
@@ -100,6 +101,11 @@ public class EditCampaignMVCActionCommand extends BaseMVCRenderCommand {
 			String userSegmentAssetCategoryIdsAsString = StringPool.BLANK;
 			String userSegmentAssetCategoryNames = StringPool.BLANK;
 
+			Map<String, Report> reports = _reportsRegistry.getReports(
+				Campaign.class.getName());
+
+			renderRequest.setAttribute("reports", reports.values());
+
 			if (campaignId > 0) {
 				List<UserSegment> campaignUserSegments = null;
 
@@ -117,6 +123,25 @@ public class EditCampaignMVCActionCommand extends BaseMVCRenderCommand {
 				userSegmentAssetCategoryNames =
 					ContentTargetingUtil.getAssetCategoryNames(
 						userSegmentAssetCategoryIds, themeDisplay.getLocale());
+
+				for (Report report : reports.values()) {
+					if (report.isInstantiable()) {
+						continue;
+					}
+
+					if (_reportInstanceLocalService.getReportInstanceCount(
+							report.getReportKey(), Campaign.class.getName(),
+							campaignId)
+								> 0) {
+
+						continue;
+					}
+
+					_reportInstanceLocalService.addReportInstance(
+						themeDisplay.getUserId(), report.getReportKey(),
+						Campaign.class.getName(), campaignId, StringPool.BLANK,
+						serviceContext);
+				}
 			}
 
 			renderRequest.setAttribute(
@@ -124,17 +149,19 @@ public class EditCampaignMVCActionCommand extends BaseMVCRenderCommand {
 				userSegmentAssetCategoryIdsAsString);
 			renderRequest.setAttribute(
 				"userSegmentAssetCategoryNames", userSegmentAssetCategoryNames);
-
-			Map<String, Report> reports = _reportsRegistry.getReports(
-				Campaign.class.getName());
-
-			renderRequest.setAttribute("reports", reports.values());
 		}
 		finally {
 			themeDisplay.setIsolated(isolated);
 		}
 
 		return ContentTargetingPath.EDIT_CAMPAIGN;
+	}
+
+	@Reference(unbind = "unsetReportInstanceLocalService")
+	protected void setReportInstanceLocalService(
+		ReportInstanceLocalService reportInstanceLocalService) {
+
+		_reportInstanceLocalService = reportInstanceLocalService;
 	}
 
 	@Reference(unbind = "unsetReportsRegistry")
@@ -149,6 +176,10 @@ public class EditCampaignMVCActionCommand extends BaseMVCRenderCommand {
 		_userSegmentLocalService = userSegmentLocalService;
 	}
 
+	protected void unsetReportInstanceLocalService() {
+		_reportInstanceLocalService = null;
+	}
+
 	protected void unsetReportsRegistry() {
 		_reportsRegistry = null;
 	}
@@ -160,6 +191,7 @@ public class EditCampaignMVCActionCommand extends BaseMVCRenderCommand {
 	private static Log _log = LogFactoryUtil.getLog(
 		EditCampaignMVCActionCommand.class);
 
+	private volatile ReportInstanceLocalService _reportInstanceLocalService;
 	private volatile ReportsRegistry _reportsRegistry;
 	private volatile UserSegmentLocalService _userSegmentLocalService;
 
