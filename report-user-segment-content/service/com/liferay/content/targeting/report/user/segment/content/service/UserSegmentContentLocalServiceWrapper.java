@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.report.user.segment.content.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link UserSegmentContentLocalService}.
@@ -23,6 +25,7 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see UserSegmentContentLocalService
  * @generated
  */
+@ProviderType
 public class UserSegmentContentLocalServiceWrapper
 	implements UserSegmentContentLocalService,
 		ServiceWrapper<UserSegmentContentLocalService> {
@@ -36,13 +39,32 @@ public class UserSegmentContentLocalServiceWrapper
 	*
 	* @param userSegmentContent the user segment content
 	* @return the user segment content that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent addUserSegmentContent(
-		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent) {
 		return _userSegmentContentLocalService.addUserSegmentContent(userSegmentContent);
+	}
+
+	@Override
+	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent addUserSegmentContent(
+		long userSegmentId, java.lang.String className, long classPK,
+		java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentContentLocalService.addUserSegmentContent(userSegmentId,
+			className, classPK, eventType, count);
+	}
+
+	@Override
+	public void checkUserSegmentContentEvents()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userSegmentContentLocalService.checkUserSegmentContentEvents();
+	}
+
+	@Override
+	public void checkUserSegmentContentEvents(long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userSegmentContentLocalService.checkUserSegmentContentEvents(userSegmentId);
 	}
 
 	/**
@@ -58,19 +80,13 @@ public class UserSegmentContentLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the user segment content with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userSegmentContentId the primary key of the user segment content
-	* @return the user segment content that was removed
-	* @throws PortalException if a user segment content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent deleteUserSegmentContent(
-		long userSegmentContentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentContentLocalService.deleteUserSegmentContent(userSegmentContentId);
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentContentLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -78,13 +94,25 @@ public class UserSegmentContentLocalServiceWrapper
 	*
 	* @param userSegmentContent the user segment content
 	* @return the user segment content that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent deleteUserSegmentContent(
-		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent) {
 		return _userSegmentContentLocalService.deleteUserSegmentContent(userSegmentContent);
+	}
+
+	/**
+	* Deletes the user segment content with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userSegmentContentId the primary key of the user segment content
+	* @return the user segment content that was removed
+	* @throws PortalException if a user segment content with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent deleteUserSegmentContent(
+		long userSegmentContentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentContentLocalService.deleteUserSegmentContent(userSegmentContentId);
 	}
 
 	@Override
@@ -97,13 +125,10 @@ public class UserSegmentContentLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _userSegmentContentLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -118,13 +143,11 @@ public class UserSegmentContentLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _userSegmentContentLocalService.dynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -141,55 +164,74 @@ public class UserSegmentContentLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _userSegmentContentLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _userSegmentContentLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _userSegmentContentLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent fetchUserSegmentContent(
-		long userSegmentContentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userSegmentContentId) {
 		return _userSegmentContentLocalService.fetchUserSegmentContent(userSegmentContentId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _userSegmentContentLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _userSegmentContentLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _userSegmentContentLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentContentLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -198,22 +240,21 @@ public class UserSegmentContentLocalServiceWrapper
 	* @param userSegmentContentId the primary key of the user segment content
 	* @return the user segment content
 	* @throws PortalException if a user segment content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent getUserSegmentContent(
 		long userSegmentContentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentContentLocalService.getUserSegmentContent(userSegmentContentId);
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentContentLocalService.getPersistedModel(primaryKeyObj);
+	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent getUserSegmentContent(
+		long userSegmentId, java.lang.String className, long classPK,
+		java.lang.String eventType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentContentLocalService.getUserSegmentContent(userSegmentId,
+			className, classPK, eventType);
 	}
 
 	/**
@@ -226,116 +267,24 @@ public class UserSegmentContentLocalServiceWrapper
 	* @param start the lower bound of the range of user segment contents
 	* @param end the upper bound of the range of user segment contents (not inclusive)
 	* @return the range of user segment contents
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> getUserSegmentContents(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _userSegmentContentLocalService.getUserSegmentContents(start, end);
-	}
-
-	/**
-	* Returns the number of user segment contents.
-	*
-	* @return the number of user segment contents
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public int getUserSegmentContentsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentContentLocalService.getUserSegmentContentsCount();
-	}
-
-	/**
-	* Updates the user segment content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param userSegmentContent the user segment content
-	* @return the user segment content that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent updateUserSegmentContent(
-		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentContentLocalService.updateUserSegmentContent(userSegmentContent);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _userSegmentContentLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_userSegmentContentLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _userSegmentContentLocalService.invokeMethod(name,
-			parameterTypes, arguments);
-	}
-
-	@Override
-	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent addUserSegmentContent(
-		long userSegmentId, java.lang.String className, long classPK,
-		java.lang.String eventType, int count)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentContentLocalService.addUserSegmentContent(userSegmentId,
-			className, classPK, eventType, count);
-	}
-
-	@Override
-	public void checkUserSegmentContentEvents()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentContentLocalService.checkUserSegmentContentEvents();
-	}
-
-	@Override
-	public void checkUserSegmentContentEvents(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentContentLocalService.checkUserSegmentContentEvents(userSegmentId);
-	}
-
-	@Override
-	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent getUserSegmentContent(
-		long userSegmentId, java.lang.String className, long classPK,
-		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentContentLocalService.getUserSegmentContent(userSegmentId,
-			className, classPK, eventType);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> getUserSegmentContents(
 		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentContentLocalService.getUserSegmentContents(userSegmentId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> getUserSegmentContents(
 		long userSegmentId, java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentContentLocalService.getUserSegmentContents(userSegmentId,
 			modifiedDate);
 	}
@@ -344,32 +293,37 @@ public class UserSegmentContentLocalServiceWrapper
 	public java.util.List<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> getUserSegmentContents(
 		long userSegmentId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentContentLocalService.getUserSegmentContents(userSegmentId,
 			start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of user segment contents.
+	*
+	* @return the number of user segment contents
+	*/
+	@Override
+	public int getUserSegmentContentsCount() {
+		return _userSegmentContentLocalService.getUserSegmentContentsCount();
+	}
+
 	@Override
 	public int getUserSegmentContentsCount(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentContentLocalService.getUserSegmentContentsCount(userSegmentId);
 	}
 
 	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public UserSegmentContentLocalService getWrappedUserSegmentContentLocalService() {
-		return _userSegmentContentLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedUserSegmentContentLocalService(
-		UserSegmentContentLocalService userSegmentContentLocalService) {
-		_userSegmentContentLocalService = userSegmentContentLocalService;
+	* Updates the user segment content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userSegmentContent the user segment content
+	* @return the user segment content that was updated
+	*/
+	@Override
+	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent updateUserSegmentContent(
+		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent) {
+		return _userSegmentContentLocalService.updateUserSegmentContent(userSegmentContent);
 	}
 
 	@Override

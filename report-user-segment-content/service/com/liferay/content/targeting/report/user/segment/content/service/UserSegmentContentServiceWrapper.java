@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.report.user.segment.content.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link UserSegmentContentService}.
@@ -23,6 +25,7 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see UserSegmentContentService
  * @generated
  */
+@ProviderType
 public class UserSegmentContentServiceWrapper
 	implements UserSegmentContentService,
 		ServiceWrapper<UserSegmentContentService> {
@@ -32,46 +35,13 @@ public class UserSegmentContentServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _userSegmentContentService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_userSegmentContentService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _userSegmentContentService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public UserSegmentContentService getWrappedUserSegmentContentService() {
-		return _userSegmentContentService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedUserSegmentContentService(
-		UserSegmentContentService userSegmentContentService) {
-		_userSegmentContentService = userSegmentContentService;
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _userSegmentContentService.getOSGiServiceIdentifier();
 	}
 
 	@Override

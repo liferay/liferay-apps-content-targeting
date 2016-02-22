@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.report.user.segment.content.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * Provides the SOAP utility for the
  * {@link com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentServiceUtil} service utility. The
@@ -54,5 +56,6 @@ package com.liferay.content.targeting.report.user.segment.content.service.http;
  * @see com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentServiceUtil
  * @generated
  */
+@ProviderType
 public class UserSegmentContentServiceSoap {
 }

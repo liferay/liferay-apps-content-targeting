@@ -14,8 +14,15 @@
 
 package com.liferay.content.targeting.report.user.segment.content.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +37,7 @@ import java.util.Map;
  * @see UserSegmentContent
  * @generated
  */
+@ProviderType
 public class UserSegmentContentWrapper implements UserSegmentContent,
 	ModelWrapper<UserSegmentContent> {
 	public UserSegmentContentWrapper(UserSegmentContent userSegmentContent) {
@@ -113,84 +121,15 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 		}
 	}
 
-	/**
-	* Returns the primary key of this user segment content.
-	*
-	* @return the primary key of this user segment content
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _userSegmentContent.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new UserSegmentContentWrapper((UserSegmentContent)_userSegmentContent.clone());
 	}
 
-	/**
-	* Sets the primary key of this user segment content.
-	*
-	* @param primaryKey the primary key of this user segment content
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_userSegmentContent.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the user segment content ID of this user segment content.
-	*
-	* @return the user segment content ID of this user segment content
-	*/
-	@Override
-	public long getUserSegmentContentId() {
-		return _userSegmentContent.getUserSegmentContentId();
-	}
-
-	/**
-	* Sets the user segment content ID of this user segment content.
-	*
-	* @param userSegmentContentId the user segment content ID of this user segment content
-	*/
-	@Override
-	public void setUserSegmentContentId(long userSegmentContentId) {
-		_userSegmentContent.setUserSegmentContentId(userSegmentContentId);
-	}
-
-	/**
-	* Returns the company ID of this user segment content.
-	*
-	* @return the company ID of this user segment content
-	*/
-	@Override
-	public long getCompanyId() {
-		return _userSegmentContent.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this user segment content.
-	*
-	* @param companyId the company ID of this user segment content
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_userSegmentContent.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user segment ID of this user segment content.
-	*
-	* @return the user segment ID of this user segment content
-	*/
-	@Override
-	public long getUserSegmentId() {
-		return _userSegmentContent.getUserSegmentId();
-	}
-
-	/**
-	* Sets the user segment ID of this user segment content.
-	*
-	* @param userSegmentId the user segment ID of this user segment content
-	*/
-	@Override
-	public void setUserSegmentId(long userSegmentId) {
-		_userSegmentContent.setUserSegmentId(userSegmentId);
+	public int compareTo(
+		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent) {
+		return _userSegmentContent.compareTo(userSegmentContent);
 	}
 
 	/**
@@ -204,16 +143,6 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 	}
 
 	/**
-	* Sets the class name of this user segment content.
-	*
-	* @param className the class name of this user segment content
-	*/
-	@Override
-	public void setClassName(java.lang.String className) {
-		_userSegmentContent.setClassName(className);
-	}
-
-	/**
 	* Returns the class p k of this user segment content.
 	*
 	* @return the class p k of this user segment content
@@ -224,33 +153,13 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 	}
 
 	/**
-	* Sets the class p k of this user segment content.
+	* Returns the company ID of this user segment content.
 	*
-	* @param classPK the class p k of this user segment content
+	* @return the company ID of this user segment content
 	*/
 	@Override
-	public void setClassPK(long classPK) {
-		_userSegmentContent.setClassPK(classPK);
-	}
-
-	/**
-	* Returns the event type of this user segment content.
-	*
-	* @return the event type of this user segment content
-	*/
-	@Override
-	public java.lang.String getEventType() {
-		return _userSegmentContent.getEventType();
-	}
-
-	/**
-	* Sets the event type of this user segment content.
-	*
-	* @param eventType the event type of this user segment content
-	*/
-	@Override
-	public void setEventType(java.lang.String eventType) {
-		_userSegmentContent.setEventType(eventType);
+	public long getCompanyId() {
+		return _userSegmentContent.getCompanyId();
 	}
 
 	/**
@@ -264,13 +173,18 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 	}
 
 	/**
-	* Sets the count of this user segment content.
+	* Returns the event type of this user segment content.
 	*
-	* @param count the count of this user segment content
+	* @return the event type of this user segment content
 	*/
 	@Override
-	public void setCount(int count) {
-		_userSegmentContent.setCount(count);
+	public java.lang.String getEventType() {
+		return _userSegmentContent.getEventType();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _userSegmentContent.getExpandoBridge();
 	}
 
 	/**
@@ -279,123 +193,23 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 	* @return the modified date of this user segment content
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _userSegmentContent.getModifiedDate();
 	}
 
 	/**
-	* Sets the modified date of this user segment content.
+	* Returns the primary key of this user segment content.
 	*
-	* @param modifiedDate the modified date of this user segment content
+	* @return the primary key of this user segment content
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_userSegmentContent.setModifiedDate(modifiedDate);
+	public long getPrimaryKey() {
+		return _userSegmentContent.getPrimaryKey();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _userSegmentContent.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_userSegmentContent.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _userSegmentContent.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_userSegmentContent.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _userSegmentContent.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _userSegmentContent.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_userSegmentContent.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _userSegmentContent.getExpandoBridge();
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
-		_userSegmentContent.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
-		_userSegmentContent.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_userSegmentContent.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new UserSegmentContentWrapper((UserSegmentContent)_userSegmentContent.clone());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent) {
-		return _userSegmentContent.compareTo(userSegmentContent);
-	}
-
-	@Override
-	public int hashCode() {
-		return _userSegmentContent.hashCode();
-	}
-
-	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> toCacheModel() {
-		return _userSegmentContent.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent toEscapedModel() {
-		return new UserSegmentContentWrapper(_userSegmentContent.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent toUnescapedModel() {
-		return new UserSegmentContentWrapper(_userSegmentContent.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _userSegmentContent.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _userSegmentContent.toXmlString();
-	}
-
-	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentContent.persist();
 	}
 
 	@Override
@@ -406,6 +220,197 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 	@Override
 	public java.lang.String getType(java.util.Locale locale) {
 		return _userSegmentContent.getType(locale);
+	}
+
+	/**
+	* Returns the user segment content ID of this user segment content.
+	*
+	* @return the user segment content ID of this user segment content
+	*/
+	@Override
+	public long getUserSegmentContentId() {
+		return _userSegmentContent.getUserSegmentContentId();
+	}
+
+	/**
+	* Returns the user segment ID of this user segment content.
+	*
+	* @return the user segment ID of this user segment content
+	*/
+	@Override
+	public long getUserSegmentId() {
+		return _userSegmentContent.getUserSegmentId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _userSegmentContent.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _userSegmentContent.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _userSegmentContent.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _userSegmentContent.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_userSegmentContent.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_userSegmentContent.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the class name of this user segment content.
+	*
+	* @param className the class name of this user segment content
+	*/
+	@Override
+	public void setClassName(java.lang.String className) {
+		_userSegmentContent.setClassName(className);
+	}
+
+	/**
+	* Sets the class p k of this user segment content.
+	*
+	* @param classPK the class p k of this user segment content
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_userSegmentContent.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this user segment content.
+	*
+	* @param companyId the company ID of this user segment content
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_userSegmentContent.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the count of this user segment content.
+	*
+	* @param count the count of this user segment content
+	*/
+	@Override
+	public void setCount(int count) {
+		_userSegmentContent.setCount(count);
+	}
+
+	/**
+	* Sets the event type of this user segment content.
+	*
+	* @param eventType the event type of this user segment content
+	*/
+	@Override
+	public void setEventType(java.lang.String eventType) {
+		_userSegmentContent.setEventType(eventType);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_userSegmentContent.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_userSegmentContent.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		_userSegmentContent.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the modified date of this user segment content.
+	*
+	* @param modifiedDate the modified date of this user segment content
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_userSegmentContent.setModifiedDate(modifiedDate);
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_userSegmentContent.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this user segment content.
+	*
+	* @param primaryKey the primary key of this user segment content
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_userSegmentContent.setPrimaryKey(primaryKey);
+	}
+
+	@Override
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+		_userSegmentContent.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the user segment content ID of this user segment content.
+	*
+	* @param userSegmentContentId the user segment content ID of this user segment content
+	*/
+	@Override
+	public void setUserSegmentContentId(long userSegmentContentId) {
+		_userSegmentContent.setUserSegmentContentId(userSegmentContentId);
+	}
+
+	/**
+	* Sets the user segment ID of this user segment content.
+	*
+	* @param userSegmentId the user segment ID of this user segment content
+	*/
+	@Override
+	public void setUserSegmentId(long userSegmentId) {
+		_userSegmentContent.setUserSegmentId(userSegmentId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> toCacheModel() {
+		return _userSegmentContent.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent toEscapedModel() {
+		return new UserSegmentContentWrapper(_userSegmentContent.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _userSegmentContent.toString();
+	}
+
+	@Override
+	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent toUnescapedModel() {
+		return new UserSegmentContentWrapper(_userSegmentContent.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _userSegmentContent.toXmlString();
 	}
 
 	@Override
@@ -428,16 +433,19 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	public UserSegmentContent getWrappedUserSegmentContent() {
+	@Override
+	public UserSegmentContent getWrappedModel() {
 		return _userSegmentContent;
 	}
 
 	@Override
-	public UserSegmentContent getWrappedModel() {
-		return _userSegmentContent;
+	public boolean isEntityCacheEnabled() {
+		return _userSegmentContent.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _userSegmentContent.isFinderCacheEnabled();
 	}
 
 	@Override
@@ -445,5 +453,5 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 		_userSegmentContent.resetOriginalValues();
 	}
 
-	private UserSegmentContent _userSegmentContent;
+	private final UserSegmentContent _userSegmentContent;
 }

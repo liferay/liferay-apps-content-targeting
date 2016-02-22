@@ -12,45 +12,47 @@
  * details.
  */
 
-package com.liferay.content.targeting.report.user.segment.content.service.persistence;
+package com.liferay.content.targeting.report.user.segment.content.service.persistence.impl;
 
-import com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.content.targeting.report.user.segment.content.exception.NoSuchUserSegmentContentException;
 import com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent;
 import com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentImpl;
 import com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentModelImpl;
+import com.liferay.content.targeting.report.user.segment.content.service.persistence.UserSegmentContentPersistence;
 
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.service.persistence.CompanyProvider;
+import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
+
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence implementation for the user segment content service.
@@ -61,9 +63,10 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see UserSegmentContentPersistence
- * @see UserSegmentContentUtil
+ * @see com.liferay.content.targeting.report.user.segment.content.service.persistence.UserSegmentContentUtil
  * @generated
  */
+@ProviderType
 public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserSegmentContent>
 	implements UserSegmentContentPersistence {
 	/*
@@ -116,11 +119,9 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 *
 	 * @param userSegmentId the user segment ID
 	 * @return the matching user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserSegmentContent> findByUserSegmentId(long userSegmentId)
-		throws SystemException {
+	public List<UserSegmentContent> findByUserSegmentId(long userSegmentId) {
 		return findByUserSegmentId(userSegmentId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -129,18 +130,17 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * Returns a range of all the user segment contents where userSegmentId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param userSegmentId the user segment ID
 	 * @param start the lower bound of the range of user segment contents
 	 * @param end the upper bound of the range of user segment contents (not inclusive)
 	 * @return the range of matching user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserSegmentContent> findByUserSegmentId(long userSegmentId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByUserSegmentId(userSegmentId, start, end, null);
 	}
 
@@ -148,7 +148,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * Returns an ordered range of all the user segment contents where userSegmentId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param userSegmentId the user segment ID
@@ -156,12 +156,34 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param end the upper bound of the range of user segment contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserSegmentContent> findByUserSegmentId(long userSegmentId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end,
+		OrderByComparator<UserSegmentContent> orderByComparator) {
+		return findByUserSegmentId(userSegmentId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user segment contents where userSegmentId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userSegmentId the user segment ID
+	 * @param start the lower bound of the range of user segment contents
+	 * @param end the upper bound of the range of user segment contents (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching user segment contents
+	 */
+	@Override
+	public List<UserSegmentContent> findByUserSegmentId(long userSegmentId,
+		int start, int end,
+		OrderByComparator<UserSegmentContent> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -181,15 +203,19 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 				};
 		}
 
-		List<UserSegmentContent> list = (List<UserSegmentContent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<UserSegmentContent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (UserSegmentContent userSegmentContent : list) {
-				if ((userSegmentId != userSegmentContent.getUserSegmentId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<UserSegmentContent>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (UserSegmentContent userSegmentContent : list) {
+					if ((userSegmentId != userSegmentContent.getUserSegmentId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -199,7 +225,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -237,7 +263,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<UserSegmentContent>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<UserSegmentContent>)QueryUtil.list(q,
@@ -246,10 +272,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -267,13 +293,12 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user segment content
-	 * @throws com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException if a matching user segment content could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchUserSegmentContentException if a matching user segment content could not be found
 	 */
 	@Override
 	public UserSegmentContent findByUserSegmentId_First(long userSegmentId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserSegmentContentException, SystemException {
+		OrderByComparator<UserSegmentContent> orderByComparator)
+		throws NoSuchUserSegmentContentException {
 		UserSegmentContent userSegmentContent = fetchByUserSegmentId_First(userSegmentId,
 				orderByComparator);
 
@@ -299,11 +324,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user segment content, or <code>null</code> if a matching user segment content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserSegmentContent fetchByUserSegmentId_First(long userSegmentId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<UserSegmentContent> orderByComparator) {
 		List<UserSegmentContent> list = findByUserSegmentId(userSegmentId, 0,
 				1, orderByComparator);
 
@@ -320,13 +344,12 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user segment content
-	 * @throws com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException if a matching user segment content could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchUserSegmentContentException if a matching user segment content could not be found
 	 */
 	@Override
 	public UserSegmentContent findByUserSegmentId_Last(long userSegmentId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserSegmentContentException, SystemException {
+		OrderByComparator<UserSegmentContent> orderByComparator)
+		throws NoSuchUserSegmentContentException {
 		UserSegmentContent userSegmentContent = fetchByUserSegmentId_Last(userSegmentId,
 				orderByComparator);
 
@@ -352,11 +375,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user segment content, or <code>null</code> if a matching user segment content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserSegmentContent fetchByUserSegmentId_Last(long userSegmentId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<UserSegmentContent> orderByComparator) {
 		int count = countByUserSegmentId(userSegmentId);
 
 		if (count == 0) {
@@ -380,14 +402,13 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user segment content
-	 * @throws com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException if a user segment content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchUserSegmentContentException if a user segment content with the primary key could not be found
 	 */
 	@Override
 	public UserSegmentContent[] findByUserSegmentId_PrevAndNext(
 		long userSegmentContentId, long userSegmentId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserSegmentContentException, SystemException {
+		OrderByComparator<UserSegmentContent> orderByComparator)
+		throws NoSuchUserSegmentContentException {
 		UserSegmentContent userSegmentContent = findByPrimaryKey(userSegmentContentId);
 
 		Session session = null;
@@ -417,13 +438,15 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 	protected UserSegmentContent getByUserSegmentId_PrevAndNext(
 		Session session, UserSegmentContent userSegmentContent,
-		long userSegmentId, OrderByComparator orderByComparator,
+		long userSegmentId,
+		OrderByComparator<UserSegmentContent> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -525,11 +548,9 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * Removes all the user segment contents where userSegmentId = &#63; from the database.
 	 *
 	 * @param userSegmentId the user segment ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUserSegmentId(long userSegmentId)
-		throws SystemException {
+	public void removeByUserSegmentId(long userSegmentId) {
 		for (UserSegmentContent userSegmentContent : findByUserSegmentId(
 				userSegmentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(userSegmentContent);
@@ -541,17 +562,14 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 *
 	 * @param userSegmentId the user segment ID
 	 * @return the number of matching user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUserSegmentId(long userSegmentId)
-		throws SystemException {
+	public int countByUserSegmentId(long userSegmentId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERSEGMENTID;
 
 		Object[] finderArgs = new Object[] { userSegmentId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -575,10 +593,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -612,11 +630,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param userSegmentId the user segment ID
 	 * @param modifiedDate the modified date
 	 * @return the matching user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserSegmentContent> findByC_GtD(long userSegmentId,
-		Date modifiedDate) throws SystemException {
+		Date modifiedDate) {
 		return findByC_GtD(userSegmentId, modifiedDate, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -625,7 +642,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * Returns a range of all the user segment contents where userSegmentId = &#63; and modifiedDate &gt; &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param userSegmentId the user segment ID
@@ -633,11 +650,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param start the lower bound of the range of user segment contents
 	 * @param end the upper bound of the range of user segment contents (not inclusive)
 	 * @return the range of matching user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserSegmentContent> findByC_GtD(long userSegmentId,
-		Date modifiedDate, int start, int end) throws SystemException {
+		Date modifiedDate, int start, int end) {
 		return findByC_GtD(userSegmentId, modifiedDate, start, end, null);
 	}
 
@@ -645,7 +661,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * Returns an ordered range of all the user segment contents where userSegmentId = &#63; and modifiedDate &gt; &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param userSegmentId the user segment ID
@@ -654,12 +670,35 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param end the upper bound of the range of user segment contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserSegmentContent> findByC_GtD(long userSegmentId,
 		Date modifiedDate, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<UserSegmentContent> orderByComparator) {
+		return findByC_GtD(userSegmentId, modifiedDate, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user segment contents where userSegmentId = &#63; and modifiedDate &gt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userSegmentId the user segment ID
+	 * @param modifiedDate the modified date
+	 * @param start the lower bound of the range of user segment contents
+	 * @param end the upper bound of the range of user segment contents (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching user segment contents
+	 */
+	@Override
+	public List<UserSegmentContent> findByC_GtD(long userSegmentId,
+		Date modifiedDate, int start, int end,
+		OrderByComparator<UserSegmentContent> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -671,17 +710,21 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 				start, end, orderByComparator
 			};
 
-		List<UserSegmentContent> list = (List<UserSegmentContent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<UserSegmentContent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (UserSegmentContent userSegmentContent : list) {
-				if ((userSegmentId != userSegmentContent.getUserSegmentId()) ||
-						(modifiedDate.getTime() >= userSegmentContent.getModifiedDate()
-																		 .getTime())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<UserSegmentContent>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (UserSegmentContent userSegmentContent : list) {
+					if ((userSegmentId != userSegmentContent.getUserSegmentId()) ||
+							(modifiedDate.getTime() >= userSegmentContent.getModifiedDate()
+																			 .getTime())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -691,7 +734,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -735,7 +778,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 				qPos.add(userSegmentId);
 
 				if (bindModifiedDate) {
-					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
+					qPos.add(new Timestamp(modifiedDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -744,7 +787,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<UserSegmentContent>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<UserSegmentContent>)QueryUtil.list(q,
@@ -753,10 +796,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -775,13 +818,13 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user segment content
-	 * @throws com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException if a matching user segment content could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchUserSegmentContentException if a matching user segment content could not be found
 	 */
 	@Override
 	public UserSegmentContent findByC_GtD_First(long userSegmentId,
-		Date modifiedDate, OrderByComparator orderByComparator)
-		throws NoSuchUserSegmentContentException, SystemException {
+		Date modifiedDate,
+		OrderByComparator<UserSegmentContent> orderByComparator)
+		throws NoSuchUserSegmentContentException {
 		UserSegmentContent userSegmentContent = fetchByC_GtD_First(userSegmentId,
 				modifiedDate, orderByComparator);
 
@@ -811,12 +854,11 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user segment content, or <code>null</code> if a matching user segment content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserSegmentContent fetchByC_GtD_First(long userSegmentId,
-		Date modifiedDate, OrderByComparator orderByComparator)
-		throws SystemException {
+		Date modifiedDate,
+		OrderByComparator<UserSegmentContent> orderByComparator) {
 		List<UserSegmentContent> list = findByC_GtD(userSegmentId,
 				modifiedDate, 0, 1, orderByComparator);
 
@@ -834,13 +876,13 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user segment content
-	 * @throws com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException if a matching user segment content could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchUserSegmentContentException if a matching user segment content could not be found
 	 */
 	@Override
 	public UserSegmentContent findByC_GtD_Last(long userSegmentId,
-		Date modifiedDate, OrderByComparator orderByComparator)
-		throws NoSuchUserSegmentContentException, SystemException {
+		Date modifiedDate,
+		OrderByComparator<UserSegmentContent> orderByComparator)
+		throws NoSuchUserSegmentContentException {
 		UserSegmentContent userSegmentContent = fetchByC_GtD_Last(userSegmentId,
 				modifiedDate, orderByComparator);
 
@@ -870,12 +912,11 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user segment content, or <code>null</code> if a matching user segment content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserSegmentContent fetchByC_GtD_Last(long userSegmentId,
-		Date modifiedDate, OrderByComparator orderByComparator)
-		throws SystemException {
+		Date modifiedDate,
+		OrderByComparator<UserSegmentContent> orderByComparator) {
 		int count = countByC_GtD(userSegmentId, modifiedDate);
 
 		if (count == 0) {
@@ -900,14 +941,13 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user segment content
-	 * @throws com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException if a user segment content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchUserSegmentContentException if a user segment content with the primary key could not be found
 	 */
 	@Override
 	public UserSegmentContent[] findByC_GtD_PrevAndNext(
 		long userSegmentContentId, long userSegmentId, Date modifiedDate,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserSegmentContentException, SystemException {
+		OrderByComparator<UserSegmentContent> orderByComparator)
+		throws NoSuchUserSegmentContentException {
 		UserSegmentContent userSegmentContent = findByPrimaryKey(userSegmentContentId);
 
 		Session session = null;
@@ -937,15 +977,18 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 	protected UserSegmentContent getByC_GtD_PrevAndNext(Session session,
 		UserSegmentContent userSegmentContent, long userSegmentId,
-		Date modifiedDate, OrderByComparator orderByComparator, boolean previous) {
+		Date modifiedDate,
+		OrderByComparator<UserSegmentContent> orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_USERSEGMENTCONTENT_WHERE);
@@ -1034,7 +1077,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 		qPos.add(userSegmentId);
 
 		if (bindModifiedDate) {
-			qPos.add(CalendarUtil.getTimestamp(modifiedDate));
+			qPos.add(new Timestamp(modifiedDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -1060,11 +1103,9 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 *
 	 * @param userSegmentId the user segment ID
 	 * @param modifiedDate the modified date
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_GtD(long userSegmentId, Date modifiedDate)
-		throws SystemException {
+	public void removeByC_GtD(long userSegmentId, Date modifiedDate) {
 		for (UserSegmentContent userSegmentContent : findByC_GtD(
 				userSegmentId, modifiedDate, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
@@ -1078,17 +1119,14 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param userSegmentId the user segment ID
 	 * @param modifiedDate the modified date
 	 * @return the number of matching user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_GtD(long userSegmentId, Date modifiedDate)
-		throws SystemException {
+	public int countByC_GtD(long userSegmentId, Date modifiedDate) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_GTD;
 
 		Object[] finderArgs = new Object[] { userSegmentId, modifiedDate };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1122,15 +1160,15 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 				qPos.add(userSegmentId);
 
 				if (bindModifiedDate) {
-					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
+					qPos.add(new Timestamp(modifiedDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1143,7 +1181,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	}
 
 	private static final String _FINDER_COLUMN_C_GTD_USERSEGMENTID_2 = "userSegmentContent.userSegmentId = ? AND ";
-	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_1 = "userSegmentContent.modifiedDate > NULL";
+	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_1 = "userSegmentContent.modifiedDate IS NULL";
 	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_2 = "userSegmentContent.modifiedDate > ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C_C_E = new FinderPath(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
 			UserSegmentContentModelImpl.FINDER_CACHE_ENABLED,
@@ -1166,20 +1204,19 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 			});
 
 	/**
-	 * Returns the user segment content where userSegmentId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or throws a {@link com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException} if it could not be found.
+	 * Returns the user segment content where userSegmentId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or throws a {@link NoSuchUserSegmentContentException} if it could not be found.
 	 *
 	 * @param userSegmentId the user segment ID
 	 * @param className the class name
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the matching user segment content
-	 * @throws com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException if a matching user segment content could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchUserSegmentContentException if a matching user segment content could not be found
 	 */
 	@Override
 	public UserSegmentContent findByC_C_C_E(long userSegmentId,
 		String className, long classPK, String eventType)
-		throws NoSuchUserSegmentContentException, SystemException {
+		throws NoSuchUserSegmentContentException {
 		UserSegmentContent userSegmentContent = fetchByC_C_C_E(userSegmentId,
 				className, classPK, eventType);
 
@@ -1220,12 +1257,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the matching user segment content, or <code>null</code> if a matching user segment content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserSegmentContent fetchByC_C_C_E(long userSegmentId,
-		String className, long classPK, String eventType)
-		throws SystemException {
+		String className, long classPK, String eventType) {
 		return fetchByC_C_C_E(userSegmentId, className, classPK, eventType, true);
 	}
 
@@ -1236,14 +1271,13 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param className the class name
 	 * @param classPK the class p k
 	 * @param eventType the event type
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching user segment content, or <code>null</code> if a matching user segment content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserSegmentContent fetchByC_C_C_E(long userSegmentId,
 		String className, long classPK, String eventType,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
 				userSegmentId, className, classPK, eventType
 			};
@@ -1251,7 +1285,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_C_C_E,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_C_C_E,
 					finderArgs, this);
 		}
 
@@ -1331,7 +1365,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 				List<UserSegmentContent> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
 						finderArgs, list);
 				}
 				else {
@@ -1347,13 +1381,13 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 							(userSegmentContent.getClassPK() != classPK) ||
 							(userSegmentContent.getEventType() == null) ||
 							!userSegmentContent.getEventType().equals(eventType)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
 							finderArgs, userSegmentContent);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C_E,
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_C_E,
 					finderArgs);
 
 				throw processException(e);
@@ -1379,12 +1413,11 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the user segment content that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserSegmentContent removeByC_C_C_E(long userSegmentId,
 		String className, long classPK, String eventType)
-		throws NoSuchUserSegmentContentException, SystemException {
+		throws NoSuchUserSegmentContentException {
 		UserSegmentContent userSegmentContent = findByC_C_C_E(userSegmentId,
 				className, classPK, eventType);
 
@@ -1399,19 +1432,17 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the number of matching user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int countByC_C_C_E(long userSegmentId, String className,
-		long classPK, String eventType) throws SystemException {
+		long classPK, String eventType) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C_C_E;
 
 		Object[] finderArgs = new Object[] {
 				userSegmentId, className, classPK, eventType
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -1475,10 +1506,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1510,11 +1541,11 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 */
 	@Override
 	public void cacheResult(UserSegmentContent userSegmentContent) {
-		EntityCacheUtil.putResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
 			UserSegmentContentImpl.class, userSegmentContent.getPrimaryKey(),
 			userSegmentContent);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
 			new Object[] {
 				userSegmentContent.getUserSegmentId(),
 				userSegmentContent.getClassName(),
@@ -1533,7 +1564,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	@Override
 	public void cacheResult(List<UserSegmentContent> userSegmentContents) {
 		for (UserSegmentContent userSegmentContent : userSegmentContents) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
 						UserSegmentContentImpl.class,
 						userSegmentContent.getPrimaryKey()) == null) {
@@ -1549,101 +1580,93 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * Clears the cache for all user segment contents.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(UserSegmentContentImpl.class.getName());
-		}
+		entityCache.clearCache(UserSegmentContentImpl.class);
 
-		EntityCacheUtil.clearCache(UserSegmentContentImpl.class.getName());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the user segment content.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(UserSegmentContent userSegmentContent) {
-		EntityCacheUtil.removeResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
 			UserSegmentContentImpl.class, userSegmentContent.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(userSegmentContent);
+		clearUniqueFindersCache((UserSegmentContentModelImpl)userSegmentContent);
 	}
 
 	@Override
 	public void clearCache(List<UserSegmentContent> userSegmentContents) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (UserSegmentContent userSegmentContent : userSegmentContents) {
-			EntityCacheUtil.removeResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
 				UserSegmentContentImpl.class, userSegmentContent.getPrimaryKey());
 
-			clearUniqueFindersCache(userSegmentContent);
+			clearUniqueFindersCache((UserSegmentContentModelImpl)userSegmentContent);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		UserSegmentContent userSegmentContent) {
-		if (userSegmentContent.isNew()) {
+		UserSegmentContentModelImpl userSegmentContentModelImpl, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
-					userSegmentContent.getUserSegmentId(),
-					userSegmentContent.getClassName(),
-					userSegmentContent.getClassPK(),
-					userSegmentContent.getEventType()
+					userSegmentContentModelImpl.getUserSegmentId(),
+					userSegmentContentModelImpl.getClassName(),
+					userSegmentContentModelImpl.getClassPK(),
+					userSegmentContentModelImpl.getEventType()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_C_E, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_C_E, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C_E, args,
-				userSegmentContent);
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C_E, args,
+				userSegmentContentModelImpl);
 		}
 		else {
-			UserSegmentContentModelImpl userSegmentContentModelImpl = (UserSegmentContentModelImpl)userSegmentContent;
-
 			if ((userSegmentContentModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C_C_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						userSegmentContent.getUserSegmentId(),
-						userSegmentContent.getClassName(),
-						userSegmentContent.getClassPK(),
-						userSegmentContent.getEventType()
+						userSegmentContentModelImpl.getUserSegmentId(),
+						userSegmentContentModelImpl.getClassName(),
+						userSegmentContentModelImpl.getClassPK(),
+						userSegmentContentModelImpl.getEventType()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_C_E, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_C_E, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C_E, args,
-					userSegmentContent);
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C_E, args,
+					userSegmentContentModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		UserSegmentContent userSegmentContent) {
-		UserSegmentContentModelImpl userSegmentContentModelImpl = (UserSegmentContentModelImpl)userSegmentContent;
-
+		UserSegmentContentModelImpl userSegmentContentModelImpl) {
 		Object[] args = new Object[] {
-				userSegmentContent.getUserSegmentId(),
-				userSegmentContent.getClassName(),
-				userSegmentContent.getClassPK(),
-				userSegmentContent.getEventType()
+				userSegmentContentModelImpl.getUserSegmentId(),
+				userSegmentContentModelImpl.getClassName(),
+				userSegmentContentModelImpl.getClassPK(),
+				userSegmentContentModelImpl.getEventType()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_E, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C_E, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_E, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_C_E, args);
 
 		if ((userSegmentContentModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C_C_E.getColumnBitmask()) != 0) {
@@ -1654,8 +1677,8 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 					userSegmentContentModelImpl.getOriginalEventType()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_E, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C_E, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_E, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_C_E, args);
 		}
 	}
 
@@ -1672,6 +1695,8 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 		userSegmentContent.setNew(true);
 		userSegmentContent.setPrimaryKey(userSegmentContentId);
 
+		userSegmentContent.setCompanyId(companyProvider.getCompanyId());
+
 		return userSegmentContent;
 	}
 
@@ -1680,12 +1705,11 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 *
 	 * @param userSegmentContentId the primary key of the user segment content
 	 * @return the user segment content that was removed
-	 * @throws com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException if a user segment content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchUserSegmentContentException if a user segment content with the primary key could not be found
 	 */
 	@Override
 	public UserSegmentContent remove(long userSegmentContentId)
-		throws NoSuchUserSegmentContentException, SystemException {
+		throws NoSuchUserSegmentContentException {
 		return remove((Serializable)userSegmentContentId);
 	}
 
@@ -1694,12 +1718,11 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 *
 	 * @param primaryKey the primary key of the user segment content
 	 * @return the user segment content that was removed
-	 * @throws com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException if a user segment content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchUserSegmentContentException if a user segment content with the primary key could not be found
 	 */
 	@Override
 	public UserSegmentContent remove(Serializable primaryKey)
-		throws NoSuchUserSegmentContentException, SystemException {
+		throws NoSuchUserSegmentContentException {
 		Session session = null;
 
 		try {
@@ -1732,7 +1755,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 	@Override
 	protected UserSegmentContent removeImpl(
-		UserSegmentContent userSegmentContent) throws SystemException {
+		UserSegmentContent userSegmentContent) {
 		userSegmentContent = toUnwrappedModel(userSegmentContent);
 
 		Session session = null;
@@ -1764,9 +1787,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	}
 
 	@Override
-	public UserSegmentContent updateImpl(
-		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent)
-		throws SystemException {
+	public UserSegmentContent updateImpl(UserSegmentContent userSegmentContent) {
 		userSegmentContent = toUnwrappedModel(userSegmentContent);
 
 		boolean isNew = userSegmentContent.isNew();
@@ -1784,7 +1805,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 				userSegmentContent.setNew(false);
 			}
 			else {
-				session.merge(userSegmentContent);
+				userSegmentContent = (UserSegmentContent)session.merge(userSegmentContent);
 			}
 		}
 		catch (Exception e) {
@@ -1794,10 +1815,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !UserSegmentContentModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1807,28 +1828,30 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 						userSegmentContentModelImpl.getOriginalUserSegmentId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERSEGMENTID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERSEGMENTID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERSEGMENTID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERSEGMENTID,
 					args);
 
 				args = new Object[] {
 						userSegmentContentModelImpl.getUserSegmentId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERSEGMENTID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERSEGMENTID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERSEGMENTID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERSEGMENTID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
 			UserSegmentContentImpl.class, userSegmentContent.getPrimaryKey(),
-			userSegmentContent);
+			userSegmentContent, false);
 
-		clearUniqueFindersCache(userSegmentContent);
-		cacheUniqueFindersCache(userSegmentContent);
+		clearUniqueFindersCache(userSegmentContentModelImpl);
+		cacheUniqueFindersCache(userSegmentContentModelImpl, isNew);
+
+		userSegmentContent.resetOriginalValues();
 
 		return userSegmentContent;
 	}
@@ -1857,16 +1880,15 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	}
 
 	/**
-	 * Returns the user segment content with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the user segment content with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the user segment content
 	 * @return the user segment content
-	 * @throws com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException if a user segment content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchUserSegmentContentException if a user segment content with the primary key could not be found
 	 */
 	@Override
 	public UserSegmentContent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserSegmentContentException, SystemException {
+		throws NoSuchUserSegmentContentException {
 		UserSegmentContent userSegmentContent = fetchByPrimaryKey(primaryKey);
 
 		if (userSegmentContent == null) {
@@ -1882,16 +1904,15 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	}
 
 	/**
-	 * Returns the user segment content with the primary key or throws a {@link com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException} if it could not be found.
+	 * Returns the user segment content with the primary key or throws a {@link NoSuchUserSegmentContentException} if it could not be found.
 	 *
 	 * @param userSegmentContentId the primary key of the user segment content
 	 * @return the user segment content
-	 * @throws com.liferay.content.targeting.report.user.segment.content.NoSuchUserSegmentContentException if a user segment content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchUserSegmentContentException if a user segment content with the primary key could not be found
 	 */
 	@Override
 	public UserSegmentContent findByPrimaryKey(long userSegmentContentId)
-		throws NoSuchUserSegmentContentException, SystemException {
+		throws NoSuchUserSegmentContentException {
 		return findByPrimaryKey((Serializable)userSegmentContentId);
 	}
 
@@ -1900,12 +1921,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 *
 	 * @param primaryKey the primary key of the user segment content
 	 * @return the user segment content, or <code>null</code> if a user segment content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserSegmentContent fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
-		UserSegmentContent userSegmentContent = (UserSegmentContent)EntityCacheUtil.getResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
+	public UserSegmentContent fetchByPrimaryKey(Serializable primaryKey) {
+		UserSegmentContent userSegmentContent = (UserSegmentContent)entityCache.getResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
 				UserSegmentContentImpl.class, primaryKey);
 
 		if (userSegmentContent == _nullUserSegmentContent) {
@@ -1925,13 +1944,13 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 					cacheResult(userSegmentContent);
 				}
 				else {
-					EntityCacheUtil.putResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
 						UserSegmentContentImpl.class, primaryKey,
 						_nullUserSegmentContent);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
 					UserSegmentContentImpl.class, primaryKey);
 
 				throw processException(e);
@@ -1949,22 +1968,113 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 *
 	 * @param userSegmentContentId the primary key of the user segment content
 	 * @return the user segment content, or <code>null</code> if a user segment content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserSegmentContent fetchByPrimaryKey(long userSegmentContentId)
-		throws SystemException {
+	public UserSegmentContent fetchByPrimaryKey(long userSegmentContentId) {
 		return fetchByPrimaryKey((Serializable)userSegmentContentId);
+	}
+
+	@Override
+	public Map<Serializable, UserSegmentContent> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, UserSegmentContent> map = new HashMap<Serializable, UserSegmentContent>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			UserSegmentContent userSegmentContent = fetchByPrimaryKey(primaryKey);
+
+			if (userSegmentContent != null) {
+				map.put(primaryKey, userSegmentContent);
+			}
+
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			UserSegmentContent userSegmentContent = (UserSegmentContent)entityCache.getResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
+					UserSegmentContentImpl.class, primaryKey);
+
+			if (userSegmentContent == null) {
+				if (uncachedPrimaryKeys == null) {
+					uncachedPrimaryKeys = new HashSet<Serializable>();
+				}
+
+				uncachedPrimaryKeys.add(primaryKey);
+			}
+			else {
+				map.put(primaryKey, userSegmentContent);
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
+			return map;
+		}
+
+		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
+				1);
+
+		query.append(_SQL_SELECT_USERSEGMENTCONTENT_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : uncachedPrimaryKeys) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (UserSegmentContent userSegmentContent : (List<UserSegmentContent>)q.list()) {
+				map.put(userSegmentContent.getPrimaryKeyObj(),
+					userSegmentContent);
+
+				cacheResult(userSegmentContent);
+
+				uncachedPrimaryKeys.remove(userSegmentContent.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				entityCache.putResult(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
+					UserSegmentContentImpl.class, primaryKey,
+					_nullUserSegmentContent);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
 	 * Returns all the user segment contents.
 	 *
 	 * @return the user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserSegmentContent> findAll() throws SystemException {
+	public List<UserSegmentContent> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1972,17 +2082,15 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * Returns a range of all the user segment contents.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of user segment contents
 	 * @param end the upper bound of the range of user segment contents (not inclusive)
 	 * @return the range of user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserSegmentContent> findAll(int start, int end)
-		throws SystemException {
+	public List<UserSegmentContent> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -1990,18 +2098,37 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * Returns an ordered range of all the user segment contents.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of user segment contents
 	 * @param end the upper bound of the range of user segment contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserSegmentContent> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<UserSegmentContent> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user segment contents.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of user segment contents
+	 * @param end the upper bound of the range of user segment contents (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of user segment contents
+	 */
+	@Override
+	public List<UserSegmentContent> findAll(int start, int end,
+		OrderByComparator<UserSegmentContent> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2017,8 +2144,12 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<UserSegmentContent> list = (List<UserSegmentContent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<UserSegmentContent> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<UserSegmentContent>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2026,7 +2157,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_USERSEGMENTCONTENT);
 
@@ -2056,7 +2187,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<UserSegmentContent>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<UserSegmentContent>)QueryUtil.list(q,
@@ -2065,10 +2196,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2083,10 +2214,9 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	/**
 	 * Removes all the user segment contents from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (UserSegmentContent userSegmentContent : findAll()) {
 			remove(userSegmentContent);
 		}
@@ -2096,11 +2226,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 * Returns the number of user segment contents.
 	 *
 	 * @return the number of user segment contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+	public int countAll() {
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2113,11 +2242,11 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2130,49 +2259,40 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 		return count.intValue();
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return UserSegmentContentModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the user segment content persistence.
 	 */
 	public void afterPropertiesSet() {
-		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(
-					com.liferay.util.service.ServiceProps.get(
-						"value.object.listener.com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent")));
-
-		if (listenerClassNames.length > 0) {
-			try {
-				List<ModelListener<UserSegmentContent>> listenersList = new ArrayList<ModelListener<UserSegmentContent>>();
-
-				for (String listenerClassName : listenerClassNames) {
-					listenersList.add((ModelListener<UserSegmentContent>)InstanceFactory.newInstance(
-							getClassLoader(), listenerClassName));
-				}
-
-				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(UserSegmentContentImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(UserSegmentContentImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = CompanyProviderWrapper.class)
+	protected CompanyProvider companyProvider;
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_USERSEGMENTCONTENT = "SELECT userSegmentContent FROM UserSegmentContent userSegmentContent";
+	private static final String _SQL_SELECT_USERSEGMENTCONTENT_WHERE_PKS_IN = "SELECT userSegmentContent FROM UserSegmentContent userSegmentContent WHERE userSegmentContentId IN (";
 	private static final String _SQL_SELECT_USERSEGMENTCONTENT_WHERE = "SELECT userSegmentContent FROM UserSegmentContent userSegmentContent WHERE ";
 	private static final String _SQL_COUNT_USERSEGMENTCONTENT = "SELECT COUNT(userSegmentContent) FROM UserSegmentContent userSegmentContent";
 	private static final String _SQL_COUNT_USERSEGMENTCONTENT_WHERE = "SELECT COUNT(userSegmentContent) FROM UserSegmentContent userSegmentContent WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userSegmentContent.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No UserSegmentContent exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserSegmentContent exists with the key {";
-	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
-	private static Log _log = LogFactoryUtil.getLog(UserSegmentContentPersistenceImpl.class);
-	private static UserSegmentContent _nullUserSegmentContent = new UserSegmentContentImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(UserSegmentContentPersistenceImpl.class);
+	private static final UserSegmentContent _nullUserSegmentContent = new UserSegmentContentImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2184,7 +2304,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 			}
 		};
 
-	private static CacheModel<UserSegmentContent> _nullUserSegmentContentCacheModel =
+	private static final CacheModel<UserSegmentContent> _nullUserSegmentContentCacheModel =
 		new CacheModel<UserSegmentContent>() {
 			@Override
 			public UserSegmentContent toEntityModel() {

@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.content.targeting.report.user.segment.content;
+package com.liferay.content.targeting.report.user.segment.content.exception;
 
-import com.liferay.portal.NoSuchModelException;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class NoSuchUserSegmentContentException extends NoSuchModelException {
 
 	public NoSuchUserSegmentContentException() {
-		super();
 	}
 
 	public NoSuchUserSegmentContentException(String msg) {

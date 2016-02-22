@@ -14,9 +14,11 @@
 
 package com.liferay.content.targeting.report.user.segment.content.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for UserSegmentContent. This utility wraps
@@ -32,6 +34,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * @see com.liferay.content.targeting.report.user.segment.content.service.impl.UserSegmentContentLocalServiceImpl
  * @generated
  */
+@ProviderType
 public class UserSegmentContentLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -44,12 +47,29 @@ public class UserSegmentContentLocalServiceUtil {
 	*
 	* @param userSegmentContent the user segment content
 	* @return the user segment content that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent addUserSegmentContent(
-		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent) {
 		return getService().addUserSegmentContent(userSegmentContent);
+	}
+
+	public static com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent addUserSegmentContent(
+		long userSegmentId, java.lang.String className, long classPK,
+		java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addUserSegmentContent(userSegmentId, className, classPK,
+			eventType, count);
+	}
+
+	public static void checkUserSegmentContentEvents()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkUserSegmentContentEvents();
+	}
+
+	public static void checkUserSegmentContentEvents(long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkUserSegmentContentEvents(userSegmentId);
 	}
 
 	/**
@@ -64,18 +84,12 @@ public class UserSegmentContentLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the user segment content with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userSegmentContentId the primary key of the user segment content
-	* @return the user segment content that was removed
-	* @throws PortalException if a user segment content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
-	public static com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent deleteUserSegmentContent(
-		long userSegmentContentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteUserSegmentContent(userSegmentContentId);
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -83,12 +97,23 @@ public class UserSegmentContentLocalServiceUtil {
 	*
 	* @param userSegmentContent the user segment content
 	* @return the user segment content that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent deleteUserSegmentContent(
-		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent) {
 		return getService().deleteUserSegmentContent(userSegmentContent);
+	}
+
+	/**
+	* Deletes the user segment content with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userSegmentContentId the primary key of the user segment content
+	* @return the user segment content that was removed
+	* @throws PortalException if a user segment content with the primary key could not be found
+	*/
+	public static com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent deleteUserSegmentContent(
+		long userSegmentContentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteUserSegmentContent(userSegmentContentId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -100,12 +125,9 @@ public class UserSegmentContentLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -120,12 +142,10 @@ public class UserSegmentContentLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -141,50 +161,65 @@ public class UserSegmentContentLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent fetchUserSegmentContent(
-		long userSegmentContentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userSegmentContentId) {
 		return getService().fetchUserSegmentContent(userSegmentContentId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -193,20 +228,20 @@ public class UserSegmentContentLocalServiceUtil {
 	* @param userSegmentContentId the primary key of the user segment content
 	* @return the user segment content
 	* @throws PortalException if a user segment content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent getUserSegmentContent(
 		long userSegmentContentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserSegmentContent(userSegmentContentId);
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPersistedModel(primaryKeyObj);
+	public static com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent getUserSegmentContent(
+		long userSegmentId, java.lang.String className, long classPK,
+		java.lang.String eventType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getUserSegmentContent(userSegmentId, className, classPK,
+			eventType);
 	}
 
 	/**
@@ -219,23 +254,45 @@ public class UserSegmentContentLocalServiceUtil {
 	* @param start the lower bound of the range of user segment contents
 	* @param end the upper bound of the range of user segment contents (not inclusive)
 	* @return the range of user segment contents
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> getUserSegmentContents(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getUserSegmentContents(start, end);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> getUserSegmentContents(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserSegmentContents(userSegmentId);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> getUserSegmentContents(
+		long userSegmentId, java.util.Date modifiedDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserSegmentContents(userSegmentId, modifiedDate);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> getUserSegmentContents(
+		long userSegmentId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getUserSegmentContents(userSegmentId, start, end,
+			orderByComparator);
 	}
 
 	/**
 	* Returns the number of user segment contents.
 	*
 	* @return the number of user segment contents
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getUserSegmentContentsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getUserSegmentContentsCount() {
 		return getService().getUserSegmentContentsCount();
+	}
+
+	public static int getUserSegmentContentsCount(long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserSegmentContentsCount(userSegmentId);
 	}
 
 	/**
@@ -243,128 +300,16 @@ public class UserSegmentContentLocalServiceUtil {
 	*
 	* @param userSegmentContent the user segment content
 	* @return the user segment content that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent updateUserSegmentContent(
-		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent) {
 		return getService().updateUserSegmentContent(userSegmentContent);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
-	public static com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent addUserSegmentContent(
-		long userSegmentId, java.lang.String className, long classPK,
-		java.lang.String eventType, int count)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addUserSegmentContent(userSegmentId, className, classPK,
-			eventType, count);
-	}
-
-	public static void checkUserSegmentContentEvents()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().checkUserSegmentContentEvents();
-	}
-
-	public static void checkUserSegmentContentEvents(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().checkUserSegmentContentEvents(userSegmentId);
-	}
-
-	public static com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent getUserSegmentContent(
-		long userSegmentId, java.lang.String className, long classPK,
-		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getUserSegmentContent(userSegmentId, className, classPK,
-			eventType);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> getUserSegmentContents(
-		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserSegmentContents(userSegmentId);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> getUserSegmentContents(
-		long userSegmentId, java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserSegmentContents(userSegmentId, modifiedDate);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> getUserSegmentContents(
-		long userSegmentId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getUserSegmentContents(userSegmentId, start, end,
-			orderByComparator);
-	}
-
-	public static int getUserSegmentContentsCount(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserSegmentContentsCount(userSegmentId);
-	}
-
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static UserSegmentContentLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					UserSegmentContentLocalService.class.getName());
-
-			if (invokableLocalService instanceof UserSegmentContentLocalService) {
-				_service = (UserSegmentContentLocalService)invokableLocalService;
-			}
-			else {
-				_service = new UserSegmentContentLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(UserSegmentContentLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setService(UserSegmentContentLocalService service) {
-	}
-
-	private static UserSegmentContentLocalService _service;
+	private static ServiceTracker<UserSegmentContentLocalService, UserSegmentContentLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(UserSegmentContentLocalService.class);
 }
