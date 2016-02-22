@@ -14,6 +14,11 @@
 
 package com.liferay.content.targeting.rule.score.points.messaging;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.content.targeting.model.UserSegment;
@@ -23,31 +28,23 @@ import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.content.targeting.service.test.util.GroupTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleException;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -57,28 +54,12 @@ public class DefaultScorePointsAssignerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		try {
-			_bundle.start();
-		}
-		catch (BundleException e) {
-			e.printStackTrace();
-		}
-
-		_anonymousUserLocalService = ServiceTrackerUtil.getService(
-			AnonymousUserLocalService.class, _bundle.getBundleContext());
-		_scorePointsAssigner = ServiceTrackerUtil.getService(
-			ScorePointsAssigner.class, _bundle.getBundleContext());
-		_scorePointLocalService = ServiceTrackerUtil.getService(
-			ScorePointLocalService.class, _bundle.getBundleContext());
-		_userSegmentLocalService = ServiceTrackerUtil.getService(
-			UserSegmentLocalService.class, _bundle.getBundleContext());
-
 		Group group = GroupTestUtil.addGroup();
 
 		_serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId(), TestPropsValues.getUserId());
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), "test-category");
 
@@ -116,11 +97,35 @@ public class DefaultScorePointsAssignerImplTest {
 			_scorePointLocalService.getScorePointsCount());
 	}
 
+	@Reference(unbind = "-")
+	protected void setAnonymousUserLocalService(
+		AnonymousUserLocalService anonymousUserLocalService) {
+
+		_anonymousUserLocalService = anonymousUserLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setScorePointLocalService(
+		ScorePointLocalService scorePointLocalService) {
+
+		_scorePointLocalService = scorePointLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setScorePointsAssigner(
+		ScorePointsAssigner scorePointsAssigner) {
+
+		_scorePointsAssigner = scorePointsAssigner;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
 	private AnonymousUserLocalService _anonymousUserLocalService;
-
-	@ArquillianResource
-	private Bundle _bundle;
-
 	private ScorePointLocalService _scorePointLocalService;
 	private ScorePointsAssigner _scorePointsAssigner;
 	private ServiceContext _serviceContext;

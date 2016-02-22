@@ -14,19 +14,23 @@
 
 package com.liferay.content.targeting.analytics.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.util.tracker.ServiceTracker;
+
+import java.util.Date;
 import java.util.List;
 
 /**
- * The persistence utility for the analytics event service. This utility wraps {@link AnalyticsEventPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the analytics event service. This utility wraps {@link com.liferay.content.targeting.analytics.service.persistence.impl.AnalyticsEventPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -34,9 +38,10 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see AnalyticsEventPersistence
- * @see AnalyticsEventPersistenceImpl
+ * @see com.liferay.content.targeting.analytics.service.persistence.impl.AnalyticsEventPersistenceImpl
  * @generated
  */
+@ProviderType
 public class AnalyticsEventUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -45,68 +50,65 @@ public class AnalyticsEventUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(AnalyticsEvent analyticsEvent) {
 		getPersistence().clearCache(analyticsEvent);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<AnalyticsEvent> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<AnalyticsEvent> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<AnalyticsEvent> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
-	public static AnalyticsEvent update(AnalyticsEvent analyticsEvent)
-		throws SystemException {
+	public static AnalyticsEvent update(AnalyticsEvent analyticsEvent) {
 		return getPersistence().update(analyticsEvent);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static AnalyticsEvent update(AnalyticsEvent analyticsEvent,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(analyticsEvent, serviceContext);
 	}
 
@@ -115,11 +117,8 @@ public class AnalyticsEventUtil {
 	*
 	* @param companyId the company ID
 	* @return the matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByCompanyId(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByCompanyId(long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -127,18 +126,16 @@ public class AnalyticsEventUtil {
 	* Returns a range of all the analytics events where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
 	* @param start the lower bound of the range of analytics events
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @return the range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByCompanyId(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByCompanyId(long companyId,
+		int start, int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -146,7 +143,7 @@ public class AnalyticsEventUtil {
 	* Returns an ordered range of all the analytics events where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -154,14 +151,34 @@ public class AnalyticsEventUtil {
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByCompanyId(long companyId,
+		int start, int end, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the analytics events where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching analytics events
+	*/
+	public static List<AnalyticsEvent> findByCompanyId(long companyId,
+		int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -170,14 +187,11 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByCompanyId_First(long companyId,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -188,12 +202,9 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent fetchByCompanyId_First(long companyId,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -204,14 +215,11 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByCompanyId_Last(long companyId,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -222,12 +230,9 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent fetchByCompanyId_Last(long companyId,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -239,14 +244,12 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent[] findByCompanyId_PrevAndNext(
+	public static AnalyticsEvent[] findByCompanyId_PrevAndNext(
 		long analyticsEventId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(analyticsEventId, companyId,
 			orderByComparator);
@@ -256,10 +259,8 @@ public class AnalyticsEventUtil {
 	* Removes all the analytics events where companyId = &#63; from the database.
 	*
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByCompanyId(long companyId) {
 		getPersistence().removeByCompanyId(companyId);
 	}
 
@@ -268,10 +269,8 @@ public class AnalyticsEventUtil {
 	*
 	* @param companyId the company ID
 	* @return the number of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
@@ -281,11 +280,9 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param createDate the create date
 	* @return the matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByC_GtD(
-		long companyId, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByC_GtD(long companyId,
+		Date createDate) {
 		return getPersistence().findByC_GtD(companyId, createDate);
 	}
 
@@ -293,7 +290,7 @@ public class AnalyticsEventUtil {
 	* Returns a range of all the analytics events where companyId = &#63; and createDate &gt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -301,11 +298,9 @@ public class AnalyticsEventUtil {
 	* @param start the lower bound of the range of analytics events
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @return the range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByC_GtD(
-		long companyId, java.util.Date createDate, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByC_GtD(long companyId,
+		Date createDate, int start, int end) {
 		return getPersistence().findByC_GtD(companyId, createDate, start, end);
 	}
 
@@ -313,7 +308,7 @@ public class AnalyticsEventUtil {
 	* Returns an ordered range of all the analytics events where companyId = &#63; and createDate &gt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -322,15 +317,37 @@ public class AnalyticsEventUtil {
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByC_GtD(
-		long companyId, java.util.Date createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByC_GtD(long companyId,
+		Date createDate, int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByC_GtD(companyId, createDate, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the analytics events where companyId = &#63; and createDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param createDate the create date
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching analytics events
+	*/
+	public static List<AnalyticsEvent> findByC_GtD(long companyId,
+		Date createDate, int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_GtD(companyId, createDate, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -340,14 +357,11 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByC_GtD_First(
-		long companyId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByC_GtD_First(long companyId,
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_GtD_First(companyId, createDate, orderByComparator);
 	}
@@ -359,12 +373,9 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByC_GtD_First(
-		long companyId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent fetchByC_GtD_First(long companyId,
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_GtD_First(companyId, createDate, orderByComparator);
 	}
@@ -376,14 +387,11 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByC_GtD_Last(
-		long companyId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByC_GtD_Last(long companyId,
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_GtD_Last(companyId, createDate, orderByComparator);
 	}
@@ -395,12 +403,9 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByC_GtD_Last(
-		long companyId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent fetchByC_GtD_Last(long companyId,
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_GtD_Last(companyId, createDate, orderByComparator);
 	}
@@ -413,14 +418,12 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent[] findByC_GtD_PrevAndNext(
-		long analyticsEventId, long companyId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent[] findByC_GtD_PrevAndNext(
+		long analyticsEventId, long companyId, Date createDate,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_GtD_PrevAndNext(analyticsEventId, companyId,
 			createDate, orderByComparator);
@@ -431,10 +434,8 @@ public class AnalyticsEventUtil {
 	*
 	* @param companyId the company ID
 	* @param createDate the create date
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_GtD(long companyId, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByC_GtD(long companyId, Date createDate) {
 		getPersistence().removeByC_GtD(companyId, createDate);
 	}
 
@@ -444,10 +445,8 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param createDate the create date
 	* @return the number of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_GtD(long companyId, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_GtD(long companyId, Date createDate) {
 		return getPersistence().countByC_GtD(companyId, createDate);
 	}
 
@@ -457,11 +456,9 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param createDate the create date
 	* @return the matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByC_LtD(
-		long companyId, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByC_LtD(long companyId,
+		Date createDate) {
 		return getPersistence().findByC_LtD(companyId, createDate);
 	}
 
@@ -469,7 +466,7 @@ public class AnalyticsEventUtil {
 	* Returns a range of all the analytics events where companyId = &#63; and createDate &lt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -477,11 +474,9 @@ public class AnalyticsEventUtil {
 	* @param start the lower bound of the range of analytics events
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @return the range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByC_LtD(
-		long companyId, java.util.Date createDate, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByC_LtD(long companyId,
+		Date createDate, int start, int end) {
 		return getPersistence().findByC_LtD(companyId, createDate, start, end);
 	}
 
@@ -489,7 +484,7 @@ public class AnalyticsEventUtil {
 	* Returns an ordered range of all the analytics events where companyId = &#63; and createDate &lt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -498,15 +493,37 @@ public class AnalyticsEventUtil {
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByC_LtD(
-		long companyId, java.util.Date createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByC_LtD(long companyId,
+		Date createDate, int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByC_LtD(companyId, createDate, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the analytics events where companyId = &#63; and createDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param createDate the create date
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching analytics events
+	*/
+	public static List<AnalyticsEvent> findByC_LtD(long companyId,
+		Date createDate, int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_LtD(companyId, createDate, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -516,14 +533,11 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByC_LtD_First(
-		long companyId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByC_LtD_First(long companyId,
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_LtD_First(companyId, createDate, orderByComparator);
 	}
@@ -535,12 +549,9 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByC_LtD_First(
-		long companyId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent fetchByC_LtD_First(long companyId,
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_First(companyId, createDate, orderByComparator);
 	}
@@ -552,14 +563,11 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByC_LtD_Last(
-		long companyId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByC_LtD_Last(long companyId,
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_LtD_Last(companyId, createDate, orderByComparator);
 	}
@@ -571,12 +579,9 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByC_LtD_Last(
-		long companyId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent fetchByC_LtD_Last(long companyId,
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_Last(companyId, createDate, orderByComparator);
 	}
@@ -589,14 +594,12 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent[] findByC_LtD_PrevAndNext(
-		long analyticsEventId, long companyId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent[] findByC_LtD_PrevAndNext(
+		long analyticsEventId, long companyId, Date createDate,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_LtD_PrevAndNext(analyticsEventId, companyId,
 			createDate, orderByComparator);
@@ -607,10 +610,8 @@ public class AnalyticsEventUtil {
 	*
 	* @param companyId the company ID
 	* @param createDate the create date
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_LtD(long companyId, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByC_LtD(long companyId, Date createDate) {
 		getPersistence().removeByC_LtD(companyId, createDate);
 	}
 
@@ -620,10 +621,8 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param createDate the create date
 	* @return the number of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_LtD(long companyId, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_LtD(long companyId, Date createDate) {
 		return getPersistence().countByC_LtD(companyId, createDate);
 	}
 
@@ -633,11 +632,9 @@ public class AnalyticsEventUtil {
 	* @param classPK the class p k
 	* @param createDate the create date
 	* @return the matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByNotC_GtD(
-		long classPK, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByNotC_GtD(long classPK,
+		Date createDate) {
 		return getPersistence().findByNotC_GtD(classPK, createDate);
 	}
 
@@ -645,7 +642,7 @@ public class AnalyticsEventUtil {
 	* Returns a range of all the analytics events where classPK &ne; &#63; and createDate &gt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classPK the class p k
@@ -653,11 +650,9 @@ public class AnalyticsEventUtil {
 	* @param start the lower bound of the range of analytics events
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @return the range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByNotC_GtD(
-		long classPK, java.util.Date createDate, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByNotC_GtD(long classPK,
+		Date createDate, int start, int end) {
 		return getPersistence().findByNotC_GtD(classPK, createDate, start, end);
 	}
 
@@ -665,7 +660,7 @@ public class AnalyticsEventUtil {
 	* Returns an ordered range of all the analytics events where classPK &ne; &#63; and createDate &gt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classPK the class p k
@@ -674,15 +669,37 @@ public class AnalyticsEventUtil {
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByNotC_GtD(
-		long classPK, java.util.Date createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByNotC_GtD(long classPK,
+		Date createDate, int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByNotC_GtD(classPK, createDate, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the analytics events where classPK &ne; &#63; and createDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classPK the class p k
+	* @param createDate the create date
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching analytics events
+	*/
+	public static List<AnalyticsEvent> findByNotC_GtD(long classPK,
+		Date createDate, int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByNotC_GtD(classPK, createDate, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -692,14 +709,11 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByNotC_GtD_First(
-		long classPK, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByNotC_GtD_First(long classPK,
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByNotC_GtD_First(classPK, createDate, orderByComparator);
 	}
@@ -711,12 +725,9 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByNotC_GtD_First(
-		long classPK, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent fetchByNotC_GtD_First(long classPK,
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByNotC_GtD_First(classPK, createDate, orderByComparator);
 	}
@@ -728,14 +739,11 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByNotC_GtD_Last(
-		long classPK, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByNotC_GtD_Last(long classPK,
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByNotC_GtD_Last(classPK, createDate, orderByComparator);
 	}
@@ -747,12 +755,9 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByNotC_GtD_Last(
-		long classPK, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent fetchByNotC_GtD_Last(long classPK,
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByNotC_GtD_Last(classPK, createDate, orderByComparator);
 	}
@@ -765,14 +770,12 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent[] findByNotC_GtD_PrevAndNext(
-		long analyticsEventId, long classPK, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent[] findByNotC_GtD_PrevAndNext(
+		long analyticsEventId, long classPK, Date createDate,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByNotC_GtD_PrevAndNext(analyticsEventId, classPK,
 			createDate, orderByComparator);
@@ -783,10 +786,8 @@ public class AnalyticsEventUtil {
 	*
 	* @param classPK the class p k
 	* @param createDate the create date
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByNotC_GtD(long classPK, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByNotC_GtD(long classPK, Date createDate) {
 		getPersistence().removeByNotC_GtD(classPK, createDate);
 	}
 
@@ -796,10 +797,8 @@ public class AnalyticsEventUtil {
 	* @param classPK the class p k
 	* @param createDate the create date
 	* @return the number of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByNotC_GtD(long classPK, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByNotC_GtD(long classPK, Date createDate) {
 		return getPersistence().countByNotC_GtD(classPK, createDate);
 	}
 
@@ -810,11 +809,9 @@ public class AnalyticsEventUtil {
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @return the matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByC_C_E(
-		java.lang.String className, long classPK, java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByC_C_E(java.lang.String className,
+		long classPK, java.lang.String eventType) {
 		return getPersistence().findByC_C_E(className, classPK, eventType);
 	}
 
@@ -822,7 +819,7 @@ public class AnalyticsEventUtil {
 	* Returns a range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param className the class name
@@ -831,12 +828,9 @@ public class AnalyticsEventUtil {
 	* @param start the lower bound of the range of analytics events
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @return the range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByC_C_E(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByC_C_E(java.lang.String className,
+		long classPK, java.lang.String eventType, int start, int end) {
 		return getPersistence()
 				   .findByC_C_E(className, classPK, eventType, start, end);
 	}
@@ -845,7 +839,7 @@ public class AnalyticsEventUtil {
 	* Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param className the class name
@@ -855,16 +849,38 @@ public class AnalyticsEventUtil {
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByC_C_E(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByC_C_E(java.lang.String className,
+		long classPK, java.lang.String eventType, int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByC_C_E(className, classPK, eventType, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param eventType the event type
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching analytics events
+	*/
+	public static List<AnalyticsEvent> findByC_C_E(java.lang.String className,
+		long classPK, java.lang.String eventType, int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_C_E(className, classPK, eventType, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -875,14 +891,12 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByC_C_E_First(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByC_C_E_First(java.lang.String className,
+		long classPK, java.lang.String eventType,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_C_E_First(className, classPK, eventType,
 			orderByComparator);
@@ -896,12 +910,10 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByC_C_E_First(
+	public static AnalyticsEvent fetchByC_C_E_First(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_E_First(className, classPK, eventType,
 			orderByComparator);
@@ -915,14 +927,12 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByC_C_E_Last(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByC_C_E_Last(java.lang.String className,
+		long classPK, java.lang.String eventType,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_C_E_Last(className, classPK, eventType,
 			orderByComparator);
@@ -936,12 +946,10 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByC_C_E_Last(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent fetchByC_C_E_Last(java.lang.String className,
+		long classPK, java.lang.String eventType,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_E_Last(className, classPK, eventType,
 			orderByComparator);
@@ -956,15 +964,13 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent[] findByC_C_E_PrevAndNext(
+	public static AnalyticsEvent[] findByC_C_E_PrevAndNext(
 		long analyticsEventId, java.lang.String className, long classPK,
 		java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_C_E_PrevAndNext(analyticsEventId, className,
 			classPK, eventType, orderByComparator);
@@ -976,11 +982,9 @@ public class AnalyticsEventUtil {
 	* @param className the class name
 	* @param classPK the class p k
 	* @param eventType the event type
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByC_C_E(java.lang.String className, long classPK,
-		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String eventType) {
 		getPersistence().removeByC_C_E(className, classPK, eventType);
 	}
 
@@ -991,11 +995,9 @@ public class AnalyticsEventUtil {
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @return the number of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByC_C_E(java.lang.String className, long classPK,
-		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String eventType) {
 		return getPersistence().countByC_C_E(className, classPK, eventType);
 	}
 
@@ -1006,12 +1008,9 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param createDate the create date
 	* @return the matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByE_E_GtD(
-		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByE_E_GtD(
+		java.lang.String elementId, java.lang.String eventType, Date createDate) {
 		return getPersistence().findByE_E_GtD(elementId, eventType, createDate);
 	}
 
@@ -1019,7 +1018,7 @@ public class AnalyticsEventUtil {
 	* Returns a range of all the analytics events where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param elementId the element ID
@@ -1028,12 +1027,10 @@ public class AnalyticsEventUtil {
 	* @param start the lower bound of the range of analytics events
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @return the range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByE_E_GtD(
+	public static List<AnalyticsEvent> findByE_E_GtD(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		Date createDate, int start, int end) {
 		return getPersistence()
 				   .findByE_E_GtD(elementId, eventType, createDate, start, end);
 	}
@@ -1042,7 +1039,7 @@ public class AnalyticsEventUtil {
 	* Returns an ordered range of all the analytics events where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param elementId the element ID
@@ -1052,16 +1049,40 @@ public class AnalyticsEventUtil {
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByE_E_GtD(
+	public static List<AnalyticsEvent> findByE_E_GtD(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		Date createDate, int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByE_E_GtD(elementId, eventType, createDate, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the analytics events where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching analytics events
+	*/
+	public static List<AnalyticsEvent> findByE_E_GtD(
+		java.lang.String elementId, java.lang.String eventType,
+		Date createDate, int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByE_E_GtD(elementId, eventType, createDate, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -1072,15 +1093,12 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByE_E_GtD_First(
+	public static AnalyticsEvent findByE_E_GtD_First(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByE_E_GtD_First(elementId, eventType, createDate,
 			orderByComparator);
@@ -1094,13 +1112,10 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByE_E_GtD_First(
+	public static AnalyticsEvent fetchByE_E_GtD_First(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByE_E_GtD_First(elementId, eventType, createDate,
 			orderByComparator);
@@ -1114,15 +1129,12 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByE_E_GtD_Last(
+	public static AnalyticsEvent findByE_E_GtD_Last(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByE_E_GtD_Last(elementId, eventType, createDate,
 			orderByComparator);
@@ -1136,13 +1148,10 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByE_E_GtD_Last(
+	public static AnalyticsEvent fetchByE_E_GtD_Last(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByE_E_GtD_Last(elementId, eventType, createDate,
 			orderByComparator);
@@ -1157,15 +1166,13 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent[] findByE_E_GtD_PrevAndNext(
+	public static AnalyticsEvent[] findByE_E_GtD_PrevAndNext(
 		long analyticsEventId, java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String eventType, Date createDate,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByE_E_GtD_PrevAndNext(analyticsEventId, elementId,
 			eventType, createDate, orderByComparator);
@@ -1177,11 +1184,9 @@ public class AnalyticsEventUtil {
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @param createDate the create date
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByE_E_GtD(java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String eventType, Date createDate) {
 		getPersistence().removeByE_E_GtD(elementId, eventType, createDate);
 	}
 
@@ -1192,11 +1197,9 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param createDate the create date
 	* @return the number of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByE_E_GtD(java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String eventType, Date createDate) {
 		return getPersistence().countByE_E_GtD(elementId, eventType, createDate);
 	}
 
@@ -1208,12 +1211,9 @@ public class AnalyticsEventUtil {
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @return the matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByA_C_C_E(
-		long anonymousUserId, java.lang.String className, long classPK,
-		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByA_C_C_E(long anonymousUserId,
+		java.lang.String className, long classPK, java.lang.String eventType) {
 		return getPersistence()
 				   .findByA_C_C_E(anonymousUserId, className, classPK, eventType);
 	}
@@ -1222,7 +1222,7 @@ public class AnalyticsEventUtil {
 	* Returns a range of all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param anonymousUserId the anonymous user ID
@@ -1232,12 +1232,10 @@ public class AnalyticsEventUtil {
 	* @param start the lower bound of the range of analytics events
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @return the range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByA_C_C_E(
-		long anonymousUserId, java.lang.String className, long classPK,
-		java.lang.String eventType, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByA_C_C_E(long anonymousUserId,
+		java.lang.String className, long classPK, java.lang.String eventType,
+		int start, int end) {
 		return getPersistence()
 				   .findByA_C_C_E(anonymousUserId, className, classPK,
 			eventType, start, end);
@@ -1247,7 +1245,7 @@ public class AnalyticsEventUtil {
 	* Returns an ordered range of all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param anonymousUserId the anonymous user ID
@@ -1258,16 +1256,40 @@ public class AnalyticsEventUtil {
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByA_C_C_E(
-		long anonymousUserId, java.lang.String className, long classPK,
-		java.lang.String eventType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findByA_C_C_E(long anonymousUserId,
+		java.lang.String className, long classPK, java.lang.String eventType,
+		int start, int end, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByA_C_C_E(anonymousUserId, className, classPK,
 			eventType, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param className the class name
+	* @param classPK the class p k
+	* @param eventType the event type
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching analytics events
+	*/
+	public static List<AnalyticsEvent> findByA_C_C_E(long anonymousUserId,
+		java.lang.String className, long classPK, java.lang.String eventType,
+		int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByA_C_C_E(anonymousUserId, className, classPK,
+			eventType, start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -1279,15 +1301,12 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByA_C_C_E_First(
-		long anonymousUserId, java.lang.String className, long classPK,
-		java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByA_C_C_E_First(long anonymousUserId,
+		java.lang.String className, long classPK, java.lang.String eventType,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByA_C_C_E_First(anonymousUserId, className, classPK,
 			eventType, orderByComparator);
@@ -1302,13 +1321,10 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByA_C_C_E_First(
-		long anonymousUserId, java.lang.String className, long classPK,
-		java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent fetchByA_C_C_E_First(long anonymousUserId,
+		java.lang.String className, long classPK, java.lang.String eventType,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByA_C_C_E_First(anonymousUserId, className, classPK,
 			eventType, orderByComparator);
@@ -1323,15 +1339,12 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByA_C_C_E_Last(
-		long anonymousUserId, java.lang.String className, long classPK,
-		java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByA_C_C_E_Last(long anonymousUserId,
+		java.lang.String className, long classPK, java.lang.String eventType,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByA_C_C_E_Last(anonymousUserId, className, classPK,
 			eventType, orderByComparator);
@@ -1346,13 +1359,10 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByA_C_C_E_Last(
-		long anonymousUserId, java.lang.String className, long classPK,
-		java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent fetchByA_C_C_E_Last(long anonymousUserId,
+		java.lang.String className, long classPK, java.lang.String eventType,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByA_C_C_E_Last(anonymousUserId, className, classPK,
 			eventType, orderByComparator);
@@ -1368,15 +1378,13 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent[] findByA_C_C_E_PrevAndNext(
+	public static AnalyticsEvent[] findByA_C_C_E_PrevAndNext(
 		long analyticsEventId, long anonymousUserId,
 		java.lang.String className, long classPK, java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByA_C_C_E_PrevAndNext(analyticsEventId,
 			anonymousUserId, className, classPK, eventType, orderByComparator);
@@ -1389,11 +1397,9 @@ public class AnalyticsEventUtil {
 	* @param className the class name
 	* @param classPK the class p k
 	* @param eventType the event type
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByA_C_C_E(long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK, java.lang.String eventType) {
 		getPersistence()
 			.removeByA_C_C_E(anonymousUserId, className, classPK, eventType);
 	}
@@ -1406,11 +1412,9 @@ public class AnalyticsEventUtil {
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @return the number of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByA_C_C_E(long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK, java.lang.String eventType) {
 		return getPersistence()
 				   .countByA_C_C_E(anonymousUserId, className, classPK,
 			eventType);
@@ -1424,12 +1428,10 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param createDate the create date
 	* @return the matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByC_C_E_GtD(
+	public static List<AnalyticsEvent> findByC_C_E_GtD(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		Date createDate) {
 		return getPersistence()
 				   .findByC_C_E_GtD(className, classPK, eventType, createDate);
 	}
@@ -1438,7 +1440,7 @@ public class AnalyticsEventUtil {
 	* Returns a range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param className the class name
@@ -1448,12 +1450,10 @@ public class AnalyticsEventUtil {
 	* @param start the lower bound of the range of analytics events
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @return the range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByC_C_E_GtD(
+	public static List<AnalyticsEvent> findByC_C_E_GtD(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		Date createDate, int start, int end) {
 		return getPersistence()
 				   .findByC_C_E_GtD(className, classPK, eventType, createDate,
 			start, end);
@@ -1463,7 +1463,7 @@ public class AnalyticsEventUtil {
 	* Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param className the class name
@@ -1474,16 +1474,41 @@ public class AnalyticsEventUtil {
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findByC_C_E_GtD(
+	public static List<AnalyticsEvent> findByC_C_E_GtD(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		Date createDate, int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .findByC_C_E_GtD(className, classPK, eventType, createDate,
 			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching analytics events
+	*/
+	public static List<AnalyticsEvent> findByC_C_E_GtD(
+		java.lang.String className, long classPK, java.lang.String eventType,
+		Date createDate, int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_C_E_GtD(className, classPK, eventType, createDate,
+			start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -1495,15 +1520,12 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByC_C_E_GtD_First(
+	public static AnalyticsEvent findByC_C_E_GtD_First(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_C_E_GtD_First(className, classPK, eventType,
 			createDate, orderByComparator);
@@ -1518,13 +1540,10 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByC_C_E_GtD_First(
+	public static AnalyticsEvent fetchByC_C_E_GtD_First(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_E_GtD_First(className, classPK, eventType,
 			createDate, orderByComparator);
@@ -1539,15 +1558,12 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByC_C_E_GtD_Last(
+	public static AnalyticsEvent findByC_C_E_GtD_Last(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_C_E_GtD_Last(className, classPK, eventType,
 			createDate, orderByComparator);
@@ -1562,13 +1578,10 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByC_C_E_GtD_Last(
+	public static AnalyticsEvent fetchByC_C_E_GtD_Last(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_E_GtD_Last(className, classPK, eventType,
 			createDate, orderByComparator);
@@ -1584,15 +1597,13 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent[] findByC_C_E_GtD_PrevAndNext(
+	public static AnalyticsEvent[] findByC_C_E_GtD_PrevAndNext(
 		long analyticsEventId, java.lang.String className, long classPK,
-		java.lang.String eventType, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String eventType, Date createDate,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByC_C_E_GtD_PrevAndNext(analyticsEventId, className,
 			classPK, eventType, createDate, orderByComparator);
@@ -1605,11 +1616,9 @@ public class AnalyticsEventUtil {
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param createDate the create date
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByC_C_E_GtD(java.lang.String className,
-		long classPK, java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK, java.lang.String eventType, Date createDate) {
 		getPersistence()
 			.removeByC_C_E_GtD(className, classPK, eventType, createDate);
 	}
@@ -1622,11 +1631,9 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param createDate the create date
 	* @return the number of matching analytics events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByC_C_E_GtD(java.lang.String className,
-		long classPK, java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK, java.lang.String eventType, Date createDate) {
 		return getPersistence()
 				   .countByC_C_E_GtD(className, classPK, eventType, createDate);
 	}
@@ -1636,8 +1643,7 @@ public class AnalyticsEventUtil {
 	*
 	* @param analyticsEvent the analytics event
 	*/
-	public static void cacheResult(
-		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent) {
+	public static void cacheResult(AnalyticsEvent analyticsEvent) {
 		getPersistence().cacheResult(analyticsEvent);
 	}
 
@@ -1646,8 +1652,7 @@ public class AnalyticsEventUtil {
 	*
 	* @param analyticsEvents the analytics events
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> analyticsEvents) {
+	public static void cacheResult(List<AnalyticsEvent> analyticsEvents) {
 		getPersistence().cacheResult(analyticsEvents);
 	}
 
@@ -1657,8 +1662,7 @@ public class AnalyticsEventUtil {
 	* @param analyticsEventId the primary key for the new analytics event
 	* @return the new analytics event
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent create(
-		long analyticsEventId) {
+	public static AnalyticsEvent create(long analyticsEventId) {
 		return getPersistence().create(analyticsEventId);
 	}
 
@@ -1667,34 +1671,26 @@ public class AnalyticsEventUtil {
 	*
 	* @param analyticsEventId the primary key of the analytics event
 	* @return the analytics event that was removed
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent remove(
-		long analyticsEventId)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent remove(long analyticsEventId)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence().remove(analyticsEventId);
 	}
 
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent updateImpl(
-		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent updateImpl(AnalyticsEvent analyticsEvent) {
 		return getPersistence().updateImpl(analyticsEvent);
 	}
 
 	/**
-	* Returns the analytics event with the primary key or throws a {@link com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException} if it could not be found.
+	* Returns the analytics event with the primary key or throws a {@link NoSuchAnalyticsEventException} if it could not be found.
 	*
 	* @param analyticsEventId the primary key of the analytics event
 	* @return the analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent findByPrimaryKey(
-		long analyticsEventId)
-		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent findByPrimaryKey(long analyticsEventId)
+		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence().findByPrimaryKey(analyticsEventId);
 	}
 
@@ -1703,22 +1699,22 @@ public class AnalyticsEventUtil {
 	*
 	* @param analyticsEventId the primary key of the analytics event
 	* @return the analytics event, or <code>null</code> if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchByPrimaryKey(
-		long analyticsEventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static AnalyticsEvent fetchByPrimaryKey(long analyticsEventId) {
 		return getPersistence().fetchByPrimaryKey(analyticsEventId);
+	}
+
+	public static java.util.Map<java.io.Serializable, AnalyticsEvent> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
 	* Returns all the analytics events.
 	*
 	* @return the analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1726,17 +1722,14 @@ public class AnalyticsEventUtil {
 	* Returns a range of all the analytics events.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of analytics events
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @return the range of analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1744,29 +1737,43 @@ public class AnalyticsEventUtil {
 	* Returns an ordered range of all the analytics events.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of analytics events
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findAll(int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	* Removes all the analytics events from the database.
+	* Returns an ordered range of all the analytics events.
 	*
-	* @throws SystemException if a system exception occurred
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of analytics events
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<AnalyticsEvent> findAll(int start, int end,
+		OrderByComparator<AnalyticsEvent> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Removes all the analytics events from the database.
+	*/
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -1774,30 +1781,15 @@ public class AnalyticsEventUtil {
 	* Returns the number of analytics events.
 	*
 	* @return the number of analytics events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 
 	public static AnalyticsEventPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (AnalyticsEventPersistence)PortletBeanLocatorUtil.locate(com.liferay.content.targeting.analytics.service.ClpSerializer.getServletContextName(),
-					AnalyticsEventPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(AnalyticsEventUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setPersistence(AnalyticsEventPersistence persistence) {
-	}
-
-	private static AnalyticsEventPersistence _persistence;
+	private static ServiceTracker<AnalyticsEventPersistence, AnalyticsEventPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(AnalyticsEventPersistence.class);
 }

@@ -42,8 +42,9 @@ public class DefaultRulesRegistryImpl implements RulesRegistry {
 	}
 
 	@Reference(
-		unbind = "unregisterRule", cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC)
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC, unbind = "unregisterRule"
+	)
 	public void registerRule(Rule rule) {
 		_rules.put(rule.getRuleKey(), rule);
 	}
@@ -52,6 +53,6 @@ public class DefaultRulesRegistryImpl implements RulesRegistry {
 		_rules.remove(rule);
 	}
 
-	private Map<String, Rule> _rules = new ConcurrentHashMap<String, Rule>();
+	private Map<String, Rule> _rules = new ConcurrentHashMap<>();
 
 }

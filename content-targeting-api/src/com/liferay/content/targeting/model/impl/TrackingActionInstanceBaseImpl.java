@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the TrackingActionInstance service. Represents a row in the &quot;CT_TrackingActionInstance&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see TrackingActionInstanceImpl
- * @see com.liferay.content.targeting.model.TrackingActionInstance
+ * @see TrackingActionInstance
  * @generated
  */
+@ProviderType
 public abstract class TrackingActionInstanceBaseImpl
 	extends TrackingActionInstanceModelImpl implements TrackingActionInstance {
 	/*
@@ -39,7 +40,7 @@ public abstract class TrackingActionInstanceBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a tracking action instance model instance should use the {@link TrackingActionInstance} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			TrackingActionInstanceLocalServiceUtil.addTrackingActionInstance(this);
 		}

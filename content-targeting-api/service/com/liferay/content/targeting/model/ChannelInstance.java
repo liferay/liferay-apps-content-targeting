@@ -14,7 +14,11 @@
 
 package com.liferay.content.targeting.model;
 
-import com.liferay.portal.model.PersistedModel;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.Accessor;
 
 /**
  * The extended model interface for the ChannelInstance service. Represents a row in the &quot;CT_ChannelInstance&quot; database table, with each column mapped to a property of this class.
@@ -25,12 +29,32 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.content.targeting.model.impl.ChannelInstanceImpl")
+@ProviderType
 public interface ChannelInstance extends ChannelInstanceModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.ChannelInstanceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ChannelInstance, Long> CHANNEL_INSTANCE_ID_ACCESSOR =
+		new Accessor<ChannelInstance, Long>() {
+			@Override
+			public Long get(ChannelInstance channelInstance) {
+				return channelInstance.getChannelInstanceId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ChannelInstance> getTypeClass() {
+				return ChannelInstance.class;
+			}
+		};
+
 	public java.lang.String getChannelGuid();
 
 	public java.util.Map<java.lang.String, java.lang.String> getValues();

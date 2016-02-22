@@ -14,10 +14,15 @@
 
 package com.liferay.content.targeting.tracking.action.content;
 
-import com.liferay.content.targeting.InvalidTrackingActionException;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
+import com.liferay.content.targeting.exception.InvalidTrackingActionException;
 import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
 import com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler;
 import com.liferay.content.targeting.model.Campaign;
@@ -25,29 +30,24 @@ import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.WebKeys;
+import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,8 +146,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 		portletDataContext.addClassedModel(
 			assetEntryReferencedStagedModelElement,
-			ExportImportPathUtil.getModelPath(
-				assetEntryReferencedStagedModel),
+			ExportImportPathUtil.getModelPath(assetEntryReferencedStagedModel),
 			assetEntryReferencedStagedModel);
 	}
 
@@ -167,9 +166,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 		String summary = LanguageUtil.format(
 			locale, "tracking-content-x",
-			new Object[] {
-				trackingActionInstance.getAlias(),
-			});
+			new Object[] {trackingActionInstance.getAlias()});
 
 		return summary;
 	}
@@ -194,7 +191,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			portletDataContext.getScopeGroupId(), classUuid);
 
-		if (assetEntry != null ) {
+		if (assetEntry != null) {
 			trackingActionInstance.setReferrerClassPK(assetEntry.getClassPK());
 
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
@@ -229,8 +226,8 @@ public class ContentTrackingAction extends BaseTrackingAction {
 				assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
 					assetEntryId);
 			}
-			catch (SystemException e) {
-				_log.error(e);
+			catch (SystemException se) {
+				_log.error(se);
 			}
 
 			if (assetEntry == null) {
@@ -258,11 +255,11 @@ public class ContentTrackingAction extends BaseTrackingAction {
 		long companyId) {
 
 		List<AssetRendererFactory> selectableAssetRendererFactories =
-			new ArrayList<AssetRendererFactory>();
+			new ArrayList<>();
 
-		List<AssetRendererFactory> assetRendererFactories =
+		List<AssetRendererFactory<?>> assetRendererFactories =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-					companyId);
+				companyId);
 
 		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
 			if (!rendererFactory.isSelectable()) {
@@ -298,8 +295,8 @@ public class ContentTrackingAction extends BaseTrackingAction {
 					assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 						assetEntryId);
 				}
-				catch (SystemException e) {
-					_log.error(e);
+				catch (SystemException se) {
+					_log.error(se);
 				}
 			}
 		}
@@ -331,6 +328,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 						assetEntry.getClassName());
 
 			AssetRenderer assetRenderer = null;
+
 			try {
 				assetRenderer = assetRendererFactory.getAssetRenderer(
 					assetEntry.getClassPK());
@@ -380,7 +378,8 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 		if (!trackingContentEnabled) {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
-				context); }
+				context);
+		}
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};

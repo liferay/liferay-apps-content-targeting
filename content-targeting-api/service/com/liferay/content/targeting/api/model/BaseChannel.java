@@ -14,21 +14,21 @@
 
 package com.liferay.content.targeting.api.model;
 
-import com.liferay.content.targeting.InvalidChannelException;
+import com.liferay.content.targeting.exception.InvalidChannelException;
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
+import com.liferay.content.targeting.util.ContentTargetingUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -57,7 +57,7 @@ public abstract class BaseChannel implements Channel {
 
 	@Override
 	public void deleteData(ChannelInstance channelInstance)
-		throws PortalException, SystemException {
+		throws PortalException {
 	}
 
 	@Override
@@ -77,7 +77,8 @@ public abstract class BaseChannel implements Channel {
 	public String getDescription(Locale locale) {
 		String key = getClass().getName().concat(".description");
 
-		String description = ResourceActionsUtil.getModelResource(locale, key);
+		String description = ContentTargetingUtil.getModelResource(
+			locale, getClass(), key);
 
 		if (description.endsWith(key)) {
 			description = getShortDescription(locale);
@@ -116,16 +117,16 @@ public abstract class BaseChannel implements Channel {
 
 	@Override
 	public String getName(Locale locale) {
-		return ResourceActionsUtil.getModelResource(
-			locale, getClass().getName());
+		return ContentTargetingUtil.getModelResource(
+			locale, getClass(), getClass().getName());
 	}
 
 	@Override
 	public String getShortDescription(Locale locale) {
 		String key = getClass().getName().concat(".shortDescription");
 
-		String shortDescription = ResourceActionsUtil.getModelResource(
-			locale, key);
+		String shortDescription = ContentTargetingUtil.getModelResource(
+			locale, getClass(), key);
 
 		if (shortDescription.endsWith(key)) {
 			shortDescription = StringPool.BLANK;

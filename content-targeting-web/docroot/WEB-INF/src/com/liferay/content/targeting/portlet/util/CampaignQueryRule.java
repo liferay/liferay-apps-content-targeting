@@ -15,10 +15,8 @@
 package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.content.targeting.model.Campaign;
-import com.liferay.content.targeting.service.CampaignLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -27,21 +25,18 @@ import java.util.Locale;
 
 import javax.portlet.PortletConfig;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-
 /**
  * @author Eudaldo Alonso
  */
 public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 
-	public CampaignQueryRule() throws PortalException, SystemException {
+	public CampaignQueryRule() throws PortalException {
 		this(0, 0, 0, null);
 	}
 
 	public CampaignQueryRule(
 			long assetEntryId, long campaignId, int index, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		super(assetEntryId, index, locale);
 
@@ -93,11 +88,11 @@ public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 		return super.getGroupId(scopeGroupId);
 	}
 
-	public String getSummary(PortletConfig portletConfig, Locale locale)
-		throws SystemException {
-
+	@Override
+	public String getSummary(PortletConfig portletConfig, Locale locale) {
 		if (_campaign == null) {
-			return LanguageUtil.get(portletConfig, locale, "default");
+			return LanguageUtil.get(
+				portletConfig.getResourceBundle(locale), "default");
 		}
 
 		return getCampaignName(locale);
@@ -117,13 +112,7 @@ public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 
 	protected void initCampaign() {
 		try {
-			Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-			CampaignLocalService campaignLocalService =
-				ServiceTrackerUtil.getService(
-					CampaignLocalService.class, bundle.getBundleContext());
-
-			_campaign = campaignLocalService.getCampaign(_campaignId);
+			_campaign = CampaignLocalServiceUtil.getCampaign(_campaignId);
 		}
 		catch (Exception e) {
 		}

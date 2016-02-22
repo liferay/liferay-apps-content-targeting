@@ -14,29 +14,25 @@
 
 package com.liferay.content.targeting.service.impl;
 
-import com.liferay.content.targeting.DuplicateTrackingActionInstanceException;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
+import com.liferay.content.targeting.exception.DuplicateTrackingActionInstanceException;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.base.TrackingActionInstanceLocalServiceBaseImpl;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.SystemEventConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * The implementation of the tracking action instance local service.
@@ -55,20 +51,13 @@ import org.osgi.framework.FrameworkUtil;
 public class TrackingActionInstanceLocalServiceImpl
 	extends TrackingActionInstanceLocalServiceBaseImpl {
 
-	public TrackingActionInstanceLocalServiceImpl() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_trackingActionsRegistry = ServiceTrackerUtil.getService(
-			TrackingActionsRegistry.class, bundle.getBundleContext());
-	}
-
 	@Override
 	public TrackingActionInstance addTrackingActionInstance(
 			long userId, long reportInstanceId, String trackingActionKey,
 			long campaignId, String alias, String referrerClassName,
 			long referrerClassPK, String elementId, String eventType,
 			String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		validate(0, campaignId, alias);
 
@@ -105,8 +94,8 @@ public class TrackingActionInstanceLocalServiceImpl
 	}
 
 	/**
-	* @deprecated As of 2.0.0
-	*/
+	 * @deprecated As of 2.0.0
+	 */
 	@Deprecated
 	@Override
 	public TrackingActionInstance addTrackingActionInstance(
@@ -114,7 +103,7 @@ public class TrackingActionInstanceLocalServiceImpl
 			String alias, String referrerClassName, long referrerClassPK,
 			String elementId, String eventType, String typeSettings,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addTrackingActionInstance(
 			userId, 0, trackingActionKey, campaignId, alias, referrerClassName,
@@ -126,7 +115,7 @@ public class TrackingActionInstanceLocalServiceImpl
 	@Override
 	public TrackingActionInstance deleteTrackingActionInstance(
 			long trackingActionInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		TrackingActionInstance TrackingActionInstance =
 			trackingActionInstancePersistence.findByPrimaryKey(
@@ -139,7 +128,7 @@ public class TrackingActionInstanceLocalServiceImpl
 	@Override
 	public TrackingActionInstance deleteTrackingActionInstance(
 			TrackingActionInstance trackingActionInstance)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		trackingActionInstancePersistence.remove(trackingActionInstance);
 
@@ -175,16 +164,14 @@ public class TrackingActionInstanceLocalServiceImpl
 
 	@Override
 	public TrackingActionInstance fetchTrackingActionInstance(
-			long campaignId, String alias)
-		throws SystemException {
+		long campaignId, String alias) {
 
 		return trackingActionInstancePersistence.fetchByC_A(campaignId, alias);
 	}
 
 	@Override
 	public TrackingActionInstance fetchTrackingActionInstanceByReportInstanceId(
-			long reportInstanceId, String alias)
-		throws SystemException {
+		long reportInstanceId, String alias) {
 
 		return trackingActionInstancePersistence.fetchByR_A(
 			reportInstanceId, alias);
@@ -192,16 +179,14 @@ public class TrackingActionInstanceLocalServiceImpl
 
 	@Override
 	public List<TrackingActionInstance> getTrackingActionInstances(
-			long campaignId)
-		throws SystemException {
+		long campaignId) {
 
 		return trackingActionInstancePersistence.findByCampaignId(campaignId);
 	}
 
 	@Override
 	public List<TrackingActionInstance> getTrackingActionInstances(
-			long campaignId, String className, long classPK, String eventType)
-		throws SystemException {
+		long campaignId, String className, long classPK, String eventType) {
 
 		return trackingActionInstancePersistence.findByC_R_R_E(
 			campaignId, className, classPK, eventType);
@@ -209,8 +194,7 @@ public class TrackingActionInstanceLocalServiceImpl
 
 	@Override
 	public List<TrackingActionInstance> getTrackingActionInstances(
-			long campaignId, String elementId, String eventType)
-	throws SystemException {
+		long campaignId, String elementId, String eventType) {
 
 		return trackingActionInstancePersistence.findByC_E_E(
 			campaignId, elementId, eventType);
@@ -219,8 +203,7 @@ public class TrackingActionInstanceLocalServiceImpl
 	@Override
 	public List<TrackingActionInstance>
 		getTrackingActionInstancesByReportInstanceId(
-			long reportInstanceId)
-		throws SystemException {
+			long reportInstanceId) {
 
 		return trackingActionInstancePersistence.findByReportInstanceId(
 			reportInstanceId);
@@ -230,8 +213,7 @@ public class TrackingActionInstanceLocalServiceImpl
 	public List<TrackingActionInstance>
 		getTrackingActionInstancesByReportInstanceId(
 			long reportInstanceId, String className, long classPK,
-			String eventType)
-		throws SystemException {
+			String eventType) {
 
 		return trackingActionInstancePersistence.findByR_R_R_E(
 			reportInstanceId, className, classPK, eventType);
@@ -240,17 +222,14 @@ public class TrackingActionInstanceLocalServiceImpl
 	@Override
 	public List<TrackingActionInstance>
 		getTrackingActionInstancesByReportInstanceId(
-			long reportInstanceId, String elementId, String eventType)
-		throws SystemException {
+			long reportInstanceId, String elementId, String eventType) {
 
 		return trackingActionInstancePersistence.findByR_E_E(
 			reportInstanceId, elementId, eventType);
 	}
 
 	@Override
-	public int getTrackingActionInstancesCount(long campaignId)
-		throws SystemException {
-
+	public int getTrackingActionInstancesCount(long campaignId) {
 		return trackingActionInstancePersistence.countByCampaignId(campaignId);
 	}
 
@@ -260,7 +239,7 @@ public class TrackingActionInstanceLocalServiceImpl
 			String referrerClassName, long referrerClassPK, String elementId,
 			String eventType, String typeSettings,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date now = new Date();
 
@@ -289,7 +268,7 @@ public class TrackingActionInstanceLocalServiceImpl
 
 	protected void validate(
 			long trackingInstanceId, long campaignId, String alias)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		TrackingActionInstance trackingActionInstance =
 			trackingActionInstancePersistence.fetchByC_A(campaignId, alias);
@@ -304,9 +283,10 @@ public class TrackingActionInstanceLocalServiceImpl
 		}
 	}
 
+	@ServiceReference(type = TrackingActionsRegistry.class)
+	protected TrackingActionsRegistry _trackingActionsRegistry;
+
 	private static Log _log = LogFactoryUtil.getLog(
 		TrackingActionInstanceLocalServiceImpl.class);
-
-	private TrackingActionsRegistry _trackingActionsRegistry;
 
 }

@@ -14,14 +14,17 @@
 
 package com.liferay.content.targeting.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.StagedGroupedModel;
-import com.liferay.portal.service.ServiceContext;
+import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -40,8 +43,9 @@ import java.util.Date;
  * @see com.liferay.content.targeting.model.impl.TrackingActionInstanceModelImpl
  * @generated
  */
+@ProviderType
 public interface TrackingActionInstanceModel extends BaseModel<TrackingActionInstance>,
-	StagedGroupedModel {
+	GroupedModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -145,10 +149,9 @@ public interface TrackingActionInstanceModel extends BaseModel<TrackingActionIns
 	 * Returns the user uuid of this tracking action instance.
 	 *
 	 * @return the user uuid of this tracking action instance
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this tracking action instance.
@@ -376,19 +379,20 @@ public interface TrackingActionInstanceModel extends BaseModel<TrackingActionIns
 	public Object clone();
 
 	@Override
-	public int compareTo(TrackingActionInstance trackingActionInstance);
+	public int compareTo(
+		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<TrackingActionInstance> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.TrackingActionInstance> toCacheModel();
 
 	@Override
-	public TrackingActionInstance toEscapedModel();
+	public com.liferay.content.targeting.model.TrackingActionInstance toEscapedModel();
 
 	@Override
-	public TrackingActionInstance toUnescapedModel();
+	public com.liferay.content.targeting.model.TrackingActionInstance toUnescapedModel();
 
 	@Override
 	public String toString();

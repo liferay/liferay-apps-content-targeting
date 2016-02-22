@@ -1,4 +1,32 @@
+@import "bourbon";
+
 .campaign-content-display-portlet {
+
+	.rules-panel {
+		.undomanager {
+			margin: 0 10px 0 30px;
+		}
+
+		.user-segment-selector {
+			margin-bottom: 10px;
+			margin-right: 10px;
+			overflow: hidden;
+
+			.tagselector-content {
+				overflow: hidden;
+
+				ul {
+					margin: 10px 0;
+				}
+			}
+		}
+
+		.toolbar {
+			right: 5px !important;
+			text-align: right;
+		}
+	}
+
 	.title {
 		font-size: 20px;
 	}

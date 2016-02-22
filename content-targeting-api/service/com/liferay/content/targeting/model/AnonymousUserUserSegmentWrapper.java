@@ -14,8 +14,15 @@
 
 package com.liferay.content.targeting.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +37,7 @@ import java.util.Map;
  * @see AnonymousUserUserSegment
  * @generated
  */
+@ProviderType
 public class AnonymousUserUserSegmentWrapper implements AnonymousUserUserSegment,
 	ModelWrapper<AnonymousUserUserSegment> {
 	public AnonymousUserUserSegmentWrapper(
@@ -109,176 +117,15 @@ public class AnonymousUserUserSegmentWrapper implements AnonymousUserUserSegment
 		}
 	}
 
-	/**
-	* Returns the primary key of this anonymous user user segment.
-	*
-	* @return the primary key of this anonymous user user segment
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _anonymousUserUserSegment.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new AnonymousUserUserSegmentWrapper((AnonymousUserUserSegment)_anonymousUserUserSegment.clone());
 	}
 
-	/**
-	* Sets the primary key of this anonymous user user segment.
-	*
-	* @param primaryKey the primary key of this anonymous user user segment
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_anonymousUserUserSegment.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the anonymous user user segment ID of this anonymous user user segment.
-	*
-	* @return the anonymous user user segment ID of this anonymous user user segment
-	*/
-	@Override
-	public long getAnonymousUserUserSegmentId() {
-		return _anonymousUserUserSegment.getAnonymousUserUserSegmentId();
-	}
-
-	/**
-	* Sets the anonymous user user segment ID of this anonymous user user segment.
-	*
-	* @param anonymousUserUserSegmentId the anonymous user user segment ID of this anonymous user user segment
-	*/
-	@Override
-	public void setAnonymousUserUserSegmentId(long anonymousUserUserSegmentId) {
-		_anonymousUserUserSegment.setAnonymousUserUserSegmentId(anonymousUserUserSegmentId);
-	}
-
-	/**
-	* Returns the company ID of this anonymous user user segment.
-	*
-	* @return the company ID of this anonymous user user segment
-	*/
-	@Override
-	public long getCompanyId() {
-		return _anonymousUserUserSegment.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this anonymous user user segment.
-	*
-	* @param companyId the company ID of this anonymous user user segment
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_anonymousUserUserSegment.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the modified date of this anonymous user user segment.
-	*
-	* @return the modified date of this anonymous user user segment
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _anonymousUserUserSegment.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this anonymous user user segment.
-	*
-	* @param modifiedDate the modified date of this anonymous user user segment
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_anonymousUserUserSegment.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the anonymous user ID of this anonymous user user segment.
-	*
-	* @return the anonymous user ID of this anonymous user user segment
-	*/
-	@Override
-	public long getAnonymousUserId() {
-		return _anonymousUserUserSegment.getAnonymousUserId();
-	}
-
-	/**
-	* Sets the anonymous user ID of this anonymous user user segment.
-	*
-	* @param anonymousUserId the anonymous user ID of this anonymous user user segment
-	*/
-	@Override
-	public void setAnonymousUserId(long anonymousUserId) {
-		_anonymousUserUserSegment.setAnonymousUserId(anonymousUserId);
-	}
-
-	/**
-	* Returns the anonymous user uuid of this anonymous user user segment.
-	*
-	* @return the anonymous user uuid of this anonymous user user segment
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.lang.String getAnonymousUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _anonymousUserUserSegment.getAnonymousUserUuid();
-	}
-
-	/**
-	* Sets the anonymous user uuid of this anonymous user user segment.
-	*
-	* @param anonymousUserUuid the anonymous user uuid of this anonymous user user segment
-	*/
-	@Override
-	public void setAnonymousUserUuid(java.lang.String anonymousUserUuid) {
-		_anonymousUserUserSegment.setAnonymousUserUuid(anonymousUserUuid);
-	}
-
-	/**
-	* Returns the user segment ID of this anonymous user user segment.
-	*
-	* @return the user segment ID of this anonymous user user segment
-	*/
-	@Override
-	public long getUserSegmentId() {
-		return _anonymousUserUserSegment.getUserSegmentId();
-	}
-
-	/**
-	* Sets the user segment ID of this anonymous user user segment.
-	*
-	* @param userSegmentId the user segment ID of this anonymous user user segment
-	*/
-	@Override
-	public void setUserSegmentId(long userSegmentId) {
-		_anonymousUserUserSegment.setUserSegmentId(userSegmentId);
-	}
-
-	/**
-	* Returns the manual of this anonymous user user segment.
-	*
-	* @return the manual of this anonymous user user segment
-	*/
-	@Override
-	public boolean getManual() {
-		return _anonymousUserUserSegment.getManual();
-	}
-
-	/**
-	* Returns <code>true</code> if this anonymous user user segment is manual.
-	*
-	* @return <code>true</code> if this anonymous user user segment is manual; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isManual() {
-		return _anonymousUserUserSegment.isManual();
-	}
-
-	/**
-	* Sets whether this anonymous user user segment is manual.
-	*
-	* @param manual the manual of this anonymous user user segment
-	*/
-	@Override
-	public void setManual(boolean manual) {
-		_anonymousUserUserSegment.setManual(manual);
+	public int compareTo(
+		com.liferay.content.targeting.model.AnonymousUserUserSegment anonymousUserUserSegment) {
+		return _anonymousUserUserSegment.compareTo(anonymousUserUserSegment);
 	}
 
 	/**
@@ -292,6 +139,101 @@ public class AnonymousUserUserSegmentWrapper implements AnonymousUserUserSegment
 	}
 
 	/**
+	* Returns the anonymous user ID of this anonymous user user segment.
+	*
+	* @return the anonymous user ID of this anonymous user user segment
+	*/
+	@Override
+	public long getAnonymousUserId() {
+		return _anonymousUserUserSegment.getAnonymousUserId();
+	}
+
+	/**
+	* Returns the anonymous user user segment ID of this anonymous user user segment.
+	*
+	* @return the anonymous user user segment ID of this anonymous user user segment
+	*/
+	@Override
+	public long getAnonymousUserUserSegmentId() {
+		return _anonymousUserUserSegment.getAnonymousUserUserSegmentId();
+	}
+
+	/**
+	* Returns the anonymous user uuid of this anonymous user user segment.
+	*
+	* @return the anonymous user uuid of this anonymous user user segment
+	*/
+	@Override
+	public java.lang.String getAnonymousUserUuid() {
+		return _anonymousUserUserSegment.getAnonymousUserUuid();
+	}
+
+	/**
+	* Returns the company ID of this anonymous user user segment.
+	*
+	* @return the company ID of this anonymous user user segment
+	*/
+	@Override
+	public long getCompanyId() {
+		return _anonymousUserUserSegment.getCompanyId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _anonymousUserUserSegment.getExpandoBridge();
+	}
+
+	/**
+	* Returns the manual of this anonymous user user segment.
+	*
+	* @return the manual of this anonymous user user segment
+	*/
+	@Override
+	public boolean getManual() {
+		return _anonymousUserUserSegment.getManual();
+	}
+
+	/**
+	* Returns the modified date of this anonymous user user segment.
+	*
+	* @return the modified date of this anonymous user user segment
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _anonymousUserUserSegment.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this anonymous user user segment.
+	*
+	* @return the primary key of this anonymous user user segment
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _anonymousUserUserSegment.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _anonymousUserUserSegment.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the user segment ID of this anonymous user user segment.
+	*
+	* @return the user segment ID of this anonymous user user segment
+	*/
+	@Override
+	public long getUserSegmentId() {
+		return _anonymousUserUserSegment.getUserSegmentId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _anonymousUserUserSegment.hashCode();
+	}
+
+	/**
 	* Returns <code>true</code> if this anonymous user user segment is active.
 	*
 	* @return <code>true</code> if this anonymous user user segment is active; <code>false</code> otherwise
@@ -299,6 +241,36 @@ public class AnonymousUserUserSegmentWrapper implements AnonymousUserUserSegment
 	@Override
 	public boolean isActive() {
 		return _anonymousUserUserSegment.isActive();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _anonymousUserUserSegment.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _anonymousUserUserSegment.isEscapedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this anonymous user user segment is manual.
+	*
+	* @return <code>true</code> if this anonymous user user segment is manual; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isManual() {
+		return _anonymousUserUserSegment.isManual();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _anonymousUserUserSegment.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_anonymousUserUserSegment.persist();
 	}
 
 	/**
@@ -311,19 +283,34 @@ public class AnonymousUserUserSegmentWrapper implements AnonymousUserUserSegment
 		_anonymousUserUserSegment.setActive(active);
 	}
 
+	/**
+	* Sets the anonymous user ID of this anonymous user user segment.
+	*
+	* @param anonymousUserId the anonymous user ID of this anonymous user user segment
+	*/
 	@Override
-	public boolean isNew() {
-		return _anonymousUserUserSegment.isNew();
+	public void setAnonymousUserId(long anonymousUserId) {
+		_anonymousUserUserSegment.setAnonymousUserId(anonymousUserId);
 	}
 
+	/**
+	* Sets the anonymous user user segment ID of this anonymous user user segment.
+	*
+	* @param anonymousUserUserSegmentId the anonymous user user segment ID of this anonymous user user segment
+	*/
 	@Override
-	public void setNew(boolean n) {
-		_anonymousUserUserSegment.setNew(n);
+	public void setAnonymousUserUserSegmentId(long anonymousUserUserSegmentId) {
+		_anonymousUserUserSegment.setAnonymousUserUserSegmentId(anonymousUserUserSegmentId);
 	}
 
+	/**
+	* Sets the anonymous user uuid of this anonymous user user segment.
+	*
+	* @param anonymousUserUuid the anonymous user uuid of this anonymous user user segment
+	*/
 	@Override
-	public boolean isCachedModel() {
-		return _anonymousUserUserSegment.isCachedModel();
+	public void setAnonymousUserUuid(java.lang.String anonymousUserUuid) {
+		_anonymousUserUserSegment.setAnonymousUserUuid(anonymousUserUuid);
 	}
 
 	@Override
@@ -331,62 +318,84 @@ public class AnonymousUserUserSegmentWrapper implements AnonymousUserUserSegment
 		_anonymousUserUserSegment.setCachedModel(cachedModel);
 	}
 
+	/**
+	* Sets the company ID of this anonymous user user segment.
+	*
+	* @param companyId the company ID of this anonymous user user segment
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _anonymousUserUserSegment.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _anonymousUserUserSegment.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_anonymousUserUserSegment.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _anonymousUserUserSegment.getExpandoBridge();
+	public void setCompanyId(long companyId) {
+		_anonymousUserUserSegment.setCompanyId(companyId);
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_anonymousUserUserSegment.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_anonymousUserUserSegment.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_anonymousUserUserSegment.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets whether this anonymous user user segment is manual.
+	*
+	* @param manual the manual of this anonymous user user segment
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new AnonymousUserUserSegmentWrapper((AnonymousUserUserSegment)_anonymousUserUserSegment.clone());
+	public void setManual(boolean manual) {
+		_anonymousUserUserSegment.setManual(manual);
+	}
+
+	/**
+	* Sets the modified date of this anonymous user user segment.
+	*
+	* @param modifiedDate the modified date of this anonymous user user segment
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_anonymousUserUserSegment.setModifiedDate(modifiedDate);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.model.AnonymousUserUserSegment anonymousUserUserSegment) {
-		return _anonymousUserUserSegment.compareTo(anonymousUserUserSegment);
+	public void setNew(boolean n) {
+		_anonymousUserUserSegment.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this anonymous user user segment.
+	*
+	* @param primaryKey the primary key of this anonymous user user segment
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_anonymousUserUserSegment.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _anonymousUserUserSegment.hashCode();
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+		_anonymousUserUserSegment.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the user segment ID of this anonymous user user segment.
+	*
+	* @param userSegmentId the user segment ID of this anonymous user user segment
+	*/
+	@Override
+	public void setUserSegmentId(long userSegmentId) {
+		_anonymousUserUserSegment.setUserSegmentId(userSegmentId);
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.model.AnonymousUserUserSegment> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.content.targeting.model.AnonymousUserUserSegment> toCacheModel() {
 		return _anonymousUserUserSegment.toCacheModel();
 	}
 
@@ -396,24 +405,18 @@ public class AnonymousUserUserSegmentWrapper implements AnonymousUserUserSegment
 	}
 
 	@Override
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment toUnescapedModel() {
-		return new AnonymousUserUserSegmentWrapper(_anonymousUserUserSegment.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _anonymousUserUserSegment.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _anonymousUserUserSegment.toXmlString();
+	public com.liferay.content.targeting.model.AnonymousUserUserSegment toUnescapedModel() {
+		return new AnonymousUserUserSegmentWrapper(_anonymousUserUserSegment.toUnescapedModel());
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_anonymousUserUserSegment.persist();
+	public java.lang.String toXmlString() {
+		return _anonymousUserUserSegment.toXmlString();
 	}
 
 	@Override
@@ -436,16 +439,19 @@ public class AnonymousUserUserSegmentWrapper implements AnonymousUserUserSegment
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	public AnonymousUserUserSegment getWrappedAnonymousUserUserSegment() {
+	@Override
+	public AnonymousUserUserSegment getWrappedModel() {
 		return _anonymousUserUserSegment;
 	}
 
 	@Override
-	public AnonymousUserUserSegment getWrappedModel() {
-		return _anonymousUserUserSegment;
+	public boolean isEntityCacheEnabled() {
+		return _anonymousUserUserSegment.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _anonymousUserUserSegment.isFinderCacheEnabled();
 	}
 
 	@Override
@@ -453,5 +459,5 @@ public class AnonymousUserUserSegmentWrapper implements AnonymousUserUserSegment
 		_anonymousUserUserSegment.resetOriginalValues();
 	}
 
-	private AnonymousUserUserSegment _anonymousUserUserSegment;
+	private final AnonymousUserUserSegment _anonymousUserUserSegment;
 }

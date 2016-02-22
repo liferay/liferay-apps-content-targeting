@@ -14,11 +14,14 @@
 
 package com.liferay.content.targeting.anonymous.users.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +37,33 @@ import java.util.Date;
  * @see AnonymousUser
  * @generated
  */
+@ProviderType
 public class AnonymousUserCacheModel implements CacheModel<AnonymousUser>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AnonymousUserCacheModel)) {
+			return false;
+		}
+
+		AnonymousUserCacheModel anonymousUserCacheModel = (AnonymousUserCacheModel)obj;
+
+		if (anonymousUserId == anonymousUserCacheModel.anonymousUserId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, anonymousUserId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
@@ -121,8 +149,11 @@ public class AnonymousUserCacheModel implements CacheModel<AnonymousUser>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		anonymousUserId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -142,7 +173,9 @@ public class AnonymousUserCacheModel implements CacheModel<AnonymousUser>,
 		}
 
 		objectOutput.writeLong(anonymousUserId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {

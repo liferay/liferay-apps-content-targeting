@@ -172,7 +172,7 @@ public class TimeRule extends BaseRule {
 				startTimeMinute = jsonObj.getInt("startTimeMinute");
 				startTimeAmPm = jsonObj.getInt("startTimeAmPm");
 			}
-			catch (JSONException jse) {
+			catch (JSONException jsone) {
 			}
 		}
 
@@ -211,7 +211,7 @@ public class TimeRule extends BaseRule {
 
 			return endCalendar;
 		}
-		catch (JSONException jse) {
+		catch (JSONException jsone) {
 		}
 
 		return now;
@@ -240,7 +240,7 @@ public class TimeRule extends BaseRule {
 
 			return startCalendar;
 		}
-		catch (JSONException jse) {
+		catch (JSONException jsone) {
 		}
 
 		return now;

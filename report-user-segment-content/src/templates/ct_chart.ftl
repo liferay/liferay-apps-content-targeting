@@ -22,7 +22,7 @@
 	}
 </style>
 
-<@aui["script"] use="charts">
+<@liferay_aui["script"] use="charts">
 	var userSegmentContentChartDataValues = [
 		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as userSegmentContent>
 			{content:'${userSegmentContent.getTitle(locale)}', count:${userSegmentContent.getCount()}}<#if userSegmentContent_has_next>,</#if>

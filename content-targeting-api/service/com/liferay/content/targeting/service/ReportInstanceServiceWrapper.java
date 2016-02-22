@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ReportInstanceService}.
@@ -23,39 +25,12 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see ReportInstanceService
  * @generated
  */
+@ProviderType
 public class ReportInstanceServiceWrapper implements ReportInstanceService,
 	ServiceWrapper<ReportInstanceService> {
 	public ReportInstanceServiceWrapper(
 		ReportInstanceService reportInstanceService) {
 		_reportInstanceService = reportInstanceService;
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _reportInstanceService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_reportInstanceService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _reportInstanceService.invokeMethod(name, parameterTypes,
-			arguments);
 	}
 
 	@Override
@@ -65,9 +40,8 @@ public class ReportInstanceServiceWrapper implements ReportInstanceService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _reportInstanceService.addReportInstance(userId, reportKey,
 			className, classPK, nameMap, descriptionMap, typeSettings,
 			serviceContext);
@@ -76,45 +50,57 @@ public class ReportInstanceServiceWrapper implements ReportInstanceService,
 	/**
 	* @deprecated As of 2.0.0
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.content.targeting.model.ReportInstance addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _reportInstanceService.addReportInstance(userId, reportKey,
 			className, classPK, typeSettings, serviceContext);
 	}
 
 	@Override
 	public com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long reportInstanceId) {
 		return _reportInstanceService.fetchReportInstance(reportInstanceId);
 	}
 
 	@Override
 	public com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String reportKey, java.lang.String className, long classPK) {
 		return _reportInstanceService.fetchReportInstance(reportKey, className,
 			classPK);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
-		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String reportKey, java.lang.String className, long classPK) {
 		return _reportInstanceService.findReportInstances(reportKey, className,
 			classPK);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _reportInstanceService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		return _reportInstanceService.getReportInstances(className, classPK);
+	}
+
+	@Override
+	public com.liferay.content.targeting.model.ReportInstance updateReportInstance(
+		com.liferay.content.targeting.model.ReportInstance reportInstance) {
+		return _reportInstanceService.updateReportInstance(reportInstance);
 	}
 
 	@Override
@@ -124,34 +110,11 @@ public class ReportInstanceServiceWrapper implements ReportInstanceService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _reportInstanceService.updateReportInstance(reportInstanceId,
 			userId, reportKey, className, classPK, nameMap, descriptionMap,
 			typeSettings, serviceContext);
-	}
-
-	@Override
-	public com.liferay.content.targeting.model.ReportInstance updateReportInstance(
-		com.liferay.content.targeting.model.ReportInstance reportInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _reportInstanceService.updateReportInstance(reportInstance);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public ReportInstanceService getWrappedReportInstanceService() {
-		return _reportInstanceService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedReportInstanceService(
-		ReportInstanceService reportInstanceService) {
-		_reportInstanceService = reportInstanceService;
 	}
 
 	@Override

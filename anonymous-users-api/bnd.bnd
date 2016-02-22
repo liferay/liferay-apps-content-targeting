@@ -7,21 +7,21 @@ Export-Package:\
 	com.liferay.content.targeting.anonymous.users.service,\
 	com.liferay.content.targeting.anonymous.users.service.messaging,\
 	com.liferay.content.targeting.anonymous.users.util
-Import-Package:\
-	com.liferay.osgi.util.service,\
-	*;resolution:="optional"
+Import-Package: *;resolution:="optional"
 Include-Resource:\
- 	classes,\
+	classes,\
+	META-INF/sql=sql,\
 	WEB-INF/classes/META-INF=classes/META-INF/,\
+	WEB-INF/classes/META-INF/spring=classes/META-INF/spring,\
 	WEB-INF/sql=sql,\
-	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
-	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
 	@lib/com.liferay.content.targeting.anonymous.users.api-service.jar
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
 Require-Capability:\
-	system.packages.extra;\
-	filter:="(version=1.0.0)",\
-	content.targeting.deploy.extender;\
-	filter:="(version=1.0.0)"
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 Service-Component: com.liferay.content.targeting.anonymous.users.*
 Web-ContextPath: /anonymous-users-api
 -baseline: *;version="2.0.0"
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

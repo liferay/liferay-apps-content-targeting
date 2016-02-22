@@ -14,19 +14,23 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.util.tracker.ServiceTracker;
+
+import java.util.Date;
 import java.util.List;
 
 /**
- * The persistence utility for the c t action service. This utility wraps {@link CTActionPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the c t action service. This utility wraps {@link com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.impl.CTActionPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -34,9 +38,10 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see CTActionPersistence
- * @see CTActionPersistenceImpl
+ * @see com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.impl.CTActionPersistenceImpl
  * @generated
  */
+@ProviderType
 public class CTActionUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -45,251 +50,392 @@ public class CTActionUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache()
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#clearCache(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(CTAction ctAction) {
 		getPersistence().clearCache(ctAction);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
-	public static List<CTAction> findWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static List<CTAction> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<CTAction> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<CTAction> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
-	public static CTAction update(CTAction ctAction) throws SystemException {
+	public static CTAction update(CTAction ctAction) {
 		return getPersistence().update(ctAction);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static CTAction update(CTAction ctAction,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(ctAction, serviceContext);
 	}
 
 	/**
-	* Returns all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns all the c t actions where campaignId = &#63;.
 	*
-	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
+	* @param campaignId the campaign ID
 	* @return the matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findByR_GtD(
-		long reportInstanceId, java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByR_GtD(reportInstanceId, modifiedDate);
+	public static List<CTAction> findByCampaignId(long campaignId) {
+		return getPersistence().findByCampaignId(campaignId);
 	}
 
 	/**
-	* Returns a range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns a range of all the c t actions where campaignId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
+	* @param campaignId the campaign ID
 	* @param start the lower bound of the range of c t actions
 	* @param end the upper bound of the range of c t actions (not inclusive)
 	* @return the range of matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findByR_GtD(
-		long reportInstanceId, java.util.Date modifiedDate, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByR_GtD(reportInstanceId, modifiedDate, start, end);
+	public static List<CTAction> findByCampaignId(long campaignId, int start,
+		int end) {
+		return getPersistence().findByCampaignId(campaignId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns an ordered range of all the c t actions where campaignId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
+	* @param campaignId the campaign ID
 	* @param start the lower bound of the range of c t actions
 	* @param end the upper bound of the range of c t actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findByR_GtD(
-		long reportInstanceId, java.util.Date modifiedDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<CTAction> findByCampaignId(long campaignId, int start,
+		int end, OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
-				   .findByR_GtD(reportInstanceId, modifiedDate, start, end,
-			orderByComparator);
+				   .findByCampaignId(campaignId, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the first c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns an ordered range of all the c t actions where campaignId = &#63;.
 	*
-	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param campaignId the campaign ID
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching c t actions
+	*/
+	public static List<CTAction> findByCampaignId(long campaignId, int start,
+		int end, OrderByComparator<CTAction> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCampaignId(campaignId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first c t action in the ordered set where campaignId = &#63;.
+	*
+	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchCTActionException if a matching c t action could not be found
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction findByR_GtD_First(
-		long reportInstanceId, java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction findByCampaignId_First(long campaignId,
+		OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
-				   .findByR_GtD_First(reportInstanceId, modifiedDate,
-			orderByComparator);
+				   .findByCampaignId_First(campaignId, orderByComparator);
 	}
 
 	/**
-	* Returns the first c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the first c t action in the ordered set where campaignId = &#63;.
 	*
-	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
+	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction fetchByR_GtD_First(
-		long reportInstanceId, java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction fetchByCampaignId_First(long campaignId,
+		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
-				   .fetchByR_GtD_First(reportInstanceId, modifiedDate,
-			orderByComparator);
+				   .fetchByCampaignId_First(campaignId, orderByComparator);
 	}
 
 	/**
-	* Returns the last c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the last c t action in the ordered set where campaignId = &#63;.
 	*
-	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
+	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchCTActionException if a matching c t action could not be found
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction findByR_GtD_Last(
-		long reportInstanceId, java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction findByCampaignId_Last(long campaignId,
+		OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
-				   .findByR_GtD_Last(reportInstanceId, modifiedDate,
-			orderByComparator);
+				   .findByCampaignId_Last(campaignId, orderByComparator);
 	}
 
 	/**
-	* Returns the last c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the last c t action in the ordered set where campaignId = &#63;.
 	*
-	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
+	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction fetchByR_GtD_Last(
-		long reportInstanceId, java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction fetchByCampaignId_Last(long campaignId,
+		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
-				   .fetchByR_GtD_Last(reportInstanceId, modifiedDate,
+				   .fetchByCampaignId_Last(campaignId, orderByComparator);
+	}
+
+	/**
+	* Returns the c t actions before and after the current c t action in the ordered set where campaignId = &#63;.
+	*
+	* @param CTActionId the primary key of the current c t action
+	* @param campaignId the campaign ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next c t action
+	* @throws NoSuchCTActionException if a c t action with the primary key could not be found
+	*/
+	public static CTAction[] findByCampaignId_PrevAndNext(long CTActionId,
+		long campaignId, OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
+		return getPersistence()
+				   .findByCampaignId_PrevAndNext(CTActionId, campaignId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Removes all the c t actions where campaignId = &#63; from the database.
+	*
+	* @param campaignId the campaign ID
+	*/
+	public static void removeByCampaignId(long campaignId) {
+		getPersistence().removeByCampaignId(campaignId);
+	}
+
+	/**
+	* Returns the number of c t actions where campaignId = &#63;.
+	*
+	* @param campaignId the campaign ID
+	* @return the number of matching c t actions
+	*/
+	public static int countByCampaignId(long campaignId) {
+		return getPersistence().countByCampaignId(campaignId);
+	}
+
+	/**
+	* Returns all the c t actions where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @return the matching c t actions
+	*/
+	public static List<CTAction> findByReportInstanceId(long reportInstanceId) {
+		return getPersistence().findByReportInstanceId(reportInstanceId);
+	}
+
+	/**
+	* Returns a range of all the c t actions where reportInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @return the range of matching c t actions
+	*/
+	public static List<CTAction> findByReportInstanceId(long reportInstanceId,
+		int start, int end) {
+		return getPersistence()
+				   .findByReportInstanceId(reportInstanceId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the c t actions where reportInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching c t actions
+	*/
+	public static List<CTAction> findByReportInstanceId(long reportInstanceId,
+		int start, int end, OrderByComparator<CTAction> orderByComparator) {
+		return getPersistence()
+				   .findByReportInstanceId(reportInstanceId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the c t actions where reportInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching c t actions
+	*/
+	public static List<CTAction> findByReportInstanceId(long reportInstanceId,
+		int start, int end, OrderByComparator<CTAction> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByReportInstanceId(reportInstanceId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first c t action in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching c t action
+	* @throws NoSuchCTActionException if a matching c t action could not be found
+	*/
+	public static CTAction findByReportInstanceId_First(long reportInstanceId,
+		OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
+		return getPersistence()
+				   .findByReportInstanceId_First(reportInstanceId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first c t action in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
+	*/
+	public static CTAction fetchByReportInstanceId_First(
+		long reportInstanceId, OrderByComparator<CTAction> orderByComparator) {
+		return getPersistence()
+				   .fetchByReportInstanceId_First(reportInstanceId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last c t action in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching c t action
+	* @throws NoSuchCTActionException if a matching c t action could not be found
+	*/
+	public static CTAction findByReportInstanceId_Last(long reportInstanceId,
+		OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
+		return getPersistence()
+				   .findByReportInstanceId_Last(reportInstanceId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last c t action in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
+	*/
+	public static CTAction fetchByReportInstanceId_Last(long reportInstanceId,
+		OrderByComparator<CTAction> orderByComparator) {
+		return getPersistence()
+				   .fetchByReportInstanceId_Last(reportInstanceId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63;.
 	*
 	* @param CTActionId the primary key of the current c t action
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a c t action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchCTActionException if a c t action with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction[] findByR_GtD_PrevAndNext(
-		long CTActionId, long reportInstanceId, java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction[] findByReportInstanceId_PrevAndNext(
+		long CTActionId, long reportInstanceId,
+		OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
-				   .findByR_GtD_PrevAndNext(CTActionId, reportInstanceId,
-			modifiedDate, orderByComparator);
+				   .findByReportInstanceId_PrevAndNext(CTActionId,
+			reportInstanceId, orderByComparator);
 	}
 
 	/**
-	* Removes all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63; from the database.
+	* Removes all the c t actions where reportInstanceId = &#63; from the database.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByR_GtD(long reportInstanceId,
-		java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByR_GtD(reportInstanceId, modifiedDate);
+	public static void removeByReportInstanceId(long reportInstanceId) {
+		getPersistence().removeByReportInstanceId(reportInstanceId);
 	}
 
 	/**
-	* Returns the number of c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the number of c t actions where reportInstanceId = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	* @return the number of matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByR_GtD(long reportInstanceId,
-		java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByR_GtD(reportInstanceId, modifiedDate);
+	public static int countByReportInstanceId(long reportInstanceId) {
+		return getPersistence().countByReportInstanceId(reportInstanceId);
 	}
 
 	/**
@@ -298,11 +444,9 @@ public class CTActionUtil {
 	* @param reportInstanceId the report instance ID
 	* @param elementId the element ID
 	* @return the matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findByR_E(
-		long reportInstanceId, java.lang.String elementId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<CTAction> findByR_E(long reportInstanceId,
+		java.lang.String elementId) {
 		return getPersistence().findByR_E(reportInstanceId, elementId);
 	}
 
@@ -310,7 +454,7 @@ public class CTActionUtil {
 	* Returns a range of all the c t actions where reportInstanceId = &#63; and elementId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportInstanceId the report instance ID
@@ -318,11 +462,9 @@ public class CTActionUtil {
 	* @param start the lower bound of the range of c t actions
 	* @param end the upper bound of the range of c t actions (not inclusive)
 	* @return the range of matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findByR_E(
-		long reportInstanceId, java.lang.String elementId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<CTAction> findByR_E(long reportInstanceId,
+		java.lang.String elementId, int start, int end) {
 		return getPersistence()
 				   .findByR_E(reportInstanceId, elementId, start, end);
 	}
@@ -331,7 +473,7 @@ public class CTActionUtil {
 	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and elementId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportInstanceId the report instance ID
@@ -340,15 +482,36 @@ public class CTActionUtil {
 	* @param end the upper bound of the range of c t actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findByR_E(
-		long reportInstanceId, java.lang.String elementId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<CTAction> findByR_E(long reportInstanceId,
+		java.lang.String elementId, int start, int end,
+		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
 				   .findByR_E(reportInstanceId, elementId, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and elementId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param elementId the element ID
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching c t actions
+	*/
+	public static List<CTAction> findByR_E(long reportInstanceId,
+		java.lang.String elementId, int start, int end,
+		OrderByComparator<CTAction> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByR_E(reportInstanceId, elementId, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -358,14 +521,12 @@ public class CTActionUtil {
 	* @param elementId the element ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchCTActionException if a matching c t action could not be found
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction findByR_E_First(
-		long reportInstanceId, java.lang.String elementId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction findByR_E_First(long reportInstanceId,
+		java.lang.String elementId,
+		OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
 				   .findByR_E_First(reportInstanceId, elementId,
 			orderByComparator);
@@ -378,12 +539,10 @@ public class CTActionUtil {
 	* @param elementId the element ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction fetchByR_E_First(
-		long reportInstanceId, java.lang.String elementId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction fetchByR_E_First(long reportInstanceId,
+		java.lang.String elementId,
+		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_E_First(reportInstanceId, elementId,
 			orderByComparator);
@@ -396,14 +555,12 @@ public class CTActionUtil {
 	* @param elementId the element ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchCTActionException if a matching c t action could not be found
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction findByR_E_Last(
-		long reportInstanceId, java.lang.String elementId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction findByR_E_Last(long reportInstanceId,
+		java.lang.String elementId,
+		OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
 				   .findByR_E_Last(reportInstanceId, elementId,
 			orderByComparator);
@@ -416,12 +573,10 @@ public class CTActionUtil {
 	* @param elementId the element ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction fetchByR_E_Last(
-		long reportInstanceId, java.lang.String elementId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction fetchByR_E_Last(long reportInstanceId,
+		java.lang.String elementId,
+		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_E_Last(reportInstanceId, elementId,
 			orderByComparator);
@@ -435,14 +590,12 @@ public class CTActionUtil {
 	* @param elementId the element ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a c t action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchCTActionException if a c t action with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction[] findByR_E_PrevAndNext(
-		long CTActionId, long reportInstanceId, java.lang.String elementId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction[] findByR_E_PrevAndNext(long CTActionId,
+		long reportInstanceId, java.lang.String elementId,
+		OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
 				   .findByR_E_PrevAndNext(CTActionId, reportInstanceId,
 			elementId, orderByComparator);
@@ -453,11 +606,9 @@ public class CTActionUtil {
 	*
 	* @param reportInstanceId the report instance ID
 	* @param elementId the element ID
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByR_E(long reportInstanceId,
-		java.lang.String elementId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String elementId) {
 		getPersistence().removeByR_E(reportInstanceId, elementId);
 	}
 
@@ -467,12 +618,190 @@ public class CTActionUtil {
 	* @param reportInstanceId the report instance ID
 	* @param elementId the element ID
 	* @return the number of matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByR_E(long reportInstanceId,
-		java.lang.String elementId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String elementId) {
 		return getPersistence().countByR_E(reportInstanceId, elementId);
+	}
+
+	/**
+	* Returns all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @return the matching c t actions
+	*/
+	public static List<CTAction> findByR_GtD(long reportInstanceId,
+		Date modifiedDate) {
+		return getPersistence().findByR_GtD(reportInstanceId, modifiedDate);
+	}
+
+	/**
+	* Returns a range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @return the range of matching c t actions
+	*/
+	public static List<CTAction> findByR_GtD(long reportInstanceId,
+		Date modifiedDate, int start, int end) {
+		return getPersistence()
+				   .findByR_GtD(reportInstanceId, modifiedDate, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching c t actions
+	*/
+	public static List<CTAction> findByR_GtD(long reportInstanceId,
+		Date modifiedDate, int start, int end,
+		OrderByComparator<CTAction> orderByComparator) {
+		return getPersistence()
+				   .findByR_GtD(reportInstanceId, modifiedDate, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching c t actions
+	*/
+	public static List<CTAction> findByR_GtD(long reportInstanceId,
+		Date modifiedDate, int start, int end,
+		OrderByComparator<CTAction> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByR_GtD(reportInstanceId, modifiedDate, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching c t action
+	* @throws NoSuchCTActionException if a matching c t action could not be found
+	*/
+	public static CTAction findByR_GtD_First(long reportInstanceId,
+		Date modifiedDate, OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
+		return getPersistence()
+				   .findByR_GtD_First(reportInstanceId, modifiedDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
+	*/
+	public static CTAction fetchByR_GtD_First(long reportInstanceId,
+		Date modifiedDate, OrderByComparator<CTAction> orderByComparator) {
+		return getPersistence()
+				   .fetchByR_GtD_First(reportInstanceId, modifiedDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching c t action
+	* @throws NoSuchCTActionException if a matching c t action could not be found
+	*/
+	public static CTAction findByR_GtD_Last(long reportInstanceId,
+		Date modifiedDate, OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
+		return getPersistence()
+				   .findByR_GtD_Last(reportInstanceId, modifiedDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
+	*/
+	public static CTAction fetchByR_GtD_Last(long reportInstanceId,
+		Date modifiedDate, OrderByComparator<CTAction> orderByComparator) {
+		return getPersistence()
+				   .fetchByR_GtD_Last(reportInstanceId, modifiedDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param CTActionId the primary key of the current c t action
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next c t action
+	* @throws NoSuchCTActionException if a c t action with the primary key could not be found
+	*/
+	public static CTAction[] findByR_GtD_PrevAndNext(long CTActionId,
+		long reportInstanceId, Date modifiedDate,
+		OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
+		return getPersistence()
+				   .findByR_GtD_PrevAndNext(CTActionId, reportInstanceId,
+			modifiedDate, orderByComparator);
+	}
+
+	/**
+	* Removes all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63; from the database.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	*/
+	public static void removeByR_GtD(long reportInstanceId, Date modifiedDate) {
+		getPersistence().removeByR_GtD(reportInstanceId, modifiedDate);
+	}
+
+	/**
+	* Returns the number of c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @return the number of matching c t actions
+	*/
+	public static int countByR_GtD(long reportInstanceId, Date modifiedDate) {
+		return getPersistence().countByR_GtD(reportInstanceId, modifiedDate);
 	}
 
 	/**
@@ -482,12 +811,9 @@ public class CTActionUtil {
 	* @param referrerClassName the referrer class name
 	* @param referrerClassPK the referrer class p k
 	* @return the matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findByR_R_R(
-		long reportInstanceId, java.lang.String referrerClassName,
-		long referrerClassPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<CTAction> findByR_R_R(long reportInstanceId,
+		java.lang.String referrerClassName, long referrerClassPK) {
 		return getPersistence()
 				   .findByR_R_R(reportInstanceId, referrerClassName,
 			referrerClassPK);
@@ -497,7 +823,7 @@ public class CTActionUtil {
 	* Returns a range of all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportInstanceId the report instance ID
@@ -506,12 +832,10 @@ public class CTActionUtil {
 	* @param start the lower bound of the range of c t actions
 	* @param end the upper bound of the range of c t actions (not inclusive)
 	* @return the range of matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findByR_R_R(
-		long reportInstanceId, java.lang.String referrerClassName,
-		long referrerClassPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<CTAction> findByR_R_R(long reportInstanceId,
+		java.lang.String referrerClassName, long referrerClassPK, int start,
+		int end) {
 		return getPersistence()
 				   .findByR_R_R(reportInstanceId, referrerClassName,
 			referrerClassPK, start, end);
@@ -521,7 +845,7 @@ public class CTActionUtil {
 	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportInstanceId the report instance ID
@@ -531,16 +855,38 @@ public class CTActionUtil {
 	* @param end the upper bound of the range of c t actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findByR_R_R(
-		long reportInstanceId, java.lang.String referrerClassName,
-		long referrerClassPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<CTAction> findByR_R_R(long reportInstanceId,
+		java.lang.String referrerClassName, long referrerClassPK, int start,
+		int end, OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
 				   .findByR_R_R(reportInstanceId, referrerClassName,
 			referrerClassPK, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching c t actions
+	*/
+	public static List<CTAction> findByR_R_R(long reportInstanceId,
+		java.lang.String referrerClassName, long referrerClassPK, int start,
+		int end, OrderByComparator<CTAction> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByR_R_R(reportInstanceId, referrerClassName,
+			referrerClassPK, start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -551,15 +897,12 @@ public class CTActionUtil {
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchCTActionException if a matching c t action could not be found
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction findByR_R_R_First(
-		long reportInstanceId, java.lang.String referrerClassName,
-		long referrerClassPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction findByR_R_R_First(long reportInstanceId,
+		java.lang.String referrerClassName, long referrerClassPK,
+		OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
 				   .findByR_R_R_First(reportInstanceId, referrerClassName,
 			referrerClassPK, orderByComparator);
@@ -573,13 +916,10 @@ public class CTActionUtil {
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction fetchByR_R_R_First(
-		long reportInstanceId, java.lang.String referrerClassName,
-		long referrerClassPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction fetchByR_R_R_First(long reportInstanceId,
+		java.lang.String referrerClassName, long referrerClassPK,
+		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_R_R_First(reportInstanceId, referrerClassName,
 			referrerClassPK, orderByComparator);
@@ -593,15 +933,12 @@ public class CTActionUtil {
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchCTActionException if a matching c t action could not be found
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction findByR_R_R_Last(
-		long reportInstanceId, java.lang.String referrerClassName,
-		long referrerClassPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction findByR_R_R_Last(long reportInstanceId,
+		java.lang.String referrerClassName, long referrerClassPK,
+		OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
 				   .findByR_R_R_Last(reportInstanceId, referrerClassName,
 			referrerClassPK, orderByComparator);
@@ -615,13 +952,10 @@ public class CTActionUtil {
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction fetchByR_R_R_Last(
-		long reportInstanceId, java.lang.String referrerClassName,
-		long referrerClassPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction fetchByR_R_R_Last(long reportInstanceId,
+		java.lang.String referrerClassName, long referrerClassPK,
+		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_R_R_Last(reportInstanceId, referrerClassName,
 			referrerClassPK, orderByComparator);
@@ -636,15 +970,12 @@ public class CTActionUtil {
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a c t action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchCTActionException if a c t action with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction[] findByR_R_R_PrevAndNext(
-		long CTActionId, long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction[] findByR_R_R_PrevAndNext(long CTActionId,
+		long reportInstanceId, java.lang.String referrerClassName,
+		long referrerClassPK, OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
 				   .findByR_R_R_PrevAndNext(CTActionId, reportInstanceId,
 			referrerClassName, referrerClassPK, orderByComparator);
@@ -656,11 +987,9 @@ public class CTActionUtil {
 	* @param reportInstanceId the report instance ID
 	* @param referrerClassName the referrer class name
 	* @param referrerClassPK the referrer class p k
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByR_R_R(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String referrerClassName, long referrerClassPK) {
 		getPersistence()
 			.removeByR_R_R(reportInstanceId, referrerClassName, referrerClassPK);
 	}
@@ -672,18 +1001,16 @@ public class CTActionUtil {
 	* @param referrerClassName the referrer class name
 	* @param referrerClassPK the referrer class p k
 	* @return the number of matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByR_R_R(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String referrerClassName, long referrerClassPK) {
 		return getPersistence()
 				   .countByR_R_R(reportInstanceId, referrerClassName,
 			referrerClassPK);
 	}
 
 	/**
-	* Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException} if it could not be found.
+	* Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link NoSuchCTActionException} if it could not be found.
 	*
 	* @param reportInstanceId the report instance ID
 	* @param userSegmentId the user segment ID
@@ -692,15 +1019,13 @@ public class CTActionUtil {
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the matching c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchCTActionException if a matching c t action could not be found
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction findByR_U_R_R_E_E(
-		long reportInstanceId, long userSegmentId,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction findByR_U_R_R_E_E(long reportInstanceId,
+		long userSegmentId, java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
 				   .findByR_U_R_R_E_E(reportInstanceId, userSegmentId,
 			referrerClassName, referrerClassPK, elementId, eventType);
@@ -716,13 +1041,11 @@ public class CTActionUtil {
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the matching c t action, or <code>null</code> if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction fetchByR_U_R_R_E_E(
-		long reportInstanceId, long userSegmentId,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction fetchByR_U_R_R_E_E(long reportInstanceId,
+		long userSegmentId, java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType) {
 		return getPersistence()
 				   .fetchByR_U_R_R_E_E(reportInstanceId, userSegmentId,
 			referrerClassName, referrerClassPK, elementId, eventType);
@@ -737,16 +1060,13 @@ public class CTActionUtil {
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching c t action, or <code>null</code> if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction fetchByR_U_R_R_E_E(
-		long reportInstanceId, long userSegmentId,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction fetchByR_U_R_R_E_E(long reportInstanceId,
+		long userSegmentId, java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByR_U_R_R_E_E(reportInstanceId, userSegmentId,
 			referrerClassName, referrerClassPK, elementId, eventType,
@@ -763,14 +1083,12 @@ public class CTActionUtil {
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the c t action that was removed
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction removeByR_U_R_R_E_E(
-		long reportInstanceId, long userSegmentId,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction removeByR_U_R_R_E_E(long reportInstanceId,
+		long userSegmentId, java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
 				   .removeByR_U_R_R_E_E(reportInstanceId, userSegmentId,
 			referrerClassName, referrerClassPK, elementId, eventType);
@@ -786,187 +1104,14 @@ public class CTActionUtil {
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the number of matching c t actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByR_U_R_R_E_E(long reportInstanceId,
 		long userSegmentId, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String eventType) {
 		return getPersistence()
 				   .countByR_U_R_R_E_E(reportInstanceId, userSegmentId,
 			referrerClassName, referrerClassPK, elementId, eventType);
-	}
-
-	/**
-	* Returns all the c t actions where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @return the matching c t actions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findByReportInstanceId(
-		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByReportInstanceId(reportInstanceId);
-	}
-
-	/**
-	* Returns a range of all the c t actions where reportInstanceId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param start the lower bound of the range of c t actions
-	* @param end the upper bound of the range of c t actions (not inclusive)
-	* @return the range of matching c t actions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findByReportInstanceId(
-		long reportInstanceId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByReportInstanceId(reportInstanceId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the c t actions where reportInstanceId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param start the lower bound of the range of c t actions
-	* @param end the upper bound of the range of c t actions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching c t actions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findByReportInstanceId(
-		long reportInstanceId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByReportInstanceId(reportInstanceId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first c t action in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction findByReportInstanceId_First(
-		long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByReportInstanceId_First(reportInstanceId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first c t action in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction fetchByReportInstanceId_First(
-		long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByReportInstanceId_First(reportInstanceId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last c t action in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction findByReportInstanceId_Last(
-		long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByReportInstanceId_Last(reportInstanceId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last c t action in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction fetchByReportInstanceId_Last(
-		long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByReportInstanceId_Last(reportInstanceId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param CTActionId the primary key of the current c t action
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a c t action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction[] findByReportInstanceId_PrevAndNext(
-		long CTActionId, long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByReportInstanceId_PrevAndNext(CTActionId,
-			reportInstanceId, orderByComparator);
-	}
-
-	/**
-	* Removes all the c t actions where reportInstanceId = &#63; from the database.
-	*
-	* @param reportInstanceId the report instance ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByReportInstanceId(long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByReportInstanceId(reportInstanceId);
-	}
-
-	/**
-	* Returns the number of c t actions where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @return the number of matching c t actions
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByReportInstanceId(long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByReportInstanceId(reportInstanceId);
 	}
 
 	/**
@@ -974,8 +1119,7 @@ public class CTActionUtil {
 	*
 	* @param ctAction the c t action
 	*/
-	public static void cacheResult(
-		com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction ctAction) {
+	public static void cacheResult(CTAction ctAction) {
 		getPersistence().cacheResult(ctAction);
 	}
 
@@ -984,8 +1128,7 @@ public class CTActionUtil {
 	*
 	* @param ctActions the c t actions
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> ctActions) {
+	public static void cacheResult(List<CTAction> ctActions) {
 		getPersistence().cacheResult(ctActions);
 	}
 
@@ -995,8 +1138,7 @@ public class CTActionUtil {
 	* @param CTActionId the primary key for the new c t action
 	* @return the new c t action
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction create(
-		long CTActionId) {
+	public static CTAction create(long CTActionId) {
 		return getPersistence().create(CTActionId);
 	}
 
@@ -1005,34 +1147,26 @@ public class CTActionUtil {
 	*
 	* @param CTActionId the primary key of the c t action
 	* @return the c t action that was removed
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a c t action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchCTActionException if a c t action with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction remove(
-		long CTActionId)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction remove(long CTActionId)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence().remove(CTActionId);
 	}
 
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction updateImpl(
-		com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction ctAction)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction updateImpl(CTAction ctAction) {
 		return getPersistence().updateImpl(ctAction);
 	}
 
 	/**
-	* Returns the c t action with the primary key or throws a {@link com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException} if it could not be found.
+	* Returns the c t action with the primary key or throws a {@link NoSuchCTActionException} if it could not be found.
 	*
 	* @param CTActionId the primary key of the c t action
 	* @return the c t action
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a c t action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws NoSuchCTActionException if a c t action with the primary key could not be found
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction findByPrimaryKey(
-		long CTActionId)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction findByPrimaryKey(long CTActionId)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence().findByPrimaryKey(CTActionId);
 	}
 
@@ -1041,22 +1175,22 @@ public class CTActionUtil {
 	*
 	* @param CTActionId the primary key of the c t action
 	* @return the c t action, or <code>null</code> if a c t action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction fetchByPrimaryKey(
-		long CTActionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static CTAction fetchByPrimaryKey(long CTActionId) {
 		return getPersistence().fetchByPrimaryKey(CTActionId);
+	}
+
+	public static java.util.Map<java.io.Serializable, CTAction> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
 	* Returns all the c t actions.
 	*
 	* @return the c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<CTAction> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1064,17 +1198,14 @@ public class CTActionUtil {
 	* Returns a range of all the c t actions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of c t actions
 	* @param end the upper bound of the range of c t actions (not inclusive)
 	* @return the range of c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<CTAction> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1082,29 +1213,42 @@ public class CTActionUtil {
 	* Returns an ordered range of all the c t actions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of c t actions
 	* @param end the upper bound of the range of c t actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<CTAction> findAll(int start, int end,
+		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	* Removes all the c t actions from the database.
+	* Returns an ordered range of all the c t actions.
 	*
-	* @throws SystemException if a system exception occurred
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of c t actions
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<CTAction> findAll(int start, int end,
+		OrderByComparator<CTAction> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Removes all the c t actions from the database.
+	*/
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -1112,30 +1256,19 @@ public class CTActionUtil {
 	* Returns the number of c t actions.
 	*
 	* @return the number of c t actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static CTActionPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (CTActionPersistence)PortletBeanLocatorUtil.locate(com.liferay.content.targeting.report.campaign.tracking.action.service.ClpSerializer.getServletContextName(),
-					CTActionPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(CTActionUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setPersistence(CTActionPersistence persistence) {
-	}
-
-	private static CTActionPersistence _persistence;
+	private static ServiceTracker<CTActionPersistence, CTActionPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(CTActionPersistence.class);
 }

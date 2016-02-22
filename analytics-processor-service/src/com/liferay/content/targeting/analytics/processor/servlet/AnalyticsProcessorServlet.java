@@ -30,9 +30,9 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -48,7 +48,6 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -61,10 +60,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(
+	immediate = true,
 	property = {
-		"servletName=Analytics Processor", "urlPattern=/track"
+		"osgi.http.whiteboard.context.select=analytics-processor",
+		"osgi.http.whiteboard.servlet.name=Analytics Processor Servlet",
+		"osgi.http.whiteboard.servlet.pattern=/track"
 	},
-	service = Servlet.class)
+	service = Servlet.class
+)
 public class AnalyticsProcessorServlet extends HttpServlet {
 
 	@Override
@@ -132,12 +135,6 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		_anonymousUsersManager = anonymousUsersManager;
 	}
 
-	// Needed only for http service in 6.2
-
-	@Reference (target ="(Web-ContextPath=/o/analytics-processor)")
-	public void setServletContext(ServletContext servletContext) {
-	}
-
 	protected void processEvent(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
@@ -159,7 +156,7 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		long classPK = ParamUtil.getLong(request, "classPK");
 		String elementId = ParamUtil.getString(request, "elementId");
 		String referrerClassName = ParamUtil.getString(
-			request,"referrerClassName");
+			request, "referrerClassName");
 		long[] referrerClassPKs = ParamUtil.getLongValues(
 			request, "referrerClassPKs");
 		long requestAnonymousUserId = ParamUtil.getLong(
@@ -180,7 +177,7 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		message.put("elementId", elementId);
 		message.put("event", event);
 
-		Map<String, long[]> referrers = new HashMap<String, long[]>();
+		Map<String, long[]> referrers = new HashMap<>();
 
 		referrers.put(referrerClassName, referrerClassPKs);
 
@@ -276,8 +273,8 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 				request, response, file.getName(), new FileInputStream(file),
 				file.length(), "image/png");
 		}
-		catch (IOException e) {
-			_log.error(e);
+		catch (IOException ioe) {
+			_log.error(ioe);
 		}
 	}
 
@@ -323,7 +320,7 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 	}
 
 	private Map<String, long[]> _getReferrersMap(JSONArray referrersJSONArray) {
-		Map<String, long[]> referrersMap = new HashMap<String, long[]>();
+		Map<String, long[]> referrersMap = new HashMap<>();
 
 		if (referrersJSONArray == null) {
 			return referrersMap;

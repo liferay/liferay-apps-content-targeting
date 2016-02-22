@@ -14,12 +14,15 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.service.ServiceContext;
+import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -38,7 +41,9 @@ import java.util.Date;
  * @see com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl
  * @generated
  */
-public interface CTActionTotalModel extends BaseModel<CTActionTotal> {
+@ProviderType
+public interface CTActionTotalModel extends BaseModel<CTActionTotal>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -78,6 +83,7 @@ public interface CTActionTotalModel extends BaseModel<CTActionTotal> {
 	 *
 	 * @return the company ID of this c t action total
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -85,6 +91,7 @@ public interface CTActionTotalModel extends BaseModel<CTActionTotal> {
 	 *
 	 * @param companyId the company ID of this c t action total
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -254,19 +261,20 @@ public interface CTActionTotalModel extends BaseModel<CTActionTotal> {
 	public Object clone();
 
 	@Override
-	public int compareTo(CTActionTotal ctActionTotal);
+	public int compareTo(
+		com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal ctActionTotal);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<CTActionTotal> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> toCacheModel();
 
 	@Override
-	public CTActionTotal toEscapedModel();
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal toEscapedModel();
 
 	@Override
-	public CTActionTotal toUnescapedModel();
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal toUnescapedModel();
 
 	@Override
 	public String toString();

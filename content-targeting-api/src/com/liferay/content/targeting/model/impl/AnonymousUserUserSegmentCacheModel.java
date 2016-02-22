@@ -14,10 +14,13 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.AnonymousUserUserSegment;
 
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,8 +36,33 @@ import java.util.Date;
  * @see AnonymousUserUserSegment
  * @generated
  */
+@ProviderType
 public class AnonymousUserUserSegmentCacheModel implements CacheModel<AnonymousUserUserSegment>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AnonymousUserUserSegmentCacheModel)) {
+			return false;
+		}
+
+		AnonymousUserUserSegmentCacheModel anonymousUserUserSegmentCacheModel = (AnonymousUserUserSegmentCacheModel)obj;
+
+		if (anonymousUserUserSegmentId == anonymousUserUserSegmentCacheModel.anonymousUserUserSegmentId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, anonymousUserUserSegmentId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
@@ -85,11 +113,16 @@ public class AnonymousUserUserSegmentCacheModel implements CacheModel<AnonymousU
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		anonymousUserUserSegmentId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
 		anonymousUserId = objectInput.readLong();
+
 		userSegmentId = objectInput.readLong();
+
 		manual = objectInput.readBoolean();
+
 		active = objectInput.readBoolean();
 	}
 
@@ -97,11 +130,16 @@ public class AnonymousUserUserSegmentCacheModel implements CacheModel<AnonymousU
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(anonymousUserUserSegmentId);
+
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(modifiedDate);
+
 		objectOutput.writeLong(anonymousUserId);
+
 		objectOutput.writeLong(userSegmentId);
+
 		objectOutput.writeBoolean(manual);
+
 		objectOutput.writeBoolean(active);
 	}
 

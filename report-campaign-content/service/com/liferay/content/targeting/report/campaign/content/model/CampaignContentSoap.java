@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.report.campaign.content.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.content.targeting.report.campaign.content.service.http.CampaignContentServiceSoap
  * @generated
  */
+@ProviderType
 public class CampaignContentSoap implements Serializable {
 	public static CampaignContentSoap toSoapModel(CampaignContent model) {
 		CampaignContentSoap soapModel = new CampaignContentSoap();

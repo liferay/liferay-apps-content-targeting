@@ -31,5 +31,4 @@ import com.liferay.content.targeting.anonymous.users.service.base.AnonymousUserS
  * @see com.liferay.content.targeting.anonymous.users.service.AnonymousUserServiceUtil
  */
 public class AnonymousUserServiceImpl extends AnonymousUserServiceBaseImpl {
-
 }

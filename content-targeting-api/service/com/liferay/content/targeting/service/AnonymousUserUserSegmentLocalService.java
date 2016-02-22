@@ -14,15 +14,33 @@
 
 package com.liferay.content.targeting.service;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
+import com.liferay.content.targeting.model.AnonymousUserUserSegment;
+import com.liferay.content.targeting.model.UserSegment;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.BaseLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.BaseLocalService;
-import com.liferay.portal.service.InvokableLocalService;
-import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Provides the local service interface for AnonymousUserUserSegment. Methods of this
@@ -36,27 +54,32 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * @see com.liferay.content.targeting.service.impl.AnonymousUserUserSegmentLocalServiceImpl
  * @generated
  */
+@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
-	InvokableLocalService, PersistedModelLocalService {
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnonymousUserUserSegmentLocalServiceUtil} to access the anonymous user user segment local service. Add custom service methods to {@link com.liferay.content.targeting.service.impl.AnonymousUserUserSegmentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public AnonymousUserUserSegment addAnonymousUserUserSegment(
+		long anonymousUserId, long userSegmentId, boolean manual,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the anonymous user user segment to the database. Also notifies the appropriate model listeners.
 	*
 	* @param anonymousUserUserSegment the anonymous user user segment
 	* @return the anonymous user user segment that was added
-	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment addAnonymousUserUserSegment(
-		com.liferay.content.targeting.model.AnonymousUserUserSegment anonymousUserUserSegment)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	@Indexable(type = IndexableType.REINDEX)
+	public AnonymousUserUserSegment addAnonymousUserUserSegment(
+		AnonymousUserUserSegment anonymousUserUserSegment);
+
+	public void checkAnonymousUserUserSegments() throws PortalException;
 
 	/**
 	* Creates a new anonymous user user segment with the primary key. Does not add the anonymous user user segment to the database.
@@ -64,8 +87,18 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param anonymousUserUserSegmentId the primary key for the new anonymous user user segment
 	* @return the new anonymous user user segment
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment createAnonymousUserUserSegment(
+	public AnonymousUserUserSegment createAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId);
+
+	/**
+	* Deletes the anonymous user user segment from the database. Also notifies the appropriate model listeners.
+	*
+	* @param anonymousUserUserSegment the anonymous user user segment
+	* @return the anonymous user user segment that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public AnonymousUserUserSegment deleteAnonymousUserUserSegment(
+		AnonymousUserUserSegment anonymousUserUserSegment);
 
 	/**
 	* Deletes the anonymous user user segment with the primary key from the database. Also notifies the appropriate model listeners.
@@ -73,39 +106,27 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param anonymousUserUserSegmentId the primary key of the anonymous user user segment
 	* @return the anonymous user user segment that was removed
 	* @throws PortalException if a anonymous user user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment deleteAnonymousUserUserSegment(
-		long anonymousUserUserSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+	@Indexable(type = IndexableType.DELETE)
+	public AnonymousUserUserSegment deleteAnonymousUserUserSegment(
+		long anonymousUserUserSegmentId) throws PortalException;
 
 	/**
-	* Deletes the anonymous user user segment from the database. Also notifies the appropriate model listeners.
-	*
-	* @param anonymousUserUserSegment the anonymous user user segment
-	* @return the anonymous user user segment that was removed
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment deleteAnonymousUserUserSegment(
-		com.liferay.content.targeting.model.AnonymousUserUserSegment anonymousUserUserSegment)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -118,12 +139,9 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -137,43 +155,34 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment fetchAnonymousUserUserSegment(
-		long anonymousUserUserSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment fetchAnonymousUserUserSegment(
+		long anonymousUserUserSegmentId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the anonymous user user segment with the primary key.
@@ -181,20 +190,14 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param anonymousUserUserSegmentId the primary key of the anonymous user user segment
 	* @return the anonymous user user segment
 	* @throws PortalException if a anonymous user user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment getAnonymousUserUserSegment(
-		long anonymousUserUserSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment getAnonymousUserUserSegment(
+		long anonymousUserUserSegmentId) throws PortalException;
 
-	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public List<AnonymousUserUserSegment> getAnonymousUserUserSegments(
+		long anonymousUserId, long userSegmentId) throws PortalException;
 
 	/**
 	* Returns a range of all the anonymous user user segments.
@@ -206,130 +209,83 @@ public interface AnonymousUserUserSegmentLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of anonymous user user segments
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @return the range of anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> getAnonymousUserUserSegments(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public List<AnonymousUserUserSegment> getAnonymousUserUserSegments(
+		int start, int end);
 
 	/**
 	* Returns the number of anonymous user user segments.
 	*
 	* @return the number of anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAnonymousUserUserSegmentsCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getAnonymousUserUserSegmentsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnonymousUser> getAnonymousUsersByUserSegmentId(
+		long userSegmentId, boolean active) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAnonymousUsersByUserSegmentIdCount(long userSegmentId,
+		boolean active) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnonymousUser> getAnonymousUsersByUserSegmentIds(
+		long[] userSegmentIds, boolean active) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAnonymousUsersByUserSegmentIdsCount(long[] userSegmentIds,
+		boolean active) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Date getMaxAge() throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserSegment> getUserSegmentsByAnonymousUserId(
+		long anonymousUserId, boolean active) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserSegmentsByAnonymousUserIdCount(long anonymousUserId,
+		boolean active) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserSegment> getUserSegmentsByUserId(long userId, boolean active)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserSegmentsByUserIdCount(long userId, boolean active)
+		throws PortalException;
 
 	/**
 	* Updates the anonymous user user segment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param anonymousUserUserSegment the anonymous user user segment
 	* @return the anonymous user user segment that was updated
-	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
-		com.liferay.content.targeting.model.AnonymousUserUserSegment anonymousUserUserSegment)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	@Indexable(type = IndexableType.REINDEX)
+	public AnonymousUserUserSegment updateAnonymousUserUserSegment(
+		AnonymousUserUserSegment anonymousUserUserSegment);
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
-
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment addAnonymousUserUserSegment(
-		long anonymousUserId, long userSegmentId, boolean manual,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public void checkAnonymousUserUserSegments()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentId(
-		long userSegmentId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAnonymousUsersByUserSegmentIdCount(long userSegmentId,
-		boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentIds(
-		long[] userSegmentIds, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAnonymousUsersByUserSegmentIdsCount(long[] userSegmentIds,
-		boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> getAnonymousUserUserSegments(
-		long anonymousUserId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date getMaxAge()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByAnonymousUserId(
-		long anonymousUserId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserSegmentsByAnonymousUserIdCount(long anonymousUserId,
-		boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUserId(
-		long userId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserSegmentsByUserIdCount(long userId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
-		long anonymousUserUserSegmentId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment updateAnonymousUserUserSegment(
+		long anonymousUserUserSegmentId, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void updateAnonymousUserUserSegments(long companyId,
-		java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		Date modifiedDate) throws PortalException;
 }

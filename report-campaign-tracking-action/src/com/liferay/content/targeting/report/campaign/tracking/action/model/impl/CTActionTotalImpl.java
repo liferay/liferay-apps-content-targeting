@@ -16,17 +16,12 @@ package com.liferay.content.targeting.report.campaign.tracking.action.model.impl
 
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction;
-import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
-import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalServiceUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * The extended model implementation for the CTActionTotal service. Represents a row in the &quot;CT_CTAReport_CTActionTotal&quot; database table, with each column mapped to a property of this class.
@@ -39,22 +34,16 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class CTActionTotalImpl extends CTActionTotalBaseImpl {
 
-	public CTActionTotalImpl() {
-		_initServices();
-	}
-
 	@Override
-	public List<CTAction> getViewsByUserSegment()
-		throws PortalException, SystemException {
-
+	public List<CTAction> getViewsByUserSegment() throws PortalException {
 		List<CTAction> ctActions = null;
 
 		if (getReferrerClassPK() == 0) {
-			ctActions = _ctActionLocalService.getCTActions(
+			ctActions = CTActionLocalServiceUtil.getCTActions(
 				getReportInstanceId(), getElementId());
 		}
 		else {
-			ctActions = _ctActionLocalService.getCTActions(
+			ctActions = CTActionLocalServiceUtil.getCTActions(
 				getReportInstanceId(), getReferrerClassName(),
 				getReferrerClassPK());
 		}
@@ -63,13 +52,14 @@ public class CTActionTotalImpl extends CTActionTotalBaseImpl {
 	}
 
 	protected List<CTAction> filterUserSegment(List<CTAction> ctActions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<CTAction> filterCTAction = new ArrayList<CTAction>();
+		List<CTAction> filterCTAction = new ArrayList<>();
 
 		for (CTAction ctAction : ctActions) {
-			UserSegment userSegment = _userSegmentLocalService.fetchUserSegment(
-				ctAction.getUserSegmentId());
+			UserSegment userSegment =
+				UserSegmentLocalServiceUtil.fetchUserSegment(
+					ctAction.getUserSegmentId());
 
 			if (userSegment == null) {
 				continue;
@@ -80,17 +70,5 @@ public class CTActionTotalImpl extends CTActionTotalBaseImpl {
 
 		return filterCTAction;
 	}
-
-	private void _initServices() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_ctActionLocalService = ServiceTrackerUtil.getService(
-			CTActionLocalService.class, bundle.getBundleContext());
-		_userSegmentLocalService = ServiceTrackerUtil.getService(
-			UserSegmentLocalService.class, bundle.getBundleContext());
-	}
-
-	private CTActionLocalService _ctActionLocalService;
-	private UserSegmentLocalService _userSegmentLocalService;
 
 }

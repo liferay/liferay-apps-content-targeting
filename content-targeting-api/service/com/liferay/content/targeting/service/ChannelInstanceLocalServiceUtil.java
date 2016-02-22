@@ -14,9 +14,11 @@
 
 package com.liferay.content.targeting.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for ChannelInstance. This utility wraps
@@ -32,6 +34,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * @see com.liferay.content.targeting.service.impl.ChannelInstanceLocalServiceImpl
  * @generated
  */
+@ProviderType
 public class ChannelInstanceLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -44,12 +47,20 @@ public class ChannelInstanceLocalServiceUtil {
 	*
 	* @param channelInstance the channel instance
 	* @return the channel instance that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ChannelInstance addChannelInstance(
-		com.liferay.content.targeting.model.ChannelInstance channelInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.ChannelInstance channelInstance) {
 		return getService().addChannelInstance(channelInstance);
+	}
+
+	public static com.liferay.content.targeting.model.ChannelInstance addChannelInstance(
+		long userId, long tacticId, java.lang.String channelKey,
+		long campaignId, java.lang.String alias, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addChannelInstance(userId, tacticId, channelKey,
+			campaignId, alias, typeSettings, serviceContext);
 	}
 
 	/**
@@ -64,33 +75,38 @@ public class ChannelInstanceLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the channel instance with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param channelInstanceId the primary key of the channel instance
-	* @return the channel instance that was removed
-	* @throws PortalException if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
-		long channelInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteChannelInstance(channelInstanceId);
-	}
-
-	/**
 	* Deletes the channel instance from the database. Also notifies the appropriate model listeners.
 	*
 	* @param channelInstance the channel instance
 	* @return the channel instance that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
 		com.liferay.content.targeting.model.ChannelInstance channelInstance)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteChannelInstance(channelInstance);
+	}
+
+	/**
+	* Deletes the channel instance with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param channelInstanceId the primary key of the channel instance
+	* @return the channel instance that was removed
+	* @throws PortalException if a channel instance with the primary key could not be found
+	*/
+	public static com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
+		long channelInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteChannelInstance(channelInstanceId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -102,12 +118,9 @@ public class ChannelInstanceLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +135,10 @@ public class ChannelInstanceLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,65 +154,42 @@ public class ChannelInstanceLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.content.targeting.model.ChannelInstance fetchChannelInstance(
-		long channelInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long channelInstanceId) {
 		return getService().fetchChannelInstance(channelInstanceId);
-	}
-
-	/**
-	* Returns the channel instance with the matching UUID and company.
-	*
-	* @param uuid the channel instance's UUID
-	* @param companyId the primary key of the company
-	* @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchChannelInstanceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .fetchChannelInstanceByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**
@@ -210,12 +198,26 @@ public class ChannelInstanceLocalServiceUtil {
 	* @param uuid the channel instance's UUID
 	* @param groupId the primary key of the group
 	* @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ChannelInstance fetchChannelInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getService().fetchChannelInstanceByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getCampaignChannelInstances(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCampaignChannelInstances(campaignId);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getCampaignChannelInstances(
+		long campaignId, java.lang.String channelKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCampaignChannelInstances(campaignId, channelKey);
 	}
 
 	/**
@@ -224,36 +226,11 @@ public class ChannelInstanceLocalServiceUtil {
 	* @param channelInstanceId the primary key of the channel instance
 	* @return the channel instance
 	* @throws PortalException if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ChannelInstance getChannelInstance(
 		long channelInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getChannelInstance(channelInstanceId);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the channel instance with the matching UUID and company.
-	*
-	* @param uuid the channel instance's UUID
-	* @param companyId the primary key of the company
-	* @return the matching channel instance
-	* @throws PortalException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ChannelInstance getChannelInstanceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getChannelInstanceByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**
@@ -263,12 +240,10 @@ public class ChannelInstanceLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching channel instance
 	* @throws PortalException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ChannelInstance getChannelInstanceByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getChannelInstanceByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -282,23 +257,86 @@ public class ChannelInstanceLocalServiceUtil {
 	* @param start the lower bound of the range of channel instances
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @return the range of channel instances
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getChannelInstances(start, end);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
+		long tacticId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getChannelInstances(tacticId);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
+		long tacticId, java.lang.String channelKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getChannelInstances(tacticId, channelKey);
+	}
+
+	/**
+	* Returns all the channel instances matching the UUID and company.
+	*
+	* @param uuid the UUID of the channel instances
+	* @param companyId the primary key of the company
+	* @return the matching channel instances, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstancesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .getChannelInstancesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of channel instances matching the UUID and company.
+	*
+	* @param uuid the UUID of the channel instances
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching channel instances, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstancesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.ChannelInstance> orderByComparator) {
+		return getService()
+				   .getChannelInstancesByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
 	}
 
 	/**
 	* Returns the number of channel instances.
 	*
 	* @return the number of channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getChannelInstancesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getChannelInstancesCount() {
 		return getService().getChannelInstancesCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -306,116 +344,26 @@ public class ChannelInstanceLocalServiceUtil {
 	*
 	* @param channelInstance the channel instance
 	* @return the channel instance that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ChannelInstance updateChannelInstance(
-		com.liferay.content.targeting.model.ChannelInstance channelInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.ChannelInstance channelInstance) {
 		return getService().updateChannelInstance(channelInstance);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
-	public static com.liferay.content.targeting.model.ChannelInstance addChannelInstance(
-		long userId, long tacticId, java.lang.String channelKey,
-		long campaignId, java.lang.String alias, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addChannelInstance(userId, tacticId, channelKey,
-			campaignId, alias, typeSettings, serviceContext);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getCampaignChannelInstances(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCampaignChannelInstances(campaignId);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getCampaignChannelInstances(
-		long campaignId, java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCampaignChannelInstances(campaignId, channelKey);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
-		long tacticId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getChannelInstances(tacticId);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
-		long tacticId, java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getChannelInstances(tacticId, channelKey);
 	}
 
 	public static com.liferay.content.targeting.model.ChannelInstance updateChannelInstance(
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateChannelInstance(channelInstanceId, alias,
 			typeSettings, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static ChannelInstanceLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					ChannelInstanceLocalService.class.getName());
-
-			if (invokableLocalService instanceof ChannelInstanceLocalService) {
-				_service = (ChannelInstanceLocalService)invokableLocalService;
-			}
-			else {
-				_service = new ChannelInstanceLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(ChannelInstanceLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setService(ChannelInstanceLocalService service) {
-	}
-
-	private static ChannelInstanceLocalService _service;
+	private static ServiceTracker<ChannelInstanceLocalService, ChannelInstanceLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(ChannelInstanceLocalService.class);
 }

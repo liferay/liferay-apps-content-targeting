@@ -16,6 +16,6 @@
 
 <#include "init.ftl" />
 
-<@aui["input"] label="" name="facebookName" prefix="https://www.facebook.com/" type="text" value=facebookName>
-	<@aui["validator"] name="required" />
+<@liferay_aui["input"] label="" name="facebookName" prefix="https://www.facebook.com/" type="text" value=facebookName>
+	<@liferay_aui["validator"] name="required" />
 </@>

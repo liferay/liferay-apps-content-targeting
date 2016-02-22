@@ -5,8 +5,35 @@ Export-Package:\
 	com.liferay.content.targeting.report.campaign.content,\
 	com.liferay.content.targeting.report.campaign.content.model,\
 	com.liferay.content.targeting.report.campaign.content.service,\
-    com.liferay.content.targeting.report.campaign.content.service.messaging
+	com.liferay.content.targeting.report.campaign.content.service.messaging
 Import-Package:\
+	!com.swabunga.spell.engine,\
+	!com.swabunga.spell.event,\
+	\
+	!net.fortuna.ical4j.model,\
+	!net.fortuna.ical4j.model.property,\
+	\
+	!org.apache.axis,\
+	!org.apache.axis.soap,\
+	!org.apache.axis.tools.ant.wsdl,\
+	!org.apache.axis.transport.http,\
+	!org.apache.axis.utils.cache,\
+	!org.apache.bsf,\
+	!org.apache.commons.validator.*,\
+	!org.apache.log,\
+	!org.apache.poi.hssf.usermodel,\
+	!org.apache.poi.ss.usermodel,\
+	!org.apache.portals.bridges.common,\
+	!org.apache.portals.bridges.struts,\
+	\
+	!org.aspectj.lang.*,\
+	\
+	!org.mozilla.javascript.*,\
+	\
+	!org.python.*,\
+	\
+	!org.zeroturnaround.*,\
+	\
 	com.liferay.content.targeting.analytics.model,\
 	com.liferay.content.targeting.analytics.service,\
 	com.liferay.content.targeting.analytics.service.messaging,\
@@ -15,27 +42,28 @@ Import-Package:\
 	com.liferay.content.targeting.anonymous.users.service.messaging,\
 	com.liferay.content.targeting.api.model,\
 	com.liferay.content.targeting.model,\
-	com.liferay.content.targeting.report.campaign.content,\
-	com.liferay.content.targeting.report.campaign.content.model,\
-	com.liferay.content.targeting.report.campaign.content.service,\
 	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.messaging,\
 	com.liferay.content.targeting.util,\
+	com.liferay.exportimport.kernel.lar,\
 	com.liferay.osgi.util.service,\
-	com.liferay.portal.kernel.lar,\
+	\
 	javax.portlet,\
 	*;resolution:="optional"
 Include-Resource:\
 	classes,\
 	WEB-INF/classes/META-INF=classes/META-INF/,\
-	WEB-INF/liferay-display.xml=META-INF/liferay-display.xml,\
 	WEB-INF/liferay-plugin-package.properties=META-INF/liferay-plugin-package.properties,\
-	WEB-INF/liferay-portlet.xml=META-INF/liferay-portlet.xml,\
-	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
-	WEB-INF/portlet.xml=META-INF/portlet.xml,\
 	WEB-INF/sql=sql,\
+	META-INF/sql=sql,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	@lib/com.liferay.content.targeting.report.campaign.content-service.jar
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 Service-Component: com.liferay.content.targeting.report.campaign.content.*
 Web-ContextPath: /report-campaign-content
 -baseline: *;version="1.0.0"
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

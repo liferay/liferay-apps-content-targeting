@@ -14,59 +14,116 @@
 
 package com.liferay.content.targeting.messaging.config;
 
+import com.liferay.portal.kernel.concurrent.DiscardOldestPolicy;
+import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.Dictionary;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	immediate = true,
+	service = AnonymousUserUserSegmentsPluginMessagingConfigurator.class
+)
 public class AnonymousUserUserSegmentsPluginMessagingConfigurator
 	extends PluginMessagingConfigurator {
 
-	public void setAnonymousUserSegmentsMessageDestination(
-		String anonymousUserSegmentsMessageDestination) {
+	@Activate
+	protected void activate(ComponentContext componentContext) {
+		_bundleContext = componentContext.getBundleContext();
 
-		_anonymousUserSegmentsMessageDestination =
-			anonymousUserSegmentsMessageDestination;
+		Dictionary<String, Object> properties =
+			componentContext.getProperties();
+
+		DestinationConfiguration destinationConfiguration =
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+				"liferay/anonymous_user_segments");
+
+		/* TODO: replace with max queue size from configuration instance */
+		destinationConfiguration.setMaximumQueueSize(200);
+
+		RejectedExecutionHandler rejectedExecutionHandler =
+			new DiscardOldestPolicy() {
+
+				@Override
+				public void rejectedExecution(
+					Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Maximum capacity reached, rejecting request");
+					}
+
+					super.rejectedExecution(runnable, threadPoolExecutor);
+				}
+
+			};
+
+		destinationConfiguration.setRejectedExecutionHandler(
+			rejectedExecutionHandler);
+
+		Destination destination = _destinationFactory.createDestination(
+			destinationConfiguration);
+
+		Dictionary<String, Object> destinationProperties =
+			new HashMapDictionary<>();
+
+		destinationProperties.put("destination.name", destination.getName());
+
+		_destinationServiceRegistration = _bundleContext.registerService(
+			Destination.class, destination, destinationProperties);
 	}
 
-	@Override
-	public void setMessageListeners(
-		Map<String, List<MessageListener>> messageListeners) {
+	@Deactivate
+	protected void deactivate() {
+		if (_destinationServiceRegistration != null) {
+			Destination destination = _bundleContext.getService(
+				_destinationServiceRegistration.getReference());
 
-		Collection<String> destinationNames =
-			getMessageBus().getDestinationNames();
+			_destinationServiceRegistration.unregister();
 
-		if (!destinationNames.contains(
-				_anonymousUserSegmentsMessageDestination)) {
-
-			messageListeners.remove(_anonymousUserSegmentsMessageDestination);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Cannot register anonymous users segments API message " +
-						"listener because destination " +
-							_anonymousUserSegmentsMessageDestination +
-								" does not exist yet");
-			}
+			destination.destroy();
 		}
 
-		super.setMessageListeners(messageListeners);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Registering message listeners");
-		}
+		_bundleContext = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	@Reference(unbind = "-")
+	protected void setDestinationFactory(
+		DestinationFactory destinationFactory) {
+
+		_destinationFactory = destinationFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMessageBus(MessageBus messageBus) {
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
 		AnonymousUserUserSegmentsPluginMessagingConfigurator.class);
 
-	private String _anonymousUserSegmentsMessageDestination;
+	private volatile BundleContext _bundleContext;
+	private DestinationFactory _destinationFactory;
+	private volatile ServiceRegistration<Destination>
+		_destinationServiceRegistration;
 
 }

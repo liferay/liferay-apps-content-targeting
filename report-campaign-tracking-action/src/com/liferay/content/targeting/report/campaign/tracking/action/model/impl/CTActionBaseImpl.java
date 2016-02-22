@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the CTAction service. Represents a row in the &quot;CT_CTA_CTAction&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see CTActionImpl
- * @see com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction
+ * @see CTAction
  * @generated
  */
+@ProviderType
 public abstract class CTActionBaseImpl extends CTActionModelImpl
 	implements CTAction {
 	/*
@@ -39,7 +40,7 @@ public abstract class CTActionBaseImpl extends CTActionModelImpl
 	 * Never modify or reference this class directly. All methods that expect a c t action model instance should use the {@link CTAction} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			CTActionLocalServiceUtil.addCTAction(this);
 		}

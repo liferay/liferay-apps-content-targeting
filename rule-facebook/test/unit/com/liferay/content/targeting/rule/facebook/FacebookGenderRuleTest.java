@@ -63,6 +63,7 @@ public class FacebookGenderRuleTest extends PowerMockito {
 
 					return new JSONObjectImpl((String)args[0]);
 				}
+
 			}
 		);
 

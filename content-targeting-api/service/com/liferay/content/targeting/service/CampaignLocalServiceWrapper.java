@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link CampaignLocalService}.
@@ -23,6 +25,7 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see CampaignLocalService
  * @generated
  */
+@ProviderType
 public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	ServiceWrapper<CampaignLocalService> {
 	public CampaignLocalServiceWrapper(
@@ -35,13 +38,83 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	*
 	* @param campaign the campaign
 	* @return the campaign that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.Campaign addCampaign(
-		com.liferay.content.targeting.model.Campaign campaign)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.Campaign campaign) {
 		return _campaignLocalService.addCampaign(campaign);
+	}
+
+	@Override
+	public com.liferay.content.targeting.model.Campaign addCampaign(
+		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Date startDate, java.util.Date endDate, int priority,
+		boolean active, long[] userSegmentIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.addCampaign(userId, nameMap,
+			descriptionMap, startDate, endDate, priority, active,
+			userSegmentIds, serviceContext);
+	}
+
+	@Override
+	public com.liferay.content.targeting.model.Campaign addCampaign(
+		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String timeZoneId, int priority, boolean active,
+		long[] userSegmentIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.addCampaign(userId, nameMap,
+			descriptionMap, startDate, endDate, timeZoneId, priority, active,
+			userSegmentIds, serviceContext);
+	}
+
+	@Override
+	public void addCampaignResources(
+		com.liferay.content.targeting.model.Campaign campaign,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_campaignLocalService.addCampaignResources(campaign,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addCampaignResources(
+		com.liferay.content.targeting.model.Campaign campaign,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_campaignLocalService.addCampaignResources(campaign, groupPermissions,
+			guestPermissions);
+	}
+
+	@Override
+	public void addUserSegmentCampaign(long userSegmentId,
+		com.liferay.content.targeting.model.Campaign campaign) {
+		_campaignLocalService.addUserSegmentCampaign(userSegmentId, campaign);
+	}
+
+	@Override
+	public void addUserSegmentCampaign(long userSegmentId, long campaignId) {
+		_campaignLocalService.addUserSegmentCampaign(userSegmentId, campaignId);
+	}
+
+	@Override
+	public void addUserSegmentCampaigns(long userSegmentId,
+		java.util.List<com.liferay.content.targeting.model.Campaign> Campaigns) {
+		_campaignLocalService.addUserSegmentCampaigns(userSegmentId, Campaigns);
+	}
+
+	@Override
+	public void addUserSegmentCampaigns(long userSegmentId, long[] campaignIds) {
+		_campaignLocalService.addUserSegmentCampaigns(userSegmentId, campaignIds);
+	}
+
+	@Override
+	public void clearUserSegmentCampaigns(long userSegmentId) {
+		_campaignLocalService.clearUserSegmentCampaigns(userSegmentId);
 	}
 
 	/**
@@ -57,35 +130,73 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	}
 
 	/**
-	* Deletes the campaign with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param campaignId the primary key of the campaign
-	* @return the campaign that was removed
-	* @throws PortalException if a campaign with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public com.liferay.content.targeting.model.Campaign deleteCampaign(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.deleteCampaign(campaignId);
-	}
-
-	/**
 	* Deletes the campaign from the database. Also notifies the appropriate model listeners.
 	*
 	* @param campaign the campaign
 	* @return the campaign that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.Campaign deleteCampaign(
 		com.liferay.content.targeting.model.Campaign campaign)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.deleteCampaign(campaign);
+	}
+
+	/**
+	* Deletes the campaign with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param campaignId the primary key of the campaign
+	* @return the campaign that was removed
+	* @throws PortalException if a campaign with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.content.targeting.model.Campaign deleteCampaign(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.deleteCampaign(campaignId);
+	}
+
+	@Override
+	public void deleteCampaigns(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_campaignLocalService.deleteCampaigns(groupId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteUserSegmentCampaign(long userSegmentId,
+		com.liferay.content.targeting.model.Campaign campaign) {
+		_campaignLocalService.deleteUserSegmentCampaign(userSegmentId, campaign);
+	}
+
+	@Override
+	public void deleteUserSegmentCampaign(long userSegmentId, long campaignId) {
+		_campaignLocalService.deleteUserSegmentCampaign(userSegmentId,
+			campaignId);
+	}
+
+	@Override
+	public void deleteUserSegmentCampaigns(long userSegmentId,
+		java.util.List<com.liferay.content.targeting.model.Campaign> Campaigns) {
+		_campaignLocalService.deleteUserSegmentCampaigns(userSegmentId,
+			Campaigns);
+	}
+
+	@Override
+	public void deleteUserSegmentCampaigns(long userSegmentId,
+		long[] campaignIds) {
+		_campaignLocalService.deleteUserSegmentCampaigns(userSegmentId,
+			campaignIds);
 	}
 
 	@Override
@@ -98,13 +209,10 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _campaignLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -119,13 +227,11 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _campaignLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -141,70 +247,46 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _campaignLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _campaignLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _campaignLocalService.dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	@Override
 	public com.liferay.content.targeting.model.Campaign fetchCampaign(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long campaignId) {
 		return _campaignLocalService.fetchCampaign(campaignId);
-	}
-
-	/**
-	* Returns the campaign with the matching UUID and company.
-	*
-	* @param uuid the campaign's UUID
-	* @param companyId the primary key of the company
-	* @return the matching campaign, or <code>null</code> if a matching campaign could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public com.liferay.content.targeting.model.Campaign fetchCampaignByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.fetchCampaignByUuidAndCompanyId(uuid,
-			companyId);
 	}
 
 	/**
@@ -213,13 +295,23 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	* @param uuid the campaign's UUID
 	* @param groupId the primary key of the group
 	* @return the matching campaign, or <code>null</code> if a matching campaign could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.Campaign fetchCampaignByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return _campaignLocalService.fetchCampaignByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.content.targeting.model.Campaign fetchCurrentMaxPriorityCampaign(
+		long[] groupIds, long[] userSegmentIds) {
+		return _campaignLocalService.fetchCurrentMaxPriorityCampaign(groupIds,
+			userSegmentIds);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _campaignLocalService.getActionableDynamicQuery();
 	}
 
 	/**
@@ -228,40 +320,12 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	* @param campaignId the primary key of the campaign
 	* @return the campaign
 	* @throws PortalException if a campaign with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.Campaign getCampaign(
 		long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.getCampaign(campaignId);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the campaign with the matching UUID and company.
-	*
-	* @param uuid the campaign's UUID
-	* @param companyId the primary key of the company
-	* @return the matching campaign
-	* @throws PortalException if a matching campaign could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public com.liferay.content.targeting.model.Campaign getCampaignByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getCampaignByUuidAndCompanyId(uuid,
-			companyId);
 	}
 
 	/**
@@ -271,14 +335,49 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	* @param groupId the primary key of the group
 	* @return the matching campaign
 	* @throws PortalException if a matching campaign could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.Campaign getCampaignByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.getCampaignByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.getCampaigns(groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.getCampaigns(groupId, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.getCampaigns(groupIds);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.getCampaigns(groupIds, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+		long[] groupIds, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.getCampaigns(groupIds, userSegmentIds);
 	}
 
 	/**
@@ -291,25 +390,161 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	* @param start the lower bound of the range of campaigns
 	* @param end the upper bound of the range of campaigns (not inclusive)
 	* @return the range of campaigns
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _campaignLocalService.getCampaigns(start, end);
+	}
+
+	/**
+	* Returns all the campaigns matching the UUID and company.
+	*
+	* @param uuid the UUID of the campaigns
+	* @param companyId the primary key of the company
+	* @return the matching campaigns, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaignsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _campaignLocalService.getCampaignsByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of campaigns matching the UUID and company.
+	*
+	* @param uuid the UUID of the campaigns
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of campaigns
+	* @param end the upper bound of the range of campaigns (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching campaigns, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaignsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.Campaign> orderByComparator) {
+		return _campaignLocalService.getCampaignsByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**
 	* Returns the number of campaigns.
 	*
 	* @return the number of campaigns
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getCampaignsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getCampaignsCount() {
 		return _campaignLocalService.getCampaignsCount();
+	}
+
+	@Override
+	public int getCampaignsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.getCampaignsCount(groupId);
+	}
+
+	@Override
+	public int getCampaignsCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.getCampaignsCount(groupIds);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _campaignLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _campaignLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _campaignLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.Campaign> getUserSegmentCampaigns(
+		long userSegmentId) {
+		return _campaignLocalService.getUserSegmentCampaigns(userSegmentId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.Campaign> getUserSegmentCampaigns(
+		long userSegmentId, int start, int end) {
+		return _campaignLocalService.getUserSegmentCampaigns(userSegmentId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.Campaign> getUserSegmentCampaigns(
+		long userSegmentId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.Campaign> orderByComparator) {
+		return _campaignLocalService.getUserSegmentCampaigns(userSegmentId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getUserSegmentCampaignsCount(long userSegmentId) {
+		return _campaignLocalService.getUserSegmentCampaignsCount(userSegmentId);
+	}
+
+	/**
+	* Returns the userSegmentIds of the user segments associated with the campaign.
+	*
+	* @param campaignId the campaignId of the campaign
+	* @return long[] the userSegmentIds of user segments associated with the campaign
+	*/
+	@Override
+	public long[] getUserSegmentPrimaryKeys(long campaignId) {
+		return _campaignLocalService.getUserSegmentPrimaryKeys(campaignId);
+	}
+
+	@Override
+	public boolean hasUserSegmentCampaign(long userSegmentId, long campaignId) {
+		return _campaignLocalService.hasUserSegmentCampaign(userSegmentId,
+			campaignId);
+	}
+
+	@Override
+	public boolean hasUserSegmentCampaigns(long userSegmentId) {
+		return _campaignLocalService.hasUserSegmentCampaigns(userSegmentId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		java.lang.String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.search(groupId, keywords, start, end);
+	}
+
+	@Override
+	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Campaign> searchCampaigns(
+		long groupId, java.lang.String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.searchCampaigns(groupId, keywords, start,
+			end);
+	}
+
+	@Override
+	public void setUserSegmentCampaigns(long userSegmentId, long[] campaignIds) {
+		_campaignLocalService.setUserSegmentCampaigns(userSegmentId, campaignIds);
 	}
 
 	/**
@@ -317,337 +552,11 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	*
 	* @param campaign the campaign
 	* @return the campaign that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.Campaign updateCampaign(
-		com.liferay.content.targeting.model.Campaign campaign)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.Campaign campaign) {
 		return _campaignLocalService.updateCampaign(campaign);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void addUserSegmentCampaign(long userSegmentId, long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.addUserSegmentCampaign(userSegmentId, campaignId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void addUserSegmentCampaign(long userSegmentId,
-		com.liferay.content.targeting.model.Campaign campaign)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.addUserSegmentCampaign(userSegmentId, campaign);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void addUserSegmentCampaigns(long userSegmentId, long[] campaignIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.addUserSegmentCampaigns(userSegmentId, campaignIds);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void addUserSegmentCampaigns(long userSegmentId,
-		java.util.List<com.liferay.content.targeting.model.Campaign> Campaigns)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.addUserSegmentCampaigns(userSegmentId, Campaigns);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void clearUserSegmentCampaigns(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.clearUserSegmentCampaigns(userSegmentId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void deleteUserSegmentCampaign(long userSegmentId, long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.deleteUserSegmentCampaign(userSegmentId,
-			campaignId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void deleteUserSegmentCampaign(long userSegmentId,
-		com.liferay.content.targeting.model.Campaign campaign)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.deleteUserSegmentCampaign(userSegmentId, campaign);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void deleteUserSegmentCampaigns(long userSegmentId,
-		long[] campaignIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.deleteUserSegmentCampaigns(userSegmentId,
-			campaignIds);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void deleteUserSegmentCampaigns(long userSegmentId,
-		java.util.List<com.liferay.content.targeting.model.Campaign> Campaigns)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.deleteUserSegmentCampaigns(userSegmentId,
-			Campaigns);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getUserSegmentCampaigns(
-		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getUserSegmentCampaigns(userSegmentId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getUserSegmentCampaigns(
-		long userSegmentId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getUserSegmentCampaigns(userSegmentId,
-			start, end);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getUserSegmentCampaigns(
-		long userSegmentId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getUserSegmentCampaigns(userSegmentId,
-			start, end, orderByComparator);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public int getUserSegmentCampaignsCount(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getUserSegmentCampaignsCount(userSegmentId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public boolean hasUserSegmentCampaign(long userSegmentId, long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.hasUserSegmentCampaign(userSegmentId,
-			campaignId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public boolean hasUserSegmentCampaigns(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.hasUserSegmentCampaigns(userSegmentId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void setUserSegmentCampaigns(long userSegmentId, long[] campaignIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.setUserSegmentCampaigns(userSegmentId, campaignIds);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _campaignLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_campaignLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _campaignLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	@Override
-	public com.liferay.content.targeting.model.Campaign addCampaign(
-		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Date startDate, java.util.Date endDate, int priority,
-		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.addCampaign(userId, nameMap,
-			descriptionMap, startDate, endDate, priority, active,
-			userSegmentIds, serviceContext);
-	}
-
-	@Override
-	public com.liferay.content.targeting.model.Campaign addCampaign(
-		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Date startDate, java.util.Date endDate,
-		java.lang.String timeZoneId, int priority, boolean active,
-		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.addCampaign(userId, nameMap,
-			descriptionMap, startDate, endDate, timeZoneId, priority, active,
-			userSegmentIds, serviceContext);
-	}
-
-	@Override
-	public void addCampaignResources(
-		com.liferay.content.targeting.model.Campaign campaign,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.addCampaignResources(campaign,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	@Override
-	public void addCampaignResources(
-		com.liferay.content.targeting.model.Campaign campaign,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.addCampaignResources(campaign, groupPermissions,
-			guestPermissions);
-	}
-
-	@Override
-	public void deleteCampaigns(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_campaignLocalService.deleteCampaigns(groupId);
-	}
-
-	@Override
-	public com.liferay.content.targeting.model.Campaign fetchCurrentMaxPriorityCampaign(
-		long[] groupIds, long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.fetchCurrentMaxPriorityCampaign(groupIds,
-			userSegmentIds);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getCampaigns(groupId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getCampaigns(groupId, start, end, obc);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long[] groupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getCampaigns(groupIds);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getCampaigns(groupIds, start, end, obc);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long[] groupIds, long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getCampaigns(groupIds, userSegmentIds);
-	}
-
-	@Override
-	public int getCampaignsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getCampaignsCount(groupId);
-	}
-
-	@Override
-	public int getCampaignsCount(long[] groupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getCampaignsCount(groupIds);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.Hits search(long groupId,
-		java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.search(groupId, keywords, start, end);
-	}
-
-	@Override
-	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Campaign> searchCampaigns(
-		long groupId, java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.searchCampaigns(groupId, keywords, start,
-			end);
 	}
 
 	@Override
@@ -657,9 +566,8 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.updateCampaign(campaignId, nameMap,
 			descriptionMap, startDate, endDate, priority, active,
 			userSegmentIds, serviceContext);
@@ -673,9 +581,8 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.updateCampaign(campaignId, nameMap,
 			descriptionMap, startDate, endDate, timeZoneId, priority, active,
 			userSegmentIds, serviceContext);
@@ -685,25 +592,9 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	public void updateCampaignResources(
 		com.liferay.content.targeting.model.Campaign campaign,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_campaignLocalService.updateCampaignResources(campaign,
 			groupPermissions, guestPermissions);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public CampaignLocalService getWrappedCampaignLocalService() {
-		return _campaignLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedCampaignLocalService(
-		CampaignLocalService campaignLocalService) {
-		_campaignLocalService = campaignLocalService;
 	}
 
 	@Override

@@ -14,13 +14,15 @@
 
 package com.liferay.content.targeting.rule.score.points.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.service.ServiceContext;
+import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -37,7 +39,8 @@ import java.io.Serializable;
  * @see com.liferay.content.targeting.rule.score.points.model.impl.ScorePointModelImpl
  * @generated
  */
-public interface ScorePointModel extends BaseModel<ScorePoint> {
+@ProviderType
+public interface ScorePointModel extends BaseModel<ScorePoint>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -92,6 +95,7 @@ public interface ScorePointModel extends BaseModel<ScorePoint> {
 	 *
 	 * @return the company ID of this score point
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -99,6 +103,7 @@ public interface ScorePointModel extends BaseModel<ScorePoint> {
 	 *
 	 * @param companyId the company ID of this score point
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -119,9 +124,8 @@ public interface ScorePointModel extends BaseModel<ScorePoint> {
 	 * Returns the anonymous user uuid of this score point.
 	 *
 	 * @return the anonymous user uuid of this score point
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getAnonymousUserUuid() throws SystemException;
+	public String getAnonymousUserUuid();
 
 	/**
 	 * Sets the anonymous user uuid of this score point.
@@ -195,19 +199,20 @@ public interface ScorePointModel extends BaseModel<ScorePoint> {
 	public Object clone();
 
 	@Override
-	public int compareTo(ScorePoint scorePoint);
+	public int compareTo(
+		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ScorePoint> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.rule.score.points.model.ScorePoint> toCacheModel();
 
 	@Override
-	public ScorePoint toEscapedModel();
+	public com.liferay.content.targeting.rule.score.points.model.ScorePoint toEscapedModel();
 
 	@Override
-	public ScorePoint toUnescapedModel();
+	public com.liferay.content.targeting.rule.score.points.model.ScorePoint toUnescapedModel();
 
 	@Override
 	public String toString();

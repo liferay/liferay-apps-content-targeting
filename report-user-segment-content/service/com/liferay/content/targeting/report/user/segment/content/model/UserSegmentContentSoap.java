@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.report.user.segment.content.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.content.targeting.report.user.segment.content.service.http.UserSegmentContentServiceSoap
  * @generated
  */
+@ProviderType
 public class UserSegmentContentSoap implements Serializable {
 	public static UserSegmentContentSoap toSoapModel(UserSegmentContent model) {
 		UserSegmentContentSoap soapModel = new UserSegmentContentSoap();

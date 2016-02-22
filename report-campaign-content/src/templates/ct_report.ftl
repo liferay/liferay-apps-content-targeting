@@ -14,11 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_theme = PortletJspTagLibs["/META-INF/liferay-theme.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
-
 <@portlet["defineObjects"] />
 
 <@liferay_theme["defineObjects"] />
@@ -28,11 +23,26 @@
 <#setting number_format="computer">
 
 <@portlet["renderURL"] varImpl="portletURL">
-	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORT}" />
-	<@portlet["param"] name="redirect" value="${redirect}" />
-	<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
-	<@portlet["param"] name="className" value="${className}" />
-	<@portlet["param"] name="classPK" value="${classPK?string}" />
+	<@portlet["param"]
+		name="mvcPath"
+		value="${contentTargetingPath.VIEW_REPORT}"
+	/>
+	<@portlet["param"]
+		name="redirect"
+		value="${redirect}"
+	/>
+	<@portlet["param"]
+		name="reportKey"
+		value="${report.getReportKey()}"
+	/>
+	<@portlet["param"]
+		name="className"
+		value="${className}"
+	/>
+	<@portlet["param"]
+		name="classPK"
+		value="${classPK?string}"
+	/>
 </@>
 
 <@liferay_ui["search-container"]

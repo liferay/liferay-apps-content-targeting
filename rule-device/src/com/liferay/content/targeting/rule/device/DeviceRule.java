@@ -21,29 +21,30 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.SessionAttributesRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
+import com.liferay.mobile.device.rules.model.MDRRule;
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
+import com.liferay.mobile.device.rules.rule.RuleHandler;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil;
-import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.mobiledevicerules.model.MDRRule;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -206,14 +207,14 @@ public class DeviceRule extends BaseRule {
 
 			mdrRuleGroupUuid = jsonObj.getString("mdrRuleGroupUuid");
 		}
-		catch (JSONException jse) {
+		catch (JSONException jsone) {
 		}
 
 		MDRRuleGroup mdrRuleGroup =
 			MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroupByUuidAndGroupId(
 				mdrRuleGroupUuid, portletDataContext.getScopeGroupId());
 
-		if (mdrRuleGroup != null ) {
+		if (mdrRuleGroup != null) {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 
 			jsonObj.put("mdrRuleGroupId", mdrRuleGroup.getRuleGroupId());
@@ -261,8 +262,7 @@ public class DeviceRule extends BaseRule {
 	}
 
 	protected boolean evaluateRuleGroup(
-			MDRRuleGroup mdrRuleGroup, ThemeDisplay themeDisplay)
-		throws SystemException {
+		MDRRuleGroup mdrRuleGroup, ThemeDisplay themeDisplay) {
 
 		Collection<MDRRule> mdrRules = mdrRuleGroup.getRules();
 
@@ -284,7 +284,7 @@ public class DeviceRule extends BaseRule {
 
 			mdrRuleGroupId = jsonObj.getLong("mdrRuleGroupId");
 		}
-		catch (JSONException jse) {
+		catch (JSONException jsone) {
 		}
 
 		return mdrRuleGroupId;
@@ -310,20 +310,21 @@ public class DeviceRule extends BaseRule {
 
 				mdrRuleGroupId = jsonObj.getInt("mdrRuleGroupId");
 			}
-			catch (JSONException jse) {
+			catch (JSONException jsone) {
 			}
 		}
 
 		context.put("mdrRuleGroupId", mdrRuleGroupId);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("includeGlobalScope", Boolean.TRUE);
 
-		long groupId = GetterUtil.getLong(context.get("scopeGroupId"));
+		Group scopeGroup = (Group)context.get("scopeGroup");
 
-		List<MDRRuleGroup> mdrRuleGroups = new ArrayList<MDRRuleGroup>();
+		long groupId = (scopeGroup != null) ? scopeGroup.getGroupId() : 0;
+
+		List<MDRRuleGroup> mdrRuleGroups = new ArrayList<>();
 
 		try {
 
@@ -341,13 +342,13 @@ public class DeviceRule extends BaseRule {
 
 		boolean hasMDRViewPermission =
 			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-				context, PortletKeys.MOBILE_DEVICE_SITE_ADMIN);
+				context, MDRPortletKeys.MOBILE_DEVICE_RULES);
 
 		if (hasMDRViewPermission) {
 			context.put(
 				"mDRURL",
 				ContentTargetingContextUtil.getSiteAdministrationPortletURL(
-					context, PortletKeys.MOBILE_DEVICE_SITE_ADMIN, null));
+					context, MDRPortletKeys.MOBILE_DEVICE_RULES, null));
 		}
 	}
 

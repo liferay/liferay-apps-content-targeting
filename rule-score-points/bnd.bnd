@@ -2,7 +2,7 @@ Bundle-Name: Score Points Rule
 Bundle-SymbolicName: com.liferay.content.targeting.rule.score.points
 Bundle-Version: 1.0.0
 Export-Package:\
-    com.liferay.content.targeting.rule.score.points.api.model,\
+	com.liferay.content.targeting.rule.score.points.api.model,\
 	com.liferay.content.targeting.rule.score.points.messaging,\
 	com.liferay.content.targeting.rule.score.points.messaging.config,\
 	com.liferay.content.targeting.rule.score.points.service,\
@@ -21,9 +21,15 @@ Include-Resource:\
 	classes,\
 	WEB-INF/classes/META-INF=classes/META-INF/,\
 	WEB-INF/sql=sql,\
-	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
+	META-INF/sql=sql,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	@lib/com.liferay.content.targeting.rule.score.points-service.jar
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 Service-Component: com.liferay.content.targeting.rule.score.points.*
 Web-ContextPath: /rule-score-points
 -baseline: *;version="1.0.0"
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

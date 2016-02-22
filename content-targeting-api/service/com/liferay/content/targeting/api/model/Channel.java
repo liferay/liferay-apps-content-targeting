@@ -14,12 +14,11 @@
 
 package com.liferay.content.targeting.api.model;
 
-import com.liferay.content.targeting.InvalidChannelException;
+import com.liferay.content.targeting.exception.InvalidChannelException;
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Locale;
@@ -54,7 +53,7 @@ public interface Channel {
 	 *        stored configuration
 	 */
 	public void deleteData(ChannelInstance channelInstance)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Exports any additional data added by this channel when the

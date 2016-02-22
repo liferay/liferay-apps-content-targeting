@@ -31,5 +31,4 @@ import com.liferay.content.targeting.report.campaign.tracking.action.service.bas
  * @see com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalServiceUtil
  */
 public class CTActionTotalServiceImpl extends CTActionTotalServiceBaseImpl {
-
 }

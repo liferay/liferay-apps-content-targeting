@@ -15,31 +15,48 @@
 package com.liferay.content.targeting.anonymous.users.hook.listeners;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
-import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil;
-import com.liferay.portal.ModelListenerException;
-import com.liferay.portal.model.BaseModelListener;
-import com.liferay.portal.model.User;
+import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.User;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
+@Component(immediate = true, service = ModelListener.class)
 public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
 	public void onAfterRemove(User user) throws ModelListenerException {
 		try {
 			AnonymousUser anonymousUser =
-				AnonymousUserLocalServiceUtil.fetchAnonymousUserByUserId(
+				_anonymousUserLocalService.fetchAnonymousUserByUserId(
 					user.getUserId());
 
 			if (anonymousUser != null) {
-				AnonymousUserLocalServiceUtil.deleteAnonymousUser(
-					anonymousUser);
+				_anonymousUserLocalService.deleteAnonymousUser(anonymousUser);
 			}
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference(unbind = "unsetAnonymousUserLocalService")
+	protected void setAnonymousUserLocalService(
+		AnonymousUserLocalService anonymousUserLocalService) {
+
+		_anonymousUserLocalService = anonymousUserLocalService;
+	}
+
+	protected void unsetAnonymousUserLocalService() {
+		_anonymousUserLocalService = null;
+	}
+
+	private volatile AnonymousUserLocalService _anonymousUserLocalService;
 
 }

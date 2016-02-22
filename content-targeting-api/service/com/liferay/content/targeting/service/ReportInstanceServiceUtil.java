@@ -14,9 +14,11 @@
 
 package com.liferay.content.targeting.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableService;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for ReportInstance. This utility wraps
@@ -32,46 +34,21 @@ import com.liferay.portal.service.InvokableService;
  * @see com.liferay.content.targeting.service.impl.ReportInstanceServiceImpl
  * @generated
  */
+@ProviderType
 public class ReportInstanceServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.content.targeting.service.impl.ReportInstanceServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	public static com.liferay.content.targeting.model.ReportInstance addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addReportInstance(userId, reportKey, className, classPK,
 			nameMap, descriptionMap, typeSettings, serviceContext);
@@ -80,39 +57,49 @@ public class ReportInstanceServiceUtil {
 	/**
 	* @deprecated As of 2.0.0
 	*/
+	@Deprecated
 	public static com.liferay.content.targeting.model.ReportInstance addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addReportInstance(userId, reportKey, className, classPK,
 			typeSettings, serviceContext);
 	}
 
 	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long reportInstanceId) {
 		return getService().fetchReportInstance(reportInstanceId);
 	}
 
 	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String reportKey, java.lang.String className, long classPK) {
 		return getService().fetchReportInstance(reportKey, className, classPK);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
-		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String reportKey, java.lang.String className, long classPK) {
 		return getService().findReportInstances(reportKey, className, classPK);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		return getService().getReportInstances(className, classPK);
+	}
+
+	public static com.liferay.content.targeting.model.ReportInstance updateReportInstance(
+		com.liferay.content.targeting.model.ReportInstance reportInstance) {
+		return getService().updateReportInstance(reportInstance);
 	}
 
 	public static com.liferay.content.targeting.model.ReportInstance updateReportInstance(
@@ -121,49 +108,18 @@ public class ReportInstanceServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateReportInstance(reportInstanceId, userId, reportKey,
 			className, classPK, nameMap, descriptionMap, typeSettings,
 			serviceContext);
 	}
 
-	public static com.liferay.content.targeting.model.ReportInstance updateReportInstance(
-		com.liferay.content.targeting.model.ReportInstance reportInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateReportInstance(reportInstance);
-	}
-
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static ReportInstanceService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					ReportInstanceService.class.getName());
-
-			if (invokableService instanceof ReportInstanceService) {
-				_service = (ReportInstanceService)invokableService;
-			}
-			else {
-				_service = new ReportInstanceServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(ReportInstanceServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setService(ReportInstanceService service) {
-	}
-
-	private static ReportInstanceService _service;
+	private static ServiceTracker<ReportInstanceService, ReportInstanceService> _serviceTracker =
+		ServiceTrackerFactory.open(ReportInstanceService.class);
 }

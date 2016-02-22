@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the ReportInstance service. Represents a row in the &quot;CT_ReportInstance&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see ReportInstanceImpl
- * @see com.liferay.content.targeting.model.ReportInstance
+ * @see ReportInstance
  * @generated
  */
+@ProviderType
 public abstract class ReportInstanceBaseImpl extends ReportInstanceModelImpl
 	implements ReportInstance {
 	/*
@@ -39,7 +40,7 @@ public abstract class ReportInstanceBaseImpl extends ReportInstanceModelImpl
 	 * Never modify or reference this class directly. All methods that expect a report instance model instance should use the {@link ReportInstance} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			ReportInstanceLocalServiceUtil.addReportInstance(this);
 		}

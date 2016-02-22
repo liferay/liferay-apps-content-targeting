@@ -14,9 +14,17 @@
 
 package com.liferay.content.targeting.model;
 
-import com.liferay.portal.kernel.lar.StagedModelType;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -31,6 +39,7 @@ import java.util.Map;
  * @see TrackingActionInstance
  * @generated
  */
+@ProviderType
 public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	ModelWrapper<TrackingActionInstance> {
 	public TrackingActionInstanceWrapper(
@@ -179,266 +188,15 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 		}
 	}
 
-	/**
-	* Returns the primary key of this tracking action instance.
-	*
-	* @return the primary key of this tracking action instance
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _trackingActionInstance.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new TrackingActionInstanceWrapper((TrackingActionInstance)_trackingActionInstance.clone());
 	}
 
-	/**
-	* Sets the primary key of this tracking action instance.
-	*
-	* @param primaryKey the primary key of this tracking action instance
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_trackingActionInstance.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the uuid of this tracking action instance.
-	*
-	* @return the uuid of this tracking action instance
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _trackingActionInstance.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this tracking action instance.
-	*
-	* @param uuid the uuid of this tracking action instance
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_trackingActionInstance.setUuid(uuid);
-	}
-
-	/**
-	* Returns the tracking action instance ID of this tracking action instance.
-	*
-	* @return the tracking action instance ID of this tracking action instance
-	*/
-	@Override
-	public long getTrackingActionInstanceId() {
-		return _trackingActionInstance.getTrackingActionInstanceId();
-	}
-
-	/**
-	* Sets the tracking action instance ID of this tracking action instance.
-	*
-	* @param trackingActionInstanceId the tracking action instance ID of this tracking action instance
-	*/
-	@Override
-	public void setTrackingActionInstanceId(long trackingActionInstanceId) {
-		_trackingActionInstance.setTrackingActionInstanceId(trackingActionInstanceId);
-	}
-
-	/**
-	* Returns the group ID of this tracking action instance.
-	*
-	* @return the group ID of this tracking action instance
-	*/
-	@Override
-	public long getGroupId() {
-		return _trackingActionInstance.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this tracking action instance.
-	*
-	* @param groupId the group ID of this tracking action instance
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_trackingActionInstance.setGroupId(groupId);
-	}
-
-	/**
-	* Returns the company ID of this tracking action instance.
-	*
-	* @return the company ID of this tracking action instance
-	*/
-	@Override
-	public long getCompanyId() {
-		return _trackingActionInstance.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this tracking action instance.
-	*
-	* @param companyId the company ID of this tracking action instance
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_trackingActionInstance.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this tracking action instance.
-	*
-	* @return the user ID of this tracking action instance
-	*/
-	@Override
-	public long getUserId() {
-		return _trackingActionInstance.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this tracking action instance.
-	*
-	* @param userId the user ID of this tracking action instance
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_trackingActionInstance.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this tracking action instance.
-	*
-	* @return the user uuid of this tracking action instance
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _trackingActionInstance.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this tracking action instance.
-	*
-	* @param userUuid the user uuid of this tracking action instance
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_trackingActionInstance.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this tracking action instance.
-	*
-	* @return the user name of this tracking action instance
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _trackingActionInstance.getUserName();
-	}
-
-	/**
-	* Sets the user name of this tracking action instance.
-	*
-	* @param userName the user name of this tracking action instance
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_trackingActionInstance.setUserName(userName);
-	}
-
-	/**
-	* Returns the create date of this tracking action instance.
-	*
-	* @return the create date of this tracking action instance
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _trackingActionInstance.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this tracking action instance.
-	*
-	* @param createDate the create date of this tracking action instance
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_trackingActionInstance.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the modified date of this tracking action instance.
-	*
-	* @return the modified date of this tracking action instance
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _trackingActionInstance.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this tracking action instance.
-	*
-	* @param modifiedDate the modified date of this tracking action instance
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_trackingActionInstance.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the tracking action key of this tracking action instance.
-	*
-	* @return the tracking action key of this tracking action instance
-	*/
-	@Override
-	public java.lang.String getTrackingActionKey() {
-		return _trackingActionInstance.getTrackingActionKey();
-	}
-
-	/**
-	* Sets the tracking action key of this tracking action instance.
-	*
-	* @param trackingActionKey the tracking action key of this tracking action instance
-	*/
-	@Override
-	public void setTrackingActionKey(java.lang.String trackingActionKey) {
-		_trackingActionInstance.setTrackingActionKey(trackingActionKey);
-	}
-
-	/**
-	* Returns the campaign ID of this tracking action instance.
-	*
-	* @return the campaign ID of this tracking action instance
-	*/
-	@Override
-	public long getCampaignId() {
-		return _trackingActionInstance.getCampaignId();
-	}
-
-	/**
-	* Sets the campaign ID of this tracking action instance.
-	*
-	* @param campaignId the campaign ID of this tracking action instance
-	*/
-	@Override
-	public void setCampaignId(long campaignId) {
-		_trackingActionInstance.setCampaignId(campaignId);
-	}
-
-	/**
-	* Returns the report instance ID of this tracking action instance.
-	*
-	* @return the report instance ID of this tracking action instance
-	*/
-	@Override
-	public long getReportInstanceId() {
-		return _trackingActionInstance.getReportInstanceId();
-	}
-
-	/**
-	* Sets the report instance ID of this tracking action instance.
-	*
-	* @param reportInstanceId the report instance ID of this tracking action instance
-	*/
-	@Override
-	public void setReportInstanceId(long reportInstanceId) {
-		_trackingActionInstance.setReportInstanceId(reportInstanceId);
+	public int compareTo(
+		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance) {
+		return _trackingActionInstance.compareTo(trackingActionInstance);
 	}
 
 	/**
@@ -452,53 +210,33 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	}
 
 	/**
-	* Sets the alias of this tracking action instance.
+	* Returns the campaign ID of this tracking action instance.
 	*
-	* @param alias the alias of this tracking action instance
+	* @return the campaign ID of this tracking action instance
 	*/
 	@Override
-	public void setAlias(java.lang.String alias) {
-		_trackingActionInstance.setAlias(alias);
+	public long getCampaignId() {
+		return _trackingActionInstance.getCampaignId();
 	}
 
 	/**
-	* Returns the referrer class name of this tracking action instance.
+	* Returns the company ID of this tracking action instance.
 	*
-	* @return the referrer class name of this tracking action instance
+	* @return the company ID of this tracking action instance
 	*/
 	@Override
-	public java.lang.String getReferrerClassName() {
-		return _trackingActionInstance.getReferrerClassName();
+	public long getCompanyId() {
+		return _trackingActionInstance.getCompanyId();
 	}
 
 	/**
-	* Sets the referrer class name of this tracking action instance.
+	* Returns the create date of this tracking action instance.
 	*
-	* @param referrerClassName the referrer class name of this tracking action instance
+	* @return the create date of this tracking action instance
 	*/
 	@Override
-	public void setReferrerClassName(java.lang.String referrerClassName) {
-		_trackingActionInstance.setReferrerClassName(referrerClassName);
-	}
-
-	/**
-	* Returns the referrer class p k of this tracking action instance.
-	*
-	* @return the referrer class p k of this tracking action instance
-	*/
-	@Override
-	public long getReferrerClassPK() {
-		return _trackingActionInstance.getReferrerClassPK();
-	}
-
-	/**
-	* Sets the referrer class p k of this tracking action instance.
-	*
-	* @param referrerClassPK the referrer class p k of this tracking action instance
-	*/
-	@Override
-	public void setReferrerClassPK(long referrerClassPK) {
-		_trackingActionInstance.setReferrerClassPK(referrerClassPK);
+	public Date getCreateDate() {
+		return _trackingActionInstance.getCreateDate();
 	}
 
 	/**
@@ -512,16 +250,6 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	}
 
 	/**
-	* Sets the element ID of this tracking action instance.
-	*
-	* @param elementId the element ID of this tracking action instance
-	*/
-	@Override
-	public void setElementId(java.lang.String elementId) {
-		_trackingActionInstance.setElementId(elementId);
-	}
-
-	/**
 	* Returns the event type of this tracking action instance.
 	*
 	* @return the event type of this tracking action instance
@@ -531,14 +259,99 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 		return _trackingActionInstance.getEventType();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _trackingActionInstance.getExpandoBridge();
+	}
+
 	/**
-	* Sets the event type of this tracking action instance.
+	* Returns the group ID of this tracking action instance.
 	*
-	* @param eventType the event type of this tracking action instance
+	* @return the group ID of this tracking action instance
 	*/
 	@Override
-	public void setEventType(java.lang.String eventType) {
-		_trackingActionInstance.setEventType(eventType);
+	public long getGroupId() {
+		return _trackingActionInstance.getGroupId();
+	}
+
+	/**
+	* Returns the modified date of this tracking action instance.
+	*
+	* @return the modified date of this tracking action instance
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _trackingActionInstance.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this tracking action instance.
+	*
+	* @return the primary key of this tracking action instance
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _trackingActionInstance.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _trackingActionInstance.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the referrer class name of this tracking action instance.
+	*
+	* @return the referrer class name of this tracking action instance
+	*/
+	@Override
+	public java.lang.String getReferrerClassName() {
+		return _trackingActionInstance.getReferrerClassName();
+	}
+
+	/**
+	* Returns the referrer class p k of this tracking action instance.
+	*
+	* @return the referrer class p k of this tracking action instance
+	*/
+	@Override
+	public long getReferrerClassPK() {
+		return _trackingActionInstance.getReferrerClassPK();
+	}
+
+	/**
+	* Returns the report instance ID of this tracking action instance.
+	*
+	* @return the report instance ID of this tracking action instance
+	*/
+	@Override
+	public long getReportInstanceId() {
+		return _trackingActionInstance.getReportInstanceId();
+	}
+
+	@Override
+	public java.lang.String getTrackingActionGuid() {
+		return _trackingActionInstance.getTrackingActionGuid();
+	}
+
+	/**
+	* Returns the tracking action instance ID of this tracking action instance.
+	*
+	* @return the tracking action instance ID of this tracking action instance
+	*/
+	@Override
+	public long getTrackingActionInstanceId() {
+		return _trackingActionInstance.getTrackingActionInstanceId();
+	}
+
+	/**
+	* Returns the tracking action key of this tracking action instance.
+	*
+	* @return the tracking action key of this tracking action instance
+	*/
+	@Override
+	public java.lang.String getTrackingActionKey() {
+		return _trackingActionInstance.getTrackingActionKey();
 	}
 
 	/**
@@ -552,6 +365,252 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	}
 
 	/**
+	* Returns the user ID of this tracking action instance.
+	*
+	* @return the user ID of this tracking action instance
+	*/
+	@Override
+	public long getUserId() {
+		return _trackingActionInstance.getUserId();
+	}
+
+	/**
+	* Returns the user name of this tracking action instance.
+	*
+	* @return the user name of this tracking action instance
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _trackingActionInstance.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this tracking action instance.
+	*
+	* @return the user uuid of this tracking action instance
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _trackingActionInstance.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this tracking action instance.
+	*
+	* @return the uuid of this tracking action instance
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _trackingActionInstance.getUuid();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.String> getValues() {
+		return _trackingActionInstance.getValues();
+	}
+
+	@Override
+	public int hashCode() {
+		return _trackingActionInstance.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _trackingActionInstance.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _trackingActionInstance.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _trackingActionInstance.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_trackingActionInstance.persist();
+	}
+
+	/**
+	* Sets the alias of this tracking action instance.
+	*
+	* @param alias the alias of this tracking action instance
+	*/
+	@Override
+	public void setAlias(java.lang.String alias) {
+		_trackingActionInstance.setAlias(alias);
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_trackingActionInstance.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the campaign ID of this tracking action instance.
+	*
+	* @param campaignId the campaign ID of this tracking action instance
+	*/
+	@Override
+	public void setCampaignId(long campaignId) {
+		_trackingActionInstance.setCampaignId(campaignId);
+	}
+
+	/**
+	* Sets the company ID of this tracking action instance.
+	*
+	* @param companyId the company ID of this tracking action instance
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_trackingActionInstance.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this tracking action instance.
+	*
+	* @param createDate the create date of this tracking action instance
+	*/
+	@Override
+	public void setCreateDate(Date createDate) {
+		_trackingActionInstance.setCreateDate(createDate);
+	}
+
+	/**
+	* Sets the element ID of this tracking action instance.
+	*
+	* @param elementId the element ID of this tracking action instance
+	*/
+	@Override
+	public void setElementId(java.lang.String elementId) {
+		_trackingActionInstance.setElementId(elementId);
+	}
+
+	/**
+	* Sets the event type of this tracking action instance.
+	*
+	* @param eventType the event type of this tracking action instance
+	*/
+	@Override
+	public void setEventType(java.lang.String eventType) {
+		_trackingActionInstance.setEventType(eventType);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_trackingActionInstance.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_trackingActionInstance.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		_trackingActionInstance.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the group ID of this tracking action instance.
+	*
+	* @param groupId the group ID of this tracking action instance
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_trackingActionInstance.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the modified date of this tracking action instance.
+	*
+	* @param modifiedDate the modified date of this tracking action instance
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_trackingActionInstance.setModifiedDate(modifiedDate);
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_trackingActionInstance.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this tracking action instance.
+	*
+	* @param primaryKey the primary key of this tracking action instance
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_trackingActionInstance.setPrimaryKey(primaryKey);
+	}
+
+	@Override
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+		_trackingActionInstance.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the referrer class name of this tracking action instance.
+	*
+	* @param referrerClassName the referrer class name of this tracking action instance
+	*/
+	@Override
+	public void setReferrerClassName(java.lang.String referrerClassName) {
+		_trackingActionInstance.setReferrerClassName(referrerClassName);
+	}
+
+	/**
+	* Sets the referrer class p k of this tracking action instance.
+	*
+	* @param referrerClassPK the referrer class p k of this tracking action instance
+	*/
+	@Override
+	public void setReferrerClassPK(long referrerClassPK) {
+		_trackingActionInstance.setReferrerClassPK(referrerClassPK);
+	}
+
+	/**
+	* Sets the report instance ID of this tracking action instance.
+	*
+	* @param reportInstanceId the report instance ID of this tracking action instance
+	*/
+	@Override
+	public void setReportInstanceId(long reportInstanceId) {
+		_trackingActionInstance.setReportInstanceId(reportInstanceId);
+	}
+
+	@Override
+	public void setTrackingActionGuid(java.lang.String trackingActionGuid) {
+		_trackingActionInstance.setTrackingActionGuid(trackingActionGuid);
+	}
+
+	/**
+	* Sets the tracking action instance ID of this tracking action instance.
+	*
+	* @param trackingActionInstanceId the tracking action instance ID of this tracking action instance
+	*/
+	@Override
+	public void setTrackingActionInstanceId(long trackingActionInstanceId) {
+		_trackingActionInstance.setTrackingActionInstanceId(trackingActionInstanceId);
+	}
+
+	/**
+	* Sets the tracking action key of this tracking action instance.
+	*
+	* @param trackingActionKey the tracking action key of this tracking action instance
+	*/
+	@Override
+	public void setTrackingActionKey(java.lang.String trackingActionKey) {
+		_trackingActionInstance.setTrackingActionKey(trackingActionKey);
+	}
+
+	/**
 	* Sets the type settings of this tracking action instance.
 	*
 	* @param typeSettings the type settings of this tracking action instance
@@ -561,82 +620,53 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 		_trackingActionInstance.setTypeSettings(typeSettings);
 	}
 
+	/**
+	* Sets the user ID of this tracking action instance.
+	*
+	* @param userId the user ID of this tracking action instance
+	*/
 	@Override
-	public boolean isNew() {
-		return _trackingActionInstance.isNew();
+	public void setUserId(long userId) {
+		_trackingActionInstance.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this tracking action instance.
+	*
+	* @param userName the user name of this tracking action instance
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_trackingActionInstance.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this tracking action instance.
+	*
+	* @param userUuid the user uuid of this tracking action instance
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_trackingActionInstance.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the uuid of this tracking action instance.
+	*
+	* @param uuid the uuid of this tracking action instance
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_trackingActionInstance.setUuid(uuid);
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_trackingActionInstance.setNew(n);
+	public void setValues(Map<java.lang.String, java.lang.String> values) {
+		_trackingActionInstance.setValues(values);
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _trackingActionInstance.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_trackingActionInstance.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _trackingActionInstance.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _trackingActionInstance.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_trackingActionInstance.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _trackingActionInstance.getExpandoBridge();
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
-		_trackingActionInstance.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
-		_trackingActionInstance.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_trackingActionInstance.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new TrackingActionInstanceWrapper((TrackingActionInstance)_trackingActionInstance.clone());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance) {
-		return _trackingActionInstance.compareTo(trackingActionInstance);
-	}
-
-	@Override
-	public int hashCode() {
-		return _trackingActionInstance.hashCode();
-	}
-
-	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.model.TrackingActionInstance> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.content.targeting.model.TrackingActionInstance> toCacheModel() {
 		return _trackingActionInstance.toCacheModel();
 	}
 
@@ -646,45 +676,18 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	}
 
 	@Override
-	public com.liferay.content.targeting.model.TrackingActionInstance toUnescapedModel() {
-		return new TrackingActionInstanceWrapper(_trackingActionInstance.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _trackingActionInstance.toString();
 	}
 
 	@Override
+	public com.liferay.content.targeting.model.TrackingActionInstance toUnescapedModel() {
+		return new TrackingActionInstanceWrapper(_trackingActionInstance.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _trackingActionInstance.toXmlString();
-	}
-
-	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_trackingActionInstance.persist();
-	}
-
-	@Override
-	public java.lang.String getTrackingActionGuid() {
-		return _trackingActionInstance.getTrackingActionGuid();
-	}
-
-	@Override
-	public java.util.Map<java.lang.String, java.lang.String> getValues() {
-		return _trackingActionInstance.getValues();
-	}
-
-	@Override
-	public void setTrackingActionGuid(java.lang.String trackingActionGuid) {
-		_trackingActionInstance.setTrackingActionGuid(trackingActionGuid);
-	}
-
-	@Override
-	public void setValues(
-		java.util.Map<java.lang.String, java.lang.String> values) {
-		_trackingActionInstance.setValues(values);
 	}
 
 	@Override
@@ -712,16 +715,19 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 		return _trackingActionInstance.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	public TrackingActionInstance getWrappedTrackingActionInstance() {
+	@Override
+	public TrackingActionInstance getWrappedModel() {
 		return _trackingActionInstance;
 	}
 
 	@Override
-	public TrackingActionInstance getWrappedModel() {
-		return _trackingActionInstance;
+	public boolean isEntityCacheEnabled() {
+		return _trackingActionInstance.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _trackingActionInstance.isFinderCacheEnabled();
 	}
 
 	@Override
@@ -729,5 +735,5 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 		_trackingActionInstance.resetOriginalValues();
 	}
 
-	private TrackingActionInstance _trackingActionInstance;
+	private final TrackingActionInstance _trackingActionInstance;
 }

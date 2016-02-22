@@ -14,11 +14,14 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.RuleInstance;
 
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +37,33 @@ import java.util.Date;
  * @see RuleInstance
  * @generated
  */
+@ProviderType
 public class RuleInstanceCacheModel implements CacheModel<RuleInstance>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof RuleInstanceCacheModel)) {
+			return false;
+		}
+
+		RuleInstanceCacheModel ruleInstanceCacheModel = (RuleInstanceCacheModel)obj;
+
+		if (ruleInstanceId == ruleInstanceCacheModel.ruleInstanceId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, ruleInstanceId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
@@ -128,14 +156,19 @@ public class RuleInstanceCacheModel implements CacheModel<RuleInstance>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		ruleInstanceId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		ruleKey = objectInput.readUTF();
+
 		userSegmentId = objectInput.readLong();
 		typeSettings = objectInput.readUTF();
 	}
@@ -151,8 +184,11 @@ public class RuleInstanceCacheModel implements CacheModel<RuleInstance>,
 		}
 
 		objectOutput.writeLong(ruleInstanceId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {

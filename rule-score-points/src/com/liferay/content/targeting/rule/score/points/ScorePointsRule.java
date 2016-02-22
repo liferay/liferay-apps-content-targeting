@@ -24,7 +24,6 @@ import com.liferay.content.targeting.rule.score.points.model.ScorePoint;
 import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalServiceUtil;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -64,9 +63,7 @@ public class ScorePointsRule extends BaseRule {
 	}
 
 	@Override
-	public void deleteData(RuleInstance ruleInstance)
-		throws PortalException, SystemException {
-
+	public void deleteData(RuleInstance ruleInstance) throws PortalException {
 		List<ScorePoint> scorePoints =
 			ScorePointLocalServiceUtil.getScorePoints(
 				ruleInstance.getUserSegmentId());
@@ -126,7 +123,7 @@ public class ScorePointsRule extends BaseRule {
 				locale, "users-with-more-than-x-score-points-of-x",
 				new Object[] {scorePoints, userSegmentName});
 		}
-		catch (JSONException jse) {
+		catch (JSONException jsone) {
 		}
 
 		return summary;
@@ -165,7 +162,7 @@ public class ScorePointsRule extends BaseRule {
 
 				scorePoints = jsonObj.getInt("scorePoints");
 			}
-			catch (JSONException jse) {
+			catch (JSONException jsone) {
 			}
 		}
 

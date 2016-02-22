@@ -14,7 +14,11 @@
 
 package com.liferay.content.targeting.model;
 
-import com.liferay.portal.model.PersistedModel;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.Accessor;
 
 /**
  * The extended model interface for the RuleInstance service. Represents a row in the &quot;CT_RuleInstance&quot; database table, with each column mapped to a property of this class.
@@ -25,12 +29,31 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.model.impl.RuleInstanceModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.content.targeting.model.impl.RuleInstanceImpl")
+@ProviderType
 public interface RuleInstance extends RuleInstanceModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.RuleInstanceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<RuleInstance, Long> RULE_INSTANCE_ID_ACCESSOR = new Accessor<RuleInstance, Long>() {
+			@Override
+			public Long get(RuleInstance ruleInstance) {
+				return ruleInstance.getRuleInstanceId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<RuleInstance> getTypeClass() {
+				return RuleInstance.class;
+			}
+		};
+
 	public java.lang.String getRuleGuid();
 
 	public java.lang.String getUserSegmentName(java.util.Locale locale);

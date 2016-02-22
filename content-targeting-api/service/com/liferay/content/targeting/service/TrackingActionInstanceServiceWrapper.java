@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link TrackingActionInstanceService}.
@@ -23,40 +25,13 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see TrackingActionInstanceService
  * @generated
  */
+@ProviderType
 public class TrackingActionInstanceServiceWrapper
 	implements TrackingActionInstanceService,
 		ServiceWrapper<TrackingActionInstanceService> {
 	public TrackingActionInstanceServiceWrapper(
 		TrackingActionInstanceService trackingActionInstanceService) {
 		_trackingActionInstanceService = trackingActionInstanceService;
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _trackingActionInstanceService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_trackingActionInstanceService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _trackingActionInstanceService.invokeMethod(name,
-			parameterTypes, arguments);
 	}
 
 	@Override
@@ -66,9 +41,8 @@ public class TrackingActionInstanceServiceWrapper
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trackingActionInstanceService.addTrackingActionInstance(userId,
 			reportInstanceId, trackingActionKey, campaignId, alias,
 			referrerClassName, referrerClassPK, elementId, eventType,
@@ -78,15 +52,15 @@ public class TrackingActionInstanceServiceWrapper
 	/**
 	* @deprecated As of 2.0.0
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
 		long userId, java.lang.String trackingActionKey, long campaignId,
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trackingActionInstanceService.addTrackingActionInstance(userId,
 			trackingActionKey, campaignId, alias, referrerClassName,
 			referrerClassPK, elementId, eventType, typeSettings, serviceContext);
@@ -95,8 +69,7 @@ public class TrackingActionInstanceServiceWrapper
 	@Override
 	public com.liferay.content.targeting.model.TrackingActionInstance deleteTrackingActionInstance(
 		long trackingActionInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trackingActionInstanceService.deleteTrackingActionInstance(trackingActionInstanceId);
 	}
 
@@ -107,23 +80,30 @@ public class TrackingActionInstanceServiceWrapper
 			alias);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _trackingActionInstanceService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long campaignId) {
 		return _trackingActionInstanceService.getTrackingActionInstances(campaignId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
-		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long reportInstanceId) {
 		return _trackingActionInstanceService.getTrackingActionInstancesByReportInstanceId(reportInstanceId);
 	}
 
 	@Override
-	public int getTrackingActionInstancesCount(long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getTrackingActionInstancesCount(long campaignId) {
 		return _trackingActionInstanceService.getTrackingActionInstancesCount(campaignId);
 	}
 
@@ -133,27 +113,11 @@ public class TrackingActionInstanceServiceWrapper
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trackingActionInstanceService.updateTrackingActionInstance(trackingActionInstanceId,
 			reportInstanceId, alias, referrerClassName, referrerClassPK,
 			elementId, eventType, typeSettings, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public TrackingActionInstanceService getWrappedTrackingActionInstanceService() {
-		return _trackingActionInstanceService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedTrackingActionInstanceService(
-		TrackingActionInstanceService trackingActionInstanceService) {
-		_trackingActionInstanceService = trackingActionInstanceService;
 	}
 
 	@Override

@@ -23,30 +23,32 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
-import com.liferay.content.targeting.service.persistence.CampaignExportActionableDynamicQuery;
-import com.liferay.content.targeting.service.persistence.UserSegmentExportActionableDynamicQuery;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.util.PortletKeys;
+import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.lar.BasePortletDataHandler;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
-import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.UnavailableException;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  * @see    com.liferay.portal.kernel.lar.PortletDataHandler
  */
+@Component(
+	property = {"javax.portlet.name=" + PortletKeys.CT_ADMIN},
+	service = PortletDataHandler.class
+)
 public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "content_targeting";
@@ -91,8 +93,6 @@ public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		_initServices();
-
 		_campaignLocalService.deleteCampaigns(
 			portletDataContext.getScopeGroupId());
 		_userSegmentLocalService.deleteUserSegments(
@@ -113,7 +113,8 @@ public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "campaigns")) {
 			ActionableDynamicQuery campaignActionableDynamicQuery =
-				new CampaignExportActionableDynamicQuery(portletDataContext);
+				_campaignLocalService.getExportActionableDynamicQuery(
+					portletDataContext);
 
 			campaignActionableDynamicQuery.performActions();
 		}
@@ -122,7 +123,8 @@ public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "user-segments")) {
 
 			ActionableDynamicQuery userSegmentActionableDynamicQuery =
-				new UserSegmentExportActionableDynamicQuery(portletDataContext);
+				_userSegmentLocalService.getExportActionableDynamicQuery(
+					portletDataContext);
 
 			userSegmentActionableDynamicQuery.performActions();
 		}
@@ -175,38 +177,34 @@ public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery campaignActionableDynamicQuery =
-			new CampaignExportActionableDynamicQuery(portletDataContext);
+			_campaignLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		campaignActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery userSegmentActionableDynamicQuery =
-			new UserSegmentExportActionableDynamicQuery(portletDataContext);
+			_userSegmentLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		userSegmentActionableDynamicQuery.performCount();
 	}
 
+	@Reference(unbind = "-")
+	protected void setCampaignLocalService(
+		CampaignLocalService campaignLocalService) {
+
+		_campaignLocalService = campaignLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
 	protected static final String RESOURCE_NAME =
 		"com.liferay.content.targeting";
-
-	private void _initServices() throws UnavailableException {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		if (bundle == null) {
-			throw new UnavailableException(
-					"Can't find a reference to the OSGi bundle") {
-
-				@Override
-				public boolean isPermanent() {
-					return true;
-				}
-			};
-		}
-
-		_campaignLocalService = ServiceTrackerUtil.getService(
-			CampaignLocalService.class, bundle.getBundleContext());
-		_userSegmentLocalService = ServiceTrackerUtil.getService(
-			UserSegmentLocalService.class, bundle.getBundleContext());
-	}
 
 	private CampaignLocalService _campaignLocalService;
 	private UserSegmentLocalService _userSegmentLocalService;

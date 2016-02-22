@@ -15,19 +15,14 @@
 package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
 import javax.portlet.PortletException;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eduardo Garcia
@@ -35,46 +30,42 @@ import org.osgi.framework.FrameworkUtil;
 public class UserSegmentSearchContainerIterator
 	extends SearchContainerIterator<UserSegment> {
 
+	public UserSegmentSearchContainerIterator() {
+	}
+
 	public UserSegmentSearchContainerIterator(long groupId, String keywords)
 		throws PortletException {
 
 		super(groupId, keywords);
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_userSegmentLocalService = ServiceTrackerUtil.getService(
-			UserSegmentLocalService.class, bundle.getBundleContext());
 	}
 
 	@Override
 	public List<UserSegment> getResults(int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(keywords)) {
-			return _userSegmentLocalService.getUserSegments(
+			return UserSegmentLocalServiceUtil.getUserSegments(
 				groupId, start, end, null);
 		}
 
 		BaseModelSearchResult<UserSegment> searchResults =
-			_userSegmentLocalService.searchUserSegments(
+			UserSegmentLocalServiceUtil.searchUserSegments(
 				groupId, keywords, start, end);
 
 		return searchResults.getBaseModels();
 	}
 
 	@Override
-	public int getTotal() throws PortalException, SystemException {
+	public int getTotal() throws PortalException {
 		if (Validator.isNull(keywords)) {
-			return _userSegmentLocalService.getUserSegmentsCount(groupId);
+			return UserSegmentLocalServiceUtil.getUserSegmentsCount(groupId);
 		}
 
 		BaseModelSearchResult<UserSegment> searchResults =
-			_userSegmentLocalService.searchUserSegments(
+			UserSegmentLocalServiceUtil.searchUserSegments(
 				groupId, keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return searchResults.getLength();
 	}
-
-	private UserSegmentLocalService _userSegmentLocalService;
 
 }

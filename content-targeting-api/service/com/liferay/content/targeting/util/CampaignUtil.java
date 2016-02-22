@@ -17,7 +17,6 @@ package com.liferay.content.targeting.util;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -37,11 +36,11 @@ public class CampaignUtil {
 		{Field.COMPANY_ID, Field.GROUP_ID, Field.UID, "campaignId"};
 
 	public static List<Campaign> getCampaigns(Hits hits)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<Document> documents = hits.toList();
 
-		List<Campaign> campaigns = new ArrayList<Campaign>(documents.size());
+		List<Campaign> campaigns = new ArrayList<>(documents.size());
 
 		for (Document document : documents) {
 			long campaignId = GetterUtil.getLong(document.get("campaignId"));

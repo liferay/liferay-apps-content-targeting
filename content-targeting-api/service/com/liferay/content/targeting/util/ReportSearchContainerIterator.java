@@ -15,25 +15,23 @@
 package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.ReportInstance;
-import com.liferay.content.targeting.service.ReportInstanceLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
 import javax.portlet.PortletException;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-
 /**
  * @author Eduardo Garcia
  */
 public class ReportSearchContainerIterator
 	extends SearchContainerIterator<ReportInstance> {
+
+	public ReportSearchContainerIterator() {
+	}
 
 	/**
 	 * @deprecated As of Audience Targeting 2.0, replaced by {@link
@@ -54,39 +52,31 @@ public class ReportSearchContainerIterator
 
 		_className = className;
 		_classPK = classPK;
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_reportInstanceLocalService = ServiceTrackerUtil.getService(
-			ReportInstanceLocalService.class, bundle.getBundleContext());
 	}
 
 	@Override
 	public List<ReportInstance> getResults(int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isBlank(keywords)) {
-			return _reportInstanceLocalService.getReportInstances(
+			return ReportInstanceLocalServiceUtil.getReportInstances(
 				_className, _classPK, start, end);
 		}
 
-		return _reportInstanceLocalService.searchReportInstances(
+		return ReportInstanceLocalServiceUtil.searchReportInstances(
 			groupId, _className, _classPK, keywords, start, end);
 	}
 
 	@Override
-	public int getTotal() throws PortalException, SystemException {
+	public int getTotal() throws PortalException {
 		return getResults().size();
 	}
 
-	protected List<ReportInstance> getResults()
-		throws PortalException, SystemException {
-
+	protected List<ReportInstance> getResults() throws PortalException {
 		return getResults(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	private String _className;
 	private long _classPK;
-	private ReportInstanceLocalService _reportInstanceLocalService;
 
 }

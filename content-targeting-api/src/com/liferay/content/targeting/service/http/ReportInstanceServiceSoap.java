@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.service.ReportInstanceServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -27,7 +29,7 @@ import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.content.targeting.service.ReportInstanceServiceUtil} service utility. The
+ * {@link ReportInstanceServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -62,9 +64,10 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @see ReportInstanceServiceHttp
  * @see com.liferay.content.targeting.model.ReportInstanceSoap
- * @see com.liferay.content.targeting.service.ReportInstanceServiceUtil
+ * @see ReportInstanceServiceUtil
  * @generated
  */
+@ProviderType
 public class ReportInstanceServiceSoap {
 	public static com.liferay.content.targeting.model.ReportInstanceSoap addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
@@ -72,7 +75,7 @@ public class ReportInstanceServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -96,10 +99,11 @@ public class ReportInstanceServiceSoap {
 	/**
 	* @deprecated As of 2.0.0
 	*/
+	@Deprecated
 	public static com.liferay.content.targeting.model.ReportInstanceSoap addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.ReportInstance returnValue = ReportInstanceServiceUtil.addReportInstance(userId,
@@ -183,7 +187,7 @@ public class ReportInstanceServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,

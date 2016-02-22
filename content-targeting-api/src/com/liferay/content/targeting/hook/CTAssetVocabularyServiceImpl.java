@@ -14,32 +14,39 @@
 
 package com.liferay.content.targeting.hook;
 
+import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyDisplay;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.asset.kernel.service.AssetVocabularyServiceWrapper;
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portlet.asset.NoSuchVocabularyException;
-import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.model.AssetVocabularyDisplay;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetVocabularyService;
-import com.liferay.portlet.asset.service.AssetVocabularyServiceWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = ServiceWrapper.class)
 public class CTAssetVocabularyServiceImpl
-		extends AssetVocabularyServiceWrapper {
+	extends AssetVocabularyServiceWrapper {
+
+	public CTAssetVocabularyServiceImpl() {
+		super(null);
+	}
 
 	public CTAssetVocabularyServiceImpl(
 		AssetVocabularyService assetVocabularyService) {
@@ -51,7 +58,7 @@ public class CTAssetVocabularyServiceImpl
 	public AssetVocabularyDisplay getGroupVocabulariesDisplay(
 			long groupId, String name, int start, int end,
 			boolean addDefaultVocabulary, OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetVocabularyDisplay vocabularyDisplay =
 			super.getGroupVocabulariesDisplay(
@@ -64,13 +71,13 @@ public class CTAssetVocabularyServiceImpl
 
 		try {
 			vocabulary = AssetVocabularyLocalServiceUtil.getGroupVocabulary(
-					groupId, UserSegmentUtil.getAssetVocabularyName());
+				groupId, UserSegmentUtil.getAssetVocabularyName());
 		}
 		catch (NoSuchVocabularyException nsve) {
 			return vocabularyDisplay;
 		}
 
-		List<AssetVocabulary> removes = new ArrayList<AssetVocabulary>();
+		List<AssetVocabulary> removes = new ArrayList<>();
 
 		removes.add(vocabulary);
 
@@ -82,7 +89,7 @@ public class CTAssetVocabularyServiceImpl
 
 	@Override
 	public List<AssetVocabulary> getVocabularies(long[] vocabularyIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<AssetVocabulary> vocabularies = super.getVocabularies(
 			vocabularyIds);
@@ -91,8 +98,7 @@ public class CTAssetVocabularyServiceImpl
 			return vocabularies;
 		}
 
-		List<AssetVocabulary> unambiguousVocabularies =
-			new ArrayList<AssetVocabulary>();
+		List<AssetVocabulary> unambiguousVocabularies = new ArrayList<>();
 
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 

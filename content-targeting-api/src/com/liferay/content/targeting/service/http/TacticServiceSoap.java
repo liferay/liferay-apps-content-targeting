@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.service.TacticServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -27,7 +29,7 @@ import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.content.targeting.service.TacticServiceUtil} service utility. The
+ * {@link TacticServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -62,16 +64,17 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @see TacticServiceHttp
  * @see com.liferay.content.targeting.model.TacticSoap
- * @see com.liferay.content.targeting.service.TacticServiceUtil
+ * @see TacticServiceUtil
  * @generated
  */
+@ProviderType
 public class TacticServiceSoap {
 	public static com.liferay.content.targeting.model.TacticSoap addTactic(
 		long userId, long campaignId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, long[] userSegmentsIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
@@ -112,7 +115,7 @@ public class TacticServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, long[] userSegmentsIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,

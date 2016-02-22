@@ -76,18 +76,20 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						var contentSearch = new AjaxSearch(
-							{
-								inputNode: instance.get('inputNode')
-							}
-						);
+						if (instance.get('inputNode')) {
+							var contentSearch = new AjaxSearch(
+								{
+									inputNode: instance.get('inputNode')
+								}
+							);
 
-						instance._contentPanel = instance.get('contentPanel');
-						instance._resourceURL = instance.get('resourceURL');
+							instance._contentPanel = instance.get('contentPanel');
+							instance._resourceURL = instance.get('resourceURL');
 
-						instance._search = contentSearch;
+							instance._search = contentSearch;
 
-						instance._bindUISearch();
+							instance._bindUISearch();
+						}
 					},
 
 					_afterSuccess: function(event) {

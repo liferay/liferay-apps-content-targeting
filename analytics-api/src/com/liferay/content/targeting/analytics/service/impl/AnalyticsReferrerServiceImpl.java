@@ -16,7 +16,6 @@ package com.liferay.content.targeting.analytics.service.impl;
 
 import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 import com.liferay.content.targeting.analytics.service.base.AnalyticsReferrerServiceBaseImpl;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
 
@@ -38,8 +37,8 @@ public class AnalyticsReferrerServiceImpl
 	extends AnalyticsReferrerServiceBaseImpl {
 
 	@Override
-	public List<AnalyticsReferrer> getAnalyticsReferrers(long analyticsEventId)
-		throws SystemException {
+	public List<AnalyticsReferrer> getAnalyticsReferrers(
+		long analyticsEventId) {
 
 		return analyticsReferrerLocalService.getAnalyticsReferrers(
 			analyticsEventId);

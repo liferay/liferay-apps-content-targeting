@@ -27,6 +27,7 @@ create table CT_Campaign (
 );
 
 create table CT_Campaigns_UserSegments (
+	companyId LONG not null,
 	campaignId LONG not null,
 	userSegmentId LONG not null,
 	primary key (campaignId, userSegmentId)
@@ -94,6 +95,7 @@ create table CT_Tactic (
 );
 
 create table CT_Tactics_UserSegments (
+	companyId LONG not null,
 	tacticId LONG not null,
 	userSegmentId LONG not null,
 	primary key (tacticId, userSegmentId)

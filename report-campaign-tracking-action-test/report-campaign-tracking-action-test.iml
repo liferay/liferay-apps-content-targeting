@@ -47,7 +47,6 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.test/arquillian-test-impl-base/jars/arquillian-test-impl-base-1.1.2.Final.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-impl-base/jars/arquillian-container-impl-base-1.1.2.Final.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-test-impl-base/jars/arquillian-container-test-impl-base-1.1.2.Final.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay.arquillian/arquillian-container-liferay/jars/arquillian-container-liferay-1.0.0.Alpha1-SNAPSHOT.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api/jars/shrinkwrap-resolver-api-2.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven/jars/shrinkwrap-resolver-api-maven-2.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.logging/jboss-logging/jars/jboss-logging-3.1.3.GA.jar!/" />
@@ -84,8 +83,6 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven-archive/jars/shrinkwrap-resolver-api-maven-archive-2.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-spi-maven-archive/jars/shrinkwrap-resolver-spi-maven-archive-2.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/jars/org.osgi.core-5.0.0.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay.arquillian/arquillian-deployment-generator-bnd/jars/arquillian-deployment-generator-bnd-1.0.0.Alpha1-SNAPSHOT.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.osgi/shrinkwrap-osgi/jars/shrinkwrap-osgi-1.0.0-alpha-1-SNAPSHOT.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/biz.aQute.bnd/bndlib/jars/bndlib-2.3.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-api/jars/shrinkwrap-api-1.2.2.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-spi/jars/shrinkwrap-spi-1.2.2.jar!/" />
@@ -109,6 +106,9 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/jars/shrinkwrap-descriptors-spi-2.0.0-alpha-3.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/jars/arquillian-protocol-jmx-1.1.2.Final.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.arquillian.liferay/arquillian-container-liferay/jars/arquillian-container-liferay-1.0.0.Alpha1.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.arquillian.liferay/arquillian-deployment-generator-bnd/jars/arquillian-deployment-generator-bnd-1.0.0.Alpha1.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.osgi/shrinkwrap-osgi/jars/shrinkwrap-osgi-1.0.0-alpha-1.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.junit/arquillian-junit-container/javadocs/arquillian-junit-container-1.1.2.Final-javadoc.jar!/" />
@@ -177,6 +177,9 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/javadocs/shrinkwrap-descriptors-api-base-2.0.0-alpha-3-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/javadocs/shrinkwrap-descriptors-spi-2.0.0-alpha-3-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/javadocs/arquillian-protocol-jmx-1.1.2.Final-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.arquillian.liferay/arquillian-container-liferay/javadocs/arquillian-container-liferay-1.0.0.Alpha1-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.arquillian.liferay/arquillian-deployment-generator-bnd/javadocs/arquillian-deployment-generator-bnd-1.0.0.Alpha1-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.osgi/shrinkwrap-osgi/javadocs/shrinkwrap-osgi-1.0.0-alpha-1-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.junit/arquillian-junit-container/sources/arquillian-junit-container-1.1.2.Final-sources.jar!/" />
@@ -194,7 +197,6 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.test/arquillian-test-impl-base/sources/arquillian-test-impl-base-1.1.2.Final-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-impl-base/sources/arquillian-container-impl-base-1.1.2.Final-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-test-impl-base/sources/arquillian-container-test-impl-base-1.1.2.Final-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay.arquillian/arquillian-container-liferay/sources/arquillian-container-liferay-1.0.0.Alpha1-SNAPSHOT-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api/sources/shrinkwrap-resolver-api-2.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven/sources/shrinkwrap-resolver-api-maven-2.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.logging/jboss-logging/sources/jboss-logging-3.1.3.GA-sources.jar!/" />
@@ -231,8 +233,6 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven-archive/sources/shrinkwrap-resolver-api-maven-archive-2.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-spi-maven-archive/sources/shrinkwrap-resolver-spi-maven-archive-2.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/sources/org.osgi.core-5.0.0-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay.arquillian/arquillian-deployment-generator-bnd/sources/arquillian-deployment-generator-bnd-1.0.0.Alpha1-SNAPSHOT-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.osgi/shrinkwrap-osgi/sources/shrinkwrap-osgi-1.0.0-alpha-1-SNAPSHOT-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/biz.aQute.bnd/bndlib/sources/bndlib-2.3.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-api/sources/shrinkwrap-api-1.2.2-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-spi/sources/shrinkwrap-spi-1.2.2-sources.jar!/" />
@@ -255,9 +255,11 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/sources/arquillian-protocol-jmx-1.1.2.Final-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.1-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/sources/hamcrest-core-1.3-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.arquillian.liferay/arquillian-container-liferay/sources/arquillian-container-liferay-1.0.0.Alpha1-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.arquillian.liferay/arquillian-deployment-generator-bnd/sources/arquillian-deployment-generator-bnd-1.0.0.Alpha1-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.osgi/shrinkwrap-osgi/sources/shrinkwrap-osgi-1.0.0-alpha-1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
   </component>
 </module>
-

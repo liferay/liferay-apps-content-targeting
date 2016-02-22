@@ -20,62 +20,58 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.service.ServiceContext;
 
+import java.util.List;
 import java.util.Map;
 
-import javax.portlet.UnavailableException;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class RuleInstanceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<RuleInstance> {
 
 	public static final String[] CLASS_NAMES = {RuleInstance.class.getName()};
 
-	public RuleInstanceStagedModelDataHandler() throws UnavailableException {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+	@Override
+	public void deleteStagedModel(RuleInstance stagedRuleInstance)
+		throws PortalException {
 
-		if (bundle == null) {
-			throw new UnavailableException(
-				"Can't find a reference to the OSGi bundle") {
-
-				@Override
-				public boolean isPermanent() {
-					return true;
-				}
-			};
-		}
-
-		_rulesRegistry = ServiceTrackerUtil.getService(
-			RulesRegistry.class, bundle.getBundleContext());
+		RuleInstanceLocalServiceUtil.deleteRuleInstance(stagedRuleInstance);
 	}
 
 	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		RuleInstance ruleInstance =
 			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
 				uuid, groupId);
 
 		RuleInstanceLocalServiceUtil.deleteRuleInstance(ruleInstance);
+	}
+
+	@Override
+	public List<RuleInstance>
+		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -98,6 +94,24 @@ public class RuleInstanceStagedModelDataHandler
 	}
 
 	@Override
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid,
+			long ruleInstanceId)
+		throws PortletDataException {
+
+		RuleInstance existingRuleInstance =
+			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> ruleInstanceIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				RuleInstance.class);
+
+		ruleInstanceIds.put(
+			ruleInstanceId, existingRuleInstance.getRuleInstanceId());
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, RuleInstance ruleInstance)
 		throws Exception {
@@ -114,9 +128,8 @@ public class RuleInstanceStagedModelDataHandler
 			return;
 		}
 
-		UserSegment userSegment =
-			UserSegmentLocalServiceUtil.getUserSegment(
-				ruleInstance.getUserSegmentId());
+		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
+			ruleInstance.getUserSegmentId());
 
 		Element userSegmentElement = portletDataContext.getExportDataElement(
 			userSegment);
@@ -141,24 +154,6 @@ public class RuleInstanceStagedModelDataHandler
 	}
 
 	@Override
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
-			long ruleInstanceId)
-		throws Exception {
-
-		RuleInstance existingRuleInstance =
-			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> ruleInstanceIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				RuleInstance.class);
-
-		ruleInstanceIds.put(
-			ruleInstanceId, existingRuleInstance.getRuleInstanceId());
-	}
-
-	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, RuleInstance ruleInstance)
 		throws Exception {
@@ -172,9 +167,8 @@ public class RuleInstanceStagedModelDataHandler
 			return;
 		}
 
-		UserSegment userSegment =
-			UserSegmentLocalServiceUtil.getUserSegment(
-				ruleInstance.getUserSegmentId());
+		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
+			ruleInstance.getUserSegmentId());
 
 		try {
 			rule.importData(portletDataContext, userSegment, ruleInstance);
@@ -220,11 +214,13 @@ public class RuleInstanceStagedModelDataHandler
 			ruleInstance, importedRuleInstance);
 	}
 
-	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
+	@Reference(unbind ="-")
+	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
+		_rulesRegistry = rulesRegistry;
+	}
 
+	@Override
+	protected boolean validateMissingReference(String uuid, long groupId) {
 		RuleInstance ruleInstance =
 			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
 				uuid, groupId);

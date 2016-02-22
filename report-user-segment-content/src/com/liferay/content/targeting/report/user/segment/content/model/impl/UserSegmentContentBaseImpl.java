@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.report.user.segment.content.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent;
 import com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the UserSegmentContent service. Represents a row in the &quot;CT_USCR_UserSegmentContent&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see UserSegmentContentImpl
- * @see com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent
+ * @see UserSegmentContent
  * @generated
  */
+@ProviderType
 public abstract class UserSegmentContentBaseImpl
 	extends UserSegmentContentModelImpl implements UserSegmentContent {
 	/*
@@ -39,7 +40,7 @@ public abstract class UserSegmentContentBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a user segment content model instance should use the {@link UserSegmentContent} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			UserSegmentContentLocalServiceUtil.addUserSegmentContent(this);
 		}

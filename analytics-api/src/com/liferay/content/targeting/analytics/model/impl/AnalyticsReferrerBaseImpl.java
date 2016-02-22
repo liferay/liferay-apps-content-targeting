@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.analytics.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 import com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the AnalyticsReferrer service. Represents a row in the &quot;CT_Analytics_AnalyticsReferrer&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see AnalyticsReferrerImpl
- * @see com.liferay.content.targeting.analytics.model.AnalyticsReferrer
+ * @see AnalyticsReferrer
  * @generated
  */
+@ProviderType
 public abstract class AnalyticsReferrerBaseImpl
 	extends AnalyticsReferrerModelImpl implements AnalyticsReferrer {
 	/*
@@ -39,7 +40,7 @@ public abstract class AnalyticsReferrerBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a analytics referrer model instance should use the {@link AnalyticsReferrer} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			AnalyticsReferrerLocalServiceUtil.addAnalyticsReferrer(this);
 		}

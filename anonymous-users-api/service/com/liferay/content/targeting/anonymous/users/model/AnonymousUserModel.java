@@ -14,14 +14,16 @@
 
 package com.liferay.content.targeting.anonymous.users.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.StagedAuditedModel;
-import com.liferay.portal.service.ServiceContext;
+import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -40,8 +42,9 @@ import java.util.Date;
  * @see com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl
  * @generated
  */
+@ProviderType
 public interface AnonymousUserModel extends BaseModel<AnonymousUser>,
-	StagedAuditedModel {
+	ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -97,9 +100,8 @@ public interface AnonymousUserModel extends BaseModel<AnonymousUser>,
 	 * Returns the anonymous user uuid of this anonymous user.
 	 *
 	 * @return the anonymous user uuid of this anonymous user
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getAnonymousUserUuid() throws SystemException;
+	public String getAnonymousUserUuid();
 
 	/**
 	 * Sets the anonymous user uuid of this anonymous user.
@@ -144,10 +146,9 @@ public interface AnonymousUserModel extends BaseModel<AnonymousUser>,
 	 * Returns the user uuid of this anonymous user.
 	 *
 	 * @return the user uuid of this anonymous user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this anonymous user.
@@ -273,19 +274,20 @@ public interface AnonymousUserModel extends BaseModel<AnonymousUser>,
 	public Object clone();
 
 	@Override
-	public int compareTo(AnonymousUser anonymousUser);
+	public int compareTo(
+		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AnonymousUser> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> toCacheModel();
 
 	@Override
-	public AnonymousUser toEscapedModel();
+	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser toEscapedModel();
 
 	@Override
-	public AnonymousUser toUnescapedModel();
+	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.anonymous.users.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.content.targeting.anonymous.users.service.http.AnonymousUserServiceSoap
  * @generated
  */
+@ProviderType
 public class AnonymousUserSoap implements Serializable {
 	public static AnonymousUserSoap toSoapModel(AnonymousUser model) {
 		AnonymousUserSoap soapModel = new AnonymousUserSoap();

@@ -14,51 +14,64 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-
 <#setting number_format="computer">
 
 <#if !trackingFormEnabled >
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-metric-will-not-work-properly-because-form-tracking-is-not-enabled" /></strong>
 
-		<#assign enableLocationPortalLabel = languageUtil.get(locale, "portal-settings-content-targeting-analytics") />
+		<#assign enableLocationPortalLabel = languageUtil.get(resourceBundle, "portal-settings-content-targeting-analytics") />
 
 		<#if portalSettingsURL??>
 			<#assign enableLocationPortalLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationPortalLabel + "</a>" />
 		</#if>
 
-		<#assign enableLocationSiteLabel = languageUtil.get(locale, "site-settings-content-targeting-analytics") />
+		<#assign enableLocationSiteLabel = languageUtil.get(resourceBundle, "site-settings-content-targeting-analytics") />
 
 		<#if siteSettingsURL??>
 			<#assign enableLocationSiteLabel = "<a href=\"" + siteSettingsURL + "\">" + enableLocationSiteLabel + "</a>" />
 		</#if>
 
-		<#assign enableLocationLabels = [enableLocationPortalLabel, enableLocationSiteLabel] />
-
-		${languageUtil.format(locale, "it-can-be-enabled-in-x-or-in-x", enableLocationLabels)}
+		<@liferay_ui["message"]
+			arguments=stringUtil.split(enableLocationPortalLabel + "," + enableLocationSiteLabel)
+			key="it-can-be-enabled-in-x-or-in-x"
+			translateArguments=false
+		/>
 	</div>
 </#if>
 
-<@aui["input"] helpMessage="name-help" label="name" name="{ct_field_guid}alias" type="text" value=alias >
-	<@aui["validator"] name="required" />
+<@liferay_aui["input"] helpMessage="name-help" label="name" name="{ct_field_guid}alias" type="text" value=alias >
+	<@liferay_aui["validator"] name="required" />
 </@>
 
-<@aui["input"] helpMessage="enter-the-id-of-the-form-to-be-tracked" label="form-id" name="{ct_field_guid}elementId" type="text" value=elementId>
-	<@aui["validator"] name="required" />
+<@liferay_aui["input"] helpMessage="enter-the-id-of-the-form-to-be-tracked" label="form-id" name="{ct_field_guid}elementId" type="text" value=elementId>
+	<@liferay_aui["validator"] name="required" />
 </@>
 
 <#if eventTypes?has_content && (eventTypes?size > 1)>
-	<@aui["select"] label="event-type" name="{ct_field_guid}eventType">
-		<@aui["option"] label="all" selected=(eventType == "all") value="all" />
+	<@liferay_aui["select"] label="event-type" name="{ct_field_guid}eventType">
+		<@liferay_aui["option"]
+			label="all"
+			selected=(eventType
+			== "all") value="all"
+		/>
 
 		<#list eventTypes as curEventType>
-			<@aui["option"] label="${curEventType}" selected=(eventType == curEventType) value=curEventType />
+			<@liferay_aui["option"]
+				label="${curEventType}"
+				selected=(eventType
+				== curEventType) value=curEventType
+			/>
 		</#list>
 	</@>
 <#else>
 	<#list eventTypes as curEventType>
-		<@aui["input"] disabled=true label="event-type" name="{ct_field_guid}eventType" type="text" value=curEventType />
+		<@liferay_aui["input"]
+			disabled=true
+			label="event-type"
+			name="{ct_field_guid}eventType"
+			type="text"
+			value=curEventType
+		/>
 	</#list>
 </#if>

@@ -17,32 +17,31 @@ package com.liferay.content.targeting.rule.facebook.hook;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.content.targeting.anonymous.users.util.AnonymousUsersManager;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.facebook.FacebookConnectUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Contact;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserGroupRole;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
 
 import java.util.Calendar;
 import java.util.List;
@@ -56,8 +55,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -194,13 +192,26 @@ public class CTFacebookConnectionAction extends BaseStrutsAction {
 		response.sendRedirect(portletURL.toString());
 	}
 
+	@Reference(unbind = "-")
+	protected void setAnonymousUserLocalService(
+		AnonymousUserLocalService anonymousUserLocalService) {
+
+		_anonymousUserLocalService = anonymousUserLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAnonymousUsersManager(
+		AnonymousUsersManager anonymousUsersManager) {
+
+		_anonymousUsersManager = anonymousUsersManager;
+	}
+
 	protected User setFacebookCredentials(
 			HttpSession session, long companyId, String token)
 		throws Exception {
 
 		JSONObject jsonObject = FacebookConnectUtil.getGraphResources(
-				companyId, "/me", token,
-				"id,email,first_name,last_name,gender");
+			companyId, "/me", token, "id,email,first_name,last_name,gender");
 
 		if ((jsonObject == null) ||
 			(jsonObject.getJSONObject("error") != null)) {
@@ -219,7 +230,8 @@ public class CTFacebookConnectionAction extends BaseStrutsAction {
 		long facebookId = jsonObject.getLong("id");
 
 		if (facebookId > 0) {
-			session.setAttribute(WebKeys.FACEBOOK_ACCESS_TOKEN, token);
+			session.setAttribute(
+				FacebookConnectWebKeys.FACEBOOK_ACCESS_TOKEN, token);
 
 			user = UserLocalServiceUtil.fetchUserByFacebookId(
 				companyId, facebookId);
@@ -228,7 +240,8 @@ public class CTFacebookConnectionAction extends BaseStrutsAction {
 				(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
 
 				session.setAttribute(
-					WebKeys.FACEBOOK_USER_ID, String.valueOf(facebookId));
+					FacebookConnectWebKeys.FACEBOOK_USER_ID,
+					String.valueOf(facebookId));
 			}
 		}
 
@@ -236,7 +249,7 @@ public class CTFacebookConnectionAction extends BaseStrutsAction {
 
 		if ((user == null) && Validator.isNotNull(emailAddress)) {
 			user = UserLocalServiceUtil.fetchUserByEmailAddress(
-					companyId, emailAddress);
+				companyId, emailAddress);
 
 			if ((user != null) &&
 				(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
@@ -269,30 +282,22 @@ public class CTFacebookConnectionAction extends BaseStrutsAction {
 
 	protected void updateAnonymousUserFacebookAccessToken(
 			HttpServletRequest request, long userId, String token)
-		throws PortalException, SystemException {
-
-		if (_anonymousUsersManager == null) {
-			_initAnonymousUserManager();
-		}
+		throws PortalException {
 
 		AnonymousUser anonymousUser = _anonymousUsersManager.getAnonymousUser(
 			request, userId);
-
-		if (_anonymousUserLocalService == null) {
-			_initAnonymousUserLocalService();
-		}
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			anonymousUser.getTypeSettings());
 
 		String accessToken = jsonObject.getString(
-			WebKeys.FACEBOOK_ACCESS_TOKEN);
+			FacebookConnectWebKeys.FACEBOOK_ACCESS_TOKEN);
 
 		if (Validator.isNull(accessToken)) {
-			jsonObject.remove(WebKeys.FACEBOOK_ACCESS_TOKEN);
+			jsonObject.remove(FacebookConnectWebKeys.FACEBOOK_ACCESS_TOKEN);
 		}
 
-		jsonObject.put(WebKeys.FACEBOOK_ACCESS_TOKEN, token);
+		jsonObject.put(FacebookConnectWebKeys.FACEBOOK_ACCESS_TOKEN, token);
 
 		anonymousUser.setTypeSettings(jsonObject.toString());
 
@@ -351,26 +356,10 @@ public class CTFacebookConnectionAction extends BaseStrutsAction {
 			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
 			firstName, user.getMiddleName(), lastName, contact.getPrefixId(),
 			contact.getSuffixId(), male, birthdayMonth, birthdayDay,
-			birthdayYear, contact.getSmsSn(), contact.getAimSn(),
-			contact.getFacebookSn(), contact.getIcqSn(), contact.getJabberSn(),
-			contact.getMsnSn(), contact.getMySpaceSn(), contact.getSkypeSn(),
-			contact.getTwitterSn(), contact.getYmSn(), contact.getJobTitle(),
-			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
-			serviceContext);
-	}
-
-	private void _initAnonymousUserLocalService() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_anonymousUserLocalService = ServiceTrackerUtil.getService(
-			AnonymousUserLocalService.class, bundle.getBundleContext());
-	}
-
-	private void _initAnonymousUserManager() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_anonymousUsersManager = ServiceTrackerUtil.getService(
-			AnonymousUsersManager.class, bundle.getBundleContext());
+			birthdayYear, contact.getSmsSn(), contact.getFacebookSn(),
+			contact.getJabberSn(), contact.getSkypeSn(), contact.getTwitterSn(),
+			contact.getJobTitle(), groupIds, organizationIds, roleIds,
+			userGroupRoles, userGroupIds, serviceContext);
 	}
 
 	private AnonymousUserLocalService _anonymousUserLocalService;

@@ -18,9 +18,9 @@ import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.PortletKeys;
+import com.liferay.portal.facebook.FacebookConnectUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
-import com.liferay.portal.model.Company;
+import com.liferay.portal.kernel.model.Company;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,7 +59,7 @@ public abstract class BaseFacebookRule extends BaseRule {
 						context, PortletKeys.PORTAL_SETTINGS);
 
 			if (hasPortalSettingsViewPermission) {
-				Map<String, String> params = new HashMap<String, String>();
+				Map<String, String> params = new HashMap<>();
 
 				params.put("historyKey", "_130_authentication");
 

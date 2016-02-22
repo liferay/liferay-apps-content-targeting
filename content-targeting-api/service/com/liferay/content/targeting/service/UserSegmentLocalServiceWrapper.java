@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link UserSegmentLocalService}.
@@ -23,6 +25,7 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see UserSegmentLocalService
  * @generated
  */
+@ProviderType
 public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	ServiceWrapper<UserSegmentLocalService> {
 	public UserSegmentLocalServiceWrapper(
@@ -30,18 +33,101 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 		_userSegmentLocalService = userSegmentLocalService;
 	}
 
+	@Override
+	public void addCampaignUserSegment(long campaignId,
+		com.liferay.content.targeting.model.UserSegment userSegment) {
+		_userSegmentLocalService.addCampaignUserSegment(campaignId, userSegment);
+	}
+
+	@Override
+	public void addCampaignUserSegment(long campaignId, long userSegmentId) {
+		_userSegmentLocalService.addCampaignUserSegment(campaignId,
+			userSegmentId);
+	}
+
+	@Override
+	public void addCampaignUserSegments(long campaignId,
+		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments) {
+		_userSegmentLocalService.addCampaignUserSegments(campaignId,
+			UserSegments);
+	}
+
+	@Override
+	public void addCampaignUserSegments(long campaignId, long[] userSegmentIds) {
+		_userSegmentLocalService.addCampaignUserSegments(campaignId,
+			userSegmentIds);
+	}
+
+	@Override
+	public void addTacticUserSegment(long tacticId,
+		com.liferay.content.targeting.model.UserSegment userSegment) {
+		_userSegmentLocalService.addTacticUserSegment(tacticId, userSegment);
+	}
+
+	@Override
+	public void addTacticUserSegment(long tacticId, long userSegmentId) {
+		_userSegmentLocalService.addTacticUserSegment(tacticId, userSegmentId);
+	}
+
+	@Override
+	public void addTacticUserSegments(long tacticId,
+		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments) {
+		_userSegmentLocalService.addTacticUserSegments(tacticId, UserSegments);
+	}
+
+	@Override
+	public void addTacticUserSegments(long tacticId, long[] userSegmentIds) {
+		_userSegmentLocalService.addTacticUserSegments(tacticId, userSegmentIds);
+	}
+
+	@Override
+	public com.liferay.content.targeting.model.UserSegment addUserSegment(
+		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.addUserSegment(userId, nameMap,
+			descriptionMap, serviceContext);
+	}
+
 	/**
 	* Adds the user segment to the database. Also notifies the appropriate model listeners.
 	*
 	* @param userSegment the user segment
 	* @return the user segment that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.UserSegment addUserSegment(
-		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.UserSegment userSegment) {
 		return _userSegmentLocalService.addUserSegment(userSegment);
+	}
+
+	@Override
+	public void addUserSegmentResources(
+		com.liferay.content.targeting.model.UserSegment userSegment,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userSegmentLocalService.addUserSegmentResources(userSegment,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addUserSegmentResources(
+		com.liferay.content.targeting.model.UserSegment userSegment,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userSegmentLocalService.addUserSegmentResources(userSegment,
+			groupPermissions, guestPermissions);
+	}
+
+	@Override
+	public void clearCampaignUserSegments(long campaignId) {
+		_userSegmentLocalService.clearCampaignUserSegments(campaignId);
+	}
+
+	@Override
+	public void clearTacticUserSegments(long tacticId) {
+		_userSegmentLocalService.clearTacticUserSegments(tacticId);
 	}
 
 	/**
@@ -56,20 +142,64 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 		return _userSegmentLocalService.createUserSegment(userSegmentId);
 	}
 
+	@Override
+	public void deleteCampaignUserSegment(long campaignId,
+		com.liferay.content.targeting.model.UserSegment userSegment) {
+		_userSegmentLocalService.deleteCampaignUserSegment(campaignId,
+			userSegment);
+	}
+
+	@Override
+	public void deleteCampaignUserSegment(long campaignId, long userSegmentId) {
+		_userSegmentLocalService.deleteCampaignUserSegment(campaignId,
+			userSegmentId);
+	}
+
+	@Override
+	public void deleteCampaignUserSegments(long campaignId,
+		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments) {
+		_userSegmentLocalService.deleteCampaignUserSegments(campaignId,
+			UserSegments);
+	}
+
+	@Override
+	public void deleteCampaignUserSegments(long campaignId,
+		long[] userSegmentIds) {
+		_userSegmentLocalService.deleteCampaignUserSegments(campaignId,
+			userSegmentIds);
+	}
+
 	/**
-	* Deletes the user segment with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userSegmentId the primary key of the user segment
-	* @return the user segment that was removed
-	* @throws PortalException if a user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
-		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.deleteUserSegment(userSegmentId);
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteTacticUserSegment(long tacticId,
+		com.liferay.content.targeting.model.UserSegment userSegment) {
+		_userSegmentLocalService.deleteTacticUserSegment(tacticId, userSegment);
+	}
+
+	@Override
+	public void deleteTacticUserSegment(long tacticId, long userSegmentId) {
+		_userSegmentLocalService.deleteTacticUserSegment(tacticId, userSegmentId);
+	}
+
+	@Override
+	public void deleteTacticUserSegments(long tacticId,
+		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments) {
+		_userSegmentLocalService.deleteTacticUserSegments(tacticId, UserSegments);
+	}
+
+	@Override
+	public void deleteTacticUserSegments(long tacticId, long[] userSegmentIds) {
+		_userSegmentLocalService.deleteTacticUserSegments(tacticId,
+			userSegmentIds);
 	}
 
 	/**
@@ -78,14 +208,32 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	* @param userSegment the user segment
 	* @return the user segment that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
 		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.deleteUserSegment(userSegment);
+	}
+
+	/**
+	* Deletes the user segment with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userSegmentId the primary key of the user segment
+	* @return the user segment that was removed
+	* @throws PortalException if a user segment with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.deleteUserSegment(userSegmentId);
+	}
+
+	@Override
+	public void deleteUserSegments(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userSegmentLocalService.deleteUserSegments(groupId);
 	}
 
 	@Override
@@ -98,13 +246,10 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _userSegmentLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -119,13 +264,11 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _userSegmentLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -141,71 +284,54 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _userSegmentLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _userSegmentLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _userSegmentLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.content.targeting.model.UserSegment fetchUserSegment(
-		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userSegmentId) {
 		return _userSegmentLocalService.fetchUserSegment(userSegmentId);
 	}
 
-	/**
-	* Returns the user segment with the matching UUID and company.
-	*
-	* @param uuid the user segment's UUID
-	* @param companyId the primary key of the company
-	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public com.liferay.content.targeting.model.UserSegment fetchUserSegmentByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.fetchUserSegmentByUuidAndCompanyId(uuid,
-			companyId);
+	public com.liferay.content.targeting.model.UserSegment fetchUserSegmentByAssetCategoryId(
+		long assetCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.fetchUserSegmentByAssetCategoryId(assetCategoryId);
 	}
 
 	/**
@@ -214,14 +340,119 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	* @param uuid the user segment's UUID
 	* @param groupId the primary key of the group
 	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.UserSegment fetchUserSegmentByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return _userSegmentLocalService.fetchUserSegmentByUuidAndGroupId(uuid,
 			groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _userSegmentLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the campaignIds of the campaigns associated with the user segment.
+	*
+	* @param userSegmentId the userSegmentId of the user segment
+	* @return long[] the campaignIds of campaigns associated with the user segment
+	*/
+	@Override
+	public long[] getCampaignPrimaryKeys(long userSegmentId) {
+		return _userSegmentLocalService.getCampaignPrimaryKeys(userSegmentId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getCampaignUserSegments(
+		long campaignId) {
+		return _userSegmentLocalService.getCampaignUserSegments(campaignId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getCampaignUserSegments(
+		long campaignId, int start, int end) {
+		return _userSegmentLocalService.getCampaignUserSegments(campaignId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getCampaignUserSegments(
+		long campaignId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.UserSegment> orderByComparator) {
+		return _userSegmentLocalService.getCampaignUserSegments(campaignId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCampaignUserSegmentsCount(long campaignId) {
+		return _userSegmentLocalService.getCampaignUserSegmentsCount(campaignId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _userSegmentLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _userSegmentLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _userSegmentLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the tacticIds of the tactics associated with the user segment.
+	*
+	* @param userSegmentId the userSegmentId of the user segment
+	* @return long[] the tacticIds of tactics associated with the user segment
+	*/
+	@Override
+	public long[] getTacticPrimaryKeys(long userSegmentId) {
+		return _userSegmentLocalService.getTacticPrimaryKeys(userSegmentId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
+		long tacticId) {
+		return _userSegmentLocalService.getTacticUserSegments(tacticId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
+		long tacticId, int start, int end) {
+		return _userSegmentLocalService.getTacticUserSegments(tacticId, start,
+			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
+		long tacticId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.UserSegment> orderByComparator) {
+		return _userSegmentLocalService.getTacticUserSegments(tacticId, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public int getTacticUserSegmentsCount(long tacticId) {
+		return _userSegmentLocalService.getTacticUserSegmentsCount(tacticId);
 	}
 
 	/**
@@ -230,40 +461,12 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	* @param userSegmentId the primary key of the user segment
 	* @return the user segment
 	* @throws PortalException if a user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.UserSegment getUserSegment(
 		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.getUserSegment(userSegmentId);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the user segment with the matching UUID and company.
-	*
-	* @param uuid the user segment's UUID
-	* @param companyId the primary key of the company
-	* @return the matching user segment
-	* @throws PortalException if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public com.liferay.content.targeting.model.UserSegment getUserSegmentByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getUserSegmentByUuidAndCompanyId(uuid,
-			companyId);
 	}
 
 	/**
@@ -273,15 +476,44 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	* @param groupId the primary key of the group
 	* @return the matching user segment
 	* @throws PortalException if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.UserSegment getUserSegmentByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.getUserSegmentByUuidAndGroupId(uuid,
 			groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.getUserSegments(groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.getUserSegments(groupId, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.getUserSegments(groupIds);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.getUserSegments(groupIds, start, end,
+			obc);
 	}
 
 	/**
@@ -294,25 +526,113 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	* @param start the lower bound of the range of user segments
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @return the range of user segments
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _userSegmentLocalService.getUserSegments(start, end);
+	}
+
+	/**
+	* Returns all the user segments matching the UUID and company.
+	*
+	* @param uuid the UUID of the user segments
+	* @param companyId the primary key of the company
+	* @return the matching user segments, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _userSegmentLocalService.getUserSegmentsByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of user segments matching the UUID and company.
+	*
+	* @param uuid the UUID of the user segments
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching user segments, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.UserSegment> orderByComparator) {
+		return _userSegmentLocalService.getUserSegmentsByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**
 	* Returns the number of user segments.
 	*
 	* @return the number of user segments
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getUserSegmentsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getUserSegmentsCount() {
 		return _userSegmentLocalService.getUserSegmentsCount();
+	}
+
+	@Override
+	public int getUserSegmentsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.getUserSegmentsCount(groupId);
+	}
+
+	@Override
+	public int getUserSegmentsCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.getUserSegmentsCount(groupIds);
+	}
+
+	@Override
+	public boolean hasCampaignUserSegment(long campaignId, long userSegmentId) {
+		return _userSegmentLocalService.hasCampaignUserSegment(campaignId,
+			userSegmentId);
+	}
+
+	@Override
+	public boolean hasCampaignUserSegments(long campaignId) {
+		return _userSegmentLocalService.hasCampaignUserSegments(campaignId);
+	}
+
+	@Override
+	public boolean hasTacticUserSegment(long tacticId, long userSegmentId) {
+		return _userSegmentLocalService.hasTacticUserSegment(tacticId,
+			userSegmentId);
+	}
+
+	@Override
+	public boolean hasTacticUserSegments(long tacticId) {
+		return _userSegmentLocalService.hasTacticUserSegments(tacticId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		java.lang.String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.search(groupId, keywords, start, end);
+	}
+
+	@Override
+	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.UserSegment> searchUserSegments(
+		long groupId, java.lang.String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.searchUserSegments(groupId, keywords,
+			start, end);
+	}
+
+	@Override
+	public void setCampaignUserSegments(long campaignId, long[] userSegmentIds) {
+		_userSegmentLocalService.setCampaignUserSegments(campaignId,
+			userSegmentIds);
+	}
+
+	@Override
+	public void setTacticUserSegments(long tacticId, long[] userSegmentIds) {
+		_userSegmentLocalService.setTacticUserSegments(tacticId, userSegmentIds);
 	}
 
 	/**
@@ -320,473 +640,11 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	*
 	* @param userSegment the user segment
 	* @return the user segment that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.UserSegment updateUserSegment(
-		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.UserSegment userSegment) {
 		return _userSegmentLocalService.updateUserSegment(userSegment);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void addCampaignUserSegment(long campaignId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.addCampaignUserSegment(campaignId,
-			userSegmentId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void addCampaignUserSegment(long campaignId,
-		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.addCampaignUserSegment(campaignId, userSegment);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void addCampaignUserSegments(long campaignId, long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.addCampaignUserSegments(campaignId,
-			userSegmentIds);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void addCampaignUserSegments(long campaignId,
-		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.addCampaignUserSegments(campaignId,
-			UserSegments);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void clearCampaignUserSegments(long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.clearCampaignUserSegments(campaignId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void deleteCampaignUserSegment(long campaignId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.deleteCampaignUserSegment(campaignId,
-			userSegmentId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void deleteCampaignUserSegment(long campaignId,
-		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.deleteCampaignUserSegment(campaignId,
-			userSegment);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void deleteCampaignUserSegments(long campaignId,
-		long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.deleteCampaignUserSegments(campaignId,
-			userSegmentIds);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void deleteCampaignUserSegments(long campaignId,
-		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.deleteCampaignUserSegments(campaignId,
-			UserSegments);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getCampaignUserSegments(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getCampaignUserSegments(campaignId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getCampaignUserSegments(
-		long campaignId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getCampaignUserSegments(campaignId,
-			start, end);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getCampaignUserSegments(
-		long campaignId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getCampaignUserSegments(campaignId,
-			start, end, orderByComparator);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public int getCampaignUserSegmentsCount(long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getCampaignUserSegmentsCount(campaignId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public boolean hasCampaignUserSegment(long campaignId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.hasCampaignUserSegment(campaignId,
-			userSegmentId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public boolean hasCampaignUserSegments(long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.hasCampaignUserSegments(campaignId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void setCampaignUserSegments(long campaignId, long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.setCampaignUserSegments(campaignId,
-			userSegmentIds);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void addTacticUserSegment(long tacticId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.addTacticUserSegment(tacticId, userSegmentId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void addTacticUserSegment(long tacticId,
-		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.addTacticUserSegment(tacticId, userSegment);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void addTacticUserSegments(long tacticId, long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.addTacticUserSegments(tacticId, userSegmentIds);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void addTacticUserSegments(long tacticId,
-		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.addTacticUserSegments(tacticId, UserSegments);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void clearTacticUserSegments(long tacticId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.clearTacticUserSegments(tacticId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void deleteTacticUserSegment(long tacticId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.deleteTacticUserSegment(tacticId, userSegmentId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void deleteTacticUserSegment(long tacticId,
-		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.deleteTacticUserSegment(tacticId, userSegment);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void deleteTacticUserSegments(long tacticId, long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.deleteTacticUserSegments(tacticId,
-			userSegmentIds);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void deleteTacticUserSegments(long tacticId,
-		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.deleteTacticUserSegments(tacticId, UserSegments);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
-		long tacticId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getTacticUserSegments(tacticId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
-		long tacticId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getTacticUserSegments(tacticId, start,
-			end);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
-		long tacticId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getTacticUserSegments(tacticId, start,
-			end, orderByComparator);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public int getTacticUserSegmentsCount(long tacticId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getTacticUserSegmentsCount(tacticId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public boolean hasTacticUserSegment(long tacticId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.hasTacticUserSegment(tacticId,
-			userSegmentId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public boolean hasTacticUserSegments(long tacticId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.hasTacticUserSegments(tacticId);
-	}
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public void setTacticUserSegments(long tacticId, long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.setTacticUserSegments(tacticId, userSegmentIds);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _userSegmentLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_userSegmentLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _userSegmentLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	@Override
-	public com.liferay.content.targeting.model.UserSegment addUserSegment(
-		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.addUserSegment(userId, nameMap,
-			descriptionMap, serviceContext);
-	}
-
-	@Override
-	public void addUserSegmentResources(
-		com.liferay.content.targeting.model.UserSegment userSegment,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.addUserSegmentResources(userSegment,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	@Override
-	public void addUserSegmentResources(
-		com.liferay.content.targeting.model.UserSegment userSegment,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.addUserSegmentResources(userSegment,
-			groupPermissions, guestPermissions);
-	}
-
-	@Override
-	public void deleteUserSegments(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_userSegmentLocalService.deleteUserSegments(groupId);
-	}
-
-	@Override
-	public com.liferay.content.targeting.model.UserSegment fetchUserSegmentByAssetCategoryId(
-		long assetCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.fetchUserSegmentByAssetCategoryId(assetCategoryId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getUserSegments(groupId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getUserSegments(groupId, start, end, obc);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long[] groupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getUserSegments(groupIds);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getUserSegments(groupIds, start, end,
-			obc);
-	}
-
-	@Override
-	public int getUserSegmentsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getUserSegmentsCount(groupId);
-	}
-
-	@Override
-	public int getUserSegmentsCount(long[] groupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getUserSegmentsCount(groupIds);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.Hits search(long groupId,
-		java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.search(groupId, keywords, start, end);
-	}
-
-	@Override
-	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.UserSegment> searchUserSegments(
-		long groupId, java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.searchUserSegments(groupId, keywords,
-			start, end);
 	}
 
 	@Override
@@ -794,9 +652,8 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 		long userSegmentId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.updateUserSegment(userSegmentId,
 			nameMap, descriptionMap, serviceContext);
 	}
@@ -805,25 +662,9 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	public void updateUserSegmentResources(
 		com.liferay.content.targeting.model.UserSegment userSegment,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_userSegmentLocalService.updateUserSegmentResources(userSegment,
 			groupPermissions, guestPermissions);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public UserSegmentLocalService getWrappedUserSegmentLocalService() {
-		return _userSegmentLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedUserSegmentLocalService(
-		UserSegmentLocalService userSegmentLocalService) {
-		_userSegmentLocalService = userSegmentLocalService;
 	}
 
 	@Override

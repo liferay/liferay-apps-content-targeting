@@ -14,12 +14,14 @@
 
 package com.liferay.content.targeting.analytics.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.service.ServiceContext;
+import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -36,6 +38,7 @@ import java.io.Serializable;
  * @see com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl
  * @generated
  */
+@ProviderType
 public interface AnalyticsReferrerModel extends BaseModel<AnalyticsReferrer> {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -151,19 +154,20 @@ public interface AnalyticsReferrerModel extends BaseModel<AnalyticsReferrer> {
 	public Object clone();
 
 	@Override
-	public int compareTo(AnalyticsReferrer analyticsReferrer);
+	public int compareTo(
+		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AnalyticsReferrer> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> toCacheModel();
 
 	@Override
-	public AnalyticsReferrer toEscapedModel();
+	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer toEscapedModel();
 
 	@Override
-	public AnalyticsReferrer toUnescapedModel();
+	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer toUnescapedModel();
 
 	@Override
 	public String toString();

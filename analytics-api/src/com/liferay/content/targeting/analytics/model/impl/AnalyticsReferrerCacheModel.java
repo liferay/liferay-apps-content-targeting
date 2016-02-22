@@ -14,11 +14,14 @@
 
 package com.liferay.content.targeting.analytics.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -32,8 +35,33 @@ import java.io.ObjectOutput;
  * @see AnalyticsReferrer
  * @generated
  */
+@ProviderType
 public class AnalyticsReferrerCacheModel implements CacheModel<AnalyticsReferrer>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AnalyticsReferrerCacheModel)) {
+			return false;
+		}
+
+		AnalyticsReferrerCacheModel analyticsReferrerCacheModel = (AnalyticsReferrerCacheModel)obj;
+
+		if (analyticsReferrerId == analyticsReferrerCacheModel.analyticsReferrerId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, analyticsReferrerId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
@@ -75,8 +103,10 @@ public class AnalyticsReferrerCacheModel implements CacheModel<AnalyticsReferrer
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		analyticsReferrerId = objectInput.readLong();
+
 		analyticsEventId = objectInput.readLong();
 		referrerClassName = objectInput.readUTF();
+
 		referrerClassPK = objectInput.readLong();
 	}
 
@@ -84,6 +114,7 @@ public class AnalyticsReferrerCacheModel implements CacheModel<AnalyticsReferrer
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(analyticsReferrerId);
+
 		objectOutput.writeLong(analyticsEventId);
 
 		if (referrerClassName == null) {

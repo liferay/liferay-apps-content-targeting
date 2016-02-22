@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.rule.score.points.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ScorePointLocalService}.
@@ -23,6 +25,7 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see ScorePointLocalService
  * @generated
  */
+@ProviderType
 public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	ServiceWrapper<ScorePointLocalService> {
 	public ScorePointLocalServiceWrapper(
@@ -35,13 +38,18 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	*
 	* @param scorePoint the score point
 	* @return the score point that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint addScorePoint(
-		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint) {
 		return _scorePointLocalService.addScorePoint(scorePoint);
+	}
+
+	@Override
+	public com.liferay.content.targeting.rule.score.points.model.ScorePoint addScorePoints(
+		long anonymousUserId, long userSegmentId, long points) {
+		return _scorePointLocalService.addScorePoints(anonymousUserId,
+			userSegmentId, points);
 	}
 
 	/**
@@ -57,19 +65,13 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	}
 
 	/**
-	* Deletes the score point with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param scorePointId the primary key of the score point
-	* @return the score point that was removed
-	* @throws PortalException if a score point with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.content.targeting.rule.score.points.model.ScorePoint deleteScorePoint(
-		long scorePointId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.deleteScorePoint(scorePointId);
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _scorePointLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -77,13 +79,25 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	*
 	* @param scorePoint the score point
 	* @return the score point that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint deleteScorePoint(
-		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint) {
 		return _scorePointLocalService.deleteScorePoint(scorePoint);
+	}
+
+	/**
+	* Deletes the score point with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param scorePointId the primary key of the score point
+	* @return the score point that was removed
+	* @throws PortalException if a score point with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.content.targeting.rule.score.points.model.ScorePoint deleteScorePoint(
+		long scorePointId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _scorePointLocalService.deleteScorePoint(scorePointId);
 	}
 
 	@Override
@@ -96,13 +110,10 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _scorePointLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -117,13 +128,11 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _scorePointLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -139,54 +148,46 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _scorePointLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _scorePointLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _scorePointLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint fetchScorePoint(
-		long scorePointId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long scorePointId) {
 		return _scorePointLocalService.fetchScorePoint(scorePointId);
 	}
 
@@ -196,14 +197,44 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	* @param uuid the score point's UUID
 	* @param companyId the primary key of the company
 	* @return the matching score point, or <code>null</code> if a matching score point could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint fetchScorePointByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return _scorePointLocalService.fetchScorePointByUuidAndCompanyId(uuid,
 			companyId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _scorePointLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _scorePointLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _scorePointLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _scorePointLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public long getPoints(long anonymousUserId, long userSegmentId) {
+		return _scorePointLocalService.getPoints(anonymousUserId, userSegmentId);
 	}
 
 	/**
@@ -212,22 +243,12 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	* @param scorePointId the primary key of the score point
 	* @return the score point
 	* @throws PortalException if a score point with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint getScorePoint(
 		long scorePointId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _scorePointLocalService.getScorePoint(scorePointId);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -237,13 +258,11 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching score point
 	* @throws PortalException if a matching score point could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint getScorePointByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _scorePointLocalService.getScorePointByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -258,25 +277,34 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	* @param start the lower bound of the range of score points
 	* @param end the upper bound of the range of score points (not inclusive)
 	* @return the range of score points
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint> getScorePoints(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _scorePointLocalService.getScorePoints(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint> getScorePoints(
+		long userSegmentId) {
+		return _scorePointLocalService.getScorePoints(userSegmentId);
 	}
 
 	/**
 	* Returns the number of score points.
 	*
 	* @return the number of score points
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getScorePointsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getScorePointsCount() {
 		return _scorePointLocalService.getScorePointsCount();
+	}
+
+	@Override
+	public long incrementPoints(long anonymousUserId, long userSegmentId,
+		long points) {
+		return _scorePointLocalService.incrementPoints(anonymousUserId,
+			userSegmentId, points);
 	}
 
 	/**
@@ -284,92 +312,18 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	*
 	* @param scorePoint the score point
 	* @return the score point that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint updateScorePoint(
-		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint) {
 		return _scorePointLocalService.updateScorePoint(scorePoint);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _scorePointLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scorePointLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _scorePointLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	@Override
-	public com.liferay.content.targeting.rule.score.points.model.ScorePoint addScorePoints(
-		long anonymousUserId, long userSegmentId, long points)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.addScorePoints(anonymousUserId,
-			userSegmentId, points);
-	}
-
-	@Override
-	public long getPoints(long anonymousUserId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.getPoints(anonymousUserId, userSegmentId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint> getScorePoints(
-		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.getScorePoints(userSegmentId);
-	}
-
-	@Override
-	public long incrementPoints(long anonymousUserId, long userSegmentId,
-		long points) throws com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.incrementPoints(anonymousUserId,
-			userSegmentId, points);
 	}
 
 	@Override
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint updateScorePoints(
-		long anonymousUserId, long userSegmentId, long points)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long anonymousUserId, long userSegmentId, long points) {
 		return _scorePointLocalService.updateScorePoints(anonymousUserId,
 			userSegmentId, points);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public ScorePointLocalService getWrappedScorePointLocalService() {
-		return _scorePointLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedScorePointLocalService(
-		ScorePointLocalService scorePointLocalService) {
-		_scorePointLocalService = scorePointLocalService;
 	}
 
 	@Override

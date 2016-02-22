@@ -22,33 +22,42 @@ import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Garcia
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class CampaignStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Campaign> {
 
 	public static final String[] CLASS_NAMES = {Campaign.class.getName()};
 
 	@Override
+	public void deleteStagedModel(Campaign campaign) throws PortalException {
+		CampaignLocalServiceUtil.deleteCampaign(campaign);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Campaign campaign =
 			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
@@ -60,6 +69,13 @@ public class CampaignStagedModelDataHandler
 	}
 
 	@Override
+	public List<Campaign>
+		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}
@@ -67,6 +83,22 @@ public class CampaignStagedModelDataHandler
 	@Override
 	public String getDisplayName(Campaign campaign) {
 		return campaign.getName(LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid, long campaignId)
+		throws PortletDataException {
+
+		Campaign existingCampaign =
+			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> campaignIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Campaign.class);
+
+		campaignIds.put(campaignId, existingCampaign.getCampaignId());
 	}
 
 	@Override
@@ -86,22 +118,6 @@ public class CampaignStagedModelDataHandler
 		exportTrackingActionInstances(portletDataContext, campaign);
 
 		exportTactics(portletDataContext, campaignElement, campaign);
-	}
-
-	@Override
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid, long campaignId)
-		throws Exception {
-
-		Campaign existingCampaign =
-			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> campaignIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Campaign.class);
-
-		campaignIds.put(campaignId, existingCampaign.getCampaignId());
 	}
 
 	@Override
@@ -136,13 +152,12 @@ public class CampaignStagedModelDataHandler
 					campaign.getActive(), userSegmentIds, serviceContext);
 			}
 			else {
-				importedCampaign =
-					CampaignLocalServiceUtil.updateCampaign(
-						existingCampaign.getCampaignId(), campaign.getNameMap(),
-						campaign.getDescriptionMap(), campaign.getStartDate(),
-						campaign.getEndDate(), campaign.getTimeZoneId(),
-						campaign.getPriority(), campaign.getActive(),
-						userSegmentIds, serviceContext);
+				importedCampaign = CampaignLocalServiceUtil.updateCampaign(
+					existingCampaign.getCampaignId(), campaign.getNameMap(),
+					campaign.getDescriptionMap(), campaign.getStartDate(),
+					campaign.getEndDate(), campaign.getTimeZoneId(),
+					campaign.getPriority(), campaign.getActive(),
+					userSegmentIds, serviceContext);
 			}
 		}
 		else {
@@ -300,10 +315,7 @@ public class CampaignStagedModelDataHandler
 	}
 
 	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
+	protected boolean validateMissingReference(String uuid, long groupId) {
 		Campaign campaign =
 			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
 				uuid, groupId);

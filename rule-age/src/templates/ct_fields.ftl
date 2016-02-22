@@ -14,10 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
-
 <#setting number_format="computer">
 
 <#if !birthdayEnabled >
@@ -30,16 +26,26 @@
 			<#assign enableLocationLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationLabel + "</a>" />
 		</#if>
 
-		<@liferay_ui["message"] arguments=enableLocationLabel key="it-can-be-enabled-in-x" />
+		<@liferay_ui["message"]
+			arguments=enableLocationLabel
+			key="it-can-be-enabled-in-x"
+		/>
 	</div>
 </#if>
 
-<@aui["input"] cssClass="slider-input" inlineField=true name="olderThan" size="2" maxlength="3" value=olderThan />
+<@liferay_aui["input"]
+	cssClass="slider-input"
+	inlineField=true
+	name="olderThan"
+	size="2"
+	maxlength="3"
+	value=olderThan
+/>
 
 <span class="slider-holder older"></span>
 
-<@aui["input"] cssClass="slider-input" inlineField=true name="youngerThan" size="2" maxlength="3" value=youngerThan>
-	<@aui["validator"] errorMessage="the-age-range-is-invalid" name="custom">
+<@liferay_aui["input"] cssClass="slider-input" inlineField=true name="youngerThan" size="2" maxlength="3" value=youngerThan>
+	<@liferay_aui["validator"] errorMessage="the-age-range-is-invalid" name="custom">
 		function(val, fieldNode, ruleValue) {
 			if (!val) {
 				return false;
@@ -61,7 +67,7 @@
 
 <span class="slider-holder younger"></span>
 
-<@aui["script"] use="liferay-input-slider">
+<@liferay_aui["script"] use="liferay-input-slider">
 	new Liferay.InputSlider(
 		{
 			inputNode: '#<@portlet["namespace"] />olderThan'

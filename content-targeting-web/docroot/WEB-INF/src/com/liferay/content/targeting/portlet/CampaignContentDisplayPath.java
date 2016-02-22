@@ -20,13 +20,13 @@ package com.liferay.content.targeting.portlet;
 public class CampaignContentDisplayPath {
 
 	public static final String CONFIGURATION =
-		"html/campaign_content_display/configuration.ftl";
+		"/html/campaign_content_display/configuration.jsp";
 
 	public static final String EDIT_QUERY_RULE =
-		"html/campaign_content_display/edit_query_rule.ftl";
+		"/html/campaign_content_display/edit_query_rule.jsp";
 
-	public static final String ERROR = "html/error.ftl";
+	public static final String ERROR = "/html/error.jsp";
 
-	public static final String VIEW = "html/campaign_content_display/view.ftl";
+	public static final String VIEW = "/html/campaign_content_display/view.jsp";
 
 }

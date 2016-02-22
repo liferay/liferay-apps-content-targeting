@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.service.TrackingActionInstanceServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -23,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.content.targeting.service.TrackingActionInstanceServiceUtil} service utility. The
+ * {@link TrackingActionInstanceServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -58,9 +60,10 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see TrackingActionInstanceServiceHttp
  * @see com.liferay.content.targeting.model.TrackingActionInstanceSoap
- * @see com.liferay.content.targeting.service.TrackingActionInstanceServiceUtil
+ * @see TrackingActionInstanceServiceUtil
  * @generated
  */
+@ProviderType
 public class TrackingActionInstanceServiceSoap {
 	public static com.liferay.content.targeting.model.TrackingActionInstanceSoap addTrackingActionInstance(
 		long userId, long reportInstanceId, java.lang.String trackingActionKey,
@@ -68,7 +71,7 @@ public class TrackingActionInstanceServiceSoap {
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.TrackingActionInstance returnValue =
@@ -89,12 +92,13 @@ public class TrackingActionInstanceServiceSoap {
 	/**
 	* @deprecated As of 2.0.0
 	*/
+	@Deprecated
 	public static com.liferay.content.targeting.model.TrackingActionInstanceSoap addTrackingActionInstance(
 		long userId, java.lang.String trackingActionKey, long campaignId,
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.TrackingActionInstance returnValue =
@@ -192,7 +196,7 @@ public class TrackingActionInstanceServiceSoap {
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.TrackingActionInstance returnValue =

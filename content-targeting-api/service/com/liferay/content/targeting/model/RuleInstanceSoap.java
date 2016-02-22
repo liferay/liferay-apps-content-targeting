@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.content.targeting.service.http.RuleInstanceServiceSoap
  * @generated
  */
+@ProviderType
 public class RuleInstanceSoap implements Serializable {
 	public static RuleInstanceSoap toSoapModel(RuleInstance model) {
 		RuleInstanceSoap soapModel = new RuleInstanceSoap();

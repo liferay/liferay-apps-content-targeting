@@ -44,6 +44,84 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/junit.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/restfb.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/javassist.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/objenesis.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/freemarker.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/mockito-all.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/spring-test.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/hamcrest-core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.osgi.core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/commons-logging.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-reflect.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.osgi.compendium.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.osgi.enterprise.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/portal-compat-shared.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.osgi.util.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-api-mockito.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-api-support.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.apache.felix.utils.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.journal.api.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-module-junit4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.portal.search.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.journal.api-1.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.portal.log.bridge.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.apache.felix.gogo.runtime.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-module-junit4-common.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.api.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.portal.spring.extender.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.apache.felix.dependencymanager.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.dynamic.data.mapping.api.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.apache.felix.dependencymanager.shell.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.api-service.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.portal.security.sso.facebook.connect.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.anonymous.users.api.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.anonymous.users.api-service.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/junit.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/restfb.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/javassist.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/objenesis.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/freemarker.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/mockito-all.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/spring-test.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/hamcrest-core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.osgi.core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/commons-logging.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-reflect.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.osgi.compendium.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.osgi.enterprise.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/portal-compat-shared.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.osgi.util.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-api-mockito.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-api-support.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.apache.felix.utils.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.journal.api.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-module-junit4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.portal.search.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.journal.api-1.0.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.portal.log.bridge.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.apache.felix.gogo.runtime.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-module-junit4-common.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.api.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.portal.spring.extender.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.apache.felix.dependencymanager.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.dynamic.data.mapping.api.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.apache.felix.dependencymanager.shell.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.api-service.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.portal.security.sso.facebook.connect.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.anonymous.users.api.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.anonymous.users.api-service.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
-

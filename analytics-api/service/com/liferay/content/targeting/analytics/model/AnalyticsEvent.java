@@ -14,8 +14,11 @@
 
 package com.liferay.content.targeting.analytics.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.model.PersistedModel;
 
 /**
  * The extended model interface for the AnalyticsEvent service. Represents a row in the &quot;CT_Analytics_AnalyticsEvent&quot; database table, with each column mapped to a property of this class.
@@ -26,6 +29,8 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.content.targeting.analytics.model.impl.AnalyticsEventImpl")
+@ProviderType
 public interface AnalyticsEvent extends AnalyticsEventModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -37,6 +42,16 @@ public interface AnalyticsEvent extends AnalyticsEventModel, PersistedModel {
 			@Override
 			public Long get(AnalyticsEvent analyticsEvent) {
 				return analyticsEvent.getAnalyticsEventId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<AnalyticsEvent> getTypeClass() {
+				return AnalyticsEvent.class;
 			}
 		};
 }

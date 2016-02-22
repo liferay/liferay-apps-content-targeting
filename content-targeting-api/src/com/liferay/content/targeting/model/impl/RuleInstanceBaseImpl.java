@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the RuleInstance service. Represents a row in the &quot;CT_RuleInstance&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see RuleInstanceImpl
- * @see com.liferay.content.targeting.model.RuleInstance
+ * @see RuleInstance
  * @generated
  */
+@ProviderType
 public abstract class RuleInstanceBaseImpl extends RuleInstanceModelImpl
 	implements RuleInstance {
 	/*
@@ -39,7 +40,7 @@ public abstract class RuleInstanceBaseImpl extends RuleInstanceModelImpl
 	 * Never modify or reference this class directly. All methods that expect a rule instance model instance should use the {@link RuleInstance} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			RuleInstanceLocalServiceUtil.addRuleInstance(this);
 		}

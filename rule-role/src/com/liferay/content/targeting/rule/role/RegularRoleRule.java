@@ -20,17 +20,17 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.service.RoleLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +103,7 @@ public class RegularRoleRule extends BaseRule {
 
 		Role role = RoleLocalServiceUtil.fetchRole(roleId);
 
-		if (role != null ) {
+		if (role != null) {
 			ruleInstance.setTypeSettings(role.getUuid());
 
 			portletDataContext.addReferenceElement(
@@ -138,7 +138,7 @@ public class RegularRoleRule extends BaseRule {
 
 			return role.getTitle(locale);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return StringPool.BLANK;
@@ -155,7 +155,7 @@ public class RegularRoleRule extends BaseRule {
 		Role role = RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
 			roleUuid, portletDataContext.getCompanyId());
 
-		if (role != null ) {
+		if (role != null) {
 			ruleInstance.setTypeSettings(String.valueOf(role.getRoleId()));
 
 			return;
@@ -198,7 +198,7 @@ public class RegularRoleRule extends BaseRule {
 
 		Company company = (Company)context.get("company");
 
-		List<Role> roles = new ArrayList<Role>();
+		List<Role> roles = new ArrayList<>();
 
 		try {
 
@@ -207,7 +207,7 @@ public class RegularRoleRule extends BaseRule {
 			roles = RoleLocalServiceUtil.getRoles(
 				company.getCompanyId(), new int[] {RoleConstants.TYPE_REGULAR});
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		context.put("roles", roles);

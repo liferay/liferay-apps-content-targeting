@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 
 <project name="report-campaign-tracking-action" basedir="." default="compile">
-	<property name="osgi.auto.update.xml" value="false" />
-
 	<property name="plugin.version" value="1" />
 
 	<property name="plugin.name" value="com.liferay.content.targeting.report.campaign.tracking.action" />

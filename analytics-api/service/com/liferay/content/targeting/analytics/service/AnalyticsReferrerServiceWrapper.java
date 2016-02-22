@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.analytics.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link AnalyticsReferrerService}.
@@ -23,6 +25,7 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see AnalyticsReferrerService
  * @generated
  */
+@ProviderType
 public class AnalyticsReferrerServiceWrapper implements AnalyticsReferrerService,
 	ServiceWrapper<AnalyticsReferrerService> {
 	public AnalyticsReferrerServiceWrapper(
@@ -30,54 +33,20 @@ public class AnalyticsReferrerServiceWrapper implements AnalyticsReferrerService
 		_analyticsReferrerService = analyticsReferrerService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _analyticsReferrerService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_analyticsReferrerService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _analyticsReferrerService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
 	@Override
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
-		long analyticsEventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long analyticsEventId) {
 		return _analyticsReferrerService.getAnalyticsReferrers(analyticsEventId);
 	}
 
 	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public AnalyticsReferrerService getWrappedAnalyticsReferrerService() {
-		return _analyticsReferrerService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedAnalyticsReferrerService(
-		AnalyticsReferrerService analyticsReferrerService) {
-		_analyticsReferrerService = analyticsReferrerService;
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _analyticsReferrerService.getOSGiServiceIdentifier();
 	}
 
 	@Override

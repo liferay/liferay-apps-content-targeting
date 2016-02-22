@@ -14,9 +14,11 @@
 
 package com.liferay.content.targeting.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for ReportInstance. This utility wraps
@@ -32,6 +34,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * @see com.liferay.content.targeting.service.impl.ReportInstanceLocalServiceImpl
  * @generated
  */
+@ProviderType
 public class ReportInstanceLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -44,12 +47,33 @@ public class ReportInstanceLocalServiceUtil {
 	*
 	* @param reportInstance the report instance
 	* @return the report instance that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ReportInstance addReportInstance(
-		com.liferay.content.targeting.model.ReportInstance reportInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.ReportInstance reportInstance) {
 		return getService().addReportInstance(reportInstance);
+	}
+
+	public static com.liferay.content.targeting.model.ReportInstance addReportInstance(
+		long userId, java.lang.String reportKey, java.lang.String className,
+		long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addReportInstance(userId, reportKey, className, classPK,
+			nameMap, descriptionMap, typeSettings, serviceContext);
+	}
+
+	public static com.liferay.content.targeting.model.ReportInstance addReportInstance(
+		long userId, java.lang.String reportKey, java.lang.String className,
+		long classPK, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addReportInstance(userId, reportKey, className, classPK,
+			typeSettings, serviceContext);
 	}
 
 	/**
@@ -64,18 +88,12 @@ public class ReportInstanceLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the report instance with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param reportInstanceId the primary key of the report instance
-	* @return the report instance that was removed
-	* @throws PortalException if a report instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
-	public static com.liferay.content.targeting.model.ReportInstance deleteReportInstance(
-		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteReportInstance(reportInstanceId);
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -83,12 +101,23 @@ public class ReportInstanceLocalServiceUtil {
 	*
 	* @param reportInstance the report instance
 	* @return the report instance that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ReportInstance deleteReportInstance(
-		com.liferay.content.targeting.model.ReportInstance reportInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.ReportInstance reportInstance) {
 		return getService().deleteReportInstance(reportInstance);
+	}
+
+	/**
+	* Deletes the report instance with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param reportInstanceId the primary key of the report instance
+	* @return the report instance that was removed
+	* @throws PortalException if a report instance with the primary key could not be found
+	*/
+	public static com.liferay.content.targeting.model.ReportInstance deleteReportInstance(
+		long reportInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteReportInstance(reportInstanceId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -100,12 +129,9 @@ public class ReportInstanceLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -120,12 +146,10 @@ public class ReportInstanceLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -141,65 +165,47 @@ public class ReportInstanceLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long reportInstanceId) {
 		return getService().fetchReportInstance(reportInstanceId);
 	}
 
-	/**
-	* Returns the report instance with the matching UUID and company.
-	*
-	* @param uuid the report instance's UUID
-	* @param companyId the primary key of the company
-	* @return the matching report instance, or <code>null</code> if a matching report instance could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstanceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .fetchReportInstanceByUuidAndCompanyId(uuid, companyId);
+	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
+		java.lang.String reportKey, java.lang.String className, long classPK) {
+		return getService().fetchReportInstance(reportKey, className, classPK);
 	}
 
 	/**
@@ -208,12 +214,48 @@ public class ReportInstanceLocalServiceUtil {
 	* @param uuid the report instance's UUID
 	* @param groupId the primary key of the group
 	* @return the matching report instance, or <code>null</code> if a matching report instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getService().fetchReportInstanceByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
+		java.lang.String reportKey, java.lang.String className, long classPK) {
+		return getService().findReportInstances(reportKey, className, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.content.targeting.api.model.Report getReport(
+		java.lang.String reportKey) {
+		return getService().getReport(reportKey);
 	}
 
 	/**
@@ -222,36 +264,11 @@ public class ReportInstanceLocalServiceUtil {
 	* @param reportInstanceId the primary key of the report instance
 	* @return the report instance
 	* @throws PortalException if a report instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ReportInstance getReportInstance(
 		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getReportInstance(reportInstanceId);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the report instance with the matching UUID and company.
-	*
-	* @param uuid the report instance's UUID
-	* @param companyId the primary key of the company
-	* @return the matching report instance
-	* @throws PortalException if a matching report instance could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ReportInstance getReportInstanceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getReportInstanceByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**
@@ -261,13 +278,26 @@ public class ReportInstanceLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching report instance
 	* @throws PortalException if a matching report instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ReportInstance getReportInstanceByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getReportInstanceByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static int getReportInstanceCount(java.lang.String reportKey,
+		java.lang.String className, long classPK) {
+		return getService().getReportInstanceCount(reportKey, className, classPK);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
+		java.lang.String className, long classPK) {
+		return getService().getReportInstances(className, classPK);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
+		java.lang.String className, long classPK, int start, int end) {
+		return getService().getReportInstances(className, classPK, start, end);
 	}
 
 	/**
@@ -280,23 +310,58 @@ public class ReportInstanceLocalServiceUtil {
 	* @param start the lower bound of the range of report instances
 	* @param end the upper bound of the range of report instances (not inclusive)
 	* @return the range of report instances
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getReportInstances(start, end);
+	}
+
+	/**
+	* Returns all the report instances matching the UUID and company.
+	*
+	* @param uuid the UUID of the report instances
+	* @param companyId the primary key of the company
+	* @return the matching report instances, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstancesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getReportInstancesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of report instances matching the UUID and company.
+	*
+	* @param uuid the UUID of the report instances
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of report instances
+	* @param end the upper bound of the range of report instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching report instances, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstancesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.ReportInstance> orderByComparator) {
+		return getService()
+				   .getReportInstancesByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
 	}
 
 	/**
 	* Returns the number of report instances.
 	*
 	* @return the number of report instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getReportInstancesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getReportInstancesCount() {
 		return getService().getReportInstancesCount();
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> searchReportInstances(
+		long groupId, java.lang.String className, long classPK,
+		java.lang.String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchReportInstances(groupId, className, classPK,
+			keywords, start, end);
 	}
 
 	/**
@@ -304,101 +369,10 @@ public class ReportInstanceLocalServiceUtil {
 	*
 	* @param reportInstance the report instance
 	* @return the report instance that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ReportInstance updateReportInstance(
-		com.liferay.content.targeting.model.ReportInstance reportInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.ReportInstance reportInstance) {
 		return getService().updateReportInstance(reportInstance);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
-	public static com.liferay.content.targeting.model.ReportInstance addReportInstance(
-		long userId, java.lang.String reportKey, java.lang.String className,
-		long classPK,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addReportInstance(userId, reportKey, className, classPK,
-			nameMap, descriptionMap, typeSettings, serviceContext);
-	}
-
-	public static com.liferay.content.targeting.model.ReportInstance addReportInstance(
-		long userId, java.lang.String reportKey, java.lang.String className,
-		long classPK, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addReportInstance(userId, reportKey, className, classPK,
-			typeSettings, serviceContext);
-	}
-
-	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchReportInstance(reportKey, className, classPK);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
-		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().findReportInstances(reportKey, className, classPK);
-	}
-
-	public static int getReportInstanceCount(java.lang.String reportKey,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getReportInstanceCount(reportKey, className, classPK);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getReportInstances(className, classPK);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
-		java.lang.String className, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getReportInstances(className, classPK, start, end);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> searchReportInstances(
-		long groupId, java.lang.String className, long classPK,
-		java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .searchReportInstances(groupId, className, classPK,
-			keywords, start, end);
 	}
 
 	public static com.liferay.content.targeting.model.ReportInstance updateReportInstance(
@@ -407,43 +381,18 @@ public class ReportInstanceLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateReportInstance(reportInstanceId, userId, reportKey,
 			className, classPK, nameMap, descriptionMap, typeSettings,
 			serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static ReportInstanceLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					ReportInstanceLocalService.class.getName());
-
-			if (invokableLocalService instanceof ReportInstanceLocalService) {
-				_service = (ReportInstanceLocalService)invokableLocalService;
-			}
-			else {
-				_service = new ReportInstanceLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(ReportInstanceLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setService(ReportInstanceLocalService service) {
-	}
-
-	private static ReportInstanceLocalService _service;
+	private static ServiceTracker<ReportInstanceLocalService, ReportInstanceLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(ReportInstanceLocalService.class);
 }

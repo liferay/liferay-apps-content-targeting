@@ -14,46 +14,39 @@
 
 package com.liferay.content.targeting.util;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.sites.util.Sites;
-import com.liferay.portlet.sites.util.SitesUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletMode;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +59,7 @@ public class ContentTargetingUtil {
 	public static final String GUID_REPLACEMENT = "{ct_field_guid}";
 
 	public static long[] getAncestorsAndCurrentGroupIds(long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Group scopeGroup = GroupLocalServiceUtil.fetchGroup(groupId);
 
@@ -114,8 +107,7 @@ public class ContentTargetingUtil {
 	}
 
 	public static long[] getAssetCategoryIds(
-			long groupId, long[] userSegmentIds)
-		throws SystemException {
+		long groupId, long[] userSegmentIds) {
 
 		if (userSegmentIds == null) {
 			return new long[0];
@@ -134,16 +126,14 @@ public class ContentTargetingUtil {
 	}
 
 	public static String getAssetCategoryNames(
-			long[] assetCategoryIds, Locale locale)
-		throws SystemException {
+		long[] assetCategoryIds, Locale locale) {
 
 		return getAssetCategoryNames(
 			assetCategoryIds, locale, _CATEGORY_SEPARATOR);
 	}
 
 	public static String getAssetCategoryNames(
-			long[] assetCategoryIds, Locale locale, String separator)
-		throws SystemException {
+		long[] assetCategoryIds, Locale locale, String separator) {
 
 		if (ArrayUtil.isEmpty(assetCategoryIds)) {
 			return StringPool.BLANK;
@@ -154,7 +144,7 @@ public class ContentTargetingUtil {
 		for (int i = 0; i < assetCategoryIds.length; i++) {
 			AssetCategory assetCategory =
 				AssetCategoryLocalServiceUtil.fetchAssetCategory(
-						assetCategoryIds[i]);
+					assetCategoryIds[i]);
 
 			if (assetCategory == null) {
 				continue;
@@ -194,7 +184,7 @@ public class ContentTargetingUtil {
 		String typeName = assetRendererFactory.getTypeName(
 			themeDisplay.getLocale(), false);
 
-		Map<String, Object> data = new HashMap<String, Object>();
+		Map<String, Object> data = new HashMap<>();
 
 		data.put("groupid", String.valueOf(themeDisplay.getScopeGroupId()));
 		data.put("href", assetBrowserURL.toString());
@@ -212,77 +202,24 @@ public class ContentTargetingUtil {
 		return data;
 	}
 
-	// This method already exists in 7.0
+	public static String getModelResource(
+		Locale locale, Class clazz, String name) {
 
-	public static long[] getSharedContentSiteGroupIds(
-			long companyId, long groupId, long userId)
-		throws PortalException, SystemException {
+		String key = ResourceActionsUtil.getModelResourceNamePrefix() + name;
 
-		Set<Group> groups = new LinkedHashSet<Group>();
+		try {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, clazz);
 
-		Group siteGroup = doGetCurrentSiteGroup(groupId);
-
-		if (siteGroup != null) {
-
-			// Current site
-
-			groups.add(siteGroup);
-
-			// Layout scopes
-
-			groups.addAll(
-				GroupLocalServiceUtil.getGroups(
-					siteGroup.getCompanyId(), Layout.class.getName(),
-					siteGroup.getGroupId()));
+			return ResourceBundleUtil.getString(resourceBundle, key);
 		}
-
-		// Administered sites
-
-		if (PrefsPropsUtil.getBoolean(
-				companyId,
-			PropsKeys.
-				SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
-
-			LinkedHashMap<String, Object> groupParams =
-				new LinkedHashMap<String, Object>();
-
-			groupParams.put("site", Boolean.TRUE);
-			groupParams.put("usersGroups", userId);
-
-			groups.addAll(
-				GroupLocalServiceUtil.search(
-					companyId, null, null, groupParams, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null));
+		catch (MissingResourceException mre) {
+			return ResourceActionsUtil.getModelResource(locale, name);
 		}
-
-		// Descendant sites
-
-		groups.addAll(getDescendants(siteGroup, true));
-
-		// Ancestor sites and global site
-
-		int sitesContentSharingWithChildrenEnabled = PrefsPropsUtil.getInteger(
-			companyId, PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
-
-		if (sitesContentSharingWithChildrenEnabled !=
-				Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED) {
-
-			groups.addAll(doGetAncestorSiteGroups(groupId, true));
-		}
-
-		long[] groupIds = new long[groups.size()];
-
-		int i = 0;
-
-		for (Group group : groups) {
-			groupIds[i++] = group.getGroupId();
-		}
-
-		return groupIds;
 	}
 
 	public static boolean isStaged(long liveGroupId, String portletId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Group liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
 
@@ -291,54 +228,8 @@ public class ContentTargetingUtil {
 
 		return GetterUtil.getBoolean(
 			liveGroupTypeSettings.getProperty(
-				StagingUtil.getStagedPortletId(portletId)), false);
-	}
-
-	// This method already exists in 7.0
-
-	protected static Set<Group> doGetAncestorSiteGroups(
-			long groupId, boolean checkContentSharingWithChildrenEnabled)
-		throws PortalException, SystemException {
-
-		Set<Group> groups = new LinkedHashSet<Group>();
-
-		long siteGroupId = getSiteGroupId(groupId);
-
-		Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
-
-		for (Group group : siteGroup.getAncestors()) {
-			if (checkContentSharingWithChildrenEnabled &&
-				!SitesUtil.isContentSharingWithChildrenEnabled(group)) {
-
-				continue;
-			}
-
-			groups.add(group);
-		}
-
-		if (!siteGroup.isCompany()) {
-			groups.add(
-				GroupLocalServiceUtil.getCompanyGroup(
-					siteGroup.getCompanyId()));
-		}
-
-		return groups;
-	}
-
-	// This method already exists in 7.0
-
-	protected static Group doGetCurrentSiteGroup(long groupId)
-		throws PortalException, SystemException {
-
-		long siteGroupId = getSiteGroupId(groupId);
-
-		Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
-
-		if (!siteGroup.isLayoutPrototype()) {
-			return siteGroup;
-		}
-
-		return null;
+				StagingUtil.getStagedPortletId(portletId)),
+			false);
 	}
 
 	protected static PortletURL getAssetBrowserURL(
@@ -348,18 +239,15 @@ public class ContentTargetingUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL assetBrowserURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.ASSET_BROWSER,
-			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
-			PortletRequest.RENDER_PHASE);
+		PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(
+			request, className, PortletProvider.Action.BROWSE);
 
-		assetBrowserURL.setParameter("struts_action", "/asset_browser/view");
 		assetBrowserURL.setParameter(
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 		assetBrowserURL.setParameter(
 			"selectedGroupIds",
 			StringUtil.merge(
-				getSharedContentSiteGroupIds(
+				PortalUtil.getSharedContentSiteGroupIds(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					themeDisplay.getUserId())));
 
@@ -375,41 +263,6 @@ public class ContentTargetingUtil {
 		assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return assetBrowserURL;
-	}
-
-	// This method already exists in 7.0
-
-	protected static List<Group> getDescendants(Group group, boolean site)
-		throws SystemException {
-
-		Set<Group> descendants = new LinkedHashSet<Group>();
-
-		for (Group curGroup : group.getChildren(site)) {
-			descendants.add(curGroup);
-			descendants.addAll(getDescendants(curGroup, site));
-		}
-
-		return new ArrayList<Group>(descendants);
-	}
-
-	// This method already exists in 7.0
-
-	protected static long getSiteGroupId(long groupId)
-		throws PortalException, SystemException {
-
-		if (groupId <= 0) {
-			return 0;
-		}
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		long siteGroupId = groupId;
-
-		if (group.isLayout()) {
-			siteGroupId = group.getParentGroupId();
-		}
-
-		return siteGroupId;
 	}
 
 	private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";

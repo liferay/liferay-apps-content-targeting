@@ -14,39 +14,58 @@
 
 package com.liferay.content.targeting.lar;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
+import java.util.List;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class AssetEntryReferencedStagedModelDataHandler
 	extends BaseStagedModelDataHandler<AssetEntryReferencedStagedModel> {
 
 	public static final String[] CLASS_NAMES = {
-		AssetEntryReferencedStagedModel.class.getName()};
+		AssetEntryReferencedStagedModel.class.getName()
+	};
+
+	@Override
+	public void deleteStagedModel(
+			AssetEntryReferencedStagedModel assetEntryReferencedStagedModel)
+		throws PortalException {
+	}
 
 	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
+	}
+
+	@Override
+	public List<AssetEntryReferencedStagedModel>
+		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -65,6 +84,39 @@ public class AssetEntryReferencedStagedModelDataHandler
 			assetEntryReferencedStagedModel.getClassName());
 
 		return title + " - " + type;
+	}
+
+	@Override
+	public void importStagedModel(
+			PortletDataContext portletDataContext,
+			AssetEntryReferencedStagedModel assetEntryReferencedStagedModel)
+		throws PortletDataException {
+
+		try {
+			Class clazz = getSupportedStagedModelClass(
+				assetEntryReferencedStagedModel.getClassName());
+
+			if (clazz != null) {
+				StagedModelDataHandlerUtil.importReferenceStagedModels(
+					portletDataContext, assetEntryReferencedStagedModel, clazz);
+			}
+			else {
+				String stagedModelPath = ExportImportPathUtil.getModelPath(
+					portletDataContext,
+					assetEntryReferencedStagedModel.getClassName(),
+					assetEntryReferencedStagedModel.getClassPK());
+
+				StagedModel stagedModel =
+					(StagedModel)portletDataContext.getZipEntryAsObject(
+						stagedModelPath);
+
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, stagedModel);
+			}
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
 	}
 
 	@Override
@@ -101,14 +153,12 @@ public class AssetEntryReferencedStagedModelDataHandler
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	protected void doImportCompanyStagedModel(
 			PortletDataContext portletDataContext, String uuid, long classPK)
 		throws Exception {
 
-		AssetEntry existingAssetEntry =
-			AssetEntryLocalServiceUtil.fetchEntry(
-				uuid, portletDataContext.getCompanyGroupId());
+		AssetEntry existingAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			uuid, portletDataContext.getCompanyGroupId());
 
 		if (existingAssetEntry == null) {
 			return;
@@ -122,37 +172,21 @@ public class AssetEntryReferencedStagedModelDataHandler
 			classPK, existingAssetEntry.getClassPK());
 	}
 
-	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext,
 			AssetEntryReferencedStagedModel assetEntryReferencedStagedModel)
 		throws Exception {
 
-		Class clazz = getSupportedStagedModelClass(
-			assetEntryReferencedStagedModel.getClassName());
-
-		if (clazz != null) {
-			StagedModelDataHandlerUtil.importReferenceStagedModels(
-				portletDataContext, assetEntryReferencedStagedModel, clazz);
-		}
-		else {
-			String stagedModelPath = ExportImportPathUtil.getModelPath(
-				portletDataContext,
-				assetEntryReferencedStagedModel.getClassName(),
+		if (assetEntryReferencedStagedModel != null) {
+			doImportCompanyStagedModel(
+				portletDataContext, assetEntryReferencedStagedModel.getUuid(),
 				assetEntryReferencedStagedModel.getClassPK());
-
-			StagedModel stagedModel =
-				(StagedModel)portletDataContext.getZipEntryAsObject(
-					stagedModelPath);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, stagedModel);
 		}
 	}
 
 	protected StagedModel getSupportedStagedModel(
 			String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (className.equals(JournalArticle.class.getName())) {
 			return JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
@@ -166,7 +200,7 @@ public class AssetEntryReferencedStagedModelDataHandler
 	}
 
 	protected Class getSupportedStagedModelClass(String className)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (className.equals(JournalArticle.class.getName())) {
 			return JournalArticle.class;
@@ -179,10 +213,7 @@ public class AssetEntryReferencedStagedModelDataHandler
 	}
 
 	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
+	protected boolean validateMissingReference(String uuid, long groupId) {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			groupId, uuid);
 

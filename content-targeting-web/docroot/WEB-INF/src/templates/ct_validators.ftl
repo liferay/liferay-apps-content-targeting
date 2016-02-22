@@ -14,11 +14,7 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
-
-<@aui["script"] use="aui-base,aui-form-validator">
+<@liferay_aui["script"] use="aui-base,aui-form-validator">
 	var form = Liferay.Form.get('<@portlet["namespace"] />fm');
 	var validator = form.formValidator;
 	var rules = validator.get('rules');

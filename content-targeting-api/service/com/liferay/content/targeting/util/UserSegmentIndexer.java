@@ -17,10 +17,9 @@ package com.liferay.content.targeting.util;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.UserSegmentPermission;
-import com.liferay.content.targeting.service.persistence.UserSegmentActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -28,21 +27,26 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
-public class UserSegmentIndexer extends BaseIndexer {
+@Component(immediate = true, service = Indexer.class)
+public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
 
 	public static final String[] CLASS_NAMES = {UserSegment.class.getName()};
 
@@ -51,6 +55,11 @@ public class UserSegmentIndexer extends BaseIndexer {
 	public UserSegmentIndexer() {
 		setFilterSearch(true);
 		setPermissionAware(true);
+	}
+
+	@Override
+	public String getClassName() {
+		return UserSegment.class.getName();
 	}
 
 	@Override
@@ -87,9 +96,7 @@ public class UserSegmentIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		UserSegment userSegment = (UserSegment)obj;
-
+	protected void doDelete(UserSegment userSegment) throws Exception {
 		Document document = new DocumentImpl();
 
 		document.addUID(PORTLET_ID, userSegment.getUserSegmentId());
@@ -100,9 +107,7 @@ public class UserSegmentIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		UserSegment userSegment = (UserSegment)obj;
-
+	protected Document doGetDocument(UserSegment userSegment) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Indexing user segment " + userSegment);
 		}
@@ -124,22 +129,11 @@ public class UserSegmentIndexer extends BaseIndexer {
 
 	@Override
 	protected Summary doGetSummary(
-		Document document, Locale locale, String snippet,
-		PortletURL portletURL) {
+			Document document, Locale locale, String snippet,
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
 
 		return null;
-	}
-
-	@Override
-	protected void doReindex(Object obj) throws Exception {
-		UserSegment userSegment = (UserSegment)obj;
-
-		Document document = getDocument(userSegment);
-
-		if (document != null) {
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), userSegment.getCompanyId(), document);
-		}
 	}
 
 	@Override
@@ -158,40 +152,52 @@ public class UserSegmentIndexer extends BaseIndexer {
 	}
 
 	@Override
+	protected void doReindex(UserSegment userSegment) throws Exception {
+		Document document = getDocument(userSegment);
+
+		if (document != null) {
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), userSegment.getCompanyId(), document);
+		}
+	}
+
+	@Override
 	protected String getPortletId(SearchContext searchContext) {
 		return PORTLET_ID;
 	}
 
 	protected void reindexUserSegments(final long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			new UserSegmentActionableDynamicQuery() {
-
-			@Override
-			protected void performAction(Object object) {
-				UserSegment userSegment = (UserSegment)object;
-
-				try {
-					Document document = getDocument(userSegment);
-
-					if (document != null) {
-						addDocument(document);
-					}
-				}
-				catch (PortalException e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index user segment: " +
-								userSegment.getUserSegmentId(),
-							e);
-					}
-				}
-			}
-
-		};
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			UserSegmentLocalServiceUtil.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<UserSegment>() {
+
+				@Override
+				public void performAction(UserSegment userSegment) {
+					try {
+						Document document = getDocument(userSegment);
+
+						if (document != null) {
+							actionableDynamicQuery.addDocuments(document);
+						}
+					}
+					catch (PortalException pe) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index user segment: " +
+									userSegment.getUserSegmentId(),
+								pe);
+						}
+					}
+				}
+
+			});
+
 		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		actionableDynamicQuery.performActions();

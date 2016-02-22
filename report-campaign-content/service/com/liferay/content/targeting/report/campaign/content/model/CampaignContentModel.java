@@ -14,12 +14,15 @@
 
 package com.liferay.content.targeting.report.campaign.content.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.service.ServiceContext;
+import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -38,7 +41,9 @@ import java.util.Date;
  * @see com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentModelImpl
  * @generated
  */
-public interface CampaignContentModel extends BaseModel<CampaignContent> {
+@ProviderType
+public interface CampaignContentModel extends BaseModel<CampaignContent>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -78,6 +83,7 @@ public interface CampaignContentModel extends BaseModel<CampaignContent> {
 	 *
 	 * @return the company ID of this campaign content
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -85,6 +91,7 @@ public interface CampaignContentModel extends BaseModel<CampaignContent> {
 	 *
 	 * @param companyId the company ID of this campaign content
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -210,19 +217,20 @@ public interface CampaignContentModel extends BaseModel<CampaignContent> {
 	public Object clone();
 
 	@Override
-	public int compareTo(CampaignContent campaignContent);
+	public int compareTo(
+		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<CampaignContent> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.report.campaign.content.model.CampaignContent> toCacheModel();
 
 	@Override
-	public CampaignContent toEscapedModel();
+	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent toEscapedModel();
 
 	@Override
-	public CampaignContent toUnescapedModel();
+	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent toUnescapedModel();
 
 	@Override
 	public String toString();

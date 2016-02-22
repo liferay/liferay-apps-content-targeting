@@ -14,7 +14,11 @@
 
 package com.liferay.content.targeting.report.user.segment.content.model;
 
-import com.liferay.portal.model.PersistedModel;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.Accessor;
 
 /**
  * The extended model interface for the UserSegmentContent service. Represents a row in the &quot;CT_USCR_UserSegmentContent&quot; database table, with each column mapped to a property of this class.
@@ -25,6 +29,8 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentImpl")
+@ProviderType
 public interface UserSegmentContent extends UserSegmentContentModel,
 	PersistedModel {
 	/*
@@ -32,6 +38,24 @@ public interface UserSegmentContent extends UserSegmentContentModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<UserSegmentContent, Long> USER_SEGMENT_CONTENT_ID_ACCESSOR =
+		new Accessor<UserSegmentContent, Long>() {
+			@Override
+			public Long get(UserSegmentContent userSegmentContent) {
+				return userSegmentContent.getUserSegmentContentId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<UserSegmentContent> getTypeClass() {
+				return UserSegmentContent.class;
+			}
+		};
+
 	public java.lang.String getTitle(java.util.Locale locale);
 
 	public java.lang.String getType(java.util.Locale locale);

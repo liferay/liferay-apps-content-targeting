@@ -22,26 +22,26 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.PortletKeys;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.OrganizationConstants;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +100,7 @@ public class OrganizationRoleRule extends BaseRule {
 			return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 				anonymousUser.getUserId(), organization.getGroupId(), roleId);
 		}
-		catch (JSONException e) {
+		catch (JSONException jsone) {
 		}
 
 		return false;
@@ -156,7 +156,7 @@ public class OrganizationRoleRule extends BaseRule {
 				ruleInstance, ruleInstanceElement, role,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 		}
-		catch (JSONException e) {
+		catch (JSONException jsone) {
 		}
 	}
 
@@ -202,9 +202,9 @@ public class OrganizationRoleRule extends BaseRule {
 
 			return sb.toString();
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
-		catch (JSONException e) {
+		catch (JSONException jsone) {
 		}
 
 		return StringPool.BLANK;
@@ -254,7 +254,7 @@ public class OrganizationRoleRule extends BaseRule {
 
 			ruleInstance.setTypeSettings(jsonObj.toString());
 		}
-		catch (JSONException e) {
+		catch (JSONException jsone) {
 		}
 	}
 
@@ -301,7 +301,7 @@ public class OrganizationRoleRule extends BaseRule {
 				roleId = jsonObj.getLong("roleId");
 				organizationId = jsonObj.getLong("organizationId");
 			}
-			catch (JSONException jse) {
+			catch (JSONException jsone) {
 			}
 		}
 
@@ -310,28 +310,28 @@ public class OrganizationRoleRule extends BaseRule {
 
 		Company company = (Company)context.get("company");
 
-		List<Role> roles = new ArrayList<Role>();
+		List<Role> roles = new ArrayList<>();
 
 		try {
 			roles = RoleLocalServiceUtil.getRoles(
 				company.getCompanyId(),
-				new int[]{RoleConstants.TYPE_ORGANIZATION});
+				new int[] {RoleConstants.TYPE_ORGANIZATION});
 
 			Role role = RoleLocalServiceUtil.fetchRole(
 				company.getCompanyId(), RoleConstants.ORGANIZATION_USER);
 
-			List<Role> removeRoles = new ArrayList<Role>();
+			List<Role> removeRoles = new ArrayList<>();
 
 			removeRoles.add(role);
 
 			roles = ListUtil.remove(roles, removeRoles);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		context.put("roles", roles);
 
-		List<Organization> organizations = new ArrayList<Organization>();
+		List<Organization> organizations = new ArrayList<>();
 
 		try {
 
@@ -341,7 +341,7 @@ public class OrganizationRoleRule extends BaseRule {
 				company.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		context.put("organizations", organizations);

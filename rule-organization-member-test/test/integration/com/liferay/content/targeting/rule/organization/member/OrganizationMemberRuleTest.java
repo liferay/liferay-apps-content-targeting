@@ -22,47 +22,26 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.OrganizationConstants;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleException;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
 public class OrganizationMemberRuleTest {
-
-	@Before
-	public void setUp() {
-		try {
-			_bundle.start();
-		}
-		catch (BundleException e) {
-			e.printStackTrace();
-		}
-
-		_anonymousUserLocalService = ServiceTrackerUtil.getService(
-			AnonymousUserLocalService.class, _bundle.getBundleContext());
-		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
-			RuleInstanceLocalService.class, _bundle.getBundleContext());
-		_rulesRegistry = ServiceTrackerUtil.getService(
-			RulesRegistry.class, _bundle.getBundleContext());
-	}
 
 	@Test
 	public void testOrganizationMemberRule() throws Exception {
@@ -91,11 +70,26 @@ public class OrganizationMemberRuleTest {
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
 	}
 
+	@Reference(unbind = "-")
+	protected void setAnonymousUserLocalService(
+		AnonymousUserLocalService anonymousUserLocalService) {
+
+		_anonymousUserLocalService = anonymousUserLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRuleInstanceLocalService(
+		RuleInstanceLocalService ruleInstanceLocalService) {
+
+		_ruleInstanceLocalService = ruleInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
+		_rulesRegistry = rulesRegistry;
+	}
+
 	private AnonymousUserLocalService _anonymousUserLocalService;
-
-	@ArquillianResource
-	private Bundle _bundle;
-
 	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RulesRegistry _rulesRegistry;
 

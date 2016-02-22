@@ -14,7 +14,11 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.model;
 
-import com.liferay.portal.model.PersistedModel;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.Accessor;
 
 /**
  * The extended model interface for the CTAction service. Represents a row in the &quot;CT_CTA_CTAction&quot; database table, with each column mapped to a property of this class.
@@ -25,11 +29,30 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionImpl")
+@ProviderType
 public interface CTAction extends CTActionModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<CTAction, Long> C_T_ACTION_ID_ACCESSOR = new Accessor<CTAction, Long>() {
+			@Override
+			public Long get(CTAction ctAction) {
+				return ctAction.getCTActionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<CTAction> getTypeClass() {
+				return CTAction.class;
+			}
+		};
+
 	public java.lang.String getUserSegmentName(java.util.Locale locale);
 }

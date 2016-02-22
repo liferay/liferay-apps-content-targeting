@@ -14,11 +14,14 @@
 
 package com.liferay.content.targeting.analytics.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +37,33 @@ import java.util.Date;
  * @see AnalyticsEvent
  * @generated
  */
+@ProviderType
 public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AnalyticsEventCacheModel)) {
+			return false;
+		}
+
+		AnalyticsEventCacheModel analyticsEventCacheModel = (AnalyticsEventCacheModel)obj;
+
+		if (analyticsEventId == analyticsEventCacheModel.analyticsEventId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, analyticsEventId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
@@ -155,10 +183,14 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		analyticsEventId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
+
 		anonymousUserId = objectInput.readLong();
 		className = objectInput.readUTF();
+
 		classPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
 		eventType = objectInput.readUTF();
@@ -174,8 +206,11 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(analyticsEventId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
+
 		objectOutput.writeLong(anonymousUserId);
 
 		if (className == null) {

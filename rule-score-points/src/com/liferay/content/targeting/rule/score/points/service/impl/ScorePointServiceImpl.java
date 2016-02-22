@@ -19,7 +19,6 @@ import com.liferay.content.targeting.rule.score.points.service.base.ScorePointSe
 import com.liferay.content.targeting.service.permission.UserSegmentPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
 
@@ -40,7 +39,7 @@ import java.util.List;
 public class ScorePointServiceImpl extends ScorePointServiceBaseImpl {
 
 	public long getPoints(long anonymousUserId, long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
@@ -49,7 +48,7 @@ public class ScorePointServiceImpl extends ScorePointServiceBaseImpl {
 	}
 
 	public List<ScorePoint> getScorePoints(long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
@@ -59,7 +58,7 @@ public class ScorePointServiceImpl extends ScorePointServiceBaseImpl {
 
 	public long incrementPoints(
 			long anonymousUserId, long userSegmentId, long points)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
@@ -70,7 +69,7 @@ public class ScorePointServiceImpl extends ScorePointServiceBaseImpl {
 
 	public ScorePoint updateScorePoints(
 			long anonymousUserId, long userSegmentId, long points)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);

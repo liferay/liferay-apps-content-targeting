@@ -14,11 +14,14 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal;
 
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +37,33 @@ import java.util.Date;
  * @see CTActionTotal
  * @generated
  */
+@ProviderType
 public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof CTActionTotalCacheModel)) {
+			return false;
+		}
+
+		CTActionTotalCacheModel ctActionTotalCacheModel = (CTActionTotalCacheModel)obj;
+
+		if (CTActionTotalId == ctActionTotalCacheModel.CTActionTotalId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, CTActionTotalId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
@@ -123,14 +151,19 @@ public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		CTActionTotalId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		campaignId = objectInput.readLong();
+
 		reportInstanceId = objectInput.readLong();
 		alias = objectInput.readUTF();
 		referrerClassName = objectInput.readUTF();
+
 		referrerClassPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
 		eventType = objectInput.readUTF();
+
 		count = objectInput.readInt();
 		modifiedDate = objectInput.readLong();
 	}
@@ -139,8 +172,11 @@ public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(CTActionTotalId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(campaignId);
+
 		objectOutput.writeLong(reportInstanceId);
 
 		if (alias == null) {

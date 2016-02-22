@@ -14,11 +14,14 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.TrackingActionInstance;
 
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +37,33 @@ import java.util.Date;
  * @see TrackingActionInstance
  * @generated
  */
+@ProviderType
 public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActionInstance>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof TrackingActionInstanceCacheModel)) {
+			return false;
+		}
+
+		TrackingActionInstanceCacheModel trackingActionInstanceCacheModel = (TrackingActionInstanceCacheModel)obj;
+
+		if (trackingActionInstanceId == trackingActionInstanceCacheModel.trackingActionInstanceId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, trackingActionInstanceId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(35);
@@ -171,18 +199,25 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		trackingActionInstanceId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		trackingActionKey = objectInput.readUTF();
+
 		campaignId = objectInput.readLong();
+
 		reportInstanceId = objectInput.readLong();
 		alias = objectInput.readUTF();
 		referrerClassName = objectInput.readUTF();
+
 		referrerClassPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
 		eventType = objectInput.readUTF();
@@ -200,8 +235,11 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		}
 
 		objectOutput.writeLong(trackingActionInstanceId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -222,6 +260,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		}
 
 		objectOutput.writeLong(campaignId);
+
 		objectOutput.writeLong(reportInstanceId);
 
 		if (alias == null) {

@@ -19,7 +19,7 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -64,6 +64,7 @@ public class AgeRuleTest extends PowerMockito {
 
 					return new JSONObjectImpl((String)args[0]);
 				}
+
 			}
 		);
 

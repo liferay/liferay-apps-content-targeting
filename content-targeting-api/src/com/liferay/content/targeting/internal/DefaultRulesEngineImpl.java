@@ -20,7 +20,6 @@ import com.liferay.content.targeting.api.model.RulesEngine;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -42,13 +41,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component
 public class DefaultRulesEngineImpl implements RulesEngine {
 
-	@Override
 	public long[] getMatchingUserSegmentIds(
-			HttpServletRequest request, AnonymousUser anonymousUser,
-			List<UserSegment> userSegments)
-		throws SystemException {
+		HttpServletRequest request, AnonymousUser anonymousUser,
+		List<UserSegment> userSegments) {
 
-		List<Long> userSegmentIds = new ArrayList<Long>();
+		List<Long> userSegmentIds = new ArrayList<>();
 
 		for (UserSegment userSegment : userSegments) {
 			if (matches(
@@ -93,14 +90,17 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 		return true;
 	}
 
-	@Reference
+	@Reference(unbind = "unsetRulesRegistry")
 	public void setRulesRegistry(RulesRegistry rulesRegistry) {
 		_rulesRegistry = rulesRegistry;
 	}
 
+	protected void unsetRulesRegistry() {
+		_rulesRegistry = null;
+	}
+
 	protected void updateAnonymousUserUserSegment(
-			AnonymousUser anonymousUser, UserSegment userSegment)
-		throws SystemException {
+		AnonymousUser anonymousUser, UserSegment userSegment) {
 
 		Date now = new Date();
 

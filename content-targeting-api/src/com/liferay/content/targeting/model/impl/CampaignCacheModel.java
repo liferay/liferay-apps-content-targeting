@@ -14,11 +14,14 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.Campaign;
 
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +37,32 @@ import java.util.Date;
  * @see Campaign
  * @generated
  */
+@ProviderType
 public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof CampaignCacheModel)) {
+			return false;
+		}
+
+		CampaignCacheModel campaignCacheModel = (CampaignCacheModel)obj;
+
+		if (campaignId == campaignCacheModel.campaignId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, campaignId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
@@ -157,9 +185,13 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		campaignId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -169,7 +201,9 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 		startDate = objectInput.readLong();
 		endDate = objectInput.readLong();
 		timeZoneId = objectInput.readUTF();
+
 		priority = objectInput.readInt();
+
 		active = objectInput.readBoolean();
 	}
 
@@ -184,8 +218,11 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 		}
 
 		objectOutput.writeLong(campaignId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -223,6 +260,7 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 		}
 
 		objectOutput.writeInt(priority);
+
 		objectOutput.writeBoolean(active);
 	}
 

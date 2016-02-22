@@ -14,9 +14,11 @@
 
 package com.liferay.content.targeting.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for TrackingActionInstance. This utility wraps
@@ -32,6 +34,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * @see com.liferay.content.targeting.service.impl.TrackingActionInstanceLocalServiceImpl
  * @generated
  */
+@ProviderType
 public class TrackingActionInstanceLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -44,12 +47,41 @@ public class TrackingActionInstanceLocalServiceUtil {
 	*
 	* @param trackingActionInstance the tracking action instance
 	* @return the tracking action instance that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
-		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance) {
 		return getService().addTrackingActionInstance(trackingActionInstance);
+	}
+
+	public static com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
+		long userId, long reportInstanceId, java.lang.String trackingActionKey,
+		long campaignId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addTrackingActionInstance(userId, reportInstanceId,
+			trackingActionKey, campaignId, alias, referrerClassName,
+			referrerClassPK, elementId, eventType, typeSettings, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 2.0.0
+	*/
+	@Deprecated
+	public static com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
+		long userId, java.lang.String trackingActionKey, long campaignId,
+		java.lang.String alias, java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addTrackingActionInstance(userId, trackingActionKey,
+			campaignId, alias, referrerClassName, referrerClassPK, elementId,
+			eventType, typeSettings, serviceContext);
 	}
 
 	/**
@@ -65,19 +97,12 @@ public class TrackingActionInstanceLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the tracking action instance with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param trackingActionInstanceId the primary key of the tracking action instance
-	* @return the tracking action instance that was removed
-	* @throws PortalException if a tracking action instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
-	public static com.liferay.content.targeting.model.TrackingActionInstance deleteTrackingActionInstance(
-		long trackingActionInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .deleteTrackingActionInstance(trackingActionInstanceId);
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -86,13 +111,25 @@ public class TrackingActionInstanceLocalServiceUtil {
 	* @param trackingActionInstance the tracking action instance
 	* @return the tracking action instance that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.TrackingActionInstance deleteTrackingActionInstance(
 		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteTrackingActionInstance(trackingActionInstance);
+	}
+
+	/**
+	* Deletes the tracking action instance with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param trackingActionInstanceId the primary key of the tracking action instance
+	* @return the tracking action instance that was removed
+	* @throws PortalException if a tracking action instance with the primary key could not be found
+	*/
+	public static com.liferay.content.targeting.model.TrackingActionInstance deleteTrackingActionInstance(
+		long trackingActionInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteTrackingActionInstance(trackingActionInstanceId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -104,12 +141,9 @@ public class TrackingActionInstanceLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -124,12 +158,10 @@ public class TrackingActionInstanceLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -145,66 +177,54 @@ public class TrackingActionInstanceLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
+	public static <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstance(
-		long trackingActionInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long campaignId, java.lang.String alias) {
+		return getService().fetchTrackingActionInstance(campaignId, alias);
+	}
+
+	public static com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstance(
+		long trackingActionInstanceId) {
 		return getService().fetchTrackingActionInstance(trackingActionInstanceId);
 	}
 
-	/**
-	* Returns the tracking action instance with the matching UUID and company.
-	*
-	* @param uuid the tracking action instance's UUID
-	* @param companyId the primary key of the company
-	* @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstanceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstanceByReportInstanceId(
+		long reportInstanceId, java.lang.String alias) {
 		return getService()
-				   .fetchTrackingActionInstanceByUuidAndCompanyId(uuid,
-			companyId);
+				   .fetchTrackingActionInstanceByReportInstanceId(reportInstanceId,
+			alias);
 	}
 
 	/**
@@ -213,13 +233,39 @@ public class TrackingActionInstanceLocalServiceUtil {
 	* @param uuid the tracking action instance's UUID
 	* @param groupId the primary key of the group
 	* @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getService()
 				   .fetchTrackingActionInstanceByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -228,37 +274,11 @@ public class TrackingActionInstanceLocalServiceUtil {
 	* @param trackingActionInstanceId the primary key of the tracking action instance
 	* @return the tracking action instance
 	* @throws PortalException if a tracking action instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.TrackingActionInstance getTrackingActionInstance(
 		long trackingActionInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTrackingActionInstance(trackingActionInstanceId);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the tracking action instance with the matching UUID and company.
-	*
-	* @param uuid the tracking action instance's UUID
-	* @param companyId the primary key of the company
-	* @return the matching tracking action instance
-	* @throws PortalException if a matching tracking action instance could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.TrackingActionInstance getTrackingActionInstanceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getTrackingActionInstanceByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**
@@ -268,14 +288,31 @@ public class TrackingActionInstanceLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching tracking action instance
 	* @throws PortalException if a matching tracking action instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.TrackingActionInstance getTrackingActionInstanceByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getTrackingActionInstanceByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
+		long campaignId) {
+		return getService().getTrackingActionInstances(campaignId);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
+		long campaignId, java.lang.String className, long classPK,
+		java.lang.String eventType) {
+		return getService()
+				   .getTrackingActionInstances(campaignId, className, classPK,
+			eventType);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
+		long campaignId, java.lang.String elementId, java.lang.String eventType) {
+		return getService()
+				   .getTrackingActionInstances(campaignId, elementId, eventType);
 	}
 
 	/**
@@ -288,141 +325,21 @@ public class TrackingActionInstanceLocalServiceUtil {
 	* @param start the lower bound of the range of tracking action instances
 	* @param end the upper bound of the range of tracking action instances (not inclusive)
 	* @return the range of tracking action instances
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getTrackingActionInstances(start, end);
 	}
 
-	/**
-	* Returns the number of tracking action instances.
-	*
-	* @return the number of tracking action instances
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int getTrackingActionInstancesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getTrackingActionInstancesCount();
-	}
-
-	/**
-	* Updates the tracking action instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param trackingActionInstance the tracking action instance
-	* @return the tracking action instance that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.TrackingActionInstance updateTrackingActionInstance(
-		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateTrackingActionInstance(trackingActionInstance);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
-	public static com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
-		long userId, long reportInstanceId, java.lang.String trackingActionKey,
-		long campaignId, java.lang.String alias,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType,
-		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addTrackingActionInstance(userId, reportInstanceId,
-			trackingActionKey, campaignId, alias, referrerClassName,
-			referrerClassPK, elementId, eventType, typeSettings, serviceContext);
-	}
-
-	/**
-	* @deprecated As of 2.0.0
-	*/
-	public static com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
-		long userId, java.lang.String trackingActionKey, long campaignId,
-		java.lang.String alias, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addTrackingActionInstance(userId, trackingActionKey,
-			campaignId, alias, referrerClassName, referrerClassPK, elementId,
-			eventType, typeSettings, serviceContext);
-	}
-
-	public static com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstance(
-		long campaignId, java.lang.String alias)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchTrackingActionInstance(campaignId, alias);
-	}
-
-	public static com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstanceByReportInstanceId(
-		long reportInstanceId, java.lang.String alias)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .fetchTrackingActionInstanceByReportInstanceId(reportInstanceId,
-			alias);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getTrackingActionInstances(campaignId);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
-		long campaignId, java.lang.String className, long classPK,
-		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getTrackingActionInstances(campaignId, className, classPK,
-			eventType);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
-		long campaignId, java.lang.String elementId, java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getTrackingActionInstances(campaignId, elementId, eventType);
-	}
-
 	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
-		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long reportInstanceId) {
 		return getService()
 				   .getTrackingActionInstancesByReportInstanceId(reportInstanceId);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
 		long reportInstanceId, java.lang.String className, long classPK,
-		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String eventType) {
 		return getService()
 				   .getTrackingActionInstancesByReportInstanceId(reportInstanceId,
 			className, classPK, eventType);
@@ -430,16 +347,65 @@ public class TrackingActionInstanceLocalServiceUtil {
 
 	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
 		long reportInstanceId, java.lang.String elementId,
-		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String eventType) {
 		return getService()
 				   .getTrackingActionInstancesByReportInstanceId(reportInstanceId,
 			elementId, eventType);
 	}
 
-	public static int getTrackingActionInstancesCount(long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	/**
+	* Returns all the tracking action instances matching the UUID and company.
+	*
+	* @param uuid the UUID of the tracking action instances
+	* @param companyId the primary key of the company
+	* @return the matching tracking action instances, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .getTrackingActionInstancesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of tracking action instances matching the UUID and company.
+	*
+	* @param uuid the UUID of the tracking action instances
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of tracking action instances
+	* @param end the upper bound of the range of tracking action instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching tracking action instances, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.TrackingActionInstance> orderByComparator) {
+		return getService()
+				   .getTrackingActionInstancesByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of tracking action instances.
+	*
+	* @return the number of tracking action instances
+	*/
+	public static int getTrackingActionInstancesCount() {
+		return getService().getTrackingActionInstancesCount();
+	}
+
+	public static int getTrackingActionInstancesCount(long campaignId) {
 		return getService().getTrackingActionInstancesCount(campaignId);
+	}
+
+	/**
+	* Updates the tracking action instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param trackingActionInstance the tracking action instance
+	* @return the tracking action instance that was updated
+	*/
+	public static com.liferay.content.targeting.model.TrackingActionInstance updateTrackingActionInstance(
+		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance) {
+		return getService().updateTrackingActionInstance(trackingActionInstance);
 	}
 
 	public static com.liferay.content.targeting.model.TrackingActionInstance updateTrackingActionInstance(
@@ -447,43 +413,18 @@ public class TrackingActionInstanceLocalServiceUtil {
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateTrackingActionInstance(trackingActionInstanceId,
 			reportInstanceId, alias, referrerClassName, referrerClassPK,
 			elementId, eventType, typeSettings, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static TrackingActionInstanceLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					TrackingActionInstanceLocalService.class.getName());
-
-			if (invokableLocalService instanceof TrackingActionInstanceLocalService) {
-				_service = (TrackingActionInstanceLocalService)invokableLocalService;
-			}
-			else {
-				_service = new TrackingActionInstanceLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(TrackingActionInstanceLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setService(TrackingActionInstanceLocalService service) {
-	}
-
-	private static TrackingActionInstanceLocalService _service;
+	private static ServiceTracker<TrackingActionInstanceLocalService, TrackingActionInstanceLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(TrackingActionInstanceLocalService.class);
 }

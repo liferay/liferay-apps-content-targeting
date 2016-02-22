@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.report.campaign.content.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link CampaignContentLocalService}.
@@ -23,6 +25,7 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see CampaignContentLocalService
  * @generated
  */
+@ProviderType
 public class CampaignContentLocalServiceWrapper
 	implements CampaignContentLocalService,
 		ServiceWrapper<CampaignContentLocalService> {
@@ -36,13 +39,32 @@ public class CampaignContentLocalServiceWrapper
 	*
 	* @param campaignContent the campaign content
 	* @return the campaign content that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent addCampaignContent(
-		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent) {
 		return _campaignContentLocalService.addCampaignContent(campaignContent);
+	}
+
+	@Override
+	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent addCampaignContent(
+		long campaignId, java.lang.String className, long classPK,
+		java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignContentLocalService.addCampaignContent(campaignId,
+			className, classPK, eventType, count);
+	}
+
+	@Override
+	public void checkCampaignContentEvents()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_campaignContentLocalService.checkCampaignContentEvents();
+	}
+
+	@Override
+	public void checkCampaignContentEvents(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_campaignContentLocalService.checkCampaignContentEvents(campaignId);
 	}
 
 	/**
@@ -58,33 +80,39 @@ public class CampaignContentLocalServiceWrapper
 	}
 
 	/**
+	* Deletes the campaign content from the database. Also notifies the appropriate model listeners.
+	*
+	* @param campaignContent the campaign content
+	* @return the campaign content that was removed
+	*/
+	@Override
+	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent deleteCampaignContent(
+		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent) {
+		return _campaignContentLocalService.deleteCampaignContent(campaignContent);
+	}
+
+	/**
 	* Deletes the campaign content with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param campaignContentId the primary key of the campaign content
 	* @return the campaign content that was removed
 	* @throws PortalException if a campaign content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent deleteCampaignContent(
 		long campaignContentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignContentLocalService.deleteCampaignContent(campaignContentId);
 	}
 
 	/**
-	* Deletes the campaign content from the database. Also notifies the appropriate model listeners.
-	*
-	* @param campaignContent the campaign content
-	* @return the campaign content that was removed
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent deleteCampaignContent(
-		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _campaignContentLocalService.deleteCampaignContent(campaignContent);
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignContentLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
@@ -97,13 +125,10 @@ public class CampaignContentLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _campaignContentLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -118,13 +143,11 @@ public class CampaignContentLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _campaignContentLocalService.dynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -141,55 +164,52 @@ public class CampaignContentLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _campaignContentLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _campaignContentLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _campaignContentLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent fetchCampaignContent(
-		long campaignContentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long campaignContentId) {
 		return _campaignContentLocalService.fetchCampaignContent(campaignContentId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _campaignContentLocalService.getActionableDynamicQuery();
 	}
 
 	/**
@@ -198,22 +218,45 @@ public class CampaignContentLocalServiceWrapper
 	* @param campaignContentId the primary key of the campaign content
 	* @return the campaign content
 	* @throws PortalException if a campaign content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent getCampaignContent(
 		long campaignContentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignContentLocalService.getCampaignContent(campaignContentId);
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignContentLocalService.getPersistedModel(primaryKeyObj);
+	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent getCampaignContent(
+		long campaignId, java.lang.String className, long classPK,
+		java.lang.String eventType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignContentLocalService.getCampaignContent(campaignId,
+			className, classPK, eventType);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.report.campaign.content.model.CampaignContent> getCampaignContents(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignContentLocalService.getCampaignContents(campaignId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.report.campaign.content.model.CampaignContent> getCampaignContents(
+		long campaignId, java.util.Date modifiedDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignContentLocalService.getCampaignContents(campaignId,
+			modifiedDate);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.report.campaign.content.model.CampaignContent> getCampaignContents(
+		long campaignId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignContentLocalService.getCampaignContents(campaignId,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -226,12 +269,10 @@ public class CampaignContentLocalServiceWrapper
 	* @param start the lower bound of the range of campaign contents
 	* @param end the upper bound of the range of campaign contents (not inclusive)
 	* @return the range of campaign contents
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.content.model.CampaignContent> getCampaignContents(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _campaignContentLocalService.getCampaignContents(start, end);
 	}
 
@@ -239,12 +280,38 @@ public class CampaignContentLocalServiceWrapper
 	* Returns the number of campaign contents.
 	*
 	* @return the number of campaign contents
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getCampaignContentsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getCampaignContentsCount() {
 		return _campaignContentLocalService.getCampaignContentsCount();
+	}
+
+	@Override
+	public int getCampaignContentsCount(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignContentLocalService.getCampaignContentsCount(campaignId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _campaignContentLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _campaignContentLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignContentLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -252,124 +319,11 @@ public class CampaignContentLocalServiceWrapper
 	*
 	* @param campaignContent the campaign content
 	* @return the campaign content that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent updateCampaignContent(
-		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent) {
 		return _campaignContentLocalService.updateCampaignContent(campaignContent);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _campaignContentLocalService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_campaignContentLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _campaignContentLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	@Override
-	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent addCampaignContent(
-		long campaignId, java.lang.String className, long classPK,
-		java.lang.String eventType, int count)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignContentLocalService.addCampaignContent(campaignId,
-			className, classPK, eventType, count);
-	}
-
-	@Override
-	public void checkCampaignContentEvents()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_campaignContentLocalService.checkCampaignContentEvents();
-	}
-
-	@Override
-	public void checkCampaignContentEvents(long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_campaignContentLocalService.checkCampaignContentEvents(campaignId);
-	}
-
-	@Override
-	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent getCampaignContent(
-		long campaignId, java.lang.String className, long classPK,
-		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignContentLocalService.getCampaignContent(campaignId,
-			className, classPK, eventType);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.report.campaign.content.model.CampaignContent> getCampaignContents(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignContentLocalService.getCampaignContents(campaignId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.report.campaign.content.model.CampaignContent> getCampaignContents(
-		long campaignId, java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignContentLocalService.getCampaignContents(campaignId,
-			modifiedDate);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.report.campaign.content.model.CampaignContent> getCampaignContents(
-		long campaignId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignContentLocalService.getCampaignContents(campaignId,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public int getCampaignContentsCount(long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignContentLocalService.getCampaignContentsCount(campaignId);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public CampaignContentLocalService getWrappedCampaignContentLocalService() {
-		return _campaignContentLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedCampaignContentLocalService(
-		CampaignContentLocalService campaignContentLocalService) {
-		_campaignContentLocalService = campaignContentLocalService;
 	}
 
 	@Override

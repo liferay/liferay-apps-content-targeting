@@ -14,14 +14,14 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action;
 
-import com.liferay.content.targeting.DuplicateTrackingActionInstanceException;
-import com.liferay.content.targeting.InvalidReportException;
-import com.liferay.content.targeting.InvalidTrackingActionException;
-import com.liferay.content.targeting.InvalidTrackingActionsException;
 import com.liferay.content.targeting.api.model.BaseReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
+import com.liferay.content.targeting.exception.DuplicateTrackingActionInstanceException;
+import com.liferay.content.targeting.exception.InvalidReportException;
+import com.liferay.content.targeting.exception.InvalidTrackingActionException;
+import com.liferay.content.targeting.exception.InvalidTrackingActionsException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.TrackingActionInstance;
@@ -42,10 +42,14 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -53,9 +57,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,8 +67,6 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -147,28 +146,28 @@ public class CTActionReport extends BaseReport {
 		return StringPool.BLANK;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setCTActionLocalService(
 		CTActionLocalService ctActionLocalService) {
 
 		_ctActionLocalService = ctActionLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setCTActionTotalLocalService(
 		CTActionTotalLocalService ctActionTotalLocalService) {
 
 		_ctActionTotalLocalService = ctActionTotalLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setReportInstanceLocalService(
 		ReportInstanceLocalService reportInstanceLocalService) {
 
 		_reportInstanceLocalService = reportInstanceLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setTrackingActionInstanceLocalService(
 		TrackingActionInstanceLocalService trackingActionInstanceLocalService) {
 
@@ -176,14 +175,14 @@ public class CTActionReport extends BaseReport {
 			trackingActionInstanceLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setTrackingActionInstanceService(
 		TrackingActionInstanceService trackingActionInstanceService) {
 
 		_trackingActionInstanceService = trackingActionInstanceService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setTrackingActionsRegistry(
 		TrackingActionsRegistry trackingActionsRegistry) {
 
@@ -215,32 +214,12 @@ public class CTActionReport extends BaseReport {
 			List<TrackingActionInstance> trackingActionInstances)
 		throws Exception {
 
-		for (TrackingActionInstance
-			trackingActionInstance : trackingActionInstances) {
+		for (TrackingActionInstance trackingActionInstance
+				: trackingActionInstances) {
 
 			_trackingActionInstanceService.deleteTrackingActionInstance(
 				trackingActionInstance.getTrackingActionInstanceId());
 		}
-	}
-
-	protected Map<String, String> getJSONValues(
-		JSONArray data, String namespace, String id) {
-
-		Map<String, String> values = new HashMap<String, String>(data.length());
-
-		for (int i = 0; i < data.length(); i++) {
-			JSONObject jsonObject = data.getJSONObject(i);
-
-			String name = jsonObject.getString("name");
-
-			name = StringUtil.replace(
-				name, new String[]{namespace, id},
-				new String[]{StringPool.BLANK, StringPool.BLANK});
-
-			values.put(name, jsonObject.getString("value"));
-		}
-
-		return values;
 	}
 
 	protected InvalidTrackingActionsException
@@ -248,15 +227,14 @@ public class CTActionReport extends BaseReport {
 
 		if (SessionErrors.contains(
 				portletRequest,
-			InvalidTrackingActionsException.class.getName())) {
+				InvalidTrackingActionsException.class.getName())) {
 
 			return (InvalidTrackingActionsException)SessionErrors.get(
 				portletRequest,
 				InvalidTrackingActionsException.class.getName());
 		}
 		else if (SessionErrors.contains(
-					portletRequest,
-			InvalidReportException.class.getName())) {
+					portletRequest, InvalidReportException.class.getName())) {
 
 			InvalidReportException invalidReportException =
 				(InvalidReportException)SessionErrors.get(
@@ -270,6 +248,26 @@ public class CTActionReport extends BaseReport {
 		}
 
 		return new InvalidTrackingActionsException();
+	}
+
+	protected Map<String, String> getJSONValues(
+		JSONArray data, String namespace, String id) {
+
+		Map<String, String> values = new HashMap<>(data.length());
+
+		for (int i = 0; i < data.length(); i++) {
+			JSONObject jsonObject = data.getJSONObject(i);
+
+			String name = jsonObject.getString("name");
+
+			name = StringUtil.replace(
+				name, new String[] {namespace, id},
+				new String[] {StringPool.BLANK, StringPool.BLANK});
+
+			values.put(name, jsonObject.getString("value"));
+		}
+
+		return values;
 	}
 
 	protected String getTrackingActionHtml(
@@ -296,8 +294,7 @@ public class CTActionReport extends BaseReport {
 
 		HttpServletRequest request = (HttpServletRequest)context.get("request");
 
-		Map<String, List<ValidatorTag>> validatorTagsMap =
-			new HashMap<String, List<ValidatorTag>>();
+		Map<String, List<ValidatorTag>> validatorTagsMap = new HashMap<>();
 
 		request.setAttribute("aui:form:validatorTagsMap", validatorTagsMap);
 
@@ -332,7 +329,7 @@ public class CTActionReport extends BaseReport {
 		throws Exception {
 
 		List<TrackingActionInstance> trackingActionsInstances =
-			new ArrayList<TrackingActionInstance>();
+			new ArrayList<>();
 
 		String campaignTrackingActions = ParamUtil.getString(
 			request, "reportTrackingActions");
@@ -395,18 +392,19 @@ public class CTActionReport extends BaseReport {
 
 				@Override
 				public List<CTActionTotal> getResults(int start, int end)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					return _ctActionTotalLocalService.getCTActionsTotal(
 						reportInstanceId, start, end,
-							new CTActionTotalCountComparator());
+						new CTActionTotalCountComparator());
 				}
 
 				@Override
-				public int getTotal() throws PortalException, SystemException {
+				public int getTotal() throws PortalException {
 					return _ctActionTotalLocalService.getCTActionsTotalCount(
 						reportInstanceId);
 				}
+
 			}
 		);
 	}
@@ -421,12 +419,12 @@ public class CTActionReport extends BaseReport {
 		context.put("trackingActions", trackingActions.values());
 		context.put("trackingActionsRegistry", _trackingActionsRegistry);
 
-		RenderRequest renderRequest = (RenderRequest)context.get(
-			"renderRequest");
-		RenderResponse renderResponse = (RenderResponse)context.get(
-			"renderResponse");
+		PortletRequest portletRequest = (PortletRequest)context.get(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse = (PortletResponse)context.get(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)context.get(
 			WebKeys.THEME_DISPLAY);
 
 		boolean isolated = themeDisplay.isIsolated();
@@ -435,7 +433,7 @@ public class CTActionReport extends BaseReport {
 			themeDisplay.setIsolated(true);
 
 			List<TrackingActionInstance> trackingActionInstances =
-				getTrackingActionsFromRequest(renderRequest, renderResponse);
+				getTrackingActionsFromRequest(portletRequest, portletResponse);
 
 			if (trackingActionInstances.isEmpty()) {
 				final long reportInstanceId = MapUtil.getLong(
@@ -448,16 +446,16 @@ public class CTActionReport extends BaseReport {
 			}
 
 			List<TrackingActionTemplate> addedTrackingActionTemplates =
-				new ArrayList<TrackingActionTemplate>();
+				new ArrayList<>();
 
 			if (!trackingActionInstances.isEmpty()) {
 				context.put("trackingActionInstances", trackingActionInstances);
 
 				InvalidTrackingActionsException itae =
-					getInvalidTrackingActionsException(renderRequest);
+					getInvalidTrackingActionsException(portletRequest);
 
 				for (TrackingActionInstance instance
-					: trackingActionInstances) {
+						: trackingActionInstances) {
 
 					TrackingAction trackingAction =
 						_trackingActionsRegistry.getTrackingAction(
@@ -499,10 +497,10 @@ public class CTActionReport extends BaseReport {
 				"addedTrackingActionTemplates", addedTrackingActionTemplates);
 
 			List<TrackingActionTemplate> trackingActionTemplates =
-				new ArrayList<TrackingActionTemplate>();
+				new ArrayList<>();
 
 			for (TrackingAction trackingAction
-				: trackingActions.values()) {
+					: trackingActions.values()) {
 
 				if (!trackingAction.isVisible()) {
 					continue;
@@ -545,7 +543,7 @@ public class CTActionReport extends BaseReport {
 				getTrackingActionInstancesByReportInstanceId(reportInstanceId));
 
 		List<InvalidTrackingActionException> trackingActionExceptions =
-			new ArrayList<InvalidTrackingActionException>();
+			new ArrayList<>();
 
 		if (requestTrackingActionInstances.isEmpty()) {
 			deleteTrackingActionInstances(trackingActionInstances);
@@ -560,7 +558,7 @@ public class CTActionReport extends BaseReport {
 			WebKeys.THEME_DISPLAY);
 
 		for (TrackingActionInstance requestTrackingActionInstance
-			: requestTrackingActionInstances) {
+				: requestTrackingActionInstances) {
 
 			TrackingAction trackingAction =
 				_trackingActionsRegistry.getTrackingAction(
@@ -652,9 +650,7 @@ public class CTActionReport extends BaseReport {
 	private ReportInstanceLocalService _reportInstanceLocalService;
 	private TrackingActionInstanceLocalService
 		_trackingActionInstanceLocalService;
-	private TrackingActionInstanceService
-		_trackingActionInstanceService;
-	private TrackingActionsRegistry
-		_trackingActionsRegistry;
+	private TrackingActionInstanceService _trackingActionInstanceService;
+	private TrackingActionsRegistry _trackingActionsRegistry;
 
 }

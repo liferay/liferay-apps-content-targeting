@@ -19,8 +19,7 @@ import com.liferay.content.targeting.service.base.TacticServiceBaseImpl;
 import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 import java.util.Locale;
@@ -47,7 +46,7 @@ public class TacticServiceImpl extends TacticServiceBaseImpl {
 			long userId, long campaignId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, long[] userSegmentsIds,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CampaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
@@ -58,9 +57,7 @@ public class TacticServiceImpl extends TacticServiceBaseImpl {
 	}
 
 	@Override
-	public List<Tactic> getTactics(long campaignId)
-		throws PortalException, SystemException {
-
+	public List<Tactic> getTactics(long campaignId) throws PortalException {
 		return tacticLocalService.getTactics(campaignId);
 	}
 
@@ -69,7 +66,7 @@ public class TacticServiceImpl extends TacticServiceBaseImpl {
 			long tacticId, long campaignId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, long[] userSegmentsIds,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CampaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);

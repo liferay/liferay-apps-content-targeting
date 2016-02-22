@@ -14,7 +14,11 @@
 
 package com.liferay.content.targeting.model;
 
-import com.liferay.portal.model.PersistedModel;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.Accessor;
 
 /**
  * The extended model interface for the TrackingActionInstance service. Represents a row in the &quot;CT_TrackingActionInstance&quot; database table, with each column mapped to a property of this class.
@@ -25,6 +29,8 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.model.impl.TrackingActionInstanceModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.content.targeting.model.impl.TrackingActionInstanceImpl")
+@ProviderType
 public interface TrackingActionInstance extends TrackingActionInstanceModel,
 	PersistedModel {
 	/*
@@ -32,6 +38,24 @@ public interface TrackingActionInstance extends TrackingActionInstanceModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.TrackingActionInstanceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<TrackingActionInstance, Long> TRACKING_ACTION_INSTANCE_ID_ACCESSOR =
+		new Accessor<TrackingActionInstance, Long>() {
+			@Override
+			public Long get(TrackingActionInstance trackingActionInstance) {
+				return trackingActionInstance.getTrackingActionInstanceId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<TrackingActionInstance> getTypeClass() {
+				return TrackingActionInstance.class;
+			}
+		};
+
 	public java.lang.String getTrackingActionGuid();
 
 	public java.util.Map<java.lang.String, java.lang.String> getValues();

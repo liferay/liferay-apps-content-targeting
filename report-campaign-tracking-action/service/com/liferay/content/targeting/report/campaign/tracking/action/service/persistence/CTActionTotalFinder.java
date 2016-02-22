@@ -14,15 +14,17 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Brian Wing Shun Chan
+ * @generated
  */
+@ProviderType
 public interface CTActionTotalFinder {
 	public java.util.List<java.lang.Object[]> findByAnalyticsWithClassName(
-		java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.Date modifiedDate);
 
 	public java.util.List<java.lang.Object[]> findByAnalyticsWithElementId(
-		java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.Date modifiedDate);
 }

@@ -5,7 +5,7 @@ AUI.add(
 
 		var Node = A.Node;
 
-		var SELECTOR_CHECKBOX = '.checkbox';
+		var SELECTOR_CHECKBOX = '.input-checkbox-wrapper';
 
 		var SELECTOR_ELEMENT = '.element';
 

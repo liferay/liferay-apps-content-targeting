@@ -10,9 +10,10 @@
 	</info>
 
 	<dependencies defaultconf="default">
-		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.1" />
+		<dependency name="com.liferay.journal.api" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="2.0.4" />
 		<dependency name="com.liferay.portal.log.bridge" org="com.liferay" rev="1.0.0" />
-		<dependency name="freemarker" org="org.freemarker" rev="2.3.17" />
+		<dependency name="freemarker" org="org.freemarker" rev="2.3.23" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>

@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.service.RuleInstanceServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -23,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.content.targeting.service.RuleInstanceServiceUtil} service utility. The
+ * {@link RuleInstanceServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -58,14 +60,15 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see RuleInstanceServiceHttp
  * @see com.liferay.content.targeting.model.RuleInstanceSoap
- * @see com.liferay.content.targeting.service.RuleInstanceServiceUtil
+ * @see RuleInstanceServiceUtil
  * @generated
  */
+@ProviderType
 public class RuleInstanceServiceSoap {
 	public static com.liferay.content.targeting.model.RuleInstanceSoap addRuleInstance(
 		long userId, java.lang.String ruleKey, long userSegmentId,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.RuleInstance returnValue = RuleInstanceServiceUtil.addRuleInstance(userId,
@@ -125,7 +128,7 @@ public class RuleInstanceServiceSoap {
 
 	public static com.liferay.content.targeting.model.RuleInstanceSoap updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.RuleInstance returnValue = RuleInstanceServiceUtil.updateRuleInstance(ruleInstanceId,

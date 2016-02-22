@@ -14,9 +14,11 @@
 
 package com.liferay.content.targeting.report.user.segment.content.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableService;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for UserSegmentContent. This utility wraps
@@ -32,6 +34,7 @@ import com.liferay.portal.service.InvokableService;
  * @see com.liferay.content.targeting.report.user.segment.content.service.impl.UserSegmentContentServiceImpl
  * @generated
  */
+@ProviderType
 public class UserSegmentContentServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -40,57 +43,18 @@ public class UserSegmentContentServiceUtil {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
-	public static void clearService() {
-		_service = null;
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static UserSegmentContentService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					UserSegmentContentService.class.getName());
-
-			if (invokableService instanceof UserSegmentContentService) {
-				_service = (UserSegmentContentService)invokableService;
-			}
-			else {
-				_service = new UserSegmentContentServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(UserSegmentContentServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setService(UserSegmentContentService service) {
-	}
-
-	private static UserSegmentContentService _service;
+	private static ServiceTracker<UserSegmentContentService, UserSegmentContentService> _serviceTracker =
+		ServiceTrackerFactory.open(UserSegmentContentService.class);
 }

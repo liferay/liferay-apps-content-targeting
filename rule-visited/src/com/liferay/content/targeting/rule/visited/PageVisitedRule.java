@@ -14,30 +14,32 @@
 
 package com.liferay.content.targeting.rule.visited;
 
-import com.liferay.content.targeting.InvalidRuleException;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
+import com.liferay.content.targeting.exception.InvalidRuleException;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -100,7 +102,7 @@ public class PageVisitedRule extends BaseRule {
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
-		if (layout != null ) {
+		if (layout != null) {
 			ruleInstance.setTypeSettings(layout.getUuid());
 
 			portletDataContext.addReferenceElement(
@@ -135,7 +137,7 @@ public class PageVisitedRule extends BaseRule {
 		try {
 			layout = LayoutLocalServiceUtil.fetchLayout(plid);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		if (layout != null) {
@@ -153,10 +155,17 @@ public class PageVisitedRule extends BaseRule {
 
 		String layoutUuid = ruleInstance.getTypeSettings();
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndCompanyId(
-			layoutUuid, portletDataContext.getCompanyId());
+		Layout layout = null;
 
-		if (layout != null ) {
+		layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layoutUuid, portletDataContext.getGroupId(), false);
+
+		if (layout == null) {
+			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layoutUuid, portletDataContext.getGroupId(), true);
+		}
+
+		if (layout != null) {
 			ruleInstance.setTypeSettings(String.valueOf(layout.getPlid()));
 
 			return;
@@ -194,9 +203,7 @@ public class PageVisitedRule extends BaseRule {
 					"a-page-with-this-friendly-url-could-not-be-found");
 			}
 		}
-		catch (Exception e) {
-			throw new InvalidRuleException(
-					"a-page-with-this-friendly-url-could-not-be-found");
+		catch (SystemException se) {
 		}
 	}
 
@@ -222,10 +229,19 @@ public class PageVisitedRule extends BaseRule {
 		String friendlyURLPublicBase = StringPool.BLANK;
 
 		try {
+			LayoutSet layoutSet = themeDisplay.getLayoutSet();
+
+			boolean privateLayoutSet = layoutSet.isPrivateLayout();
+
+			layoutSet.setPrivateLayout(false);
 			friendlyURLPublicBase = PortalUtil.getGroupFriendlyURL(
-				themeDisplay.getScopeGroup(), false, themeDisplay);
+				layoutSet, themeDisplay);
+
+			layoutSet.setPrivateLayout(true);
 			friendlyURLPrivateBase = PortalUtil.getGroupFriendlyURL(
-				themeDisplay.getScopeGroup(), true, themeDisplay);
+				layoutSet, themeDisplay);
+
+			layoutSet.setPrivateLayout(privateLayoutSet);
 		}
 		catch (Exception e) {
 			_log.error(e);
@@ -250,7 +266,7 @@ public class PageVisitedRule extends BaseRule {
 					privateLayout = layout.isPrivateLayout();
 				}
 			}
-			catch (SystemException e) {
+			catch (SystemException se) {
 			}
 		}
 
@@ -267,7 +283,9 @@ public class PageVisitedRule extends BaseRule {
 		context.put("friendlyURLPublicBase", friendlyURLPublicBase);
 		context.put("friendlyURLPrivateBase", friendlyURLPrivateBase);
 
-		long groupId = (Long)context.get("scopeGroupId");
+		Group scopeGroup = (Group)context.get("scopeGroup");
+
+		long groupId = (scopeGroup != null) ? scopeGroup.getGroupId() : 0;
 
 		boolean trackingPageEnabled = AnalyticsUtil.isAnalyticsPageEnabled(
 			groupId);

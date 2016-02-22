@@ -20,15 +20,14 @@ import com.liferay.content.targeting.analytics.service.base.AnalyticsEventLocalS
 import com.liferay.content.targeting.analytics.util.PortletPropsValues;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.persistence.CompanyActionableDynamicQuery;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -58,7 +57,7 @@ public class AnalyticsEventLocalServiceImpl
 			Map<String, long[]> referrers, String elementId, String eventType,
 			String clientIP, String userAgent, String languageId, String URL,
 			String additionalInfo, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AnalyticsEvent analyticsEvent = addAnalyticsEvent(
 			userId, anonymousUserId, className, classPK, elementId, eventType,
@@ -85,7 +84,7 @@ public class AnalyticsEventLocalServiceImpl
 			String eventType, String clientIP, String userAgent,
 			String languageId, String URL, String additionalInfo,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AnalyticsEvent analyticsEvent = addAnalyticsEvent(
 			userId, anonymousUserId, className, classPK, elementId, eventType,
@@ -107,7 +106,7 @@ public class AnalyticsEventLocalServiceImpl
 			String elementId, String eventType, String clientIP,
 			String userAgent, String languageId, String URL,
 			String additionalInfo, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long analyticsEventId = counterLocalService.increment();
 
@@ -141,29 +140,29 @@ public class AnalyticsEventLocalServiceImpl
 	}
 
 	@Override
-	public void checkAnalyticsEvents() throws PortalException, SystemException {
+	public void checkAnalyticsEvents() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			new CompanyActionableDynamicQuery() {
+			CompanyLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Company>() {
 
 				@Override
-				protected void performAction(Object object)
-					throws PortalException, SystemException {
-
-					Company company = (Company)object;
+				public void performAction(Company company)
+					throws PortalException {
 
 					deleteAnalyticsEvents(company.getCompanyId(), getMaxAge());
 				}
 
-			};
+			}
+		);
 
 		actionableDynamicQuery.performActions();
 	}
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public AnalyticsEvent deleteAnalyticsEvent(AnalyticsEvent analyticsEvent)
-		throws SystemException {
-
+	public AnalyticsEvent deleteAnalyticsEvent(AnalyticsEvent analyticsEvent) {
 		analyticsEventPersistence.remove(analyticsEvent);
 
 		// Analytic referrers
@@ -181,7 +180,7 @@ public class AnalyticsEventLocalServiceImpl
 
 	@Override
 	public void deleteAnalyticsEvents(long companyId, Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<AnalyticsEvent> analyticsEvents =
 			analyticsEventPersistence.findByC_LtD(companyId, createDate);
@@ -194,7 +193,7 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public List<AnalyticsEvent> getAnalyticsEvents(
 			long companyId, Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return analyticsEventPersistence.findByC_GtD(companyId, createDate);
 	}
@@ -203,7 +202,7 @@ public class AnalyticsEventLocalServiceImpl
 	public List<Object[]> getAnalyticsEvents(
 			long companyId, String referrerClassName, long referrerClassPK,
 			Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return analyticsEventFinder.findByC_GtC_R_R(
 			companyId, referrerClassName, referrerClassPK, createDate);
@@ -213,7 +212,7 @@ public class AnalyticsEventLocalServiceImpl
 	public List<AnalyticsEvent> getAnalyticsEvents(
 			long anonymousUserId, String className, long classPK,
 			String eventType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return analyticsEventPersistence.findByA_C_C_E(
 			anonymousUserId, className, classPK, eventType);
@@ -222,7 +221,7 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public List<AnalyticsEvent> getAnalyticsEvents(
 			String className, long classPK, String eventType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return analyticsEventPersistence.findByC_C_E(
 			className, classPK, eventType);
@@ -231,7 +230,7 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public List<AnalyticsEvent> getAnalyticsEvents(
 			String className, long classPK, String eventType, Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return analyticsEventPersistence.findByC_C_E_GtD(
 			className, classPK, eventType, createDate);
@@ -240,7 +239,7 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public List<AnalyticsEvent> getAnalyticsEvents(
 			String elementId, String eventType, Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return analyticsEventPersistence.findByE_E_GtD(
 			elementId, eventType, createDate);
@@ -248,14 +247,14 @@ public class AnalyticsEventLocalServiceImpl
 
 	@Override
 	public List<AnalyticsEvent> getAnalyticsEventsContent(Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return analyticsEventPersistence.findByNotC_GtD(0, createDate);
 	}
 
 	@Override
 	public long[] getAnalyticsEventsContentIds(Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<AnalyticsEvent> analyticsEvents =
 			analyticsEventPersistence.findByNotC_GtD(0, createDate);
@@ -265,7 +264,7 @@ public class AnalyticsEventLocalServiceImpl
 
 	@Override
 	public int getAnalyticsEventsCount(long companyId, Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return analyticsEventPersistence.countByC_GtD(companyId, createDate);
 	}
@@ -274,7 +273,7 @@ public class AnalyticsEventLocalServiceImpl
 	public int getAnalyticsEventsCount(
 			long anonymousUserId, String className, long classPK,
 			String eventType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return analyticsEventPersistence.countByA_C_C_E(
 			anonymousUserId, className, classPK, eventType);
@@ -283,7 +282,7 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public int getAnalyticsEventsCount(
 			String className, long classPK, String eventType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return analyticsEventPersistence.countByC_C_E(
 			className, classPK, eventType);
@@ -292,7 +291,7 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public int getAnalyticsEventsCount(
 			String className, long classPK, String eventType, Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return analyticsEventPersistence.countByC_C_E_GtD(
 			className, classPK, eventType, createDate);
@@ -302,7 +301,7 @@ public class AnalyticsEventLocalServiceImpl
 	public int getAnalyticsEventsCount(
 			String className, long classPK, String referrerClassName,
 			long referrerClassPK, String eventType, Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long[] analyticsEventsIds = getAnalyticsEventsIds(
 			className, classPK, eventType, createDate);
@@ -315,7 +314,7 @@ public class AnalyticsEventLocalServiceImpl
 	public int getAnalyticsEventsCount(
 			String referrerClassName, long referrerClassPK, String elementId,
 			String eventType, Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long[] analyticsEventsIds = getAnalyticsEventsIds(
 			elementId, eventType, createDate);
@@ -327,7 +326,7 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public int getAnalyticsEventsCount(
 			String elementId, String eventType, Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return analyticsEventPersistence.countByE_E_GtD(
 			elementId, eventType, createDate);
@@ -336,7 +335,7 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public long[] getAnalyticsEventsIds(
 			String className, long classPK, String eventType, Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<AnalyticsEvent> analyticsEvents =
 			analyticsEventPersistence.findByC_C_E_GtD(
@@ -348,7 +347,7 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public long[] getAnalyticsEventsIds(
 			String elementId, String eventType, Date createDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<AnalyticsEvent> analyticsEvents =
 			analyticsEventPersistence.findByE_E_GtD(
@@ -358,7 +357,7 @@ public class AnalyticsEventLocalServiceImpl
 	}
 
 	@Override
-	public Date getMaxAge() throws PortalException, SystemException {
+	public Date getMaxAge() throws PortalException {
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(new Date());

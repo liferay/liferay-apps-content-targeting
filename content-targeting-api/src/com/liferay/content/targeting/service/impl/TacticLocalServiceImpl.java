@@ -20,7 +20,8 @@ import com.liferay.content.targeting.service.base.TacticLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.content.targeting.util.TacticUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -29,10 +30,8 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.Date;
 import java.util.List;
@@ -61,7 +60,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 			long userId, long campaignId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, long[] userSegmentsIds,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
 
@@ -94,11 +93,9 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Tactic deleteTactic(long tacticId)
-		throws PortalException, SystemException {
-
+	public Tactic deleteTactic(long tacticId) throws PortalException {
 		for (ChannelInstance channelInstance
-			: channelInstanceLocalService.getChannelInstances(tacticId)) {
+				: channelInstanceLocalService.getChannelInstances(tacticId)) {
 
 			channelInstanceLocalService.deleteChannelInstance(
 				channelInstance.getChannelInstanceId());
@@ -109,36 +106,30 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Tactic deleteTactic(Tactic tactic)
-		throws PortalException, SystemException {
-
+	public Tactic deleteTactic(Tactic tactic) throws PortalException {
 		return deleteTactic(tactic.getTacticId());
 	}
 
-	public List<Tactic> getTactics(long campaignId)
-		throws PortalException, SystemException {
-
+	public List<Tactic> getTactics(long campaignId) throws PortalException {
 		return tacticPersistence.findByCampaignId(campaignId);
 	}
 
 	@Override
 	public List<Tactic> getTactics(
 			long campaignId, int start, int end, OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return tacticPersistence.findByCampaignId(campaignId, start, end, obc);
 	}
 
 	@Override
-	public int getTacticsCount(long campaignId)
-		throws PortalException, SystemException {
-
+	public int getTacticsCount(long campaignId) throws PortalException {
 		return tacticPersistence.countByCampaignId(campaignId);
 	}
 
 	public BaseModelSearchResult<Tactic> searchTactics(
 			long campaignId, long groupId, String keywords, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
 			campaignId, groupId, keywords, start, end);
@@ -149,7 +140,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 	@Override
 	public BaseModelSearchResult<Tactic> searchTactics(
 			long groupId, String keywords, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
 			groupId, keywords, start, end);
@@ -163,7 +154,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 			long tacticId, long campaignId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, long[] userSegmentsIds,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date now = new Date();
 
@@ -184,7 +175,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 	protected SearchContext buildSearchContext(
 			long campaignId, long groupId, String keywords, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -194,12 +185,12 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 		multiValueFacet.setFieldName("campaignId");
 		multiValueFacet.setStatic(true);
-		multiValueFacet.setValues(new long[]{campaignId});
+		multiValueFacet.setValues(new long[] {campaignId});
 
 		searchContext.addFacet(multiValueFacet);
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[]{groupId});
+		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setKeywords(keywords == null ? "" : keywords);
 		searchContext.setStart(start);
 
@@ -208,7 +199,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 	protected SearchContext buildSearchContext(
 			long groupId, String keywords, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -216,7 +207,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[]{groupId});
+		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setKeywords(keywords == null ? "" : keywords);
 		searchContext.setStart(start);
 
@@ -225,7 +216,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 	protected BaseModelSearchResult<Tactic> searchTactics(
 			SearchContext searchContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Tactic.class);
 
@@ -235,8 +226,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 			List<Tactic> tactics = TacticUtil.getTactics(hits);
 
 			if ((hits != null) && (tactics != null)) {
-				return new BaseModelSearchResult<Tactic>(
-				tactics, hits.getLength());
+				return new BaseModelSearchResult<>(tactics, hits.getLength());
 			}
 		}
 

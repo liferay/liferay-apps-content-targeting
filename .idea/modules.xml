@@ -3,19 +3,16 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/analytics-api/analytics-api.iml" filepath="$PROJECT_DIR$/analytics-api/analytics-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/analytics-hook/analytics-hook.iml" filepath="$PROJECT_DIR$/analytics-hook/analytics-hook.iml" />
       <module fileurl="file://$PROJECT_DIR$/analytics-processor-service/analytics-processor-service.iml" filepath="$PROJECT_DIR$/analytics-processor-service/analytics-processor-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/analytics-test/analytics-test.iml" filepath="$PROJECT_DIR$/analytics-test/analytics-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/analytics-web/analytics-web.iml" filepath="$PROJECT_DIR$/analytics-web/analytics-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/anonymous-users-api/anonymous-users-api.iml" filepath="$PROJECT_DIR$/anonymous-users-api/anonymous-users-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/anonymous-users-test/anonymous-users-test.iml" filepath="$PROJECT_DIR$/anonymous-users-test/anonymous-users-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/benchmarks/benchmarks.iml" filepath="$PROJECT_DIR$/benchmarks/benchmarks.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-api/content-targeting-api.iml" filepath="$PROJECT_DIR$/content-targeting-api/content-targeting-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/content-targeting-deploy-extender/content-targeting-deploy-extender.iml" filepath="$PROJECT_DIR$/content-targeting-deploy-extender/content-targeting-deploy-extender.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-test/content-targeting-test.iml" filepath="$PROJECT_DIR$/content-targeting-test/content-targeting-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-web/content-targeting-web.iml" filepath="$PROJECT_DIR$/content-targeting-web/content-targeting-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../shared/osgi-util-shared/osgi-util-shared.iml" filepath="$PROJECT_DIR$/../../shared/osgi-util-shared/osgi-util-shared.iml" />
-      <module fileurl="file://$PROJECT_DIR$/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" filepath="$PROJECT_DIR$/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/portal-http-service.iml" filepath="$PROJECT_DIR$/.idea/portal-http-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-campaign-content/report-campaign-content.iml" filepath="$PROJECT_DIR$/report-campaign-content/report-campaign-content.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-campaign-content-test/report-campaign-content-test.iml" filepath="$PROJECT_DIR$/report-campaign-content-test/report-campaign-content-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-campaign-tracking-action/report-campaign-tracking-action.iml" filepath="$PROJECT_DIR$/report-campaign-tracking-action/report-campaign-tracking-action.iml" />
@@ -45,11 +42,8 @@
       <module fileurl="file://$PROJECT_DIR$/rule-user-logged-test/rule-user-logged-test.iml" filepath="$PROJECT_DIR$/rule-user-logged-test/rule-user-logged-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-visited/rule-visited.iml" filepath="$PROJECT_DIR$/rule-visited/rule-visited.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-visited-test/rule-visited-test.iml" filepath="$PROJECT_DIR$/rule-visited-test/rule-visited-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/runtime-dependencies/runtime-dependencies.iml" filepath="$PROJECT_DIR$/runtime-dependencies/runtime-dependencies.iml" />
       <module fileurl="file://$PROJECT_DIR$/runtime-test-dependencies/runtime-test-dependencies.iml" filepath="$PROJECT_DIR$/runtime-test-dependencies/runtime-test-dependencies.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-test-util/service-test-util.iml" filepath="$PROJECT_DIR$/service-test-util/service-test-util.iml" />
-      <module fileurl="file://$PROJECT_DIR$/simulator-hook/simulator-hook.iml" filepath="$PROJECT_DIR$/simulator-hook/simulator-hook.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/system-packages-extra-shared.iml" filepath="$PROJECT_DIR$/.idea/system-packages-extra-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/tools/tools.iml" filepath="$PROJECT_DIR$/tools/tools.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-content/tracking-action-content.iml" filepath="$PROJECT_DIR$/tracking-action-content/tracking-action-content.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" filepath="$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" />

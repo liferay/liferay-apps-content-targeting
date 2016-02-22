@@ -22,27 +22,27 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.PortletKeys;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.GroupServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +98,7 @@ public class SiteRoleRule extends BaseRule {
 			return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 				anonymousUser.getUserId(), siteId, roleId);
 		}
-		catch (JSONException e) {
+		catch (JSONException jsone) {
 		}
 
 		return false;
@@ -153,7 +153,7 @@ public class SiteRoleRule extends BaseRule {
 				ruleInstance, ruleInstanceElement, group,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 		}
-		catch (JSONException e) {
+		catch (JSONException jsone) {
 		}
 	}
 
@@ -246,7 +246,7 @@ public class SiteRoleRule extends BaseRule {
 
 			ruleInstance.setTypeSettings(jsonObj.toString());
 		}
-		catch (JSONException e) {
+		catch (JSONException jsone) {
 		}
 	}
 
@@ -293,7 +293,7 @@ public class SiteRoleRule extends BaseRule {
 				roleId = jsonObj.getLong("roleId");
 				siteId = jsonObj.getLong("siteId");
 			}
-			catch (JSONException jse) {
+			catch (JSONException jsone) {
 			}
 		}
 
@@ -302,7 +302,7 @@ public class SiteRoleRule extends BaseRule {
 
 		Company company = (Company)context.get("company");
 
-		List<Role> roles = new ArrayList<Role>();
+		List<Role> roles = new ArrayList<>();
 
 		try {
 
@@ -314,18 +314,18 @@ public class SiteRoleRule extends BaseRule {
 			Role role = RoleLocalServiceUtil.fetchRole(
 				company.getCompanyId(), RoleConstants.SITE_MEMBER);
 
-			List<Role> removeRoles = new ArrayList<Role>();
+			List<Role> removeRoles = new ArrayList<>();
 
 			removeRoles.add(role);
 
 			roles = ListUtil.remove(roles, removeRoles);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		context.put("roles", roles);
 
-		List<Group> sites = new ArrayList<Group>();
+		List<Group> sites = new ArrayList<>();
 
 		try {
 			sites = GroupServiceUtil.getGroups(
@@ -341,13 +341,13 @@ public class SiteRoleRule extends BaseRule {
 			boolean hasSitesAdminViewPermission =
 				ContentTargetingContextUtil.
 					hasControlPanelPortletViewPermission(
-						context, PortletKeys.SITES_ADMIN);
+						context, PortletKeys.SITE_ADMIN);
 
 			if (hasSitesAdminViewPermission) {
 				context.put(
 					"sitesAdminURL",
 					ContentTargetingContextUtil.getControlPanelPortletURL(
-						context, PortletKeys.SITES_ADMIN, null));
+						context, PortletKeys.SITE_ADMIN, null));
 			}
 		}
 	}

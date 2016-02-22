@@ -14,27 +14,30 @@
 
 package com.liferay.content.targeting.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Brian Wing Shun Chan
+ * @generated
  */
+@ProviderType
 public interface CampaignFinder {
-	public java.util.List<com.liferay.content.targeting.model.Campaign> filterFindByG_D_A_U(
-		long[] groupIds, java.util.Date date, boolean active,
-		long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public java.util.List<com.liferay.content.targeting.model.Campaign> findByG_D_A_U(
-		long[] groupIds, java.util.Date date, boolean active,
-		long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public com.liferay.content.targeting.model.Campaign fetchByG_D_A_U_First(
 		long[] groupIds, java.util.Date date, boolean active,
-		long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] userSegmentIds);
+
+	public java.util.Map<java.io.Serializable, com.liferay.content.targeting.model.Campaign> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
+
+	public java.util.List<com.liferay.content.targeting.model.Campaign> filterFindByG_D_A_U(
+		long[] groupIds, java.util.Date date, boolean active,
+		long[] userSegmentIds);
 
 	public com.liferay.content.targeting.model.Campaign filterFetchByG_D_A_U_First(
 		long[] groupIds, java.util.Date date, boolean active,
-		long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] userSegmentIds);
+
+	public java.util.List<com.liferay.content.targeting.model.Campaign> findByG_D_A_U(
+		long[] groupIds, java.util.Date date, boolean active,
+		long[] userSegmentIds);
 }

@@ -16,7 +16,6 @@ package com.liferay.content.targeting.anonymous.users.util;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -31,14 +30,14 @@ public interface AnonymousUsersManager {
 
 	public AnonymousUser getAnonymousUser(
 			HttpServletRequest request, HttpServletResponse response)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public AnonymousUser getAnonymousUser(
 			HttpServletRequest request, long userId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public AnonymousUser getAnonymousUser(
 			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

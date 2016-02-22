@@ -14,12 +14,11 @@
 
 package com.liferay.content.targeting.api.model;
 
-import com.liferay.content.targeting.InvalidTrackingActionException;
+import com.liferay.content.targeting.exception.InvalidTrackingActionException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -55,7 +54,7 @@ public interface TrackingAction {
 	 *        stored configuration
 	 */
 	public void deleteData(TrackingActionInstance trackingActionInstance)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Exports any additional data added by this tracking action when the

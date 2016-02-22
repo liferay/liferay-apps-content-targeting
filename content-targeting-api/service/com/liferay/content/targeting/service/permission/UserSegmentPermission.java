@@ -17,19 +17,26 @@ package com.liferay.content.targeting.service.permission;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Julio Camarero
  */
-public class UserSegmentPermission {
+@Component(
+	immediate = true,
+	property = {"model.class.name=om.liferay.content.targeting.model.UserSegment"},
+	service = BaseModelPermissionChecker.class
+)
+public class UserSegmentPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long userSegmentId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, userSegmentId, actionId)) {
 			throw new PrincipalException();
@@ -57,10 +64,10 @@ public class UserSegmentPermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long userSegmentId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
-				userSegmentId);
+			userSegmentId);
 
 		return contains(permissionChecker, userSegment, actionId);
 	}
@@ -80,6 +87,18 @@ public class UserSegmentPermission {
 		return contains(
 			permissionChecker, userSegment.getGroupId(),
 			userSegment.getUserSegmentId(), actionId);
+	}
+
+	public void checkBaseModel(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, groupId, primaryKey, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, UserSegment.class.getName(), primaryKey,
+				actionId);
+		}
 	}
 
 }

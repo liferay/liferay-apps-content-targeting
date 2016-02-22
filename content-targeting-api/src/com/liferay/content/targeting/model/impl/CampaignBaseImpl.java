@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the Campaign service. Represents a row in the &quot;CT_Campaign&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see CampaignImpl
- * @see com.liferay.content.targeting.model.Campaign
+ * @see Campaign
  * @generated
  */
+@ProviderType
 public abstract class CampaignBaseImpl extends CampaignModelImpl
 	implements Campaign {
 	/*
@@ -39,7 +40,7 @@ public abstract class CampaignBaseImpl extends CampaignModelImpl
 	 * Never modify or reference this class directly. All methods that expect a campaign model instance should use the {@link Campaign} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			CampaignLocalServiceUtil.addCampaign(this);
 		}

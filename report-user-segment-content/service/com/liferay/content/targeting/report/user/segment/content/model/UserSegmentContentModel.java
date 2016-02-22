@@ -14,12 +14,15 @@
 
 package com.liferay.content.targeting.report.user.segment.content.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.service.ServiceContext;
+import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -38,7 +41,9 @@ import java.util.Date;
  * @see com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentModelImpl
  * @generated
  */
-public interface UserSegmentContentModel extends BaseModel<UserSegmentContent> {
+@ProviderType
+public interface UserSegmentContentModel extends BaseModel<UserSegmentContent>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -78,6 +83,7 @@ public interface UserSegmentContentModel extends BaseModel<UserSegmentContent> {
 	 *
 	 * @return the company ID of this user segment content
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -85,6 +91,7 @@ public interface UserSegmentContentModel extends BaseModel<UserSegmentContent> {
 	 *
 	 * @param companyId the company ID of this user segment content
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -210,19 +217,20 @@ public interface UserSegmentContentModel extends BaseModel<UserSegmentContent> {
 	public Object clone();
 
 	@Override
-	public int compareTo(UserSegmentContent userSegmentContent);
+	public int compareTo(
+		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<UserSegmentContent> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> toCacheModel();
 
 	@Override
-	public UserSegmentContent toEscapedModel();
+	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent toEscapedModel();
 
 	@Override
-	public UserSegmentContent toUnescapedModel();
+	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent toUnescapedModel();
 
 	@Override
 	public String toString();

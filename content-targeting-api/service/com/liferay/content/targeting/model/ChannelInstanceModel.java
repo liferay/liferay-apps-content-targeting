@@ -14,14 +14,17 @@
 
 package com.liferay.content.targeting.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.StagedGroupedModel;
-import com.liferay.portal.service.ServiceContext;
+import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -40,8 +43,9 @@ import java.util.Date;
  * @see com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl
  * @generated
  */
+@ProviderType
 public interface ChannelInstanceModel extends BaseModel<ChannelInstance>,
-	StagedGroupedModel {
+	GroupedModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -145,10 +149,9 @@ public interface ChannelInstanceModel extends BaseModel<ChannelInstance>,
 	 * Returns the user uuid of this channel instance.
 	 *
 	 * @return the user uuid of this channel instance
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this channel instance.
@@ -317,19 +320,20 @@ public interface ChannelInstanceModel extends BaseModel<ChannelInstance>,
 	public Object clone();
 
 	@Override
-	public int compareTo(ChannelInstance channelInstance);
+	public int compareTo(
+		com.liferay.content.targeting.model.ChannelInstance channelInstance);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ChannelInstance> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.ChannelInstance> toCacheModel();
 
 	@Override
-	public ChannelInstance toEscapedModel();
+	public com.liferay.content.targeting.model.ChannelInstance toEscapedModel();
 
 	@Override
-	public ChannelInstance toUnescapedModel();
+	public com.liferay.content.targeting.model.ChannelInstance toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -14,11 +14,14 @@
 
 package com.liferay.content.targeting.report.campaign.content.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.report.campaign.content.model.CampaignContent;
 
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +37,33 @@ import java.util.Date;
  * @see CampaignContent
  * @generated
  */
+@ProviderType
 public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof CampaignContentCacheModel)) {
+			return false;
+		}
+
+		CampaignContentCacheModel campaignContentCacheModel = (CampaignContentCacheModel)obj;
+
+		if (campaignContentId == campaignContentCacheModel.campaignContentId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, campaignContentId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(17);
@@ -102,11 +130,15 @@ public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		campaignContentId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		campaignId = objectInput.readLong();
 		className = objectInput.readUTF();
+
 		classPK = objectInput.readLong();
 		eventType = objectInput.readUTF();
+
 		count = objectInput.readInt();
 		modifiedDate = objectInput.readLong();
 	}
@@ -115,7 +147,9 @@ public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(campaignContentId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(campaignId);
 
 		if (className == null) {

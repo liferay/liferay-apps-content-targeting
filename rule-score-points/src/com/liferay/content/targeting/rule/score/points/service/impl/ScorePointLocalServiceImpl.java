@@ -18,15 +18,11 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.score.points.model.ScorePoint;
 import com.liferay.content.targeting.rule.score.points.service.base.ScorePointLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * The implementation of the score point local service.
@@ -44,14 +40,9 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 
-	public ScorePointLocalServiceImpl() {
-		_initServices();
-	}
-
 	@Override
 	public ScorePoint addScorePoints(
-			long anonymousUserId, long userSegmentId, long points)
-		throws SystemException {
+		long anonymousUserId, long userSegmentId, long points) {
 
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
 			anonymousUserId, userSegmentId);
@@ -79,9 +70,7 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 	}
 
 	@Override
-	public long getPoints(long anonymousUserId, long userSegmentId)
-		throws SystemException {
-
+	public long getPoints(long anonymousUserId, long userSegmentId) {
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
 			anonymousUserId, userSegmentId);
 
@@ -93,16 +82,13 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<ScorePoint> getScorePoints(long userSegmentId)
-		throws SystemException {
-
+	public List<ScorePoint> getScorePoints(long userSegmentId) {
 		return scorePointPersistence.findByUserSegmentId(userSegmentId);
 	}
 
 	@Override
 	public long incrementPoints(
-			long anonymousUserId, long userSegmentId, long points)
-		throws SystemException {
+		long anonymousUserId, long userSegmentId, long points) {
 
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
 			anonymousUserId, userSegmentId);
@@ -132,8 +118,7 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 
 	@Override
 	public ScorePoint updateScorePoints(
-			long anonymousUserId, long userSegmentId, long points)
-		throws SystemException {
+		long anonymousUserId, long userSegmentId, long points) {
 
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
 			anonymousUserId, userSegmentId);
@@ -145,16 +130,10 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return scorePoint;
 	}
 
-	private void _initServices() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_userSegmentLocalService = ServiceTrackerUtil.getService(
-			UserSegmentLocalService.class, bundle.getBundleContext());
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		ScorePointLocalServiceImpl.class);
 
+	@ServiceReference(type = UserSegmentLocalService.class)
 	private UserSegmentLocalService _userSegmentLocalService;
 
 }

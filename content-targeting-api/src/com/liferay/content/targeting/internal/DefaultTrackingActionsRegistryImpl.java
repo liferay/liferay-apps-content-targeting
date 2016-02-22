@@ -43,9 +43,9 @@ public class DefaultTrackingActionsRegistryImpl
 	}
 
 	@Reference(
-		unbind = "unregisterTrackingAction",
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC)
+		policy = ReferencePolicy.DYNAMIC, unbind = "unregisterTrackingAction"
+	)
 	public void registerTrackingAction(TrackingAction trackingAction) {
 		_trackingActions.put(
 			trackingAction.getTrackingActionKey(), trackingAction);
@@ -56,6 +56,6 @@ public class DefaultTrackingActionsRegistryImpl
 	}
 
 	private Map<String, TrackingAction> _trackingActions =
-		new ConcurrentHashMap<String, TrackingAction>();
+		new ConcurrentHashMap<>();
 
 }

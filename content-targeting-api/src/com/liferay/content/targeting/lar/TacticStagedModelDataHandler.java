@@ -20,24 +20,28 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.ChannelInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Pavel Savinov
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class TacticStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Tactic> {
 
@@ -46,7 +50,7 @@ public class TacticStagedModelDataHandler
 	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Tactic tactic = TacticLocalServiceUtil.fetchTacticByUuidAndGroupId(
 			uuid, groupId);
@@ -57,6 +61,18 @@ public class TacticStagedModelDataHandler
 	}
 
 	@Override
+	public void deleteStagedModel(Tactic stagedTactic) throws PortalException {
+		TacticLocalServiceUtil.deleteTactic(stagedTactic);
+	}
+
+	@Override
+	public List<Tactic>
+		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}
@@ -64,6 +80,22 @@ public class TacticStagedModelDataHandler
 	@Override
 	public String getDisplayName(Tactic tactic) {
 		return tactic.getName(LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid, long tacticId)
+		throws PortletDataException {
+
+		Tactic existingTactic =
+			TacticLocalServiceUtil.fetchTacticByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> tacticIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Tactic.class);
+
+		tacticIds.put(tacticId, existingTactic.getTacticId());
 	}
 
 	@Override
@@ -79,22 +111,6 @@ public class TacticStagedModelDataHandler
 			tacticElement, ExportImportPathUtil.getModelPath(tactic), tactic);
 
 		exportChannelInstances(portletDataContext, tactic);
-	}
-
-	@Override
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid, long tacticId)
-		throws Exception {
-
-		Tactic existingTactic =
-			TacticLocalServiceUtil.fetchTacticByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> tacticIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Tactic.class);
-
-		tacticIds.put(tacticId, existingTactic.getTacticId());
 	}
 
 	@Override
@@ -126,11 +142,10 @@ public class TacticStagedModelDataHandler
 					tactic.getDescriptionMap(), userSegmentIds, serviceContext);
 			}
 			else {
-				importedTactic =
-					TacticLocalServiceUtil.updateTactic(
-						existingTactic.getTacticId(), tactic.getCampaignId(),
-						tactic.getNameMap(), tactic.getDescriptionMap(),
-						userSegmentIds, serviceContext);
+				importedTactic = TacticLocalServiceUtil.updateTactic(
+					existingTactic.getTacticId(), tactic.getCampaignId(),
+					tactic.getNameMap(), tactic.getDescriptionMap(),
+					userSegmentIds, serviceContext);
 			}
 		}
 		else {
@@ -192,7 +207,7 @@ public class TacticStagedModelDataHandler
 
 		List<Element> channelInstanceElements =
 			portletDataContext.getReferenceDataElements(
-					tactic, ChannelInstance.class);
+				tactic, ChannelInstance.class);
 
 		for (Element channelInstanceElement : channelInstanceElements) {
 			String channelInstancePath = channelInstanceElement.attributeValue(
@@ -241,10 +256,7 @@ public class TacticStagedModelDataHandler
 	}
 
 	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
+	protected boolean validateMissingReference(String uuid, long groupId) {
 		Tactic tactic = TacticLocalServiceUtil.fetchTacticByUuidAndGroupId(
 			uuid, groupId);
 

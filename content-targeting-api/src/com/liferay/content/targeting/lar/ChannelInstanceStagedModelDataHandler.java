@@ -20,62 +20,59 @@ import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.service.ChannelInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.service.ServiceContext;
 
+import java.util.List;
 import java.util.Map;
 
-import javax.portlet.UnavailableException;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class ChannelInstanceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<ChannelInstance> {
 
 	public static final String[] CLASS_NAMES = {
-		ChannelInstance.class.getName()};
+		ChannelInstance.class.getName()
+	};
 
-	public ChannelInstanceStagedModelDataHandler() throws UnavailableException {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+	@Override
+	public void deleteStagedModel(ChannelInstance channelInstance)
+		throws PortalException {
 
-		if (bundle == null) {
-			throw new UnavailableException(
-				"Can't find a reference to the OSGi bundle") {
-
-				@Override
-				public boolean isPermanent() {
-					return true;
-				}
-			};
-		}
-
-		_channelsRegistry = ServiceTrackerUtil.getService(
-			ChannelsRegistry.class, bundle.getBundleContext());
+		ChannelInstanceLocalServiceUtil.deleteChannelInstance(channelInstance);
 	}
 
 	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ChannelInstance channelInstance =
 			ChannelInstanceLocalServiceUtil.
 				fetchChannelInstanceByUuidAndGroupId(uuid, groupId);
 
 		ChannelInstanceLocalServiceUtil.deleteChannelInstance(channelInstance);
+	}
+
+	@Override
+	public List<ChannelInstance> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -89,6 +86,25 @@ public class ChannelInstanceStagedModelDataHandler
 	}
 
 	@Override
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid,
+			long channelInstanceId)
+		throws PortletDataException {
+
+		ChannelInstance existingChannelInstance =
+			ChannelInstanceLocalServiceUtil.
+				fetchChannelInstanceByUuidAndGroupId(
+					uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> channelInstanceIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				ChannelInstance.class);
+
+		channelInstanceIds.put(
+			channelInstanceId, existingChannelInstance.getChannelInstanceId());
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
 			ChannelInstance channelInstance)
@@ -98,7 +114,7 @@ public class ChannelInstanceStagedModelDataHandler
 			portletDataContext.getExportDataElement(channelInstance);
 
 		Channel channel = _channelsRegistry.getChannel(
-				channelInstance.getChannelKey());
+			channelInstance.getChannelKey());
 
 		if (channel == null) {
 			_log.error(
@@ -132,25 +148,6 @@ public class ChannelInstanceStagedModelDataHandler
 			channelInstanceElement,
 			ExportImportPathUtil.getModelPath(channelInstance),
 			channelInstance);
-	}
-
-	@Override
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
-			long channelInstanceId)
-		throws Exception {
-
-		ChannelInstance existingChannelInstance =
-			ChannelInstanceLocalServiceUtil.
-				fetchChannelInstanceByUuidAndGroupId(
-					uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> channelInstanceIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				ChannelInstance.class);
-
-		channelInstanceIds.put(
-			channelInstanceId, existingChannelInstance.getChannelInstanceId());
 	}
 
 	@Override
@@ -223,11 +220,13 @@ public class ChannelInstanceStagedModelDataHandler
 		}
 	}
 
-	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
+	@Reference(unbind = "-")
+	protected void setChannelsRegistry(ChannelsRegistry channelsRegistry) {
+		_channelsRegistry = channelsRegistry;
+	}
 
+	@Override
+	protected boolean validateMissingReference(String uuid, long groupId) {
 		ChannelInstance channelInstance =
 			ChannelInstanceLocalServiceUtil.
 				fetchChannelInstanceByUuidAndGroupId(uuid, groupId);

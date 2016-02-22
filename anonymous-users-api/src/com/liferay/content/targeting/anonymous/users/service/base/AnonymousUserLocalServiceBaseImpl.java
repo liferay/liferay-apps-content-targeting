@@ -14,26 +14,43 @@
 
 package com.liferay.content.targeting.anonymous.users.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.content.targeting.anonymous.users.service.persistence.AnonymousUserPersistence;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.PersistedModel;
-import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
-import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -53,9 +70,10 @@ import javax.sql.DataSource;
  * @see com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class AnonymousUserLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements AnonymousUserLocalService,
-		IdentifiableBean {
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -67,12 +85,10 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 *
 	 * @param anonymousUser the anonymous user
 	 * @return the anonymous user that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public AnonymousUser addAnonymousUser(AnonymousUser anonymousUser)
-		throws SystemException {
+	public AnonymousUser addAnonymousUser(AnonymousUser anonymousUser) {
 		anonymousUser.setNew(true);
 
 		return anonymousUserPersistence.update(anonymousUser);
@@ -95,12 +111,11 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 * @param anonymousUserId the primary key of the anonymous user
 	 * @return the anonymous user that was removed
 	 * @throws PortalException if a anonymous user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AnonymousUser deleteAnonymousUser(long anonymousUserId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return anonymousUserPersistence.remove(anonymousUserId);
 	}
 
@@ -109,12 +124,10 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 *
 	 * @param anonymousUser the anonymous user
 	 * @return the anonymous user that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public AnonymousUser deleteAnonymousUser(AnonymousUser anonymousUser)
-		throws SystemException {
+	public AnonymousUser deleteAnonymousUser(AnonymousUser anonymousUser) {
 		return anonymousUserPersistence.remove(anonymousUser);
 	}
 
@@ -131,12 +144,9 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return anonymousUserPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -151,12 +161,10 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return anonymousUserPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -173,47 +181,41 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return anonymousUserPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return anonymousUserPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return anonymousUserPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public AnonymousUser fetchAnonymousUser(long anonymousUserId)
-		throws SystemException {
+	public AnonymousUser fetchAnonymousUser(long anonymousUserId) {
 		return anonymousUserPersistence.fetchByPrimaryKey(anonymousUserId);
 	}
 
@@ -221,13 +223,12 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 * Returns the anonymous user with the matching UUID and company.
 	 *
 	 * @param uuid the anonymous user's UUID
-	 * @param  companyId the primary key of the company
+	 * @param companyId the primary key of the company
 	 * @return the matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser fetchAnonymousUserByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return anonymousUserPersistence.fetchByUuid_C_First(uuid, companyId,
 			null);
 	}
@@ -238,17 +239,112 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 * @param anonymousUserId the primary key of the anonymous user
 	 * @return the anonymous user
 	 * @throws PortalException if a anonymous user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser getAnonymousUser(long anonymousUserId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return anonymousUserPersistence.findByPrimaryKey(anonymousUserId);
 	}
 
 	@Override
+	public ActionableDynamicQuery getActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(AnonymousUser.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("anonymousUserId");
+
+		return actionableDynamicQuery;
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+		indexableActionableDynamicQuery.setModelClass(AnonymousUser.class);
+
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
+			"anonymousUserId");
+
+		return indexableActionableDynamicQuery;
+	}
+
+	protected void initActionableDynamicQuery(
+		ActionableDynamicQuery actionableDynamicQuery) {
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(AnonymousUser.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("anonymousUserId");
+	}
+
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
+
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
+
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
+				}
+			});
+
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AnonymousUser>() {
+				@Override
+				public void performAction(AnonymousUser anonymousUser)
+					throws PortalException {
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						anonymousUser);
+				}
+			});
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+				PortalUtil.getClassNameId(AnonymousUser.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return anonymousUserLocalService.deleteAnonymousUser((AnonymousUser)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return anonymousUserPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -256,14 +352,13 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 * Returns the anonymous user with the matching UUID and company.
 	 *
 	 * @param uuid the anonymous user's UUID
-	 * @param  companyId the primary key of the company
+	 * @param companyId the primary key of the company
 	 * @return the matching anonymous user
 	 * @throws PortalException if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser getAnonymousUserByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
+		long companyId) throws PortalException {
 		return anonymousUserPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -277,11 +372,9 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 * @param start the lower bound of the range of anonymous users
 	 * @param end the upper bound of the range of anonymous users (not inclusive)
 	 * @return the range of anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnonymousUser> getAnonymousUsers(int start, int end)
-		throws SystemException {
+	public List<AnonymousUser> getAnonymousUsers(int start, int end) {
 		return anonymousUserPersistence.findAll(start, end);
 	}
 
@@ -289,10 +382,9 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 * Returns the number of anonymous users.
 	 *
 	 * @return the number of anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getAnonymousUsersCount() throws SystemException {
+	public int getAnonymousUsersCount() {
 		return anonymousUserPersistence.countAll();
 	}
 
@@ -301,12 +393,10 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 *
 	 * @param anonymousUser the anonymous user
 	 * @return the anonymous user that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public AnonymousUser updateAnonymousUser(AnonymousUser anonymousUser)
-		throws SystemException {
+	public AnonymousUser updateAnonymousUser(AnonymousUser anonymousUser) {
 		return anonymousUserPersistence.update(anonymousUser);
 	}
 
@@ -315,7 +405,7 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 *
 	 * @return the anonymous user local service
 	 */
-	public com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService getAnonymousUserLocalService() {
+	public AnonymousUserLocalService getAnonymousUserLocalService() {
 		return anonymousUserLocalService;
 	}
 
@@ -325,27 +415,8 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 * @param anonymousUserLocalService the anonymous user local service
 	 */
 	public void setAnonymousUserLocalService(
-		com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService anonymousUserLocalService) {
+		AnonymousUserLocalService anonymousUserLocalService) {
 		this.anonymousUserLocalService = anonymousUserLocalService;
-	}
-
-	/**
-	 * Returns the anonymous user remote service.
-	 *
-	 * @return the anonymous user remote service
-	 */
-	public com.liferay.content.targeting.anonymous.users.service.AnonymousUserService getAnonymousUserService() {
-		return anonymousUserService;
-	}
-
-	/**
-	 * Sets the anonymous user remote service.
-	 *
-	 * @param anonymousUserService the anonymous user remote service
-	 */
-	public void setAnonymousUserService(
-		com.liferay.content.targeting.anonymous.users.service.AnonymousUserService anonymousUserService) {
-		this.anonymousUserService = anonymousUserService;
 	}
 
 	/**
@@ -372,7 +443,7 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -382,8 +453,46 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
+	}
+
+	/**
+	 * Returns the class name local service.
+	 *
+	 * @return the class name local service
+	 */
+	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
+		return classNameLocalService;
+	}
+
+	/**
+	 * Sets the class name local service.
+	 *
+	 * @param classNameLocalService the class name local service
+	 */
+	public void setClassNameLocalService(
+		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
+		this.classNameLocalService = classNameLocalService;
+	}
+
+	/**
+	 * Returns the class name persistence.
+	 *
+	 * @return the class name persistence
+	 */
+	public ClassNamePersistence getClassNamePersistence() {
+		return classNamePersistence;
+	}
+
+	/**
+	 * Sets the class name persistence.
+	 *
+	 * @param classNamePersistence the class name persistence
+	 */
+	public void setClassNamePersistence(
+		ClassNamePersistence classNamePersistence) {
+		this.classNamePersistence = classNamePersistence;
 	}
 
 	/**
@@ -391,7 +500,7 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.service.ResourceLocalService getResourceLocalService() {
+	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
 		return resourceLocalService;
 	}
 
@@ -401,7 +510,7 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.service.ResourceLocalService resourceLocalService) {
+		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -410,7 +519,7 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -420,27 +529,8 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	 * @param userLocalService the user local service
 	 */
 	public void setUserLocalService(
-		com.liferay.portal.service.UserLocalService userLocalService) {
+		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
 	}
 
 	/**
@@ -462,58 +552,23 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
-
-		PersistedModelLocalServiceRegistryUtil.register("com.liferay.content.targeting.anonymous.users.model.AnonymousUser",
+		persistedModelLocalServiceRegistry.register("com.liferay.content.targeting.anonymous.users.model.AnonymousUser",
 			anonymousUserLocalService);
 	}
 
 	public void destroy() {
-		PersistedModelLocalServiceRegistryUtil.unregister(
+		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.content.targeting.anonymous.users.model.AnonymousUser");
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
+	public String getOSGiServiceIdentifier() {
+		return AnonymousUserLocalService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -525,13 +580,18 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	}
 
 	/**
-	 * Performs an SQL query.
+	 * Performs a SQL query.
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = anonymousUserPersistence.getDataSource();
+
+			DB db = DBManagerUtil.getDB();
+
+			sql = db.buildSQL(sql);
+			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -544,22 +604,21 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService.class)
-	protected com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService anonymousUserLocalService;
-	@BeanReference(type = com.liferay.content.targeting.anonymous.users.service.AnonymousUserService.class)
-	protected com.liferay.content.targeting.anonymous.users.service.AnonymousUserService anonymousUserService;
+	protected AnonymousUserLocalService anonymousUserLocalService;
 	@BeanReference(type = AnonymousUserPersistence.class)
 	protected AnonymousUserPersistence anonymousUserPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
-	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
-	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
-	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = ClassNamePersistence.class)
+	protected ClassNamePersistence classNamePersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private String _beanIdentifier;
-	private ClassLoader _classLoader;
-	private AnonymousUserLocalServiceClpInvoker _clpInvoker = new AnonymousUserLocalServiceClpInvoker();
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

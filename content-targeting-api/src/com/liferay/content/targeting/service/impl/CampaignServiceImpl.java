@@ -20,8 +20,7 @@ import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Date;
 import java.util.List;
@@ -50,7 +49,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
 			int priority, boolean active, long[] userSegmentIds,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ContentTargetingPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -67,7 +66,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
 			String timeZoneId, int priority, boolean active,
 			long[] userSegmentIds, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ContentTargetingPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -79,9 +78,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 	}
 
 	@Override
-	public Campaign deleteCampaign(long campaignId)
-		throws PortalException, SystemException {
-
+	public Campaign deleteCampaign(long campaignId) throws PortalException {
 		CampaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.DELETE);
 
@@ -90,8 +87,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 
 	@Override
 	public Campaign fetchCurrentMaxPriorityCampaign(
-			long[] groupIds, long[] userSegmentIds)
-		throws SystemException {
+		long[] groupIds, long[] userSegmentIds) {
 
 		Date now = new Date();
 
@@ -100,16 +96,12 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 	}
 
 	@Override
-	public List<Campaign> getCampaigns(long groupId)
-		throws PortalException, SystemException {
-
+	public List<Campaign> getCampaigns(long groupId) throws PortalException {
 		return campaignPersistence.filterFindByGroupId(groupId);
 	}
 
 	@Override
-	public int getCampaignsCount(long groupId)
-		throws PortalException, SystemException {
-
+	public int getCampaignsCount(long groupId) throws PortalException {
 		return campaignPersistence.filterCountByGroupId(groupId);
 	}
 
@@ -119,7 +111,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
 			int priority, boolean active, long[] userSegmentIds,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CampaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
@@ -135,7 +127,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
 			String timeZoneId, int priority, boolean active,
 			long[] userSegmentIds, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CampaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);

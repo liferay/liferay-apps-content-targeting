@@ -22,18 +22,18 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.PortletKeys;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.GroupServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,7 @@ public class SiteMemberRule extends BaseRule {
 
 		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-		if (group == null ) {
+		if (group == null) {
 			throw new PortletDataException(
 				getExportImportErrorMessage(
 					userSegment, ruleInstance, Group.class.getName(),
@@ -136,9 +136,9 @@ public class SiteMemberRule extends BaseRule {
 		String groupUuid = ruleInstance.getTypeSettings();
 
 		Group group = GroupLocalServiceUtil.fetchGroupByUuidAndCompanyId(
-				groupUuid, portletDataContext.getCompanyId());
+			groupUuid, portletDataContext.getCompanyId());
 
-		if (group != null ) {
+		if (group != null) {
 			ruleInstance.setTypeSettings(String.valueOf(group.getGroupId()));
 
 			return;
@@ -176,7 +176,7 @@ public class SiteMemberRule extends BaseRule {
 
 		Company company = (Company)context.get("company");
 
-		List<Group> sites = new ArrayList<Group>();
+		List<Group> sites = new ArrayList<>();
 
 		try {
 			sites = GroupServiceUtil.getGroups(
@@ -192,13 +192,13 @@ public class SiteMemberRule extends BaseRule {
 			boolean hasSitesAdminViewPermission =
 				ContentTargetingContextUtil.
 					hasControlPanelPortletViewPermission(
-						context, PortletKeys.SITES_ADMIN);
+						context, PortletKeys.SITE_ADMIN);
 
 			if (hasSitesAdminViewPermission) {
 				context.put(
 					"sitesAdminURL",
 					ContentTargetingContextUtil.getControlPanelPortletURL(
-						context, PortletKeys.SITES_ADMIN, null));
+						context, PortletKeys.SITE_ADMIN, null));
 			}
 		}
 	}

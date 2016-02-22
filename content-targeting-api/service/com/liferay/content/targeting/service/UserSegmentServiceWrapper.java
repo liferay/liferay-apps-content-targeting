@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link UserSegmentService}.
@@ -23,46 +25,19 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see UserSegmentService
  * @generated
  */
+@ProviderType
 public class UserSegmentServiceWrapper implements UserSegmentService,
 	ServiceWrapper<UserSegmentService> {
 	public UserSegmentServiceWrapper(UserSegmentService userSegmentService) {
 		_userSegmentService = userSegmentService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _userSegmentService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_userSegmentService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _userSegmentService.invokeMethod(name, parameterTypes, arguments);
-	}
-
 	@Override
 	public com.liferay.content.targeting.model.UserSegment addUserSegment(
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.addUserSegment(userId, nameMap,
 			descriptionMap, serviceContext);
 	}
@@ -70,38 +45,43 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 	@Override
 	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
 		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.deleteUserSegment(userSegmentId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _userSegmentService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.getUserSegments(groupId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long[] groupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.getUserSegments(groupIds);
 	}
 
 	@Override
 	public int getUserSegmentsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.getUserSegmentsCount(groupId);
 	}
 
 	@Override
 	public int getUserSegmentsCount(long[] groupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.getUserSegmentsCount(groupIds);
 	}
 
@@ -110,26 +90,10 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 		long userSegmentId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.updateUserSegment(userSegmentId, nameMap,
 			descriptionMap, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public UserSegmentService getWrappedUserSegmentService() {
-		return _userSegmentService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedUserSegmentService(
-		UserSegmentService userSegmentService) {
-		_userSegmentService = userSegmentService;
 	}
 
 	@Override

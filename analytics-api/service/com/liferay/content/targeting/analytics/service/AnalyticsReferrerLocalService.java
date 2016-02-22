@@ -14,15 +14,29 @@
 
 package com.liferay.content.targeting.analytics.service;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.BaseLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.BaseLocalService;
-import com.liferay.portal.service.InvokableLocalService;
-import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for AnalyticsReferrer. Methods of this
@@ -36,27 +50,28 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * @see com.liferay.content.targeting.analytics.service.impl.AnalyticsReferrerLocalServiceImpl
  * @generated
  */
+@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface AnalyticsReferrerLocalService extends BaseLocalService,
-	InvokableLocalService, PersistedModelLocalService {
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnalyticsReferrerLocalServiceUtil} to access the analytics referrer local service. Add custom service methods to {@link com.liferay.content.targeting.analytics.service.impl.AnalyticsReferrerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public AnalyticsReferrer addAnalyticsReferrer(long analyticsEventId,
+		java.lang.String className, long classPK) throws PortalException;
 
 	/**
 	* Adds the analytics referrer to the database. Also notifies the appropriate model listeners.
 	*
 	* @param analyticsReferrer the analytics referrer
 	* @return the analytics referrer that was added
-	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer addAnalyticsReferrer(
-		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	@Indexable(type = IndexableType.REINDEX)
+	public AnalyticsReferrer addAnalyticsReferrer(
+		AnalyticsReferrer analyticsReferrer);
 
 	/**
 	* Creates a new analytics referrer with the primary key. Does not add the analytics referrer to the database.
@@ -64,8 +79,17 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	* @param analyticsReferrerId the primary key for the new analytics referrer
 	* @return the new analytics referrer
 	*/
-	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer createAnalyticsReferrer(
-		long analyticsReferrerId);
+	public AnalyticsReferrer createAnalyticsReferrer(long analyticsReferrerId);
+
+	/**
+	* Deletes the analytics referrer from the database. Also notifies the appropriate model listeners.
+	*
+	* @param analyticsReferrer the analytics referrer
+	* @return the analytics referrer that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public AnalyticsReferrer deleteAnalyticsReferrer(
+		AnalyticsReferrer analyticsReferrer);
 
 	/**
 	* Deletes the analytics referrer with the primary key from the database. Also notifies the appropriate model listeners.
@@ -73,39 +97,27 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	* @param analyticsReferrerId the primary key of the analytics referrer
 	* @return the analytics referrer that was removed
 	* @throws PortalException if a analytics referrer with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer deleteAnalyticsReferrer(
-		long analyticsReferrerId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+	@Indexable(type = IndexableType.DELETE)
+	public AnalyticsReferrer deleteAnalyticsReferrer(long analyticsReferrerId)
+		throws PortalException;
 
 	/**
-	* Deletes the analytics referrer from the database. Also notifies the appropriate model listeners.
-	*
-	* @param analyticsReferrer the analytics referrer
-	* @return the analytics referrer that was removed
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer deleteAnalyticsReferrer(
-		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -118,12 +130,9 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -137,43 +146,33 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer fetchAnalyticsReferrer(
-		long analyticsReferrerId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public AnalyticsReferrer fetchAnalyticsReferrer(long analyticsReferrerId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the analytics referrer with the primary key.
@@ -181,20 +180,25 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	* @param analyticsReferrerId the primary key of the analytics referrer
 	* @return the analytics referrer
 	* @throws PortalException if a analytics referrer with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer getAnalyticsReferrer(
-		long analyticsReferrerId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public AnalyticsReferrer getAnalyticsReferrer(long analyticsReferrerId)
+		throws PortalException;
 
-	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public int getAnalyticsReferrerCount(long analyticsEventId,
+		java.lang.String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAnalyticsReferrerCount(long[] analyticsEventIds,
+		java.lang.String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAnalyticsReferrerCount(java.lang.String className,
+		long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnalyticsReferrer> getAnalyticsReferrers(long analyticsEventId);
 
 	/**
 	* Returns a range of all the analytics referrers.
@@ -206,76 +210,40 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of analytics referrers
 	* @param end the upper bound of the range of analytics referrers (not inclusive)
 	* @return the range of analytics referrers
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public List<AnalyticsReferrer> getAnalyticsReferrers(int start, int end);
 
 	/**
 	* Returns the number of analytics referrers.
 	*
 	* @return the number of analytics referrers
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAnalyticsReferrersCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getAnalyticsReferrersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the analytics referrer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param analyticsReferrer the analytics referrer
 	* @return the analytics referrer that was updated
-	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer updateAnalyticsReferrer(
-		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
-
-	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer addAnalyticsReferrer(
-		long analyticsEventId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAnalyticsReferrerCount(long analyticsEventId,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAnalyticsReferrerCount(long[] analyticsEventIds,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAnalyticsReferrerCount(java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
-		long analyticsEventId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	@Indexable(type = IndexableType.REINDEX)
+	public AnalyticsReferrer updateAnalyticsReferrer(
+		AnalyticsReferrer analyticsReferrer);
 }

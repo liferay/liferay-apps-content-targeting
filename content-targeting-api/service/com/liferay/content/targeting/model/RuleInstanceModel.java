@@ -14,14 +14,17 @@
 
 package com.liferay.content.targeting.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.StagedGroupedModel;
-import com.liferay.portal.service.ServiceContext;
+import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -40,8 +43,9 @@ import java.util.Date;
  * @see com.liferay.content.targeting.model.impl.RuleInstanceModelImpl
  * @generated
  */
-public interface RuleInstanceModel extends BaseModel<RuleInstance>,
-	StagedGroupedModel {
+@ProviderType
+public interface RuleInstanceModel extends BaseModel<RuleInstance>, GroupedModel,
+	ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -145,10 +149,9 @@ public interface RuleInstanceModel extends BaseModel<RuleInstance>,
 	 * Returns the user uuid of this rule instance.
 	 *
 	 * @return the user uuid of this rule instance
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this rule instance.
@@ -288,19 +291,20 @@ public interface RuleInstanceModel extends BaseModel<RuleInstance>,
 	public Object clone();
 
 	@Override
-	public int compareTo(RuleInstance ruleInstance);
+	public int compareTo(
+		com.liferay.content.targeting.model.RuleInstance ruleInstance);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<RuleInstance> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.RuleInstance> toCacheModel();
 
 	@Override
-	public RuleInstance toEscapedModel();
+	public com.liferay.content.targeting.model.RuleInstance toEscapedModel();
 
 	@Override
-	public RuleInstance toUnescapedModel();
+	public com.liferay.content.targeting.model.RuleInstance toUnescapedModel();
 
 	@Override
 	public String toString();

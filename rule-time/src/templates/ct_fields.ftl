@@ -14,18 +14,18 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-
 <#setting number_format="computer">
 
 <#assign nowTime = now?time />
 
 <div class="alert alert-info">
-	<@liferay_ui["message"] arguments=nowTime?string.short key="this-rule-checks-the-server-time-which-currently-is-x" />
+	<@liferay_ui["message"]
+		arguments=nowTime?string.short
+		key="this-rule-checks-the-server-time-which-currently-is-x"
+	/>
 </div>
 
-<@aui["fieldset"] cssClass="time-selector" label="start-time">
+<@liferay_aui["fieldset"] cssClass="time-selector" label="start-time">
 	<@liferay_ui["input-time"]
 		amPmParam="startTimeAmPm"
 		amPmValue=startTimeAmPm
@@ -37,7 +37,7 @@
 	/>
 </@>
 
-<@aui["fieldset"] cssClass="time-selector" label="end-time">
+<@liferay_aui["fieldset"] cssClass="time-selector" label="end-time">
 	<@liferay_ui["input-time"]
 		amPmParam="endTimeAmPm"
 		amPmValue=endTimeAmPm

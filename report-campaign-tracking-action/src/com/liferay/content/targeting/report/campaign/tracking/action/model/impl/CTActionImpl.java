@@ -15,14 +15,10 @@
 package com.liferay.content.targeting.report.campaign.tracking.action.model.impl;
 
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * The extended model implementation for the CTAction service. Represents a row in the &quot;CTActionsReport_CTAction&quot; database table, with each column mapped to a property of this class.
@@ -46,14 +42,8 @@ public class CTActionImpl extends CTActionBaseImpl {
 	@Override
 	public String getUserSegmentName(Locale locale) {
 		try {
-			Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-			UserSegmentLocalService userSegmentLocalService =
-				ServiceTrackerUtil.getService(
-					UserSegmentLocalService.class, bundle.getBundleContext());
-
-			UserSegment userSegment = userSegmentLocalService.getUserSegment(
-				getUserSegmentId());
+			UserSegment userSegment =
+				UserSegmentLocalServiceUtil.getUserSegment(getUserSegmentId());
 
 			return userSegment.getName(locale);
 		}

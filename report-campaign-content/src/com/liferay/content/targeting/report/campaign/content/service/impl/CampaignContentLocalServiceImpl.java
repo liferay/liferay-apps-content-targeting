@@ -23,20 +23,16 @@ import com.liferay.content.targeting.report.campaign.content.model.CampaignConte
 import com.liferay.content.targeting.report.campaign.content.service.base.CampaignContentLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * The implementation of the campaign content local service.
@@ -55,15 +51,11 @@ import org.osgi.framework.FrameworkUtil;
 public class CampaignContentLocalServiceImpl
 	extends CampaignContentLocalServiceBaseImpl {
 
-	public CampaignContentLocalServiceImpl() {
-		_initServices();
-	}
-
 	@Override
 	public CampaignContent addCampaignContent(
 			long campaignId, String className, long classPK, String eventType,
 			int count)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CampaignContent campaignContent = getCampaignContent(
 			campaignId, className, classPK, eventType);
@@ -90,9 +82,7 @@ public class CampaignContentLocalServiceImpl
 	}
 
 	@Override
-	public void checkCampaignContentEvents()
-		throws PortalException, SystemException {
-
+	public void checkCampaignContentEvents() throws PortalException {
 		try {
 			List<Campaign> campaigns = _campaignLocalService.getCampaigns(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -110,7 +100,7 @@ public class CampaignContentLocalServiceImpl
 
 	@Override
 	public void checkCampaignContentEvents(long campaignId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date modifiedDate = _analyticsEventLocalService.getMaxAge();
 
@@ -129,7 +119,7 @@ public class CampaignContentLocalServiceImpl
 	@Override
 	public CampaignContent getCampaignContent(
 			long campaignId, String className, long classPK, String eventType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return campaignContentPersistence.fetchByC_C_C_E(
 			campaignId, className, classPK, eventType);
@@ -137,7 +127,7 @@ public class CampaignContentLocalServiceImpl
 
 	@Override
 	public List<CampaignContent> getCampaignContents(long campaignId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return campaignContentPersistence.findByCampaignId(campaignId);
 	}
@@ -145,7 +135,7 @@ public class CampaignContentLocalServiceImpl
 	@Override
 	public List<CampaignContent> getCampaignContents(
 			long campaignId, Date modifiedDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return campaignContentPersistence.findByC_GtD(campaignId, modifiedDate);
 	}
@@ -154,21 +144,21 @@ public class CampaignContentLocalServiceImpl
 	public List<CampaignContent> getCampaignContents(
 			long campaignId, int start, int end,
 			OrderByComparator orderByComparator)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return campaignContentPersistence.findByCampaignId(
-				campaignId, start, end, orderByComparator);
+			campaignId, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getCampaignContentsCount(long campaignId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return campaignContentPersistence.countByCampaignId(campaignId);
 	}
 
 	protected void addCampaignContentsFromAnalytics(long campaignId, Date date)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Campaign campaign = _campaignLocalService.getCampaign(campaignId);
 
@@ -191,25 +181,19 @@ public class CampaignContentLocalServiceImpl
 		}
 	}
 
-	private void _initServices() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_analyticsEventLocalService = ServiceTrackerUtil.getService(
-			AnalyticsEventLocalService.class, bundle.getBundleContext());
-		_analyticsReferrerLocalService = ServiceTrackerUtil.getService(
-			AnalyticsReferrerLocalService.class, bundle.getBundleContext());
-		_campaignLocalService = ServiceTrackerUtil.getService(
-			CampaignLocalService.class, bundle.getBundleContext());
-		_reportInstanceLocalService = ServiceTrackerUtil.getService(
-			ReportInstanceLocalService.class, bundle.getBundleContext());
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		CampaignContentLocalServiceImpl.class);
 
+	@ServiceReference(type = AnalyticsEventLocalService.class)
 	private AnalyticsEventLocalService _analyticsEventLocalService;
+
+	@ServiceReference(type = AnalyticsReferrerLocalService.class)
 	private AnalyticsReferrerLocalService _analyticsReferrerLocalService;
+
+	@ServiceReference(type = CampaignLocalService.class)
 	private CampaignLocalService _campaignLocalService;
+
+	@ServiceReference(type = ReportInstanceLocalService.class)
 	private ReportInstanceLocalService _reportInstanceLocalService;
 
 }

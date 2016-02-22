@@ -14,15 +14,19 @@
 
 package com.liferay.content.targeting.model;
 
-import com.liferay.portal.LocaleException;
-import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.StagedGroupedModel;
-import com.liferay.portal.service.ServiceContext;
+import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.LocaleException;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -43,8 +47,9 @@ import java.util.Map;
  * @see com.liferay.content.targeting.model.impl.UserSegmentModelImpl
  * @generated
  */
-public interface UserSegmentModel extends BaseModel<UserSegment>,
-	StagedGroupedModel {
+@ProviderType
+public interface UserSegmentModel extends BaseModel<UserSegment>, GroupedModel,
+	LocalizedModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -162,10 +167,9 @@ public interface UserSegmentModel extends BaseModel<UserSegment>,
 	 * Returns the user uuid of this user segment.
 	 *
 	 * @return the user uuid of this user segment
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this user segment.
@@ -457,12 +461,16 @@ public interface UserSegmentModel extends BaseModel<UserSegment>,
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	@Override
 	public String[] getAvailableLanguageIds();
 
+	@Override
 	public String getDefaultLanguageId();
 
+	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException;
 
+	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
@@ -470,19 +478,20 @@ public interface UserSegmentModel extends BaseModel<UserSegment>,
 	public Object clone();
 
 	@Override
-	public int compareTo(UserSegment userSegment);
+	public int compareTo(
+		com.liferay.content.targeting.model.UserSegment userSegment);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<UserSegment> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.UserSegment> toCacheModel();
 
 	@Override
-	public UserSegment toEscapedModel();
+	public com.liferay.content.targeting.model.UserSegment toEscapedModel();
 
 	@Override
-	public UserSegment toUnescapedModel();
+	public com.liferay.content.targeting.model.UserSegment toUnescapedModel();
 
 	@Override
 	public String toString();

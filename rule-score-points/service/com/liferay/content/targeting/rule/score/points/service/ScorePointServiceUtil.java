@@ -14,9 +14,11 @@
 
 package com.liferay.content.targeting.rule.score.points.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableService;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for ScorePoint. This utility wraps
@@ -32,6 +34,7 @@ import com.liferay.portal.service.InvokableService;
  * @see com.liferay.content.targeting.rule.score.points.service.impl.ScorePointServiceImpl
  * @generated
  */
+@ProviderType
 public class ScorePointServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -40,86 +43,43 @@ public class ScorePointServiceUtil {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static long getPoints(long anonymousUserId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPoints(anonymousUserId, userSegmentId);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint> getScorePoints(
 		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getScorePoints(userSegmentId);
 	}
 
 	public static long incrementPoints(long anonymousUserId,
 		long userSegmentId, long points)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .incrementPoints(anonymousUserId, userSegmentId, points);
 	}
 
 	public static com.liferay.content.targeting.rule.score.points.model.ScorePoint updateScorePoints(
 		long anonymousUserId, long userSegmentId, long points)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateScorePoints(anonymousUserId, userSegmentId, points);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static ScorePointService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					ScorePointService.class.getName());
-
-			if (invokableService instanceof ScorePointService) {
-				_service = (ScorePointService)invokableService;
-			}
-			else {
-				_service = new ScorePointServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(ScorePointServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setService(ScorePointService service) {
-	}
-
-	private static ScorePointService _service;
+	private static ServiceTracker<ScorePointService, ScorePointService> _serviceTracker =
+		ServiceTrackerFactory.open(ScorePointService.class);
 }

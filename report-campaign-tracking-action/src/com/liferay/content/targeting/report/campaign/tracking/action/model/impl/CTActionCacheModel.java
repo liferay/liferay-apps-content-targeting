@@ -14,11 +14,14 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction;
 
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +37,32 @@ import java.util.Date;
  * @see CTAction
  * @generated
  */
+@ProviderType
 public class CTActionCacheModel implements CacheModel<CTAction>, Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof CTActionCacheModel)) {
+			return false;
+		}
+
+		CTActionCacheModel ctActionCacheModel = (CTActionCacheModel)obj;
+
+		if (CTActionId == ctActionCacheModel.CTActionId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, CTActionId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
@@ -125,15 +153,21 @@ public class CTActionCacheModel implements CacheModel<CTAction>, Externalizable 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		CTActionId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		campaignId = objectInput.readLong();
+
 		reportInstanceId = objectInput.readLong();
+
 		userSegmentId = objectInput.readLong();
 		alias = objectInput.readUTF();
 		referrerClassName = objectInput.readUTF();
+
 		referrerClassPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
 		eventType = objectInput.readUTF();
+
 		count = objectInput.readInt();
 		modifiedDate = objectInput.readLong();
 	}
@@ -142,9 +176,13 @@ public class CTActionCacheModel implements CacheModel<CTAction>, Externalizable 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(CTActionId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(campaignId);
+
 		objectOutput.writeLong(reportInstanceId);
+
 		objectOutput.writeLong(userSegmentId);
 
 		if (alias == null) {

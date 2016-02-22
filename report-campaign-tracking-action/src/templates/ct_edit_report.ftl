@@ -14,11 +14,6 @@
  */
 -->
 
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_theme = PortletJspTagLibs["/META-INF/liferay-theme.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
-
 <@portlet["defineObjects"] />
 
 <@liferay_theme["defineObjects"] />
@@ -27,11 +22,14 @@
 
 <#setting number_format="computer">
 
-<@aui["input"] name="reportTrackingActions" type="hidden" />
+<@liferay_aui["input"]
+	name="reportTrackingActions"
+	type="hidden"
+/>
 
 <@liferay_ui["panel"] cssClass="tracking-actions-panel" collapsible=false defaultState="open" extended=false id="trackingActionPanel" helpMessage="metrics-help" persistState=true title="metrics">
-	<div class="component diagram-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
-		<div class="diagram-builder-content form-builder-content" id="formBuilderCB">
+	<div class="component property-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
+		<div class="property-builder-content form-builder-content" id="formBuilderCB">
 			<div class="tabbable">
 				<div class="tabbable-content">
 					<ul class="nav nav-tabs">
@@ -46,20 +44,25 @@
 									<i class="icon-search"></i>
 
 									<div class="search-panels-bar">
-										<@aui["input"] cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
+										<@liferay_aui["input"]
+											cssClass="search-panels-input search-query"
+											label=""
+											name="searchPanel"
+											type="text"
+										/>
 									</div>
 								</div>
 							</div>
 
-							<ul class="clearfix diagram-builder-fields-container form-builder-fields-container">
+							<ul class="clearfix property-builder-fields-container form-builder-fields-container">
 								<#list trackingActionTemplates as template>
 									<#assign trackingAction = template.getTrackingAction()>
 									<#assign templateKey = template.getTemplateKey()>
 
 									<#if trackingAction.isVisible(className?string, classPK?long)>
-										<li class="diagram-builder-field form-builder-field hide" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
-											<span class="diagram-builder-field-icon icon ${trackingAction.getIcon()}"></span>
-											<div class="diagram-builder-field-label">
+										<li class="property-builder-field form-builder-field hide" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
+											<span class="property-builder-field-icon icon ${trackingAction.getIcon()}"></span>
+											<div class="property-builder-field-label">
 												<div class="row">
 													<div class="field-title">${trackingAction.getName(locale)}</div>
 													<div class="field-description">${trackingAction.getDescription(locale)}</div>
@@ -77,19 +80,19 @@
 				</div>
 			</div>
 
-			<div class="diagram-builder-content-container form-builder-content-container">
+			<div class="property-builder-content-container form-builder-content-container">
 				<#assign cssHasItemsClass = "">
 
 				<#if (addedTrackingActionTemplates?size > 0)>
 					<#assign cssHasItemsClass = "has-items">
 				</#if>
 
-				<div class="diagram-builder-canvas form-builder-canvas ${cssHasItemsClass}">
+				<div class="property-builder-canvas form-builder-canvas ${cssHasItemsClass}">
 					<div class="alert alert-info alert-no-items">
 						<@liferay_ui["message"] key="drag-actions-to-track-in-this-report" />
 					</div>
 
-					<div class="diagram-builder-drop-container form-builder-drop-container">
+					<div class="property-builder-drop-container form-builder-drop-container">
 						<#list addedTrackingActionTemplates as template>
 							<#assign trackingAction = template.getTrackingAction()>
 							<#assign templateKey = template.getTemplateKey()>
@@ -121,7 +124,7 @@
 	</div>
 </@>
 
-<@aui["script"] use="liferay-ct-form-builder">
+<@liferay_aui["script"] use="liferay-ct-form-builder">
 	var reportBuilder = new A.LiferayCTFormBuilder(
 		{
 			boundingBox: '#formBuilderBB',

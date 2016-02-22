@@ -14,11 +14,14 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.ReportInstance;
 
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +37,33 @@ import java.util.Date;
  * @see ReportInstance
  * @generated
  */
+@ProviderType
 public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ReportInstanceCacheModel)) {
+			return false;
+		}
+
+		ReportInstanceCacheModel reportInstanceCacheModel = (ReportInstanceCacheModel)obj;
+
+		if (reportInstanceId == reportInstanceCacheModel.reportInstanceId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, reportInstanceId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
@@ -155,9 +183,13 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+
 		reportInstanceId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -166,6 +198,7 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		className = objectInput.readUTF();
+
 		classPK = objectInput.readLong();
 		typeSettings = objectInput.readUTF();
 	}
@@ -181,8 +214,11 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 		}
 
 		objectOutput.writeLong(reportInstanceId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {

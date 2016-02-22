@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.rule.score.points.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link ScorePointService}.
@@ -23,6 +25,7 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see ScorePointService
  * @generated
  */
+@ProviderType
 public class ScorePointServiceWrapper implements ScorePointService,
 	ServiceWrapper<ScorePointService> {
 	public ScorePointServiceWrapper(ScorePointService scorePointService) {
@@ -30,52 +33,31 @@ public class ScorePointServiceWrapper implements ScorePointService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _scorePointService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scorePointService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _scorePointService.invokeMethod(name, parameterTypes, arguments);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _scorePointService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public long getPoints(long anonymousUserId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _scorePointService.getPoints(anonymousUserId, userSegmentId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint> getScorePoints(
 		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _scorePointService.getScorePoints(userSegmentId);
 	}
 
 	@Override
 	public long incrementPoints(long anonymousUserId, long userSegmentId,
-		long points)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long points) throws com.liferay.portal.kernel.exception.PortalException {
 		return _scorePointService.incrementPoints(anonymousUserId,
 			userSegmentId, points);
 	}
@@ -83,24 +65,9 @@ public class ScorePointServiceWrapper implements ScorePointService,
 	@Override
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint updateScorePoints(
 		long anonymousUserId, long userSegmentId, long points)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _scorePointService.updateScorePoints(anonymousUserId,
 			userSegmentId, points);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public ScorePointService getWrappedScorePointService() {
-		return _scorePointService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedScorePointService(ScorePointService scorePointService) {
-		_scorePointService = scorePointService;
 	}
 
 	@Override

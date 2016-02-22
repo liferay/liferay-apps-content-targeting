@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -35,9 +34,9 @@ public class CampaignQueryRuleUtil {
 	public static List<QueryRule> getCampaignQueryRules(
 			PortletPreferences portletPreferences, Locale locale,
 			boolean includeEmptyQueryRule)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<QueryRule> campaignQueryRules = new ArrayList<QueryRule>();
+		List<QueryRule> campaignQueryRules = new ArrayList<>();
 
 		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
 			portletPreferences.getValues("queryLogicIndexes", null),
@@ -65,7 +64,7 @@ public class CampaignQueryRuleUtil {
 
 	public static QueryRule getQueryRule(
 			ActionRequest request, int queryRulesIndex, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long assetEntryId = ParamUtil.getLong(
 			request, "assetEntryId" + queryRulesIndex);
@@ -80,7 +79,7 @@ public class CampaignQueryRuleUtil {
 	public static QueryRule getQueryRule(
 			PortletPreferences portletPreferences, int queryRulesIndex,
 			Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long assetEntryId = GetterUtil.getLong(
 			portletPreferences.getValue(
@@ -95,7 +94,7 @@ public class CampaignQueryRuleUtil {
 
 	public static QueryRule match(
 			long[] campaignIds, List<QueryRule> queryRules)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		for (QueryRule queryRule : queryRules) {
 			if (queryRule.evaluate(campaignIds)) {
@@ -108,7 +107,7 @@ public class CampaignQueryRuleUtil {
 
 	protected static CampaignQueryRule getDefaultQueryRule(
 			PortletPreferences portletPreferences, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long assetEntryIdDefault = GetterUtil.getLong(
 			portletPreferences.getValue("assetEntryIdDefault", null));

@@ -14,8 +14,8 @@
 
 package com.liferay.content.targeting.service.impl;
 
-import com.liferay.content.targeting.InvalidDateRangeException;
-import com.liferay.content.targeting.InvalidNameException;
+import com.liferay.content.targeting.exception.InvalidDateRangeException;
+import com.liferay.content.targeting.exception.InvalidNameException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.Tactic;
@@ -24,7 +24,10 @@ import com.liferay.content.targeting.service.base.CampaignLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.content.targeting.util.CampaignUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -32,15 +35,11 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.SystemEventConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.Date;
 import java.util.List;
@@ -70,7 +69,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
 			int priority, boolean active, long[] userSegmentIds,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return addCampaign(
 			userId, nameMap, descriptionMap, startDate, endDate, null, priority,
@@ -84,7 +83,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
 			String timeZoneId, int priority, boolean active,
 			long[] userSegmentIds, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
 
@@ -146,7 +145,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	public void addCampaignResources(
 			Campaign campaign, boolean addGroupPermissions,
 			boolean addGuestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		resourceLocalService.addResources(
 			campaign.getCompanyId(), campaign.getGroupId(),
@@ -159,7 +158,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	public void addCampaignResources(
 			Campaign campaign, String[] groupPermissions,
 			String[] guestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			campaign.getCompanyId(), campaign.getGroupId(),
@@ -169,9 +168,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Campaign deleteCampaign(Campaign campaign)
-		throws PortalException, SystemException {
-
+	public Campaign deleteCampaign(Campaign campaign) throws PortalException {
 		campaignPersistence.remove(campaign);
 
 		// System event
@@ -221,18 +218,14 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Campaign deleteCampaign(long campaignId)
-		throws PortalException, SystemException {
-
+	public Campaign deleteCampaign(long campaignId) throws PortalException {
 		Campaign campaign = campaignPersistence.findByPrimaryKey(campaignId);
 
 		return deleteCampaign(campaign);
 	}
 
 	@Override
-	public void deleteCampaigns(long groupId)
-		throws PortalException, SystemException {
-
+	public void deleteCampaigns(long groupId) throws PortalException {
 		for (Campaign campaign : campaignPersistence.findByGroupId(groupId)) {
 			campaignLocalService.deleteCampaign(campaign.getCampaignId());
 		}
@@ -240,8 +233,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 	@Override
 	public Campaign fetchCurrentMaxPriorityCampaign(
-			long[] groupIds, long[] userSegmentIds)
-		throws SystemException {
+		long[] groupIds, long[] userSegmentIds) {
 
 		Date now = new Date();
 
@@ -250,38 +242,34 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<Campaign> getCampaigns(long groupId)
-		throws PortalException, SystemException {
-
-		return getCampaigns(new long[]{groupId});
+	public List<Campaign> getCampaigns(long groupId) throws PortalException {
+		return getCampaigns(new long[] {groupId});
 	}
 
 	@Override
 	public List<Campaign> getCampaigns(
 			long groupId, int start, int end, OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		return getCampaigns(new long[]{groupId}, start, end, obc);
+		return getCampaigns(new long[] {groupId}, start, end, obc);
 	}
 
 	@Override
-	public List<Campaign> getCampaigns(long[] groupIds)
-		throws PortalException, SystemException {
-
+	public List<Campaign> getCampaigns(long[] groupIds) throws PortalException {
 		return campaignPersistence.findByGroupId(groupIds);
 	}
 
 	@Override
 	public List<Campaign> getCampaigns(
 			long[] groupIds, int start, int end, OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return campaignPersistence.findByGroupId(groupIds, start, end, obc);
 	}
 
 	@Override
 	public List<Campaign> getCampaigns(long[] groupIds, long[] userSegmentIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date now = new Date();
 
@@ -290,22 +278,18 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	}
 
 	@Override
-	public int getCampaignsCount(long groupId)
-		throws PortalException, SystemException {
-
+	public int getCampaignsCount(long groupId) throws PortalException {
 		return campaignPersistence.countByGroupId(groupId);
 	}
 
 	@Override
-	public int getCampaignsCount(long[] groupIds)
-		throws PortalException, SystemException {
-
+	public int getCampaignsCount(long[] groupIds) throws PortalException {
 		return campaignPersistence.countByGroupId(groupIds);
 	}
 
 	@Override
 	public Hits search(long groupId, String keywords, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(
 			Campaign.class.getName());
@@ -319,7 +303,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	@Override
 	public BaseModelSearchResult<Campaign> searchCampaigns(
 			long groupId, String keywords, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
 			groupId, keywords, start, end);
@@ -334,7 +318,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
 			int priority, boolean active, long[] userSegmentIds,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return updateCampaign(
 			campaignId, nameMap, descriptionMap, startDate, endDate, null,
@@ -348,7 +332,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
 			String timeZoneId, int priority, boolean active,
 			long[] userSegmentIds, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date now = new Date();
 
@@ -392,7 +376,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	public void updateCampaignResources(
 			Campaign campaign, String[] groupPermissions,
 			String[] guestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		resourceLocalService.updateResources(
 			campaign.getCompanyId(), campaign.getGroupId(),
@@ -402,7 +386,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 	protected SearchContext buildSearchContext(
 			long groupId, String keywords, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -410,7 +394,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[]{groupId});
+		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(start);
 
@@ -419,7 +403,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 	protected BaseModelSearchResult<Campaign> searchCampaigns(
 			SearchContext searchContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			Campaign.class);
@@ -430,8 +414,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 			List<Campaign> campaigns = CampaignUtil.getCampaigns(hits);
 
 			if (campaigns != null) {
-				return new BaseModelSearchResult<Campaign>(
-					campaigns, hits.getLength());
+				return new BaseModelSearchResult<>(campaigns, hits.getLength());
 			}
 		}
 
@@ -441,7 +424,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 	protected void validateCampaign(Campaign campaign) throws PortalException {
 		if (Validator.isNull(campaign.getName(LocaleUtil.getDefault()))) {
-			throw new InvalidNameException(InvalidNameException.EMPTY);
+			throw new InvalidNameException();
 		}
 
 		if ((campaign.getStartDate() == null) ||

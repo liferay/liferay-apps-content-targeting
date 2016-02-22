@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.anonymous.users.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * Provides the SOAP utility for the
  * {@link com.liferay.content.targeting.anonymous.users.service.AnonymousUserServiceUtil} service utility. The
@@ -54,5 +56,6 @@ package com.liferay.content.targeting.anonymous.users.service.http;
  * @see com.liferay.content.targeting.anonymous.users.service.AnonymousUserServiceUtil
  * @generated
  */
+@ProviderType
 public class AnonymousUserServiceSoap {
 }

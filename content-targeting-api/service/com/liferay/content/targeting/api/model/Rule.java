@@ -14,13 +14,12 @@
 
 package com.liferay.content.targeting.api.model;
 
-import com.liferay.content.targeting.InvalidRuleException;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
+import com.liferay.content.targeting.exception.InvalidRuleException;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Locale;
@@ -55,8 +54,7 @@ public interface Rule {
 	 *
 	 * @param ruleInstance the rule instance with the stored configuration
 	 */
-	public void deleteData(RuleInstance ruleInstance)
-		throws PortalException, SystemException;
+	public void deleteData(RuleInstance ruleInstance) throws PortalException;
 
 	/**
 	 * Returns <code>true</code> if the user complies with the rule instance.

@@ -42,9 +42,9 @@ public class DefaultChannelsRegistryImpl implements ChannelsRegistry {
 	}
 
 	@Reference(
-		unbind = "unregisterChannel",
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC)
+		policy = ReferencePolicy.DYNAMIC, unbind = "unregisterChannel"
+	)
 	public void registerChannnel(Channel channel) {
 		_channels.put(channel.getChannelKey(), channel);
 	}
@@ -53,7 +53,6 @@ public class DefaultChannelsRegistryImpl implements ChannelsRegistry {
 		_channels.remove(channel);
 	}
 
-	private Map<String, Channel> _channels =
-		new ConcurrentHashMap<String, Channel>();
+	private Map<String, Channel> _channels = new ConcurrentHashMap<>();
 
 }

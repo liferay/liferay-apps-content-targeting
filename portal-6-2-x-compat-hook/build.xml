@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE project>
-
-<project name="portal-6-2-x-compat-hook" basedir="." default="deploy">
-	<import file="../../../hooks/build-common-hook.xml" />
-</project>

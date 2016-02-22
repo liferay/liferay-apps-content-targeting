@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
 
 import com.restfb.types.User;
 
@@ -79,7 +79,8 @@ public class FacebookEducationRule extends BaseFacebookRule {
 			anonymousUser.getTypeSettings());
 
 		User user = FacebookUtil.getFacebookUser(
-			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
+			typeSettings.getString(
+				FacebookConnectWebKeys.FACEBOOK_ACCESS_TOKEN));
 
 		if (matchEducationLevel(user, educationLevel) &&
 			matchEducationName(user, schoolName)) {
@@ -128,7 +129,7 @@ public class FacebookEducationRule extends BaseFacebookRule {
 				sb.append(schoolName);
 			}
 		}
-		catch (JSONException jse) {
+		catch (JSONException jsone) {
 		}
 
 		return summary;
@@ -173,7 +174,7 @@ public class FacebookEducationRule extends BaseFacebookRule {
 				educationLevel = jsonObj.getString("educationLevel");
 				schoolName = jsonObj.getString("schoolName");
 			}
-			catch (JSONException jse) {
+			catch (JSONException jsone) {
 			}
 		}
 
@@ -233,11 +234,11 @@ public class FacebookEducationRule extends BaseFacebookRule {
 		return false;
 	}
 
+	protected static final String _EDUCATION_TYPE_COLLEGE = "College";
+
+	protected static final String _EDUCATION_TYPE_HIGH_SCHOOL = "High School";
+
 	protected static final String _FORM_TEMPLATE_PATH_EDUCATION =
 		"templates/ct_fields_education.ftl";
-
-	protected final static String _EDUCATION_TYPE_COLLEGE = "College";
-
-	protected final static String _EDUCATION_TYPE_HIGH_SCHOOL = "High School";
 
 }

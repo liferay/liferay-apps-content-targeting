@@ -19,8 +19,8 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.model.User;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -66,6 +66,7 @@ public class TimeRuleTest extends PowerMockito {
 
 					return new JSONObjectImpl((String)args[0]);
 				}
+
 			}
 		);
 
@@ -92,6 +93,7 @@ public class TimeRuleTest extends PowerMockito {
 						(Integer)args[0], (Integer)args[1], (Integer)args[2],
 						(Integer)args[3], (Integer)args[4]);
 				}
+
 			}
 		);
 

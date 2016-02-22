@@ -14,31 +14,31 @@
 
 package com.liferay.content.targeting.util;
 
+import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.asset.NoSuchVocabularyException;
-import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
@@ -50,19 +50,20 @@ public class UserSegmentUtil {
 
 	public static AssetVocabulary addAssetVocabulary(
 			long userId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
 		return AssetVocabularyLocalServiceUtil.addVocabulary(
-			userId, StringPool.BLANK, _getAssetVocabularyTitleMap(), null,
-			StringPool.BLANK, serviceContext);
+			userId, serviceContext.getScopeGroupId(), StringPool.BLANK,
+			_getAssetVocabularyTitleMap(), null, StringPool.BLANK,
+			serviceContext);
 	}
 
 	public static long getAssetVocabularyId(
 			long userId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetVocabulary vocabulary = null;
 
@@ -107,9 +108,9 @@ public class UserSegmentUtil {
 	}
 
 	public static long[] getAssetVocabularyIds(long[] groupIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<Long> vocabularyIds = new ArrayList<Long>();
+		List<Long> vocabularyIds = new ArrayList<>();
 
 		for (long groupId : groupIds) {
 			try {
@@ -119,7 +120,7 @@ public class UserSegmentUtil {
 
 				vocabularyIds.add(vocabulary.getVocabularyId());
 			}
-			catch (NoSuchVocabularyException e) {
+			catch (NoSuchVocabularyException nsve) {
 			}
 		}
 
@@ -132,12 +133,11 @@ public class UserSegmentUtil {
 	}
 
 	public static List<UserSegment> getUserSegments(Hits hits)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<Document> documents = hits.toList();
 
-		List<UserSegment> userSegments = new ArrayList<UserSegment>(
-			documents.size());
+		List<UserSegment> userSegments = new ArrayList<>(documents.size());
 
 		for (com.liferay.portal.kernel.search.Document document : documents) {
 			long userSegmentId = GetterUtil.getLong(
@@ -166,9 +166,9 @@ public class UserSegmentUtil {
 	}
 
 	private static Map<Locale, String> _getAssetVocabularyTitleMap() {
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
+		Set<Locale> locales = LanguageUtil.getAvailableLocales();
 
 		for (Locale locale : locales) {
 			titleMap.put(

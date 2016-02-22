@@ -22,18 +22,18 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.PortletKeys;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.OrganizationConstants;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +93,7 @@ public class OrganizationMemberRule extends BaseRule {
 		Organization organization =
 			OrganizationLocalServiceUtil.fetchOrganization(organizationId);
 
-		if (organization != null ) {
+		if (organization != null) {
 			ruleInstance.setTypeSettings(organization.getUuid());
 
 			portletDataContext.addReferenceElement(
@@ -134,7 +134,7 @@ public class OrganizationMemberRule extends BaseRule {
 
 			return organization.getName();
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		return StringPool.BLANK;
@@ -152,7 +152,7 @@ public class OrganizationMemberRule extends BaseRule {
 			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
 				organizationUuid, portletDataContext.getCompanyId());
 
-		if (organization != null ) {
+		if (organization != null) {
 			ruleInstance.setTypeSettings(
 				String.valueOf(organization.getOrganizationId()));
 
@@ -191,7 +191,7 @@ public class OrganizationMemberRule extends BaseRule {
 
 		Company company = (Company)context.get("company");
 
-		List<Organization> organizations = new ArrayList<Organization>();
+		List<Organization> organizations = new ArrayList<>();
 
 		try {
 
@@ -201,7 +201,7 @@ public class OrganizationMemberRule extends BaseRule {
 				company.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
 		}
-		catch (SystemException e) {
+		catch (SystemException se) {
 		}
 
 		context.put("organizations", organizations);

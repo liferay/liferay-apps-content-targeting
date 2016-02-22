@@ -14,29 +14,25 @@
 
 package com.liferay.content.targeting.service.impl;
 
-import com.liferay.content.targeting.DuplicateChannelInstanceException;
 import com.liferay.content.targeting.api.model.Channel;
 import com.liferay.content.targeting.api.model.ChannelsRegistry;
+import com.liferay.content.targeting.exception.DuplicateChannelInstanceException;
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.service.base.ChannelInstanceLocalServiceBaseImpl;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.SystemEventConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * The implementation of the channel instance local service.
@@ -55,18 +51,11 @@ import org.osgi.framework.FrameworkUtil;
 public class ChannelInstanceLocalServiceImpl
 	extends ChannelInstanceLocalServiceBaseImpl {
 
-	public ChannelInstanceLocalServiceImpl() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_channelsRegistry = ServiceTrackerUtil.getService(
-			ChannelsRegistry.class, bundle.getBundleContext());
-	}
-
 	@Override
 	public ChannelInstance addChannelInstance(
 			long userId, long tacticId, String channelKey, long campaignId,
 			String alias, String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		validate(0, tacticId, alias);
 
@@ -101,7 +90,7 @@ public class ChannelInstanceLocalServiceImpl
 	@Override
 	public ChannelInstance deleteChannelInstance(
 			ChannelInstance channelInstance)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		channelInstancePersistence.remove(channelInstance);
 
@@ -135,7 +124,7 @@ public class ChannelInstanceLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ChannelInstance deleteChannelInstance(long channelInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ChannelInstance channelInstance =
 			channelInstancePersistence.findByPrimaryKey(channelInstanceId);
@@ -145,7 +134,7 @@ public class ChannelInstanceLocalServiceImpl
 
 	@Override
 	public List<ChannelInstance> getCampaignChannelInstances(long campaignId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return channelInstancePersistence.findByCampaignId(campaignId);
 	}
@@ -153,14 +142,14 @@ public class ChannelInstanceLocalServiceImpl
 	@Override
 	public List<ChannelInstance> getCampaignChannelInstances(
 			long campaignId, String channelKey)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return channelInstancePersistence.findByC_K(campaignId, channelKey);
 	}
 
 	@Override
 	public List<ChannelInstance> getChannelInstances(long tacticId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return channelInstancePersistence.findByTacticId(tacticId);
 	}
@@ -168,7 +157,7 @@ public class ChannelInstanceLocalServiceImpl
 	@Override
 	public List<ChannelInstance> getChannelInstances(
 			long tacticId, String channelKey)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (tacticId > 0) {
 			return channelInstancePersistence.findByT_K(tacticId, channelKey);
@@ -181,7 +170,7 @@ public class ChannelInstanceLocalServiceImpl
 	public ChannelInstance updateChannelInstance(
 			long channelInstanceId, String alias, String typeSettings,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ChannelInstance channelInstance =
 			channelInstancePersistence.findByPrimaryKey(channelInstanceId);
@@ -200,14 +189,13 @@ public class ChannelInstanceLocalServiceImpl
 	}
 
 	protected void validate(long channelInstanceId, long tacticId, String alias)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ChannelInstance channelInstance = channelInstancePersistence.fetchByT_A(
 			tacticId, alias);
 
 		if ((channelInstance != null) &&
-			(channelInstance.getChannelInstanceId() !=
-				channelInstanceId)) {
+			(channelInstance.getChannelInstanceId() != channelInstanceId)) {
 
 			throw new DuplicateChannelInstanceException(
 				"A channel instance with the alias " + alias + " already " +
@@ -215,9 +203,10 @@ public class ChannelInstanceLocalServiceImpl
 		}
 	}
 
+	@ServiceReference(type = ChannelsRegistry.class)
+	protected ChannelsRegistry _channelsRegistry;
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ChannelInstanceLocalServiceImpl.class);
-
-	private ChannelsRegistry _channelsRegistry;
 
 }

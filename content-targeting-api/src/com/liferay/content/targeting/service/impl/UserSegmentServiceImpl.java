@@ -20,8 +20,7 @@ import com.liferay.content.targeting.service.permission.ContentTargetingPermissi
 import com.liferay.content.targeting.service.permission.UserSegmentPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 import java.util.Locale;
@@ -48,7 +47,7 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 	public UserSegment addUserSegment(
 			long userId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ContentTargetingPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -60,7 +59,7 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 
 	@Override
 	public UserSegment deleteUserSegment(long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.DELETE);
@@ -70,29 +69,25 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 
 	@Override
 	public List<UserSegment> getUserSegments(long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userSegmentPersistence.filterFindByGroupId(groupId);
 	}
 
 	@Override
 	public List<UserSegment> getUserSegments(long[] groupIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userSegmentPersistence.filterFindByGroupId(groupIds);
 	}
 
 	@Override
-	public int getUserSegmentsCount(long groupId)
-		throws PortalException, SystemException {
-
+	public int getUserSegmentsCount(long groupId) throws PortalException {
 		return userSegmentPersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override
-	public int getUserSegmentsCount(long[] groupIds)
-		throws PortalException, SystemException {
-
+	public int getUserSegmentsCount(long[] groupIds) throws PortalException {
 		return userSegmentPersistence.filterCountByGroupId(groupIds);
 	}
 
@@ -100,7 +95,7 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 	public UserSegment updateUserSegment(
 			long userSegmentId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);

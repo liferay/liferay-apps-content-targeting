@@ -20,10 +20,9 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.content.targeting.service.persistence.ReportInstanceActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -31,21 +30,26 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.Date;
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
-public class ReportInstanceIndexer extends BaseIndexer {
+@Component(immediate = true, service = Indexer.class)
+public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 
 	public static final String[] CLASS_NAMES = {ReportInstance.class.getName()};
 
@@ -54,6 +58,11 @@ public class ReportInstanceIndexer extends BaseIndexer {
 	public ReportInstanceIndexer() {
 		setFilterSearch(true);
 		setPermissionAware(false);
+	}
+
+	@Override
+	public String getClassName() {
+		return ReportInstance.class.getName();
 	}
 
 	@Override
@@ -86,9 +95,7 @@ public class ReportInstanceIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		ReportInstance reportInstance = (ReportInstance)obj;
-
+	protected void doDelete(ReportInstance reportInstance) throws Exception {
 		Document document = new DocumentImpl();
 
 		document.addUID(PORTLET_ID, reportInstance.getReportInstanceId());
@@ -99,8 +106,8 @@ public class ReportInstanceIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		ReportInstance reportInstance = (ReportInstance)obj;
+	protected Document doGetDocument(ReportInstance reportInstance)
+		throws Exception {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Indexing reportInstance " + reportInstance);
@@ -127,16 +134,15 @@ public class ReportInstanceIndexer extends BaseIndexer {
 
 	@Override
 	protected Summary doGetSummary(
-		Document document, Locale locale, String snippet,
-		PortletURL portletURL) {
+			Document document, Locale locale, String snippet,
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
 
 		return null;
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		ReportInstance reportInstance = (ReportInstance)obj;
-
+	protected void doReindex(ReportInstance reportInstance) throws Exception {
 		Document document = getDocument(reportInstance);
 
 		if (document != null) {
@@ -166,67 +172,71 @@ public class ReportInstanceIndexer extends BaseIndexer {
 	}
 
 	protected void reindexReportInstances(final long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			new ReportInstanceActionableDynamicQuery() {
-
-			@Override
-			protected void performAction(Object object) {
-				ReportInstance reportInstance = (ReportInstance)object;
-
-				if (reportInstance.getGroupId() == 0) {
-					try {
-						String className = reportInstance.getClassName();
-
-						if (className.equals(Campaign.class.getName())) {
-							Campaign campaign =
-								CampaignLocalServiceUtil.getCampaign(
-									reportInstance.getClassPK());
-
-							reportInstance.setGroupId(campaign.getGroupId());
-						}
-						else {
-							UserSegment userSegment =
-								UserSegmentLocalServiceUtil.getUserSegment(
-									reportInstance.getClassPK());
-
-							reportInstance.setGroupId(userSegment.getGroupId());
-						}
-
-						reportInstance.setCreateDate(new Date());
-					}
-					catch (Exception e) {
-						_log.error(e, e);
-					}
-				}
-
-				try {
-					Document document = getDocument(reportInstance);
-
-					if (document != null) {
-						addDocument(document);
-					}
-				}
-				catch (PortalException e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index report instance: " +
-								reportInstance.getReportInstanceId(),
-							e);
-					}
-				}
-			}
-
-		};
+		final IndexableActionableDynamicQuery actionableDynamicQuery =
+			ReportInstanceLocalServiceUtil.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<ReportInstance>() {
+
+				@Override
+				public void performAction(ReportInstance reportInstance) {
+					if (reportInstance.getGroupId() == 0) {
+						try {
+							String className = reportInstance.getClassName();
+
+							if (className.equals(Campaign.class.getName())) {
+								Campaign campaign =
+									CampaignLocalServiceUtil.getCampaign(
+										reportInstance.getClassPK());
+
+								reportInstance.setGroupId(
+									campaign.getGroupId());
+							}
+							else {
+								UserSegment userSegment =
+									UserSegmentLocalServiceUtil.getUserSegment(
+										reportInstance.getClassPK());
+
+								reportInstance.setGroupId(
+									userSegment.getGroupId());
+							}
+
+							reportInstance.setCreateDate(new Date());
+						}
+						catch (Exception e) {
+							_log.error(e, e);
+						}
+					}
+
+					try {
+						Document document = getDocument(reportInstance);
+
+						if (document != null) {
+							actionableDynamicQuery.addDocuments(document);
+						}
+					}
+					catch (PortalException pe) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index report instance: " +
+									reportInstance.getReportInstanceId(),
+								pe);
+						}
+					}
+				}
+
+			});
+
 		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		actionableDynamicQuery.performActions();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-ReportInstanceIndexer.class);
+		ReportInstanceIndexer.class);
 
 }

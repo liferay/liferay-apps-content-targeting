@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.service.ChannelInstanceServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -23,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.content.targeting.service.ChannelInstanceServiceUtil} service utility. The
+ * {@link ChannelInstanceServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -58,14 +60,15 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see ChannelInstanceServiceHttp
  * @see com.liferay.content.targeting.model.ChannelInstanceSoap
- * @see com.liferay.content.targeting.service.ChannelInstanceServiceUtil
+ * @see ChannelInstanceServiceUtil
  * @generated
  */
+@ProviderType
 public class ChannelInstanceServiceSoap {
 	public static com.liferay.content.targeting.model.ChannelInstanceSoap addChannelInstance(
 		long userId, long tacticId, java.lang.String channelKey,
 		long campaignId, java.lang.String alias, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.ChannelInstance returnValue = ChannelInstanceServiceUtil.addChannelInstance(userId,
@@ -130,7 +133,7 @@ public class ChannelInstanceServiceSoap {
 	public static com.liferay.content.targeting.model.ChannelInstanceSoap updateChannelInstance(
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.ChannelInstance returnValue = ChannelInstanceServiceUtil.updateChannelInstance(channelInstanceId,

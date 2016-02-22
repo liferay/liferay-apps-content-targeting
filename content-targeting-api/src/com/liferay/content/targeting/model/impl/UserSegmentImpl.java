@@ -14,18 +14,17 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -103,7 +102,7 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 		return name;
 	}
 
-	public List<RuleInstance> getRuleInstances() throws SystemException {
+	public List<RuleInstance> getRuleInstances() {
 		return RuleInstanceLocalServiceUtil.getRuleInstances(
 			getUserSegmentId());
 	}

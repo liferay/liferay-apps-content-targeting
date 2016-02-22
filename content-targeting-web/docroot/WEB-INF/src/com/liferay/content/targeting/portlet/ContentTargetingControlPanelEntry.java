@@ -14,14 +14,22 @@
 
 package com.liferay.content.targeting.portlet;
 
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.content.targeting.util.PortletKeys;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
+import com.liferay.portal.kernel.portlet.ControlPanelEntry;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Julio Camarero
  */
+@Component(
+	immediate = true, property = {"javax.portlet.name=" + PortletKeys.CT_ADMIN},
+	service = ControlPanelEntry.class
+)
 public class ContentTargetingControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override

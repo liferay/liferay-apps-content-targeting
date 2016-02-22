@@ -22,20 +22,16 @@ import com.liferay.content.targeting.report.user.segment.content.model.UserSegme
 import com.liferay.content.targeting.report.user.segment.content.service.base.UserSegmentContentLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * The implementation of the user segment content local service.
@@ -54,15 +50,11 @@ import org.osgi.framework.FrameworkUtil;
 public class UserSegmentContentLocalServiceImpl
 	extends UserSegmentContentLocalServiceBaseImpl {
 
-	public UserSegmentContentLocalServiceImpl() {
-		_initServices();
-	}
-
 	@Override
 	public UserSegmentContent addUserSegmentContent(
 			long userSegmentId, String className, long classPK,
 			String eventType, int count)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserSegmentContent userSegmentContent = getUserSegmentContent(
 			userSegmentId, className, classPK, eventType);
@@ -93,9 +85,7 @@ public class UserSegmentContentLocalServiceImpl
 	}
 
 	@Override
-	public void checkUserSegmentContentEvents()
-		throws PortalException, SystemException {
-
+	public void checkUserSegmentContentEvents() throws PortalException {
 		try {
 			List<UserSegment> userSegments =
 				_userSegmentLocalService.getUserSegments(
@@ -114,7 +104,7 @@ public class UserSegmentContentLocalServiceImpl
 
 	@Override
 	public void checkUserSegmentContentEvents(long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date modifiedDate = _analyticsEventLocalService.getMaxAge();
 
@@ -134,15 +124,15 @@ public class UserSegmentContentLocalServiceImpl
 	public UserSegmentContent getUserSegmentContent(
 			long userSegmentId, String className, long classPK,
 			String eventType)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userSegmentContentPersistence.fetchByC_C_C_E(
-				userSegmentId, className, classPK, eventType);
+			userSegmentId, className, classPK, eventType);
 	}
 
 	@Override
 	public List<UserSegmentContent> getUserSegmentContents(long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userSegmentContentPersistence.findByUserSegmentId(userSegmentId);
 	}
@@ -150,25 +140,25 @@ public class UserSegmentContentLocalServiceImpl
 	@Override
 	public List<UserSegmentContent> getUserSegmentContents(
 			long userSegmentId, Date modifiedDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userSegmentContentPersistence.findByC_GtD(
-				userSegmentId, modifiedDate);
+			userSegmentId, modifiedDate);
 	}
 
 	@Override
 	public List<UserSegmentContent> getUserSegmentContents(
 			long userSegmentId, int start, int end,
 			OrderByComparator orderByComparator)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userSegmentContentPersistence.findByUserSegmentId(
-				userSegmentId, start, end, orderByComparator);
+			userSegmentId, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getUserSegmentContentsCount(long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userSegmentContentPersistence.countByUserSegmentId(
 			userSegmentId);
@@ -176,7 +166,7 @@ public class UserSegmentContentLocalServiceImpl
 
 	protected void addUserSegmentContentsFromAnalytics(
 			long userSegmentId, Date date)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserSegment userSegment = _userSegmentLocalService.getUserSegment(
 			userSegmentId);
@@ -200,22 +190,16 @@ public class UserSegmentContentLocalServiceImpl
 		}
 	}
 
-	private void _initServices() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_analyticsEventLocalService = ServiceTrackerUtil.getService(
-			AnalyticsEventLocalService.class, bundle.getBundleContext());
-		_reportInstanceLocalService = ServiceTrackerUtil.getService(
-			ReportInstanceLocalService.class, bundle.getBundleContext());
-		_userSegmentLocalService = ServiceTrackerUtil.getService(
-			UserSegmentLocalService.class, bundle.getBundleContext());
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		UserSegmentContentLocalServiceImpl.class);
 
+	@ServiceReference(type = AnalyticsEventLocalService.class)
 	private AnalyticsEventLocalService _analyticsEventLocalService;
+
+	@ServiceReference(type = ReportInstanceLocalService.class)
 	private ReportInstanceLocalService _reportInstanceLocalService;
+
+	@ServiceReference(type = UserSegmentLocalService.class)
 	private UserSegmentLocalService _userSegmentLocalService;
 
 }

@@ -66,6 +66,7 @@ public class FacebookEducationRuleTest extends PowerMockito {
 
 					return new JSONObjectImpl((String)args[0]);
 				}
+
 			}
 		);
 
