@@ -19,7 +19,7 @@
 
 	<property name="build.app.services" value="true" />
 
-	<property name="source.formatter.excludes" value="**/tools/**,**/consumer-manager-web/build.xml**/" />
+	<property name="source.formatter.excludes" value="**/*-test**/**&#10;**/benchmarks/**&#10;**/consumer-manager/**&#10;**/tools/**" />
 
 	<target name="all">
 		<antcall target="release" />
