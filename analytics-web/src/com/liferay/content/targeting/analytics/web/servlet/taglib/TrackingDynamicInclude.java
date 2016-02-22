@@ -18,16 +18,21 @@ import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.io.PrintWriter;
+
 import java.util.Arrays;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Pavel Savinov
  */
 public abstract class TrackingDynamicInclude extends BaseDynamicInclude {
 
-	protected String getTrackingJS(
-		String eventName, String className, long classPK,
-		String referrerClassName, long[] referrerClassPKs) {
+	protected void doInclude(
+			HttpServletResponse response, String eventName, String className,
+			long classPK, String referrerClassName, long[] referrerClassPKs)
+		throws Exception {
 
 		StringBundler stringBundler = new StringBundler(13);
 
@@ -46,7 +51,9 @@ public abstract class TrackingDynamicInclude extends BaseDynamicInclude {
 			Arrays.deepToString(ArrayUtil.toArray(referrerClassPKs)));
 		stringBundler.append("'}]});</script>");
 
-		return stringBundler.toString();
+		PrintWriter printWriter = response.getWriter();
+
+		printWriter.println(stringBundler.toString());
 	}
 
 }
