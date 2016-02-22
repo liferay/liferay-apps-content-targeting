@@ -56,22 +56,7 @@ public class CampaignFinderImpl
 		new String[] {
 			Long.class.getName(), Date.class.getName(), Boolean.class.getName(),
 			Long.class.getName(), Boolean.class.getName()
-		}
-	);
-
-	@Override
-	public List<Campaign> filterFindByG_D_A_U(
-		long[] groupIds, Date date, boolean active, long[] userSegmentIds) {
-
-		return doFetchByG_D_A_U(groupIds, date, active, userSegmentIds, true);
-	}
-
-	@Override
-	public List<Campaign> findByG_D_A_U(
-		long[] groupIds, Date date, boolean active, long[] userSegmentIds) {
-
-		return doFetchByG_D_A_U(groupIds, date, active, userSegmentIds, false);
-	}
+		});
 
 	@Override
 	public Campaign fetchByG_D_A_U_First(
@@ -86,6 +71,28 @@ public class CampaignFinderImpl
 		Set<Serializable> primaryKeys) {
 
 		return CampaignUtil.fetchByPrimaryKeys(primaryKeys);
+	}
+
+	@Override
+	public List<Campaign> filterFindByG_D_A_U(
+		long[] groupIds, Date date, boolean active, long[] userSegmentIds) {
+
+		return doFetchByG_D_A_U(groupIds, date, active, userSegmentIds, true);
+	}
+
+	@Override
+	public Campaign filterFetchByG_D_A_U_First(
+		long[] groupIds, Date date, boolean active, long[] userSegmentIds) {
+
+		return doFetchByG_D_A_U_First(
+			groupIds, date, active, userSegmentIds, true);
+	}
+
+	@Override
+	public List<Campaign> findByG_D_A_U(
+		long[] groupIds, Date date, boolean active, long[] userSegmentIds) {
+
+		return doFetchByG_D_A_U(groupIds, date, active, userSegmentIds, false);
 	}
 
 	protected List<Campaign> doFetchByG_D_A_U(
@@ -202,14 +209,6 @@ public class CampaignFinderImpl
 		sb.append(") AND");
 
 		return sb.toString();
-	}
-
-	@Override
-	public Campaign filterFetchByG_D_A_U_First(
-		long[] groupIds, Date date, boolean active, long[] userSegmentIds) {
-
-		return doFetchByG_D_A_U_First(
-			groupIds, date, active, userSegmentIds, true);
 	}
 
 }

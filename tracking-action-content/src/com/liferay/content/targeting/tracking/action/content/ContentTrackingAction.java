@@ -379,7 +379,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 		if (!trackingContentEnabled) {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);
-			}
+		}
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};

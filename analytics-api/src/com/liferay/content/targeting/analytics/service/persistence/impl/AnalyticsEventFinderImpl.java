@@ -35,11 +35,6 @@ public class AnalyticsEventFinderImpl
 		AnalyticsEventFinder.class.getName() + ".findByC_GtC_R_R";
 
 	@Override
-	public int findBlabla() {
-		return 0;
-	}
-
-	@Override
 	public List<Object[]> findByC_GtC_R_R(
 		long companyId, String referrerClassName, long referrerClassPK,
 		Date date) {

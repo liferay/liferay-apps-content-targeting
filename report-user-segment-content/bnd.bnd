@@ -45,8 +45,9 @@ Import-Package:\
 	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.messaging,\
 	com.liferay.content.targeting.util,\
-	com.liferay.osgi.util.service,\
 	com.liferay.exportimport.kernel.lar,\
+	com.liferay.osgi.util.service,\
+	\
 	javax.portlet,\
 	*;resolution:="optional"
 Include-Resource: classes,\

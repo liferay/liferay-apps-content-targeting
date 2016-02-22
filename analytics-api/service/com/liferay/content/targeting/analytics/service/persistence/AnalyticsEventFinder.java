@@ -22,8 +22,6 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface AnalyticsEventFinder {
-	public int findBlabla();
-
 	public java.util.List<java.lang.Object[]> findByC_GtC_R_R(long companyId,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.util.Date date);

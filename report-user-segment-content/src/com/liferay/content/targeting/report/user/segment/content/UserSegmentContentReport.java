@@ -23,7 +23,6 @@ import com.liferay.content.targeting.report.user.segment.content.service.UserSeg
 import com.liferay.content.targeting.report.user.segment.content.util.comparator.UserSegmentContentCountComparator;
 import com.liferay.content.targeting.util.SearchContainerIterator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -94,7 +93,7 @@ public class UserSegmentContentReport extends BaseReport {
 
 				@Override
 				public List<UserSegmentContent> getResults(int start, int end)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					return _userSegmentContentLocalService.
 						getUserSegmentContents(
@@ -103,10 +102,11 @@ public class UserSegmentContentReport extends BaseReport {
 				}
 
 				@Override
-				public int getTotal() throws PortalException, SystemException {
+				public int getTotal() throws PortalException {
 					return _userSegmentContentLocalService.
 						getUserSegmentContentsCount(classPK);
 				}
+
 			}
 		);
 	}

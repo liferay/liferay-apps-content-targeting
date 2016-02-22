@@ -23,7 +23,6 @@ import com.liferay.content.targeting.report.campaign.content.service.CampaignCon
 import com.liferay.content.targeting.report.campaign.content.util.comparator.CampaignContentCountComparator;
 import com.liferay.content.targeting.util.SearchContainerIterator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -94,7 +93,7 @@ public class CampaignContentReport extends BaseReport {
 
 				@Override
 				public List<CampaignContent> getResults(int start, int end)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					return _campaignContentLocalService.getCampaignContents(
 						classPK, start, end,
@@ -102,11 +101,12 @@ public class CampaignContentReport extends BaseReport {
 				}
 
 				@Override
-				public int getTotal() throws PortalException, SystemException {
+				public int getTotal() throws PortalException {
 					return
 						_campaignContentLocalService.getCampaignContentsCount(
 							classPK);
 				}
+
 			}
 		);
 	}

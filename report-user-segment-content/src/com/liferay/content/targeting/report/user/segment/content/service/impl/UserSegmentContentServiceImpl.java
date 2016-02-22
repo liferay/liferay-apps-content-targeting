@@ -32,5 +32,4 @@ import com.liferay.content.targeting.report.user.segment.content.service.base.Us
  */
 public class UserSegmentContentServiceImpl
 	extends UserSegmentContentServiceBaseImpl {
-
 }
