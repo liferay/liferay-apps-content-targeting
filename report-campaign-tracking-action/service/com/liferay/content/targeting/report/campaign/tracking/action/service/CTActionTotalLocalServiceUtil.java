@@ -56,8 +56,7 @@ public class CTActionTotalLocalServiceUtil {
 	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
 		long reportInstanceId, java.lang.String alias,
 		java.lang.String elementId, java.lang.String eventType, int count)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCTActionTotal(reportInstanceId, alias, elementId,
 			eventType, count);
@@ -67,8 +66,7 @@ public class CTActionTotalLocalServiceUtil {
 		long reportInstanceId, java.lang.String alias,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType, int count)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCTActionTotal(reportInstanceId, alias,
 			referrerClassName, referrerClassPK, elementId, eventType, count);
@@ -78,22 +76,19 @@ public class CTActionTotalLocalServiceUtil {
 		long reportInstanceId, java.lang.String alias,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType, int count)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCTActionTotal(reportInstanceId, alias,
 			referrerClassName, referrerClassPK, eventType, count);
 	}
 
 	public static void checkCTActionTotalEvents()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkCTActionTotalEvents();
 	}
 
 	public static void checkCTActionTotalEvents(long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkCTActionTotalEvents(reportInstanceId);
 	}
 
@@ -245,8 +240,7 @@ public class CTActionTotalLocalServiceUtil {
 		long reportInstanceId, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCTActionTotal(reportInstanceId, referrerClassName,
 			referrerClassPK, elementId, eventType);
@@ -279,31 +273,27 @@ public class CTActionTotalLocalServiceUtil {
 
 	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> getCTActionsTotal(
 		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCTActionsTotal(reportInstanceId);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> getCTActionsTotal(
 		long reportInstanceId, java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCTActionsTotal(reportInstanceId, modifiedDate);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> getCTActionsTotal(
 		long reportInstanceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCTActionsTotal(reportInstanceId, start, end,
 			orderByComparator);
 	}
 
 	public static int getCTActionsTotalCount(long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCTActionsTotalCount(reportInstanceId);
 	}
 

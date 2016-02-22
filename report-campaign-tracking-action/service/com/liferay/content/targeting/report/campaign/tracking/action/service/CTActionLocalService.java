@@ -73,24 +73,22 @@ public interface CTActionLocalService extends BaseLocalService,
 
 	public CTAction addCTAction(long reportInstanceId, long userSegmentId,
 		java.lang.String alias, java.lang.String elementId,
-		java.lang.String eventType, int count)
-		throws PortalException, SystemException;
+		java.lang.String eventType, int count) throws PortalException;
 
 	public CTAction addCTAction(long reportInstanceId, long userSegmentId,
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType, int count)
-		throws PortalException, SystemException;
+		java.lang.String eventType, int count) throws PortalException;
 
 	public CTAction addCTAction(long reportInstanceId, long userSegmentId,
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String eventType, int count)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public void checkCTActionEvents() throws PortalException, SystemException;
+	public void checkCTActionEvents() throws PortalException;
 
 	public void checkCTActionEvents(long reportInstanceId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Creates a new c t action with the primary key. Does not add the c t action to the database.
@@ -205,29 +203,27 @@ public interface CTActionLocalService extends BaseLocalService,
 	public CTAction getCTAction(long reportInstanceId, long userSegmentId,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTAction> getCTActions(long reportInstanceId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTAction> getCTActions(long reportInstanceId,
-		java.lang.String className, long classPK)
-		throws PortalException, SystemException;
+		java.lang.String className, long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTAction> getCTActions(long reportInstanceId,
-		java.lang.String elementId) throws PortalException, SystemException;
+		java.lang.String elementId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTAction> getCTActions(long reportInstanceId, Date modifiedDate)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTAction> getCTActions(long reportInstanceId, int start,
-		int end, OrderByComparator orderByComparator)
-		throws PortalException, SystemException;
+		int end, OrderByComparator orderByComparator) throws PortalException;
 
 	/**
 	* Returns a range of all the c t actions.
@@ -253,7 +249,7 @@ public interface CTActionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCTActionsCount(long reportInstanceId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

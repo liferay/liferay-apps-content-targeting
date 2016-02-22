@@ -272,183 +272,170 @@ public class CTActionUtil {
 	}
 
 	/**
-	* Returns all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns all the c t actions where reportInstanceId = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	* @return the matching c t actions
 	*/
-	public static List<CTAction> findByR_GtD(long reportInstanceId,
-		Date modifiedDate) {
-		return getPersistence().findByR_GtD(reportInstanceId, modifiedDate);
+	public static List<CTAction> findByReportInstanceId(long reportInstanceId) {
+		return getPersistence().findByReportInstanceId(reportInstanceId);
 	}
 
 	/**
-	* Returns a range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns a range of all the c t actions where reportInstanceId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	* @param start the lower bound of the range of c t actions
 	* @param end the upper bound of the range of c t actions (not inclusive)
 	* @return the range of matching c t actions
 	*/
-	public static List<CTAction> findByR_GtD(long reportInstanceId,
-		Date modifiedDate, int start, int end) {
+	public static List<CTAction> findByReportInstanceId(long reportInstanceId,
+		int start, int end) {
 		return getPersistence()
-				   .findByR_GtD(reportInstanceId, modifiedDate, start, end);
+				   .findByReportInstanceId(reportInstanceId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns an ordered range of all the c t actions where reportInstanceId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	* @param start the lower bound of the range of c t actions
 	* @param end the upper bound of the range of c t actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching c t actions
 	*/
-	public static List<CTAction> findByR_GtD(long reportInstanceId,
-		Date modifiedDate, int start, int end,
-		OrderByComparator<CTAction> orderByComparator) {
+	public static List<CTAction> findByReportInstanceId(long reportInstanceId,
+		int start, int end, OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
-				   .findByR_GtD(reportInstanceId, modifiedDate, start, end,
+				   .findByReportInstanceId(reportInstanceId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns an ordered range of all the c t actions where reportInstanceId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	* @param start the lower bound of the range of c t actions
 	* @param end the upper bound of the range of c t actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching c t actions
 	*/
-	public static List<CTAction> findByR_GtD(long reportInstanceId,
-		Date modifiedDate, int start, int end,
-		OrderByComparator<CTAction> orderByComparator, boolean retrieveFromCache) {
+	public static List<CTAction> findByReportInstanceId(long reportInstanceId,
+		int start, int end, OrderByComparator<CTAction> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByR_GtD(reportInstanceId, modifiedDate, start, end,
+				   .findByReportInstanceId(reportInstanceId, start, end,
 			orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the first c t action in the ordered set where reportInstanceId = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t action
 	* @throws NoSuchCTActionException if a matching c t action could not be found
 	*/
-	public static CTAction findByR_GtD_First(long reportInstanceId,
-		Date modifiedDate, OrderByComparator<CTAction> orderByComparator)
+	public static CTAction findByReportInstanceId_First(long reportInstanceId,
+		OrderByComparator<CTAction> orderByComparator)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
-				   .findByR_GtD_First(reportInstanceId, modifiedDate,
+				   .findByReportInstanceId_First(reportInstanceId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the first c t action in the ordered set where reportInstanceId = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
 	*/
-	public static CTAction fetchByR_GtD_First(long reportInstanceId,
-		Date modifiedDate, OrderByComparator<CTAction> orderByComparator) {
+	public static CTAction fetchByReportInstanceId_First(
+		long reportInstanceId, OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
-				   .fetchByR_GtD_First(reportInstanceId, modifiedDate,
+				   .fetchByReportInstanceId_First(reportInstanceId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the last c t action in the ordered set where reportInstanceId = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t action
 	* @throws NoSuchCTActionException if a matching c t action could not be found
 	*/
-	public static CTAction findByR_GtD_Last(long reportInstanceId,
-		Date modifiedDate, OrderByComparator<CTAction> orderByComparator)
+	public static CTAction findByReportInstanceId_Last(long reportInstanceId,
+		OrderByComparator<CTAction> orderByComparator)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
-				   .findByR_GtD_Last(reportInstanceId, modifiedDate,
+				   .findByReportInstanceId_Last(reportInstanceId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the last c t action in the ordered set where reportInstanceId = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
 	*/
-	public static CTAction fetchByR_GtD_Last(long reportInstanceId,
-		Date modifiedDate, OrderByComparator<CTAction> orderByComparator) {
+	public static CTAction fetchByReportInstanceId_Last(long reportInstanceId,
+		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
-				   .fetchByR_GtD_Last(reportInstanceId, modifiedDate,
+				   .fetchByReportInstanceId_Last(reportInstanceId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63;.
 	*
 	* @param CTActionId the primary key of the current c t action
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next c t action
 	* @throws NoSuchCTActionException if a c t action with the primary key could not be found
 	*/
-	public static CTAction[] findByR_GtD_PrevAndNext(long CTActionId,
-		long reportInstanceId, Date modifiedDate,
+	public static CTAction[] findByReportInstanceId_PrevAndNext(
+		long CTActionId, long reportInstanceId,
 		OrderByComparator<CTAction> orderByComparator)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
-				   .findByR_GtD_PrevAndNext(CTActionId, reportInstanceId,
-			modifiedDate, orderByComparator);
+				   .findByReportInstanceId_PrevAndNext(CTActionId,
+			reportInstanceId, orderByComparator);
 	}
 
 	/**
-	* Removes all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63; from the database.
+	* Removes all the c t actions where reportInstanceId = &#63; from the database.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	*/
-	public static void removeByR_GtD(long reportInstanceId, Date modifiedDate) {
-		getPersistence().removeByR_GtD(reportInstanceId, modifiedDate);
+	public static void removeByReportInstanceId(long reportInstanceId) {
+		getPersistence().removeByReportInstanceId(reportInstanceId);
 	}
 
 	/**
-	* Returns the number of c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the number of c t actions where reportInstanceId = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param modifiedDate the modified date
 	* @return the number of matching c t actions
 	*/
-	public static int countByR_GtD(long reportInstanceId, Date modifiedDate) {
-		return getPersistence().countByR_GtD(reportInstanceId, modifiedDate);
+	public static int countByReportInstanceId(long reportInstanceId) {
+		return getPersistence().countByReportInstanceId(reportInstanceId);
 	}
 
 	/**
@@ -635,6 +622,186 @@ public class CTActionUtil {
 	public static int countByR_E(long reportInstanceId,
 		java.lang.String elementId) {
 		return getPersistence().countByR_E(reportInstanceId, elementId);
+	}
+
+	/**
+	* Returns all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @return the matching c t actions
+	*/
+	public static List<CTAction> findByR_GtD(long reportInstanceId,
+		Date modifiedDate) {
+		return getPersistence().findByR_GtD(reportInstanceId, modifiedDate);
+	}
+
+	/**
+	* Returns a range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @return the range of matching c t actions
+	*/
+	public static List<CTAction> findByR_GtD(long reportInstanceId,
+		Date modifiedDate, int start, int end) {
+		return getPersistence()
+				   .findByR_GtD(reportInstanceId, modifiedDate, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching c t actions
+	*/
+	public static List<CTAction> findByR_GtD(long reportInstanceId,
+		Date modifiedDate, int start, int end,
+		OrderByComparator<CTAction> orderByComparator) {
+		return getPersistence()
+				   .findByR_GtD(reportInstanceId, modifiedDate, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param start the lower bound of the range of c t actions
+	* @param end the upper bound of the range of c t actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching c t actions
+	*/
+	public static List<CTAction> findByR_GtD(long reportInstanceId,
+		Date modifiedDate, int start, int end,
+		OrderByComparator<CTAction> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByR_GtD(reportInstanceId, modifiedDate, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching c t action
+	* @throws NoSuchCTActionException if a matching c t action could not be found
+	*/
+	public static CTAction findByR_GtD_First(long reportInstanceId,
+		Date modifiedDate, OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
+		return getPersistence()
+				   .findByR_GtD_First(reportInstanceId, modifiedDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
+	*/
+	public static CTAction fetchByR_GtD_First(long reportInstanceId,
+		Date modifiedDate, OrderByComparator<CTAction> orderByComparator) {
+		return getPersistence()
+				   .fetchByR_GtD_First(reportInstanceId, modifiedDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching c t action
+	* @throws NoSuchCTActionException if a matching c t action could not be found
+	*/
+	public static CTAction findByR_GtD_Last(long reportInstanceId,
+		Date modifiedDate, OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
+		return getPersistence()
+				   .findByR_GtD_Last(reportInstanceId, modifiedDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
+	*/
+	public static CTAction fetchByR_GtD_Last(long reportInstanceId,
+		Date modifiedDate, OrderByComparator<CTAction> orderByComparator) {
+		return getPersistence()
+				   .fetchByR_GtD_Last(reportInstanceId, modifiedDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param CTActionId the primary key of the current c t action
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next c t action
+	* @throws NoSuchCTActionException if a c t action with the primary key could not be found
+	*/
+	public static CTAction[] findByR_GtD_PrevAndNext(long CTActionId,
+		long reportInstanceId, Date modifiedDate,
+		OrderByComparator<CTAction> orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
+		return getPersistence()
+				   .findByR_GtD_PrevAndNext(CTActionId, reportInstanceId,
+			modifiedDate, orderByComparator);
+	}
+
+	/**
+	* Removes all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63; from the database.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	*/
+	public static void removeByR_GtD(long reportInstanceId, Date modifiedDate) {
+		getPersistence().removeByR_GtD(reportInstanceId, modifiedDate);
+	}
+
+	/**
+	* Returns the number of c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param modifiedDate the modified date
+	* @return the number of matching c t actions
+	*/
+	public static int countByR_GtD(long reportInstanceId, Date modifiedDate) {
+		return getPersistence().countByR_GtD(reportInstanceId, modifiedDate);
 	}
 
 	/**
@@ -945,173 +1112,6 @@ public class CTActionUtil {
 		return getPersistence()
 				   .countByR_U_R_R_E_E(reportInstanceId, userSegmentId,
 			referrerClassName, referrerClassPK, elementId, eventType);
-	}
-
-	/**
-	* Returns all the c t actions where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @return the matching c t actions
-	*/
-	public static List<CTAction> findByReportInstanceId(long reportInstanceId) {
-		return getPersistence().findByReportInstanceId(reportInstanceId);
-	}
-
-	/**
-	* Returns a range of all the c t actions where reportInstanceId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param start the lower bound of the range of c t actions
-	* @param end the upper bound of the range of c t actions (not inclusive)
-	* @return the range of matching c t actions
-	*/
-	public static List<CTAction> findByReportInstanceId(long reportInstanceId,
-		int start, int end) {
-		return getPersistence()
-				   .findByReportInstanceId(reportInstanceId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the c t actions where reportInstanceId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param start the lower bound of the range of c t actions
-	* @param end the upper bound of the range of c t actions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching c t actions
-	*/
-	public static List<CTAction> findByReportInstanceId(long reportInstanceId,
-		int start, int end, OrderByComparator<CTAction> orderByComparator) {
-		return getPersistence()
-				   .findByReportInstanceId(reportInstanceId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the c t actions where reportInstanceId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param start the lower bound of the range of c t actions
-	* @param end the upper bound of the range of c t actions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching c t actions
-	*/
-	public static List<CTAction> findByReportInstanceId(long reportInstanceId,
-		int start, int end, OrderByComparator<CTAction> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByReportInstanceId(reportInstanceId, start, end,
-			orderByComparator, retrieveFromCache);
-	}
-
-	/**
-	* Returns the first c t action in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching c t action
-	* @throws NoSuchCTActionException if a matching c t action could not be found
-	*/
-	public static CTAction findByReportInstanceId_First(long reportInstanceId,
-		OrderByComparator<CTAction> orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
-		return getPersistence()
-				   .findByReportInstanceId_First(reportInstanceId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first c t action in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
-	*/
-	public static CTAction fetchByReportInstanceId_First(
-		long reportInstanceId, OrderByComparator<CTAction> orderByComparator) {
-		return getPersistence()
-				   .fetchByReportInstanceId_First(reportInstanceId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last c t action in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching c t action
-	* @throws NoSuchCTActionException if a matching c t action could not be found
-	*/
-	public static CTAction findByReportInstanceId_Last(long reportInstanceId,
-		OrderByComparator<CTAction> orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
-		return getPersistence()
-				   .findByReportInstanceId_Last(reportInstanceId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last c t action in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
-	*/
-	public static CTAction fetchByReportInstanceId_Last(long reportInstanceId,
-		OrderByComparator<CTAction> orderByComparator) {
-		return getPersistence()
-				   .fetchByReportInstanceId_Last(reportInstanceId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param CTActionId the primary key of the current c t action
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next c t action
-	* @throws NoSuchCTActionException if a c t action with the primary key could not be found
-	*/
-	public static CTAction[] findByReportInstanceId_PrevAndNext(
-		long CTActionId, long reportInstanceId,
-		OrderByComparator<CTAction> orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
-		return getPersistence()
-				   .findByReportInstanceId_PrevAndNext(CTActionId,
-			reportInstanceId, orderByComparator);
-	}
-
-	/**
-	* Removes all the c t actions where reportInstanceId = &#63; from the database.
-	*
-	* @param reportInstanceId the report instance ID
-	*/
-	public static void removeByReportInstanceId(long reportInstanceId) {
-		getPersistence().removeByReportInstanceId(reportInstanceId);
-	}
-
-	/**
-	* Returns the number of c t actions where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @return the number of matching c t actions
-	*/
-	public static int countByReportInstanceId(long reportInstanceId) {
-		return getPersistence().countByReportInstanceId(reportInstanceId);
 	}
 
 	/**

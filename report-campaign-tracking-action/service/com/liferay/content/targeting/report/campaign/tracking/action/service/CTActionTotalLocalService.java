@@ -73,25 +73,22 @@ public interface CTActionTotalLocalService extends BaseLocalService,
 
 	public CTActionTotal addCTActionTotal(long reportInstanceId,
 		java.lang.String alias, java.lang.String elementId,
-		java.lang.String eventType, int count)
-		throws PortalException, SystemException;
+		java.lang.String eventType, int count) throws PortalException;
 
 	public CTActionTotal addCTActionTotal(long reportInstanceId,
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType, int count)
-		throws PortalException, SystemException;
+		java.lang.String eventType, int count) throws PortalException;
 
 	public CTActionTotal addCTActionTotal(long reportInstanceId,
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String eventType, int count)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public void checkCTActionTotalEvents()
-		throws PortalException, SystemException;
+	public void checkCTActionTotalEvents() throws PortalException;
 
 	public void checkCTActionTotalEvents(long reportInstanceId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Creates a new c t action total with the primary key. Does not add the c t action total to the database.
@@ -208,7 +205,7 @@ public interface CTActionTotalLocalService extends BaseLocalService,
 	public CTActionTotal getCTActionTotal(long reportInstanceId,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Returns a range of all the c t action totals.
@@ -234,20 +231,20 @@ public interface CTActionTotalLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTActionTotal> getCTActionsTotal(long reportInstanceId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTActionTotal> getCTActionsTotal(long reportInstanceId,
-		Date modifiedDate) throws PortalException, SystemException;
+		Date modifiedDate) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTActionTotal> getCTActionsTotal(long reportInstanceId,
 		int start, int end, OrderByComparator orderByComparator)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCTActionsTotalCount(long reportInstanceId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

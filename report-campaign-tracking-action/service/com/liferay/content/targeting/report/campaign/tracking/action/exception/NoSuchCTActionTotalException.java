@@ -12,19 +12,31 @@
  * details.
  */
 
-package com.liferay.content.targeting.report.campaign.tracking.action.service.persistence;
+package com.liferay.content.targeting.report.campaign.tracking.action.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @ProviderType
-public interface CTActionTotalFinder {
-	public java.util.List<java.lang.Object[]> findByAnalyticsWithClassName(
-		java.util.Date modifiedDate);
+public class NoSuchCTActionTotalException extends NoSuchModelException {
 
-	public java.util.List<java.lang.Object[]> findByAnalyticsWithElementId(
-		java.util.Date modifiedDate);
+	public NoSuchCTActionTotalException() {
+	}
+
+	public NoSuchCTActionTotalException(String msg) {
+		super(msg);
+	}
+
+	public NoSuchCTActionTotalException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NoSuchCTActionTotalException(Throwable cause) {
+		super(cause);
+	}
+
 }

@@ -285,8 +285,7 @@ public class CTActionTotalWrapper implements CTActionTotal,
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> getViewsByUserSegment()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ctActionTotal.getViewsByUserSegment();
 	}
 

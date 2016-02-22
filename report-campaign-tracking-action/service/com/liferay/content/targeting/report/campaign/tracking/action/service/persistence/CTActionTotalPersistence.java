@@ -176,6 +176,139 @@ public interface CTActionTotalPersistence extends BasePersistence<CTActionTotal>
 	public int countByCampaignId(long campaignId);
 
 	/**
+	* Returns all the c t action totals where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @return the matching c t action totals
+	*/
+	public java.util.List<CTActionTotal> findByReportInstanceId(
+		long reportInstanceId);
+
+	/**
+	* Returns a range of all the c t action totals where reportInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param start the lower bound of the range of c t action totals
+	* @param end the upper bound of the range of c t action totals (not inclusive)
+	* @return the range of matching c t action totals
+	*/
+	public java.util.List<CTActionTotal> findByReportInstanceId(
+		long reportInstanceId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the c t action totals where reportInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param start the lower bound of the range of c t action totals
+	* @param end the upper bound of the range of c t action totals (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching c t action totals
+	*/
+	public java.util.List<CTActionTotal> findByReportInstanceId(
+		long reportInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the c t action totals where reportInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param start the lower bound of the range of c t action totals
+	* @param end the upper bound of the range of c t action totals (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching c t action totals
+	*/
+	public java.util.List<CTActionTotal> findByReportInstanceId(
+		long reportInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first c t action total in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching c t action total
+	* @throws NoSuchCTActionTotalException if a matching c t action total could not be found
+	*/
+	public CTActionTotal findByReportInstanceId_First(long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator)
+		throws NoSuchCTActionTotalException;
+
+	/**
+	* Returns the first c t action total in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching c t action total, or <code>null</code> if a matching c t action total could not be found
+	*/
+	public CTActionTotal fetchByReportInstanceId_First(long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator);
+
+	/**
+	* Returns the last c t action total in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching c t action total
+	* @throws NoSuchCTActionTotalException if a matching c t action total could not be found
+	*/
+	public CTActionTotal findByReportInstanceId_Last(long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator)
+		throws NoSuchCTActionTotalException;
+
+	/**
+	* Returns the last c t action total in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching c t action total, or <code>null</code> if a matching c t action total could not be found
+	*/
+	public CTActionTotal fetchByReportInstanceId_Last(long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator);
+
+	/**
+	* Returns the c t action totals before and after the current c t action total in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param CTActionTotalId the primary key of the current c t action total
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next c t action total
+	* @throws NoSuchCTActionTotalException if a c t action total with the primary key could not be found
+	*/
+	public CTActionTotal[] findByReportInstanceId_PrevAndNext(
+		long CTActionTotalId, long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator)
+		throws NoSuchCTActionTotalException;
+
+	/**
+	* Removes all the c t action totals where reportInstanceId = &#63; from the database.
+	*
+	* @param reportInstanceId the report instance ID
+	*/
+	public void removeByReportInstanceId(long reportInstanceId);
+
+	/**
+	* Returns the number of c t action totals where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @return the number of matching c t action totals
+	*/
+	public int countByReportInstanceId(long reportInstanceId);
+
+	/**
 	* Returns all the c t action totals where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	*
 	* @param reportInstanceId the report instance ID
@@ -397,139 +530,6 @@ public interface CTActionTotalPersistence extends BasePersistence<CTActionTotal>
 	public int countByR_R_R_E_E(long reportInstanceId,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType);
-
-	/**
-	* Returns all the c t action totals where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @return the matching c t action totals
-	*/
-	public java.util.List<CTActionTotal> findByReportInstanceId(
-		long reportInstanceId);
-
-	/**
-	* Returns a range of all the c t action totals where reportInstanceId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param start the lower bound of the range of c t action totals
-	* @param end the upper bound of the range of c t action totals (not inclusive)
-	* @return the range of matching c t action totals
-	*/
-	public java.util.List<CTActionTotal> findByReportInstanceId(
-		long reportInstanceId, int start, int end);
-
-	/**
-	* Returns an ordered range of all the c t action totals where reportInstanceId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param start the lower bound of the range of c t action totals
-	* @param end the upper bound of the range of c t action totals (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching c t action totals
-	*/
-	public java.util.List<CTActionTotal> findByReportInstanceId(
-		long reportInstanceId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator);
-
-	/**
-	* Returns an ordered range of all the c t action totals where reportInstanceId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param start the lower bound of the range of c t action totals
-	* @param end the upper bound of the range of c t action totals (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching c t action totals
-	*/
-	public java.util.List<CTActionTotal> findByReportInstanceId(
-		long reportInstanceId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	* Returns the first c t action total in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching c t action total
-	* @throws NoSuchCTActionTotalException if a matching c t action total could not be found
-	*/
-	public CTActionTotal findByReportInstanceId_First(long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator)
-		throws NoSuchCTActionTotalException;
-
-	/**
-	* Returns the first c t action total in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching c t action total, or <code>null</code> if a matching c t action total could not be found
-	*/
-	public CTActionTotal fetchByReportInstanceId_First(long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator);
-
-	/**
-	* Returns the last c t action total in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching c t action total
-	* @throws NoSuchCTActionTotalException if a matching c t action total could not be found
-	*/
-	public CTActionTotal findByReportInstanceId_Last(long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator)
-		throws NoSuchCTActionTotalException;
-
-	/**
-	* Returns the last c t action total in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching c t action total, or <code>null</code> if a matching c t action total could not be found
-	*/
-	public CTActionTotal fetchByReportInstanceId_Last(long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator);
-
-	/**
-	* Returns the c t action totals before and after the current c t action total in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param CTActionTotalId the primary key of the current c t action total
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next c t action total
-	* @throws NoSuchCTActionTotalException if a c t action total with the primary key could not be found
-	*/
-	public CTActionTotal[] findByReportInstanceId_PrevAndNext(
-		long CTActionTotalId, long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator<CTActionTotal> orderByComparator)
-		throws NoSuchCTActionTotalException;
-
-	/**
-	* Removes all the c t action totals where reportInstanceId = &#63; from the database.
-	*
-	* @param reportInstanceId the report instance ID
-	*/
-	public void removeByReportInstanceId(long reportInstanceId);
-
-	/**
-	* Returns the number of c t action totals where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @return the number of matching c t action totals
-	*/
-	public int countByReportInstanceId(long reportInstanceId);
 
 	/**
 	* Caches the c t action total in the entity cache if it is enabled.
