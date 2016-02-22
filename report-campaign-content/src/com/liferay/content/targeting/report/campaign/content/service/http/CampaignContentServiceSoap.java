@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.report.campaign.content.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * Provides the SOAP utility for the
  * {@link com.liferay.content.targeting.report.campaign.content.service.CampaignContentServiceUtil} service utility. The
@@ -54,5 +56,6 @@ package com.liferay.content.targeting.report.campaign.content.service.http;
  * @see com.liferay.content.targeting.report.campaign.content.service.CampaignContentServiceUtil
  * @generated
  */
+@ProviderType
 public class CampaignContentServiceSoap {
 }

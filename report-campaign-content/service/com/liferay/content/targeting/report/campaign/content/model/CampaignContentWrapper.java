@@ -14,8 +14,15 @@
 
 package com.liferay.content.targeting.report.campaign.content.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
+import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +37,7 @@ import java.util.Map;
  * @see CampaignContent
  * @generated
  */
+@ProviderType
 public class CampaignContentWrapper implements CampaignContent,
 	ModelWrapper<CampaignContent> {
 	public CampaignContentWrapper(CampaignContent campaignContent) {
@@ -113,24 +121,15 @@ public class CampaignContentWrapper implements CampaignContent,
 		}
 	}
 
-	/**
-	* Returns the primary key of this campaign content.
-	*
-	* @return the primary key of this campaign content
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _campaignContent.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new CampaignContentWrapper((CampaignContent)_campaignContent.clone());
 	}
 
-	/**
-	* Sets the primary key of this campaign content.
-	*
-	* @param primaryKey the primary key of this campaign content
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_campaignContent.setPrimaryKey(primaryKey);
+	public int compareTo(
+		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent) {
+		return _campaignContent.compareTo(campaignContent);
 	}
 
 	/**
@@ -144,36 +143,6 @@ public class CampaignContentWrapper implements CampaignContent,
 	}
 
 	/**
-	* Sets the campaign content ID of this campaign content.
-	*
-	* @param campaignContentId the campaign content ID of this campaign content
-	*/
-	@Override
-	public void setCampaignContentId(long campaignContentId) {
-		_campaignContent.setCampaignContentId(campaignContentId);
-	}
-
-	/**
-	* Returns the company ID of this campaign content.
-	*
-	* @return the company ID of this campaign content
-	*/
-	@Override
-	public long getCompanyId() {
-		return _campaignContent.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this campaign content.
-	*
-	* @param companyId the company ID of this campaign content
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_campaignContent.setCompanyId(companyId);
-	}
-
-	/**
 	* Returns the campaign ID of this campaign content.
 	*
 	* @return the campaign ID of this campaign content
@@ -181,16 +150,6 @@ public class CampaignContentWrapper implements CampaignContent,
 	@Override
 	public long getCampaignId() {
 		return _campaignContent.getCampaignId();
-	}
-
-	/**
-	* Sets the campaign ID of this campaign content.
-	*
-	* @param campaignId the campaign ID of this campaign content
-	*/
-	@Override
-	public void setCampaignId(long campaignId) {
-		_campaignContent.setCampaignId(campaignId);
 	}
 
 	/**
@@ -204,16 +163,6 @@ public class CampaignContentWrapper implements CampaignContent,
 	}
 
 	/**
-	* Sets the class name of this campaign content.
-	*
-	* @param className the class name of this campaign content
-	*/
-	@Override
-	public void setClassName(java.lang.String className) {
-		_campaignContent.setClassName(className);
-	}
-
-	/**
 	* Returns the class p k of this campaign content.
 	*
 	* @return the class p k of this campaign content
@@ -224,33 +173,13 @@ public class CampaignContentWrapper implements CampaignContent,
 	}
 
 	/**
-	* Sets the class p k of this campaign content.
+	* Returns the company ID of this campaign content.
 	*
-	* @param classPK the class p k of this campaign content
+	* @return the company ID of this campaign content
 	*/
 	@Override
-	public void setClassPK(long classPK) {
-		_campaignContent.setClassPK(classPK);
-	}
-
-	/**
-	* Returns the event type of this campaign content.
-	*
-	* @return the event type of this campaign content
-	*/
-	@Override
-	public java.lang.String getEventType() {
-		return _campaignContent.getEventType();
-	}
-
-	/**
-	* Sets the event type of this campaign content.
-	*
-	* @param eventType the event type of this campaign content
-	*/
-	@Override
-	public void setEventType(java.lang.String eventType) {
-		_campaignContent.setEventType(eventType);
+	public long getCompanyId() {
+		return _campaignContent.getCompanyId();
 	}
 
 	/**
@@ -264,13 +193,18 @@ public class CampaignContentWrapper implements CampaignContent,
 	}
 
 	/**
-	* Sets the count of this campaign content.
+	* Returns the event type of this campaign content.
 	*
-	* @param count the count of this campaign content
+	* @return the event type of this campaign content
 	*/
 	@Override
-	public void setCount(int count) {
-		_campaignContent.setCount(count);
+	public java.lang.String getEventType() {
+		return _campaignContent.getEventType();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _campaignContent.getExpandoBridge();
 	}
 
 	/**
@@ -279,123 +213,23 @@ public class CampaignContentWrapper implements CampaignContent,
 	* @return the modified date of this campaign content
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _campaignContent.getModifiedDate();
 	}
 
 	/**
-	* Sets the modified date of this campaign content.
+	* Returns the primary key of this campaign content.
 	*
-	* @param modifiedDate the modified date of this campaign content
+	* @return the primary key of this campaign content
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_campaignContent.setModifiedDate(modifiedDate);
+	public long getPrimaryKey() {
+		return _campaignContent.getPrimaryKey();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _campaignContent.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_campaignContent.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _campaignContent.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_campaignContent.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _campaignContent.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _campaignContent.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_campaignContent.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _campaignContent.getExpandoBridge();
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
-		_campaignContent.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
-		_campaignContent.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_campaignContent.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CampaignContentWrapper((CampaignContent)_campaignContent.clone());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent) {
-		return _campaignContent.compareTo(campaignContent);
-	}
-
-	@Override
-	public int hashCode() {
-		return _campaignContent.hashCode();
-	}
-
-	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.report.campaign.content.model.CampaignContent> toCacheModel() {
-		return _campaignContent.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent toEscapedModel() {
-		return new CampaignContentWrapper(_campaignContent.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent toUnescapedModel() {
-		return new CampaignContentWrapper(_campaignContent.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _campaignContent.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _campaignContent.toXmlString();
-	}
-
-	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_campaignContent.persist();
 	}
 
 	@Override
@@ -406,6 +240,177 @@ public class CampaignContentWrapper implements CampaignContent,
 	@Override
 	public java.lang.String getType(java.util.Locale locale) {
 		return _campaignContent.getType(locale);
+	}
+
+	@Override
+	public int hashCode() {
+		return _campaignContent.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _campaignContent.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _campaignContent.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _campaignContent.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_campaignContent.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_campaignContent.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the campaign content ID of this campaign content.
+	*
+	* @param campaignContentId the campaign content ID of this campaign content
+	*/
+	@Override
+	public void setCampaignContentId(long campaignContentId) {
+		_campaignContent.setCampaignContentId(campaignContentId);
+	}
+
+	/**
+	* Sets the campaign ID of this campaign content.
+	*
+	* @param campaignId the campaign ID of this campaign content
+	*/
+	@Override
+	public void setCampaignId(long campaignId) {
+		_campaignContent.setCampaignId(campaignId);
+	}
+
+	/**
+	* Sets the class name of this campaign content.
+	*
+	* @param className the class name of this campaign content
+	*/
+	@Override
+	public void setClassName(java.lang.String className) {
+		_campaignContent.setClassName(className);
+	}
+
+	/**
+	* Sets the class p k of this campaign content.
+	*
+	* @param classPK the class p k of this campaign content
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_campaignContent.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this campaign content.
+	*
+	* @param companyId the company ID of this campaign content
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_campaignContent.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the count of this campaign content.
+	*
+	* @param count the count of this campaign content
+	*/
+	@Override
+	public void setCount(int count) {
+		_campaignContent.setCount(count);
+	}
+
+	/**
+	* Sets the event type of this campaign content.
+	*
+	* @param eventType the event type of this campaign content
+	*/
+	@Override
+	public void setEventType(java.lang.String eventType) {
+		_campaignContent.setEventType(eventType);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_campaignContent.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_campaignContent.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		_campaignContent.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the modified date of this campaign content.
+	*
+	* @param modifiedDate the modified date of this campaign content
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_campaignContent.setModifiedDate(modifiedDate);
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_campaignContent.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this campaign content.
+	*
+	* @param primaryKey the primary key of this campaign content
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_campaignContent.setPrimaryKey(primaryKey);
+	}
+
+	@Override
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+		_campaignContent.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.content.targeting.report.campaign.content.model.CampaignContent> toCacheModel() {
+		return _campaignContent.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent toEscapedModel() {
+		return new CampaignContentWrapper(_campaignContent.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _campaignContent.toString();
+	}
+
+	@Override
+	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent toUnescapedModel() {
+		return new CampaignContentWrapper(_campaignContent.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _campaignContent.toXmlString();
 	}
 
 	@Override
@@ -428,16 +433,19 @@ public class CampaignContentWrapper implements CampaignContent,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	public CampaignContent getWrappedCampaignContent() {
+	@Override
+	public CampaignContent getWrappedModel() {
 		return _campaignContent;
 	}
 
 	@Override
-	public CampaignContent getWrappedModel() {
-		return _campaignContent;
+	public boolean isEntityCacheEnabled() {
+		return _campaignContent.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _campaignContent.isFinderCacheEnabled();
 	}
 
 	@Override
@@ -445,5 +453,5 @@ public class CampaignContentWrapper implements CampaignContent,
 		_campaignContent.resetOriginalValues();
 	}
 
-	private CampaignContent _campaignContent;
+	private final CampaignContent _campaignContent;
 }

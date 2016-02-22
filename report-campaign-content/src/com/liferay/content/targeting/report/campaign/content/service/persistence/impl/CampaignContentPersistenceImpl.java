@@ -12,45 +12,47 @@
  * details.
  */
 
-package com.liferay.content.targeting.report.campaign.content.service.persistence;
+package com.liferay.content.targeting.report.campaign.content.service.persistence.impl;
 
-import com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.content.targeting.report.campaign.content.exception.NoSuchCampaignContentException;
 import com.liferay.content.targeting.report.campaign.content.model.CampaignContent;
 import com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentImpl;
 import com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentModelImpl;
+import com.liferay.content.targeting.report.campaign.content.service.persistence.CampaignContentPersistence;
 
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.service.persistence.CompanyProvider;
+import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
+
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence implementation for the campaign content service.
@@ -61,9 +63,10 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see CampaignContentPersistence
- * @see CampaignContentUtil
+ * @see com.liferay.content.targeting.report.campaign.content.service.persistence.CampaignContentUtil
  * @generated
  */
+@ProviderType
 public class CampaignContentPersistenceImpl extends BasePersistenceImpl<CampaignContent>
 	implements CampaignContentPersistence {
 	/*
@@ -116,11 +119,9 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 *
 	 * @param campaignId the campaign ID
 	 * @return the matching campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CampaignContent> findByCampaignId(long campaignId)
-		throws SystemException {
+	public List<CampaignContent> findByCampaignId(long campaignId) {
 		return findByCampaignId(campaignId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -129,18 +130,17 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * Returns a range of all the campaign contents where campaignId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param campaignId the campaign ID
 	 * @param start the lower bound of the range of campaign contents
 	 * @param end the upper bound of the range of campaign contents (not inclusive)
 	 * @return the range of matching campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<CampaignContent> findByCampaignId(long campaignId, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByCampaignId(campaignId, start, end, null);
 	}
 
@@ -148,7 +148,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * Returns an ordered range of all the campaign contents where campaignId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param campaignId the campaign ID
@@ -156,11 +156,31 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param end the upper bound of the range of campaign contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<CampaignContent> findByCampaignId(long campaignId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator<CampaignContent> orderByComparator) {
+		return findByCampaignId(campaignId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the campaign contents where campaignId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param campaignId the campaign ID
+	 * @param start the lower bound of the range of campaign contents
+	 * @param end the upper bound of the range of campaign contents (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching campaign contents
+	 */
+	@Override
+	public List<CampaignContent> findByCampaignId(long campaignId, int start,
+		int end, OrderByComparator<CampaignContent> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -176,15 +196,19 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 			finderArgs = new Object[] { campaignId, start, end, orderByComparator };
 		}
 
-		List<CampaignContent> list = (List<CampaignContent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<CampaignContent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (CampaignContent campaignContent : list) {
-				if ((campaignId != campaignContent.getCampaignId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<CampaignContent>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (CampaignContent campaignContent : list) {
+					if ((campaignId != campaignContent.getCampaignId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -194,7 +218,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -232,7 +256,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<CampaignContent>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<CampaignContent>)QueryUtil.list(q,
@@ -241,10 +265,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -262,13 +286,12 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching campaign content
-	 * @throws com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException if a matching campaign content could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchCampaignContentException if a matching campaign content could not be found
 	 */
 	@Override
 	public CampaignContent findByCampaignId_First(long campaignId,
-		OrderByComparator orderByComparator)
-		throws NoSuchCampaignContentException, SystemException {
+		OrderByComparator<CampaignContent> orderByComparator)
+		throws NoSuchCampaignContentException {
 		CampaignContent campaignContent = fetchByCampaignId_First(campaignId,
 				orderByComparator);
 
@@ -294,11 +317,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching campaign content, or <code>null</code> if a matching campaign content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CampaignContent fetchByCampaignId_First(long campaignId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<CampaignContent> orderByComparator) {
 		List<CampaignContent> list = findByCampaignId(campaignId, 0, 1,
 				orderByComparator);
 
@@ -315,13 +337,12 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching campaign content
-	 * @throws com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException if a matching campaign content could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchCampaignContentException if a matching campaign content could not be found
 	 */
 	@Override
 	public CampaignContent findByCampaignId_Last(long campaignId,
-		OrderByComparator orderByComparator)
-		throws NoSuchCampaignContentException, SystemException {
+		OrderByComparator<CampaignContent> orderByComparator)
+		throws NoSuchCampaignContentException {
 		CampaignContent campaignContent = fetchByCampaignId_Last(campaignId,
 				orderByComparator);
 
@@ -347,11 +368,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching campaign content, or <code>null</code> if a matching campaign content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CampaignContent fetchByCampaignId_Last(long campaignId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<CampaignContent> orderByComparator) {
 		int count = countByCampaignId(campaignId);
 
 		if (count == 0) {
@@ -375,14 +395,13 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next campaign content
-	 * @throws com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException if a campaign content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchCampaignContentException if a campaign content with the primary key could not be found
 	 */
 	@Override
 	public CampaignContent[] findByCampaignId_PrevAndNext(
 		long campaignContentId, long campaignId,
-		OrderByComparator orderByComparator)
-		throws NoSuchCampaignContentException, SystemException {
+		OrderByComparator<CampaignContent> orderByComparator)
+		throws NoSuchCampaignContentException {
 		CampaignContent campaignContent = findByPrimaryKey(campaignContentId);
 
 		Session session = null;
@@ -412,12 +431,13 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 	protected CampaignContent getByCampaignId_PrevAndNext(Session session,
 		CampaignContent campaignContent, long campaignId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<CampaignContent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -519,10 +539,9 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * Removes all the campaign contents where campaignId = &#63; from the database.
 	 *
 	 * @param campaignId the campaign ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByCampaignId(long campaignId) throws SystemException {
+	public void removeByCampaignId(long campaignId) {
 		for (CampaignContent campaignContent : findByCampaignId(campaignId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(campaignContent);
@@ -534,16 +553,14 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 *
 	 * @param campaignId the campaign ID
 	 * @return the number of matching campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByCampaignId(long campaignId) throws SystemException {
+	public int countByCampaignId(long campaignId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_CAMPAIGNID;
 
 		Object[] finderArgs = new Object[] { campaignId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -567,10 +584,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -604,11 +621,9 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param campaignId the campaign ID
 	 * @param modifiedDate the modified date
 	 * @return the matching campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CampaignContent> findByC_GtD(long campaignId, Date modifiedDate)
-		throws SystemException {
+	public List<CampaignContent> findByC_GtD(long campaignId, Date modifiedDate) {
 		return findByC_GtD(campaignId, modifiedDate, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -617,7 +632,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * Returns a range of all the campaign contents where campaignId = &#63; and modifiedDate &gt; &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param campaignId the campaign ID
@@ -625,11 +640,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param start the lower bound of the range of campaign contents
 	 * @param end the upper bound of the range of campaign contents (not inclusive)
 	 * @return the range of matching campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<CampaignContent> findByC_GtD(long campaignId,
-		Date modifiedDate, int start, int end) throws SystemException {
+		Date modifiedDate, int start, int end) {
 		return findByC_GtD(campaignId, modifiedDate, start, end, null);
 	}
 
@@ -637,7 +651,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * Returns an ordered range of all the campaign contents where campaignId = &#63; and modifiedDate &gt; &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param campaignId the campaign ID
@@ -646,12 +660,35 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param end the upper bound of the range of campaign contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<CampaignContent> findByC_GtD(long campaignId,
 		Date modifiedDate, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<CampaignContent> orderByComparator) {
+		return findByC_GtD(campaignId, modifiedDate, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the campaign contents where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param campaignId the campaign ID
+	 * @param modifiedDate the modified date
+	 * @param start the lower bound of the range of campaign contents
+	 * @param end the upper bound of the range of campaign contents (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching campaign contents
+	 */
+	@Override
+	public List<CampaignContent> findByC_GtD(long campaignId,
+		Date modifiedDate, int start, int end,
+		OrderByComparator<CampaignContent> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -663,17 +700,21 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 				start, end, orderByComparator
 			};
 
-		List<CampaignContent> list = (List<CampaignContent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<CampaignContent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (CampaignContent campaignContent : list) {
-				if ((campaignId != campaignContent.getCampaignId()) ||
-						(modifiedDate.getTime() >= campaignContent.getModifiedDate()
-																	  .getTime())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<CampaignContent>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (CampaignContent campaignContent : list) {
+					if ((campaignId != campaignContent.getCampaignId()) ||
+							(modifiedDate.getTime() >= campaignContent.getModifiedDate()
+																		  .getTime())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -683,7 +724,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -727,7 +768,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 				qPos.add(campaignId);
 
 				if (bindModifiedDate) {
-					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
+					qPos.add(new Timestamp(modifiedDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -736,7 +777,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<CampaignContent>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<CampaignContent>)QueryUtil.list(q,
@@ -745,10 +786,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -767,13 +808,12 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching campaign content
-	 * @throws com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException if a matching campaign content could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchCampaignContentException if a matching campaign content could not be found
 	 */
 	@Override
 	public CampaignContent findByC_GtD_First(long campaignId,
-		Date modifiedDate, OrderByComparator orderByComparator)
-		throws NoSuchCampaignContentException, SystemException {
+		Date modifiedDate, OrderByComparator<CampaignContent> orderByComparator)
+		throws NoSuchCampaignContentException {
 		CampaignContent campaignContent = fetchByC_GtD_First(campaignId,
 				modifiedDate, orderByComparator);
 
@@ -803,12 +843,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching campaign content, or <code>null</code> if a matching campaign content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CampaignContent fetchByC_GtD_First(long campaignId,
-		Date modifiedDate, OrderByComparator orderByComparator)
-		throws SystemException {
+		Date modifiedDate, OrderByComparator<CampaignContent> orderByComparator) {
 		List<CampaignContent> list = findByC_GtD(campaignId, modifiedDate, 0,
 				1, orderByComparator);
 
@@ -826,13 +864,12 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching campaign content
-	 * @throws com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException if a matching campaign content could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchCampaignContentException if a matching campaign content could not be found
 	 */
 	@Override
 	public CampaignContent findByC_GtD_Last(long campaignId, Date modifiedDate,
-		OrderByComparator orderByComparator)
-		throws NoSuchCampaignContentException, SystemException {
+		OrderByComparator<CampaignContent> orderByComparator)
+		throws NoSuchCampaignContentException {
 		CampaignContent campaignContent = fetchByC_GtD_Last(campaignId,
 				modifiedDate, orderByComparator);
 
@@ -862,12 +899,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching campaign content, or <code>null</code> if a matching campaign content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CampaignContent fetchByC_GtD_Last(long campaignId,
-		Date modifiedDate, OrderByComparator orderByComparator)
-		throws SystemException {
+		Date modifiedDate, OrderByComparator<CampaignContent> orderByComparator) {
 		int count = countByC_GtD(campaignId, modifiedDate);
 
 		if (count == 0) {
@@ -892,13 +927,13 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next campaign content
-	 * @throws com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException if a campaign content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchCampaignContentException if a campaign content with the primary key could not be found
 	 */
 	@Override
 	public CampaignContent[] findByC_GtD_PrevAndNext(long campaignContentId,
-		long campaignId, Date modifiedDate, OrderByComparator orderByComparator)
-		throws NoSuchCampaignContentException, SystemException {
+		long campaignId, Date modifiedDate,
+		OrderByComparator<CampaignContent> orderByComparator)
+		throws NoSuchCampaignContentException {
 		CampaignContent campaignContent = findByPrimaryKey(campaignContentId);
 
 		Session session = null;
@@ -928,15 +963,16 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 	protected CampaignContent getByC_GtD_PrevAndNext(Session session,
 		CampaignContent campaignContent, long campaignId, Date modifiedDate,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<CampaignContent> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_CAMPAIGNCONTENT_WHERE);
@@ -1025,7 +1061,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 		qPos.add(campaignId);
 
 		if (bindModifiedDate) {
-			qPos.add(CalendarUtil.getTimestamp(modifiedDate));
+			qPos.add(new Timestamp(modifiedDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -1051,11 +1087,9 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 *
 	 * @param campaignId the campaign ID
 	 * @param modifiedDate the modified date
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_GtD(long campaignId, Date modifiedDate)
-		throws SystemException {
+	public void removeByC_GtD(long campaignId, Date modifiedDate) {
 		for (CampaignContent campaignContent : findByC_GtD(campaignId,
 				modifiedDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(campaignContent);
@@ -1068,17 +1102,14 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param campaignId the campaign ID
 	 * @param modifiedDate the modified date
 	 * @return the number of matching campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_GtD(long campaignId, Date modifiedDate)
-		throws SystemException {
+	public int countByC_GtD(long campaignId, Date modifiedDate) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_GTD;
 
 		Object[] finderArgs = new Object[] { campaignId, modifiedDate };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1112,15 +1143,15 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 				qPos.add(campaignId);
 
 				if (bindModifiedDate) {
-					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
+					qPos.add(new Timestamp(modifiedDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1133,7 +1164,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	}
 
 	private static final String _FINDER_COLUMN_C_GTD_CAMPAIGNID_2 = "campaignContent.campaignId = ? AND ";
-	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_1 = "campaignContent.modifiedDate > NULL";
+	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_1 = "campaignContent.modifiedDate IS NULL";
 	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_2 = "campaignContent.modifiedDate > ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C_C_E = new FinderPath(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
 			CampaignContentModelImpl.FINDER_CACHE_ENABLED,
@@ -1156,20 +1187,18 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 			});
 
 	/**
-	 * Returns the campaign content where campaignId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or throws a {@link com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException} if it could not be found.
+	 * Returns the campaign content where campaignId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or throws a {@link NoSuchCampaignContentException} if it could not be found.
 	 *
 	 * @param campaignId the campaign ID
 	 * @param className the class name
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the matching campaign content
-	 * @throws com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException if a matching campaign content could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchCampaignContentException if a matching campaign content could not be found
 	 */
 	@Override
 	public CampaignContent findByC_C_C_E(long campaignId, String className,
-		long classPK, String eventType)
-		throws NoSuchCampaignContentException, SystemException {
+		long classPK, String eventType) throws NoSuchCampaignContentException {
 		CampaignContent campaignContent = fetchByC_C_C_E(campaignId, className,
 				classPK, eventType);
 
@@ -1210,11 +1239,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the matching campaign content, or <code>null</code> if a matching campaign content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CampaignContent fetchByC_C_C_E(long campaignId, String className,
-		long classPK, String eventType) throws SystemException {
+		long classPK, String eventType) {
 		return fetchByC_C_C_E(campaignId, className, classPK, eventType, true);
 	}
 
@@ -1225,14 +1253,12 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param className the class name
 	 * @param classPK the class p k
 	 * @param eventType the event type
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching campaign content, or <code>null</code> if a matching campaign content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CampaignContent fetchByC_C_C_E(long campaignId, String className,
-		long classPK, String eventType, boolean retrieveFromCache)
-		throws SystemException {
+		long classPK, String eventType, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
 				campaignId, className, classPK, eventType
 			};
@@ -1240,7 +1266,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_C_C_E,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_C_C_E,
 					finderArgs, this);
 		}
 
@@ -1318,7 +1344,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 				List<CampaignContent> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
 						finderArgs, list);
 				}
 				else {
@@ -1334,13 +1360,13 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 							(campaignContent.getClassPK() != classPK) ||
 							(campaignContent.getEventType() == null) ||
 							!campaignContent.getEventType().equals(eventType)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
 							finderArgs, campaignContent);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C_E,
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_C_E,
 					finderArgs);
 
 				throw processException(e);
@@ -1366,12 +1392,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the campaign content that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CampaignContent removeByC_C_C_E(long campaignId, String className,
-		long classPK, String eventType)
-		throws NoSuchCampaignContentException, SystemException {
+		long classPK, String eventType) throws NoSuchCampaignContentException {
 		CampaignContent campaignContent = findByC_C_C_E(campaignId, className,
 				classPK, eventType);
 
@@ -1386,19 +1410,17 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the number of matching campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int countByC_C_C_E(long campaignId, String className, long classPK,
-		String eventType) throws SystemException {
+		String eventType) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C_C_E;
 
 		Object[] finderArgs = new Object[] {
 				campaignId, className, classPK, eventType
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -1462,10 +1484,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1497,11 +1519,11 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 */
 	@Override
 	public void cacheResult(CampaignContent campaignContent) {
-		EntityCacheUtil.putResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
 			CampaignContentImpl.class, campaignContent.getPrimaryKey(),
 			campaignContent);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
 			new Object[] {
 				campaignContent.getCampaignId(), campaignContent.getClassName(),
 				campaignContent.getClassPK(), campaignContent.getEventType()
@@ -1518,7 +1540,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	@Override
 	public void cacheResult(List<CampaignContent> campaignContents) {
 		for (CampaignContent campaignContent : campaignContents) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
 						CampaignContentImpl.class,
 						campaignContent.getPrimaryKey()) == null) {
@@ -1534,96 +1556,93 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * Clears the cache for all campaign contents.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(CampaignContentImpl.class.getName());
-		}
+		entityCache.clearCache(CampaignContentImpl.class);
 
-		EntityCacheUtil.clearCache(CampaignContentImpl.class.getName());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the campaign content.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(CampaignContent campaignContent) {
-		EntityCacheUtil.removeResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
 			CampaignContentImpl.class, campaignContent.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(campaignContent);
+		clearUniqueFindersCache((CampaignContentModelImpl)campaignContent);
 	}
 
 	@Override
 	public void clearCache(List<CampaignContent> campaignContents) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (CampaignContent campaignContent : campaignContents) {
-			EntityCacheUtil.removeResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
 				CampaignContentImpl.class, campaignContent.getPrimaryKey());
 
-			clearUniqueFindersCache(campaignContent);
+			clearUniqueFindersCache((CampaignContentModelImpl)campaignContent);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(CampaignContent campaignContent) {
-		if (campaignContent.isNew()) {
+	protected void cacheUniqueFindersCache(
+		CampaignContentModelImpl campaignContentModelImpl, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
-					campaignContent.getCampaignId(),
-					campaignContent.getClassName(), campaignContent.getClassPK(),
-					campaignContent.getEventType()
+					campaignContentModelImpl.getCampaignId(),
+					campaignContentModelImpl.getClassName(),
+					campaignContentModelImpl.getClassPK(),
+					campaignContentModelImpl.getEventType()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_C_E, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_C_E, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C_E, args,
-				campaignContent);
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C_E, args,
+				campaignContentModelImpl);
 		}
 		else {
-			CampaignContentModelImpl campaignContentModelImpl = (CampaignContentModelImpl)campaignContent;
-
 			if ((campaignContentModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C_C_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						campaignContent.getCampaignId(),
-						campaignContent.getClassName(),
-						campaignContent.getClassPK(),
-						campaignContent.getEventType()
+						campaignContentModelImpl.getCampaignId(),
+						campaignContentModelImpl.getClassName(),
+						campaignContentModelImpl.getClassPK(),
+						campaignContentModelImpl.getEventType()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_C_E, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_C_E, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C_E, args,
-					campaignContent);
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C_E, args,
+					campaignContentModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(CampaignContent campaignContent) {
-		CampaignContentModelImpl campaignContentModelImpl = (CampaignContentModelImpl)campaignContent;
-
+	protected void clearUniqueFindersCache(
+		CampaignContentModelImpl campaignContentModelImpl) {
 		Object[] args = new Object[] {
-				campaignContent.getCampaignId(), campaignContent.getClassName(),
-				campaignContent.getClassPK(), campaignContent.getEventType()
+				campaignContentModelImpl.getCampaignId(),
+				campaignContentModelImpl.getClassName(),
+				campaignContentModelImpl.getClassPK(),
+				campaignContentModelImpl.getEventType()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_E, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C_E, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_E, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_C_E, args);
 
 		if ((campaignContentModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C_C_E.getColumnBitmask()) != 0) {
@@ -1634,8 +1653,8 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 					campaignContentModelImpl.getOriginalEventType()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C_E, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C_C_E, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_E, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_C_E, args);
 		}
 	}
 
@@ -1652,6 +1671,8 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 		campaignContent.setNew(true);
 		campaignContent.setPrimaryKey(campaignContentId);
 
+		campaignContent.setCompanyId(companyProvider.getCompanyId());
+
 		return campaignContent;
 	}
 
@@ -1660,12 +1681,11 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 *
 	 * @param campaignContentId the primary key of the campaign content
 	 * @return the campaign content that was removed
-	 * @throws com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException if a campaign content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchCampaignContentException if a campaign content with the primary key could not be found
 	 */
 	@Override
 	public CampaignContent remove(long campaignContentId)
-		throws NoSuchCampaignContentException, SystemException {
+		throws NoSuchCampaignContentException {
 		return remove((Serializable)campaignContentId);
 	}
 
@@ -1674,12 +1694,11 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 *
 	 * @param primaryKey the primary key of the campaign content
 	 * @return the campaign content that was removed
-	 * @throws com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException if a campaign content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchCampaignContentException if a campaign content with the primary key could not be found
 	 */
 	@Override
 	public CampaignContent remove(Serializable primaryKey)
-		throws NoSuchCampaignContentException, SystemException {
+		throws NoSuchCampaignContentException {
 		Session session = null;
 
 		try {
@@ -1711,8 +1730,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	}
 
 	@Override
-	protected CampaignContent removeImpl(CampaignContent campaignContent)
-		throws SystemException {
+	protected CampaignContent removeImpl(CampaignContent campaignContent) {
 		campaignContent = toUnwrappedModel(campaignContent);
 
 		Session session = null;
@@ -1744,9 +1762,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	}
 
 	@Override
-	public CampaignContent updateImpl(
-		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent)
-		throws SystemException {
+	public CampaignContent updateImpl(CampaignContent campaignContent) {
 		campaignContent = toUnwrappedModel(campaignContent);
 
 		boolean isNew = campaignContent.isNew();
@@ -1764,7 +1780,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 				campaignContent.setNew(false);
 			}
 			else {
-				session.merge(campaignContent);
+				campaignContent = (CampaignContent)session.merge(campaignContent);
 			}
 		}
 		catch (Exception e) {
@@ -1774,10 +1790,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !CampaignContentModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1787,26 +1803,26 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 						campaignContentModelImpl.getOriginalCampaignId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CAMPAIGNID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CAMPAIGNID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID,
 					args);
 
 				args = new Object[] { campaignContentModelImpl.getCampaignId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CAMPAIGNID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CAMPAIGNID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
 			CampaignContentImpl.class, campaignContent.getPrimaryKey(),
-			campaignContent);
+			campaignContent, false);
 
-		clearUniqueFindersCache(campaignContent);
-		cacheUniqueFindersCache(campaignContent);
+		clearUniqueFindersCache(campaignContentModelImpl);
+		cacheUniqueFindersCache(campaignContentModelImpl, isNew);
+
+		campaignContent.resetOriginalValues();
 
 		return campaignContent;
 	}
@@ -1834,16 +1850,15 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	}
 
 	/**
-	 * Returns the campaign content with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the campaign content with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the campaign content
 	 * @return the campaign content
-	 * @throws com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException if a campaign content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchCampaignContentException if a campaign content with the primary key could not be found
 	 */
 	@Override
 	public CampaignContent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCampaignContentException, SystemException {
+		throws NoSuchCampaignContentException {
 		CampaignContent campaignContent = fetchByPrimaryKey(primaryKey);
 
 		if (campaignContent == null) {
@@ -1859,16 +1874,15 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	}
 
 	/**
-	 * Returns the campaign content with the primary key or throws a {@link com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException} if it could not be found.
+	 * Returns the campaign content with the primary key or throws a {@link NoSuchCampaignContentException} if it could not be found.
 	 *
 	 * @param campaignContentId the primary key of the campaign content
 	 * @return the campaign content
-	 * @throws com.liferay.content.targeting.report.campaign.content.NoSuchCampaignContentException if a campaign content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchCampaignContentException if a campaign content with the primary key could not be found
 	 */
 	@Override
 	public CampaignContent findByPrimaryKey(long campaignContentId)
-		throws NoSuchCampaignContentException, SystemException {
+		throws NoSuchCampaignContentException {
 		return findByPrimaryKey((Serializable)campaignContentId);
 	}
 
@@ -1877,12 +1891,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 *
 	 * @param primaryKey the primary key of the campaign content
 	 * @return the campaign content, or <code>null</code> if a campaign content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CampaignContent fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
-		CampaignContent campaignContent = (CampaignContent)EntityCacheUtil.getResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
+	public CampaignContent fetchByPrimaryKey(Serializable primaryKey) {
+		CampaignContent campaignContent = (CampaignContent)entityCache.getResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
 				CampaignContentImpl.class, primaryKey);
 
 		if (campaignContent == _nullCampaignContent) {
@@ -1902,13 +1914,13 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 					cacheResult(campaignContent);
 				}
 				else {
-					EntityCacheUtil.putResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
 						CampaignContentImpl.class, primaryKey,
 						_nullCampaignContent);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
 					CampaignContentImpl.class, primaryKey);
 
 				throw processException(e);
@@ -1926,22 +1938,111 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 *
 	 * @param campaignContentId the primary key of the campaign content
 	 * @return the campaign content, or <code>null</code> if a campaign content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CampaignContent fetchByPrimaryKey(long campaignContentId)
-		throws SystemException {
+	public CampaignContent fetchByPrimaryKey(long campaignContentId) {
 		return fetchByPrimaryKey((Serializable)campaignContentId);
+	}
+
+	@Override
+	public Map<Serializable, CampaignContent> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, CampaignContent> map = new HashMap<Serializable, CampaignContent>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			CampaignContent campaignContent = fetchByPrimaryKey(primaryKey);
+
+			if (campaignContent != null) {
+				map.put(primaryKey, campaignContent);
+			}
+
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			CampaignContent campaignContent = (CampaignContent)entityCache.getResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
+					CampaignContentImpl.class, primaryKey);
+
+			if (campaignContent == null) {
+				if (uncachedPrimaryKeys == null) {
+					uncachedPrimaryKeys = new HashSet<Serializable>();
+				}
+
+				uncachedPrimaryKeys.add(primaryKey);
+			}
+			else {
+				map.put(primaryKey, campaignContent);
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
+			return map;
+		}
+
+		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
+				1);
+
+		query.append(_SQL_SELECT_CAMPAIGNCONTENT_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : uncachedPrimaryKeys) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (CampaignContent campaignContent : (List<CampaignContent>)q.list()) {
+				map.put(campaignContent.getPrimaryKeyObj(), campaignContent);
+
+				cacheResult(campaignContent);
+
+				uncachedPrimaryKeys.remove(campaignContent.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				entityCache.putResult(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
+					CampaignContentImpl.class, primaryKey, _nullCampaignContent);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
 	 * Returns all the campaign contents.
 	 *
 	 * @return the campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CampaignContent> findAll() throws SystemException {
+	public List<CampaignContent> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1949,17 +2050,15 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * Returns a range of all the campaign contents.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of campaign contents
 	 * @param end the upper bound of the range of campaign contents (not inclusive)
 	 * @return the range of campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CampaignContent> findAll(int start, int end)
-		throws SystemException {
+	public List<CampaignContent> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -1967,18 +2066,37 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * Returns an ordered range of all the campaign contents.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of campaign contents
 	 * @param end the upper bound of the range of campaign contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<CampaignContent> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<CampaignContent> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the campaign contents.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of campaign contents
+	 * @param end the upper bound of the range of campaign contents (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of campaign contents
+	 */
+	@Override
+	public List<CampaignContent> findAll(int start, int end,
+		OrderByComparator<CampaignContent> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1994,8 +2112,12 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<CampaignContent> list = (List<CampaignContent>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<CampaignContent> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CampaignContent>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2003,7 +2125,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_CAMPAIGNCONTENT);
 
@@ -2033,7 +2155,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<CampaignContent>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<CampaignContent>)QueryUtil.list(q,
@@ -2042,10 +2164,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2060,10 +2182,9 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	/**
 	 * Removes all the campaign contents from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (CampaignContent campaignContent : findAll()) {
 			remove(campaignContent);
 		}
@@ -2073,11 +2194,10 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	 * Returns the number of campaign contents.
 	 *
 	 * @return the number of campaign contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+	public int countAll() {
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2090,11 +2210,11 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2107,49 +2227,40 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 		return count.intValue();
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return CampaignContentModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the campaign content persistence.
 	 */
 	public void afterPropertiesSet() {
-		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(
-					com.liferay.util.service.ServiceProps.get(
-						"value.object.listener.com.liferay.content.targeting.report.campaign.content.model.CampaignContent")));
-
-		if (listenerClassNames.length > 0) {
-			try {
-				List<ModelListener<CampaignContent>> listenersList = new ArrayList<ModelListener<CampaignContent>>();
-
-				for (String listenerClassName : listenerClassNames) {
-					listenersList.add((ModelListener<CampaignContent>)InstanceFactory.newInstance(
-							getClassLoader(), listenerClassName));
-				}
-
-				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(CampaignContentImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(CampaignContentImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = CompanyProviderWrapper.class)
+	protected CompanyProvider companyProvider;
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_CAMPAIGNCONTENT = "SELECT campaignContent FROM CampaignContent campaignContent";
+	private static final String _SQL_SELECT_CAMPAIGNCONTENT_WHERE_PKS_IN = "SELECT campaignContent FROM CampaignContent campaignContent WHERE campaignContentId IN (";
 	private static final String _SQL_SELECT_CAMPAIGNCONTENT_WHERE = "SELECT campaignContent FROM CampaignContent campaignContent WHERE ";
 	private static final String _SQL_COUNT_CAMPAIGNCONTENT = "SELECT COUNT(campaignContent) FROM CampaignContent campaignContent";
 	private static final String _SQL_COUNT_CAMPAIGNCONTENT_WHERE = "SELECT COUNT(campaignContent) FROM CampaignContent campaignContent WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "campaignContent.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CampaignContent exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CampaignContent exists with the key {";
-	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
-	private static Log _log = LogFactoryUtil.getLog(CampaignContentPersistenceImpl.class);
-	private static CampaignContent _nullCampaignContent = new CampaignContentImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(CampaignContentPersistenceImpl.class);
+	private static final CampaignContent _nullCampaignContent = new CampaignContentImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2161,7 +2272,8 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 			}
 		};
 
-	private static CacheModel<CampaignContent> _nullCampaignContentCacheModel = new CacheModel<CampaignContent>() {
+	private static final CacheModel<CampaignContent> _nullCampaignContentCacheModel =
+		new CacheModel<CampaignContent>() {
 			@Override
 			public CampaignContent toEntityModel() {
 				return _nullCampaignContent;

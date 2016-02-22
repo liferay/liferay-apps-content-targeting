@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.report.campaign.content.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.report.campaign.content.model.CampaignContent;
 import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the CampaignContent service. Represents a row in the &quot;CT_CCR_CampaignContent&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see CampaignContentImpl
- * @see com.liferay.content.targeting.report.campaign.content.model.CampaignContent
+ * @see CampaignContent
  * @generated
  */
+@ProviderType
 public abstract class CampaignContentBaseImpl extends CampaignContentModelImpl
 	implements CampaignContent {
 	/*
@@ -39,7 +40,7 @@ public abstract class CampaignContentBaseImpl extends CampaignContentModelImpl
 	 * Never modify or reference this class directly. All methods that expect a campaign content model instance should use the {@link CampaignContent} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			CampaignContentLocalServiceUtil.addCampaignContent(this);
 		}

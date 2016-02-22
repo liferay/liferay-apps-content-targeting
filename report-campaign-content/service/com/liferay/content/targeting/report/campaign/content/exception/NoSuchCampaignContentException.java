@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.content.targeting.report.campaign.content;
+package com.liferay.content.targeting.report.campaign.content.exception;
 
-import com.liferay.portal.NoSuchModelException;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class NoSuchCampaignContentException extends NoSuchModelException {
 
 	public NoSuchCampaignContentException() {
-		super();
 	}
 
 	public NoSuchCampaignContentException(String msg) {
