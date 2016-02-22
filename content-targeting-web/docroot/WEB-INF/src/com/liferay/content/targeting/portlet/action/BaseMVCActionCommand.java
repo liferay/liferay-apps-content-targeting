@@ -16,7 +16,7 @@ package com.liferay.content.targeting.portlet.action;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -69,8 +69,8 @@ public abstract class BaseMVCActionCommand
 		return calendar.getTime();
 	}
 
-	protected TransactionAttribute _transactionAttribute =
-		TransactionAttribute.Factory.create(
+	protected TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class},
 			new Class<?>[0]);
 
