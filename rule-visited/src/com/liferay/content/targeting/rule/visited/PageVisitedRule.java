@@ -205,6 +205,8 @@ public class PageVisitedRule extends BaseRule {
 		}
 		catch (SystemException se) {
 		}
+
+		return StringPool.BLANK;
 	}
 
 	@Reference
