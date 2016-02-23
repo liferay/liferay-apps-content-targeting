@@ -1,13 +1,6 @@
 <?xml version="1.0"?>
+<!DOCTYPE project>
 
-<project name="rule-ip-geocode" basedir="." default="compile">
-	<property name="plugin.version" value="1" />
-
-	<property name="plugin.name" value="com.liferay.content.targeting.rule.ip.geocode" />
-
-	<property name="import.shared" value="anonymous-users-api,content-targeting-api" />
-
-	<property name="osgi.runtime.dependencies" value="com.liferay.ip.geocoder.jar,geoip-api.jar" />
-
-	<import file="../../../build-common-osgi-plugin.xml" />
+<project>
+	<import file="../../../build-module.xml" />
 </project>

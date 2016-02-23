@@ -1,15 +1,6 @@
 <?xml version="1.0"?>
+<!DOCTYPE project>
 
-<project name="content-targeting-api" basedir="." default="compile">
-	<property name="osgi.auto.update.xml" value="false" />
-
-	<property name="plugin.version" value="1" />
-
-	<property name="plugin.name" value="com.liferay.content.targeting.api" />
-
-	<property name="import.shared" value="anonymous-users-api" />
-
-	<property name="service.base.dir" value="." />
-
-	<import file="../../../build-common-osgi-plugin.xml" />
+<project>
+	<import file="../../../build-module.xml" />
 </project>
