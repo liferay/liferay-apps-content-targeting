@@ -10,35 +10,6 @@
 	<property file="sonar.${env.HOSTNAME}.properties" />
 	<property file="sonar.properties" />
 
-	<property name="app.core" value="*-api,*-service,*-web" />
-	<property name="app.channels" value="" />
-	<property name="app.reports" value="report-campaign-content,report-campaign-tracking-action,report-user-segment-content" />
-	<property name="app.rules" value="rule-age,rule-browser,rule-device,rule-facebook,rule-gender,rule-ip-geocode,rule-organization-member,rule-os,rule-role,rule-score-points,rule-site-member,rule-time,rule-user-group-member,rule-user-logged,rule-visited" />
-	<property name="app.services" value="analytics-api,anonymous-users-api,content-targeting-api,rule-score-points,${app.reports}" />
-	<property name="app.tracking.actions" value="tracking-action-content,tracking-action-form,tracking-action-link,tracking-action-page,tracking-action-youtube" />
-
-	<property name="build.app.services" value="true" />
-
-	<property name="source.formatter.excludes" value="**/*-test**/**&#10;**/benchmarks/**&#10;**/consumer-manager/**&#10;**/tools/**" />
-
-	<macrodef name="build-app-service">
-		<attribute name="module.dir" />
-
-		<sequential>
-			<compile-import-shared module.dir="@{module.dir}" />
-
-			<ant dir="@{module.dir}" target="build-service" inheritAll="false" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="build-lang">
-		<attribute name="module.dir" />
-
-		<sequential>
-			<ant dir="@{module.dir}" target="build-lang" inheritAll="false" />
-		</sequential>
-	</macrodef>
-
 	<macrodef name="consolidate-test">
 		<attribute name="module.dir" />
 
@@ -51,72 +22,6 @@
 			<merge-coverage module.dir="@{module.dir}" />
 		</sequential>
 	</macrodef>
-
-	<target name="all">
-		<antcall target="release" />
-	</target>
-
-	<target name="build-app">
-		<antcall target="clean" />
-
-		<if>
-			<equals arg1="${build.app.services}" arg2="true" />
-			<then>
-				<antcall target="build-app-services" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="app.plugins.includes" />
-			</not>
-			<then>
-				<property name="app.plugins.includes" value="${app.core},${app.rules},${app.tracking.actions},${app.reports}" />
-			</then>
-		</if>
-
-		<path id="app.plugins.includes.path">
-			<dirset dir="${sdk.dir}/apps/content-targeting" includes="${app.plugins.includes}" />
-		</path>
-
-		<pathconvert pathsep="," property="app.plugins.includes.path" refid="app.plugins.includes.path" targetos="unix" />
-
-		<loop-macrodef-or-target module.dirs="${app.plugins.includes.path}" target.name="compile-import-shared" />
-
-		<loop-macrodef-or-target module.dirs="${app.plugins.includes.path}" target.name="deploy" />
-	</target>
-
-	<target name="build-app-services">
-		<path id="app.services.path">
-			<dirset dir="." includes="${app.services}" />
-		</path>
-
-		<pathconvert pathsep="," property="app.services.path" refid="app.services.path" targetos="unix" />
-
-		<loop-macrodef-or-target module.dirs="${app.services.path}" target.name="build-app-service" />
-	</target>
-
-	<target name="build-lang">
-		<loop-macrodef-or-target module.dirs="${plugins.includes.path}" target.name="build-lang" />
-	</target>
-
-	<property name="app.tests" value="*-test,runtime-test-dependencies" />
-
-	<path id="app.tests.path">
-		<dirset dir="." includes="${app.tests}" />
-	</path>
-
-	<pathconvert pathsep="," property="app.tests.path" refid="app.tests.path" targetos="unix" />
-
-	<target name="build-tests">
-		<loop-macrodef-or-target module.dirs="${app.tests.path}" target.name="deploy" />
-	</target>
-
-	<target name="clean-osgi-data">
-		<delete dir="${app.server.parent.dir}/data/osgi" />
-		<delete dir="${app.server.dir}/work" />
-		<delete dir="${app.server.dir}/temp" />
-	</target>
 
 	<target name="consolidate-tests">
 		<path id="app.core.path">
@@ -348,66 +253,6 @@
 			<replacefilter token="@tracking.action.java.package.name@" value="${tracking.action.java.package.name}" />
 			<replacefilter token="@tracking.action.name@" value="${tracking.action.name}" />
 		</replace>
-	</target>
-
-	<target name="format-source">
-		<path id="source.formatter.classpath">
-			<fileset dir="${sdk.dir}/dependencies/com.liferay.source.formatter/lib" includes="*.jar" />
-		</path>
-
-		<java
-			classname="com.liferay.source.formatter.SourceFormatter"
-			classpathref="source.formatter.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-			<jvmarg value="-Xmx512m" />
-			<jvmarg value="-Xss2048k" />
-			<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
-		</java>
-
-		<delete file="ServiceBuilder.temp" />
-	</target>
-
-	<target name="release">
-		<if>
-			<and>
-				<isset property="release.all" />
-				<equals arg1="${release.all}" arg2="true" />
-			</and>
-			<else>
-				<property name="app.plugins.includes" value="${app.core},${app.channels},${app.reports},${app.rules},${app.tracking.actions}" />
-			</else>
-		</if>
-
-		<if>
-			<not>
-				<isset property="release.version" />
-			</not>
-			<then>
-				<tstamp>
-					<format property="release.version" pattern="EEE-d-MMM-yyyy-HH-mm-ss" />
-				</tstamp>
-			</then>
-		</if>
-
-		<delete dir="${sdk.dir}/dist" failonerror="false" />
-		<delete file="${sdk.dir}/content-targeting-release-${release.version}.zip" failonerror="false" />
-
-		<mkdir dir="${sdk.dir}/content-targeting-dist" />
-
-		<var name="auto.deploy.dir.default" value="${auto.deploy.dir}" />
-		<var name="auto.deploy.dir" value="${sdk.dir}/content-targeting-dist" />
-
-		<antcall target="build-app" />
-
-		<zip basedir="${auto.deploy.dir}" destfile="${sdk.dir}/content-targeting-release-${release.version}.zip" />
-
-		<copy todir="${auto.deploy.dir.default}">
-			<fileset dir="${auto.deploy.dir}" />
-		</copy>
-
-		<delete dir="${auto.deploy.dir}" failonerror="false" />
 	</target>
 
 	<target name="sonar">
