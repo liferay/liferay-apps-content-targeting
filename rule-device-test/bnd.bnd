@@ -1,5 +1,4 @@
 Bundle-Name: Device Rule Test
 Bundle-SymbolicName: com.liferay.content.targeting.rule.device.test
 Bundle-Version: 1.0.0
-Include-Resource: classes
 -baseline: *;version="1.0.0"

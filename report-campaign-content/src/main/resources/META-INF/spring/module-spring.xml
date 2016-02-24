@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalService" class="com.liferay.content.targeting.report.campaign.content.service.impl.CampaignContentLocalServiceImpl" />
+	<bean id="com.liferay.content.targeting.report.campaign.content.service.CampaignContentService" class="com.liferay.content.targeting.report.campaign.content.service.impl.CampaignContentServiceImpl" />
+	<bean id="com.liferay.content.targeting.report.campaign.content.service.persistence.CampaignContentPersistence" class="com.liferay.content.targeting.report.campaign.content.service.persistence.impl.CampaignContentPersistenceImpl" parent="basePersistence" />
+</beans>

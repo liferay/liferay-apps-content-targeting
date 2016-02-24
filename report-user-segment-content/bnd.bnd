@@ -50,13 +50,10 @@ Import-Package:\
 	\
 	javax.portlet,\
 	*;resolution:="optional"
-Include-Resource: classes,\
-	WEB-INF/classes/META-INF=classes/META-INF/,\
-	WEB-INF/liferay-plugin-package.properties=META-INF/liferay-plugin-package.properties,\
-	WEB-INF/sql=sql,\
-	META-INF/sql=sql,\
-	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	@lib/com.liferay.content.targeting.report.user.segment.content-service.jar
+Include-Resource:\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
 Liferay-Service: true
 Liferay-Spring-Context: META-INF/spring
 Require-Capability:\

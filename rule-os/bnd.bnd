@@ -11,9 +11,6 @@ Import-Package:\
 	com.liferay.content.targeting.service.messaging,\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
-Include-Resource:\
-	classes,\
-	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar
 Private-Package: com.liferay.content.targeting.rule.os.*
 Service-Component: com.liferay.content.targeting.rule.os.*
 Web-ContextPath: /rule-os

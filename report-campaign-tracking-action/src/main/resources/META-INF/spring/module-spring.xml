@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService" class="com.liferay.content.targeting.report.campaign.tracking.action.service.impl.CTActionLocalServiceImpl" />
+	<bean id="com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionService" class="com.liferay.content.targeting.report.campaign.tracking.action.service.impl.CTActionServiceImpl" />
+	<bean id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionPersistence" class="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.impl.CTActionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionFinder" class="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.impl.CTActionFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService" class="com.liferay.content.targeting.report.campaign.tracking.action.service.impl.CTActionTotalLocalServiceImpl" />
+	<bean id="com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalService" class="com.liferay.content.targeting.report.campaign.tracking.action.service.impl.CTActionTotalServiceImpl" />
+	<bean id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionTotalPersistence" class="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.impl.CTActionTotalPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionTotalFinder" class="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.impl.CTActionTotalFinderImpl" parent="basePersistence" />
+</beans>

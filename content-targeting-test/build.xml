@@ -1,15 +1,6 @@
 <?xml version="1.0"?>
+<!DOCTYPE project>
 
-<project name="content-targeting-test" basedir="." default="compile">
-	<property name="plugin.version" value="1" />
-
-	<property name="plugin.name" value="com.liferay.content.targeting.test" />
-
-	<property name="import.shared" value="content-targeting-api,service-test-util" />
-
-	<property name="ivy.resolve.transitive.dependencies" value="true" />
-
-	<import file="../../../build-common-osgi-plugin.xml" />
-
-	<target name="deploy" />
+<project>
+	<import file="../../../build-module.xml" />
 </project>
