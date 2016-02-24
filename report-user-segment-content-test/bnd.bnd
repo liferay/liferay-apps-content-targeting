@@ -1,5 +1,8 @@
 Bundle-Name: User Segment Content Report Test
 Bundle-SymbolicName: com.liferay.content.targeting.report.user.segment.content.test
 Bundle-Version: 1.0.0
-Include-Resource: classes
+Include-Resource:\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
 -baseline: *;version="1.0.0"

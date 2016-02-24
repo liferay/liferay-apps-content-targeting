@@ -50,14 +50,6 @@ Import-Package:\
 	\
 	javax.portlet,\
 	*;resolution:="optional"
-Include-Resource:\
-	classes,\
-	WEB-INF/classes/META-INF=classes/META-INF/,\
-	WEB-INF/liferay-plugin-package.properties=META-INF/liferay-plugin-package.properties,\
-	WEB-INF/sql=sql,\
-	META-INF/sql=sql,\
-	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	@lib/com.liferay.content.targeting.report.campaign.content-service.jar
 Liferay-Service: true
 Liferay-Spring-Context: META-INF/spring
 Require-Capability:\

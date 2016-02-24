@@ -9,13 +9,9 @@ Export-Package:\
 	com.liferay.content.targeting.anonymous.users.util
 Import-Package: *;resolution:="optional"
 Include-Resource:\
-	classes,\
-	META-INF/sql=sql,\
-	WEB-INF/classes/META-INF=classes/META-INF/,\
-	WEB-INF/classes/META-INF/spring=classes/META-INF/spring,\
-	WEB-INF/sql=sql,\
-	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
-	@lib/com.liferay.content.targeting.anonymous.users.api-service.jar
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
 Liferay-Service: true
 Liferay-Spring-Context: META-INF/spring
 Require-Capability:\

@@ -7,10 +7,6 @@ Import-Package:\
 	com.liferay.content.targeting.anonymous.users.service.messaging,\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
-Include-Resource:\
-	classes,\
-	WEB-INF/classes/META-INF=classes/META-INF,\
-	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar
 Private-Package: com.liferay.content.targeting.analytics.processor.servlet.*
 Service-Component: com.liferay.content.targeting.analytics.processor.*
 Web-ContextPath: /analytics-processor
