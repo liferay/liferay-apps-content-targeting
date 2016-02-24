@@ -66,7 +66,7 @@ public class InvalidTrackingActionsException extends PortalException {
 		return _exceptionsMap.get(trackingActionId);
 	}
 
-	private Map<String, List<InvalidTrackingActionException>> _exceptionsMap =
+	private final Map<String, List<InvalidTrackingActionException>> _exceptionsMap =
 		new HashMap<>();
 
 }

@@ -62,7 +62,7 @@ public class InvalidRulesException extends PortalException {
 		return _exceptionsMap.get(ruleId);
 	}
 
-	private Map<String, List<InvalidRuleException>> _exceptionsMap =
+	private final Map<String, List<InvalidRuleException>> _exceptionsMap =
 		new HashMap<>();
 
 }

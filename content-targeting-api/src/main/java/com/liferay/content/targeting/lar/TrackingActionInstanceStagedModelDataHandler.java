@@ -263,7 +263,7 @@ public class TrackingActionInstanceStagedModelDataHandler
 		return true;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		TrackingActionInstanceStagedModelDataHandler.class);
 
 	private TrackingActionsRegistry _trackingActionsRegistry;

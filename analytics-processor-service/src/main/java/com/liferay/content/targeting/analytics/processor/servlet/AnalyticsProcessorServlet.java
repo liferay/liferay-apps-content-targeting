@@ -121,14 +121,14 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setAnonymousUserLocalService(
 		AnonymousUserLocalService anonymousUserLocalService) {
 
 		_anonymousUserLocalService = anonymousUserLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setAnonymousUserManager(
 		AnonymousUsersManager anonymousUsersManager) {
 
@@ -343,7 +343,7 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		return referrersMap;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsProcessorServlet.class);
 
 	private AnonymousUserLocalService _anonymousUserLocalService;

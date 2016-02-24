@@ -54,7 +54,7 @@ public class DefaultRuleCategoriesRegistryImpl
 		_ruleCategories.remove(ruleCategory);
 	}
 
-	private Map<String, RuleCategory> _ruleCategories =
+	private final Map<String, RuleCategory> _ruleCategories =
 		new ConcurrentHashMap<>();
 
 }

@@ -121,6 +121,7 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 		return true;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserSegmentImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserSegmentImpl.class);
 
 }

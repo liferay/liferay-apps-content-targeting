@@ -88,14 +88,14 @@ public class DefaultScorePointsAssignerImpl implements ScorePointsAssigner {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setScorePointLocalService(
 		ScorePointLocalService scorePointLocalService) {
 
 		_scorePointLocalService = scorePointLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setUserSegmentLocalService(
 		UserSegmentLocalService userSegmentLocalService) {
 
@@ -105,12 +105,12 @@ public class DefaultScorePointsAssignerImpl implements ScorePointsAssigner {
 	protected long getScorePoints(
 		String className, long classPK, long userSegmentId) {
 
-		return DEFAULT_POINTS;
+		return _DEFAULT_POINTS;
 	}
 
-	private static final long DEFAULT_POINTS = 1;
+	private static final long _DEFAULT_POINTS = 1;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultScorePointsAssignerImpl.class);
 
 	private ScorePointLocalService _scorePointLocalService;

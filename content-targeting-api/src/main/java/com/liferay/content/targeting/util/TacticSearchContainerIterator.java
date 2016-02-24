@@ -31,6 +31,7 @@ public class TacticSearchContainerIterator
 	extends SearchContainerIterator<Tactic> {
 
 	public TacticSearchContainerIterator() {
+		_campaignId = 0;
 	}
 
 	public TacticSearchContainerIterator(
@@ -98,6 +99,6 @@ public class TacticSearchContainerIterator
 		return searchResults.getLength();
 	}
 
-	private long _campaignId;
+	private final long _campaignId;
 
 }

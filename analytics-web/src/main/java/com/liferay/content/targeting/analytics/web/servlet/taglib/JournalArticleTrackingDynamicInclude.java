@@ -68,7 +68,7 @@ public class JournalArticleTrackingDynamicInclude
 			"com.liferay.journal.content.web#/view.jsp#post");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleTrackingDynamicInclude.class);
 
 }

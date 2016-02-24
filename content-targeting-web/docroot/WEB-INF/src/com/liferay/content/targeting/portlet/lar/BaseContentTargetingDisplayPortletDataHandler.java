@@ -269,7 +269,7 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 			PortletPreferences portletPreferences, String key)
 		throws Exception;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseContentTargetingDisplayPortletDataHandler.class);
 
 }

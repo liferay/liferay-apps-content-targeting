@@ -85,6 +85,6 @@ public class CampaignImpl extends CampaignBaseImpl {
 		return CampaignConstants.STATUS_STARTED;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CampaignImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(CampaignImpl.class);
 
 }

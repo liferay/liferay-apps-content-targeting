@@ -119,7 +119,7 @@ public class PortletDisplayTemplateUtil
 		return contextObjects;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletDisplayTemplateUtil.class);
 
 }

@@ -333,13 +333,13 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 		return channelExceptions;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateTacticMVCActionCommand.class);
 
-	private volatile ChannelInstanceLocalService _channelInstanceLocalService;
-	private volatile ChannelInstanceService _channelInstanceService;
-	private volatile ChannelsRegistry _channelsRegistry;
-	private volatile MVCRenderCommand _mvcRenderCommand;
+	private ChannelInstanceLocalService _channelInstanceLocalService;
+	private ChannelInstanceService _channelInstanceService;
+	private ChannelsRegistry _channelsRegistry;
+	private MVCRenderCommand _mvcRenderCommand;
 	private volatile TacticService _tacticService;
 
 	private class TacticCallable implements Callable<Tactic> {
@@ -387,15 +387,15 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 			_serviceContext = serviceContext;
 		}
 
-		private long _campaignId;
-		private Map<Locale, String> _descriptionMap;
-		private Map<Locale, String> _nameMap;
-		private PortletRequest _portletRequest;
-		private PortletResponse _portletResponse;
-		private ServiceContext _serviceContext;
-		private long _tacticId;
-		private long _userId;
-		private long[] _userSegmentIds;
+		private final long _campaignId;
+		private final Map<Locale, String> _descriptionMap;
+		private final Map<Locale, String> _nameMap;
+		private final PortletRequest _portletRequest;
+		private final PortletResponse _portletResponse;
+		private final ServiceContext _serviceContext;
+		private final long _tacticId;
+		private final long _userId;
+		private final long[] _userSegmentIds;
 
 	}
 

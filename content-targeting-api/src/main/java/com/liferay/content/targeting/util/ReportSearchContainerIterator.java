@@ -18,6 +18,7 @@ import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public class ReportSearchContainerIterator
 	extends SearchContainerIterator<ReportInstance> {
 
 	public ReportSearchContainerIterator() {
+		_className = StringPool.BLANK;
+		_classPK = 0;
 	}
 
 	/**
@@ -76,7 +79,7 @@ public class ReportSearchContainerIterator
 		return getResults(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
-	private String _className;
-	private long _classPK;
+	private final String _className;
+	private final long _classPK;
 
 }

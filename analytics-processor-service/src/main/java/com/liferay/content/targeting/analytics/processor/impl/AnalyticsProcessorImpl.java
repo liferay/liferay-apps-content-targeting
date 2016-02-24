@@ -218,7 +218,7 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 		return stringBuffer.toString();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 
@@ -266,7 +266,7 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 
 	private static final String _TRACK_PATH = "/o/analytics-processor/track";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsProcessorImpl.class);
 
 	private CompanyLocalService _companyLocalService;

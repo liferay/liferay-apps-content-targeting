@@ -194,6 +194,6 @@ public class AssetEntryReferencedStagedModel
 		throw new UnsupportedOperationException();
 	}
 
-	private AssetEntry _assetEntry;
+	private final AssetEntry _assetEntry;
 
 }

@@ -174,7 +174,7 @@ public class CampaignContentDisplayPortletDataHandler
 		portletPreferences.reset(key + "uuid");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CampaignContentDisplayPortletDataHandler.class);
 
 }

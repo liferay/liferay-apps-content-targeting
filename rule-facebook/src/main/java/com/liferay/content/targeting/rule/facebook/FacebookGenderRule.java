@@ -130,11 +130,12 @@ public class FacebookGenderRule extends BaseFacebookRule {
 		context.put("gender", gender);
 	}
 
+	@Override
 	protected String getFormTemplatePath() {
 		return _FORM_TEMPLATE_PATH_GENDER;
 	}
 
-	protected static final String _FORM_TEMPLATE_PATH_GENDER =
+	private static final String _FORM_TEMPLATE_PATH_GENDER =
 		"templates/ct_fields_gender.ftl";
 
 }

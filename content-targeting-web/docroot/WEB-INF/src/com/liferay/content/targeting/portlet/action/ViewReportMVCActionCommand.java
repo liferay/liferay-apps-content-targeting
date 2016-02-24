@@ -82,10 +82,10 @@ public class ViewReportMVCActionCommand extends BaseMVCRenderCommand {
 		_trackingActionsRegistry = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ViewReportMVCActionCommand.class);
 
-	private volatile ReportsRegistry _reportsRegistry;
-	private volatile TrackingActionsRegistry _trackingActionsRegistry;
+	private ReportsRegistry _reportsRegistry;
+	private TrackingActionsRegistry _trackingActionsRegistry;
 
 }

@@ -352,7 +352,7 @@ public class SiteRoleRule extends BaseRule {
 		}
 	}
 
-	protected static final String _FORM_TEMPLATE_PATH =
+	private static final String _FORM_TEMPLATE_PATH =
 		"templates/ct_fields_site.ftl";
 
 }

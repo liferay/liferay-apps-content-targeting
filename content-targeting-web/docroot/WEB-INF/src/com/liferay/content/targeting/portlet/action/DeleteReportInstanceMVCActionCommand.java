@@ -91,9 +91,9 @@ public class DeleteReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 		_reportInstanceLocalService = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteReportInstanceMVCActionCommand.class);
 
-	private volatile ReportInstanceLocalService _reportInstanceLocalService;
+	private ReportInstanceLocalService _reportInstanceLocalService;
 
 }

@@ -206,7 +206,7 @@ public class ChannelInstanceLocalServiceImpl
 	@ServiceReference(type = ChannelsRegistry.class)
 	protected ChannelsRegistry _channelsRegistry;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ChannelInstanceLocalServiceImpl.class);
 
 }

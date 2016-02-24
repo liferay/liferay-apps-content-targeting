@@ -60,7 +60,7 @@ public class AssetEntryTrackingDynamicInclude extends TrackingDynamicInclude {
 			"com.liferay.asset.publisher.web#/view_content.jsp#post");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AssetEntryTrackingDynamicInclude.class);
 
 }

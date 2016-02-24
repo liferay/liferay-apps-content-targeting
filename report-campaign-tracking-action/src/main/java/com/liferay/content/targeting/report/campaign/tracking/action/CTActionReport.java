@@ -643,7 +643,7 @@ public class CTActionReport extends BaseReport {
 		return trackingActionExceptions;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CTActionReport.class);
+	private static final Log _log = LogFactoryUtil.getLog(CTActionReport.class);
 
 	private CTActionLocalService _ctActionLocalService;
 	private CTActionTotalLocalService _ctActionTotalLocalService;

@@ -133,14 +133,14 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 		return _anonymousUsersCookieManager;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setAnonymousUserLocalService(
 		AnonymousUserLocalService anonymousUserLocalService) {
 
 		_anonymousUserLocalService = anonymousUserLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setAnonymousUsersCookieManager(
 		AnonymousUsersCookieManager anonymousUsersCookieManager) {
 

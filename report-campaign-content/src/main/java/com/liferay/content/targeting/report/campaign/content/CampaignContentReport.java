@@ -63,7 +63,7 @@ public class CampaignContentReport extends BaseReport {
 		return Campaign.class.getName();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setCampaignContentLocalService(
 		CampaignContentLocalService campaignContentLocalService) {
 
@@ -111,7 +111,7 @@ public class CampaignContentReport extends BaseReport {
 		);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CampaignContentReport.class);
 
 	private CampaignContentLocalService _campaignContentLocalService;

@@ -53,6 +53,6 @@ public class DefaultChannelsRegistryImpl implements ChannelsRegistry {
 		_channels.remove(channel);
 	}
 
-	private Map<String, Channel> _channels = new ConcurrentHashMap<>();
+	private final Map<String, Channel> _channels = new ConcurrentHashMap<>();
 
 }

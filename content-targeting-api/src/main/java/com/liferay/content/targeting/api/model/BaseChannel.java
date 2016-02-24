@@ -197,9 +197,9 @@ public abstract class BaseChannel implements Channel {
 		Map<String, String> values) {
 	}
 
-	protected static final String _FORM_TEMPLATE_PATH =
+	private static final String _FORM_TEMPLATE_PATH =
 		"templates/ct_channel.ftl";
 
-	private static Log _log = LogFactoryUtil.getLog(BaseChannel.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseChannel.class);
 
 }

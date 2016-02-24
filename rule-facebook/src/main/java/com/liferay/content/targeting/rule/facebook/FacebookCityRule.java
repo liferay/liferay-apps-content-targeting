@@ -129,11 +129,12 @@ public class FacebookCityRule extends BaseFacebookRule {
 		context.put("cityName", cityName);
 	}
 
+	@Override
 	protected String getFormTemplatePath() {
 		return _FORM_TEMPLATE_PATH_CITY;
 	}
 
-	protected static final String _FORM_TEMPLATE_PATH_CITY =
+	private static final String _FORM_TEMPLATE_PATH_CITY =
 		"templates/ct_fields_city.ftl";
 
 }

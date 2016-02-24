@@ -64,7 +64,7 @@ public class AnalyticsMessageListener implements MessageListener {
 		_scorePointsAssigner = scorePointsAssigner;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsMessageListener.class);
 
 	private ScorePointsAssigner _scorePointsAssigner;

@@ -11,8 +11,7 @@ Import-Package:\
 	com.liferay.content.targeting.service.messaging,\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
-Include-Resource:\
-	@lib/restfb.jar
+Include-Resource: @lib/restfb.jar
 Private-Package: com.liferay.content.targeting.rule.facebook.*
 Service-Component: com.liferay.content.targeting.rule.facebook.*
 Web-ContextPath: /rule-facebook

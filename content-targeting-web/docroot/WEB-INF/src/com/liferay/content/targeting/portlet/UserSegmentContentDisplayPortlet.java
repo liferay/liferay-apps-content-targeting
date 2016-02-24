@@ -247,7 +247,7 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 			portletDisplay.getPortletName(), ActionKeys.CONFIGURATION);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UserSegmentContentDisplayPortlet.class);
 
 	private ServletContext _analyticsServletContext;

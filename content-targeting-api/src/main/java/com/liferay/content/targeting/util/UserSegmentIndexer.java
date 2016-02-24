@@ -203,6 +203,7 @@ public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserSegmentIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserSegmentIndexer.class);
 
 }

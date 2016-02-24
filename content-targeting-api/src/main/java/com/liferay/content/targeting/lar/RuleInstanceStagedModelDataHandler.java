@@ -232,7 +232,7 @@ public class RuleInstanceStagedModelDataHandler
 		return true;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RuleInstanceStagedModelDataHandler.class);
 
 	private RulesRegistry _rulesRegistry;

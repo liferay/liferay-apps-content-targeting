@@ -86,6 +86,6 @@ public class DefaultReportsRegistryImpl implements ReportsRegistry {
 		return outputMap;
 	}
 
-	private Map<String, Report> _reports = new ConcurrentHashMap<>();
+	private final Map<String, Report> _reports = new ConcurrentHashMap<>();
 
 }

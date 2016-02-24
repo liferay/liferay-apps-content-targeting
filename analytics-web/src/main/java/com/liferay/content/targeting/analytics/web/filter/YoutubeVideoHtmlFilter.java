@@ -184,13 +184,14 @@ public class YoutubeVideoHtmlFilter extends BaseFilter {
 		return HttpUtil.protocolize(url, secure);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		YoutubeVideoHtmlFilter.class);
 
-	private static Pattern _youtubeEmbedVideoIframePattern = Pattern.compile(
-		"(<iframe\\s+)(.*)(\\s+src=\\\")([^\\\"]*)" +
+	private static final Pattern _youtubeEmbedVideoIframePattern =
+		Pattern.compile(
+			"(<iframe\\s+)(.*)(\\s+src=\\\")([^\\\"]*)" +
 			"(\\\".*>.*?<\\/iframe>)");
-	private static Pattern _youtubeEmbedVideoUrlIdPattern = Pattern.compile(
-		".*\\/embed\\/([a-zA-Z0-9_\\\\-]{11}).*");
+	private static final Pattern _youtubeEmbedVideoUrlIdPattern =
+		Pattern.compile(".*\\/embed\\/([a-zA-Z0-9_\\\\-]{11}).*");
 
 }

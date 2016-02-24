@@ -209,6 +209,7 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseMVCRenderCommand.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseMVCRenderCommand.class);
 
 }

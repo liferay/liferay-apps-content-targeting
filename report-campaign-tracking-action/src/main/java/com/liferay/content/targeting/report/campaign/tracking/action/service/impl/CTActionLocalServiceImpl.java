@@ -342,7 +342,7 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CTActionLocalServiceImpl.class);
 
 	@ServiceReference(type = AnalyticsEventLocalService.class)

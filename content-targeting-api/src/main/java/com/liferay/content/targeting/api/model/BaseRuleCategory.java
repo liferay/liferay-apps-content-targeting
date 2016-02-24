@@ -75,6 +75,7 @@ public abstract class BaseRuleCategory implements RuleCategory {
 			locale, getClass().getName());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseRuleCategory.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseRuleCategory.class);
 
 }

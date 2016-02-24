@@ -74,6 +74,6 @@ public class AnalyticsBottomDynamicInclude extends BaseDynamicInclude {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsBottomDynamicInclude.class);
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

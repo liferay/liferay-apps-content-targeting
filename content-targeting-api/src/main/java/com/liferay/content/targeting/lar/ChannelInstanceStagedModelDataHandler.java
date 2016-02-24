@@ -238,7 +238,7 @@ public class ChannelInstanceStagedModelDataHandler
 		return true;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ChannelInstanceStagedModelDataHandler.class);
 
 	private ChannelsRegistry _channelsRegistry;

@@ -124,7 +124,7 @@ public class UpdateReportMVCActionCommand extends BaseMVCActionCommand {
 		_reportsRegistry = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateReportMVCActionCommand.class);
 
 	private static volatile ReportInstanceLocalService

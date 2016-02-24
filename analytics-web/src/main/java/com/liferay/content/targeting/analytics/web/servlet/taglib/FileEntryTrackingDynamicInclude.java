@@ -63,7 +63,7 @@ public class FileEntryTrackingDynamicInclude extends TrackingDynamicInclude {
 				"view_file_entry.jsp#post");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntryTrackingDynamicInclude.class);
 
 }

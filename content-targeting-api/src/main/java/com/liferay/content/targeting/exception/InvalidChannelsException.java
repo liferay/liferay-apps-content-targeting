@@ -62,7 +62,7 @@ public class InvalidChannelsException extends PortalException {
 		return _exceptionsMap.get(channelId);
 	}
 
-	private Map<String, List<InvalidChannelException>> _exceptionsMap =
+	private final Map<String, List<InvalidChannelException>> _exceptionsMap =
 		new HashMap<>();
 
 }

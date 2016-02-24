@@ -236,7 +236,7 @@ public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ReportInstanceIndexer.class);
 
 }

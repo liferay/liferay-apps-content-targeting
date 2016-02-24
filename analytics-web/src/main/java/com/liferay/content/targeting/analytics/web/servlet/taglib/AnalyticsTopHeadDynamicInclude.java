@@ -87,6 +87,6 @@ public class AnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
 		AnalyticsTopHeadDynamicInclude.class);
 
 	private AnalyticsProcessor _analyticsProcessor;
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

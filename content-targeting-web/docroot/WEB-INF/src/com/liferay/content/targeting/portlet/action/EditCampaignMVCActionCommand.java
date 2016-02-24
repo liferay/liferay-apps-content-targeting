@@ -188,11 +188,11 @@ public class EditCampaignMVCActionCommand extends BaseMVCRenderCommand {
 		_userSegmentLocalService = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		EditCampaignMVCActionCommand.class);
 
-	private volatile ReportInstanceLocalService _reportInstanceLocalService;
-	private volatile ReportsRegistry _reportsRegistry;
-	private volatile UserSegmentLocalService _userSegmentLocalService;
+	private ReportInstanceLocalService _reportInstanceLocalService;
+	private ReportsRegistry _reportsRegistry;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

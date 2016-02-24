@@ -200,9 +200,10 @@ public abstract class BaseTrackingAction implements TrackingAction {
 		Map<String, Object> context, Map<String, String> values) {
 	}
 
-	protected static final String _FORM_TEMPLATE_PATH =
+	private static final String _FORM_TEMPLATE_PATH =
 		"templates/ct_tracking_action.ftl";
 
-	private static Log _log = LogFactoryUtil.getLog(BaseTrackingAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseTrackingAction.class);
 
 }

@@ -404,13 +404,13 @@ public class EditTacticMVCActionCommand extends BaseMVCRenderCommand {
 		_userSegmentLocalService = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		EditTacticMVCActionCommand.class);
 
-	private volatile ChannelInstanceLocalService _channelInstanceLocalService;
-	private volatile ChannelInstanceService _channelInstanceService;
-	private volatile ChannelsRegistry _channelsRegistry;
-	private volatile ReportsRegistry _reportsRegistry;
-	private volatile UserSegmentLocalService _userSegmentLocalService;
+	private ChannelInstanceLocalService _channelInstanceLocalService;
+	private ChannelInstanceService _channelInstanceService;
+	private ChannelsRegistry _channelsRegistry;
+	private ReportsRegistry _reportsRegistry;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

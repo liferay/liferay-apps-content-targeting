@@ -81,7 +81,7 @@ public class ReportPermission implements BaseModelPermissionChecker {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportInstanceLocalService(
 		ReportInstanceLocalService reportInstanceLocalService) {
 

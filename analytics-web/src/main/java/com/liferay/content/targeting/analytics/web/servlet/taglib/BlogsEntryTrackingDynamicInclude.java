@@ -61,7 +61,7 @@ public class BlogsEntryTrackingDynamicInclude extends TrackingDynamicInclude {
 			"com.liferay.blogs.web#/blogs/view_entry.jsp#post");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryTrackingDynamicInclude.class);
 
 }

@@ -210,7 +210,7 @@ public class UserSegmentContentDisplayPortletDataHandler
 		portletPreferences.reset(key + "uuid");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UserSegmentContentDisplayPortletDataHandler.class);
 
 }

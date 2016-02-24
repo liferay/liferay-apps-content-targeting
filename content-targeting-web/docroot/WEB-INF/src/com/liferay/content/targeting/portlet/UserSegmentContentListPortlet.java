@@ -241,7 +241,7 @@ public class UserSegmentContentListPortlet extends MVCPortlet {
 		return super.getPath(portletRequest, portletResponse);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UserSegmentContentListPortlet.class);
 
 }

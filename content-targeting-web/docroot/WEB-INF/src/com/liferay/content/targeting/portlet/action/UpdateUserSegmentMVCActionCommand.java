@@ -280,13 +280,13 @@ public class UpdateUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 		return ruleExceptions;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateUserSegmentMVCActionCommand.class);
 
-	private volatile MVCRenderCommand _mvcRenderCommand;
-	private volatile RuleInstanceService _ruleInstanceService;
-	private volatile RulesRegistry _rulesRegistry;
-	private volatile UserSegmentService _userSegmentService;
+	private MVCRenderCommand _mvcRenderCommand;
+	private RuleInstanceService _ruleInstanceService;
+	private RulesRegistry _rulesRegistry;
+	private UserSegmentService _userSegmentService;
 
 	private class UserSegmentCallable implements Callable<UserSegment> {
 
@@ -328,13 +328,13 @@ public class UpdateUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 			_serviceContext = serviceContext;
 		}
 
-		private Map<Locale, String> _descriptionMap;
-		private Map<Locale, String> _nameMap;
-		private PortletRequest _portletRequest;
-		private PortletResponse _portletResponse;
-		private ServiceContext _serviceContext;
-		private long _userId;
-		private long _userSegmentId;
+		private final Map<Locale, String> _descriptionMap;
+		private final Map<Locale, String> _nameMap;
+		private final PortletRequest _portletRequest;
+		private final PortletResponse _portletResponse;
+		private final ServiceContext _serviceContext;
+		private final long _userId;
+		private final long _userSegmentId;
 
 	}
 

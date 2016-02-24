@@ -196,11 +196,12 @@ public class FacebookAgeRule extends BaseFacebookRule {
 		return age;
 	}
 
+	@Override
 	protected String getFormTemplatePath() {
 		return _FORM_TEMPLATE_PATH_AGE;
 	}
 
-	protected static final String _FORM_TEMPLATE_PATH_AGE =
+	private static final String _FORM_TEMPLATE_PATH_AGE =
 		"templates/ct_fields_age.ftl";
 
 }

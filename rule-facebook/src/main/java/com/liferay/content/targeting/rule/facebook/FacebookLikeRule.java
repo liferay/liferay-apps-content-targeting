@@ -110,11 +110,12 @@ public class FacebookLikeRule extends BaseFacebookRule {
 		context.put("facebookName", name);
 	}
 
+	@Override
 	protected String getFormTemplatePath() {
 		return _FORM_TEMPLATE_PATH_LIKE;
 	}
 
-	protected static final String _FORM_TEMPLATE_PATH_LIKE =
+	private static final String _FORM_TEMPLATE_PATH_LIKE =
 		"templates/ct_fields_like.ftl";
 
 }

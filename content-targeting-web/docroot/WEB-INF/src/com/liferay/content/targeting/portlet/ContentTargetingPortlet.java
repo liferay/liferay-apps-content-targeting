@@ -105,10 +105,10 @@ public class ContentTargetingPortlet extends MVCPortlet {
 		_reportsRegistry = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
-	private volatile ChannelsRegistry _channelsRegistry;
-	private volatile ReportsRegistry _reportsRegistry;
+	private ChannelsRegistry _channelsRegistry;
+	private ReportsRegistry _reportsRegistry;
 
 }

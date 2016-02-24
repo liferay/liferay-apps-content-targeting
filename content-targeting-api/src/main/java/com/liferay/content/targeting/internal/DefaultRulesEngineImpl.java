@@ -115,7 +115,7 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 		MessageBusUtil.sendMessage("liferay/anonymous_user_segments", message);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultRulesEngineImpl.class);
 
 	private RulesRegistry _rulesRegistry;

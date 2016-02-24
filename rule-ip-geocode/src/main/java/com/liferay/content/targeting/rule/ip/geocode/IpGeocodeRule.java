@@ -246,7 +246,7 @@ public class IpGeocodeRule extends BaseRule {
 		context.put("regionId", regionId);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(IpGeocodeRule.class);
+	private static final Log _log = LogFactoryUtil.getLog(IpGeocodeRule.class);
 
 	private static IPGeocoder _ipGeocoder;
 

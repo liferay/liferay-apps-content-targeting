@@ -53,6 +53,6 @@ public class DefaultRulesRegistryImpl implements RulesRegistry {
 		_rules.remove(rule);
 	}
 
-	private Map<String, Rule> _rules = new ConcurrentHashMap<>();
+	private final Map<String, Rule> _rules = new ConcurrentHashMap<>();
 
 }

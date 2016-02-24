@@ -184,10 +184,10 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 		_campaignService = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateCampaignMVCActionCommand.class);
 
-	private volatile CampaignService _campaignService;
+	private CampaignService _campaignService;
 
 	private class CampaignCallable implements Callable<Campaign> {
 
@@ -233,19 +233,19 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 			_serviceContext = serviceContext;
 		}
 
-		private boolean _active;
-		private long _campaignId;
-		private Map<Locale, String> _descriptionMap;
-		private Date _endDate;
-		private Map<Locale, String> _nameMap;
-		private PortletRequest _portletRequest;
-		private PortletResponse _portletResponse;
-		private int _priority;
-		private ServiceContext _serviceContext;
-		private Date _startDate;
-		private String _timeZoneId;
-		private long _userId;
-		private long[] _userSegmentIds;
+		private final boolean _active;
+		private final long _campaignId;
+		private final Map<Locale, String> _descriptionMap;
+		private final Date _endDate;
+		private final Map<Locale, String> _nameMap;
+		private final PortletRequest _portletRequest;
+		private final PortletResponse _portletResponse;
+		private final int _priority;
+		private final ServiceContext _serviceContext;
+		private final Date _startDate;
+		private final String _timeZoneId;
+		private final long _userId;
+		private final long[] _userSegmentIds;
 
 	}
 

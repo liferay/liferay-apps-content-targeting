@@ -152,7 +152,8 @@ public class UserSegmentPreAction extends Action {
 		_userSegmentSimulator = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserSegmentPreAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserSegmentPreAction.class);
 
 	private AnonymousUsersManager _anonymousUsersManager;
 	private RulesEngine _rulesEngine;

@@ -142,10 +142,10 @@ public class DeleteUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 		_userSegmentService = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteUserSegmentMVCActionCommand.class);
 
-	private volatile UserSegmentLocalService _userSegmentLocalService;
-	private volatile UserSegmentService _userSegmentService;
+	private UserSegmentLocalService _userSegmentLocalService;
+	private UserSegmentService _userSegmentService;
 
 }

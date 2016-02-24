@@ -191,11 +191,11 @@ public class UpdateReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateReportInstanceMVCActionCommand.class);
 
-	private volatile ReportInstanceService _reportInstanceService;
-	private volatile ReportsRegistry _reportsRegistry;
+	private ReportInstanceService _reportInstanceService;
+	private ReportsRegistry _reportsRegistry;
 
 	private class ReportInstanceCallable implements Callable<ReportInstance> {
 
@@ -238,16 +238,16 @@ public class UpdateReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 			_serviceContext = serviceContext;
 		}
 
-		private String _className;
-		private long _classPK;
-		private Map<Locale, String> _descriptionMap;
-		private Map<Locale, String> _nameMap;
-		private PortletRequest _portletRequest;
-		private PortletResponse _portletResponse;
-		private long _reportInstanceId;
-		private String _reportKey;
-		private ServiceContext _serviceContext;
-		private long _userId;
+		private final String _className;
+		private final long _classPK;
+		private final Map<Locale, String> _descriptionMap;
+		private final Map<Locale, String> _nameMap;
+		private final PortletRequest _portletRequest;
+		private final PortletResponse _portletResponse;
+		private final long _reportInstanceId;
+		private final String _reportKey;
+		private final ServiceContext _serviceContext;
+		private final long _userId;
 
 	}
 

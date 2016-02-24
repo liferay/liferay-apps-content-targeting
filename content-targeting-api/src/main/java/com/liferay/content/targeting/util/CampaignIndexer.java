@@ -201,6 +201,7 @@ public class CampaignIndexer extends BaseIndexer<Campaign> {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CampaignIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CampaignIndexer.class);
 
 }

@@ -182,6 +182,7 @@ public class FacebookEducationRule extends BaseFacebookRule {
 		context.put("schoolName", schoolName);
 	}
 
+	@Override
 	protected String getFormTemplatePath() {
 		return _FORM_TEMPLATE_PATH_EDUCATION;
 	}
@@ -234,11 +235,11 @@ public class FacebookEducationRule extends BaseFacebookRule {
 		return false;
 	}
 
-	protected static final String _EDUCATION_TYPE_COLLEGE = "College";
+	private static final String _EDUCATION_TYPE_COLLEGE = "College";
 
-	protected static final String _EDUCATION_TYPE_HIGH_SCHOOL = "High School";
+	private static final String _EDUCATION_TYPE_HIGH_SCHOOL = "High School";
 
-	protected static final String _FORM_TEMPLATE_PATH_EDUCATION =
+	private static final String _FORM_TEMPLATE_PATH_EDUCATION =
 		"templates/ct_fields_education.ftl";
 
 }

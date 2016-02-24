@@ -63,7 +63,7 @@ public class UserSegmentContentReport extends BaseReport {
 		return UserSegment.class.getName();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setUserSegmentContentLocalService(
 		UserSegmentContentLocalService userSegmentContentLocalService) {
 
@@ -111,7 +111,7 @@ public class UserSegmentContentReport extends BaseReport {
 		);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UserSegmentContentReport.class);
 
 	private UserSegmentContentLocalService _userSegmentContentLocalService;

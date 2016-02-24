@@ -262,7 +262,7 @@ public class ContentVisitedRule extends BaseRule {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setAnalyticsEventLocalService(
 		AnalyticsEventLocalService analyticsEventLocalService) {
 
@@ -377,7 +377,8 @@ public class ContentVisitedRule extends BaseRule {
 	private static final String _FORM_TEMPLATE_PATH_CONTENT =
 		"templates/ct_fields_content.ftl";
 
-	private static Log _log = LogFactoryUtil.getLog(ContentVisitedRule.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentVisitedRule.class);
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
 

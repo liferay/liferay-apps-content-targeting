@@ -287,12 +287,12 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 
 	private static final int _SHOW_SEARCH_LIMIT = 10;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ContentTargetingSimulatorPanelApp.class);
 
-	private volatile CampaignLocalService _campaignLocalService;
+	private CampaignLocalService _campaignLocalService;
 	private ServletContext _simulatorServletContext;
-	private volatile UserSegmentLocalService _userSegmentLocalService;
-	private volatile UserSegmentSimulator _userSegmentSimulator;
+	private UserSegmentLocalService _userSegmentLocalService;
+	private UserSegmentSimulator _userSegmentSimulator;
 
 }

@@ -84,7 +84,7 @@ public class AnalyticsMessageListener extends BaseMessageListener {
 	protected void setDestination(Destination destination) {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsMessageListener.class);
 
 }

@@ -361,7 +361,7 @@ public class OrganizationRoleRule extends BaseRule {
 		}
 	}
 
-	protected static final String _FORM_TEMPLATE_PATH =
+	private static final String _FORM_TEMPLATE_PATH =
 		"templates/ct_fields_organization.ftl";
 
 }

@@ -57,6 +57,6 @@ public class UserModelListener extends BaseModelListener<User> {
 		_anonymousUserLocalService = null;
 	}
 
-	private volatile AnonymousUserLocalService _anonymousUserLocalService;
+	private AnonymousUserLocalService _anonymousUserLocalService;
 
 }

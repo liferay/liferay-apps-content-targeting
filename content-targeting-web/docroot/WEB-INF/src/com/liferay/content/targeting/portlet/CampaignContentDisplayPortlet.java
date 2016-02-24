@@ -243,7 +243,7 @@ public class CampaignContentDisplayPortlet extends ContentDisplayPortlet {
 		_campaignLocalService = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CampaignContentDisplayPortlet.class);
 
 	private ServletContext _analyticsServletContext;

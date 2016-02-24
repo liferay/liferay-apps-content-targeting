@@ -286,7 +286,7 @@ public class TrackingActionInstanceLocalServiceImpl
 	@ServiceReference(type = TrackingActionsRegistry.class)
 	protected TrackingActionsRegistry _trackingActionsRegistry;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		TrackingActionInstanceLocalServiceImpl.class);
 
 }

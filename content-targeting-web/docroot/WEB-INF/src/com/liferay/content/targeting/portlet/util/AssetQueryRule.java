@@ -297,7 +297,7 @@ public abstract class AssetQueryRule implements QueryRule {
 		_assetType = _assetRendererFactory.getTypeName(locale, true);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AssetQueryRule.class);
+	private static final Log _log = LogFactoryUtil.getLog(AssetQueryRule.class);
 
 	private String _assetClassName = StringPool.BLANK;
 	private long _assetClassPK;

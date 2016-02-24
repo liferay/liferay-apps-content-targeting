@@ -386,14 +386,14 @@ public class EditUserSegmentMVCActionCommand extends BaseMVCRenderCommand {
 		_rulesRegistry = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		EditUserSegmentMVCActionCommand.class);
 
-	private volatile ReportInstanceLocalService _reportInstanceLocalService;
-	private volatile ReportsRegistry _reportsRegistry;
-	private volatile RuleCategoriesRegistry _ruleCategoriesRegistry;
-	private volatile RuleInstanceLocalService _ruleInstanceLocalService;
-	private volatile RuleInstanceService _ruleInstanceService;
-	private volatile RulesRegistry _rulesRegistry;
+	private ReportInstanceLocalService _reportInstanceLocalService;
+	private ReportsRegistry _reportsRegistry;
+	private RuleCategoriesRegistry _ruleCategoriesRegistry;
+	private RuleInstanceLocalService _ruleInstanceLocalService;
+	private RuleInstanceService _ruleInstanceService;
+	private RulesRegistry _rulesRegistry;
 
 }

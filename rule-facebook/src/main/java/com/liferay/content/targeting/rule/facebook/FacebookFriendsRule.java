@@ -150,11 +150,12 @@ public class FacebookFriendsRule extends BaseFacebookRule {
 		context.put("selector", selector);
 	}
 
+	@Override
 	protected String getFormTemplatePath() {
 		return _FORM_TEMPLATE_PATH_FRIENDS;
 	}
 
-	protected static final String _FORM_TEMPLATE_PATH_FRIENDS =
+	private static final String _FORM_TEMPLATE_PATH_FRIENDS =
 		"templates/ct_fields_friends.ftl";
 
 }

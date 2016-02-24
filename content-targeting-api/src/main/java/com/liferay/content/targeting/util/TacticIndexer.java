@@ -200,6 +200,6 @@ public class TacticIndexer extends BaseIndexer<Tactic> {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(TacticIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(TacticIndexer.class);
 
 }

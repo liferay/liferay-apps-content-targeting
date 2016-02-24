@@ -352,6 +352,6 @@ public class DeviceRule extends BaseRule {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DeviceRule.class);
+	private static final Log _log = LogFactoryUtil.getLog(DeviceRule.class);
 
 }

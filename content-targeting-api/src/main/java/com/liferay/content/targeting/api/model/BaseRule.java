@@ -189,9 +189,8 @@ public abstract class BaseRule implements Rule {
 		Map<String, String> values) {
 	}
 
-	protected static final String _FORM_TEMPLATE_PATH =
-		"templates/ct_fields.ftl";
+	private static final String _FORM_TEMPLATE_PATH = "templates/ct_fields.ftl";
 
-	private static Log _log = LogFactoryUtil.getLog(BaseRule.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseRule.class);
 
 }

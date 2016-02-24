@@ -384,7 +384,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 	private static final String[] _EVENT_TYPES = {"view"};
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ContentTrackingAction.class);
 
 }

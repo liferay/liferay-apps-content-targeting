@@ -90,9 +90,9 @@ public class DeleteTacticMVCActionCommand extends BaseMVCActionCommand {
 		_tacticLocalService = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteTacticMVCActionCommand.class);
 
-	private volatile TacticLocalService _tacticLocalService;
+	private TacticLocalService _tacticLocalService;
 
 }

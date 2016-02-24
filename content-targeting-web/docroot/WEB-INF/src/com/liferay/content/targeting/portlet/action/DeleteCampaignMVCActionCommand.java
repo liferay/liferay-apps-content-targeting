@@ -88,9 +88,9 @@ public class DeleteCampaignMVCActionCommand extends BaseMVCActionCommand {
 		_campaignService = null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteCampaignMVCActionCommand.class);
 
-	private volatile CampaignService _campaignService;
+	private CampaignService _campaignService;
 
 }

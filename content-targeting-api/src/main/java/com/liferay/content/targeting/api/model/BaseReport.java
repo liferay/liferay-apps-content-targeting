@@ -170,9 +170,8 @@ public abstract class BaseReport implements Report {
 	protected static final String _EDIT_FORM_TEMPLATE_PATH =
 		"templates/ct_edit_report.ftl";
 
-	protected static final String _FORM_TEMPLATE_PATH =
-		"templates/ct_report.ftl";
+	private static final String _FORM_TEMPLATE_PATH = "templates/ct_report.ftl";
 
-	private static Log _log = LogFactoryUtil.getLog(BaseReport.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseReport.class);
 
 }

@@ -129,7 +129,7 @@ public class UserSegmentQueryRuleUtilTest {
 	}
 
 	private QueryRule _queryRuleDefault;
-	private List<QueryRule> _queryRules = new ArrayList<>();
+	private final List<QueryRule> _queryRules = new ArrayList<>();
 
 	private class UserSegmentQueryRuleMock extends UserSegmentQueryRule {
 

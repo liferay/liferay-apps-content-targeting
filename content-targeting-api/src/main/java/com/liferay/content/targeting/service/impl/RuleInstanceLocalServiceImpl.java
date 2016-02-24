@@ -173,7 +173,7 @@ public class RuleInstanceLocalServiceImpl
 	@ServiceReference(type = RulesRegistry.class)
 	protected RulesRegistry _rulesRegistry;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RuleInstanceLocalServiceImpl.class);
 
 }

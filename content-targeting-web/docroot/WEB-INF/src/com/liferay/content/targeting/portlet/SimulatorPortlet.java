@@ -106,6 +106,6 @@ public class SimulatorPortlet extends MVCPortlet {
 		_userSegmentSimulator = null;
 	}
 
-	private volatile UserSegmentSimulator _userSegmentSimulator;
+	private UserSegmentSimulator _userSegmentSimulator;
 
 }

@@ -55,7 +55,7 @@ public class DefaultTrackingActionsRegistryImpl
 		_trackingActions.remove(trackingAction);
 	}
 
-	private Map<String, TrackingAction> _trackingActions =
+	private final Map<String, TrackingAction> _trackingActions =
 		new ConcurrentHashMap<>();
 
 }

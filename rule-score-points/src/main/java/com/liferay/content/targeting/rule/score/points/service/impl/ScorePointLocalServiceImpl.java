@@ -130,7 +130,7 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return scorePoint;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ScorePointLocalServiceImpl.class);
 
 	@ServiceReference(type = UserSegmentLocalService.class)

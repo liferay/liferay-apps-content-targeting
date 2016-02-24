@@ -181,7 +181,7 @@ public class CampaignContentLocalServiceImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CampaignContentLocalServiceImpl.class);
 
 	@ServiceReference(type = AnalyticsEventLocalService.class)
