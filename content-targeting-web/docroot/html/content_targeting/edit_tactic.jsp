@@ -18,7 +18,6 @@
 
 <%
 String backURL = ParamUtil.getString(request, "backURL");
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 String campaignUserSegmentsIds = GetterUtil.getString(request.getAttribute("campaignUserSegmentsIds"));

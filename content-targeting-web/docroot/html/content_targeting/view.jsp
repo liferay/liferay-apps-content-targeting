@@ -27,10 +27,12 @@ String tabs1 = ParamUtil.getString(request, "tabs1");
 	value="<%= tabs1 %>"
 >
 	<liferay-ui:section>
-		<%@ include file="/html/content_targeting/view_user_segments.jsp" %>
+		<liferay-util:include page="/html/content_targeting/view_user_segments.jsp" servletContext="<%= application %>">
+		</liferay-util:include>
 	</liferay-ui:section>
 
 	<liferay-ui:section>
-		<%@ include file="/html/content_targeting/view_campaigns.jsp" %>
+		<liferay-util:include page="/html/content_targeting/view_campaigns.jsp" servletContext="<%= application %>">
+		</liferay-util:include>
 	</liferay-ui:section>
 </liferay-ui:tabs>

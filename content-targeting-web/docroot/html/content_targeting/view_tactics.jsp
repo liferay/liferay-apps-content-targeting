@@ -16,6 +16,17 @@
 
 <%@ include file="/html/init.jsp" %>
 
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+long campaignId = ParamUtil.getLong(request, "campaignId", 0);
+
+Campaign campaign = null;
+
+if (campaignId > 0) {
+	campaign = CampaignLocalServiceUtil.fetchCampaign(campaignId);
+}
+%>
+
 <liferay-portlet:renderURL var="searchURL">
 	<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
 	<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
@@ -30,7 +41,7 @@
 	<aui:input name="tacticsIds" type="hidden" />
 
 	<aui:nav-bar>
-		<%@ include file="/html/content_targeting/tactic_toolbar.jsp" %>
+		<%@ include file="/html/content_targeting/tactic_toolbar.jspf" %>
 
 		<aui:nav-bar-search cssClass="pull-right">
 			<div class="form-search">
@@ -44,7 +55,8 @@
 	</aui:nav-bar>
 
 	<div id="<portlet:namespace />tacticsPanel">
-		<%@ include file="/html/content_targeting/view_tactics_resources.jsp" %>
+		<liferay-util:include page="/html/content_targeting/view_tactics_resources.jsp" servletContext="<%= application %>">
+		</liferay-util:include>
 	</div>
 </aui:form>
 

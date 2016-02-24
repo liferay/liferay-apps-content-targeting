@@ -18,15 +18,10 @@
 
 <%
 String backURL = ParamUtil.getString(request, "backURL");
-
 String redirect = ParamUtil.getString(request, "redirect");
-
 String reportKey = ParamUtil.getString(request, "reportKey");
-
 long reportInstanceId = ParamUtil.getLong(request, "reportInstanceId");
-
 String className = ParamUtil.getString(request, "className");
-
 long classPK = ParamUtil.getLong(request, "classPK");
 
 ReportsRegistry reportsRegistry = (ReportsRegistry)request.getAttribute("reportsRegistry");

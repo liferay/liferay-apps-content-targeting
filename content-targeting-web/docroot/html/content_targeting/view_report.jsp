@@ -17,19 +17,14 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
-Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
-
 String backURL = ParamUtil.getString(request, "backURL");
-
 String redirect = ParamUtil.getString(request, "redirect", currentURL);
-
 String reportKey = ParamUtil.getString(request, "reportKey");
-
 long reportInstanceId = ParamUtil.getLong(request, "reportInstanceId");
-
 String className = ParamUtil.getString(request, "className");
-
 long classPK = ParamUtil.getLong(request, "classPK");
+
+Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 
 ReportsRegistry reportsRegistry = (ReportsRegistry)request.getAttribute("reportsRegistry");
 

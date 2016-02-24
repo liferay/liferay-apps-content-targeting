@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/init.jsp" %>
-
 <%
 RuleCategoriesRegistry ruleCategoriesRegistry = (RuleCategoriesRegistry)request.getAttribute("ruleCategoriesRegistry");
 

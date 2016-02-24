@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/init.jsp" %>
-
 <%
 String userSegmentAssetCategoryIdsAsString = GetterUtil.getString(request.getAttribute("userSegmentAssetCategoryIdsAsString"));
 String userSegmentAssetCategoryNames = GetterUtil.getString(request.getAttribute("userSegmentAssetCategoryNames"));

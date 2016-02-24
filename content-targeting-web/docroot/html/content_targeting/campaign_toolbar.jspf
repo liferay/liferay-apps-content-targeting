@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/init.jsp" %>
-
 <aui:nav>
 	<c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_CAMPAIGN) %>">
 		<portlet:renderURL var="redirectURL">

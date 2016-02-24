@@ -62,7 +62,7 @@
 	<aui:input name="userSegmentIds" type="hidden" />
 
 	<aui:nav-bar>
-		<%@ include file="/html/content_targeting/user_segment_toolbar.jsp" %>
+		<%@ include file="/html/content_targeting/user_segment_toolbar.jspf" %>
 
 		<aui:nav-bar-search cssClass="pull-right">
 			<div class="form-search">
@@ -76,7 +76,8 @@
 	</aui:nav-bar>
 
 	<div id="<portlet:namespace />userSegmentsPanel">
-		<%@ include file="/html/content_targeting/view_user_segments_resources.jsp" %>
+		<liferay-util:include page="/html/content_targeting/view_user_segments_resources.jsp" servletContext="<%= application %>">
+		</liferay-util:include>
 	</div>
 </aui:form>
 

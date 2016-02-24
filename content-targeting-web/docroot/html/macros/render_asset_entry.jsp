@@ -41,7 +41,6 @@ boolean showEditLink = ParamUtil.getBoolean(request, "showEditLink", false);
 <c:if test='<%= "full-content".equals(displayStyle) %>'>
 
 	<%
-	boolean renderResult = assetRenderer.include(request, response, "full_content");
 	%>
 
 </c:if>

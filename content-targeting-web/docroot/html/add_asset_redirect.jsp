@@ -16,6 +16,14 @@
 
 <%@ include file="/html/init.jsp" %>
 
+<%
+String redirect = request.getParameter("redirect");
+
+redirect = PortalUtil.escapeRedirect(redirect);
+
+Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+%>
+
 <aui:script use="aui-base">
 	Liferay.fire(
 		'closeWindow',

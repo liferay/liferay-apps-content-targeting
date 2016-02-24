@@ -18,11 +18,8 @@
 
 <%
 String backURL = ParamUtil.getString(request, "backURL");
-
 String redirect = ParamUtil.getString(request, "redirect");
-
 String tabs2 = ParamUtil.getString(request, "tabs2");
-
 long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 UserSegment userSegment = null;
@@ -71,12 +68,13 @@ if (Validator.isNull(backURL)) {
 	value="<%= tabs2 %>"
 >
 	<liferay-ui:section>
-		<%@ include file="/html/content_targeting/user_segment_details.jsp" %>
+		<%@ include file="/html/content_targeting/user_segment_details.jspf" %>
 	</liferay-ui:section>
 
 	<c:if test="<%= userSegmentId > 0 %>">
 		<liferay-ui:section>
-			<%@ include file="/html/content_targeting/view_reports.jsp" %>
+			<liferay-util:include page="/html/content_targeting/view_reports.jsp" servletContext="<%= application %>">
+			</liferay-util:include>
 		</liferay-ui:section>
 	</c:if>
 </liferay-ui:tabs>

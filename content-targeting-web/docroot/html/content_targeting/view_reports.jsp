@@ -17,10 +17,12 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
-Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
-
+String backURL = ParamUtil.getString(request, "backURL");
+String redirect = ParamUtil.getString(request, "redirect");
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
+
+Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 %>
 
 <c:if test="<%= scopeGroup.isStagingGroup() %>">
@@ -33,9 +35,9 @@ long classPK = ParamUtil.getLong(request, "classPK");
 	</div>
 </c:if>
 
-<liferay-portlet:renderURL varImpl="viewReportsURL">
+<liferay-portlet:renderURL var="searchURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="backURL" value="<%= backURL.toString() %>" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
 
 	<c:choose>
 		<c:when test="<%= Campaign.class.getName().equals(className) %>">
@@ -57,14 +59,17 @@ long classPK = ParamUtil.getLong(request, "classPK");
 	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= viewReportsURL.toString() %>" method="post" name="fmReports">
-	<aui:input name="redirect" type="hidden" value="<%= viewReportsURL.toString() %>" />
+<aui:form action="<%= searchURL %>" method="post" name="fmReports">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="reportInstanceIds" type="hidden" />
 
 	<div id="<portlet:namespace />reportsPanel">
-		<%@ include file="/html/content_targeting/report_toolbar.jsp" %>
+		<%@ include file="/html/content_targeting/report_toolbar.jspf" %>
 
-		<%@ include file="/html/content_targeting/view_reports_resources.jsp" %>
+		<liferay-util:include page="/html/content_targeting/view_reports_resources.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="className" value="<%= className %>" />
+			<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+		</liferay-util:include>
 	</div>
 </aui:form>
 

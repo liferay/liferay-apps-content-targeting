@@ -18,11 +18,8 @@
 
 <%
 String backURL = ParamUtil.getString(request, "backURL");
-
 String redirect = ParamUtil.getString(request, "redirect");
-
 String tabs2 = ParamUtil.getString(request, "tabs2");
-
 long campaignId = ParamUtil.getLong(request, "campaignId", 0);
 
 Campaign campaign = null;
@@ -71,16 +68,18 @@ if (Validator.isNull(backURL)) {
 	value="<%= tabs2 %>"
 >
 	<liferay-ui:section>
-		<%@ include file="/html/content_targeting/campaign_details.jsp" %>
+		<%@ include file="/html/content_targeting/campaign_details.jspf" %>
 	</liferay-ui:section>
 
 	<c:if test="<%= campaign != null %>">
 		<liferay-ui:section>
-			<%@ include file="/html/content_targeting/view_tactics.jsp" %>
+			<liferay-util:include page="/html/content_targeting/view_tactics.jsp" servletContext="<%= application %>">
+			</liferay-util:include>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<%@ include file="/html/content_targeting/view_reports.jsp" %>
+			<liferay-util:include page="/html/content_targeting/view_reports.jsp" servletContext="<%= application %>">
+			</liferay-util:include>
 		</liferay-ui:section>
 	</c:if>
 </liferay-ui:tabs>

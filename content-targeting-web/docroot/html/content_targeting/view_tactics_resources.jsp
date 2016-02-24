@@ -17,6 +17,14 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
+long campaignId = ParamUtil.getLong(request, "campaignId", 0);
+
+Campaign campaign = null;
+
+if (campaignId > 0) {
+	campaign = CampaignLocalServiceUtil.fetchCampaign(campaignId);
+}
+
 String tacticKeywords = ParamUtil.getString(request, "tacticKeywords");
 
 RowChecker tacticsRowChecker = new RowChecker(liferayPortletResponse);

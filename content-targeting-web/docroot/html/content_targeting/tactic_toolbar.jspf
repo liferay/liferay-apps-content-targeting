@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/init.jsp" %>
-
 <aui:nav>
 	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="redirectURL">

@@ -17,12 +17,40 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
+String redirect = ParamUtil.getString(request, "redirect");
+String className = ParamUtil.getString(request, "className");
+long classPK = ParamUtil.getLong(request, "classPK");
 String reportKeywords = ParamUtil.getString(request, "reportKeywords");
 
 RowChecker reportsRowChecker = new RowChecker(liferayPortletResponse);
 
 SearchContainerIterator searchContainerIterator = new ReportSearchContainerIterator(scopeGroupId, reportKeywords, className, classPK);
 %>
+
+<liferay-portlet:renderURL varImpl="viewReportsURL">
+	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
+
+	<c:choose>
+		<c:when test="<%= Campaign.class.getName().equals(className) %>">
+			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
+			<portlet:param name="campaignId" value="<%= String.valueOf(classPK) %>" />
+			<portlet:param name="tabs2" value="reports" />
+		</c:when>
+		<c:when test="<%= UserSegment.class.getName().equals(className) %>">
+			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
+			<portlet:param name="userSegmentId" value="<%= String.valueOf(classPK) %>" />
+			<portlet:param name="tabs2" value="reports" />
+		</c:when>
+		<c:otherwise>
+			<portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW_REPORTS %>" />
+		</c:otherwise>
+	</c:choose>
+
+	<portlet:param name="className" value="<%= className %>" />
+	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+</liferay-portlet:renderURL>
 
 <c:if test="<%= classPK > 0 %>">
 	<liferay-ui:search-container

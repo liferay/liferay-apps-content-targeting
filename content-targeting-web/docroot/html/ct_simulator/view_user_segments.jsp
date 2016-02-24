@@ -18,14 +18,16 @@
 
 <%
 String refreshURL = GetterUtil.getString(request.getAttribute("refreshURL"));
-
 boolean showUserSegmentSearch = GetterUtil.getBoolean(request.getAttribute("showUserSegmentSearch"));
+long[] simulatedUserSegmentIds = GetterUtil.getLongValues(request.getAttribute("simulatedUserSegmentIds"));
 
 List<UserSegment> userSegments = (List<UserSegment>)request.getAttribute("userSegments");
 List<UserSegment> notMatchedUserSegments = (List<UserSegment>)request.getAttribute("notMatchedUserSegments");
 
-long[] simulatedUserSegmentIds = GetterUtil.getLongValues(request.getAttribute("simulatedUserSegmentIds"));
+String portletNamespace = PortalUtil.getPortletNamespace(PortletKeys.CT_SIMULATOR);
 %>
+
+<liferay-portlet:actionURL name="simulateUserSegment" portletName="<%= PortletKeys.CT_SIMULATOR %>" var="simulateUserSegmentURL" />
 
 <div id="<portlet:namespace />userSegmentContainer">
 	<aui:form action="<%= simulateUserSegmentURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault();" + renderResponse.getNamespace() + "saveUserSegments();" %>'>

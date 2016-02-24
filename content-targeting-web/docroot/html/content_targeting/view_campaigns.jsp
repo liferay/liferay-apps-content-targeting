@@ -26,7 +26,7 @@
 	<aui:input name="campaignsIds" type="hidden" />
 
 	<aui:nav-bar>
-		<%@ include file="/html/content_targeting/campaign_toolbar.jsp" %>
+		<%@ include file="/html/content_targeting/campaign_toolbar.jspf" %>
 
 		<aui:nav-bar-search cssClass="pull-right">
 			<div class="form-search">
@@ -40,7 +40,8 @@
 	</aui:nav-bar>
 
 	<div id="<portlet:namespace />campaignsPanel">
-		<%@ include file="/html/content_targeting/view_campaigns_resources.jsp" %>
+		<liferay-util:include page="/html/content_targeting/view_campaigns_resources.jsp" servletContext="<%= application %>">
+		</liferay-util:include>
 	</div>
 </aui:form>
 
