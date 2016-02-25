@@ -15,20 +15,6 @@
 --%>
 
 <aui:nav>
-	<c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_CAMPAIGN) %>">
-		<portlet:renderURL var="redirectURL">
-			<portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW %>" />
-			<portlet:param name="tabs1" value="campaigns" />
-		</portlet:renderURL>
-
-		<portlet:renderURL var="addCampaignURL">
-			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
-			<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item href="<%= addCampaignURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-campaign") %>' />
-	</c:if>
-
 	<c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_CAMPAIGN) %>">
 		<aui:nav-item cssClass="hide" iconCssClass="icon-remove" id="deleteCampaigns" label='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "delete") %>' />
 	</c:if>

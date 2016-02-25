@@ -45,6 +45,17 @@
 	</div>
 </aui:form>
 
+<c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_CAMPAIGN) %>">
+	<portlet:renderURL var="addCampaignURL">
+		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-campaign") %>' url="<%= addCampaignURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
+
 <aui:script use="liferay-ajax-search">
 	var campaignsPanel = A.one('#<portlet:namespace />campaignsPanel');
 	var inputNode = A.one('#<portlet:namespace />campaignKeywords');
