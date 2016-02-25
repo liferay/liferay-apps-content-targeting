@@ -44,34 +44,12 @@ SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIte
 		keyProperty="campaignId"
 		modelVar="campaign"
 	>
-
-		<%
-		String editCampaignURL = null;
-		%>
-
-		<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
-
-			<%
-			PortletURL editCampaignURLObject = liferayPortletResponse.createRenderURL();
-			editCampaignURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_CAMPAIGN);
-			editCampaignURLObject.setParameter("redirect", viewCampaignsURL.toString());
-			editCampaignURLObject.setParameter("campaignId", String.valueOf(campaign.getCampaignId()));
-			editCampaignURLObject.setParameter("className", Campaign.class.getName());
-			editCampaignURLObject.setParameter("classPK", String.valueOf(campaign.getCampaignId()));
-
-			editCampaignURL = editCampaignURLObject.toString();
-			%>
-
-		</c:if>
-
 		<liferay-ui:search-container-column-text
-			href="<%= editCampaignURL %>"
 			name="name"
 			value="<%= campaign.getName(locale) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			href="<%= editCampaignURL %>"
 			name="description"
 			value="<%= campaign.getDescription(locale) %>"
 		/>
