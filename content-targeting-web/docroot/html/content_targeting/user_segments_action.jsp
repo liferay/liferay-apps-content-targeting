@@ -25,22 +25,30 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 %>
 
 <liferay-ui:icon-menu>
-	<c:if test="<%= editUserSegmentURL != null %>">
+	<c:if test="<%= UserSegmentPermission.contains(permissionChecker, userSegment, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editUserSegmentURL">
+			<portlet:param name="mvcRenderCommand" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="className" value="<%= UserSegment.class.getName() %>" />
+			<portlet:param name="classPK" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
+			<portlet:param name="userSegmentId" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
+		</portlet:renderURL>
+
 		<liferay-ui:icon
 			image="edit"
 			method="get"
-			url="<%= editUserSegmentURL %>"
+			url="<%= editUserSegmentURL.toString() %>"
 		/>
 
 		<c:if test="<%= reportsCount > 0 %>">
-			<liferay-portlet:renderURL var="viewUserSegmentReportsURL">
+			<portlet:renderURL var="viewUserSegmentReportsURL">
 				<portlet:param name="mvcRenderCommand" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
-				<portlet:param name="redirect" value="<%= viewUserSegmentsURL.toString() %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="className" value="<%= UserSegment.class.getName() %>" />
 				<portlet:param name="classPK" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
 				<portlet:param name="userSegmentId" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
 				<portlet:param name="tabs2" value="reports" />
-			</liferay-portlet:renderURL>
+			</portlet:renderURL>
 
 			<liferay-ui:icon
 				image="view"
@@ -54,7 +62,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 
 	<c:if test="<%= UserSegmentPermission.contains(permissionChecker, userSegment, ActionKeys.DELETE) %>">
 		<liferay-portlet:actionURL name="deleteUserSegment" var="deleteUserSegmentURL">
-			<portlet:param name="redirect" value="<%= viewUserSegmentsURL.toString() %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="userSegmentId" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
 		</liferay-portlet:actionURL>
 

@@ -44,34 +44,12 @@ SearchContainerIterator searchContainerIterator = new UserSegmentSearchContainer
 		keyProperty="userSegmentId"
 		modelVar="userSegment"
 	>
-
-		<%
-		String editUserSegmentURL = null;
-		%>
-
-		<c:if test="<%= UserSegmentPermission.contains(permissionChecker, userSegment, ActionKeys.UPDATE) %>">
-
-			<%
-			PortletURL editUserSegmentURLObject = liferayPortletResponse.createRenderURL();
-			editUserSegmentURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_USER_SEGMENT);
-			editUserSegmentURLObject.setParameter("redirect", viewUserSegmentsURL.toString());
-			editUserSegmentURLObject.setParameter("className", UserSegment.class.getName());
-			editUserSegmentURLObject.setParameter("classPK", String.valueOf(userSegment.getUserSegmentId()));
-			editUserSegmentURLObject.setParameter("userSegmentId", String.valueOf(userSegment.getUserSegmentId()));
-
-			editUserSegmentURL = editUserSegmentURLObject.toString();
-			%>
-
-		</c:if>
-
 		<liferay-ui:search-container-column-text
-			href="<%= editUserSegmentURL %>"
 			name="name"
 			value="<%= userSegment.getName(locale) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			href="<%= editUserSegmentURL %>"
 			name="description"
 			value="<%= userSegment.getDescription(locale) %>"
 		/>
