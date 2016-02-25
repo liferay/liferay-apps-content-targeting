@@ -16,16 +16,37 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
+portletURL.setParameter("tabs1", "campaigns");
+%>
+
 <liferay-util:include page="/content_targeting/navigation_bar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchEnabled" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-util:include>
 
-<liferay-portlet:renderURL var="searchURL">
-	<portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW %>" />
-	<portlet:param name="tabs1" value="campaigns" />
-</liferay-portlet:renderURL>
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 
-<aui:form action="<%= searchURL %>" cssClass="container-fluid-1280" method="post" name="fmCampaigns">
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
+<aui:form action="<%= portletURL %>" cssClass="container-fluid-1280" method="post" name="fmCampaigns">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="campaignsIds" type="hidden" />
 
