@@ -16,6 +16,15 @@
 
 <%@ include file="/html/init.jsp" %>
 
+<%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
+portletURL.setParameter("tabs1", "user-segments");
+%>
+
 <liferay-ui:error key="com.liferay.content.targeting.exception.UsedUserSegmentException">
 	<liferay-ui:message key="the-following-user-segments" />
 
@@ -56,12 +65,24 @@
 	<liferay-util:param name="searchEnabled" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-util:include>
 
-<portlet:renderURL var="searchURL">
-	<portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW %>" />
-	<portlet:param name="tabs1" value="user-segments" />
-</portlet:renderURL>
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 
-<aui:form action="<%= searchURL %>" cssClass="container-fluid-1280" method="post" name="fmUserSegment">
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
+<aui:form action="<%= portletURL %>" cssClass="container-fluid-1280" method="post" name="fmUserSegment">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="userSegmentIds" type="hidden" />
 
