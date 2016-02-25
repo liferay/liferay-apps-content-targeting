@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -48,6 +48,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -76,7 +77,7 @@ public class OrganizationMemberRule extends BaseRule {
 		long organizationId = GetterUtil.getLong(
 			ruleInstance.getTypeSettings());
 
-		return UserLocalServiceUtil.hasOrganizationUser(
+		return _userLocalService.hasOrganizationUser(
 			organizationId, anonymousUser.getUserId());
 	}
 
@@ -90,8 +91,8 @@ public class OrganizationMemberRule extends BaseRule {
 		long organizationId = GetterUtil.getLong(
 			ruleInstance.getTypeSettings());
 
-		Organization organization =
-			OrganizationLocalServiceUtil.fetchOrganization(organizationId);
+		Organization organization = _organizationLocalService.fetchOrganization(
+			organizationId);
 
 		if (organization != null) {
 			ruleInstance.setTypeSettings(organization.getUuid());
@@ -126,7 +127,7 @@ public class OrganizationMemberRule extends BaseRule {
 				ruleInstance.getTypeSettings());
 
 			Organization organization =
-				OrganizationLocalServiceUtil.fetchOrganization(organizationId);
+				_organizationLocalService.fetchOrganization(organizationId);
 
 			if (organization == null) {
 				return StringPool.BLANK;
@@ -149,7 +150,7 @@ public class OrganizationMemberRule extends BaseRule {
 		String organizationUuid = ruleInstance.getTypeSettings();
 
 		Organization organization =
-			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
+			_organizationLocalService.fetchOrganizationByUuidAndCompanyId(
 				organizationUuid, portletDataContext.getCompanyId());
 
 		if (organization != null) {
@@ -197,7 +198,7 @@ public class OrganizationMemberRule extends BaseRule {
 
 			// See LPS-50218
 
-			organizations = OrganizationLocalServiceUtil.getOrganizations(
+			organizations = _organizationLocalService.getOrganizations(
 				company.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
 		}
@@ -220,5 +221,20 @@ public class OrganizationMemberRule extends BaseRule {
 			}
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setOrganizationLocalService(
+		OrganizationLocalService organizationLocalService) {
+
+		_organizationLocalService = organizationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private OrganizationLocalService _organizationLocalService;
+	private UserLocalService _userLocalService;
 
 }

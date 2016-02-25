@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -45,6 +45,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -72,14 +73,14 @@ public class RegularRoleRule extends BaseRule {
 
 		long roleId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-		Role role = RoleLocalServiceUtil.fetchRole(roleId);
+		Role role = _roleLocalService.fetchRole(roleId);
 
 		if (role == null) {
 			return false;
 		}
 
 		if (anonymousUser.getUserId() != 0) {
-			return RoleLocalServiceUtil.hasUserRole(
+			return _roleLocalService.hasUserRole(
 				anonymousUser.getUserId(), roleId);
 		}
 
@@ -101,7 +102,7 @@ public class RegularRoleRule extends BaseRule {
 
 		long roleId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-		Role role = RoleLocalServiceUtil.fetchRole(roleId);
+		Role role = _roleLocalService.fetchRole(roleId);
 
 		if (role != null) {
 			ruleInstance.setTypeSettings(role.getUuid());
@@ -134,7 +135,7 @@ public class RegularRoleRule extends BaseRule {
 		long roleId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
 		try {
-			Role role = RoleLocalServiceUtil.fetchRole(roleId);
+			Role role = _roleLocalService.fetchRole(roleId);
 
 			return role.getTitle(locale);
 		}
@@ -152,7 +153,7 @@ public class RegularRoleRule extends BaseRule {
 
 		String roleUuid = ruleInstance.getTypeSettings();
 
-		Role role = RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
+		Role role = _roleLocalService.fetchRoleByUuidAndCompanyId(
 			roleUuid, portletDataContext.getCompanyId());
 
 		if (role != null) {
@@ -204,7 +205,7 @@ public class RegularRoleRule extends BaseRule {
 
 			// See LPS-55480
 
-			roles = RoleLocalServiceUtil.getRoles(
+			roles = _roleLocalService.getRoles(
 				company.getCompanyId(), new int[] {RoleConstants.TYPE_REGULAR});
 		}
 		catch (SystemException se) {
@@ -213,7 +214,14 @@ public class RegularRoleRule extends BaseRule {
 		context.put("roles", roles);
 	}
 
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
 	private static final String _FORM_TEMPLATE_PATH =
 		"templates/ct_fields_regular.ftl";
+
+	private RoleLocalService _roleLocalService;
 
 }

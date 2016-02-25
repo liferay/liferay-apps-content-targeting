@@ -71,7 +71,7 @@ public class ReportInstanceLocalServiceImpl
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
 
-		Report report = _reportsRegistry.getReport(reportKey);
+		Report report = reportsRegistry.getReport(reportKey);
 
 		if (!report.isInstantiable() &&
 			(reportInstancePersistence.countByR_C_C(
@@ -124,7 +124,7 @@ public class ReportInstanceLocalServiceImpl
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
 
-		Report report = _reportsRegistry.getReport(reportKey);
+		Report report = reportsRegistry.getReport(reportKey);
 
 		for (Locale locale : availableLocales) {
 			nameMap.put(locale, report.getName(locale));
@@ -183,7 +183,7 @@ public class ReportInstanceLocalServiceImpl
 
 	@Override
 	public Report getReport(String reportKey) {
-		return _reportsRegistry.getReport(reportKey);
+		return reportsRegistry.getReport(reportKey);
 	}
 
 	@Override
@@ -321,6 +321,6 @@ public class ReportInstanceLocalServiceImpl
 	}
 
 	@ServiceReference(type = ReportsRegistry.class)
-	protected ReportsRegistry _reportsRegistry;
+	protected ReportsRegistry reportsRegistry;
 
 }

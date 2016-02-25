@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
@@ -61,6 +61,7 @@ import javax.portlet.RenderRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -93,7 +94,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 		long assetEntryId = jsonObj.getLong("assetEntryId");
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			assetEntryId);
 
 		if (assetEntry == null) {
@@ -188,7 +189,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 		String classUuid = trackingActionInstance.getTypeSettings();
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			portletDataContext.getScopeGroupId(), classUuid);
 
 		if (assetEntry != null) {
@@ -223,7 +224,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 			AssetEntry assetEntry = null;
 
 			try {
-				assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
+				assetEntry = _assetEntryLocalService.fetchAssetEntry(
 					assetEntryId);
 			}
 			catch (SystemException se) {
@@ -292,7 +293,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 			if (assetEntryId > 0) {
 				try {
-					assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					assetEntry = _assetEntryLocalService.fetchEntry(
 						assetEntryId);
 				}
 				catch (SystemException se) {
@@ -309,7 +310,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 				(trackingActionInstance.getReferrerClassPK() > 0)) {
 
 				try {
-					assetEntry = AssetEntryLocalServiceUtil.getEntry(
+					assetEntry = _assetEntryLocalService.getEntry(
 						trackingActionInstance.getReferrerClassName(),
 						trackingActionInstance.getReferrerClassPK());
 
@@ -382,9 +383,18 @@ public class ContentTrackingAction extends BaseTrackingAction {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
 	private static final String[] _EVENT_TYPES = {"view"};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentTrackingAction.class);
+
+	private AssetEntryLocalService _assetEntryLocalService;
 
 }

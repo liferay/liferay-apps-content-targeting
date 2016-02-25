@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -100,7 +100,7 @@ public class PageVisitedRule extends BaseRule {
 
 		long plid = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		if (layout != null) {
 			ruleInstance.setTypeSettings(layout.getUuid());
@@ -135,7 +135,7 @@ public class PageVisitedRule extends BaseRule {
 		Layout layout = null;
 
 		try {
-			layout = LayoutLocalServiceUtil.fetchLayout(plid);
+			layout = _layoutLocalService.fetchLayout(plid);
 		}
 		catch (SystemException se) {
 		}
@@ -157,11 +157,11 @@ public class PageVisitedRule extends BaseRule {
 
 		Layout layout = null;
 
-		layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+		layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layoutUuid, portletDataContext.getGroupId(), false);
 
 		if (layout == null) {
-			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 				layoutUuid, portletDataContext.getGroupId(), true);
 		}
 
@@ -192,7 +192,7 @@ public class PageVisitedRule extends BaseRule {
 
 		try {
 			long liveGroupId = themeDisplay.getSiteGroupIdOrLiveGroupId();
-			Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 				liveGroupId, privateLayout, friendlyURL);
 
 			if (layout != null) {
@@ -261,7 +261,7 @@ public class PageVisitedRule extends BaseRule {
 			long plid = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
 			try {
-				Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+				Layout layout = _layoutLocalService.fetchLayout(plid);
 
 				if (layout != null) {
 					friendlyURL = layout.getFriendlyURL();
@@ -300,6 +300,13 @@ public class PageVisitedRule extends BaseRule {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
 	private static final String _FORM_TEMPLATE_PATH_PAGE =
 		"templates/ct_fields_page.ftl";
 
@@ -307,5 +314,6 @@ public class PageVisitedRule extends BaseRule {
 		PageVisitedRule.class);
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
+	private LayoutLocalService _layoutLocalService;
 
 }

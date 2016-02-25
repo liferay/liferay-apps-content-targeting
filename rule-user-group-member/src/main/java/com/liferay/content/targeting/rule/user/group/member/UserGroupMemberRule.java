@@ -27,7 +27,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -46,6 +46,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -73,7 +74,7 @@ public class UserGroupMemberRule extends BaseRule {
 
 		long userGroupId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-		return UserGroupLocalServiceUtil.hasUserUserGroup(
+		return _userGroupLocalService.hasUserUserGroup(
 			anonymousUser.getUserId(), userGroupId);
 	}
 
@@ -86,7 +87,7 @@ public class UserGroupMemberRule extends BaseRule {
 
 		long userGroupId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-		UserGroup userGroup = UserGroupLocalServiceUtil.fetchUserGroup(
+		UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
 			userGroupId);
 
 		if (userGroup != null) {
@@ -121,7 +122,7 @@ public class UserGroupMemberRule extends BaseRule {
 			long userGroupId = GetterUtil.getLong(
 				ruleInstance.getTypeSettings());
 
-			UserGroup userGroup = UserGroupLocalServiceUtil.fetchUserGroup(
+			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
 				userGroupId);
 
 			if (userGroup == null) {
@@ -145,7 +146,7 @@ public class UserGroupMemberRule extends BaseRule {
 		String userGroupUuid = ruleInstance.getTypeSettings();
 
 		UserGroup userGroup =
-			UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
+			_userGroupLocalService.fetchUserGroupByUuidAndCompanyId(
 				userGroupUuid, portletDataContext.getCompanyId());
 
 		if (userGroup != null) {
@@ -193,7 +194,7 @@ public class UserGroupMemberRule extends BaseRule {
 
 			// See LPS-55480
 
-			userGroups = UserGroupLocalServiceUtil.getUserGroups(
+			userGroups = _userGroupLocalService.getUserGroups(
 				company.getCompanyId());
 		}
 		catch (SystemException se) {
@@ -215,5 +216,14 @@ public class UserGroupMemberRule extends BaseRule {
 			}
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupLocalService(
+		UserGroupLocalService userGroupLocalService) {
+
+		_userGroupLocalService = userGroupLocalService;
+	}
+
+	private UserGroupLocalService _userGroupLocalService;
 
 }

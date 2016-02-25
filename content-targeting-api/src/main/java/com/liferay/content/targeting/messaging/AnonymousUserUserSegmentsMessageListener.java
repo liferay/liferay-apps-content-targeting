@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.messaging;
 
 import com.liferay.content.targeting.model.AnonymousUserUserSegment;
-import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -46,8 +47,8 @@ public class AnonymousUserUserSegmentsMessageListener
 		long userSegmentId = message.getLong("userSegmentId");
 
 		List<AnonymousUserUserSegment> anonymousUserUserSegments =
-			AnonymousUserUserSegmentLocalServiceUtil.
-				getAnonymousUserUserSegments(anonymousUserId, userSegmentId);
+			_anonymousUserUserSegmentLocalService.getAnonymousUserUserSegments(
+				anonymousUserId, userSegmentId);
 
 		boolean hasActiveUserSegment = false;
 
@@ -61,7 +62,7 @@ public class AnonymousUserUserSegmentsMessageListener
 			if (anonymousUserUserSegment.isActive()) {
 				anonymousUserUserSegment.setModifiedDate(calendar.getTime());
 
-				AnonymousUserUserSegmentLocalServiceUtil.
+				_anonymousUserUserSegmentLocalService.
 					updateAnonymousUserUserSegment(anonymousUserUserSegment);
 
 				hasActiveUserSegment = true;
@@ -73,11 +74,21 @@ public class AnonymousUserUserSegmentsMessageListener
 
 			serviceContext.setCompanyId(companyId);
 
-			AnonymousUserUserSegmentLocalServiceUtil.
-				addAnonymousUserUserSegment(
-					anonymousUserId, userSegmentId, false, true,
-					serviceContext);
+			_anonymousUserUserSegmentLocalService.addAnonymousUserUserSegment(
+				anonymousUserId, userSegmentId, false, true, serviceContext);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setAnonymousUserUserSegmentLocalService(
+		AnonymousUserUserSegmentLocalService
+			anonymousUserUserSegmentLocalService) {
+
+		_anonymousUserUserSegmentLocalService =
+			anonymousUserUserSegmentLocalService;
+	}
+
+	private AnonymousUserUserSegmentLocalService
+		_anonymousUserUserSegmentLocalService;
 
 }

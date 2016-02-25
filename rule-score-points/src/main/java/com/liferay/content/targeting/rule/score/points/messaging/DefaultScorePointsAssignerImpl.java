@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.rule.score.points.messaging;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.score.points.api.model.ScorePointsAssigner;
 import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalService;
@@ -41,7 +41,7 @@ public class DefaultScorePointsAssignerImpl implements ScorePointsAssigner {
 			long groupId, long anonymousUserId, String className, long classPK)
 		throws Exception {
 
-		AssetEntry entry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry entry = _assetEntryLocalService.fetchEntry(
 			className, classPK);
 
 		if (entry == null) {
@@ -108,11 +108,19 @@ public class DefaultScorePointsAssignerImpl implements ScorePointsAssigner {
 		return _DEFAULT_POINTS;
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
 	private static final long _DEFAULT_POINTS = 1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultScorePointsAssignerImpl.class);
 
+	private AssetEntryLocalService _assetEntryLocalService;
 	private ScorePointLocalService _scorePointLocalService;
 	private UserSegmentLocalService _userSegmentLocalService;
 

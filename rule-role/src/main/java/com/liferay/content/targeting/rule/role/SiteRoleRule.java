@@ -33,10 +33,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -57,6 +57,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -95,7 +96,7 @@ public class SiteRoleRule extends BaseRule {
 
 			long roleId = jsonObj.getLong("roleId");
 
-			return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+			return _userGroupRoleLocalService.hasUserGroupRole(
 				anonymousUser.getUserId(), siteId, roleId);
 		}
 		catch (JSONException jsone) {
@@ -118,7 +119,7 @@ public class SiteRoleRule extends BaseRule {
 
 			long roleId = jsonObj.getLong("roleId");
 
-			Role role = RoleLocalServiceUtil.fetchRole(roleId);
+			Role role = _roleLocalService.fetchRole(roleId);
 
 			if (role == null) {
 				throw new PortletDataException(
@@ -129,7 +130,7 @@ public class SiteRoleRule extends BaseRule {
 
 			long siteId = jsonObj.getLong("siteId");
 
-			Group group = GroupLocalServiceUtil.fetchGroup(siteId);
+			Group group = _groupLocalService.fetchGroup(siteId);
 
 			if (group == null) {
 				throw new PortletDataException(
@@ -176,7 +177,7 @@ public class SiteRoleRule extends BaseRule {
 
 			long roleId = jsonObj.getLong("roleId");
 
-			Role role = RoleLocalServiceUtil.fetchRole(roleId);
+			Role role = _roleLocalService.fetchRole(roleId);
 
 			if (role == null) {
 				return StringPool.BLANK;
@@ -184,7 +185,7 @@ public class SiteRoleRule extends BaseRule {
 
 			long siteId = jsonObj.getLong("siteId");
 
-			Group group = GroupLocalServiceUtil.fetchGroup(siteId);
+			Group group = _groupLocalService.fetchGroup(siteId);
 
 			if (group == null) {
 				return role.getTitle(locale);
@@ -217,7 +218,7 @@ public class SiteRoleRule extends BaseRule {
 
 			String roleUuid = jsonObj.getString("roleUuid");
 
-			Role role = RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
+			Role role = _roleLocalService.fetchRoleByUuidAndCompanyId(
 				roleUuid, portletDataContext.getCompanyId());
 
 			if (role == null) {
@@ -229,7 +230,7 @@ public class SiteRoleRule extends BaseRule {
 
 			String siteUuid = jsonObj.getString("siteUuid");
 
-			Group group = GroupLocalServiceUtil.fetchGroupByUuidAndCompanyId(
+			Group group = _groupLocalService.fetchGroupByUuidAndCompanyId(
 				siteUuid, portletDataContext.getCompanyId());
 
 			if (group == null) {
@@ -308,10 +309,10 @@ public class SiteRoleRule extends BaseRule {
 
 			// See LPS-55480
 
-			roles = RoleLocalServiceUtil.getRoles(
+			roles = _roleLocalService.getRoles(
 				company.getCompanyId(), new int[] {RoleConstants.TYPE_SITE});
 
-			Role role = RoleLocalServiceUtil.fetchRole(
+			Role role = _roleLocalService.fetchRole(
 				company.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 			List<Role> removeRoles = new ArrayList<>();
@@ -328,7 +329,7 @@ public class SiteRoleRule extends BaseRule {
 		List<Group> sites = new ArrayList<>();
 
 		try {
-			sites = GroupServiceUtil.getGroups(
+			sites = _groupService.getGroups(
 				company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
 				true);
 		}
@@ -352,7 +353,34 @@ public class SiteRoleRule extends BaseRule {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupService(GroupService groupService) {
+		_groupService = groupService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupRoleLocalService(
+		UserGroupRoleLocalService userGroupRoleLocalService) {
+
+		_userGroupRoleLocalService = userGroupRoleLocalService;
+	}
+
 	private static final String _FORM_TEMPLATE_PATH =
 		"templates/ct_fields_site.ftl";
+
+	private GroupLocalService _groupLocalService;
+	private GroupService _groupService;
+	private RoleLocalService _roleLocalService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

@@ -21,7 +21,7 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
 import com.liferay.content.targeting.rule.score.points.model.ScorePoint;
-import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalServiceUtil;
+import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalService;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -43,6 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -64,12 +65,11 @@ public class ScorePointsRule extends BaseRule {
 
 	@Override
 	public void deleteData(RuleInstance ruleInstance) throws PortalException {
-		List<ScorePoint> scorePoints =
-			ScorePointLocalServiceUtil.getScorePoints(
-				ruleInstance.getUserSegmentId());
+		List<ScorePoint> scorePoints = _scorePointLocalService.getScorePoints(
+			ruleInstance.getUserSegmentId());
 
 		for (ScorePoint scorePoint : scorePoints) {
-			ScorePointLocalServiceUtil.deleteScorePoint(scorePoint);
+			_scorePointLocalService.deleteScorePoint(scorePoint);
 		}
 	}
 
@@ -85,7 +85,7 @@ public class ScorePointsRule extends BaseRule {
 
 		long scorePoints = jsonObj.getLong("scorePoints");
 
-		long anonymousUserScorePoints = ScorePointLocalServiceUtil.getPoints(
+		long anonymousUserScorePoints = _scorePointLocalService.getPoints(
 			anonymousUser.getAnonymousUserId(),
 			ruleInstance.getUserSegmentId());
 
@@ -183,5 +183,14 @@ public class ScorePointsRule extends BaseRule {
 				context);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setScorePointLocalService(
+		ScorePointLocalService scorePointLocalService) {
+
+		_scorePointLocalService = scorePointLocalService;
+	}
+
+	private ScorePointLocalService _scorePointLocalService;
 
 }

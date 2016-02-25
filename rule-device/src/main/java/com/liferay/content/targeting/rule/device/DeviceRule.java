@@ -29,7 +29,7 @@ import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
 import com.liferay.mobile.device.rules.rule.RuleHandler;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -61,6 +61,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -96,7 +97,7 @@ public class DeviceRule extends BaseRule {
 		MDRRuleGroup mdrRuleGroup = null;
 
 		try {
-			mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(
+			mdrRuleGroup = _mdrRuleGroupLocalService.getMDRRuleGroup(
 				mdrRuleGroupId);
 		}
 		catch (SystemException se) {
@@ -120,8 +121,8 @@ public class DeviceRule extends BaseRule {
 
 		long mdrRuleGroupId = getMDRRuleGroupId(ruleInstance);
 
-		MDRRuleGroup mdrRuleGroup =
-			MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroup(mdrRuleGroupId);
+		MDRRuleGroup mdrRuleGroup = _mdrRuleGroupLocalService.fetchMDRRuleGroup(
+			mdrRuleGroupId);
 
 		if (mdrRuleGroup != null) {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
@@ -164,7 +165,7 @@ public class DeviceRule extends BaseRule {
 		MDRRuleGroup mdrRuleGroup = null;
 
 		try {
-			mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroup(
+			mdrRuleGroup = _mdrRuleGroupLocalService.fetchMDRRuleGroup(
 				mdrRuleGroupId);
 		}
 		catch (SystemException se) {
@@ -211,7 +212,7 @@ public class DeviceRule extends BaseRule {
 		}
 
 		MDRRuleGroup mdrRuleGroup =
-			MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroupByUuidAndGroupId(
+			_mdrRuleGroupLocalService.fetchMDRRuleGroupByUuidAndGroupId(
 				mdrRuleGroupUuid, portletDataContext.getScopeGroupId());
 
 		if (mdrRuleGroup != null) {
@@ -330,7 +331,7 @@ public class DeviceRule extends BaseRule {
 
 			// See LPS-55480
 
-			mdrRuleGroups = MDRRuleGroupLocalServiceUtil.searchByKeywords(
+			mdrRuleGroups = _mdrRuleGroupLocalService.searchByKeywords(
 				groupId, null, params, false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 		}
@@ -352,6 +353,15 @@ public class DeviceRule extends BaseRule {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setMdrRuleGroupLocalService(
+		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
+
+		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(DeviceRule.class);
+
+	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
 
 }

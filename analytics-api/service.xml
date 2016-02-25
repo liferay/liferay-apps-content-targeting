@@ -80,6 +80,10 @@
 			<finder-column name="eventType" />
 			<finder-column name="createDate" comparator="&gt;" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Company" />
 	</entity>
 
 	<entity name="AnalyticsReferrer" local-service="true" remote-service="true">

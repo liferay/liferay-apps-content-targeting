@@ -33,9 +33,9 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -56,6 +56,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -91,13 +92,13 @@ public class OrganizationRoleRule extends BaseRule {
 			long organizationId = jsonObj.getLong("organizationId");
 
 			Organization organization =
-				OrganizationLocalServiceUtil.fetchOrganization(organizationId);
+				_organizationLocalService.fetchOrganization(organizationId);
 
 			if (organization == null) {
 				return false;
 			}
 
-			return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+			return _userGroupRoleLocalService.hasUserGroupRole(
 				anonymousUser.getUserId(), organization.getGroupId(), roleId);
 		}
 		catch (JSONException jsone) {
@@ -121,7 +122,7 @@ public class OrganizationRoleRule extends BaseRule {
 			long organizationId = jsonObj.getLong("organizationId");
 
 			Organization organization =
-				OrganizationLocalServiceUtil.fetchOrganization(organizationId);
+				_organizationLocalService.fetchOrganization(organizationId);
 
 			if (organization == null) {
 				throw new PortletDataException(
@@ -132,7 +133,7 @@ public class OrganizationRoleRule extends BaseRule {
 
 			long roleId = jsonObj.getLong("roleId");
 
-			Role role = RoleLocalServiceUtil.fetchRole(roleId);
+			Role role = _roleLocalService.fetchRole(roleId);
 
 			if (role == null) {
 				throw new PortletDataException(
@@ -179,7 +180,7 @@ public class OrganizationRoleRule extends BaseRule {
 
 			long roleId = jsonObj.getLong("roleId");
 
-			Role role = RoleLocalServiceUtil.fetchRole(roleId);
+			Role role = _roleLocalService.fetchRole(roleId);
 
 			if (role == null) {
 				return StringPool.BLANK;
@@ -188,7 +189,7 @@ public class OrganizationRoleRule extends BaseRule {
 			long organizationId = jsonObj.getLong("organizationId");
 
 			Organization organization =
-				OrganizationLocalServiceUtil.fetchOrganization(organizationId);
+				_organizationLocalService.fetchOrganization(organizationId);
 
 			if (organization == null) {
 				return role.getTitle(locale);
@@ -224,9 +225,8 @@ public class OrganizationRoleRule extends BaseRule {
 			String organizationUuid = jsonObj.getString("organizationUuid");
 
 			Organization organization =
-				OrganizationLocalServiceUtil.
-					fetchOrganizationByUuidAndCompanyId(
-						organizationUuid, portletDataContext.getCompanyId());
+				_organizationLocalService.fetchOrganizationByUuidAndCompanyId(
+					organizationUuid, portletDataContext.getCompanyId());
 
 			if (organization == null) {
 				throw new PortletDataException(
@@ -237,7 +237,7 @@ public class OrganizationRoleRule extends BaseRule {
 
 			String roleUuid = jsonObj.getString("roleUuid");
 
-			Role role = RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
+			Role role = _roleLocalService.fetchRoleByUuidAndCompanyId(
 				roleUuid, portletDataContext.getCompanyId());
 
 			if (role == null) {
@@ -313,11 +313,11 @@ public class OrganizationRoleRule extends BaseRule {
 		List<Role> roles = new ArrayList<>();
 
 		try {
-			roles = RoleLocalServiceUtil.getRoles(
+			roles = _roleLocalService.getRoles(
 				company.getCompanyId(),
 				new int[] {RoleConstants.TYPE_ORGANIZATION});
 
-			Role role = RoleLocalServiceUtil.fetchRole(
+			Role role = _roleLocalService.fetchRole(
 				company.getCompanyId(), RoleConstants.ORGANIZATION_USER);
 
 			List<Role> removeRoles = new ArrayList<>();
@@ -337,7 +337,7 @@ public class OrganizationRoleRule extends BaseRule {
 
 			// See LPS-50218
 
-			organizations = OrganizationLocalServiceUtil.getOrganizations(
+			organizations = _organizationLocalService.getOrganizations(
 				company.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
 		}
@@ -361,7 +361,30 @@ public class OrganizationRoleRule extends BaseRule {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setOrganizationLocalService(
+		OrganizationLocalService organizationLocalService) {
+
+		_organizationLocalService = organizationLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupRoleLocalService(
+		UserGroupRoleLocalService userGroupRoleLocalService) {
+
+		_userGroupRoleLocalService = userGroupRoleLocalService;
+	}
+
 	private static final String _FORM_TEMPLATE_PATH =
 		"templates/ct_fields_organization.ftl";
+
+	private OrganizationLocalService _organizationLocalService;
+	private RoleLocalService _roleLocalService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

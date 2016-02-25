@@ -24,12 +24,9 @@ import java.util.List;
 
 import javax.portlet.PortletException;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Eduardo Garcia
  */
-@Component
 public class CampaignSearchContainerIterator
 	extends SearchContainerIterator<Campaign> {
 

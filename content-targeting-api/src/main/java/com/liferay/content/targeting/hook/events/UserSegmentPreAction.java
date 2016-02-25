@@ -19,7 +19,7 @@ import com.liferay.content.targeting.anonymous.users.util.AnonymousUsersManager;
 import com.liferay.content.targeting.api.model.RulesEngine;
 import com.liferay.content.targeting.api.model.UserSegmentSimulator;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.events.Action;
@@ -57,7 +57,7 @@ public class UserSegmentPreAction extends Action {
 		}
 
 		List<UserSegment> userSegments =
-			UserSegmentLocalServiceUtil.getUserSegments(groupIds);
+			_userSegmentLocalService.getUserSegments(groupIds);
 
 		return _rulesEngine.getMatchingUserSegmentIds(
 			request, anonymousUser, userSegments);
@@ -137,6 +137,13 @@ public class UserSegmentPreAction extends Action {
 		_rulesEngine = rulesEngine;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
 	@Reference(unbind = "unsetUserSegmentSimulator")
 	protected void setUserSegmentSimulator(
 		UserSegmentSimulator userSegmentSimulator) {
@@ -157,6 +164,7 @@ public class UserSegmentPreAction extends Action {
 
 	private AnonymousUsersManager _anonymousUsersManager;
 	private RulesEngine _rulesEngine;
+	private UserSegmentLocalService _userSegmentLocalService;
 	private UserSegmentSimulator _userSegmentSimulator;
 
 }

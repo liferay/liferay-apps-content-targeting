@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.permission.UserSegmentPermission;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -41,6 +41,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -78,7 +79,7 @@ public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
+		UserSegment userSegment = _userSegmentLocalService.getUserSegment(
 			entryClassPK);
 
 		return UserSegmentPermission.contains(
@@ -138,7 +139,7 @@ public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
+		UserSegment userSegment = _userSegmentLocalService.getUserSegment(
 			classPK);
 
 		doReindex(userSegment);
@@ -170,7 +171,7 @@ public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery actionableDynamicQuery =
-			UserSegmentLocalServiceUtil.getIndexableActionableDynamicQuery();
+			_userSegmentLocalService.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 
@@ -203,7 +204,16 @@ public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserSegmentIndexer.class);
+
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

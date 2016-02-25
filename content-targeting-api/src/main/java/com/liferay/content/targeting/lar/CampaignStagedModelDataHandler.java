@@ -18,10 +18,10 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
-import com.liferay.content.targeting.service.TacticLocalServiceUtil;
-import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
-import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.service.CampaignLocalService;
+import com.liferay.content.targeting.service.TacticLocalService;
+import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -51,7 +52,7 @@ public class CampaignStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(Campaign campaign) throws PortalException {
-		CampaignLocalServiceUtil.deleteCampaign(campaign);
+		_campaignLocalService.deleteCampaign(campaign);
 	}
 
 	@Override
@@ -59,12 +60,11 @@ public class CampaignStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Campaign campaign =
-			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
-				uuid, groupId);
+		Campaign campaign = _campaignLocalService.fetchCampaignByUuidAndGroupId(
+			uuid, groupId);
 
 		if (campaign != null) {
-			CampaignLocalServiceUtil.deleteCampaign(campaign);
+			_campaignLocalService.deleteCampaign(campaign);
 		}
 	}
 
@@ -91,7 +91,7 @@ public class CampaignStagedModelDataHandler
 		throws PortletDataException {
 
 		Campaign existingCampaign =
-			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
+			_campaignLocalService.fetchCampaignByUuidAndGroupId(
 				uuid, portletDataContext.getCompanyGroupId());
 
 		Map<Long, Long> campaignIds =
@@ -139,20 +139,20 @@ public class CampaignStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			Campaign existingCampaign =
-				CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
+				_campaignLocalService.fetchCampaignByUuidAndGroupId(
 					campaign.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingCampaign == null) {
 				serviceContext.setUuid(campaign.getUuid());
 
-				importedCampaign = CampaignLocalServiceUtil.addCampaign(
+				importedCampaign = _campaignLocalService.addCampaign(
 					userId, campaign.getNameMap(), campaign.getDescriptionMap(),
 					campaign.getStartDate(), campaign.getEndDate(),
 					campaign.getTimeZoneId(), campaign.getPriority(),
 					campaign.getActive(), userSegmentIds, serviceContext);
 			}
 			else {
-				importedCampaign = CampaignLocalServiceUtil.updateCampaign(
+				importedCampaign = _campaignLocalService.updateCampaign(
 					existingCampaign.getCampaignId(), campaign.getNameMap(),
 					campaign.getDescriptionMap(), campaign.getStartDate(),
 					campaign.getEndDate(), campaign.getTimeZoneId(),
@@ -161,7 +161,7 @@ public class CampaignStagedModelDataHandler
 			}
 		}
 		else {
-			importedCampaign = CampaignLocalServiceUtil.addCampaign(
+			importedCampaign = _campaignLocalService.addCampaign(
 				userId, campaign.getNameMap(), campaign.getDescriptionMap(),
 				campaign.getStartDate(), campaign.getEndDate(),
 				campaign.getTimeZoneId(), campaign.getPriority(),
@@ -181,7 +181,7 @@ public class CampaignStagedModelDataHandler
 			Campaign campaign)
 		throws Exception {
 
-		List<Tactic> campaignTactics = TacticLocalServiceUtil.getTactics(
+		List<Tactic> campaignTactics = _tacticLocalService.getTactics(
 			campaign.getCampaignId());
 
 		for (Tactic tactic : campaignTactics) {
@@ -196,7 +196,7 @@ public class CampaignStagedModelDataHandler
 		throws Exception {
 
 		List<TrackingActionInstance> trackingActionInstances =
-			TrackingActionInstanceLocalServiceUtil.getTrackingActionInstances(
+			_trackingActionInstanceLocalService.getTrackingActionInstances(
 				campaign.getCampaignId());
 
 		for (TrackingActionInstance trackingActionInstance :
@@ -214,7 +214,7 @@ public class CampaignStagedModelDataHandler
 		throws Exception {
 
 		List<UserSegment> campaignUserSegments =
-			UserSegmentLocalServiceUtil.getCampaignUserSegments(
+			_userSegmentLocalService.getCampaignUserSegments(
 				campaign.getCampaignId());
 
 		for (UserSegment userSegment : campaignUserSegments) {
@@ -314,11 +314,39 @@ public class CampaignStagedModelDataHandler
 		return userSegmentIdsArray;
 	}
 
+	@Reference(unbind = "-")
+	protected void setCampaignLocalService(
+		CampaignLocalService campaignLocalService) {
+
+		_campaignLocalService = campaignLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTacticLocalService(
+		TacticLocalService tacticLocalService) {
+
+		_tacticLocalService = tacticLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrackingActionInstanceLocalService(
+		TrackingActionInstanceLocalService trackingActionInstanceLocalService) {
+
+		_trackingActionInstanceLocalService =
+			trackingActionInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
 	@Override
 	protected boolean validateMissingReference(String uuid, long groupId) {
-		Campaign campaign =
-			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
-				uuid, groupId);
+		Campaign campaign = _campaignLocalService.fetchCampaignByUuidAndGroupId(
+			uuid, groupId);
 
 		if (campaign == null) {
 			return false;
@@ -326,5 +354,11 @@ public class CampaignStagedModelDataHandler
 
 		return true;
 	}
+
+	private CampaignLocalService _campaignLocalService;
+	private TacticLocalService _tacticLocalService;
+	private TrackingActionInstanceLocalService
+		_trackingActionInstanceLocalService;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

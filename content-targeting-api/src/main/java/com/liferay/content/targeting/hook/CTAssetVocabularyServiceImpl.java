@@ -17,13 +17,13 @@ package com.liferay.content.targeting.hook;
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyDisplay;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceWrapper;
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -70,7 +70,7 @@ public class CTAssetVocabularyServiceImpl
 		AssetVocabulary vocabulary = null;
 
 		try {
-			vocabulary = AssetVocabularyLocalServiceUtil.getGroupVocabulary(
+			vocabulary = _assetVocabularyLocalService.getGroupVocabulary(
 				groupId, UserSegmentUtil.getAssetVocabularyName());
 		}
 		catch (NoSuchVocabularyException nsve) {
@@ -108,7 +108,7 @@ public class CTAssetVocabularyServiceImpl
 			if (vocabularyTitle.equals(
 					UserSegmentUtil.getAssetVocabularyName())) {
 
-				Group vocabularyGroup = GroupLocalServiceUtil.getGroup(
+				Group vocabularyGroup = _groupLocalService.getGroup(
 					vocabulary.getGroupId());
 
 				if (!vocabularyGroup.isCompany()) {
@@ -129,5 +129,18 @@ public class CTAssetVocabularyServiceImpl
 
 		return unambiguousVocabularies;
 	}
+
+	protected void setAssetVocabularyLocalService(
+		AssetVocabularyLocalService assetVocabularyLocalService) {
+
+		_assetVocabularyLocalService = assetVocabularyLocalService;
+	}
+
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -143,7 +142,7 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public void checkAnalyticsEvents() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			CompanyLocalServiceUtil.getActionableDynamicQuery();
+			companyLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<Company>() {

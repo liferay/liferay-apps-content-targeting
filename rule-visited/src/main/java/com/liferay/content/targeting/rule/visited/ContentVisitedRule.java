@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
@@ -89,7 +89,7 @@ public class ContentVisitedRule extends BaseRule {
 
 		long assetEntryId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			assetEntryId);
 
 		if (assetEntry == null) {
@@ -116,7 +116,7 @@ public class ContentVisitedRule extends BaseRule {
 
 		long assetEntryId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			assetEntryId);
 
 		if (assetEntry == null) {
@@ -186,7 +186,7 @@ public class ContentVisitedRule extends BaseRule {
 		AssetEntry assetEntry = null;
 
 		try {
-			assetEntry = AssetEntryLocalServiceUtil.fetchEntry(assetEntryId);
+			assetEntry = _assetEntryLocalService.fetchEntry(assetEntryId);
 		}
 		catch (SystemException se) {
 		}
@@ -215,7 +215,7 @@ public class ContentVisitedRule extends BaseRule {
 
 		String classUuid = ruleInstance.getTypeSettings();
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			portletDataContext.getScopeGroupId(), classUuid);
 
 		if (assetEntry != null) {
@@ -243,7 +243,7 @@ public class ContentVisitedRule extends BaseRule {
 			AssetEntry assetEntry = null;
 
 			try {
-				assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
+				assetEntry = _assetEntryLocalService.fetchAssetEntry(
 					assetEntryId);
 			}
 			catch (SystemException se) {
@@ -319,8 +319,8 @@ public class ContentVisitedRule extends BaseRule {
 				RenderRequest renderRequest = (RenderRequest)context.get(
 					"renderRequest");
 
-				AssetEntry assetEntry =
-					AssetEntryLocalServiceUtil.fetchAssetEntry(assetEntryId);
+				AssetEntry assetEntry = _assetEntryLocalService.fetchAssetEntry(
+					assetEntryId);
 
 				if (assetEntry != null) {
 					AssetRendererFactory assetRendererFactory =
@@ -374,6 +374,13 @@ public class ContentVisitedRule extends BaseRule {
 		context.put("contentTargetingUtilClass", new ContentTargetingUtil());
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
 	private static final String _FORM_TEMPLATE_PATH_CONTENT =
 		"templates/ct_fields_content.ftl";
 
@@ -381,5 +388,6 @@ public class ContentVisitedRule extends BaseRule {
 		ContentVisitedRule.class);
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
 
 }

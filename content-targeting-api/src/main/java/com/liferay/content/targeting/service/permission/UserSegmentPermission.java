@@ -15,13 +15,14 @@
 package com.liferay.content.targeting.service.permission;
 
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -66,7 +67,7 @@ public class UserSegmentPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
+		UserSegment userSegment = _userSegmentLocalService.getUserSegment(
 			userSegmentId);
 
 		return contains(permissionChecker, userSegment, actionId);
@@ -100,5 +101,14 @@ public class UserSegmentPermission implements BaseModelPermissionChecker {
 				actionId);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
+	private static UserSegmentLocalService _userSegmentLocalService;
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.Tactic;
-import com.liferay.content.targeting.service.TacticLocalServiceUtil;
+import com.liferay.content.targeting.service.TacticLocalService;
 import com.liferay.content.targeting.service.permission.TacticPermission;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -41,6 +41,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -78,7 +79,7 @@ public class TacticIndexer extends BaseIndexer<Tactic> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		Tactic tactic = TacticLocalServiceUtil.getTactic(entryClassPK);
+		Tactic tactic = _tacticLocalService.getTactic(entryClassPK);
 
 		return TacticPermission.contains(
 			permissionChecker, tactic, ActionKeys.VIEW);
@@ -138,7 +139,7 @@ public class TacticIndexer extends BaseIndexer<Tactic> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Tactic tactic = TacticLocalServiceUtil.getTactic(classPK);
+		Tactic tactic = _tacticLocalService.getTactic(classPK);
 
 		doReindex(tactic);
 	}
@@ -167,7 +168,7 @@ public class TacticIndexer extends BaseIndexer<Tactic> {
 
 	protected void reindexTactics(final long companyId) throws PortalException {
 		final IndexableActionableDynamicQuery actionableDynamicQuery =
-			TacticLocalServiceUtil.getIndexableActionableDynamicQuery();
+			_tacticLocalService.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 
@@ -200,6 +201,15 @@ public class TacticIndexer extends BaseIndexer<Tactic> {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setTacticLocalService(
+		TacticLocalService tacticLocalService) {
+
+		_tacticLocalService = tacticLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(TacticIndexer.class);
+
+	private TacticLocalService _tacticLocalService;
 
 }

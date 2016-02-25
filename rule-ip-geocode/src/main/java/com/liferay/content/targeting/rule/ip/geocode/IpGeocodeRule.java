@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.service.CountryServiceUtil;
-import com.liferay.portal.kernel.service.RegionServiceUtil;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -92,7 +92,7 @@ public class IpGeocodeRule extends BaseRule {
 		long countryId = jsonObj.getLong("countryId");
 		long regionId = jsonObj.getLong("regionId");
 
-		Country country = CountryServiceUtil.fetchCountry(countryId);
+		Country country = _countryService.fetchCountry(countryId);
 
 		if (country == null) {
 			if (_log.isDebugEnabled()) {
@@ -107,7 +107,7 @@ public class IpGeocodeRule extends BaseRule {
 		Region region = null;
 
 		try {
-			region = RegionServiceUtil.getRegion(regionId);
+			region = _regionService.getRegion(regionId);
 		}
 		catch (Exception e) {
 		}
@@ -162,11 +162,11 @@ public class IpGeocodeRule extends BaseRule {
 			long countryId = jsonObj.getLong("countryId");
 			long regionId = jsonObj.getLong("regionId");
 
-			Country country = CountryServiceUtil.fetchCountry(countryId);
+			Country country = _countryService.fetchCountry(countryId);
 			Region region = null;
 
 			try {
-				region = RegionServiceUtil.getRegion(regionId);
+				region = _regionService.getRegion(regionId);
 			}
 			catch (NoSuchRegionException nsre) {
 			}
@@ -246,8 +246,21 @@ public class IpGeocodeRule extends BaseRule {
 		context.put("regionId", regionId);
 	}
 
+	@Reference(unbind = "-")
+	protected void setCountryService(CountryService countryService) {
+		_countryService = countryService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRegionService(RegionService regionService) {
+		_regionService = regionService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(IpGeocodeRule.class);
 
 	private static IPGeocoder _ipGeocoder;
+
+	private CountryService _countryService;
+	private RegionService _regionService;
 
 }

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -52,6 +52,7 @@ import javax.portlet.PortletResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -86,7 +87,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 		boolean privateLayout = jsonObj.getBoolean("privateLayout", false);
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			portletDataContext.getScopeGroupId(), privateLayout, friendlyURL);
 
 		if (layout != null) {
@@ -137,7 +138,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 		String friendlyURL = jsonObj.getString("friendlyURL");
 		boolean privateLayout = jsonObj.getBoolean("privateLayout", false);
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			portletDataContext.getScopeGroupId(), privateLayout, friendlyURL);
 
 		if (layout != null) {
@@ -187,7 +188,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 				layoutSet.setPrivateLayout(privateLayoutSet);
 
-				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+				layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 					themeDisplay.getScopeGroupId(), privateLayout, friendlyURL);
 			}
 			catch (Exception e) {
@@ -242,7 +243,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 				values.get("privateLayout"), false);
 
 			try {
-				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+				layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 					scopeGroupId, privateLayout, friendlyURL);
 			}
 			catch (SystemException se) {
@@ -255,7 +256,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 			long referrerClassPK = trackingActionInstance.getReferrerClassPK();
 
 			try {
-				layout = LayoutLocalServiceUtil.fetchLayout(referrerClassPK);
+				layout = _layoutLocalService.fetchLayout(referrerClassPK);
 			}
 			catch (SystemException se) {
 				_log.error(se);
@@ -319,9 +320,18 @@ public class PageTrackingAction extends BaseTrackingAction {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
 	private static final String[] _EVENT_TYPES = {"view"};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageTrackingAction.class);
+
+	private LayoutLocalService _layoutLocalService;
 
 }

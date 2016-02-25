@@ -17,13 +17,13 @@ package com.liferay.content.targeting.lar;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyUtil;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
-import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.service.RuleInstanceLocalService;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -57,11 +58,11 @@ public class UserSegmentStagedModelDataHandler
 		throws PortalException {
 
 		UserSegment userSegment =
-			UserSegmentLocalServiceUtil.fetchUserSegmentByUuidAndGroupId(
+			_userSegmentLocalService.fetchUserSegmentByUuidAndGroupId(
 				uuid, groupId);
 
 		if (userSegment != null) {
-			UserSegmentLocalServiceUtil.deleteUserSegment(userSegment);
+			_userSegmentLocalService.deleteUserSegment(userSegment);
 		}
 	}
 
@@ -69,7 +70,7 @@ public class UserSegmentStagedModelDataHandler
 	public void deleteStagedModel(UserSegment stagedUserSegment)
 		throws PortalException {
 
-		UserSegmentLocalServiceUtil.deleteUserSegment(stagedUserSegment);
+		_userSegmentLocalService.deleteUserSegment(stagedUserSegment);
 	}
 
 	@Override
@@ -96,12 +97,12 @@ public class UserSegmentStagedModelDataHandler
 		throws PortletDataException {
 
 		UserSegment existingUserSegment =
-			UserSegmentLocalServiceUtil.fetchUserSegmentByUuidAndGroupId(
+			_userSegmentLocalService.fetchUserSegmentByUuidAndGroupId(
 				uuid, portletDataContext.getScopeGroupId());
 
 		if (existingUserSegment == null) {
 			existingUserSegment =
-				UserSegmentLocalServiceUtil.fetchUserSegmentByUuidAndGroupId(
+				_userSegmentLocalService.fetchUserSegmentByUuidAndGroupId(
 					uuid, portletDataContext.getCompanyGroupId());
 		}
 
@@ -143,32 +144,30 @@ public class UserSegmentStagedModelDataHandler
 
 			if (portletDataContext.isDataStrategyMirror()) {
 				UserSegment existingUserSegment =
-					UserSegmentLocalServiceUtil.
-						fetchUserSegmentByUuidAndGroupId(
-							userSegment.getUuid(),
-							portletDataContext.getScopeGroupId());
+					_userSegmentLocalService.fetchUserSegmentByUuidAndGroupId(
+						userSegment.getUuid(),
+						portletDataContext.getScopeGroupId());
 
 				if (existingUserSegment == null) {
 					serviceContext.setUuid(userSegment.getUuid());
 
 					importedUserSegment =
-						UserSegmentLocalServiceUtil.addUserSegment(
+						_userSegmentLocalService.addUserSegment(
 							userId, userSegment.getNameMap(),
 							userSegment.getDescriptionMap(), serviceContext);
 				}
 				else {
 					importedUserSegment =
-						UserSegmentLocalServiceUtil.updateUserSegment(
+						_userSegmentLocalService.updateUserSegment(
 							existingUserSegment.getUserSegmentId(),
 							userSegment.getNameMap(),
 							userSegment.getDescriptionMap(), serviceContext);
 				}
 			}
 			else {
-				importedUserSegment =
-					UserSegmentLocalServiceUtil.addUserSegment(
-						userId, userSegment.getNameMap(),
-						userSegment.getDescriptionMap(), serviceContext);
+				importedUserSegment = _userSegmentLocalService.addUserSegment(
+					userId, userSegment.getNameMap(),
+					userSegment.getDescriptionMap(), serviceContext);
 			}
 
 			importRuleInstances(
@@ -214,7 +213,7 @@ public class UserSegmentStagedModelDataHandler
 		throws Exception {
 
 		AssetCategory assetCategory =
-			AssetCategoryLocalServiceUtil.getAssetCategory(
+			_assetCategoryLocalService.getAssetCategory(
 				userSegment.getAssetCategoryId());
 
 		exportAssetVocabulary(
@@ -265,7 +264,7 @@ public class UserSegmentStagedModelDataHandler
 		throws Exception {
 
 		List<RuleInstance> ruleInstances =
-			RuleInstanceLocalServiceUtil.getRuleInstances(
+			_ruleInstanceLocalService.getRuleInstances(
 				userSegment.getUserSegmentId());
 
 		for (RuleInstance ruleInstance : ruleInstances) {
@@ -326,26 +325,23 @@ public class UserSegmentStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			AssetCategory existingAssetCategory =
-				AssetCategoryLocalServiceUtil.
-					fetchAssetCategoryByUuidAndGroupId(
-						assetCategory.getUuid(),
-						portletDataContext.getScopeGroupId());
+				_assetCategoryLocalService.fetchAssetCategoryByUuidAndGroupId(
+					assetCategory.getUuid(),
+					portletDataContext.getScopeGroupId());
 
 			if (existingAssetCategory == null) {
 				serviceContext.setUuid(assetCategory.getUuid());
 
-				importedAssetCategory =
-					AssetCategoryLocalServiceUtil.addCategory(
-						userId, portletDataContext.getGroupId(),
-						AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-						assetCategory.getTitleMap(),
-						assetCategory.getDescriptionMap(),
-						assetVocabulary.getVocabularyId(), null,
-						serviceContext);
+				importedAssetCategory = _assetCategoryLocalService.addCategory(
+					userId, portletDataContext.getGroupId(),
+					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+					assetCategory.getTitleMap(),
+					assetCategory.getDescriptionMap(),
+					assetVocabulary.getVocabularyId(), null, serviceContext);
 			}
 			else {
 				importedAssetCategory =
-					AssetCategoryLocalServiceUtil.updateCategory(
+					_assetCategoryLocalService.updateCategory(
 						userId, existingAssetCategory.getCategoryId(),
 						existingAssetCategory.getParentCategoryId(),
 						assetCategory.getTitleMap(),
@@ -355,7 +351,7 @@ public class UserSegmentStagedModelDataHandler
 			}
 		}
 		else {
-			importedAssetCategory = AssetCategoryLocalServiceUtil.addCategory(
+			importedAssetCategory = _assetCategoryLocalService.addCategory(
 				userId, portletDataContext.getGroupId(),
 				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				assetCategory.getTitleMap(), assetCategory.getDescriptionMap(),
@@ -392,7 +388,7 @@ public class UserSegmentStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			AssetVocabulary existingAssetVocabulary =
-				AssetVocabularyLocalServiceUtil.
+				_assetVocabularyLocalService.
 					fetchAssetVocabularyByUuidAndGroupId(
 						assetVocabulary.getUuid(),
 						portletDataContext.getScopeGroupId());
@@ -443,10 +439,38 @@ public class UserSegmentStagedModelDataHandler
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetCategoryLocalService(
+		AssetCategoryLocalService assetCategoryLocalService) {
+
+		_assetCategoryLocalService = assetCategoryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetVocabularyLocalService(
+		AssetVocabularyLocalService assetVocabularyLocalService) {
+
+		_assetVocabularyLocalService = assetVocabularyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRuleInstanceLocalService(
+		RuleInstanceLocalService ruleInstanceLocalService) {
+
+		_ruleInstanceLocalService = ruleInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
 	@Override
 	protected boolean validateMissingReference(String uuid, long groupId) {
 		UserSegment userSegment =
-			UserSegmentLocalServiceUtil.fetchUserSegmentByUuidAndGroupId(
+			_userSegmentLocalService.fetchUserSegmentByUuidAndGroupId(
 				uuid, groupId);
 
 		if (userSegment == null) {
@@ -455,5 +479,10 @@ public class UserSegmentStagedModelDataHandler
 
 		return true;
 	}
+
+	private AssetCategoryLocalService _assetCategoryLocalService;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+	private RuleInstanceLocalService _ruleInstanceLocalService;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

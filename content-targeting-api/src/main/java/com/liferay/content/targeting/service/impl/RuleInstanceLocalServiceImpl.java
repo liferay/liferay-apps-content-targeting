@@ -108,7 +108,7 @@ public class RuleInstanceLocalServiceImpl
 
 		// Rule data
 
-		Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
+		Rule rule = rulesRegistry.getRule(ruleInstance.getRuleKey());
 
 		if (rule != null) {
 			try {
@@ -171,7 +171,7 @@ public class RuleInstanceLocalServiceImpl
 	}
 
 	@ServiceReference(type = RulesRegistry.class)
-	protected RulesRegistry _rulesRegistry;
+	protected RulesRegistry rulesRegistry;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RuleInstanceLocalServiceImpl.class);

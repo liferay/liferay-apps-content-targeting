@@ -17,9 +17,9 @@ package com.liferay.content.targeting.lar;
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.ChannelInstanceLocalServiceUtil;
-import com.liferay.content.targeting.service.TacticLocalServiceUtil;
-import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.service.ChannelInstanceLocalService;
+import com.liferay.content.targeting.service.TacticLocalService;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -52,17 +53,17 @@ public class TacticStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Tactic tactic = TacticLocalServiceUtil.fetchTacticByUuidAndGroupId(
+		Tactic tactic = _tacticLocalService.fetchTacticByUuidAndGroupId(
 			uuid, groupId);
 
 		if (tactic != null) {
-			TacticLocalServiceUtil.deleteTactic(tactic);
+			_tacticLocalService.deleteTactic(tactic);
 		}
 	}
 
 	@Override
 	public void deleteStagedModel(Tactic stagedTactic) throws PortalException {
-		TacticLocalServiceUtil.deleteTactic(stagedTactic);
+		_tacticLocalService.deleteTactic(stagedTactic);
 	}
 
 	@Override
@@ -87,15 +88,21 @@ public class TacticStagedModelDataHandler
 			PortletDataContext portletDataContext, String uuid, long tacticId)
 		throws PortletDataException {
 
-		Tactic existingTactic =
-			TacticLocalServiceUtil.fetchTacticByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
+		Tactic existingTactic = _tacticLocalService.fetchTacticByUuidAndGroupId(
+			uuid, portletDataContext.getCompanyGroupId());
 
 		Map<Long, Long> tacticIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Tactic.class);
 
 		tacticIds.put(tacticId, existingTactic.getTacticId());
+	}
+
+	@Reference(unbind = "-")
+	public void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
 	}
 
 	@Override
@@ -131,25 +138,25 @@ public class TacticStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			Tactic existingTactic =
-				TacticLocalServiceUtil.fetchTacticByUuidAndGroupId(
+				_tacticLocalService.fetchTacticByUuidAndGroupId(
 					tactic.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingTactic == null) {
 				serviceContext.setUuid(tactic.getUuid());
 
-				importedTactic = TacticLocalServiceUtil.addTactic(
+				importedTactic = _tacticLocalService.addTactic(
 					userId, tactic.getCampaignId(), tactic.getNameMap(),
 					tactic.getDescriptionMap(), userSegmentIds, serviceContext);
 			}
 			else {
-				importedTactic = TacticLocalServiceUtil.updateTactic(
+				importedTactic = _tacticLocalService.updateTactic(
 					existingTactic.getTacticId(), tactic.getCampaignId(),
 					tactic.getNameMap(), tactic.getDescriptionMap(),
 					userSegmentIds, serviceContext);
 			}
 		}
 		else {
-			importedTactic = TacticLocalServiceUtil.addTactic(
+			importedTactic = _tacticLocalService.addTactic(
 				userId, tactic.getCampaignId(), tactic.getNameMap(),
 				tactic.getDescriptionMap(), userSegmentIds, serviceContext);
 		}
@@ -164,7 +171,7 @@ public class TacticStagedModelDataHandler
 		throws Exception {
 
 		List<ChannelInstance> channelInstances =
-			ChannelInstanceLocalServiceUtil.getChannelInstances(
+			_channelInstanceLocalService.getChannelInstances(
 				tactic.getTacticId());
 
 		for (ChannelInstance channelInstance : channelInstances) {
@@ -180,7 +187,7 @@ public class TacticStagedModelDataHandler
 		throws Exception {
 
 		List<UserSegment> tacticUserSegments =
-			UserSegmentLocalServiceUtil.getTacticUserSegments(
+			_userSegmentLocalService.getTacticUserSegments(
 				tactic.getTacticId());
 
 		for (UserSegment userSegment : tacticUserSegments) {
@@ -255,9 +262,23 @@ public class TacticStagedModelDataHandler
 		return userSegmentIdsArray;
 	}
 
+	@Reference(unbind = "-")
+	protected void setChannelInstanceLocalService(
+		ChannelInstanceLocalService channelInstanceLocalService) {
+
+		_channelInstanceLocalService = channelInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTacticLocalService(
+		TacticLocalService tacticLocalService) {
+
+		_tacticLocalService = tacticLocalService;
+	}
+
 	@Override
 	protected boolean validateMissingReference(String uuid, long groupId) {
-		Tactic tactic = TacticLocalServiceUtil.fetchTacticByUuidAndGroupId(
+		Tactic tactic = _tacticLocalService.fetchTacticByUuidAndGroupId(
 			uuid, groupId);
 
 		if (tactic == null) {
@@ -266,5 +287,9 @@ public class TacticStagedModelDataHandler
 
 		return true;
 	}
+
+	private ChannelInstanceLocalService _channelInstanceLocalService;
+	private TacticLocalService _tacticLocalService;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

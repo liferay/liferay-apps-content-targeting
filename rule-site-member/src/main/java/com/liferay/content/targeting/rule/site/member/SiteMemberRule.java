@@ -27,9 +27,9 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -48,6 +48,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -75,7 +76,7 @@ public class SiteMemberRule extends BaseRule {
 
 		long siteId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-		return UserLocalServiceUtil.hasGroupUser(
+		return _userLocalService.hasGroupUser(
 			siteId, anonymousUser.getUserId());
 	}
 
@@ -88,7 +89,7 @@ public class SiteMemberRule extends BaseRule {
 
 		long groupId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+		Group group = _groupLocalService.fetchGroup(groupId);
 
 		if (group == null) {
 			throw new PortletDataException(
@@ -113,7 +114,7 @@ public class SiteMemberRule extends BaseRule {
 		try {
 			long siteId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-			Group group = GroupLocalServiceUtil.fetchGroup(siteId);
+			Group group = _groupLocalService.fetchGroup(siteId);
 
 			if (group == null) {
 				return StringPool.BLANK;
@@ -135,7 +136,7 @@ public class SiteMemberRule extends BaseRule {
 
 		String groupUuid = ruleInstance.getTypeSettings();
 
-		Group group = GroupLocalServiceUtil.fetchGroupByUuidAndCompanyId(
+		Group group = _groupLocalService.fetchGroupByUuidAndCompanyId(
 			groupUuid, portletDataContext.getCompanyId());
 
 		if (group != null) {
@@ -179,7 +180,7 @@ public class SiteMemberRule extends BaseRule {
 		List<Group> sites = new ArrayList<>();
 
 		try {
-			sites = GroupServiceUtil.getGroups(
+			sites = _groupService.getGroups(
 				company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
 				true);
 		}
@@ -202,5 +203,24 @@ public class SiteMemberRule extends BaseRule {
 			}
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupService(GroupService groupService) {
+		_groupService = groupService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
+	private GroupService _groupService;
+	private UserLocalService _userLocalService;
 
 }

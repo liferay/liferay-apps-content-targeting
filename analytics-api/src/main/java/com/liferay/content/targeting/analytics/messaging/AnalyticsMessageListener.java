@@ -14,7 +14,7 @@
 
 package com.liferay.content.targeting.analytics.messaging;
 
-import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalServiceUtil;
+import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -74,10 +74,17 @@ public class AnalyticsMessageListener extends BaseMessageListener {
 
 		serviceContext.setCompanyId(companyId);
 
-		AnalyticsEventLocalServiceUtil.addAnalyticsEvent(
+		_analyticsEventLocalService.addAnalyticsEvent(
 			userId, anonymousUserId, className, classPK, referrers, elementId,
 			eventType, clientIP, userAgent, languageId, URL, additionalInfo,
 			serviceContext);
+	}
+
+	@Reference(unbind = "-")
+	protected void setAnalyticsEventLocalService(
+		AnalyticsEventLocalService analyticsEventLocalService) {
+
+		_analyticsEventLocalService = analyticsEventLocalService;
 	}
 
 	@Reference(target = "(destination.name=liferay/analytics)", unbind = "-")
@@ -86,5 +93,7 @@ public class AnalyticsMessageListener extends BaseMessageListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsMessageListener.class);
+
+	private AnalyticsEventLocalService _analyticsEventLocalService;
 
 }

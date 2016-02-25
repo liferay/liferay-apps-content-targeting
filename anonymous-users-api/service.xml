@@ -39,5 +39,9 @@
 			<finder-column name="companyId" />
 			<finder-column name="createDate" comparator="&lt;" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Company" />
 	</entity>
 </service-builder>

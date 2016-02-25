@@ -15,13 +15,14 @@
 package com.liferay.content.targeting.service.permission;
 
 import com.liferay.content.targeting.model.Tactic;
-import com.liferay.content.targeting.service.TacticLocalServiceUtil;
+import com.liferay.content.targeting.service.TacticLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -63,7 +64,7 @@ public class TacticPermission implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long tacticId, String actionId)
 		throws PortalException {
 
-		Tactic tactic = TacticLocalServiceUtil.getTactic(tacticId);
+		Tactic tactic = _tacticLocalService.getTactic(tacticId);
 
 		return contains(permissionChecker, tactic, actionId);
 	}
@@ -94,5 +95,14 @@ public class TacticPermission implements BaseModelPermissionChecker {
 				actionId);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setTacticLocalService(
+		TacticLocalService tacticLocalService) {
+
+		_tacticLocalService = tacticLocalService;
+	}
+
+	private static TacticLocalService _tacticLocalService;
 
 }

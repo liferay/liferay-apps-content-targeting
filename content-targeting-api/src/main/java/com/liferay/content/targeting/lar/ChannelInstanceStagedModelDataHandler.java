@@ -18,8 +18,8 @@ import com.liferay.content.targeting.api.model.Channel;
 import com.liferay.content.targeting.api.model.ChannelsRegistry;
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
-import com.liferay.content.targeting.service.ChannelInstanceLocalServiceUtil;
-import com.liferay.content.targeting.service.TacticLocalServiceUtil;
+import com.liferay.content.targeting.service.ChannelInstanceLocalService;
+import com.liferay.content.targeting.service.TacticLocalService;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -53,7 +53,7 @@ public class ChannelInstanceStagedModelDataHandler
 	public void deleteStagedModel(ChannelInstance channelInstance)
 		throws PortalException {
 
-		ChannelInstanceLocalServiceUtil.deleteChannelInstance(channelInstance);
+		_channelInstanceLocalService.deleteChannelInstance(channelInstance);
 	}
 
 	@Override
@@ -62,10 +62,10 @@ public class ChannelInstanceStagedModelDataHandler
 		throws PortalException {
 
 		ChannelInstance channelInstance =
-			ChannelInstanceLocalServiceUtil.
-				fetchChannelInstanceByUuidAndGroupId(uuid, groupId);
+			_channelInstanceLocalService.fetchChannelInstanceByUuidAndGroupId(
+				uuid, groupId);
 
-		ChannelInstanceLocalServiceUtil.deleteChannelInstance(channelInstance);
+		_channelInstanceLocalService.deleteChannelInstance(channelInstance);
 	}
 
 	@Override
@@ -92,9 +92,8 @@ public class ChannelInstanceStagedModelDataHandler
 		throws PortletDataException {
 
 		ChannelInstance existingChannelInstance =
-			ChannelInstanceLocalServiceUtil.
-				fetchChannelInstanceByUuidAndGroupId(
-					uuid, portletDataContext.getCompanyGroupId());
+			_channelInstanceLocalService.fetchChannelInstanceByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
 
 		Map<Long, Long> channelInstanceIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -124,7 +123,7 @@ public class ChannelInstanceStagedModelDataHandler
 			return;
 		}
 
-		Tactic tactic = TacticLocalServiceUtil.getTactic(
+		Tactic tactic = _tacticLocalService.getTactic(
 			channelInstance.getTacticId());
 
 		Element tacticElement = portletDataContext.getExportDataElement(tactic);
@@ -167,7 +166,7 @@ public class ChannelInstanceStagedModelDataHandler
 			return;
 		}
 
-		Tactic tactic = TacticLocalServiceUtil.getTactic(
+		Tactic tactic = _tacticLocalService.getTactic(
 			channelInstance.getTacticId());
 
 		long userId = portletDataContext.getUserId(
@@ -177,10 +176,9 @@ public class ChannelInstanceStagedModelDataHandler
 			channelInstance);
 
 		ChannelInstance existingChannelInstance =
-			ChannelInstanceLocalServiceUtil.
-				fetchChannelInstanceByUuidAndGroupId(
-					channelInstance.getUuid(),
-					portletDataContext.getScopeGroupId());
+			_channelInstanceLocalService.fetchChannelInstanceByUuidAndGroupId(
+				channelInstance.getUuid(),
+				portletDataContext.getScopeGroupId());
 
 		ChannelInstance importedChannelInstance = null;
 
@@ -188,7 +186,7 @@ public class ChannelInstanceStagedModelDataHandler
 			serviceContext.setUuid(channelInstance.getUuid());
 
 			importedChannelInstance =
-				ChannelInstanceLocalServiceUtil.addChannelInstance(
+				_channelInstanceLocalService.addChannelInstance(
 					userId, channelInstance.getTacticId(),
 					channelInstance.getChannelKey(),
 					channelInstance.getCampaignId(), channelInstance.getAlias(),
@@ -196,7 +194,7 @@ public class ChannelInstanceStagedModelDataHandler
 		}
 		else {
 			importedChannelInstance =
-				ChannelInstanceLocalServiceUtil.updateChannelInstance(
+				_channelInstanceLocalService.updateChannelInstance(
 					existingChannelInstance.
 						getChannelInstanceId(),
 					channelInstance.getAlias(),
@@ -221,15 +219,29 @@ public class ChannelInstanceStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
+	protected void setChannelInstanceLocalService(
+		ChannelInstanceLocalService channelInstanceLocalService) {
+
+		_channelInstanceLocalService = channelInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setChannelsRegistry(ChannelsRegistry channelsRegistry) {
 		_channelsRegistry = channelsRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTacticLocalService(
+		TacticLocalService tacticLocalService) {
+
+		_tacticLocalService = tacticLocalService;
 	}
 
 	@Override
 	protected boolean validateMissingReference(String uuid, long groupId) {
 		ChannelInstance channelInstance =
-			ChannelInstanceLocalServiceUtil.
-				fetchChannelInstanceByUuidAndGroupId(uuid, groupId);
+			_channelInstanceLocalService.fetchChannelInstanceByUuidAndGroupId(
+				uuid, groupId);
 
 		if (channelInstance == null) {
 			return false;
@@ -241,6 +253,8 @@ public class ChannelInstanceStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		ChannelInstanceStagedModelDataHandler.class);
 
+	private ChannelInstanceLocalService _channelInstanceLocalService;
 	private ChannelsRegistry _channelsRegistry;
+	private TacticLocalService _tacticLocalService;
 
 }

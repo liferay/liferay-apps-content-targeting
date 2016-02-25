@@ -74,7 +74,7 @@ public class YoutubeVideoHtmlFilter extends BaseFilter {
 
 	protected String getContent(HttpServletRequest request, String content) {
 		Matcher youtubeEmbedVideoIframeMatcher =
-			_youtubeEmbedVideoIframePattern.matcher(content);
+			_YOUTUBE_EMBED_VIDEO_IFRAME_PATTERN.matcher(content);
 
 		StringBuffer stringBuffer = new StringBuffer();
 
@@ -83,7 +83,8 @@ public class YoutubeVideoHtmlFilter extends BaseFilter {
 				youtubeEmbedVideoIframeMatcher.group(4);
 
 			Matcher youtubeEmbedVideoUrlIdMatcher =
-				_youtubeEmbedVideoUrlIdPattern.matcher(youtubeEmbededVideoUrl);
+				_YOUTUBE_EMBED_VIDEO_URL_ID_PATTERN.matcher(
+					youtubeEmbededVideoUrl);
 
 			if (!youtubeEmbedVideoUrlIdMatcher.matches()) {
 				continue;
@@ -184,14 +185,15 @@ public class YoutubeVideoHtmlFilter extends BaseFilter {
 		return HttpUtil.protocolize(url, secure);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		YoutubeVideoHtmlFilter.class);
-
-	private static final Pattern _youtubeEmbedVideoIframePattern =
+	private static final Pattern _YOUTUBE_EMBED_VIDEO_IFRAME_PATTERN =
 		Pattern.compile(
 			"(<iframe\\s+)(.*)(\\s+src=\\\")([^\\\"]*)" +
-			"(\\\".*>.*?<\\/iframe>)");
-	private static final Pattern _youtubeEmbedVideoUrlIdPattern =
+				"(\\\".*>.*?<\\/iframe>)");
+
+	private static final Pattern _YOUTUBE_EMBED_VIDEO_URL_ID_PATTERN =
 		Pattern.compile(".*\\/embed\\/([a-zA-Z0-9_\\\\-]{11}).*");
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		YoutubeVideoHtmlFilter.class);
 
 }
