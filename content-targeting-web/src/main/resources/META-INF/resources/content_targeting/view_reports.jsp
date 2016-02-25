@@ -17,12 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
 String redirect = ParamUtil.getString(request, "redirect");
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 
 Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale), "reports"));
 %>
 
 <c:if test="<%= scopeGroup.isStagingGroup() %>">
@@ -37,7 +41,6 @@ Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 
 <liferay-portlet:renderURL var="searchURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="backURL" value="<%= backURL %>" />
 
 	<c:choose>
 		<c:when test="<%= Campaign.class.getName().equals(className) %>">

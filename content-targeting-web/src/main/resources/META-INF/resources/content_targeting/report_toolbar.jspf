@@ -39,10 +39,6 @@ for (Report report : reports) {
 							value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>"
 						/>
 						<portlet:param
-							name="backURL"
-							value="<%= backURL.toString() %>"
-						/>
-						<portlet:param
 							name="campaignId"
 							value="<%= String.valueOf(classPK) %>"
 						/>
