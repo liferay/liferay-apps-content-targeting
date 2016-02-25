@@ -65,7 +65,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.header-portlet-css=/css/campaign_content_display/main.css",
 		"com.liferay.portlet.header-portlet-css=/css/content_targeting/rules_panel.css",
 		"com.liferay.portlet.header-portlet-css=/css/content_targeting/thumbnails_preview.css",
-		"com.liferay.portlet.header-portlet-css=/css/content_targeting/warning_restart.css",
 		"com.liferay.portlet.header-portlet-javascript=/js/content_targeting/thumbnails_preview.js",
 		"com.liferay.portlet.icon=/icons/campaign_content_display.png",
 		"com.liferay.portlet.instanceable=true",

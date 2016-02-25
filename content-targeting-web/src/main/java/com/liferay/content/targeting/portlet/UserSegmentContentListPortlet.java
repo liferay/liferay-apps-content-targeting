@@ -59,7 +59,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=user-segment-content-list-portlet",
 		"com.liferay.portlet.display-category=category.ct",
-		"com.liferay.portlet.header-portlet-css=/css/content_targeting/warning_restart.css",
 		"com.liferay.portlet.header-portlet-css=/css/user_segment_content_list/main.css",
 		"com.liferay.portlet.header-portlet-javascript=/js/content_targeting/thumbnails_preview.js",
 		"com.liferay.portlet.icon=/icons/user_segment_content_list.png",

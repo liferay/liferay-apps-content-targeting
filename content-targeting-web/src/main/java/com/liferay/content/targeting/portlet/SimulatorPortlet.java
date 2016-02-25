@@ -44,7 +44,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.control-panel-entry-weight=100",
 		"com.liferay.portlet.css-class-wrapper=content-targeting-simulator-portlet",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.header-portlet-css=/css/content_targeting/warning_restart.css",
 		"com.liferay.portlet.header-portlet-css=/css/ct_simulator/main.css",
 		"com.liferay.portlet.header-portlet-javascript=/js/ct_simulator/simulator.js",
 		"com.liferay.portlet.icon=/icons/icon.png",

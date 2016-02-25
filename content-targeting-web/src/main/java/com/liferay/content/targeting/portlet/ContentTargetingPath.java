@@ -58,6 +58,4 @@ public class ContentTargetingPath {
 	public static final String VIEW_USER_SEGMENTS_RESOURCES =
 		"/content_targeting/view_user_segments_resources.jsp";
 
-	public static final String WARNING_RESTART = "/warning_restart.jsp";
-
 }
