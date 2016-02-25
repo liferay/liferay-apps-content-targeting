@@ -17,8 +17,6 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
-int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
-
 String keywords = ParamUtil.getString(request, "keywords");
 
 RowChecker userSegmentsRowChecker = new RowChecker(liferayPortletResponse);
@@ -78,91 +76,9 @@ SearchContainerIterator searchContainerIterator = new UserSegmentSearchContainer
 			value="<%= userSegment.getDescription(locale) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			align="right"
-			name=""
-		>
-			<liferay-ui:icon-menu>
-				<c:if test="<%= editUserSegmentURL != null %>">
-					<liferay-ui:icon
-						image="edit"
-						method="get"
-						url="<%= editUserSegmentURL %>"
-					/>
-
-					<c:if test="<%= reportsCount > 0 %>">
-						<liferay-portlet:renderURL var="viewUserSegmentReportsURL">
-							<portlet:param
-								name="mvcRenderCommand"
-								value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>"
-							/>
-							<portlet:param
-								name="redirect"
-								value="<%= viewUserSegmentsURL.toString() %>"
-							/>
-							<portlet:param
-								name="className"
-								value="<%= UserSegment.class.getName() %>"
-							/>
-							<portlet:param
-								name="classPK"
-								value="<%= String.valueOf(userSegment.getUserSegmentId()) %>"
-							/>
-							<portlet:param
-								name="userSegmentId"
-								value="<%= String.valueOf(userSegment.getUserSegmentId()) %>"
-							/>
-							<portlet:param
-								name="tabs2"
-								value="reports"
-							/>
-						</liferay-portlet:renderURL>
-
-						<liferay-ui:icon
-							image="view"
-							label="<%= true %>"
-							message="reports"
-							method="get"
-							url="<%= viewUserSegmentReportsURL.toString() %>"
-						/>
-					</c:if>
-				</c:if>
-
-				<c:if test="<%= UserSegmentPermission.contains(permissionChecker, userSegment, ActionKeys.DELETE) %>">
-					<liferay-portlet:actionURL name="deleteUserSegment" var="deleteUserSegmentURL">
-						<portlet:param
-							name="redirect"
-							value="<%= viewUserSegmentsURL.toString() %>"
-						/>
-						<portlet:param
-							name="userSegmentId"
-							value="<%= String.valueOf(userSegment.getUserSegmentId()) %>"
-						/>
-					</liferay-portlet:actionURL>
-
-					<liferay-ui:icon-delete
-						url="<%= deleteUserSegmentURL.toString() %>"
-					/>
-				</c:if>
-
-				<c:if test="<%= UserSegmentPermission.contains(permissionChecker, userSegment, ActionKeys.PERMISSIONS) %>">
-					<liferay-security:permissionsURL
-						modelResource="<%= UserSegment.class.getName() %>"
-						modelResourceDescription="<%= userSegment.getName(locale) %>"
-						resourcePrimKey="<%= String.valueOf(userSegment.getUserSegmentId()) %>"
-						var="permissionsEntryURL"
-						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-					/>
-
-					<liferay-ui:icon
-						image="permissions"
-						method="get"
-						url="<%= permissionsEntryURL.toString() %>"
-						useDialog="<%= true %>"
-					/>
-				</c:if>
-			</liferay-ui:icon-menu>
-		</liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-jsp
+			path="/html/content_targeting/user_segments_action.jsp"
+		/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

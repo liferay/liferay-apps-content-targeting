@@ -67,6 +67,7 @@ page import="com.liferay.content.targeting.util.ReportSearchContainerIterator" %
 page import="com.liferay.content.targeting.util.SearchContainerIterator" %><%@
 page import="com.liferay.content.targeting.util.TacticSearchContainerIterator" %><%@
 page import="com.liferay.content.targeting.util.UserSegmentSearchContainerIterator" %><%@
+page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
@@ -89,7 +90,8 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.TimeZoneUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.Calendar" %><%@
 page import="java.util.Collection" %><%@
