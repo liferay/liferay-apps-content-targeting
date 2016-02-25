@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int channelsCount = GetterUtil.getInteger(request.getAttribute("channelsCount"));
-
-int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
-
 String keywords = ParamUtil.getString(request, "keywords");
 
 RowChecker campaignsRowChecker = new RowChecker(liferayPortletResponse);
@@ -103,128 +99,9 @@ SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIte
 			</span>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			align="right"
-			name=""
-		>
-			<liferay-ui:icon-menu>
-				<c:if test="<%= editCampaignURL != null %>">
-					<liferay-ui:icon
-						image="edit"
-						method="get"
-						url="<%= editCampaignURL %>"
-					/>
-
-					<c:if test="<%= reportsCount > 0 %>">
-						<liferay-portlet:renderURL var="viewCampaignReportsURL">
-							<portlet:param
-								name="mvcRenderCommandName"
-								value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>"
-							/>
-							<portlet:param
-								name="redirect"
-								value="<%= viewCampaignsURL.toString() %>"
-							/>
-							<portlet:param
-								name="campaignId"
-								value="<%= String.valueOf(campaign.getCampaignId()) %>"
-							/>
-							<portlet:param
-								name="className"
-								value="<%= Campaign.class.getName() %>"
-							/>
-							<portlet:param
-								name="classPK"
-								value="<%= String.valueOf(campaign.getCampaignId()) %>"
-							/>
-							<portlet:param
-								name="tabs2"
-								value="reports"
-							/>
-						</liferay-portlet:renderURL>
-
-						<liferay-ui:icon
-							image="view"
-							label="<%= true %>"
-							message="reports"
-							method="get"
-							url="<%= viewCampaignReportsURL %>"
-						/>
-					</c:if>
-
-					<c:if test="<%= channelsCount > 0 %>">
-						<liferay-portlet:renderURL var="viewCampaignTacticsURL">
-							<portlet:param
-								name="mvcRenderCommandName"
-								value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>"
-							/>
-							<portlet:param
-								name="redirect"
-								value="<%= viewCampaignsURL.toString() %>"
-							/>
-							<portlet:param
-								name="className"
-								value="<%= Campaign.class.getName() %>"
-							/>
-							<portlet:param
-								name="classPK"
-								value="<%= String.valueOf(campaign.getCampaignId()) %>"
-							/>
-							<portlet:param
-								name="campaignId"
-								value="<%= String.valueOf(campaign.getCampaignId()) %>"
-							/>
-							<portlet:param
-								name="tabs2"
-								value="promotions"
-							/>
-						</liferay-portlet:renderURL>
-
-						<liferay-ui:icon
-							image="sitemap"
-							label="<%= true %>"
-							message="promotions"
-							method="get"
-							url="<%= viewCampaignTacticsURL %>"
-						/>
-					</c:if>
-				</c:if>
-
-				<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.DELETE) %>">
-					<liferay-portlet:actionURL name="deleteCampaign" var="deleteCampaignURL">
-						<portlet:param
-							name="redirect"
-							value="<%= viewCampaignsURL.toString() %>"
-						/>
-						<portlet:param
-							name="campaignId"
-							value="<%= String.valueOf(campaign.getCampaignId()) %>"
-						/>
-					</liferay-portlet:actionURL>
-
-					<liferay-ui:icon-delete
-						url="<%= deleteCampaignURL %>"
-					/>
-				</c:if>
-
-				<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.PERMISSIONS) %>">
-					<liferay-security:permissionsURL
-						modelResource="<%= Campaign.class.getName() %>"
-						modelResourceDescription="<%= campaign.getName(locale) %>"
-						resourcePrimKey="<%= String.valueOf(campaign.getCampaignId()) %>"
-						var="permissionsEntryURL"
-						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-					/>
-
-					<liferay-ui:icon
-						image="permissions"
-						method="get"
-						url="<%= permissionsEntryURL %>"
-						useDialog="<%= true %>"
-					/>
-				</c:if>
-			</liferay-ui:icon-menu>
-		</liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-jsp
+			path="/content_targeting/campaign_action.jsp"
+		/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />
