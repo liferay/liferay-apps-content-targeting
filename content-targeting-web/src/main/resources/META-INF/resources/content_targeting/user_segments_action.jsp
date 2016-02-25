@@ -27,7 +27,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= UserSegmentPermission.contains(permissionChecker, userSegment, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editUserSegmentURL">
-			<portlet:param name="mvcRenderCommand" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
+			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="className" value="<%= UserSegment.class.getName() %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
@@ -36,12 +36,12 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 
 		<liferay-ui:icon
 			message="edit"
-			url="<%= editUserSegmentURL.toString() %>"
+			url="<%= editUserSegmentURL %>"
 		/>
 
 		<c:if test="<%= reportsCount > 0 %>">
 			<portlet:renderURL var="viewUserSegmentReportsURL">
-				<portlet:param name="mvcRenderCommand" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
+				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="className" value="<%= UserSegment.class.getName() %>" />
 				<portlet:param name="classPK" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
@@ -51,19 +51,19 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 
 			<liferay-ui:icon
 				message="reports"
-				url="<%= viewUserSegmentReportsURL.toString() %>"
+				url="<%= viewUserSegmentReportsURL %>"
 			/>
 		</c:if>
 	</c:if>
 
 	<c:if test="<%= UserSegmentPermission.contains(permissionChecker, userSegment, ActionKeys.DELETE) %>">
-		<liferay-portlet:actionURL name="deleteUserSegment" var="deleteUserSegmentURL">
+		<portlet:actionURL name="deleteUserSegment" var="deleteUserSegmentURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="userSegmentId" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
-		</liferay-portlet:actionURL>
+		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			url="<%= deleteUserSegmentURL.toString() %>"
+			url="<%= deleteUserSegmentURL %>"
 		/>
 	</c:if>
 
@@ -78,7 +78,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 
 		<liferay-ui:icon
 			message="permissions"
-			url="<%= permissionsEntryURL.toString() %>"
+			url="<%= permissionsEntryURL %>"
 			useDialog="<%= true %>"
 		/>
 	</c:if>
