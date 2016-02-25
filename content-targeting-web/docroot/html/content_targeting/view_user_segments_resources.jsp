@@ -19,8 +19,6 @@
 <%
 String keywords = ParamUtil.getString(request, "keywords");
 
-RowChecker userSegmentsRowChecker = new RowChecker(liferayPortletResponse);
-
 SearchContainerIterator searchContainerIterator = new UserSegmentSearchContainerIterator(scopeGroupId, keywords);
 %>
 
@@ -31,8 +29,9 @@ SearchContainerIterator searchContainerIterator = new UserSegmentSearchContainer
 
 <liferay-ui:search-container
 	emptyResultsMessage="no-user-segments-were-found"
+	id="userSegments"
 	iteratorURL="<%= viewUserSegmentsURL %>"
-	rowChecker="<%= userSegmentsRowChecker %>"
+	rowChecker="<%= new EmptyOnClickRowChecker(liferayPortletResponse) %>"
 	total="<%= searchContainerIterator.getTotal() %>"
 >
 	<liferay-ui:search-container-results
@@ -62,48 +61,3 @@ SearchContainerIterator searchContainerIterator = new UserSegmentSearchContainer
 
 	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
-
-<aui:script use="liferay-util-list-fields">
-	var deleteUserSegments = A.one('#<portlet:namespace />deleteUserSegments');
-
-	if (deleteUserSegments) {
-		A.one('#<portlet:namespace /><%= searchContainerReference.getId(request) %>SearchContainer').on(
-			'click',
-			function() {
-				var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fmUserSegment, '<portlet:namespace />allRowIds').length == 0);
-
-				deleteUserSegments.toggle(!hide);
-			},
-			'input[type=checkbox]'
-		);
-
-		deleteUserSegments.on(
-			'click',
-			function(event) {
-				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-					document.<portlet:namespace />fmUserSegment.<portlet:namespace />userSegmentIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fmUserSegment, '<portlet:namespace />allRowIds');
-
-					<liferay-portlet:renderURL var="redirectURL">
-						<portlet:param
-							name="mvcPath"
-							value="<%= ContentTargetingPath.VIEW %>"
-						/>
-						<portlet:param
-							name="tabs1"
-							value="user-segments"
-						/>
-					</liferay-portlet:renderURL>
-
-					<liferay-portlet:actionURL name="deleteUserSegment" var="deleteUserSegmentURL">
-						<portlet:param
-							name="redirect"
-							value="<%= redirectURL %>"
-						/>
-					</liferay-portlet:actionURL>
-
-					submitForm(document.<portlet:namespace />fmUserSegment, '<%= deleteUserSegmentURL %>');
-				}
-			}
-		);
-	}
-</aui:script>

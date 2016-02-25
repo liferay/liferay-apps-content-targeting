@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +65,8 @@ public class DeleteUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 			deleteUserSegmentIds = new long[] {userSegmentId};
 		}
 		else {
-			deleteUserSegmentIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "userSegmentIds"), 0L);
+			deleteUserSegmentIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
 		List<UserSegment> usedUserSegments = new ArrayList<>();

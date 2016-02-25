@@ -67,6 +67,7 @@ page import="com.liferay.content.targeting.util.ReportSearchContainerIterator" %
 page import="com.liferay.content.targeting.util.SearchContainerIterator" %><%@
 page import="com.liferay.content.targeting.util.TacticSearchContainerIterator" %><%@
 page import="com.liferay.content.targeting.util.UserSegmentSearchContainerIterator" %><%@
+page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
