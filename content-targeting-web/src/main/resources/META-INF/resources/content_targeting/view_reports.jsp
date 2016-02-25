@@ -46,9 +46,8 @@ Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 			<portlet:param name="tabs2" value="reports" />
 		</c:when>
 		<c:when test="<%= UserSegment.class.getName().equals(className) %>">
-			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
+			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORTS %>" />
 			<portlet:param name="userSegmentId" value="<%= String.valueOf(classPK) %>" />
-			<portlet:param name="tabs2" value="reports" />
 		</c:when>
 		<c:otherwise>
 			<portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW_REPORTS %>" />

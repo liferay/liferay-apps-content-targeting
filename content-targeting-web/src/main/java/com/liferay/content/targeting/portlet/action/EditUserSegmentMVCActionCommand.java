@@ -14,19 +14,15 @@
 
 package com.liferay.content.targeting.portlet.action;
 
-import com.liferay.content.targeting.api.model.Report;
-import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RuleCategoriesRegistry;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.exception.InvalidRuleException;
 import com.liferay.content.targeting.exception.InvalidRulesException;
 import com.liferay.content.targeting.model.RuleInstance;
-import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.portlet.util.RuleTemplate;
-import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.RuleInstanceService;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
@@ -174,31 +170,6 @@ public class EditUserSegmentMVCActionCommand extends BaseMVCRenderCommand {
 			}
 
 			renderRequest.setAttribute("ruleTemplates", ruleTemplates);
-
-			Map<String, Report> reports = _reportsRegistry.getReports(
-				UserSegment.class.getName());
-
-			renderRequest.setAttribute("reports", reports.values());
-
-			if (userSegmentId > 0) {
-				for (Report report : reports.values()) {
-					if (report.isInstantiable()) {
-						continue;
-					}
-
-					if (_reportInstanceLocalService.getReportInstanceCount(
-							report.getReportKey(), UserSegment.class.getName(),
-							userSegmentId) > 0) {
-
-						continue;
-					}
-
-					_reportInstanceLocalService.addReportInstance(
-						themeDisplay.getUserId(), report.getReportKey(),
-						UserSegment.class.getName(), userSegmentId,
-						StringPool.BLANK, serviceContext);
-				}
-			}
 		}
 		finally {
 			themeDisplay.setIsolated(isolated);
@@ -324,18 +295,6 @@ public class EditUserSegmentMVCActionCommand extends BaseMVCRenderCommand {
 		return ruleInstances;
 	}
 
-	@Reference(unbind = "unsetReportInstanceLocalService")
-	protected void setReportInstanceLocalService(
-		ReportInstanceLocalService reportInstanceLocalService) {
-
-		_reportInstanceLocalService = reportInstanceLocalService;
-	}
-
-	@Reference(unbind = "unsetReportsRegistry")
-	protected void setReportsRegistry(ReportsRegistry reportsRegistry) {
-		_reportsRegistry = reportsRegistry;
-	}
-
 	@Reference(unbind = "unsetRuleCategoriesRegistry")
 	protected void setRuleCategoriesRegistry(
 		RuleCategoriesRegistry ruleCategoriesRegistry) {
@@ -362,14 +321,6 @@ public class EditUserSegmentMVCActionCommand extends BaseMVCRenderCommand {
 		_rulesRegistry = rulesRegistry;
 	}
 
-	protected void unsetReportInstanceLocalService() {
-		_reportInstanceLocalService = null;
-	}
-
-	protected void unsetReportsRegistry() {
-		_reportsRegistry = null;
-	}
-
 	protected void unsetRuleCategoriesRegistry() {
 		_ruleCategoriesRegistry = null;
 	}
@@ -389,8 +340,6 @@ public class EditUserSegmentMVCActionCommand extends BaseMVCRenderCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditUserSegmentMVCActionCommand.class);
 
-	private ReportInstanceLocalService _reportInstanceLocalService;
-	private ReportsRegistry _reportsRegistry;
 	private RuleCategoriesRegistry _ruleCategoriesRegistry;
 	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RuleInstanceService _ruleInstanceService;

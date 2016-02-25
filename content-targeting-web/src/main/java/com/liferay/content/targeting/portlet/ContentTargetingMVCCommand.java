@@ -47,4 +47,6 @@ public class ContentTargetingMVCCommand {
 
 	public static final String VIEW_REPORT = "viewReport";
 
+	public static final String VIEW_REPORTS = "viewReports";
+
 }
