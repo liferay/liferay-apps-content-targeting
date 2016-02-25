@@ -61,7 +61,7 @@ renderResponse.setTitle(userSegmentTitle);
 
 <liferay-portlet:actionURL name="updateUserSegment" var="addUserSegmentURL" />
 
-<aui:form action="<%= addUserSegmentURL %>" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
+<aui:form action="<%= addUserSegmentURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="userSegmentId" type="hidden" value="<%= String.valueOf(userSegmentId) %>" />
 	<aui:input name="userSegmentRules" type="hidden" />
@@ -83,116 +83,120 @@ renderResponse.setTitle(userSegmentTitle);
 		</c:choose>
 	</liferay-ui:error>
 
-	<aui:input name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="name" />
 
-	<aui:input name="description" />
+			<aui:input name="description" />
+		</aui:fieldset>
 
-	<aui:field-wrapper label="rules">
-		<div class="component form-builder liferayctformbuilder property-builder yui3-widget" id="formBuilderBB">
-			<div class="form-builder-content property-builder-content" id="formBuilderCB">
-				<div class="tabbable">
-					<div class="tabbable-content">
-						<ul class="nav nav-tabs">
-							<li class="active"><a href="javascript:;">Add node</a></li>
-							<li><a href="javascript:;">Settings</a></li>
-						</ul>
-						<div class="tab-content">
-							<div class="tab-pane">
-								<div class="hide panel-page-menu" id="formBuilderSB">
-									<div class="form-builder-search-panels">
-										<i class="icon-search"></i>
+		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="rules">
+			<div class="component form-builder liferayctformbuilder property-builder yui3-widget" id="formBuilderBB">
+				<div class="form-builder-content property-builder-content" id="formBuilderCB">
+					<div class="tabbable">
+						<div class="tabbable-content">
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="javascript:;">Add node</a></li>
+								<li><a href="javascript:;">Settings</a></li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane">
+									<div class="hide panel-page-menu" id="formBuilderSB">
+										<div class="form-builder-search-panels">
+											<i class="icon-search"></i>
 
-										<div class="search-panels-bar">
-											<aui:input
-												cssClass="search-panels-input search-query"
-												label=""
-												name="searchPanel"
-												type="text"
-											/>
+											<div class="search-panels-bar">
+												<aui:input
+													cssClass="search-panels-input search-query"
+													label=""
+													name="searchPanel"
+													type="text"
+												/>
+											</div>
 										</div>
 									</div>
-								</div>
 
-								<ul class="clearfix form-builder-fields-container property-builder-fields-container">
+									<ul class="clearfix form-builder-fields-container property-builder-fields-container">
 
-									<%
-									for (RuleTemplate template : ruleTemplates) {
-										Rule rule = template.getRule();
-										String templateKey = template.getTemplateKey();
-										RuleCategory ruleCategory = ruleCategoriesRegistry.getRuleCategory(rule.getRuleCategoryKey());
-									%>
+										<%
+										for (RuleTemplate template : ruleTemplates) {
+											Rule rule = template.getRule();
+											String templateKey = template.getTemplateKey();
+											RuleCategory ruleCategory = ruleCategoriesRegistry.getRuleCategory(rule.getRuleCategoryKey());
+										%>
 
-										<li class="form-builder-field hide property-builder-field" data-categorydescription="<%= ruleCategory.getDescription(locale) %>" data-categoryicon="<%= ruleCategory.getIcon() %>" data-categorykey="<%= ruleCategory.getCategoryKey() %>" data-categoryname="<%= ruleCategory.getName(locale) %>" data-icon="<%= rule.getIcon() %>" data-key="<%= templateKey %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !rule.isInstantiable() %>">
-											<span class="property-builder-field-icon icon <%= rule.getIcon() %>"></span>
-											<div class="property-builder-field-label">
-												<div class="row">
-													<div class="field-title"><%= rule.getName(locale) %></div>
-													<div class="field-description"><%= rule.getDescription(locale) %></div>
-													<div class="field-short-description"><%= rule.getShortDescription(locale) %></div>
+											<li class="form-builder-field hide property-builder-field" data-categorydescription="<%= ruleCategory.getDescription(locale) %>" data-categoryicon="<%= ruleCategory.getIcon() %>" data-categorykey="<%= ruleCategory.getCategoryKey() %>" data-categoryname="<%= ruleCategory.getName(locale) %>" data-icon="<%= rule.getIcon() %>" data-key="<%= templateKey %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !rule.isInstantiable() %>">
+												<span class="property-builder-field-icon icon <%= rule.getIcon() %>"></span>
+												<div class="property-builder-field-label">
+													<div class="row">
+														<div class="field-title"><%= rule.getName(locale) %></div>
+														<div class="field-description"><%= rule.getDescription(locale) %></div>
+														<div class="field-short-description"><%= rule.getShortDescription(locale) %></div>
+													</div>
 												</div>
-											</div>
-										</li>
+											</li>
 
-									<%
-									}
-									%>
+										<%
+										}
+										%>
 
-								</ul>
+									</ul>
+								</div>
+								<div class="tab-pane"></div>
 							</div>
-							<div class="tab-pane"></div>
 						</div>
 					</div>
-				</div>
 
-				<div class="form-builder-content-container property-builder-content-container">
-					<div class="property-builder-canvas form-builder-canvas <%= cssHasItemsClass %>">
-						<div class="alert alert-info alert-no-items">
-							<liferay-ui:message key="drag-rules-here-to-configure-this-user-segment" />
-						</div>
+					<div class="form-builder-content-container property-builder-content-container">
+						<div class="property-builder-canvas form-builder-canvas <%= cssHasItemsClass %>">
+							<div class="alert alert-info alert-no-items">
+								<liferay-ui:message key="drag-rules-here-to-configure-this-user-segment" />
+							</div>
 
-						<div class="form-builder-drop-container property-builder-drop-container">
+							<div class="form-builder-drop-container property-builder-drop-container">
 
-							<%
-							for (RuleTemplate template : addedRuleTemplates) {
-								Rule rule = template.getRule();
-								String templateKey = template.getTemplateKey();
-							%>
+								<%
+								for (RuleTemplate template : addedRuleTemplates) {
+									Rule rule = template.getRule();
+									String templateKey = template.getTemplateKey();
+								%>
 
-								<div class="component form-builder-field hide widget yui3-widget" data-icon="<%= rule.getIcon() %>" data-key="<%= templateKey %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !rule.isInstantiable() %>">
-									<div>
+									<div class="component form-builder-field hide widget yui3-widget" data-icon="<%= rule.getIcon() %>" data-key="<%= templateKey %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !rule.isInstantiable() %>">
 										<div>
-											<div class="field-header">
-												<div class="field-icon"><i class="<%= rule.getIcon() %>"></i></div>
-												<div class="field-info row">
-													<div class="field-title"><%= rule.getName(locale) %></div>
-													<div class="field-description"><%= rule.getDescription(locale) %></div>
-													<div class="field-short-description"><%= rule.getShortDescription(locale) %></div>
+											<div>
+												<div class="field-header">
+													<div class="field-icon"><i class="<%= rule.getIcon() %>"></i></div>
+													<div class="field-info row">
+														<div class="field-title"><%= rule.getName(locale) %></div>
+														<div class="field-description"><%= rule.getDescription(locale) %></div>
+														<div class="field-short-description"><%= rule.getShortDescription(locale) %></div>
+													</div>
 												</div>
-											</div>
-											<div class="field-editor">
+												<div class="field-editor">
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
 
-							<%
-							}
-							%>
+								<%
+								}
+								%>
 
+							</div>
 						</div>
 					</div>
-				</div>
 
+				</div>
 			</div>
-		</div>
-	</aui:field-wrapper>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="control-button" type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button cssClass="control-button" onClick="saveAndContinue();" value="save-and-continue" />
+		<aui:button cssClass="btn-lg" onClick="saveAndContinue();" value="save-and-continue" />
 
-		<aui:button cssClass="control-button" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 
