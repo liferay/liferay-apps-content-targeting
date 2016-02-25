@@ -24,7 +24,7 @@ long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 UserSegment userSegment = null;
 
-String userSegmentTitle = "new-user-segment";
+String userSegmentTitle = LanguageUtil.get(portletConfig.getResourceBundle(locale), "new-user-segment");
 
 String pills = "details";
 
@@ -44,12 +44,12 @@ if (Validator.isNull(backURL)) {
 
 	backURL = backURLObject.toString();
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= backURL.toString() %>"
-	title="<%= userSegmentTitle %>"
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL.toString());
+
+renderResponse.setTitle(userSegmentTitle);
+%>
 
 <liferay-portlet:renderURL varImpl="switchTabsURL">
 	<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
