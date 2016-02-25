@@ -24,7 +24,7 @@ UserSegment userSegment = (UserSegment)row.getObject();
 int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= UserSegmentPermission.contains(permissionChecker, userSegment, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editUserSegmentURL">
 			<portlet:param name="mvcRenderCommand" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
@@ -35,8 +35,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
-			method="get"
+			message="edit"
 			url="<%= editUserSegmentURL.toString() %>"
 		/>
 
@@ -51,10 +50,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 			</portlet:renderURL>
 
 			<liferay-ui:icon
-				image="view"
-				label="<%= true %>"
 				message="reports"
-				method="get"
 				url="<%= viewUserSegmentReportsURL.toString() %>"
 			/>
 		</c:if>
@@ -81,8 +77,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
-			method="get"
+			message="permissions"
 			url="<%= permissionsEntryURL.toString() %>"
 			useDialog="<%= true %>"
 		/>

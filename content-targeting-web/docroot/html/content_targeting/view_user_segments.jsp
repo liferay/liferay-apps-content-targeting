@@ -61,7 +61,7 @@
 	<portlet:param name="tabs1" value="user-segments" />
 </portlet:renderURL>
 
-<aui:form action="<%= searchURL %>" method="post" name="fmUserSegment">
+<aui:form action="<%= searchURL %>" cssClass="container-fluid-1280" method="post" name="fmUserSegment">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="userSegmentIds" type="hidden" />
 
@@ -70,8 +70,7 @@
 	</aui:nav-bar>
 
 	<div id="<portlet:namespace />userSegmentsPanel">
-		<liferay-util:include page="/html/content_targeting/view_user_segments_resources.jsp" servletContext="<%= application %>">
-		</liferay-util:include>
+		<liferay-util:include page="/html/content_targeting/view_user_segments_resources.jsp" servletContext="<%= application %>" />
 	</div>
 </aui:form>
 
@@ -94,7 +93,7 @@
 		{
 			contentPanel: userSegmentsPanel,
 			inputNode: inputNode,
-			resourceURL: '<liferay-portlet:resourceURL><portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW_USER_SEGMENTS_RESOURCES %>" /><portlet:param name="tabs1" value="user-segments" /></liferay-portlet:resourceURL>',
+			resourceURL: '<portlet:resourceURL><portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW_USER_SEGMENTS_RESOURCES %>" /><portlet:param name="tabs1" value="user-segments" /></portlet:resourceURL>',
 			namespace: '<portlet:namespace />'
 		}
 	);
