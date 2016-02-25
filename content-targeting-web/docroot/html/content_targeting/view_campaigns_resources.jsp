@@ -21,11 +21,11 @@ int channelsCount = GetterUtil.getInteger(request.getAttribute("channelsCount"))
 
 int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 
-String campaignKeywords = ParamUtil.getString(request, "campaignKeywords");
+String keywords = ParamUtil.getString(request, "keywords");
 
 RowChecker campaignsRowChecker = new RowChecker(liferayPortletResponse);
 
-SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIterator(scopeGroupId, campaignKeywords);
+SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIterator(scopeGroupId, keywords);
 %>
 
 <liferay-portlet:renderURL varImpl="viewCampaignsURL">

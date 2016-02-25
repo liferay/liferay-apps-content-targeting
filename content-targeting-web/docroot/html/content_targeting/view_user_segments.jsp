@@ -52,6 +52,10 @@
 	</ul>
 </liferay-ui:error>
 
+<liferay-util:include page="/html/content_targeting/navigation_bar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchEnabled" value="<%= Boolean.TRUE.toString() %>" />
+</liferay-util:include>
+
 <portlet:renderURL var="searchURL">
 	<portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW %>" />
 	<portlet:param name="tabs1" value="user-segments" />
@@ -63,16 +67,6 @@
 
 	<aui:nav-bar>
 		<%@ include file="/html/content_targeting/user_segment_toolbar.jspf" %>
-
-		<aui:nav-bar-search cssClass="pull-right">
-			<div class="form-search">
-				<liferay-ui:input-search
-					id="userSegmentKeywords"
-					name="userSegmentKeywords"
-					placeholder='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "keywords") %>'
-				/>
-			</div>
-		</aui:nav-bar-search>
 	</aui:nav-bar>
 
 	<div id="<portlet:namespace />userSegmentsPanel">
@@ -94,7 +88,7 @@
 
 <aui:script use="liferay-ajax-search">
 	var userSegmentsPanel = A.one('#<portlet:namespace />userSegmentsPanel');
-	var inputNode = A.one('#<portlet:namespace />userSegmentKeywords');
+	var inputNode = A.one('#<portlet:namespace />keywords');
 
 	var search = new Liferay.AjaxContentSearch(
 		{

@@ -16,6 +16,10 @@
 
 <%@ include file="/html/init.jsp" %>
 
+<liferay-util:include page="/html/content_targeting/navigation_bar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchEnabled" value="<%= Boolean.TRUE.toString() %>" />
+</liferay-util:include>
+
 <liferay-portlet:renderURL var="searchURL">
 	<portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW %>" />
 	<portlet:param name="tabs1" value="campaigns" />
@@ -27,16 +31,6 @@
 
 	<aui:nav-bar>
 		<%@ include file="/html/content_targeting/campaign_toolbar.jspf" %>
-
-		<aui:nav-bar-search cssClass="pull-right">
-			<div class="form-search">
-				<liferay-ui:input-search
-					id="campaignKeywords"
-					name="campaignKeywords"
-					placeholder='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "keywords") %>'
-				/>
-			</div>
-		</aui:nav-bar-search>
 	</aui:nav-bar>
 
 	<div id="<portlet:namespace />campaignsPanel">
@@ -58,7 +52,7 @@
 
 <aui:script use="liferay-ajax-search">
 	var campaignsPanel = A.one('#<portlet:namespace />campaignsPanel');
-	var inputNode = A.one('#<portlet:namespace />campaignKeywords');
+	var inputNode = A.one('#<portlet:namespace />keywords');
 
 	var search = new Liferay.AjaxContentSearch(
 		{

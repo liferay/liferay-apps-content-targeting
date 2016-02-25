@@ -19,11 +19,11 @@
 <%
 int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 
-String userSegmentKeywords = ParamUtil.getString(request, "userSegmentKeywords");
+String keywords = ParamUtil.getString(request, "keywords");
 
 RowChecker userSegmentsRowChecker = new RowChecker(liferayPortletResponse);
 
-SearchContainerIterator searchContainerIterator = new UserSegmentSearchContainerIterator(scopeGroupId, userSegmentKeywords);
+SearchContainerIterator searchContainerIterator = new UserSegmentSearchContainerIterator(scopeGroupId, keywords);
 %>
 
 <liferay-portlet:renderURL varImpl="viewUserSegmentsURL">

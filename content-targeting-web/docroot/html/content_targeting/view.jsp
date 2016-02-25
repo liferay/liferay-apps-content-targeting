@@ -17,22 +17,14 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1");
+String tabs1 = ParamUtil.getString(request, "tabs1", "user-segments");
 %>
 
-<liferay-ui:tabs
-	names="user-segments,campaigns"
-	refresh="<%= false %>"
-	type="pills"
-	value="<%= tabs1 %>"
->
-	<liferay-ui:section>
-		<liferay-util:include page="/html/content_targeting/view_user_segments.jsp" servletContext="<%= application %>">
-		</liferay-util:include>
-	</liferay-ui:section>
-
-	<liferay-ui:section>
-		<liferay-util:include page="/html/content_targeting/view_campaigns.jsp" servletContext="<%= application %>">
-		</liferay-util:include>
-	</liferay-ui:section>
-</liferay-ui:tabs>
+<c:choose>
+	<c:when test='<%= tabs1.equals("user-segments") %>'>
+		<liferay-util:include page="/html/content_targeting/view_user_segments.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:when test='<%= tabs1.equals("campaigns") %>'>
+		<liferay-util:include page="/html/content_targeting/view_campaigns.jsp" servletContext="<%= application %>" />
+	</c:when>
+</c:choose>
