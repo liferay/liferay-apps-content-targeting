@@ -25,7 +25,7 @@
 	<portlet:param name="tabs1" value="campaigns" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= searchURL %>" method="post" name="fmCampaigns">
+<aui:form action="<%= searchURL %>" cssClass="container-fluid-1280" method="post" name="fmCampaigns">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="campaignsIds" type="hidden" />
 
@@ -34,8 +34,7 @@
 	</aui:nav-bar>
 
 	<div id="<portlet:namespace />campaignsPanel">
-		<liferay-util:include page="/content_targeting/view_campaigns_resources.jsp" servletContext="<%= application %>">
-		</liferay-util:include>
+		<liferay-util:include page="/content_targeting/view_campaigns_resources.jsp" servletContext="<%= application %>" />
 	</div>
 </aui:form>
 
@@ -58,7 +57,7 @@
 		{
 			contentPanel: campaignsPanel,
 			inputNode: inputNode,
-			resourceURL: '<liferay-portlet:resourceURL><portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW_CAMPAIGNS_RESOURCES %>" /><portlet:param name="tabs1" value="campaigns" /></liferay-portlet:resourceURL>',
+			resourceURL: '<portlet:resourceURL><portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW_CAMPAIGNS_RESOURCES %>" /><portlet:param name="tabs1" value="campaigns" /></portlet:resourceURL>',
 			namespace: '<portlet:namespace />'
 		}
 	);

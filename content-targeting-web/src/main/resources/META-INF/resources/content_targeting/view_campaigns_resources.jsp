@@ -45,6 +45,7 @@ SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIte
 		modelVar="campaign"
 	>
 		<liferay-ui:search-container-column-text
+			cssClass="text-strong"
 			name="name"
 			value="<%= campaign.getName(locale) %>"
 		/>
@@ -82,7 +83,7 @@ SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIte
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <aui:script use="liferay-util-list-fields">

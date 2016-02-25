@@ -26,7 +26,7 @@ int channelsCount = GetterUtil.getInteger(request.getAttribute("channelsCount"))
 int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editCampaignURL">
 			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
@@ -37,8 +37,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
-			method="get"
+			message="edit"
 			url="<%= editCampaignURL %>"
 		/>
 
@@ -53,10 +52,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 			</portlet:renderURL>
 
 			<liferay-ui:icon
-				image="view"
-				label="<%= true %>"
 				message="reports"
-				method="get"
 				url="<%= viewCampaignReportsURL %>"
 			/>
 		</c:if>
@@ -72,10 +68,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 			</portlet:renderURL>
 
 			<liferay-ui:icon
-				image="sitemap"
-				label="<%= true %>"
 				message="promotions"
-				method="get"
 				url="<%= viewCampaignTacticsURL %>"
 			/>
 		</c:if>
@@ -102,8 +95,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
-			method="get"
+			message="permissions"
 			url="<%= permissionsEntryURL %>"
 			useDialog="<%= true %>"
 		/>
