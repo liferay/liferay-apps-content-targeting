@@ -1,5 +1,3 @@
-Bundle-Icon: /icons/content_targeting.png;size=16
-Bundle-Localization: WEB-INF/classes/content/Language
 Bundle-Name: Content Targeting Web
 Bundle-SymbolicName: com.liferay.content.targeting.web-portlet
 Bundle-Version: 2.0.0
@@ -69,23 +67,5 @@ Import-Package:\
 	\
 	freemarker.template,\
 	*
-Include-Resource:\
-	docroot/WEB-INF/classes,\
-	resource-actions=docroot/WEB-INF/src/META-INF/resource-actions,\
-	META-INF/resources/css=docroot/css,\
-	META-INF/resources/html=docroot/html,\
-	META-INF/resources/images=docroot/images,\
-	META-INF/resources/js=docroot/js,\
-	META-INF/aui.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-aui.tld,\
-	META-INF/liferay-ddm.tld=docroot/WEB-INF/tld/liferay-ddm.tld,\
-	META-INF/liferay-portlet.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-portlet.tld,\
-	META-INF/liferay-security.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-security.tld,\
-	META-INF/liferay-theme.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-theme.tld,\
-	META-INF/liferay-ui.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-ui.tld,\
-	META-INF/liferay-util.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-util.tld,\
-	@${app.server.portal.dir}/WEB-INF/lib/portal-impl.jar!/com/liferay/portal/freemarker/FreeMarkerUtil.class,\
-	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
-	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
 Liferay-JS-Config: /js/config.js
 Web-ContextPath: /content-targeting-web
