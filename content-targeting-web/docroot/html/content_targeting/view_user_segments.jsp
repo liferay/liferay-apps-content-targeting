@@ -81,6 +81,17 @@
 	</div>
 </aui:form>
 
+<c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_USER_SEGMENT) %>">
+	<portlet:renderURL var="addUserSegmentURL">
+		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-user-segment") %>' url="<%= addUserSegmentURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
+
 <aui:script use="liferay-ajax-search">
 	var userSegmentsPanel = A.one('#<portlet:namespace />userSegmentsPanel');
 	var inputNode = A.one('#<portlet:namespace />userSegmentKeywords');

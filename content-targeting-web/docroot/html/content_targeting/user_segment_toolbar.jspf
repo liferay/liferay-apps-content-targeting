@@ -15,36 +15,6 @@
 --%>
 
 <aui:nav>
-	<c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_USER_SEGMENT) %>">
-		<liferay-portlet:renderURL var="redirectURL">
-			<portlet:param
-				name="mvcPath"
-				value="<%= ContentTargetingPath.VIEW %>"
-			/>
-			<portlet:param
-				name="tabs1"
-				value="user-segments"
-			/>
-		</liferay-portlet:renderURL>
-
-		<liferay-portlet:renderURL var="addUserSegmentURL">
-			<portlet:param
-				name="mvcRenderCommandName"
-				value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>"
-			/>
-			<portlet:param
-				name="redirect"
-				value="<%= redirectURL %>"
-			/>
-		</liferay-portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= addUserSegmentURL %>"
-			iconCssClass="icon-plus"
-			label='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-user-segment") %>'
-		/>
-	</c:if>
-
 	<c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_USER_SEGMENT) %>">
 		<aui:nav-item
 			cssClass="hide"
