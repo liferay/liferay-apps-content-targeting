@@ -19,6 +19,8 @@
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+boolean includeCheckBox = ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_CAMPAIGN);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
@@ -29,7 +31,10 @@ portletURL.setParameter("tabs1", "campaigns");
 	<liferay-util:param name="searchEnabled" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-util:include>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	includeCheckBox="<%= includeCheckBox %>"
+	searchContainerId="campaigns"
+>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
@@ -44,16 +49,19 @@ portletURL.setParameter("tabs1", "campaigns");
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
+
+	<c:if test="<%= includeCheckBox %>">
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteCampaigns" label="delete" />
+		</liferay-frontend:management-bar-action-buttons>
+	</c:if>
 </liferay-frontend:management-bar>
 
-<aui:form action="<%= portletURL %>" cssClass="container-fluid-1280" method="post" name="fmCampaigns">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="campaignsIds" type="hidden" />
+<portlet:actionURL name="deleteCampaign" var="deleteCampaignsURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
-	<aui:nav-bar>
-		<%@ include file="/content_targeting/campaign_toolbar.jspf" %>
-	</aui:nav-bar>
-
+<aui:form action="<%= deleteCampaignsURL %>" cssClass="container-fluid-1280" method="post" name="fmCampaigns">
 	<div id="<portlet:namespace />campaignsPanel">
 		<liferay-util:include page="/content_targeting/view_campaigns_resources.jsp" servletContext="<%= application %>" />
 	</div>
@@ -82,4 +90,15 @@ portletURL.setParameter("tabs1", "campaigns");
 			namespace: '<portlet:namespace />'
 		}
 	);
+
+	<c:if test="<%= includeCheckBox %>">
+		A.one('#<portlet:namespace />deleteCampaigns').on(
+			'click',
+			function(event) {
+				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+					submitForm(document.<portlet:namespace />fmCampaigns);
+				}
+			}
+		);
+	</c:if>
 </aui:script>

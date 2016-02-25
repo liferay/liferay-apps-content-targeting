@@ -19,8 +19,6 @@
 <%
 String keywords = ParamUtil.getString(request, "keywords");
 
-RowChecker campaignsRowChecker = new RowChecker(liferayPortletResponse);
-
 SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIterator(scopeGroupId, keywords);
 %>
 
@@ -31,8 +29,9 @@ SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIte
 
 <liferay-ui:search-container
 	emptyResultsMessage="no-campaigns-were-found"
+	id="campaigns"
 	iteratorURL="<%= viewCampaignsURL %>"
-	rowChecker="<%= campaignsRowChecker %>"
+	rowChecker="<%= new EmptyOnClickRowChecker(liferayPortletResponse) %>"
 	total="<%= searchContainerIterator.getTotal() %>"
 >
 	<liferay-ui:search-container-results
@@ -85,48 +84,3 @@ SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIte
 
 	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
-
-<aui:script use="liferay-util-list-fields">
-	var deleteCampaigns = A.one('#<portlet:namespace />deleteCampaigns');
-
-	if (deleteCampaigns) {
-		A.one('#<portlet:namespace /><%= searchContainerReference.getId(request) %>SearchContainer').on(
-			'click',
-			function() {
-				var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fmCampaigns, '<portlet:namespace />allRowIds').length == 0);
-
-				deleteCampaigns.toggle(!hide);
-			},
-			'input[type=checkbox]'
-		);
-
-		deleteCampaigns.on(
-			'click',
-			function(event) {
-				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-					document.<portlet:namespace />fmCampaigns.<portlet:namespace />campaignsIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fmCampaigns, '<portlet:namespace />allRowIds');
-
-					<liferay-portlet:renderURL var="redirectURL">
-						<portlet:param
-							name="mvcPath"
-							value="<%= ContentTargetingPath.VIEW %>"
-						/>
-						<portlet:param
-							name="tabs1"
-							value="campaigns"
-						/>
-					</liferay-portlet:renderURL>
-
-					<liferay-portlet:actionURL name="deleteCampaign" var="deleteCampaignsURL">
-						<portlet:param
-							name="redirect"
-							value="<%= redirectURL %>"
-						/>
-					</liferay-portlet:actionURL>
-
-					submitForm(document.<portlet:namespace />fmCampaigns, '<%= deleteCampaignsURL %>');
-				}
-			}
-		);
-	}
-</aui:script>

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -59,8 +58,8 @@ public class DeleteCampaignMVCActionCommand extends BaseMVCActionCommand {
 				deleteCampaignsIds = new long[] {campaignId};
 			}
 			else {
-				deleteCampaignsIds = StringUtil.split(
-					ParamUtil.getString(actionRequest, "campaignsIds"), 0L);
+				deleteCampaignsIds = ParamUtil.getLongValues(
+					actionRequest, "rowIds");
 			}
 
 			for (long deleteCampaignId : deleteCampaignsIds) {
