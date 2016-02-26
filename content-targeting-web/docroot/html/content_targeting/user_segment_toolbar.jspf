@@ -45,7 +45,7 @@
 		/>
 	</c:if>
 
-	<c:if test="<%= UserSegmentPermission.contains(permissionChecker, scopeGroupId, scopeGroupId, ActionKeys.DELETE) %>">
+	<c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_USER_SEGMENT) %>">
 		<aui:nav-item
 			cssClass="hide"
 			iconCssClass="icon-remove"

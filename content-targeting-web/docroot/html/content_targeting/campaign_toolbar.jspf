@@ -29,7 +29,7 @@
 		<aui:nav-item href="<%= addCampaignURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-campaign") %>' />
 	</c:if>
 
-	<c:if test="<%= CampaignPermission.contains(permissionChecker, scopeGroupId, scopeGroupId, ActionKeys.DELETE) %>">
+	<c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_CAMPAIGN) %>">
 		<aui:nav-item cssClass="hide" iconCssClass="icon-remove" id="deleteCampaigns" label='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "delete") %>' />
 	</c:if>
 </aui:nav>
