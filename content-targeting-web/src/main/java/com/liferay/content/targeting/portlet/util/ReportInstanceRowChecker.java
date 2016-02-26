@@ -18,7 +18,6 @@ import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.util.StringPool;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ReportInstanceRowChecker extends EmptyOnClickRowChecker {
 
-	public ReportInstanceRowChecker(
-		PortletRequest request, PortletResponse response) {
-
+	public ReportInstanceRowChecker(PortletResponse response) {
 		super(response);
 	}
 
