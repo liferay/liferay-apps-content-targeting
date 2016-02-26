@@ -69,49 +69,29 @@ SearchContainerIterator searchContainerIterator = new ReportSearchContainerItera
 			modelVar="reportInstance"
 		>
 
-			<liferay-portlet:renderURL varImpl="viewReportURL">
-				<portlet:param
-					name="mvcRenderCommandName"
-					value="<%= ContentTargetingMVCCommand.VIEW_REPORT %>"
-				/>
-				<portlet:param
-					name="className"
-					value="<%= className %>"
-				/>
-				<portlet:param
-					name="classPK"
-					value="<%= String.valueOf(classPK) %>"
-				/>
-				<portlet:param
-					name="redirect"
-					value="<%= viewReportsURL.toString() %>"
-				/>
-				<portlet:param
-					name="reportKey"
-					value="<%= reportInstance.getReportKey() %>"
-				/>
-				<portlet:param
-					name="reportInstanceId"
-					value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>"
-				/>
-			</liferay-portlet:renderURL>
+			<portlet:renderURL var="viewReportURL">
+				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORT %>" />
+				<portlet:param name="className" value="<%= className %>" />
+				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+				<portlet:param name="redirect" value="<%= viewReportsURL.toString() %>" />
+				<portlet:param name="reportKey" value="<%= reportInstance.getReportKey() %>" />
+				<portlet:param name="reportInstanceId" value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>" />
+			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
-				href="<%= viewReportURL.toString() %>"
-				name="type"
-				value="<%= reportInstance.getTypeName(locale) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				href="<%= viewReportURL.toString() %>"
+				href="<%= viewReportURL %>"
 				name="name"
 				value="<%= reportInstance.getName(locale) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				href="<%= viewReportURL.toString() %>"
 				name="description"
 				value="<%= reportInstance.getDescription(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="type"
+				value="<%= reportInstance.getTypeName(locale) %>"
 			/>
 
 			<liferay-ui:search-container-column-date

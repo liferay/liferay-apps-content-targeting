@@ -52,14 +52,6 @@ ReportInstance reportInstance = (ReportInstance)row.getObject();
 		/>
 	</c:if>
 
-	<liferay-ui:icon
-		image="view"
-		label="<%= true %>"
-		message="view-report"
-		method="get"
-		url="<%= viewReportURL.toString() %>"
-	/>
-
 	<liferay-portlet:actionURL name="updateReport" var="updateReportURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="reportInstanceId" value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>" />
