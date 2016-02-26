@@ -15,8 +15,8 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
-	provided project(":apps:content-targeting:analytics-api")
-	provided project(":apps:content-targeting:anonymous-users-api")
+	provided project(":apps:content-targeting:analytics:analytics-api")
+	provided project(":apps:content-targeting:anonymous-users:anonymous-users-api")
 	provided project(":apps:content-targeting:content-targeting-api")
 	provided project(":apps:platform:portal:portal-upgrade")
 }

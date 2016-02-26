@@ -12,7 +12,7 @@ dependencies {
 	provided project(":apps:collaboration:document-library:document-library-api")
 	provided project(":apps:collaboration:message-boards:message-boards-api")
 	provided project(":apps:collaboration:wiki:wiki-api")
-	provided project(":apps:content-targeting:analytics-api")
+	provided project(":apps:content-targeting:analytics:analytics-api")
 	provided project(":apps:platform:osgi-service-tracker-collections")
 	provided project(":apps:platform:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:platform:portal:portal-upgrade")
