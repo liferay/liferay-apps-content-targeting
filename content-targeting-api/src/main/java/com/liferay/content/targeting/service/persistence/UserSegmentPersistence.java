@@ -371,51 +371,6 @@ public interface UserSegmentPersistence extends BasePersistence<UserSegment> {
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
-	* Returns the user segment where assetCategoryId = &#63; or throws a {@link NoSuchUserSegmentException} if it could not be found.
-	*
-	* @param assetCategoryId the asset category ID
-	* @return the matching user segment
-	* @throws NoSuchUserSegmentException if a matching user segment could not be found
-	*/
-	public UserSegment findByAssetCategoryId(long assetCategoryId)
-		throws NoSuchUserSegmentException;
-
-	/**
-	* Returns the user segment where assetCategoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param assetCategoryId the asset category ID
-	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
-	*/
-	public UserSegment fetchByAssetCategoryId(long assetCategoryId);
-
-	/**
-	* Returns the user segment where assetCategoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param assetCategoryId the asset category ID
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
-	*/
-	public UserSegment fetchByAssetCategoryId(long assetCategoryId,
-		boolean retrieveFromCache);
-
-	/**
-	* Removes the user segment where assetCategoryId = &#63; from the database.
-	*
-	* @param assetCategoryId the asset category ID
-	* @return the user segment that was removed
-	*/
-	public UserSegment removeByAssetCategoryId(long assetCategoryId)
-		throws NoSuchUserSegmentException;
-
-	/**
-	* Returns the number of user segments where assetCategoryId = &#63;.
-	*
-	* @param assetCategoryId the asset category ID
-	* @return the number of matching user segments
-	*/
-	public int countByAssetCategoryId(long assetCategoryId);
-
-	/**
 	* Returns all the user segments where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -727,6 +682,51 @@ public interface UserSegmentPersistence extends BasePersistence<UserSegment> {
 	* @return the number of matching user segments that the user has permission to view
 	*/
 	public int filterCountByGroupId(long[] groupIds);
+
+	/**
+	* Returns the user segment where assetCategoryId = &#63; or throws a {@link NoSuchUserSegmentException} if it could not be found.
+	*
+	* @param assetCategoryId the asset category ID
+	* @return the matching user segment
+	* @throws NoSuchUserSegmentException if a matching user segment could not be found
+	*/
+	public UserSegment findByAssetCategoryId(long assetCategoryId)
+		throws NoSuchUserSegmentException;
+
+	/**
+	* Returns the user segment where assetCategoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param assetCategoryId the asset category ID
+	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
+	*/
+	public UserSegment fetchByAssetCategoryId(long assetCategoryId);
+
+	/**
+	* Returns the user segment where assetCategoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param assetCategoryId the asset category ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
+	*/
+	public UserSegment fetchByAssetCategoryId(long assetCategoryId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the user segment where assetCategoryId = &#63; from the database.
+	*
+	* @param assetCategoryId the asset category ID
+	* @return the user segment that was removed
+	*/
+	public UserSegment removeByAssetCategoryId(long assetCategoryId)
+		throws NoSuchUserSegmentException;
+
+	/**
+	* Returns the number of user segments where assetCategoryId = &#63;.
+	*
+	* @param assetCategoryId the asset category ID
+	* @return the number of matching user segments
+	*/
+	public int countByAssetCategoryId(long assetCategoryId);
 
 	/**
 	* Caches the user segment in the entity cache if it is enabled.

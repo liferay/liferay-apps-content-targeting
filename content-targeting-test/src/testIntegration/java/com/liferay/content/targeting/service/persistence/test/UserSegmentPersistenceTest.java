@@ -202,13 +202,6 @@ public class UserSegmentPersistenceTest {
 	}
 
 	@Test
-	public void testCountByAssetCategoryId() throws Exception {
-		_persistence.countByAssetCategoryId(RandomTestUtil.nextLong());
-
-		_persistence.countByAssetCategoryId(0L);
-	}
-
-	@Test
 	public void testCountByGroupId() throws Exception {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
@@ -218,6 +211,13 @@ public class UserSegmentPersistenceTest {
 	@Test
 	public void testCountByGroupIdArrayable() throws Exception {
 		_persistence.countByGroupId(new long[] { RandomTestUtil.nextLong(), 0L });
+	}
+
+	@Test
+	public void testCountByAssetCategoryId() throws Exception {
+		_persistence.countByAssetCategoryId(RandomTestUtil.nextLong());
+
+		_persistence.countByAssetCategoryId(0L);
 	}
 
 	@Test

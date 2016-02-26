@@ -210,19 +210,19 @@ public class ChannelInstancePersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
+	}
+
+	@Test
 	public void testCountByChannelKey() throws Exception {
 		_persistence.countByChannelKey(StringPool.BLANK);
 
 		_persistence.countByChannelKey(StringPool.NULL);
 
 		_persistence.countByChannelKey((String)null);
-	}
-
-	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -249,21 +249,21 @@ public class ChannelInstancePersistenceTest {
 	}
 
 	@Test
-	public void testCountByT_A() throws Exception {
-		_persistence.countByT_A(RandomTestUtil.nextLong(), StringPool.BLANK);
-
-		_persistence.countByT_A(0L, StringPool.NULL);
-
-		_persistence.countByT_A(0L, (String)null);
-	}
-
-	@Test
 	public void testCountByT_K() throws Exception {
 		_persistence.countByT_K(RandomTestUtil.nextLong(), StringPool.BLANK);
 
 		_persistence.countByT_K(0L, StringPool.NULL);
 
 		_persistence.countByT_K(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByT_A() throws Exception {
+		_persistence.countByT_A(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+		_persistence.countByT_A(0L, StringPool.NULL);
+
+		_persistence.countByT_A(0L, (String)null);
 	}
 
 	@Test

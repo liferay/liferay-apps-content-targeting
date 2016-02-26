@@ -116,6 +116,192 @@ public class AnonymousUserUserSegmentUtil {
 	}
 
 	/**
+	* Returns all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param userSegmentId the user segment ID
+	* @return the matching anonymous user user segments
+	*/
+	public static List<AnonymousUserUserSegment> findByA_U(
+		long anonymousUserId, long userSegmentId) {
+		return getPersistence().findByA_U(anonymousUserId, userSegmentId);
+	}
+
+	/**
+	* Returns a range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param userSegmentId the user segment ID
+	* @param start the lower bound of the range of anonymous user user segments
+	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
+	* @return the range of matching anonymous user user segments
+	*/
+	public static List<AnonymousUserUserSegment> findByA_U(
+		long anonymousUserId, long userSegmentId, int start, int end) {
+		return getPersistence()
+				   .findByA_U(anonymousUserId, userSegmentId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param userSegmentId the user segment ID
+	* @param start the lower bound of the range of anonymous user user segments
+	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching anonymous user user segments
+	*/
+	public static List<AnonymousUserUserSegment> findByA_U(
+		long anonymousUserId, long userSegmentId, int start, int end,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
+		return getPersistence()
+				   .findByA_U(anonymousUserId, userSegmentId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param userSegmentId the user segment ID
+	* @param start the lower bound of the range of anonymous user user segments
+	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching anonymous user user segments
+	*/
+	public static List<AnonymousUserUserSegment> findByA_U(
+		long anonymousUserId, long userSegmentId, int start, int end,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByA_U(anonymousUserId, userSegmentId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param userSegmentId the user segment ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching anonymous user user segment
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	*/
+	public static AnonymousUserUserSegment findByA_U_First(
+		long anonymousUserId, long userSegmentId,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException {
+		return getPersistence()
+				   .findByA_U_First(anonymousUserId, userSegmentId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param userSegmentId the user segment ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
+	*/
+	public static AnonymousUserUserSegment fetchByA_U_First(
+		long anonymousUserId, long userSegmentId,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
+		return getPersistence()
+				   .fetchByA_U_First(anonymousUserId, userSegmentId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param userSegmentId the user segment ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching anonymous user user segment
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	*/
+	public static AnonymousUserUserSegment findByA_U_Last(
+		long anonymousUserId, long userSegmentId,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException {
+		return getPersistence()
+				   .findByA_U_Last(anonymousUserId, userSegmentId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param userSegmentId the user segment ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
+	*/
+	public static AnonymousUserUserSegment fetchByA_U_Last(
+		long anonymousUserId, long userSegmentId,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
+		return getPersistence()
+				   .fetchByA_U_Last(anonymousUserId, userSegmentId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the anonymous user user segments before and after the current anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
+	*
+	* @param anonymousUserUserSegmentId the primary key of the current anonymous user user segment
+	* @param anonymousUserId the anonymous user ID
+	* @param userSegmentId the user segment ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next anonymous user user segment
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	*/
+	public static AnonymousUserUserSegment[] findByA_U_PrevAndNext(
+		long anonymousUserUserSegmentId, long anonymousUserId,
+		long userSegmentId,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException {
+		return getPersistence()
+				   .findByA_U_PrevAndNext(anonymousUserUserSegmentId,
+			anonymousUserId, userSegmentId, orderByComparator);
+	}
+
+	/**
+	* Removes all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63; from the database.
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param userSegmentId the user segment ID
+	*/
+	public static void removeByA_U(long anonymousUserId, long userSegmentId) {
+		getPersistence().removeByA_U(anonymousUserId, userSegmentId);
+	}
+
+	/**
+	* Returns the number of anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param userSegmentId the user segment ID
+	* @return the number of matching anonymous user user segments
+	*/
+	public static int countByA_U(long anonymousUserId, long userSegmentId) {
+		return getPersistence().countByA_U(anonymousUserId, userSegmentId);
+	}
+
+	/**
 	* Returns all the anonymous user user segments where anonymousUserId = &#63; and active = &#63;.
 	*
 	* @param anonymousUserId the anonymous user ID
@@ -578,192 +764,6 @@ public class AnonymousUserUserSegmentUtil {
 	public static int countByUserSegmentIds(long[] userSegmentIds,
 		boolean active) {
 		return getPersistence().countByUserSegmentIds(userSegmentIds, active);
-	}
-
-	/**
-	* Returns all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
-	*
-	* @param anonymousUserId the anonymous user ID
-	* @param userSegmentId the user segment ID
-	* @return the matching anonymous user user segments
-	*/
-	public static List<AnonymousUserUserSegment> findByA_U(
-		long anonymousUserId, long userSegmentId) {
-		return getPersistence().findByA_U(anonymousUserId, userSegmentId);
-	}
-
-	/**
-	* Returns a range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param anonymousUserId the anonymous user ID
-	* @param userSegmentId the user segment ID
-	* @param start the lower bound of the range of anonymous user user segments
-	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
-	* @return the range of matching anonymous user user segments
-	*/
-	public static List<AnonymousUserUserSegment> findByA_U(
-		long anonymousUserId, long userSegmentId, int start, int end) {
-		return getPersistence()
-				   .findByA_U(anonymousUserId, userSegmentId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param anonymousUserId the anonymous user ID
-	* @param userSegmentId the user segment ID
-	* @param start the lower bound of the range of anonymous user user segments
-	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching anonymous user user segments
-	*/
-	public static List<AnonymousUserUserSegment> findByA_U(
-		long anonymousUserId, long userSegmentId, int start, int end,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
-		return getPersistence()
-				   .findByA_U(anonymousUserId, userSegmentId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param anonymousUserId the anonymous user ID
-	* @param userSegmentId the user segment ID
-	* @param start the lower bound of the range of anonymous user user segments
-	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching anonymous user user segments
-	*/
-	public static List<AnonymousUserUserSegment> findByA_U(
-		long anonymousUserId, long userSegmentId, int start, int end,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByA_U(anonymousUserId, userSegmentId, start, end,
-			orderByComparator, retrieveFromCache);
-	}
-
-	/**
-	* Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
-	*
-	* @param anonymousUserId the anonymous user ID
-	* @param userSegmentId the user segment ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching anonymous user user segment
-	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
-	*/
-	public static AnonymousUserUserSegment findByA_U_First(
-		long anonymousUserId, long userSegmentId,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException {
-		return getPersistence()
-				   .findByA_U_First(anonymousUserId, userSegmentId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
-	*
-	* @param anonymousUserId the anonymous user ID
-	* @param userSegmentId the user segment ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
-	*/
-	public static AnonymousUserUserSegment fetchByA_U_First(
-		long anonymousUserId, long userSegmentId,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
-		return getPersistence()
-				   .fetchByA_U_First(anonymousUserId, userSegmentId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
-	*
-	* @param anonymousUserId the anonymous user ID
-	* @param userSegmentId the user segment ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching anonymous user user segment
-	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
-	*/
-	public static AnonymousUserUserSegment findByA_U_Last(
-		long anonymousUserId, long userSegmentId,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException {
-		return getPersistence()
-				   .findByA_U_Last(anonymousUserId, userSegmentId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
-	*
-	* @param anonymousUserId the anonymous user ID
-	* @param userSegmentId the user segment ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
-	*/
-	public static AnonymousUserUserSegment fetchByA_U_Last(
-		long anonymousUserId, long userSegmentId,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
-		return getPersistence()
-				   .fetchByA_U_Last(anonymousUserId, userSegmentId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the anonymous user user segments before and after the current anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
-	*
-	* @param anonymousUserUserSegmentId the primary key of the current anonymous user user segment
-	* @param anonymousUserId the anonymous user ID
-	* @param userSegmentId the user segment ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next anonymous user user segment
-	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
-	*/
-	public static AnonymousUserUserSegment[] findByA_U_PrevAndNext(
-		long anonymousUserUserSegmentId, long anonymousUserId,
-		long userSegmentId,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException {
-		return getPersistence()
-				   .findByA_U_PrevAndNext(anonymousUserUserSegmentId,
-			anonymousUserId, userSegmentId, orderByComparator);
-	}
-
-	/**
-	* Removes all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63; from the database.
-	*
-	* @param anonymousUserId the anonymous user ID
-	* @param userSegmentId the user segment ID
-	*/
-	public static void removeByA_U(long anonymousUserId, long userSegmentId) {
-		getPersistence().removeByA_U(anonymousUserId, userSegmentId);
-	}
-
-	/**
-	* Returns the number of anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
-	*
-	* @param anonymousUserId the anonymous user ID
-	* @param userSegmentId the user segment ID
-	* @return the number of matching anonymous user user segments
-	*/
-	public static int countByA_U(long anonymousUserId, long userSegmentId) {
-		return getPersistence().countByA_U(anonymousUserId, userSegmentId);
 	}
 
 	/**
