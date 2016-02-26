@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -22,16 +23,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "content-targeting")
 @Meta.OCD(
-    id = "com.liferay.content.targeting.configuration.AnonymousUserUserSegmentServiceConfiguration",
-    localization = "content/Language",
-    name = "%com.liferay.content.targeting.configuration.name"
+	id = "com.liferay.content.targeting.configuration.AnonymousUserUserSegmentServiceConfiguration",
+	localization = "content/Language",
+	name = "%com.liferay.content.targeting.configuration.name"
 )
 public interface AnonymousUserUserSegmentServiceConfiguration {
 
-    @Meta.AD(deflt = "1", required = false)
-    public int anonymousUserUserSegmentCheckInterval();
+	@Meta.AD(deflt = "1", required = false)
+	public int anonymousUserUserSegmentCheckInterval();
 
-    @Meta.AD(deflt = "3", required = false)
-    public int anonymousUserUserSegmentMaxAge();
+	@Meta.AD(deflt = "3", required = false)
+	public int anonymousUserUserSegmentMaxAge();
 
 }

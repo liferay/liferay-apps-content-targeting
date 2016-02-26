@@ -23,16 +23,18 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class AnonymousUserUserSegmentServiceConfigurationUtil {
 
-    public static String getString(String key) {
-        return _configuration.get(key);
-    }
+	public static int getInteger(String key) {
+		return GetterUtil.getInteger(_configuration.get(key));
+	}
 
-    public static int getInteger(String key) {
-        return GetterUtil.getInteger(_configuration.get(key));
-    }
+	public static String getString(String key) {
+		return _configuration.get(key);
+	}
 
-    private static final Configuration _configuration =
-        ConfigurationFactoryUtil.getConfiguration(
-            AnonymousUserUserSegmentServiceConfigurationUtil.class.getClassLoader(),
-            "portlet");
+	private static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			AnonymousUserUserSegmentServiceConfigurationUtil.class.
+				getClassLoader(),
+			"portlet");
+
 }
