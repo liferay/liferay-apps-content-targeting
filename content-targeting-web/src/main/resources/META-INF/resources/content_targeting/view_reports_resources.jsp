@@ -23,7 +23,7 @@ String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 String keywords = ParamUtil.getString(request, "keywords");
 
-RowChecker reportsRowChecker = new RowChecker(liferayPortletResponse);
+RowChecker reportsRowChecker = new ReportInstanceRowChecker(liferayPortletResponse);
 
 SearchContainerIterator searchContainerIterator = new ReportSearchContainerIterator(scopeGroupId, keywords, className, classPK);
 %>

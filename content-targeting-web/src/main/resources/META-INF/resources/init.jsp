@@ -50,6 +50,7 @@ page import="com.liferay.content.targeting.portlet.util.AssetQueryRule" %><%@
 page import="com.liferay.content.targeting.portlet.util.CampaignQueryRule" %><%@
 page import="com.liferay.content.targeting.portlet.util.ChannelTemplate" %><%@
 page import="com.liferay.content.targeting.portlet.util.QueryRule" %><%@
+page import="com.liferay.content.targeting.portlet.util.ReportInstanceRowChecker" %><%@
 page import="com.liferay.content.targeting.portlet.util.RuleTemplate" %><%@
 page import="com.liferay.content.targeting.portlet.util.UserSegmentQueryRule" %><%@
 page import="com.liferay.content.targeting.service.CampaignLocalServiceUtil" %><%@
