@@ -3,10 +3,9 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/channel_tmpl/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/sdk/rule_tmpl/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/sdk/tracking_action_tmpl/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/sdk/report_tmpl/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../benchmarks/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/../../benchmarks/output" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
