@@ -21,6 +21,10 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 boolean includeCheckBox = ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_CAMPAIGN);
 
+String keywords = ParamUtil.getString(request, "keywords");
+
+SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIterator(scopeGroupId, keywords);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
@@ -62,9 +66,63 @@ portletURL.setParameter("tabs1", "campaigns");
 </portlet:actionURL>
 
 <aui:form action="<%= deleteCampaignsURL %>" cssClass="container-fluid-1280" method="post" name="fmCampaigns">
-	<div id="<portlet:namespace />campaignsPanel">
-		<liferay-util:include page="/content_targeting/view_campaigns_resources.jsp" servletContext="<%= application %>" />
-	</div>
+	<liferay-ui:search-container
+		emptyResultsMessage="no-campaigns-were-found"
+		id="campaigns"
+		iteratorURL="<%= portletURL %>"
+		rowChecker="<%= new EmptyOnClickRowChecker(liferayPortletResponse) %>"
+		total="<%= searchContainerIterator.getTotal() %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
+		/>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.content.targeting.model.Campaign"
+			keyProperty="campaignId"
+			modelVar="campaign"
+		>
+			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
+				name="name"
+				value="<%= campaign.getName(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="description"
+				value="<%= campaign.getDescription(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				name="start-date"
+				value="<%= campaign.getStartDate() %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				name="end-date"
+				value="<%= campaign.getEndDate() %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="priority"
+				value="<%= String.valueOf(campaign.getPriority()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="status"
+			>
+				<span class="label <%= CampaignConstants.getStatusCssClass(campaign.getStatus()) %>">
+					<liferay-ui:message key="<%= campaign.getStatus() %>" />
+				</span>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-jsp
+				path="/content_targeting/campaign_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
 </aui:form>
 
 <c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_CAMPAIGN) %>">
@@ -78,21 +136,9 @@ portletURL.setParameter("tabs1", "campaigns");
 	</liferay-frontend:add-menu>
 </c:if>
 
-<aui:script use="liferay-ajax-search">
-	var campaignsPanel = A.one('#<portlet:namespace />campaignsPanel');
-	var inputNode = A.one('#<portlet:namespace />keywords');
-
-	var search = new Liferay.AjaxContentSearch(
-		{
-			contentPanel: campaignsPanel,
-			inputNode: inputNode,
-			resourceURL: '<portlet:resourceURL><portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW_CAMPAIGNS_RESOURCES %>" /><portlet:param name="tabs1" value="campaigns" /></portlet:resourceURL>',
-			namespace: '<portlet:namespace />'
-		}
-	);
-
-	<c:if test="<%= includeCheckBox %>">
-		A.one('#<portlet:namespace />deleteCampaigns').on(
+<c:if test="<%= includeCheckBox %>">
+	<aui:script>
+		$('#<portlet:namespace />deleteCampaigns').on(
 			'click',
 			function(event) {
 				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
@@ -100,5 +146,5 @@ portletURL.setParameter("tabs1", "campaigns");
 				}
 			}
 		);
-	</c:if>
-</aui:script>
+	</aui:script>
+</c:if>
