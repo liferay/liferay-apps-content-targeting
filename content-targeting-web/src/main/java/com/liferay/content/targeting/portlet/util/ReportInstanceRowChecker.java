@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.content.targeting.model.ReportInstance;
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.util.StringPool;
 
 import javax.portlet.PortletRequest;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Pavel Savinov
  */
-public class ReportInstanceRowChecker extends RowChecker {
+public class ReportInstanceRowChecker extends EmptyOnClickRowChecker {
 
 	public ReportInstanceRowChecker(
 		PortletRequest request, PortletResponse response) {
