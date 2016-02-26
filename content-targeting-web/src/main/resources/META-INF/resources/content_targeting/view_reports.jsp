@@ -17,11 +17,33 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 String redirect = ParamUtil.getString(request, "redirect");
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 
 Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("redirect", redirect);
+
+if (Campaign.class.getName().equals(className)) {
+	portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_CAMPAIGN);
+	portletURL.setParameter("campaignId", String.valueOf(classPK));
+	portletURL.setParameter("tabs2", "reports");
+}
+else if (UserSegment.class.getName().equals(className)) {
+	portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS);
+	portletURL.setParameter("userSegmentId", String.valueOf(classPK));
+}
+else {
+	portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW_REPORTS);
+}
+
+portletURL.setParameter("className", className);
+portletURL.setParameter("classPK", String.valueOf(classPK));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -39,41 +61,36 @@ renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale)
 	</div>
 </c:if>
 
-<liferay-portlet:renderURL var="searchURL">
-	<portlet:param name="redirect" value="<%= redirect %>" />
-
-	<c:choose>
-		<c:when test="<%= Campaign.class.getName().equals(className) %>">
-			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
-			<portlet:param name="campaignId" value="<%= String.valueOf(classPK) %>" />
-			<portlet:param name="tabs2" value="reports" />
-		</c:when>
-		<c:when test="<%= UserSegment.class.getName().equals(className) %>">
-			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORTS %>" />
-			<portlet:param name="userSegmentId" value="<%= String.valueOf(classPK) %>" />
-		</c:when>
-		<c:otherwise>
-			<portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW_REPORTS %>" />
-		</c:otherwise>
-	</c:choose>
-
-	<portlet:param name="className" value="<%= className %>" />
-	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-</liferay-portlet:renderURL>
-
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item href="<%= currentURL %>" label="reports" selected="<%= true %>" />
 	</aui:nav>
 
 	<aui:nav-bar-search>
-		<aui:form action="<%= searchURL %>" name="searchFm">
+		<aui:form action="<%= portletURL %>" name="searchFm">
 			<liferay-ui:input-search markupView="lexicon" name="keywords" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<aui:form action="<%= searchURL %>" cssClass="container-fluid-1280" method="post" name="fmReports">
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
+<aui:form action="<%= portletURL %>" cssClass="container-fluid-1280" method="post" name="fmReports">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="reportInstanceIds" type="hidden" />
 
