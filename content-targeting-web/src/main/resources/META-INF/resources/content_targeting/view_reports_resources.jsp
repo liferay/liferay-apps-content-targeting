@@ -119,79 +119,9 @@ SearchContainerIterator searchContainerIterator = new ReportSearchContainerItera
 				value="<%= reportInstance.getModifiedDate() %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				align="right"
-				name=""
-			>
-				<liferay-ui:icon-menu>
-					<c:if test="<%= reportInstance.isInstantiable() %>">
-						<liferay-portlet:renderURL var="editReportURL">
-							<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_REPORT %>" />
-							<portlet:param name="className" value="<%= className %>" />
-							<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-							<portlet:param name="redirect" value="<%= viewReportsURL.toString() %>" />
-							<portlet:param name="reportInstanceId" value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>" />
-							<portlet:param name="reportKey" value="<%= reportInstance.getReportKey() %>" />
-						</liferay-portlet:renderURL>
-
-						<liferay-ui:icon
-							image="edit"
-							method="get"
-							url="<%= editReportURL.toString() %>"
-						/>
-
-						<liferay-portlet:actionURL name="deleteReportInstance" var="deleteReportURL">
-							<portlet:param
-								name="redirect"
-								value="<%= viewReportsURL.toString() %>"
-							/>
-							<portlet:param
-								name="reportInstanceId"
-								value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>"
-							/>
-						</liferay-portlet:actionURL>
-
-						<liferay-ui:icon-delete
-							url="<%= deleteReportURL.toString() %>"
-						/>
-					</c:if>
-
-					<liferay-ui:icon
-						image="view"
-						label="<%= true %>"
-						message="view-report"
-						method="get"
-						url="<%= viewReportURL.toString() %>"
-					/>
-
-					<liferay-portlet:actionURL name="updateReport" var="updateReportURL">
-						<portlet:param
-							name="redirect"
-							value="<%= viewReportsURL.toString() %>"
-						/>
-						<portlet:param
-							name="reportInstanceId"
-							value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>"
-						/>
-						<portlet:param
-							name="reportKey"
-							value="<%= reportInstance.getReportKey() %>"
-						/>
-						<portlet:param
-							name="classPK"
-							value="<%= String.valueOf(classPK) %>"
-						/>
-					</liferay-portlet:actionURL>
-
-					<liferay-ui:icon
-						image="undo"
-						label="<%= true %>"
-						message="update-report"
-						method="post"
-						url="<%= updateReportURL.toString() %>"
-					/>
-				</liferay-ui:icon-menu>
-			</liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-jsp
+				path="/content_targeting/reports_action.jsp"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />
