@@ -211,7 +211,14 @@ public class ContentTargetingUtil {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", locale, clazz);
 
-			return ResourceBundleUtil.getString(resourceBundle, key);
+			String modelResource = ResourceBundleUtil.getString(
+				resourceBundle, key);
+
+			if (modelResource == null) {
+				modelResource = key;
+			}
+
+			return modelResource;
 		}
 		catch (MissingResourceException mre) {
 			return ResourceActionsUtil.getModelResource(locale, name);
