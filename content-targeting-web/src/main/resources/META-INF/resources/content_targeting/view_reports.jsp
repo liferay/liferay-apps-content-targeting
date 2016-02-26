@@ -25,6 +25,18 @@ long classPK = ParamUtil.getLong(request, "classPK");
 
 Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 
+boolean instantiableExists = false;
+
+Collection<Report> reports = (Collection<Report>)request.getAttribute("reports");
+
+for (Report report : reports) {
+	if (report.isInstantiable()) {
+		instantiableExists = true;
+
+		break;
+	}
+}
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("redirect", redirect);
@@ -103,6 +115,56 @@ renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale)
 		</liferay-util:include>
 	</div>
 </aui:form>
+
+<%
+boolean showAddButton = false;
+
+if (instantiableExists) {
+	if (Campaign.class.getName().equals(className) && CampaignPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE)) {
+	   showAddButton = true;
+	}
+	else if (UserSegment.class.getName().equals(className) && UserSegmentPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE)) {
+		showAddButton = true;
+	}
+}
+%>
+
+<c:if test="<%= showAddButton %>">
+	<liferay-frontend:add-menu>
+
+		<%
+		for (Report report : reports) {
+			if (!report.isInstantiable()) {
+				continue;
+			}
+		%>
+
+			<portlet:renderURL var="addReportURL">
+				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_REPORT %>" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+
+				<c:choose>
+					<c:when test="<%= Campaign.class.getName().equals(className) %>">
+						<portlet:param name="campaignId" value="<%= String.valueOf(classPK) %>" />
+					</c:when>
+					<c:otherwise>
+						<portlet:param name="userSegmentId" value="<%= String.valueOf(classPK) %>" />
+					</c:otherwise>
+				</c:choose>
+
+				<portlet:param name="className" value="<%= className %>" />
+				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+				<portlet:param name="reportKey" value="<%= report.getReportKey() %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu-item title="<%= report.getName(locale) %>" url="<%= addReportURL %>" />
+
+		<%
+		}
+		%>
+
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script use="liferay-ajax-search">
 	var reportsPanel = A.one('#<portlet:namespace />reportsPanel');
