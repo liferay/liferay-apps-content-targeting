@@ -14,10 +14,11 @@
 
 package com.liferay.content.targeting.analytics.service.impl;
 
+import com.liferay.content.targeting.analytics.configuration.AnalyticsServiceConfigurationUtil;
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 import com.liferay.content.targeting.analytics.service.base.AnalyticsEventLocalServiceBaseImpl;
-import com.liferay.content.targeting.analytics.util.PortletPropsValues;
+import com.liferay.content.targeting.analytics.util.PortletPropsKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -362,7 +363,8 @@ public class AnalyticsEventLocalServiceImpl
 
 		calendar.setTime(new Date());
 
-		int maxAge = PortletPropsValues.ANALYTICS_EVENTS_MAX_AGE;
+		int maxAge = AnalyticsServiceConfigurationUtil.getInteger(
+			PortletPropsKeys.ANALYTICS_EVENTS_MAX_AGE);
 
 		calendar.add(Calendar.DAY_OF_YEAR, -maxAge);
 

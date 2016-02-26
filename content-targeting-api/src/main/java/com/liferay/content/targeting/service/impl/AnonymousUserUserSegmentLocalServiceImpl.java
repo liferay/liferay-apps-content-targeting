@@ -16,10 +16,11 @@ package com.liferay.content.targeting.service.impl;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
+import com.liferay.content.targeting.configuration.AnonymousUserUserSegmentServiceConfigurationUtil;
 import com.liferay.content.targeting.model.AnonymousUserUserSegment;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.base.AnonymousUserUserSegmentLocalServiceBaseImpl;
-import com.liferay.content.targeting.util.PortletPropsValues;
+import com.liferay.content.targeting.util.PortletPropsKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -165,7 +166,8 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 
 		calendar.setTime(new Date());
 
-		int maxAge = PortletPropsValues.ANONYMOUS_USER_USER_SEGMENTS_MAX_AGE;
+		int maxAge = AnonymousUserUserSegmentServiceConfigurationUtil.
+			getInteger(PortletPropsKeys.ANONYMOUS_USER_USER_SEGMENTS_MAX_AGE);
 
 		calendar.add(Calendar.DAY_OF_YEAR, -maxAge);
 
