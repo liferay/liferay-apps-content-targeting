@@ -167,7 +167,7 @@ public abstract class BaseReport implements Report {
 		ReportInstance reportInstance, Map<String, Object> context) {
 	}
 
-	protected static final String _EDIT_FORM_TEMPLATE_PATH =
+	private static final String _EDIT_FORM_TEMPLATE_PATH =
 		"templates/ct_edit_report.ftl";
 
 	private static final String _FORM_TEMPLATE_PATH = "templates/ct_report.ftl";

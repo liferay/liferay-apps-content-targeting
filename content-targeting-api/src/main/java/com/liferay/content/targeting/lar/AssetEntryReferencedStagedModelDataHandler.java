@@ -15,9 +15,9 @@
 package com.liferay.content.targeting.lar;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -25,7 +25,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -157,7 +158,7 @@ public class AssetEntryReferencedStagedModelDataHandler
 			PortletDataContext portletDataContext, String uuid, long classPK)
 		throws Exception {
 
-		AssetEntry existingAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry existingAssetEntry = _assetEntryLocalService.fetchEntry(
 			uuid, portletDataContext.getCompanyGroupId());
 
 		if (existingAssetEntry == null) {
@@ -189,11 +190,11 @@ public class AssetEntryReferencedStagedModelDataHandler
 		throws PortalException {
 
 		if (className.equals(JournalArticle.class.getName())) {
-			return JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
+			return _journalArticleLocalService.fetchLatestIndexableArticle(
 				classPK);
 		}
 		else if (className.equals(DLFileEntry.class.getName())) {
-			return DLAppLocalServiceUtil.getFileEntry(classPK);
+			return _dlAppLocalService.getFileEntry(classPK);
 		}
 
 		return null;
@@ -212,9 +213,28 @@ public class AssetEntryReferencedStagedModelDataHandler
 		return null;
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetPublisherLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
 	@Override
 	protected boolean validateMissingReference(String uuid, long groupId) {
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			groupId, uuid);
 
 		if (assetEntry == null) {
@@ -223,5 +243,9 @@ public class AssetEntryReferencedStagedModelDataHandler
 
 		return true;
 	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
+	private DLAppLocalService _dlAppLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

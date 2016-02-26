@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.Campaign;
-import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
+import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -41,6 +41,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -78,7 +79,7 @@ public class CampaignIndexer extends BaseIndexer<Campaign> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		Campaign campaign = CampaignLocalServiceUtil.getCampaign(entryClassPK);
+		Campaign campaign = _campaignLocalService.getCampaign(entryClassPK);
 
 		return CampaignPermission.contains(
 			permissionChecker, campaign, ActionKeys.VIEW);
@@ -147,7 +148,7 @@ public class CampaignIndexer extends BaseIndexer<Campaign> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Campaign campaign = CampaignLocalServiceUtil.getCampaign(classPK);
+		Campaign campaign = _campaignLocalService.getCampaign(classPK);
 
 		doReindex(campaign);
 	}
@@ -168,7 +169,7 @@ public class CampaignIndexer extends BaseIndexer<Campaign> {
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery actionableDynamicQuery =
-			CampaignLocalServiceUtil.getIndexableActionableDynamicQuery();
+			_campaignLocalService.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 
@@ -201,7 +202,16 @@ public class CampaignIndexer extends BaseIndexer<Campaign> {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setCampaignLocalService(
+		CampaignLocalService campaignLocalService) {
+
+		_campaignLocalService = campaignLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CampaignIndexer.class);
+
+	private CampaignLocalService _campaignLocalService;
 
 }

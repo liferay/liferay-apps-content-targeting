@@ -157,6 +157,14 @@ public class AnonymousUserUserSegmentPersistenceTest {
 	}
 
 	@Test
+	public void testCountByA_U() throws Exception {
+		_persistence.countByA_U(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByA_U(0L, 0L);
+	}
+
+	@Test
 	public void testCountByAnonymousUserId() throws Exception {
 		_persistence.countByAnonymousUserId(RandomTestUtil.nextLong(),
 			RandomTestUtil.randomBoolean());
@@ -177,14 +185,6 @@ public class AnonymousUserUserSegmentPersistenceTest {
 		_persistence.countByUserSegmentIds(new long[] {
 				RandomTestUtil.nextLong(), 0L
 			}, RandomTestUtil.randomBoolean());
-	}
-
-	@Test
-	public void testCountByA_U() throws Exception {
-		_persistence.countByA_U(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
-
-		_persistence.countByA_U(0L, 0L);
 	}
 
 	@Test

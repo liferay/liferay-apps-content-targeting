@@ -17,9 +17,9 @@ package com.liferay.content.targeting.util;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
-import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
-import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.service.CampaignLocalService;
+import com.liferay.content.targeting.service.ReportInstanceLocalService;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,6 +44,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -154,7 +155,7 @@ public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		ReportInstance reportInstance =
-			ReportInstanceLocalServiceUtil.getReportInstance(classPK);
+			_reportInstanceLocalService.getReportInstance(classPK);
 
 		doReindex(reportInstance);
 	}
@@ -163,7 +164,8 @@ public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexReportInstances(companyId);
+		reindexReportInstances(
+			companyId, _campaignLocalService, _userSegmentLocalService);
 	}
 
 	@Override
@@ -171,11 +173,14 @@ public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 		return PORTLET_ID;
 	}
 
-	protected void reindexReportInstances(final long companyId)
+	protected void reindexReportInstances(
+			final long companyId,
+			final CampaignLocalService campaignLocalService,
+			final UserSegmentLocalService userSegmentLocalService)
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery actionableDynamicQuery =
-			ReportInstanceLocalServiceUtil.getIndexableActionableDynamicQuery();
+			_reportInstanceLocalService.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 
@@ -190,7 +195,7 @@ public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 
 							if (className.equals(Campaign.class.getName())) {
 								Campaign campaign =
-									CampaignLocalServiceUtil.getCampaign(
+									campaignLocalService.getCampaign(
 										reportInstance.getClassPK());
 
 								reportInstance.setGroupId(
@@ -198,7 +203,7 @@ public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 							}
 							else {
 								UserSegment userSegment =
-									UserSegmentLocalServiceUtil.getUserSegment(
+									userSegmentLocalService.getUserSegment(
 										reportInstance.getClassPK());
 
 								reportInstance.setGroupId(
@@ -236,7 +241,32 @@ public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setCampaignLocalService(
+		CampaignLocalService campaignLocalService) {
+
+		_campaignLocalService = campaignLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setReportInstanceLocalService(
+		ReportInstanceLocalService reportInstanceLocalService) {
+
+		_reportInstanceLocalService = reportInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReportInstanceIndexer.class);
+
+	private CampaignLocalService _campaignLocalService;
+	private ReportInstanceLocalService _reportInstanceLocalService;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

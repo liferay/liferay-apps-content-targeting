@@ -103,7 +103,7 @@ public class ChannelInstanceLocalServiceImpl
 
 		// Channel instance data
 
-		Channel channel = _channelsRegistry.getChannel(
+		Channel channel = channelsRegistry.getChannel(
 			channelInstance.getChannelKey());
 
 		if (channel != null) {
@@ -204,7 +204,7 @@ public class ChannelInstanceLocalServiceImpl
 	}
 
 	@ServiceReference(type = ChannelsRegistry.class)
-	protected ChannelsRegistry _channelsRegistry;
+	protected ChannelsRegistry channelsRegistry;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ChannelInstanceLocalServiceImpl.class);

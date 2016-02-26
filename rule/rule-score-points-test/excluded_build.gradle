@@ -1,0 +1,8 @@
+dependencies {
+	testCompile project(":apps:content-targeting:rule-score-points")
+
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	testIntegrationCompile project(":apps:content-targeting:anonymous-users:anonymous-users-api")
+	testIntegrationCompile project(":apps:content-targeting:content-targeting-api")
+}

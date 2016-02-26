@@ -1485,218 +1485,6 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "userSegment.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(userSegment.uuid IS NULL OR userSegment.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "userSegment.companyId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_ASSETCATEGORYID = new FinderPath(UserSegmentModelImpl.ENTITY_CACHE_ENABLED,
-			UserSegmentModelImpl.FINDER_CACHE_ENABLED, UserSegmentImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByAssetCategoryId",
-			new String[] { Long.class.getName() },
-			UserSegmentModelImpl.ASSETCATEGORYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_ASSETCATEGORYID = new FinderPath(UserSegmentModelImpl.ENTITY_CACHE_ENABLED,
-			UserSegmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByAssetCategoryId", new String[] { Long.class.getName() });
-
-	/**
-	 * Returns the user segment where assetCategoryId = &#63; or throws a {@link NoSuchUserSegmentException} if it could not be found.
-	 *
-	 * @param assetCategoryId the asset category ID
-	 * @return the matching user segment
-	 * @throws NoSuchUserSegmentException if a matching user segment could not be found
-	 */
-	@Override
-	public UserSegment findByAssetCategoryId(long assetCategoryId)
-		throws NoSuchUserSegmentException {
-		UserSegment userSegment = fetchByAssetCategoryId(assetCategoryId);
-
-		if (userSegment == null) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("assetCategoryId=");
-			msg.append(assetCategoryId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchUserSegmentException(msg.toString());
-		}
-
-		return userSegment;
-	}
-
-	/**
-	 * Returns the user segment where assetCategoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param assetCategoryId the asset category ID
-	 * @return the matching user segment, or <code>null</code> if a matching user segment could not be found
-	 */
-	@Override
-	public UserSegment fetchByAssetCategoryId(long assetCategoryId) {
-		return fetchByAssetCategoryId(assetCategoryId, true);
-	}
-
-	/**
-	 * Returns the user segment where assetCategoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param assetCategoryId the asset category ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching user segment, or <code>null</code> if a matching user segment could not be found
-	 */
-	@Override
-	public UserSegment fetchByAssetCategoryId(long assetCategoryId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { assetCategoryId };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_ASSETCATEGORYID,
-					finderArgs, this);
-		}
-
-		if (result instanceof UserSegment) {
-			UserSegment userSegment = (UserSegment)result;
-
-			if ((assetCategoryId != userSegment.getAssetCategoryId())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_SELECT_USERSEGMENT_WHERE);
-
-			query.append(_FINDER_COLUMN_ASSETCATEGORYID_ASSETCATEGORYID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(assetCategoryId);
-
-				List<UserSegment> list = q.list();
-
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETCATEGORYID,
-						finderArgs, list);
-				}
-				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"UserSegmentPersistenceImpl.fetchByAssetCategoryId(long, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-					}
-
-					UserSegment userSegment = list.get(0);
-
-					result = userSegment;
-
-					cacheResult(userSegment);
-
-					if ((userSegment.getAssetCategoryId() != assetCategoryId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETCATEGORYID,
-							finderArgs, userSegment);
-					}
-				}
-			}
-			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_ASSETCATEGORYID,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (UserSegment)result;
-		}
-	}
-
-	/**
-	 * Removes the user segment where assetCategoryId = &#63; from the database.
-	 *
-	 * @param assetCategoryId the asset category ID
-	 * @return the user segment that was removed
-	 */
-	@Override
-	public UserSegment removeByAssetCategoryId(long assetCategoryId)
-		throws NoSuchUserSegmentException {
-		UserSegment userSegment = findByAssetCategoryId(assetCategoryId);
-
-		return remove(userSegment);
-	}
-
-	/**
-	 * Returns the number of user segments where assetCategoryId = &#63;.
-	 *
-	 * @param assetCategoryId the asset category ID
-	 * @return the number of matching user segments
-	 */
-	@Override
-	public int countByAssetCategoryId(long assetCategoryId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_ASSETCATEGORYID;
-
-		Object[] finderArgs = new Object[] { assetCategoryId };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_USERSEGMENT_WHERE);
-
-			query.append(_FINDER_COLUMN_ASSETCATEGORYID_ASSETCATEGORYID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(assetCategoryId);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_ASSETCATEGORYID_ASSETCATEGORYID_2 =
-		"userSegment.assetCategoryId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(UserSegmentModelImpl.ENTITY_CACHE_ENABLED,
 			UserSegmentModelImpl.FINDER_CACHE_ENABLED, UserSegmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
@@ -3018,6 +2806,218 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "userSegment.groupId = ?";
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_7 = "userSegment.groupId IN (";
+	public static final FinderPath FINDER_PATH_FETCH_BY_ASSETCATEGORYID = new FinderPath(UserSegmentModelImpl.ENTITY_CACHE_ENABLED,
+			UserSegmentModelImpl.FINDER_CACHE_ENABLED, UserSegmentImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByAssetCategoryId",
+			new String[] { Long.class.getName() },
+			UserSegmentModelImpl.ASSETCATEGORYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ASSETCATEGORYID = new FinderPath(UserSegmentModelImpl.ENTITY_CACHE_ENABLED,
+			UserSegmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByAssetCategoryId", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the user segment where assetCategoryId = &#63; or throws a {@link NoSuchUserSegmentException} if it could not be found.
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @return the matching user segment
+	 * @throws NoSuchUserSegmentException if a matching user segment could not be found
+	 */
+	@Override
+	public UserSegment findByAssetCategoryId(long assetCategoryId)
+		throws NoSuchUserSegmentException {
+		UserSegment userSegment = fetchByAssetCategoryId(assetCategoryId);
+
+		if (userSegment == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("assetCategoryId=");
+			msg.append(assetCategoryId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchUserSegmentException(msg.toString());
+		}
+
+		return userSegment;
+	}
+
+	/**
+	 * Returns the user segment where assetCategoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @return the matching user segment, or <code>null</code> if a matching user segment could not be found
+	 */
+	@Override
+	public UserSegment fetchByAssetCategoryId(long assetCategoryId) {
+		return fetchByAssetCategoryId(assetCategoryId, true);
+	}
+
+	/**
+	 * Returns the user segment where assetCategoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching user segment, or <code>null</code> if a matching user segment could not be found
+	 */
+	@Override
+	public UserSegment fetchByAssetCategoryId(long assetCategoryId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { assetCategoryId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_ASSETCATEGORYID,
+					finderArgs, this);
+		}
+
+		if (result instanceof UserSegment) {
+			UserSegment userSegment = (UserSegment)result;
+
+			if ((assetCategoryId != userSegment.getAssetCategoryId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_USERSEGMENT_WHERE);
+
+			query.append(_FINDER_COLUMN_ASSETCATEGORYID_ASSETCATEGORYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetCategoryId);
+
+				List<UserSegment> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETCATEGORYID,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"UserSegmentPersistenceImpl.fetchByAssetCategoryId(long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					UserSegment userSegment = list.get(0);
+
+					result = userSegment;
+
+					cacheResult(userSegment);
+
+					if ((userSegment.getAssetCategoryId() != assetCategoryId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETCATEGORYID,
+							finderArgs, userSegment);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_ASSETCATEGORYID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (UserSegment)result;
+		}
+	}
+
+	/**
+	 * Removes the user segment where assetCategoryId = &#63; from the database.
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @return the user segment that was removed
+	 */
+	@Override
+	public UserSegment removeByAssetCategoryId(long assetCategoryId)
+		throws NoSuchUserSegmentException {
+		UserSegment userSegment = findByAssetCategoryId(assetCategoryId);
+
+		return remove(userSegment);
+	}
+
+	/**
+	 * Returns the number of user segments where assetCategoryId = &#63;.
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @return the number of matching user segments
+	 */
+	@Override
+	public int countByAssetCategoryId(long assetCategoryId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ASSETCATEGORYID;
+
+		Object[] finderArgs = new Object[] { assetCategoryId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_USERSEGMENT_WHERE);
+
+			query.append(_FINDER_COLUMN_ASSETCATEGORYID_ASSETCATEGORYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetCategoryId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ASSETCATEGORYID_ASSETCATEGORYID_2 =
+		"userSegment.assetCategoryId = ?";
 
 	public UserSegmentPersistenceImpl() {
 		setModelClass(UserSegment.class);

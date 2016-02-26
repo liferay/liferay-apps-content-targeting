@@ -15,13 +15,14 @@
 package com.liferay.content.targeting.service.permission;
 
 import com.liferay.content.targeting.model.Campaign;
-import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
+import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -82,7 +83,7 @@ public class CampaignPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		Campaign campaign = CampaignLocalServiceUtil.getCampaign(campaignId);
+		Campaign campaign = _campaignLocalService.getCampaign(campaignId);
 
 		return contains(permissionChecker, campaign, actionId);
 	}
@@ -98,5 +99,14 @@ public class CampaignPermission implements BaseModelPermissionChecker {
 				actionId);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setCampaignLocalService(
+		CampaignLocalService campaignLocalService) {
+
+		_campaignLocalService = campaignLocalService;
+	}
+
+	private static CampaignLocalService _campaignLocalService;
 
 }

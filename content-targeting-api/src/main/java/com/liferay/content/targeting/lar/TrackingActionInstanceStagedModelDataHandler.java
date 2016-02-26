@@ -18,8 +18,8 @@ import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
-import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
-import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
+import com.liferay.content.targeting.service.CampaignLocalService;
+import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -55,10 +55,10 @@ public class TrackingActionInstanceStagedModelDataHandler
 		throws PortalException {
 
 		TrackingActionInstance trackingActionInstance =
-			TrackingActionInstanceLocalServiceUtil.
+			_trackingActionInstanceLocalService.
 				fetchTrackingActionInstanceByUuidAndGroupId(uuid, groupId);
 
-		TrackingActionInstanceLocalServiceUtil.deleteTrackingActionInstance(
+		_trackingActionInstanceLocalService.deleteTrackingActionInstance(
 			trackingActionInstance);
 	}
 
@@ -66,7 +66,7 @@ public class TrackingActionInstanceStagedModelDataHandler
 	public void deleteStagedModel(TrackingActionInstance trackingActionInstance)
 		throws PortalException {
 
-		TrackingActionInstanceLocalServiceUtil.deleteTrackingActionInstance(
+		_trackingActionInstanceLocalService.deleteTrackingActionInstance(
 			trackingActionInstance);
 	}
 
@@ -96,7 +96,7 @@ public class TrackingActionInstanceStagedModelDataHandler
 		throws PortletDataException {
 
 		TrackingActionInstance existingTrackingActionInstance =
-			TrackingActionInstanceLocalServiceUtil.
+			_trackingActionInstanceLocalService.
 				fetchTrackingActionInstanceByUuidAndGroupId(
 					uuid, portletDataContext.getCompanyGroupId());
 
@@ -130,7 +130,7 @@ public class TrackingActionInstanceStagedModelDataHandler
 			return;
 		}
 
-		Campaign campaign = CampaignLocalServiceUtil.getCampaign(
+		Campaign campaign = _campaignLocalService.getCampaign(
 			trackingActionInstance.getCampaignId());
 
 		Element campaignElement = portletDataContext.getExportDataElement(
@@ -174,7 +174,7 @@ public class TrackingActionInstanceStagedModelDataHandler
 			return;
 		}
 
-		Campaign campaign = CampaignLocalServiceUtil.getCampaign(
+		Campaign campaign = _campaignLocalService.getCampaign(
 			trackingActionInstance.getCampaignId());
 
 		try {
@@ -199,7 +199,7 @@ public class TrackingActionInstanceStagedModelDataHandler
 			trackingActionInstance);
 
 		TrackingActionInstance existingTrackingActionInstance =
-			TrackingActionInstanceLocalServiceUtil.
+			_trackingActionInstanceLocalService.
 				fetchTrackingActionInstanceByUuidAndGroupId(
 					trackingActionInstance.getUuid(),
 					portletDataContext.getScopeGroupId());
@@ -210,22 +210,20 @@ public class TrackingActionInstanceStagedModelDataHandler
 			serviceContext.setUuid(trackingActionInstance.getUuid());
 
 			importedTrackingActionInstance =
-				TrackingActionInstanceLocalServiceUtil.
-					addTrackingActionInstance(
-						userId, trackingActionInstance.getReportInstanceId(),
-						trackingActionInstance.getTrackingActionKey(),
-						trackingActionInstance.getCampaignId(),
-						trackingActionInstance.getAlias(),
-						trackingActionInstance.getReferrerClassName(),
-						trackingActionInstance.getReferrerClassPK(),
-						trackingActionInstance.getElementId(),
-						trackingActionInstance.getEventType(),
-						trackingActionInstance.getTypeSettings(),
-						serviceContext);
+				_trackingActionInstanceLocalService.addTrackingActionInstance(
+					userId, trackingActionInstance.getReportInstanceId(),
+					trackingActionInstance.getTrackingActionKey(),
+					trackingActionInstance.getCampaignId(),
+					trackingActionInstance.getAlias(),
+					trackingActionInstance.getReferrerClassName(),
+					trackingActionInstance.getReferrerClassPK(),
+					trackingActionInstance.getElementId(),
+					trackingActionInstance.getEventType(),
+					trackingActionInstance.getTypeSettings(), serviceContext);
 		}
 		else {
 			importedTrackingActionInstance =
-				TrackingActionInstanceLocalServiceUtil.
+				_trackingActionInstanceLocalService.
 					updateTrackingActionInstance(
 						existingTrackingActionInstance.
 							getTrackingActionInstanceId(),
@@ -243,6 +241,21 @@ public class TrackingActionInstanceStagedModelDataHandler
 			trackingActionInstance, importedTrackingActionInstance);
 	}
 
+	@Reference(unbind = "-")
+	protected void setCampaignLocalService(
+		CampaignLocalService campaignLocalService) {
+
+		_campaignLocalService = campaignLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrackingActionInstanceLocalService(
+		TrackingActionInstanceLocalService trackingActionInstanceLocalService) {
+
+		_trackingActionInstanceLocalService =
+			trackingActionInstanceLocalService;
+	}
+
 	@Reference(unbind ="-")
 	protected void setTrackingActionsRegistry(
 		TrackingActionsRegistry trackingActionsRegistry) {
@@ -253,7 +266,7 @@ public class TrackingActionInstanceStagedModelDataHandler
 	@Override
 	protected boolean validateMissingReference(String uuid, long groupId) {
 		TrackingActionInstance trackingActionInstance =
-			TrackingActionInstanceLocalServiceUtil.
+			_trackingActionInstanceLocalService.
 				fetchTrackingActionInstanceByUuidAndGroupId(uuid, groupId);
 
 		if (trackingActionInstance == null) {
@@ -266,6 +279,9 @@ public class TrackingActionInstanceStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		TrackingActionInstanceStagedModelDataHandler.class);
 
+	private CampaignLocalService _campaignLocalService;
+	private TrackingActionInstanceLocalService
+		_trackingActionInstanceLocalService;
 	private TrackingActionsRegistry _trackingActionsRegistry;
 
 }

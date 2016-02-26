@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.liferay.content.targeting.analytics">
+	<namespace>CT_Analytics</namespace>
+	<entity name="AnalyticsEvent" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="analyticsEventId" type="long" primary="true" accessor="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="anonymousUserId" type="long" />
+		<column name="className" type="String" />
+		<column name="classPK" type="long" />
+		<column name="elementId" type="String" />
+		<column name="eventType" type="String" />
+		<column name="clientIP" type="String" />
+		<column name="userAgent" type="String" />
+		<column name="languageId" type="String" />
+		<column name="URL" type="String" />
+		<column name="additionalInfo" type="String" />
+		<column name="createDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+
+		<finder name="C_GtD" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="createDate" comparator="&gt;" />
+		</finder>
+
+		<finder name="C_LtD" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="createDate" comparator="&lt;" />
+		</finder>
+
+		<finder name="NotC_GtD" return-type="Collection">
+			<finder-column name="classPK" comparator="!=" />
+			<finder-column name="createDate" comparator="&gt;" />
+		</finder>
+
+		<finder name="C_C_E" return-type="Collection">
+			<finder-column name="className" />
+			<finder-column name="classPK" />
+			<finder-column name="eventType" />
+		</finder>
+
+		<finder name="E_E_GtD" return-type="Collection">
+			<finder-column name="elementId" />
+			<finder-column name="eventType" />
+			<finder-column name="createDate" comparator="&gt;" />
+		</finder>
+
+		<finder name="A_C_C_E" return-type="Collection">
+			<finder-column name="anonymousUserId" />
+			<finder-column name="className" />
+			<finder-column name="classPK" />
+			<finder-column name="eventType" />
+		</finder>
+
+		<finder name="C_C_E_GtD" return-type="Collection">
+			<finder-column name="className" />
+			<finder-column name="classPK" />
+			<finder-column name="eventType" />
+			<finder-column name="createDate" comparator="&gt;" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Company" />
+	</entity>
+
+	<entity name="AnalyticsReferrer" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="analyticsReferrerId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="analyticsEventId" type="long" />
+		<column name="referrerClassName" type="String" />
+		<column name="referrerClassPK" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="AnalyticsEventId" return-type="Collection">
+			<finder-column name="analyticsEventId" />
+		</finder>
+
+		<finder name="R_R" return-type="Collection">
+			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassPK" />
+		</finder>
+
+		<finder name="A_R_R" return-type="Collection">
+			<finder-column name="analyticsEventId" arrayable-operator="or" />
+			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassPK" />
+		</finder>
+	</entity>
+</service-builder>

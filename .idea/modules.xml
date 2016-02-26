@@ -2,53 +2,52 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/analytics-api/analytics-api.iml" filepath="$PROJECT_DIR$/analytics-api/analytics-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/analytics-processor-service/analytics-processor-service.iml" filepath="$PROJECT_DIR$/analytics-processor-service/analytics-processor-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/analytics-test/analytics-test.iml" filepath="$PROJECT_DIR$/analytics-test/analytics-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/analytics-web/analytics-web.iml" filepath="$PROJECT_DIR$/analytics-web/analytics-web.iml" />
-      <module fileurl="file://$PROJECT_DIR$/anonymous-users-api/anonymous-users-api.iml" filepath="$PROJECT_DIR$/anonymous-users-api/anonymous-users-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/anonymous-users-test/anonymous-users-test.iml" filepath="$PROJECT_DIR$/anonymous-users-test/anonymous-users-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/benchmarks/benchmarks.iml" filepath="$PROJECT_DIR$/benchmarks/benchmarks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/analytics/analytics-api/analytics-api.iml" filepath="$PROJECT_DIR$/analytics/analytics-api/analytics-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/analytics/analytics-processor-service/analytics-processor-service.iml" filepath="$PROJECT_DIR$/analytics/analytics-processor-service/analytics-processor-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/analytics/analytics-test/analytics-test.iml" filepath="$PROJECT_DIR$/analytics/analytics-test/analytics-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/analytics/analytics-web/analytics-web.iml" filepath="$PROJECT_DIR$/analytics/analytics-web/analytics-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/anonymous-users/anonymous-users-api/anonymous-users-api.iml" filepath="$PROJECT_DIR$/anonymous-users/anonymous-users-api/anonymous-users-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/anonymous-users/anonymous-users-test/anonymous-users-test.iml" filepath="$PROJECT_DIR$/anonymous-users/anonymous-users-test/anonymous-users-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tools/benchmarks/benchmarks.iml" filepath="$PROJECT_DIR$/tools/benchmarks/benchmarks.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-api/content-targeting-api.iml" filepath="$PROJECT_DIR$/content-targeting-api/content-targeting-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-test/content-targeting-test.iml" filepath="$PROJECT_DIR$/content-targeting-test/content-targeting-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-web/content-targeting-web.iml" filepath="$PROJECT_DIR$/content-targeting-web/content-targeting-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../shared/osgi-util-shared/osgi-util-shared.iml" filepath="$PROJECT_DIR$/../../shared/osgi-util-shared/osgi-util-shared.iml" />
-      <module fileurl="file://$PROJECT_DIR$/report-campaign-content/report-campaign-content.iml" filepath="$PROJECT_DIR$/report-campaign-content/report-campaign-content.iml" />
-      <module fileurl="file://$PROJECT_DIR$/report-campaign-content-test/report-campaign-content-test.iml" filepath="$PROJECT_DIR$/report-campaign-content-test/report-campaign-content-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/report-campaign-tracking-action/report-campaign-tracking-action.iml" filepath="$PROJECT_DIR$/report-campaign-tracking-action/report-campaign-tracking-action.iml" />
-      <module fileurl="file://$PROJECT_DIR$/report-campaign-tracking-action-test/report-campaign-tracking-action-test.iml" filepath="$PROJECT_DIR$/report-campaign-tracking-action-test/report-campaign-tracking-action-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/report-user-segment-content/report-user-segment-content.iml" filepath="$PROJECT_DIR$/report-user-segment-content/report-user-segment-content.iml" />
-      <module fileurl="file://$PROJECT_DIR$/report-user-segment-content-test/report-user-segment-content-test.iml" filepath="$PROJECT_DIR$/report-user-segment-content-test/report-user-segment-content-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-age/rule-age.iml" filepath="$PROJECT_DIR$/rule-age/rule-age.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-browser/rule-browser.iml" filepath="$PROJECT_DIR$/rule-browser/rule-browser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-device/rule-device.iml" filepath="$PROJECT_DIR$/rule-device/rule-device.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-device-test/rule-device-test.iml" filepath="$PROJECT_DIR$/rule-device-test/rule-device-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-facebook/rule-facebook.iml" filepath="$PROJECT_DIR$/rule-facebook/rule-facebook.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-gender/rule-gender.iml" filepath="$PROJECT_DIR$/rule-gender/rule-gender.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-ip-geocode/rule-ip-geocode.iml" filepath="$PROJECT_DIR$/rule-ip-geocode/rule-ip-geocode.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-organization-member/rule-organization-member.iml" filepath="$PROJECT_DIR$/rule-organization-member/rule-organization-member.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-organization-member-test/rule-organization-member-test.iml" filepath="$PROJECT_DIR$/rule-organization-member-test/rule-organization-member-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-os/rule-os.iml" filepath="$PROJECT_DIR$/rule-os/rule-os.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-role/rule-role.iml" filepath="$PROJECT_DIR$/rule-role/rule-role.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-role-test/rule-role-test.iml" filepath="$PROJECT_DIR$/rule-role-test/rule-role-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-score-points/rule-score-points.iml" filepath="$PROJECT_DIR$/rule-score-points/rule-score-points.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-score-points-test/rule-score-points-test.iml" filepath="$PROJECT_DIR$/rule-score-points-test/rule-score-points-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-site-member/rule-site-member.iml" filepath="$PROJECT_DIR$/rule-site-member/rule-site-member.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-site-member-test/rule-site-member-test.iml" filepath="$PROJECT_DIR$/rule-site-member-test/rule-site-member-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-time/rule-time.iml" filepath="$PROJECT_DIR$/rule-time/rule-time.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-user-group-member/rule-user-group-member.iml" filepath="$PROJECT_DIR$/rule-user-group-member/rule-user-group-member.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-user-group-member-test/rule-user-group-member-test.iml" filepath="$PROJECT_DIR$/rule-user-group-member-test/rule-user-group-member-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-user-logged/rule-user-logged.iml" filepath="$PROJECT_DIR$/rule-user-logged/rule-user-logged.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-user-logged-test/rule-user-logged-test.iml" filepath="$PROJECT_DIR$/rule-user-logged-test/rule-user-logged-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-visited/rule-visited.iml" filepath="$PROJECT_DIR$/rule-visited/rule-visited.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-visited-test/rule-visited-test.iml" filepath="$PROJECT_DIR$/rule-visited-test/rule-visited-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/service-test-util/service-test-util.iml" filepath="$PROJECT_DIR$/service-test-util/service-test-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/report/report-campaign-content/report-campaign-content.iml" filepath="$PROJECT_DIR$/report/report-campaign-content/report-campaign-content.iml" />
+      <module fileurl="file://$PROJECT_DIR$/report/report-campaign-content-test/report-campaign-content-test.iml" filepath="$PROJECT_DIR$/report/report-campaign-content-test/report-campaign-content-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/report/report-campaign-tracking-action/report-campaign-tracking-action.iml" filepath="$PROJECT_DIR$/report/report-campaign-tracking-action/report-campaign-tracking-action.iml" />
+      <module fileurl="file://$PROJECT_DIR$/report/report-campaign-tracking-action-test/report-campaign-tracking-action-test.iml" filepath="$PROJECT_DIR$/report/report-campaign-tracking-action-test/report-campaign-tracking-action-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/report/report-user-segment-content/report-user-segment-content.iml" filepath="$PROJECT_DIR$/report/report-user-segment-content/report-user-segment-content.iml" />
+      <module fileurl="file://$PROJECT_DIR$/report/report-user-segment-content-test/report-user-segment-content-test.iml" filepath="$PROJECT_DIR$/report/report-user-segment-content-test/report-user-segment-content-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-age/rule-age.iml" filepath="$PROJECT_DIR$/rule/rule-age/rule-age.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-browser/rule-browser.iml" filepath="$PROJECT_DIR$/rule/rule-browser/rule-browser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-device/rule-device.iml" filepath="$PROJECT_DIR$/rule/rule-device/rule-device.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-device-test/rule-device-test.iml" filepath="$PROJECT_DIR$/rule/rule-device-test/rule-device-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-facebook/rule-facebook.iml" filepath="$PROJECT_DIR$/rule/rule-facebook/rule-facebook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-gender/rule-gender.iml" filepath="$PROJECT_DIR$/rule/rule-gender/rule-gender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-ip-geocode/rule-ip-geocode.iml" filepath="$PROJECT_DIR$/rule/rule-ip-geocode/rule-ip-geocode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-organization-member/rule-organization-member.iml" filepath="$PROJECT_DIR$/rule/rule-organization-member/rule-organization-member.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-organization-member-test/rule-organization-member-test.iml" filepath="$PROJECT_DIR$/rule/rule-organization-member-test/rule-organization-member-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-os/rule-os.iml" filepath="$PROJECT_DIR$/rule/rule-os/rule-os.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-role/rule-role.iml" filepath="$PROJECT_DIR$/rule/rule-role/rule-role.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-role-test/rule-role-test.iml" filepath="$PROJECT_DIR$/rule/rule-role-test/rule-role-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-score-points/rule-score-points.iml" filepath="$PROJECT_DIR$/rule/rule-score-points/rule-score-points.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-score-points-test/rule-score-points-test.iml" filepath="$PROJECT_DIR$/rule/rule-score-points-test/rule-score-points-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-site-member/rule-site-member.iml" filepath="$PROJECT_DIR$/rule/rule-site-member/rule-site-member.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-site-member-test/rule-site-member-test.iml" filepath="$PROJECT_DIR$/rule/rule-site-member-test/rule-site-member-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-time/rule-time.iml" filepath="$PROJECT_DIR$/rule/rule-time/rule-time.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-user-group-member/rule-user-group-member.iml" filepath="$PROJECT_DIR$/rule/rule-user-group-member/rule-user-group-member.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-user-group-member-test/rule-user-group-member-test.iml" filepath="$PROJECT_DIR$/rule/rule-user-group-member-test/rule-user-group-member-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-user-logged/rule-user-logged.iml" filepath="$PROJECT_DIR$/rule/rule-user-logged/rule-user-logged.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-user-logged-test/rule-user-logged-test.iml" filepath="$PROJECT_DIR$/rule/rule-user-logged-test/rule-user-logged-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-visited/rule-visited.iml" filepath="$PROJECT_DIR$/rule/rule-visited/rule-visited.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule/rule-visited-test/rule-visited-test.iml" filepath="$PROJECT_DIR$/rule/rule-visited-test/rule-visited-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/tools/tools.iml" filepath="$PROJECT_DIR$/tools/tools.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tracking-action-content/tracking-action-content.iml" filepath="$PROJECT_DIR$/tracking-action-content/tracking-action-content.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" filepath="$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tracking-action-link/tracking-action-link.iml" filepath="$PROJECT_DIR$/tracking-action-link/tracking-action-link.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tracking-action-page/tracking-action-page.iml" filepath="$PROJECT_DIR$/tracking-action-page/tracking-action-page.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tracking-action-youtube/tracking-action-youtube.iml" filepath="$PROJECT_DIR$/tracking-action-youtube/tracking-action-youtube.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tracking-action/tracking-action-content/tracking-action-content.iml" filepath="$PROJECT_DIR$/tracking-action/tracking-action-content/tracking-action-content.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tracking-action/tracking-action-form/tracking-action-form.iml" filepath="$PROJECT_DIR$/tracking-action/tracking-action-form/tracking-action-form.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tracking-action/tracking-action-link/tracking-action-link.iml" filepath="$PROJECT_DIR$/tracking-action/tracking-action-link/tracking-action-link.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tracking-action/tracking-action-page/tracking-action-page.iml" filepath="$PROJECT_DIR$/tracking-action/tracking-action-page/tracking-action-page.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tracking-action/tracking-action-youtube/tracking-action-youtube.iml" filepath="$PROJECT_DIR$/tracking-action/tracking-action-youtube/tracking-action-youtube.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk.iml" filepath="$PROJECT_DIR$/trunk.iml" />
     </modules>
   </component>

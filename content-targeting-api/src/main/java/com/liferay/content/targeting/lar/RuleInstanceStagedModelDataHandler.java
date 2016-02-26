@@ -18,8 +18,8 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
-import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.service.RuleInstanceLocalService;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -52,7 +52,7 @@ public class RuleInstanceStagedModelDataHandler
 	public void deleteStagedModel(RuleInstance stagedRuleInstance)
 		throws PortalException {
 
-		RuleInstanceLocalServiceUtil.deleteRuleInstance(stagedRuleInstance);
+		_ruleInstanceLocalService.deleteRuleInstance(stagedRuleInstance);
 	}
 
 	@Override
@@ -61,10 +61,10 @@ public class RuleInstanceStagedModelDataHandler
 		throws PortalException {
 
 		RuleInstance ruleInstance =
-			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
+			_ruleInstanceLocalService.fetchRuleInstanceByUuidAndGroupId(
 				uuid, groupId);
 
-		RuleInstanceLocalServiceUtil.deleteRuleInstance(ruleInstance);
+		_ruleInstanceLocalService.deleteRuleInstance(ruleInstance);
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class RuleInstanceStagedModelDataHandler
 		throws PortletDataException {
 
 		RuleInstance existingRuleInstance =
-			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
+			_ruleInstanceLocalService.fetchRuleInstanceByUuidAndGroupId(
 				uuid, portletDataContext.getCompanyGroupId());
 
 		Map<Long, Long> ruleInstanceIds =
@@ -128,7 +128,7 @@ public class RuleInstanceStagedModelDataHandler
 			return;
 		}
 
-		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
+		UserSegment userSegment = _userSegmentLocalService.getUserSegment(
 			ruleInstance.getUserSegmentId());
 
 		Element userSegmentElement = portletDataContext.getExportDataElement(
@@ -167,7 +167,7 @@ public class RuleInstanceStagedModelDataHandler
 			return;
 		}
 
-		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
+		UserSegment userSegment = _userSegmentLocalService.getUserSegment(
 			ruleInstance.getUserSegmentId());
 
 		try {
@@ -190,7 +190,7 @@ public class RuleInstanceStagedModelDataHandler
 			ruleInstance);
 
 		RuleInstance existingRuleInstance =
-			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
+			_ruleInstanceLocalService.fetchRuleInstanceByUuidAndGroupId(
 				ruleInstance.getUuid(), portletDataContext.getScopeGroupId());
 
 		RuleInstance importedRuleInstance = null;
@@ -198,20 +198,26 @@ public class RuleInstanceStagedModelDataHandler
 		if (existingRuleInstance == null) {
 			serviceContext.setUuid(ruleInstance.getUuid());
 
-			importedRuleInstance = RuleInstanceLocalServiceUtil.addRuleInstance(
+			importedRuleInstance = _ruleInstanceLocalService.addRuleInstance(
 				userId, ruleInstance.getRuleKey(),
 				ruleInstance.getUserSegmentId(), ruleInstance.getTypeSettings(),
 				serviceContext);
 		}
 		else {
-			importedRuleInstance =
-				RuleInstanceLocalServiceUtil.updateRuleInstance(
-					existingRuleInstance.getRuleInstanceId(),
-					ruleInstance.getTypeSettings(), serviceContext);
+			importedRuleInstance = _ruleInstanceLocalService.updateRuleInstance(
+				existingRuleInstance.getRuleInstanceId(),
+				ruleInstance.getTypeSettings(), serviceContext);
 		}
 
 		portletDataContext.importClassedModel(
 			ruleInstance, importedRuleInstance);
+	}
+
+	@Reference(unbind = "-")
+	protected void setRuleInstanceLocalService(
+		RuleInstanceLocalService ruleInstanceLocalService) {
+
+		_ruleInstanceLocalService = ruleInstanceLocalService;
 	}
 
 	@Reference(unbind ="-")
@@ -219,10 +225,17 @@ public class RuleInstanceStagedModelDataHandler
 		_rulesRegistry = rulesRegistry;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
 	@Override
 	protected boolean validateMissingReference(String uuid, long groupId) {
 		RuleInstance ruleInstance =
-			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
+			_ruleInstanceLocalService.fetchRuleInstanceByUuidAndGroupId(
 				uuid, groupId);
 
 		if (ruleInstance == null) {
@@ -235,6 +248,8 @@ public class RuleInstanceStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		RuleInstanceStagedModelDataHandler.class);
 
+	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RulesRegistry _rulesRegistry;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

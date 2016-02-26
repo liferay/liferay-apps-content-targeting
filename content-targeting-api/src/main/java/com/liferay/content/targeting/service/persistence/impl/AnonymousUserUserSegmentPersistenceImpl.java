@@ -93,6 +93,563 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(AnonymousUserUserSegmentModelImpl.ENTITY_CACHE_ENABLED,
 			AnonymousUserUserSegmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_A_U = new FinderPath(AnonymousUserUserSegmentModelImpl.ENTITY_CACHE_ENABLED,
+			AnonymousUserUserSegmentModelImpl.FINDER_CACHE_ENABLED,
+			AnonymousUserUserSegmentImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_U",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_U = new FinderPath(AnonymousUserUserSegmentModelImpl.ENTITY_CACHE_ENABLED,
+			AnonymousUserUserSegmentModelImpl.FINDER_CACHE_ENABLED,
+			AnonymousUserUserSegmentImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_U",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			AnonymousUserUserSegmentModelImpl.ANONYMOUSUSERID_COLUMN_BITMASK |
+			AnonymousUserUserSegmentModelImpl.USERSEGMENTID_COLUMN_BITMASK |
+			AnonymousUserUserSegmentModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+			AnonymousUserUserSegmentModelImpl.ACTIVE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_A_U = new FinderPath(AnonymousUserUserSegmentModelImpl.ENTITY_CACHE_ENABLED,
+			AnonymousUserUserSegmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_U",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param anonymousUserId the anonymous user ID
+	 * @param userSegmentId the user segment ID
+	 * @return the matching anonymous user user segments
+	 */
+	@Override
+	public List<AnonymousUserUserSegment> findByA_U(long anonymousUserId,
+		long userSegmentId) {
+		return findByA_U(anonymousUserId, userSegmentId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param anonymousUserId the anonymous user ID
+	 * @param userSegmentId the user segment ID
+	 * @param start the lower bound of the range of anonymous user user segments
+	 * @param end the upper bound of the range of anonymous user user segments (not inclusive)
+	 * @return the range of matching anonymous user user segments
+	 */
+	@Override
+	public List<AnonymousUserUserSegment> findByA_U(long anonymousUserId,
+		long userSegmentId, int start, int end) {
+		return findByA_U(anonymousUserId, userSegmentId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param anonymousUserId the anonymous user ID
+	 * @param userSegmentId the user segment ID
+	 * @param start the lower bound of the range of anonymous user user segments
+	 * @param end the upper bound of the range of anonymous user user segments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching anonymous user user segments
+	 */
+	@Override
+	public List<AnonymousUserUserSegment> findByA_U(long anonymousUserId,
+		long userSegmentId, int start, int end,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
+		return findByA_U(anonymousUserId, userSegmentId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param anonymousUserId the anonymous user ID
+	 * @param userSegmentId the user segment ID
+	 * @param start the lower bound of the range of anonymous user user segments
+	 * @param end the upper bound of the range of anonymous user user segments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching anonymous user user segments
+	 */
+	@Override
+	public List<AnonymousUserUserSegment> findByA_U(long anonymousUserId,
+		long userSegmentId, int start, int end,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_U;
+			finderArgs = new Object[] { anonymousUserId, userSegmentId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_A_U;
+			finderArgs = new Object[] {
+					anonymousUserId, userSegmentId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<AnonymousUserUserSegment> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<AnonymousUserUserSegment>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AnonymousUserUserSegment anonymousUserUserSegment : list) {
+					if ((anonymousUserId != anonymousUserUserSegment.getAnonymousUserId()) ||
+							(userSegmentId != anonymousUserUserSegment.getUserSegmentId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_ANONYMOUSUSERUSERSEGMENT_WHERE);
+
+			query.append(_FINDER_COLUMN_A_U_ANONYMOUSUSERID_2);
+
+			query.append(_FINDER_COLUMN_A_U_USERSEGMENTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AnonymousUserUserSegmentModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(anonymousUserId);
+
+				qPos.add(userSegmentId);
+
+				if (!pagination) {
+					list = (List<AnonymousUserUserSegment>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AnonymousUserUserSegment>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param anonymousUserId the anonymous user ID
+	 * @param userSegmentId the user segment ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching anonymous user user segment
+	 * @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	 */
+	@Override
+	public AnonymousUserUserSegment findByA_U_First(long anonymousUserId,
+		long userSegmentId,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws NoSuchAnonymousUserUserSegmentException {
+		AnonymousUserUserSegment anonymousUserUserSegment = fetchByA_U_First(anonymousUserId,
+				userSegmentId, orderByComparator);
+
+		if (anonymousUserUserSegment != null) {
+			return anonymousUserUserSegment;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("anonymousUserId=");
+		msg.append(anonymousUserId);
+
+		msg.append(", userSegmentId=");
+		msg.append(userSegmentId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchAnonymousUserUserSegmentException(msg.toString());
+	}
+
+	/**
+	 * Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param anonymousUserId the anonymous user ID
+	 * @param userSegmentId the user segment ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
+	 */
+	@Override
+	public AnonymousUserUserSegment fetchByA_U_First(long anonymousUserId,
+		long userSegmentId,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
+		List<AnonymousUserUserSegment> list = findByA_U(anonymousUserId,
+				userSegmentId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param anonymousUserId the anonymous user ID
+	 * @param userSegmentId the user segment ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching anonymous user user segment
+	 * @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	 */
+	@Override
+	public AnonymousUserUserSegment findByA_U_Last(long anonymousUserId,
+		long userSegmentId,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws NoSuchAnonymousUserUserSegmentException {
+		AnonymousUserUserSegment anonymousUserUserSegment = fetchByA_U_Last(anonymousUserId,
+				userSegmentId, orderByComparator);
+
+		if (anonymousUserUserSegment != null) {
+			return anonymousUserUserSegment;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("anonymousUserId=");
+		msg.append(anonymousUserId);
+
+		msg.append(", userSegmentId=");
+		msg.append(userSegmentId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchAnonymousUserUserSegmentException(msg.toString());
+	}
+
+	/**
+	 * Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param anonymousUserId the anonymous user ID
+	 * @param userSegmentId the user segment ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
+	 */
+	@Override
+	public AnonymousUserUserSegment fetchByA_U_Last(long anonymousUserId,
+		long userSegmentId,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
+		int count = countByA_U(anonymousUserId, userSegmentId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AnonymousUserUserSegment> list = findByA_U(anonymousUserId,
+				userSegmentId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the anonymous user user segments before and after the current anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param anonymousUserUserSegmentId the primary key of the current anonymous user user segment
+	 * @param anonymousUserId the anonymous user ID
+	 * @param userSegmentId the user segment ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next anonymous user user segment
+	 * @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	 */
+	@Override
+	public AnonymousUserUserSegment[] findByA_U_PrevAndNext(
+		long anonymousUserUserSegmentId, long anonymousUserId,
+		long userSegmentId,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws NoSuchAnonymousUserUserSegmentException {
+		AnonymousUserUserSegment anonymousUserUserSegment = findByPrimaryKey(anonymousUserUserSegmentId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AnonymousUserUserSegment[] array = new AnonymousUserUserSegmentImpl[3];
+
+			array[0] = getByA_U_PrevAndNext(session, anonymousUserUserSegment,
+					anonymousUserId, userSegmentId, orderByComparator, true);
+
+			array[1] = anonymousUserUserSegment;
+
+			array[2] = getByA_U_PrevAndNext(session, anonymousUserUserSegment,
+					anonymousUserId, userSegmentId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AnonymousUserUserSegment getByA_U_PrevAndNext(Session session,
+		AnonymousUserUserSegment anonymousUserUserSegment,
+		long anonymousUserId, long userSegmentId,
+		OrderByComparator<AnonymousUserUserSegment> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_ANONYMOUSUSERUSERSEGMENT_WHERE);
+
+		query.append(_FINDER_COLUMN_A_U_ANONYMOUSUSERID_2);
+
+		query.append(_FINDER_COLUMN_A_U_USERSEGMENTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AnonymousUserUserSegmentModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(anonymousUserId);
+
+		qPos.add(userSegmentId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(anonymousUserUserSegment);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AnonymousUserUserSegment> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63; from the database.
+	 *
+	 * @param anonymousUserId the anonymous user ID
+	 * @param userSegmentId the user segment ID
+	 */
+	@Override
+	public void removeByA_U(long anonymousUserId, long userSegmentId) {
+		for (AnonymousUserUserSegment anonymousUserUserSegment : findByA_U(
+				anonymousUserId, userSegmentId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(anonymousUserUserSegment);
+		}
+	}
+
+	/**
+	 * Returns the number of anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param anonymousUserId the anonymous user ID
+	 * @param userSegmentId the user segment ID
+	 * @return the number of matching anonymous user user segments
+	 */
+	@Override
+	public int countByA_U(long anonymousUserId, long userSegmentId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_A_U;
+
+		Object[] finderArgs = new Object[] { anonymousUserId, userSegmentId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_ANONYMOUSUSERUSERSEGMENT_WHERE);
+
+			query.append(_FINDER_COLUMN_A_U_ANONYMOUSUSERID_2);
+
+			query.append(_FINDER_COLUMN_A_U_USERSEGMENTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(anonymousUserId);
+
+				qPos.add(userSegmentId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_A_U_ANONYMOUSUSERID_2 = "anonymousUserUserSegment.anonymousUserId = ? AND ";
+	private static final String _FINDER_COLUMN_A_U_USERSEGMENTID_2 = "anonymousUserUserSegment.userSegmentId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ANONYMOUSUSERID =
 		new FinderPath(AnonymousUserUserSegmentModelImpl.ENTITY_CACHE_ENABLED,
 			AnonymousUserUserSegmentModelImpl.FINDER_CACHE_ENABLED,
@@ -1506,563 +2063,6 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	private static final String _FINDER_COLUMN_USERSEGMENTIDS_USERSEGMENTID_2 = "anonymousUserUserSegment.userSegmentId = ? AND ";
 	private static final String _FINDER_COLUMN_USERSEGMENTIDS_USERSEGMENTID_7 = "anonymousUserUserSegment.userSegmentId IN (";
 	private static final String _FINDER_COLUMN_USERSEGMENTIDS_ACTIVE_2 = "anonymousUserUserSegment.active = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_A_U = new FinderPath(AnonymousUserUserSegmentModelImpl.ENTITY_CACHE_ENABLED,
-			AnonymousUserUserSegmentModelImpl.FINDER_CACHE_ENABLED,
-			AnonymousUserUserSegmentImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_U = new FinderPath(AnonymousUserUserSegmentModelImpl.ENTITY_CACHE_ENABLED,
-			AnonymousUserUserSegmentModelImpl.FINDER_CACHE_ENABLED,
-			AnonymousUserUserSegmentImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_U",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			AnonymousUserUserSegmentModelImpl.ANONYMOUSUSERID_COLUMN_BITMASK |
-			AnonymousUserUserSegmentModelImpl.USERSEGMENTID_COLUMN_BITMASK |
-			AnonymousUserUserSegmentModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
-			AnonymousUserUserSegmentModelImpl.ACTIVE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_A_U = new FinderPath(AnonymousUserUserSegmentModelImpl.ENTITY_CACHE_ENABLED,
-			AnonymousUserUserSegmentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_U",
-			new String[] { Long.class.getName(), Long.class.getName() });
-
-	/**
-	 * Returns all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
-	 *
-	 * @param anonymousUserId the anonymous user ID
-	 * @param userSegmentId the user segment ID
-	 * @return the matching anonymous user user segments
-	 */
-	@Override
-	public List<AnonymousUserUserSegment> findByA_U(long anonymousUserId,
-		long userSegmentId) {
-		return findByA_U(anonymousUserId, userSegmentId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param anonymousUserId the anonymous user ID
-	 * @param userSegmentId the user segment ID
-	 * @param start the lower bound of the range of anonymous user user segments
-	 * @param end the upper bound of the range of anonymous user user segments (not inclusive)
-	 * @return the range of matching anonymous user user segments
-	 */
-	@Override
-	public List<AnonymousUserUserSegment> findByA_U(long anonymousUserId,
-		long userSegmentId, int start, int end) {
-		return findByA_U(anonymousUserId, userSegmentId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param anonymousUserId the anonymous user ID
-	 * @param userSegmentId the user segment ID
-	 * @param start the lower bound of the range of anonymous user user segments
-	 * @param end the upper bound of the range of anonymous user user segments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching anonymous user user segments
-	 */
-	@Override
-	public List<AnonymousUserUserSegment> findByA_U(long anonymousUserId,
-		long userSegmentId, int start, int end,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
-		return findByA_U(anonymousUserId, userSegmentId, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param anonymousUserId the anonymous user ID
-	 * @param userSegmentId the user segment ID
-	 * @param start the lower bound of the range of anonymous user user segments
-	 * @param end the upper bound of the range of anonymous user user segments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching anonymous user user segments
-	 */
-	@Override
-	public List<AnonymousUserUserSegment> findByA_U(long anonymousUserId,
-		long userSegmentId, int start, int end,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator,
-		boolean retrieveFromCache) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_U;
-			finderArgs = new Object[] { anonymousUserId, userSegmentId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_A_U;
-			finderArgs = new Object[] {
-					anonymousUserId, userSegmentId,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<AnonymousUserUserSegment> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<AnonymousUserUserSegment>)finderCache.getResult(finderPath,
-					finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (AnonymousUserUserSegment anonymousUserUserSegment : list) {
-					if ((anonymousUserId != anonymousUserUserSegment.getAnonymousUserId()) ||
-							(userSegmentId != anonymousUserUserSegment.getUserSegmentId())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(4);
-			}
-
-			query.append(_SQL_SELECT_ANONYMOUSUSERUSERSEGMENT_WHERE);
-
-			query.append(_FINDER_COLUMN_A_U_ANONYMOUSUSERID_2);
-
-			query.append(_FINDER_COLUMN_A_U_USERSEGMENTID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(AnonymousUserUserSegmentModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(anonymousUserId);
-
-				qPos.add(userSegmentId);
-
-				if (!pagination) {
-					list = (List<AnonymousUserUserSegment>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<AnonymousUserUserSegment>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
-	 *
-	 * @param anonymousUserId the anonymous user ID
-	 * @param userSegmentId the user segment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching anonymous user user segment
-	 * @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
-	 */
-	@Override
-	public AnonymousUserUserSegment findByA_U_First(long anonymousUserId,
-		long userSegmentId,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws NoSuchAnonymousUserUserSegmentException {
-		AnonymousUserUserSegment anonymousUserUserSegment = fetchByA_U_First(anonymousUserId,
-				userSegmentId, orderByComparator);
-
-		if (anonymousUserUserSegment != null) {
-			return anonymousUserUserSegment;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("anonymousUserId=");
-		msg.append(anonymousUserId);
-
-		msg.append(", userSegmentId=");
-		msg.append(userSegmentId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchAnonymousUserUserSegmentException(msg.toString());
-	}
-
-	/**
-	 * Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
-	 *
-	 * @param anonymousUserId the anonymous user ID
-	 * @param userSegmentId the user segment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
-	 */
-	@Override
-	public AnonymousUserUserSegment fetchByA_U_First(long anonymousUserId,
-		long userSegmentId,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
-		List<AnonymousUserUserSegment> list = findByA_U(anonymousUserId,
-				userSegmentId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
-	 *
-	 * @param anonymousUserId the anonymous user ID
-	 * @param userSegmentId the user segment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching anonymous user user segment
-	 * @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
-	 */
-	@Override
-	public AnonymousUserUserSegment findByA_U_Last(long anonymousUserId,
-		long userSegmentId,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws NoSuchAnonymousUserUserSegmentException {
-		AnonymousUserUserSegment anonymousUserUserSegment = fetchByA_U_Last(anonymousUserId,
-				userSegmentId, orderByComparator);
-
-		if (anonymousUserUserSegment != null) {
-			return anonymousUserUserSegment;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("anonymousUserId=");
-		msg.append(anonymousUserId);
-
-		msg.append(", userSegmentId=");
-		msg.append(userSegmentId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchAnonymousUserUserSegmentException(msg.toString());
-	}
-
-	/**
-	 * Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
-	 *
-	 * @param anonymousUserId the anonymous user ID
-	 * @param userSegmentId the user segment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
-	 */
-	@Override
-	public AnonymousUserUserSegment fetchByA_U_Last(long anonymousUserId,
-		long userSegmentId,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator) {
-		int count = countByA_U(anonymousUserId, userSegmentId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AnonymousUserUserSegment> list = findByA_U(anonymousUserId,
-				userSegmentId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the anonymous user user segments before and after the current anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
-	 *
-	 * @param anonymousUserUserSegmentId the primary key of the current anonymous user user segment
-	 * @param anonymousUserId the anonymous user ID
-	 * @param userSegmentId the user segment ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next anonymous user user segment
-	 * @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
-	 */
-	@Override
-	public AnonymousUserUserSegment[] findByA_U_PrevAndNext(
-		long anonymousUserUserSegmentId, long anonymousUserId,
-		long userSegmentId,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator)
-		throws NoSuchAnonymousUserUserSegmentException {
-		AnonymousUserUserSegment anonymousUserUserSegment = findByPrimaryKey(anonymousUserUserSegmentId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AnonymousUserUserSegment[] array = new AnonymousUserUserSegmentImpl[3];
-
-			array[0] = getByA_U_PrevAndNext(session, anonymousUserUserSegment,
-					anonymousUserId, userSegmentId, orderByComparator, true);
-
-			array[1] = anonymousUserUserSegment;
-
-			array[2] = getByA_U_PrevAndNext(session, anonymousUserUserSegment,
-					anonymousUserId, userSegmentId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected AnonymousUserUserSegment getByA_U_PrevAndNext(Session session,
-		AnonymousUserUserSegment anonymousUserUserSegment,
-		long anonymousUserId, long userSegmentId,
-		OrderByComparator<AnonymousUserUserSegment> orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(4);
-		}
-
-		query.append(_SQL_SELECT_ANONYMOUSUSERUSERSEGMENT_WHERE);
-
-		query.append(_FINDER_COLUMN_A_U_ANONYMOUSUSERID_2);
-
-		query.append(_FINDER_COLUMN_A_U_USERSEGMENTID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(AnonymousUserUserSegmentModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(anonymousUserId);
-
-		qPos.add(userSegmentId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(anonymousUserUserSegment);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<AnonymousUserUserSegment> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63; from the database.
-	 *
-	 * @param anonymousUserId the anonymous user ID
-	 * @param userSegmentId the user segment ID
-	 */
-	@Override
-	public void removeByA_U(long anonymousUserId, long userSegmentId) {
-		for (AnonymousUserUserSegment anonymousUserUserSegment : findByA_U(
-				anonymousUserId, userSegmentId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
-			remove(anonymousUserUserSegment);
-		}
-	}
-
-	/**
-	 * Returns the number of anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
-	 *
-	 * @param anonymousUserId the anonymous user ID
-	 * @param userSegmentId the user segment ID
-	 * @return the number of matching anonymous user user segments
-	 */
-	@Override
-	public int countByA_U(long anonymousUserId, long userSegmentId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_A_U;
-
-		Object[] finderArgs = new Object[] { anonymousUserId, userSegmentId };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_ANONYMOUSUSERUSERSEGMENT_WHERE);
-
-			query.append(_FINDER_COLUMN_A_U_ANONYMOUSUSERID_2);
-
-			query.append(_FINDER_COLUMN_A_U_USERSEGMENTID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(anonymousUserId);
-
-				qPos.add(userSegmentId);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_A_U_ANONYMOUSUSERID_2 = "anonymousUserUserSegment.anonymousUserId = ? AND ";
-	private static final String _FINDER_COLUMN_A_U_USERSEGMENTID_2 = "anonymousUserUserSegment.userSegmentId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_LTD_M = new FinderPath(AnonymousUserUserSegmentModelImpl.ENTITY_CACHE_ENABLED,
 			AnonymousUserUserSegmentModelImpl.FINDER_CACHE_ENABLED,
 			AnonymousUserUserSegmentImpl.class,
@@ -2904,6 +2904,27 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 
 		else {
 			if ((anonymousUserUserSegmentModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_U.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						anonymousUserUserSegmentModelImpl.getOriginalAnonymousUserId(),
+						anonymousUserUserSegmentModelImpl.getOriginalUserSegmentId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_A_U, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_U,
+					args);
+
+				args = new Object[] {
+						anonymousUserUserSegmentModelImpl.getAnonymousUserId(),
+						anonymousUserUserSegmentModelImpl.getUserSegmentId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_A_U, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_U,
+					args);
+			}
+
+			if ((anonymousUserUserSegmentModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ANONYMOUSUSERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						anonymousUserUserSegmentModelImpl.getOriginalAnonymousUserId(),
@@ -2946,27 +2967,6 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERSEGMENTIDS,
 					args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERSEGMENTIDS,
-					args);
-			}
-
-			if ((anonymousUserUserSegmentModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_U.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						anonymousUserUserSegmentModelImpl.getOriginalAnonymousUserId(),
-						anonymousUserUserSegmentModelImpl.getOriginalUserSegmentId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_A_U, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_U,
-					args);
-
-				args = new Object[] {
-						anonymousUserUserSegmentModelImpl.getAnonymousUserId(),
-						anonymousUserUserSegmentModelImpl.getUserSegmentId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_A_U, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_U,
 					args);
 			}
 		}

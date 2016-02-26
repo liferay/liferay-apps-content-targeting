@@ -144,7 +144,7 @@ public class TrackingActionInstanceLocalServiceImpl
 		// Tracking action data
 
 		TrackingAction trackingAction =
-			_trackingActionsRegistry.getTrackingAction(
+			trackingActionsRegistry.getTrackingAction(
 				trackingActionInstance.getTrackingActionKey());
 
 		if (trackingAction != null) {
@@ -284,7 +284,7 @@ public class TrackingActionInstanceLocalServiceImpl
 	}
 
 	@ServiceReference(type = TrackingActionsRegistry.class)
-	protected TrackingActionsRegistry _trackingActionsRegistry;
+	protected TrackingActionsRegistry trackingActionsRegistry;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TrackingActionInstanceLocalServiceImpl.class);

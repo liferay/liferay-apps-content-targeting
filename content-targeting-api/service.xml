@@ -28,6 +28,11 @@
 
 		<!-- Finder methods -->
 
+		<finder name="A_U" return-type="Collection">
+			<finder-column name="anonymousUserId" />
+			<finder-column name="userSegmentId" />
+		</finder>
+
 		<finder name="AnonymousUserId" return-type="Collection">
 			<finder-column name="anonymousUserId" />
 			<finder-column name="active" />
@@ -38,17 +43,15 @@
 			<finder-column name="active" />
 		</finder>
 
-		<finder name="A_U" return-type="Collection">
-			<finder-column name="anonymousUserId" />
-			<finder-column name="userSegmentId" />
-		</finder>
-
 		<finder name="C_LtD_M" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="modifiedDate" comparator="&lt;" />
 			<finder-column name="manual" />
 		</finder>
 
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Company" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<entity name="Campaign" uuid="true" local-service="true" remote-service="true">
@@ -134,11 +137,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ChannelKey" return-type="Collection">
-			<finder-column name="channelKey" />
-		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
+		</finder>
+		<finder name="ChannelKey" return-type="Collection">
+			<finder-column name="channelKey" />
 		</finder>
 		<finder name="CampaignId" return-type="Collection">
 			<finder-column name="campaignId" />
@@ -150,13 +153,13 @@
 			<finder-column name="campaignId" />
 			<finder-column name="channelKey" />
 		</finder>
-		<finder name="T_A" return-type="ChannelInstance" unique="true">
-			<finder-column name="tacticId" />
-			<finder-column name="alias" />
-		</finder>
 		<finder name="T_K" return-type="Collection">
 			<finder-column name="tacticId" />
 			<finder-column name="channelKey" />
+		</finder>
+		<finder name="T_A" return-type="ChannelInstance" unique="true">
+			<finder-column name="tacticId" />
+			<finder-column name="alias" />
 		</finder>
 
 		<!-- References -->
@@ -418,11 +421,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="AssetCategoryId" return-type="UserSegment">
-			<finder-column name="assetCategoryId" />
-		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" arrayable-operator="OR" />
+		</finder>
+		<finder name="AssetCategoryId" return-type="UserSegment">
+			<finder-column name="assetCategoryId" />
 		</finder>
 
 		<!-- References -->

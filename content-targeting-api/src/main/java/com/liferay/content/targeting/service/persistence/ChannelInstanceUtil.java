@@ -507,6 +507,163 @@ public class ChannelInstanceUtil {
 	}
 
 	/**
+	* Returns all the channel instances where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the matching channel instances
+	*/
+	public static List<ChannelInstance> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	* Returns a range of all the channel instances where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @return the range of matching channel instances
+	*/
+	public static List<ChannelInstance> findByGroupId(long groupId, int start,
+		int end) {
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the channel instances where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching channel instances
+	*/
+	public static List<ChannelInstance> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<ChannelInstance> orderByComparator) {
+		return getPersistence()
+				   .findByGroupId(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the channel instances where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching channel instances
+	*/
+	public static List<ChannelInstance> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<ChannelInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByGroupId(groupId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first channel instance in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching channel instance
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
+	*/
+	public static ChannelInstance findByGroupId_First(long groupId,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
+		return getPersistence().findByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the first channel instance in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching channel instance, or <code>null</code> if a matching channel instance could not be found
+	*/
+	public static ChannelInstance fetchByGroupId_First(long groupId,
+		OrderByComparator<ChannelInstance> orderByComparator) {
+		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last channel instance in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching channel instance
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
+	*/
+	public static ChannelInstance findByGroupId_Last(long groupId,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
+		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last channel instance in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching channel instance, or <code>null</code> if a matching channel instance could not be found
+	*/
+	public static ChannelInstance fetchByGroupId_Last(long groupId,
+		OrderByComparator<ChannelInstance> orderByComparator) {
+		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the channel instances before and after the current channel instance in the ordered set where groupId = &#63;.
+	*
+	* @param channelInstanceId the primary key of the current channel instance
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next channel instance
+	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	*/
+	public static ChannelInstance[] findByGroupId_PrevAndNext(
+		long channelInstanceId, long groupId,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
+		return getPersistence()
+				   .findByGroupId_PrevAndNext(channelInstanceId, groupId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the channel instances where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	*/
+	public static void removeByGroupId(long groupId) {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of channel instances where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching channel instances
+	*/
+	public static int countByGroupId(long groupId) {
+		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
 	* Returns all the channel instances where channelKey = &#63;.
 	*
 	* @param channelKey the channel key
@@ -672,163 +829,6 @@ public class ChannelInstanceUtil {
 	*/
 	public static int countByChannelKey(java.lang.String channelKey) {
 		return getPersistence().countByChannelKey(channelKey);
-	}
-
-	/**
-	* Returns all the channel instances where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the matching channel instances
-	*/
-	public static List<ChannelInstance> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	* Returns a range of all the channel instances where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of channel instances
-	* @param end the upper bound of the range of channel instances (not inclusive)
-	* @return the range of matching channel instances
-	*/
-	public static List<ChannelInstance> findByGroupId(long groupId, int start,
-		int end) {
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the channel instances where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of channel instances
-	* @param end the upper bound of the range of channel instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching channel instances
-	*/
-	public static List<ChannelInstance> findByGroupId(long groupId, int start,
-		int end, OrderByComparator<ChannelInstance> orderByComparator) {
-		return getPersistence()
-				   .findByGroupId(groupId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the channel instances where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of channel instances
-	* @param end the upper bound of the range of channel instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching channel instances
-	*/
-	public static List<ChannelInstance> findByGroupId(long groupId, int start,
-		int end, OrderByComparator<ChannelInstance> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByGroupId(groupId, start, end, orderByComparator,
-			retrieveFromCache);
-	}
-
-	/**
-	* Returns the first channel instance in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching channel instance
-	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
-	*/
-	public static ChannelInstance findByGroupId_First(long groupId,
-		OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
-		return getPersistence().findByGroupId_First(groupId, orderByComparator);
-	}
-
-	/**
-	* Returns the first channel instance in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	*/
-	public static ChannelInstance fetchByGroupId_First(long groupId,
-		OrderByComparator<ChannelInstance> orderByComparator) {
-		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
-	}
-
-	/**
-	* Returns the last channel instance in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching channel instance
-	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
-	*/
-	public static ChannelInstance findByGroupId_Last(long groupId,
-		OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	* Returns the last channel instance in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	*/
-	public static ChannelInstance fetchByGroupId_Last(long groupId,
-		OrderByComparator<ChannelInstance> orderByComparator) {
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	* Returns the channel instances before and after the current channel instance in the ordered set where groupId = &#63;.
-	*
-	* @param channelInstanceId the primary key of the current channel instance
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next channel instance
-	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
-	*/
-	public static ChannelInstance[] findByGroupId_PrevAndNext(
-		long channelInstanceId, long groupId,
-		OrderByComparator<ChannelInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
-		return getPersistence()
-				   .findByGroupId_PrevAndNext(channelInstanceId, groupId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the channel instances where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	*/
-	public static void removeByGroupId(long groupId) {
-		getPersistence().removeByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of channel instances where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching channel instances
-	*/
-	public static int countByGroupId(long groupId) {
-		return getPersistence().countByGroupId(groupId);
 	}
 
 	/**
@@ -1333,69 +1333,6 @@ public class ChannelInstanceUtil {
 	}
 
 	/**
-	* Returns the channel instance where tacticId = &#63; and alias = &#63; or throws a {@link NoSuchChannelInstanceException} if it could not be found.
-	*
-	* @param tacticId the tactic ID
-	* @param alias the alias
-	* @return the matching channel instance
-	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
-	*/
-	public static ChannelInstance findByT_A(long tacticId,
-		java.lang.String alias)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
-		return getPersistence().findByT_A(tacticId, alias);
-	}
-
-	/**
-	* Returns the channel instance where tacticId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param tacticId the tactic ID
-	* @param alias the alias
-	* @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	*/
-	public static ChannelInstance fetchByT_A(long tacticId,
-		java.lang.String alias) {
-		return getPersistence().fetchByT_A(tacticId, alias);
-	}
-
-	/**
-	* Returns the channel instance where tacticId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param tacticId the tactic ID
-	* @param alias the alias
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	*/
-	public static ChannelInstance fetchByT_A(long tacticId,
-		java.lang.String alias, boolean retrieveFromCache) {
-		return getPersistence().fetchByT_A(tacticId, alias, retrieveFromCache);
-	}
-
-	/**
-	* Removes the channel instance where tacticId = &#63; and alias = &#63; from the database.
-	*
-	* @param tacticId the tactic ID
-	* @param alias the alias
-	* @return the channel instance that was removed
-	*/
-	public static ChannelInstance removeByT_A(long tacticId,
-		java.lang.String alias)
-		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
-		return getPersistence().removeByT_A(tacticId, alias);
-	}
-
-	/**
-	* Returns the number of channel instances where tacticId = &#63; and alias = &#63;.
-	*
-	* @param tacticId the tactic ID
-	* @param alias the alias
-	* @return the number of matching channel instances
-	*/
-	public static int countByT_A(long tacticId, java.lang.String alias) {
-		return getPersistence().countByT_A(tacticId, alias);
-	}
-
-	/**
 	* Returns all the channel instances where tacticId = &#63; and channelKey = &#63;.
 	*
 	* @param tacticId the tactic ID
@@ -1573,6 +1510,69 @@ public class ChannelInstanceUtil {
 	*/
 	public static int countByT_K(long tacticId, java.lang.String channelKey) {
 		return getPersistence().countByT_K(tacticId, channelKey);
+	}
+
+	/**
+	* Returns the channel instance where tacticId = &#63; and alias = &#63; or throws a {@link NoSuchChannelInstanceException} if it could not be found.
+	*
+	* @param tacticId the tactic ID
+	* @param alias the alias
+	* @return the matching channel instance
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
+	*/
+	public static ChannelInstance findByT_A(long tacticId,
+		java.lang.String alias)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
+		return getPersistence().findByT_A(tacticId, alias);
+	}
+
+	/**
+	* Returns the channel instance where tacticId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param tacticId the tactic ID
+	* @param alias the alias
+	* @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
+	*/
+	public static ChannelInstance fetchByT_A(long tacticId,
+		java.lang.String alias) {
+		return getPersistence().fetchByT_A(tacticId, alias);
+	}
+
+	/**
+	* Returns the channel instance where tacticId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param tacticId the tactic ID
+	* @param alias the alias
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
+	*/
+	public static ChannelInstance fetchByT_A(long tacticId,
+		java.lang.String alias, boolean retrieveFromCache) {
+		return getPersistence().fetchByT_A(tacticId, alias, retrieveFromCache);
+	}
+
+	/**
+	* Removes the channel instance where tacticId = &#63; and alias = &#63; from the database.
+	*
+	* @param tacticId the tactic ID
+	* @param alias the alias
+	* @return the channel instance that was removed
+	*/
+	public static ChannelInstance removeByT_A(long tacticId,
+		java.lang.String alias)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
+		return getPersistence().removeByT_A(tacticId, alias);
+	}
+
+	/**
+	* Returns the number of channel instances where tacticId = &#63; and alias = &#63;.
+	*
+	* @param tacticId the tactic ID
+	* @param alias the alias
+	* @return the number of matching channel instances
+	*/
+	public static int countByT_A(long tacticId, java.lang.String alias) {
+		return getPersistence().countByT_A(tacticId, alias);
 	}
 
 	/**
