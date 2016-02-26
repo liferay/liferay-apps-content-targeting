@@ -23,8 +23,10 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.model.*" %><%@
+<%@ page import="com.liferay.content.targeting.analytics.configuration.AnalyticsServiceConfiguration" %><%@
+page import="com.liferay.portal.kernel.model.*" %><%@
 page import="com.liferay.portal.kernel.model.impl.*" %><%@
+page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalWebResourceConstants" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalWebResourcesUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
@@ -42,9 +44,13 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%
 long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS);
-%>
 
-<%
+AnalyticsServiceConfiguration analyticsServiceConfiguration = (AnalyticsServiceConfiguration)request.getAttribute(AnalyticsServiceConfiguration.class.getName());
+
+if (analyticsServiceConfiguration == null) {
+	analyticsServiceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(AnalyticsServiceConfiguration.class, company.getCompanyId());
+}
+
 long[] analyticsReferrerIds = (long[])request.getAttribute("userSegmentIds");
 String analyticsReferrerClassName = "com.liferay.content.targeting.model.UserSegment";
 
@@ -78,43 +84,43 @@ if (!analyticsGroup.isStagingGroup() && !analyticsGroup.isLayoutSetPrototype() &
 
 	UnicodeProperties analyticsGroupTypeSettingsProperties = analyticsGroup.getParentLiveGroupTypeSettingsProperties();
 
-	if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), true)) {
+	if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), analyticsServiceConfiguration.contentTrackingEnabled())) {
 		trackAnalyticsContent = true;
 	}
 
-	if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.form.enabled"), true)) {
+	if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.form.enabled"), analyticsServiceConfiguration.formTrackingEnabled())) {
 		trackAnalyticsForm = true;
 
-		analyticsFormExcludedIdsRegex = GetterUtil.getString(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.form.excluded.ids.regex"), PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.form.excluded.ids.regex"));
+		analyticsFormExcludedIdsRegex = GetterUtil.getString(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.form.excluded.ids.regex"), PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.form.excluded.ids.regex", analyticsServiceConfiguration.formExcludedIdsRegExp()));
 
-		if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.form.interact.enabled"), true)) {
+		if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.form.interact.enabled"), analyticsServiceConfiguration.formInteractionTrackingEnabled())) {
 			trackAnalyticsFormInteract = true;
 		}
 
-		if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.form.submit.enabled"), true)) {
+		if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.form.submit.enabled"), analyticsServiceConfiguration.formSubmitTrackingEnabled())) {
 			trackAnalyticsFormSubmit = true;
 		}
 
-		if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.form.view.enabled"), true)) {
+		if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.form.view.enabled"), analyticsServiceConfiguration.formViewTrackingEnabled())) {
 			trackAnalyticsFormView = true;
 		}
 	}
 
-	if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.link.enabled"), true)) {
+	if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.link.enabled"), analyticsServiceConfiguration.linkTrackingEnabled())) {
 		trackAnalyticsLink = true;
 
-		analyticsLinkExcludedIdsRegex = GetterUtil.getString(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.link.excluded.ids.regex"), PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.link.excluded.ids.regex"));
+		analyticsLinkExcludedIdsRegex = GetterUtil.getString(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.link.excluded.ids.regex"), PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.link.excluded.ids.regex", analyticsServiceConfiguration.linkExcludedIdsRegExp()));
 
-		if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.click.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.link.click.enabled"), true)) {
+		if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.click.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.link.click.enabled"), analyticsServiceConfiguration.linkClickTrackingEnabled())) {
 			trackAnalyticsLinkClick = true;
 		}
 	}
 
-	if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.page.enabled"), true)) {
+	if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.page.enabled"), analyticsServiceConfiguration.pageTrackingEnabled())) {
 		trackAnalyticsPage = true;
 	}
 
-	if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.youtube.enabled"), true)) {
+	if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") && GetterUtil.getBoolean(analyticsGroupTypeSettingsProperties.getProperty("content.targeting.analytics.youtube.enabled"), analyticsServiceConfiguration.youtubeTrackingEnabled())) {
 		trackAnalyticsYoutube = true;
 	}
 }
