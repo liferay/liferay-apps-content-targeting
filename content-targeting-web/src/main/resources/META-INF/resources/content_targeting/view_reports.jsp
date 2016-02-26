@@ -61,6 +61,18 @@ renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale)
 	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 </liferay-portlet:renderURL>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= currentURL %>" label="reports" selected="<%= true %>" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= searchURL %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" name="keywords" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
 <aui:form action="<%= searchURL %>" cssClass="container-fluid-1280" method="post" name="fmReports">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="reportInstanceIds" type="hidden" />

@@ -163,14 +163,4 @@ for (Report report : reports) {
 			</c:otherwise>
 		</c:choose>
 	</aui:nav>
-
-	<aui:nav-bar-search cssClass="pull-right">
-		<div class="form-search">
-			<liferay-ui:input-search
-				id="reportkeywords"
-				name="reportKeywords"
-				placeholder='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "keywords") %>'
-			/>
-		</div>
-	</aui:nav-bar-search>
 </aui:nav-bar>

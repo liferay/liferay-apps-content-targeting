@@ -21,11 +21,11 @@ String backURL = ParamUtil.getString(request, "backURL");
 String redirect = ParamUtil.getString(request, "redirect");
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
-String reportKeywords = ParamUtil.getString(request, "reportKeywords");
+String keywords = ParamUtil.getString(request, "keywords");
 
 RowChecker reportsRowChecker = new RowChecker(liferayPortletResponse);
 
-SearchContainerIterator searchContainerIterator = new ReportSearchContainerIterator(scopeGroupId, reportKeywords, className, classPK);
+SearchContainerIterator searchContainerIterator = new ReportSearchContainerIterator(scopeGroupId, keywords, className, classPK);
 %>
 
 <liferay-portlet:renderURL varImpl="viewReportsURL">
