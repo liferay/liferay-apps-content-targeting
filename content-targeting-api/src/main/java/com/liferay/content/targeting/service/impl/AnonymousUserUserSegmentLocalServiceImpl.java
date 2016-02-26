@@ -165,8 +165,9 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 
 		calendar.setTime(new Date());
 
-		int maxAge = AnonymousUserUserSegmentServiceConfigurationUtil.
-			getInteger(PortletPropsKeys.ANONYMOUS_USER_USER_SEGMENTS_MAX_AGE);
+		int maxAge =
+			AnonymousUserUserSegmentServiceConfigurationUtil.getInteger(
+				PortletPropsKeys.ANONYMOUS_USER_USER_SEGMENTS_MAX_AGE);
 
 		calendar.add(Calendar.DAY_OF_YEAR, -maxAge);
 
