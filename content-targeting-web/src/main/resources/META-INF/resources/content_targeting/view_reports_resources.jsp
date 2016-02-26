@@ -79,6 +79,7 @@ SearchContainerIterator searchContainerIterator = new ReportSearchContainerItera
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				href="<%= viewReportURL %>"
 				name="name"
 				value="<%= reportInstance.getName(locale) %>"
@@ -104,7 +105,7 @@ SearchContainerIterator searchContainerIterator = new ReportSearchContainerItera
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </c:if>
 

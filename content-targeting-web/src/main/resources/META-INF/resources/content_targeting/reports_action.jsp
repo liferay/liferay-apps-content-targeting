@@ -25,7 +25,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 ReportInstance reportInstance = (ReportInstance)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= reportInstance.isInstantiable() %>">
 		<liferay-portlet:renderURL var="editReportURL">
 			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_REPORT %>" />
@@ -37,8 +37,7 @@ ReportInstance reportInstance = (ReportInstance)row.getObject();
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
-			method="get"
+			message="edit"
 			url="<%= editReportURL.toString() %>"
 		/>
 
@@ -60,8 +59,6 @@ ReportInstance reportInstance = (ReportInstance)row.getObject();
 	</liferay-portlet:actionURL>
 
 	<liferay-ui:icon
-		image="undo"
-		label="<%= true %>"
 		message="update-report"
 		method="post"
 		url="<%= updateReportURL.toString() %>"

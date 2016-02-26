@@ -61,7 +61,7 @@ renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale)
 	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= searchURL %>" method="post" name="fmReports">
+<aui:form action="<%= searchURL %>" cssClass="container-fluid-1280" method="post" name="fmReports">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="reportInstanceIds" type="hidden" />
 
