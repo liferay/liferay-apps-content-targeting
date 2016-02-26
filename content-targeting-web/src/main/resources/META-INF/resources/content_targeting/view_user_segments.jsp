@@ -21,6 +21,10 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 boolean includeCheckBox = ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_USER_SEGMENT);
 
+String keywords = ParamUtil.getString(request, "keywords");
+
+SearchContainerIterator searchContainerIterator = new UserSegmentSearchContainerIterator(scopeGroupId, keywords);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
@@ -98,9 +102,40 @@ portletURL.setParameter("tabs1", "user-segments");
 </portlet:actionURL>
 
 <aui:form action="<%= deleteUserSegmentURL %>" cssClass="container-fluid-1280" name="fmUserSegment">
-	<div id="<portlet:namespace />userSegmentsPanel">
-		<liferay-util:include page="/content_targeting/view_user_segments_resources.jsp" servletContext="<%= application %>" />
-	</div>
+	<liferay-ui:search-container
+		emptyResultsMessage="no-user-segments-were-found"
+		id="userSegments"
+		iteratorURL="<%= portletURL %>"
+		rowChecker="<%= new EmptyOnClickRowChecker(liferayPortletResponse) %>"
+		total="<%= searchContainerIterator.getTotal() %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
+		/>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.content.targeting.model.UserSegment"
+			keyProperty="userSegmentId"
+			modelVar="userSegment"
+		>
+			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
+				name="name"
+				value="<%= userSegment.getName(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="description"
+				value="<%= userSegment.getDescription(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				path="/content_targeting/user_segments_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
 </aui:form>
 
 <c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_USER_SEGMENT) %>">
@@ -114,21 +149,9 @@ portletURL.setParameter("tabs1", "user-segments");
 	</liferay-frontend:add-menu>
 </c:if>
 
-<aui:script use="liferay-ajax-search">
-	var userSegmentsPanel = A.one('#<portlet:namespace />userSegmentsPanel');
-	var inputNode = A.one('#<portlet:namespace />keywords');
-
-	var search = new Liferay.AjaxContentSearch(
-		{
-			contentPanel: userSegmentsPanel,
-			inputNode: inputNode,
-			resourceURL: '<portlet:resourceURL><portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW_USER_SEGMENTS_RESOURCES %>" /><portlet:param name="tabs1" value="user-segments" /></portlet:resourceURL>',
-			namespace: '<portlet:namespace />'
-		}
-	);
-
-	<c:if test="<%= includeCheckBox %>">
-		A.one('#<portlet:namespace />deleteUserSegments').on(
+<c:if test="<%= includeCheckBox %>">
+	<aui:script>
+		$('#<portlet:namespace />deleteUserSegments').on(
 			'click',
 			function(event) {
 				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
@@ -136,5 +159,5 @@ portletURL.setParameter("tabs1", "user-segments");
 				}
 			}
 		);
-	</c:if>
-</aui:script>
+	</aui:script>
+</c:if>
