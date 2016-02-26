@@ -16,11 +16,8 @@ package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.util.StringPool;
 
 import javax.portlet.PortletResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Pavel Savinov
@@ -29,18 +26,6 @@ public class ReportInstanceRowChecker extends EmptyOnClickRowChecker {
 
 	public ReportInstanceRowChecker(PortletResponse response) {
 		super(response);
-	}
-
-	@Override
-	public String getRowCheckBox(
-		HttpServletRequest request, boolean checked, boolean disabled,
-		String primaryKey) {
-
-		if (disabled) {
-			return StringPool.BLANK;
-		}
-
-		return super.getRowCheckBox(request, checked, disabled, primaryKey);
 	}
 
 	@Override
