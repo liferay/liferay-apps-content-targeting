@@ -39,7 +39,7 @@ public class ContentTargetingPermission extends BaseResourcePermissionChecker {
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, groupId, actionId)) {
+		if (!contains(permissionChecker, RESOURCE_NAME, groupId, actionId)) {
 			throw new PrincipalException();
 		}
 	}
@@ -47,8 +47,7 @@ public class ContentTargetingPermission extends BaseResourcePermissionChecker {
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return permissionChecker.hasPermission(
-			groupId, RESOURCE_NAME, groupId, actionId);
+		return contains(permissionChecker, RESOURCE_NAME, groupId, actionId);
 	}
 
 	@Override
