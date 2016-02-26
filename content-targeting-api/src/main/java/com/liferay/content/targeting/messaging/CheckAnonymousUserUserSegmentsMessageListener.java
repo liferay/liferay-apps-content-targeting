@@ -14,8 +14,10 @@
 
 package com.liferay.content.targeting.messaging;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.content.targeting.configuration.AnonymousUserUserSegmentServiceConfiguration;
 import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService;
-import com.liferay.content.targeting.util.PortletPropsValues;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -44,10 +46,17 @@ public class CheckAnonymousUserUserSegmentsMessageListener
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		AnonymousUserUserSegmentServiceConfiguration
+			anonymousUserUserSegmentServiceConfiguration =
+				Configurable.createConfigurable(
+					AnonymousUserUserSegmentServiceConfiguration.class,
+					properties);
+
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
 				getEventListenerClass(), getEventListenerClass(),
-				PortletPropsValues.ANONYMOUS_USER_USER_SEGMENTS_CHECK_INTERVAL,
+				anonymousUserUserSegmentServiceConfiguration.
+					anonymousUserUserSegmentCheckInterval(),
 				TimeUnit.DAY));
 
 		_schedulerEngineHelper.register(

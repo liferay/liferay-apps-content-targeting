@@ -14,8 +14,10 @@
 
 package com.liferay.content.targeting.analytics.messaging;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.content.targeting.analytics.configuration.AnalyticsServiceConfiguration;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
-import com.liferay.content.targeting.analytics.util.PortletPropsValues;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -28,23 +30,32 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
-@Component(immediate = true, service = CheckEventsMessageListener.class)
+@Component(
+	configurationPid = "com.liferay.content.targeting.analytics.configuration.AnalyticsServiceConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = CheckEventsMessageListener.class
+)
 public class CheckEventsMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		AnalyticsServiceConfiguration analyticsServiceConfiguration =
+			Configurable.createConfigurable(
+				AnalyticsServiceConfiguration.class, properties);
+
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
 				getEventListenerClass(), getEventListenerClass(),
-				PortletPropsValues.ANALYTICS_EVENTS_CHECK_INTERVAL,
+				analyticsServiceConfiguration.analyticsEventsCheckInterval(),
 				TimeUnit.DAY));
 
 		_schedulerEngineHelper.register(
