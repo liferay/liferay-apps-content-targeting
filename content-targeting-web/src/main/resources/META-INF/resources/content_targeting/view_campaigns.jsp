@@ -30,6 +30,15 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
 portletURL.setParameter("tabs1", "campaigns");
 
+SearchContainer campaignSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, renderResponse), null, "no-campaigns-were-found");
+
+campaignSearchContainer.setId("campaigns");
+campaignSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
+campaignSearchContainer.setSearch(Validator.isNotNull(keywords));
+
+campaignSearchContainer.setTotal(searchContainerIterator.getTotal());
+campaignSearchContainer.setResults(searchContainerIterator.getResults(campaignSearchContainer.getStart(), campaignSearchContainer.getEnd()));
+
 boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && Validator.isNull(keywords);
 %>
 
@@ -70,16 +79,8 @@ boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && V
 
 <aui:form action="<%= deleteCampaignsURL %>" cssClass="container-fluid-1280" method="post" name="fmCampaigns">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-campaigns-were-found"
-		id="campaigns"
-		iteratorURL="<%= portletURL %>"
-		rowChecker="<%= new EmptyOnClickRowChecker(liferayPortletResponse) %>"
-		total="<%= searchContainerIterator.getTotal() %>"
+		searchContainer="<%= campaignSearchContainer %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.Campaign"
 			keyProperty="campaignId"
