@@ -14,9 +14,11 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.messaging;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.content.targeting.report.campaign.tracking.action.configuration.CampaignTrackingActionReportServiceConfiguration;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService;
-import com.liferay.content.targeting.report.campaign.tracking.action.util.PortletPropsValues;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -41,11 +43,17 @@ public class CheckML extends BaseSchedulerEntryMessageListener {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		CampaignTrackingActionReportServiceConfiguration
+			campaignTrackingActionReportServiceConfiguration =
+				Configurable.createConfigurable(
+					CampaignTrackingActionReportServiceConfiguration.class,
+					properties);
+
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
 				getEventListenerClass(), getEventListenerClass(),
-				PortletPropsValues.
-					CAMPAIGN_TRACKING_ACTION_REPORT_CHECK_INTERVAL,
+				campaignTrackingActionReportServiceConfiguration.
+					campaignTrackingActionReportCheckInterval(),
 				TimeUnit.HOUR));
 
 		_schedulerEngineHelper.register(

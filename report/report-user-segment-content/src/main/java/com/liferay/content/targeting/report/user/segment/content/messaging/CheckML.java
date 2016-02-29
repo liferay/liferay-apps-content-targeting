@@ -14,18 +14,76 @@
 
 package com.liferay.content.targeting.report.user.segment.content.messaging;
 
-import com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentLocalServiceUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.content.targeting.report.user.segment.content.configuration.UserSegmentContentReportServiceConfiguration;
+import com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentLocalService;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
-public class CheckML extends BaseMessageListener {
+@Component(immediate = true, service = CheckML.class)
+public class CheckML extends BaseSchedulerEntryMessageListener {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		UserSegmentContentReportServiceConfiguration
+			userSegmentContentReportServiceConfiguration =
+			Configurable.createConfigurable(
+				UserSegmentContentReportServiceConfiguration.class,
+				properties);
+
+		schedulerEntryImpl.setTrigger(
+			TriggerFactoryUtil.createTrigger(
+				getEventListenerClass(), getEventListenerClass(),
+				userSegmentContentReportServiceConfiguration.
+					userSegmentContentReportCheckInterval(),
+				TimeUnit.HOUR));
+
+		_schedulerEngineHelper.register(
+			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		UserSegmentContentLocalServiceUtil.checkUserSegmentContentEvents();
+		_userSegmentContentLocalService.checkUserSegmentContentEvents();
 	}
+
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTriggerFactory(TriggerFactory triggerFactory) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserSegmentContentLocalService(
+		UserSegmentContentLocalService userSegmentContentLocalService) {
+
+		_userSegmentContentLocalService = userSegmentContentLocalService;
+	}
+
+	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	private UserSegmentContentLocalService _userSegmentContentLocalService;
 
 }
