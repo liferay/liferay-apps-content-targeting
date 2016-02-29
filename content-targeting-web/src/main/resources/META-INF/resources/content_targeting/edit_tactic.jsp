@@ -51,11 +51,10 @@ if (tacticId > 0) {
 if (Validator.isNull(backURL)) {
 	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
 
-	backURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_CAMPAIGN);
+	backURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_TACTICS);
 	backURLObject.setParameter("campaignId", String.valueOf(campaignId));
 	backURLObject.setParameter("className", Campaign.class.getName());
 	backURLObject.setParameter("classPK", String.valueOf(campaignId));
-	backURLObject.setParameter("tabs2", "promotions");
 
 	backURL = backURLObject.toString();
 }

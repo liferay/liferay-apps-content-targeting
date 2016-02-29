@@ -33,9 +33,8 @@ SearchContainerIterator searchContainerIterator = new TacticSearchContainerItera
 %>
 
 <liferay-portlet:renderURL varImpl="viewTacticsURL">
-	<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
+	<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_TACTICS %>" />
 	<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
-	<portlet:param name="tabs2" value="promotions" />
 	<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
 	<portlet:param name="classPK" value="<%= String.valueOf(campaignId) %>" />
 </liferay-portlet:renderURL>
@@ -140,9 +139,8 @@ SearchContainerIterator searchContainerIterator = new TacticSearchContainerItera
 					document.<portlet:namespace />fmTactics.<portlet:namespace />tacticsIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fmTactics, '<portlet:namespace />allRowIds');
 
 					<liferay-portlet:renderURL var="redirectURL">
-						<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
+						<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_TACTICS %>" />
 						<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
-						<portlet:param name="tabs2" value="promotions" />
 						<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
 						<portlet:param name="classPK" value="<%= String.valueOf(campaignId) %>" />
 					</liferay-portlet:renderURL>

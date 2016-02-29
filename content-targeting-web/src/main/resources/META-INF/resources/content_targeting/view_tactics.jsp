@@ -28,11 +28,10 @@ if (campaignId > 0) {
 %>
 
 <liferay-portlet:renderURL var="searchURL">
-	<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
+	<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_TACTICS %>" />
 	<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
 	<portlet:param name="classPK" value="<%= String.valueOf(campaignId) %>" />
 	<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
-	<portlet:param name="tabs2" value="promotions" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="post" name="fmTactics">

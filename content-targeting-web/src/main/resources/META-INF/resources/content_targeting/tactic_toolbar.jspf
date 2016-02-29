@@ -17,11 +17,10 @@
 <aui:nav>
 	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="redirectURL">
-			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
+			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_TACTICS %>" />
 			<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
 			<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(campaignId) %>" />
-			<portlet:param name="tabs2" value="promotions" />
 		</liferay-portlet:renderURL>
 
 		<liferay-portlet:renderURL var="addTacticURL">

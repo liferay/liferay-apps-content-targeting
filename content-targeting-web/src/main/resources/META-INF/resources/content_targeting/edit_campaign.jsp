@@ -19,7 +19,6 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL");
 String redirect = ParamUtil.getString(request, "redirect");
-String tabs2 = ParamUtil.getString(request, "tabs2");
 long campaignId = ParamUtil.getLong(request, "campaignId", 0);
 
 Campaign campaign = null;
@@ -30,12 +29,6 @@ if (campaignId > 0) {
 	campaign = CampaignLocalServiceUtil.fetchCampaign(campaignId);
 
 	title = campaign.getName(locale);
-}
-
-String campaignTabs ="details";
-
-if (campaign != null) {
-	campaignTabs ="details,promotions";
 }
 
 if (Validator.isNull(backURL)) {
@@ -60,21 +53,4 @@ if (Validator.isNull(backURL)) {
 	<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
 </liferay-portlet:renderURL>
 
-<liferay-ui:tabs
-	names="<%= campaignTabs %>"
-	param="tabs2"
-	type="pills"
-	url="<%= portletURL %>"
-	value="<%= tabs2 %>"
->
-	<liferay-ui:section>
-		<%@ include file="/content_targeting/campaign_details.jspf" %>
-	</liferay-ui:section>
-
-	<c:if test="<%= campaign != null %>">
-		<liferay-ui:section>
-			<liferay-util:include page="/content_targeting/view_tactics.jsp" servletContext="<%= application %>">
-			</liferay-util:include>
-		</liferay-ui:section>
-	</c:if>
-</liferay-ui:tabs>
+<%@ include file="/content_targeting/campaign_details.jspf" %>
