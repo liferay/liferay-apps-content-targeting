@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.content.targeting.channel.@channel.java.package.name@;
+package com.liferay.content.targeting.channel
+
+package.name@;
 
 import com.liferay.content.targeting.InvalidChannelException;
 import com.liferay.content.targeting.api.model.BaseChannel;
