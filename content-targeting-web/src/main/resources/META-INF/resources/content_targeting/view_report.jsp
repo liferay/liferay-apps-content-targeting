@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
 String redirect = ParamUtil.getString(request, "redirect", currentURL);
 String reportKey = ParamUtil.getString(request, "reportKey");
 long reportInstanceId = ParamUtil.getLong(request, "reportInstanceId");
@@ -36,26 +35,8 @@ if (reportInstanceId > 0) {
 	reportInstance = ReportInstanceLocalServiceUtil.fetchReportInstance(reportInstanceId);
 }
 
-if (Validator.isBlank(backURL)) {
-	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
-
-	if (Campaign.class.getName().equals(className)) {
-		backURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
-		backURLObject.setParameter("className", Campaign.class.getName());
-		backURLObject.setParameter("classPK", String.valueOf(classPK));
-		backURLObject.setParameter("campaignId", String.valueOf(classPK));
-	}
-	else {
-		backURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT);
-		backURLObject.setParameter("className", UserSegment.class.getName());
-		backURLObject.setParameter("classPK", String.valueOf(classPK));
-		backURLObject.setParameter("userSegmentId", String.valueOf(classPK));
-	}
-
-	backURL = backURLObject.toString();
-}
-
 Map<String, Object> templateContext = (Map<String, Object>)request.getAttribute("templateContext");
+
 templateContext.put("className", className);
 templateContext.put("classPK", classPK);
 templateContext.put("redirect", redirect);
@@ -65,38 +46,11 @@ templateContext.put("reportInstanceId", reportInstanceId);
 templateContext.put("reportKey", reportKey);
 %>
 
-<liferay-ui:breadcrumb
-	showCurrentGroup="<%= false %>"
-	showLayout="<%= false %>"
-/>
-
-<liferay-ui:header
-	backURL="<%= backURL.toString() %>"
-	title="<%= reportInstance.getReportName(locale) %>"
-/>
-
 <c:if test="<%= scopeGroup.isStagingGroup() %>">
 	<div class="alert alert-warning">
 		<liferay-ui:message key="the-staging-environment-is-activated-reports-data-refer-to-the-live-environment" />
 	</div>
 </c:if>
-
-<liferay-portlet:actionURL name="updateReport" var="updateReportURL">
-	<portlet:param name="backURL" value="<%= backURL.toString() %>" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="reportInstanceId" value="<%= String.valueOf(reportInstanceId) %>" />
-	<portlet:param name="reportKey" value="<%= report.getReportKey() %>" />
-	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-</liferay-portlet:actionURL>
-
-<liferay-ui:icon
-	cssClass="pull-right"
-	image="../aui/repeat"
-	label="<%= false %>"
-	linkCssClass="btn"
-	message="update-report"
-	url="<%= updateReportURL %>"
-/>
 
 <div class="report-description">
 	<%= report.getDescription(locale) %>
