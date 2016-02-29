@@ -266,6 +266,10 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	public List<ReportInstance> getReportInstances(java.lang.String className,
 		long classPK, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ReportInstance> getReportInstances(java.lang.String className,
+		long classPK, int start, int end, OrderByComparator obc);
+
 	/**
 	* Returns a range of all the report instances.
 	*

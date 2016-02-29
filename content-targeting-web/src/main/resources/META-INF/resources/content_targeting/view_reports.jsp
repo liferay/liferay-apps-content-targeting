@@ -18,6 +18,8 @@
 
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 String backURL = ParamUtil.getString(request, "backURL");
 String keywords = ParamUtil.getString(request, "keywords");
@@ -85,7 +87,9 @@ else {
 portletURL.setParameter("className", className);
 portletURL.setParameter("classPK", String.valueOf(classPK));
 
-SearchContainerIterator searchContainerIterator = new ReportSearchContainerIterator(scopeGroupId, keywords, className, classPK);
+if (Validator.isNotNull(keywords)) {
+	portletURL.setParameter("keywords", keywords);
+}
 
 SearchContainer reportsSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, renderResponse), null, "no-reports-were-found");
 
@@ -93,15 +97,42 @@ reportsSearchContainer.setId("reports");
 reportsSearchContainer.setRowChecker(new ReportInstanceRowChecker(liferayPortletResponse));
 reportsSearchContainer.setSearch(true);
 
-reportsSearchContainer.setTotal(searchContainerIterator.getTotal());
-reportsSearchContainer.setResults(searchContainerIterator.getResults(reportsSearchContainer.getStart(), reportsSearchContainer.getEnd()));
+boolean orderByAsc = false;
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator<ReportInstance> orderByComparator = new ReportInstanceModifiedDateComparator(orderByAsc);
+
+reportsSearchContainer.setOrderByCol(orderByCol);
+reportsSearchContainer.setOrderByComparator(orderByComparator);
+reportsSearchContainer.setOrderByType(orderByType);
+
+if (Validator.isNotNull(keywords)) {
+	Sort sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+
+	BaseModelSearchResult<ReportInstance> searchResults = ReportInstanceLocalServiceUtil.searchReportInstances(scopeGroupId, className, classPK, keywords, reportsSearchContainer.getStart(), reportsSearchContainer.getEnd(), sort);
+
+	reportsSearchContainer.setTotal(searchResults.getLength());
+	reportsSearchContainer.setResults(searchResults.getBaseModels());
+}
+else {
+	int total = ReportInstanceLocalServiceUtil.getReportInstancesCount(className, classPK);
+
+	reportsSearchContainer.setTotal(total);
+
+	List results = ReportInstanceLocalServiceUtil.getReportInstances(className, classPK, reportsSearchContainer.getStart(), reportsSearchContainer.getEnd(), reportsSearchContainer.getOrderByComparator());
+
+	reportsSearchContainer.setResults(results);
+}
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale), "reports"));
 
-boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && Validator.isNull(keywords);
+boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Validator.isNull(keywords);
 %>
 
 <c:if test="<%= scopeGroup.isStagingGroup() %>">
@@ -144,6 +175,13 @@ boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && V
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"modified-date"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -197,7 +235,7 @@ boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && V
 				/>
 
 				<liferay-ui:search-container-column-date
-					name="last-update"
+					name="modified-date"
 					value="<%= reportInstance.getModifiedDate() %>"
 				/>
 
