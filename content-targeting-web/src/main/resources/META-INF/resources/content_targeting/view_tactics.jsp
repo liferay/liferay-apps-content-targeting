@@ -19,6 +19,8 @@
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+String keywords = ParamUtil.getString(request, "keywords");
+
 String redirect = ParamUtil.getString(request, "redirect");
 long campaignId = ParamUtil.getLong(request, "campaignId", 0);
 
@@ -34,14 +36,16 @@ portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_
 portletURL.setParameter("className", Campaign.class.getName());
 portletURL.setParameter("classPK", String.valueOf(campaignId));
 portletURL.setParameter("campaignId", String.valueOf(campaignId));
+
+SearchContainerIterator searchContainerIterator = new TacticSearchContainerIterator(campaignId, scopeGroupId, keywords);
+
+boolean hasUpdatePermission = CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item href="<%= currentURL %>" label="promotions" selected="<%= true %>" />
 	</aui:nav>
-
-	<%@ include file="/content_targeting/tactic_toolbar.jspf" %>
 
 	<aui:nav-bar-search>
 		<aui:form action="<%= portletURL %>" name="searchFm">
@@ -50,7 +54,10 @@ portletURL.setParameter("campaignId", String.valueOf(campaignId));
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	includeCheckBox="<%= hasUpdatePermission %>"
+	searchContainerId="tactics"
+>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
@@ -65,23 +72,24 @@ portletURL.setParameter("campaignId", String.valueOf(campaignId));
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
+
+	<c:if test="<%= hasUpdatePermission %>">
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteTactics" label="delete" />
+		</liferay-frontend:management-bar-action-buttons>
+	</c:if>
 </liferay-frontend:management-bar>
 
-<aui:form action="<%= portletURL %>" method="post" name="fmTactics">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="campaignId" type="hidden" value="<%= campaignId %>" />
-	<aui:input name="tacticsIds" type="hidden" />
+<portlet:actionURL name="deleteTactic" var="deleteTacticsURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
-	<%
-	String keywords = ParamUtil.getString(request, "keywords");
-
-	SearchContainerIterator searchContainerIterator = new TacticSearchContainerIterator(campaignId, scopeGroupId, keywords);
-	%>
-
+<aui:form action="<%= deleteTacticsURL %>" method="post" name="fmTactics">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-promotions-were-found"
+		id="tactics"
 		iteratorURL="<%= portletURL %>"
-		rowChecker="<%= new RowChecker(liferayPortletResponse) %>"
+		rowChecker="<%= new EmptyOnClickRowChecker(liferayPortletResponse) %>"
 		total="<%= searchContainerIterator.getTotal() %>"
 	>
 		<liferay-ui:search-container-results
@@ -112,7 +120,7 @@ portletURL.setParameter("campaignId", String.valueOf(campaignId));
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
+<c:if test="<%= hasUpdatePermission %>">
 	<liferay-portlet:renderURL var="addTacticURL">
 		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_TACTIC %>" />
 		<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
@@ -122,35 +130,15 @@ portletURL.setParameter("campaignId", String.valueOf(campaignId));
 	<liferay-frontend:add-menu>
 		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-promotion") %>' url="<%= addTacticURL %>" />
 	</liferay-frontend:add-menu>
-</c:if>
 
-<aui:script use="liferay-util-list-fields">
-	var deleteTactics = A.one('#<portlet:namespace />deleteTactics');
-
-	if (deleteTactics) {
-		A.one('#<portlet:namespace /><%= searchContainerReference.getId(request) %>SearchContainer').on(
-			'click',
-			function() {
-				var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fmTactics, '<portlet:namespace />allRowIds').length == 0);
-
-				deleteTactics.toggle(!hide);
-			},
-			'input[type=checkbox]'
-		);
-
-		deleteTactics.on(
+	<aui:script use="liferay-util-list-fields">
+		$('#<portlet:namespace />deleteTactics').on(
 			'click',
 			function(event) {
 				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-					document.<portlet:namespace />fmTactics.<portlet:namespace />tacticsIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fmTactics, '<portlet:namespace />allRowIds');
-
-					<portlet:actionURL name="deleteTactic" var="deleteTacticsURL">
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-					</portlet:actionURL>
-
-					submitForm(document.<portlet:namespace />fmTactics, '<%= deleteTacticsURL %>');
+					submitForm(document.<portlet:namespace />fmTactics);
 				}
 			}
 		);
-	}
-</aui:script>
+	</aui:script>
+</c:if>
