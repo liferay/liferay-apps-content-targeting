@@ -48,12 +48,6 @@ else {
 	endDate.add(Calendar.YEAR, 1);
 }
 
-String title = "new-campaign";
-
-if (campaign != null) {
-	title = campaign.getName(locale);
-}
-
 if (Validator.isNull(backURL)) {
 	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
 
@@ -62,21 +56,21 @@ if (Validator.isNull(backURL)) {
 
 	backURL = backURLObject.toString();
 }
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle((campaign != null) ? campaign.getName(locale) : LanguageUtil.get(portletConfig.getResourceBundle(locale), "new-campaign"));
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL.toString() %>"
-	title="<%= title %>"
-/>
-
-<liferay-portlet:renderURL var="portletURL">
+<portlet:renderURL var="portletURL">
 	<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
 	<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
 	<portlet:param name="classPK" value="<%= String.valueOf(campaignId) %>" />
 	<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
-</liferay-portlet:renderURL>
+</portlet:renderURL>
 
-<liferay-portlet:actionURL name="updateCampaign" var="addCampaignURL" />
+<portlet:actionURL name="updateCampaign" var="addCampaignURL" />
 
 <aui:form action="<%= addCampaignURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
