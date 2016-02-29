@@ -33,7 +33,6 @@ ReportInstance reportInstance = null;
 if (reportInstanceId > 0) {
 	reportInstance = ReportInstanceLocalServiceUtil.fetchReportInstance(reportInstanceId);
 }
-String reportName = (reportInstance != null) ? reportInstance.getName(locale) : "new-report";
 
 if (Validator.isNull(backURL)) {
 	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
@@ -57,12 +56,12 @@ templateContext.put("classPK", classPK);
 templateContext.put("reportInstance", reportInstance);
 templateContext.put("reportInstanceId", reportInstanceId);
 templateContext.put("reportKey", reportKey);
-%>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title="<%= reportName %>"
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle((reportInstance != null) ? reportInstance.getName(locale) : LanguageUtil.get(portletConfig.getResourceBundle(locale), "new-report"));
+%>
 
 <liferay-ui:error
 	key="com.liferay.content.targeting.exception.InvalidReportException"
