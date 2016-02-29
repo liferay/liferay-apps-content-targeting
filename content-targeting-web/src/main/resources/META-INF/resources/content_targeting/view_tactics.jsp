@@ -34,29 +34,29 @@ if (campaignId > 0) {
 	<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
 </liferay-portlet:renderURL>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= currentURL %>" label="tactics" selected="<%= true %>" />
+	</aui:nav>
+
+	<%@ include file="/content_targeting/tactic_toolbar.jspf" %>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= searchURL %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" name="keywords" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
 <aui:form action="<%= searchURL %>" method="post" name="fmTactics">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="campaignId" type="hidden" value="<%= campaignId %>" />
 	<aui:input name="tacticsIds" type="hidden" />
 
-	<aui:nav-bar>
-		<%@ include file="/content_targeting/tactic_toolbar.jspf" %>
-
-		<aui:nav-bar-search cssClass="pull-right">
-			<div class="form-search">
-				<liferay-ui:input-search
-					id="tacticskeywords"
-					name="tacticKeywords"
-					placeholder='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "keywords") %>'
-				/>
-			</div>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
-
 	<%
-	String tacticKeywords = ParamUtil.getString(request, "tacticKeywords");
+	String keywords = ParamUtil.getString(request, "keywords");
 
-	SearchContainerIterator searchContainerIterator = new TacticSearchContainerIterator(campaignId, scopeGroupId, tacticKeywords);
+	SearchContainerIterator searchContainerIterator = new TacticSearchContainerIterator(campaignId, scopeGroupId, keywords);
 	%>
 
 	<liferay-portlet:renderURL varImpl="viewTacticsURL">
