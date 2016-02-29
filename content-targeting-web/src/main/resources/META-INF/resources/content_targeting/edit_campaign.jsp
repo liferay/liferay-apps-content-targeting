@@ -35,7 +35,7 @@ if (campaignId > 0) {
 String campaignTabs ="details";
 
 if (campaign != null) {
-	campaignTabs ="details,promotions,reports";
+	campaignTabs ="details,promotions";
 }
 
 if (Validator.isNull(backURL)) {
@@ -74,11 +74,6 @@ if (Validator.isNull(backURL)) {
 	<c:if test="<%= campaign != null %>">
 		<liferay-ui:section>
 			<liferay-util:include page="/content_targeting/view_tactics.jsp" servletContext="<%= application %>">
-			</liferay-util:include>
-		</liferay-ui:section>
-
-		<liferay-ui:section>
-			<liferay-util:include page="/content_targeting/view_reports.jsp" servletContext="<%= application %>">
 			</liferay-util:include>
 		</liferay-ui:section>
 	</c:if>

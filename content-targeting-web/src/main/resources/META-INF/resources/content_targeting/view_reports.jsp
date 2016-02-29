@@ -54,12 +54,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("redirect", redirect);
 
 if (Campaign.class.getName().equals(className)) {
-	portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_CAMPAIGN);
+	portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
 	portletURL.setParameter("campaignId", String.valueOf(classPK));
-	portletURL.setParameter("tabs2", "reports");
 }
 else if (UserSegment.class.getName().equals(className)) {
-	portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS);
+	portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT);
 	portletURL.setParameter("userSegmentId", String.valueOf(classPK));
 }
 else {

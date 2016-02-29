@@ -40,19 +40,17 @@ if (Validator.isBlank(backURL)) {
 	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
 
 	if (Campaign.class.getName().equals(className)) {
-		backURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_CAMPAIGN);
+		backURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
 		backURLObject.setParameter("className", Campaign.class.getName());
 		backURLObject.setParameter("classPK", String.valueOf(classPK));
 		backURLObject.setParameter("campaignId", String.valueOf(classPK));
 	}
 	else {
-		backURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_USER_SEGMENT);
+		backURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT);
 		backURLObject.setParameter("className", UserSegment.class.getName());
 		backURLObject.setParameter("classPK", String.valueOf(classPK));
 		backURLObject.setParameter("userSegmentId", String.valueOf(classPK));
 	}
-
-	backURLObject.setParameter("tabs2", "reports");
 
 	backURL = backURLObject.toString();
 }

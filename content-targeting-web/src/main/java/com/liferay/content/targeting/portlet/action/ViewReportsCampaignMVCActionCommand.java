@@ -16,11 +16,13 @@ package com.liferay.content.targeting.portlet.action;
 
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
-import com.liferay.content.targeting.model.UserSegment;
+import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.util.PortletKeys;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -37,18 +39,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Pavel Savinov
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + PortletKeys.CT_ADMIN,
-		"mvc.command.name=" + ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT
+		"mvc.command.name=" + ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewReportsUserSegmentMVCActionCommand
-	extends BaseMVCRenderCommand {
+public class ViewReportsCampaignMVCActionCommand extends BaseMVCRenderCommand {
 
 	@Override
 	public String doRender(
@@ -58,35 +59,37 @@ public class ViewReportsUserSegmentMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long userSegmentId = ParamUtil.getLong(renderRequest, "userSegmentId");
+		long campaignId = ParamUtil.getLong(renderRequest, "campaignId");
+
+		if (campaignId <= 0) {
+			return ContentTargetingPath.ERROR;
+		}
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
 
 		Map<String, Report> reports = _reportsRegistry.getReports(
-			UserSegment.class.getName());
+			Campaign.class.getName());
 
 		renderRequest.setAttribute("reports", reports.values());
 
-		if (userSegmentId > 0) {
-			for (Report report : reports.values()) {
-				if (report.isInstantiable()) {
-					continue;
-				}
-
-				if (_reportInstanceLocalService.getReportInstanceCount(
-						report.getReportKey(), UserSegment.class.getName(),
-						userSegmentId) > 0) {
-
-					continue;
-				}
-
-				_reportInstanceLocalService.addReportInstance(
-					themeDisplay.getUserId(), report.getReportKey(),
-					UserSegment.class.getName(), userSegmentId,
-					StringPool.BLANK, serviceContext);
+		for (Report report : reports.values()) {
+			if (report.isInstantiable()) {
+				continue;
 			}
+
+			if (_reportInstanceLocalService.getReportInstanceCount(
+					report.getReportKey(), Campaign.class.getName(),
+					campaignId) > 0) {
+
+				continue;
+			}
+
+			_reportInstanceLocalService.addReportInstance(
+				themeDisplay.getUserId(), report.getReportKey(),
+				Campaign.class.getName(), campaignId, StringPool.BLANK,
+				serviceContext);
 		}
 
 		return ContentTargetingPath.VIEW_REPORTS;
@@ -111,6 +114,9 @@ public class ViewReportsUserSegmentMVCActionCommand
 	protected void unsetReportsRegistry() {
 		_reportsRegistry = null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewReportsCampaignMVCActionCommand.class);
 
 	private ReportInstanceLocalService _reportInstanceLocalService;
 	private ReportsRegistry _reportsRegistry;
