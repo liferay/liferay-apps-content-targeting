@@ -40,12 +40,8 @@ long tacticId = ParamUtil.getLong(request, "tacticId");
 
 Tactic tactic = null;
 
-String title = "new-promotion";
-
 if (tacticId > 0) {
 	tactic = TacticLocalServiceUtil.fetchTactic(tacticId);
-
-	title = tactic.getName(locale);
 }
 
 if (Validator.isNull(backURL)) {
@@ -58,17 +54,14 @@ if (Validator.isNull(backURL)) {
 
 	backURL = backURLObject.toString();
 }
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle((tactic != null) ? tactic.getName(locale) : LanguageUtil.get(portletConfig.getResourceBundle(locale), "new-promotion"));
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL.toString() %>"
-	title="<%= title %>"
-/>
-
-<liferay-ui:error
-	key="com.liferay.content.targeting.exception.InvalidChannelsException"
-	message="there-is-an-error-in-one-of-your-channels"
-/>
+<liferay-ui:error key="com.liferay.content.targeting.exception.InvalidChannelsException" message="there-is-an-error-in-one-of-your-channels" />
 
 <liferay-portlet:actionURL name="updateTactic" var="addTacticURL" />
 
