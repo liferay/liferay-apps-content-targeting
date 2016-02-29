@@ -14,18 +14,68 @@
 
 package com.liferay.content.targeting.report.campaign.content.messaging;
 
-import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalServiceUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.content.targeting.report.campaign.content.configuration.CampaignContentReportServiceConfiguration;
+import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalService;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
-public class CheckML extends BaseMessageListener {
+@Component(immediate = true, service = CheckML.class)
+public class CheckML extends BaseSchedulerEntryMessageListener {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		CampaignContentReportServiceConfiguration
+			campaignContentReportServiceConfiguration =
+				Configurable.createConfigurable(
+					CampaignContentReportServiceConfiguration.class,
+					properties);
+
+		schedulerEntryImpl.setTrigger(
+			TriggerFactoryUtil.createTrigger(
+				getEventListenerClass(), getEventListenerClass(),
+				campaignContentReportServiceConfiguration.
+					campaignContentReportCheckInterval(),
+				TimeUnit.HOUR));
+
+		_schedulerEngineHelper.register(
+			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		CampaignContentLocalServiceUtil.checkCampaignContentEvents();
+		_campaignContentLocalService.checkCampaignContentEvents();
 	}
+
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTriggerFactory(TriggerFactory triggerFactory) {
+	}
+
+	private CampaignContentLocalService _campaignContentLocalService;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }
