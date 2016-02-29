@@ -44,9 +44,9 @@ public class CheckML extends BaseSchedulerEntryMessageListener {
 	protected void activate(Map<String, Object> properties) {
 		UserSegmentContentReportServiceConfiguration
 			userSegmentContentReportServiceConfiguration =
-			Configurable.createConfigurable(
-				UserSegmentContentReportServiceConfiguration.class,
-				properties);
+				Configurable.createConfigurable(
+					UserSegmentContentReportServiceConfiguration.class,
+					properties);
 
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
@@ -83,7 +83,6 @@ public class CheckML extends BaseSchedulerEntryMessageListener {
 	}
 
 	private SchedulerEngineHelper _schedulerEngineHelper;
-
 	private UserSegmentContentLocalService _userSegmentContentLocalService;
 
 }

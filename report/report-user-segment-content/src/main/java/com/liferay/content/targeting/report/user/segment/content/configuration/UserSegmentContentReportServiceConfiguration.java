@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.report.user.segment.content.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -22,13 +23,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "content-targeting")
 @Meta.OCD(
-    id = "com.liferay.content.targeting.report.user.segment.content.configuration.UserSegmentContentReportServiceConfiguration",
-    localization = "content/Language",
-    name = "%content.targeting.report.user.segment.content.configuration.name"
+	id = "com.liferay.content.targeting.report.user.segment.content.configuration.UserSegmentContentReportServiceConfiguration",
+	localization = "content/Language",
+	name = "%content.targeting.report.user.segment.content.configuration.name"
 )
 public interface UserSegmentContentReportServiceConfiguration {
 
-    @Meta.AD(deflt = "24", required = false)
-    public int userSegmentContentReportCheckInterval();
+	@Meta.AD(deflt = "24", required = false)
+	public int userSegmentContentReportCheckInterval();
 
 }

@@ -23,13 +23,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "content-targeting")
 @Meta.OCD(
-    id = "com.liferay.content.targeting.report.campaign.content.configuration.CampaignContentReportServiceConfiguration",
-    localization = "content/Language",
-    name = "%content.targeting.report.campaign.content.configuration.name"
+	id = "com.liferay.content.targeting.report.campaign.content.configuration.CampaignContentReportServiceConfiguration",
+	localization = "content/Language",
+	name = "%content.targeting.report.campaign.content.configuration.name"
 )
 public interface CampaignContentReportServiceConfiguration {
 
-    @Meta.AD(deflt = "24", required = false)
-    public int campaignContentReportCheckInterval();
+	@Meta.AD(deflt = "24", required = false)
+	public int campaignContentReportCheckInterval();
 
 }

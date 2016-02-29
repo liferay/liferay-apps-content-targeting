@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.report.campaign.tracking.action.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -22,13 +23,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "content-targeting")
 @Meta.OCD(
-    id = "com.liferay.content.targeting.report.campaign.tracking.action.configuration.CampaignTrackingActionReportServiceConfiguration",
-    localization = "content/Language",
-    name = "%content.targeting.report.campaign.tracking.action.configuration.name"
+	id = "com.liferay.content.targeting.report.campaign.tracking.action.configuration.CampaignTrackingActionReportServiceConfiguration",
+	localization = "content/Language",
+	name = "%content.targeting.report.campaign.tracking.action.configuration.name"
 )
 public interface CampaignTrackingActionReportServiceConfiguration {
 
-    @Meta.AD(deflt = "24", required = false)
-    public int campaignTrackingActionReportCheckInterval();
+	@Meta.AD(deflt = "24", required = false)
+	public int campaignTrackingActionReportCheckInterval();
 
 }

@@ -78,5 +78,4 @@ public class CheckML extends BaseSchedulerEntryMessageListener {
 	private CampaignContentLocalService _campaignContentLocalService;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
-
 }
