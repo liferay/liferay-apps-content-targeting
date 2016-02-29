@@ -41,7 +41,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 
 		<c:if test="<%= reportsCount > 0 %>">
 			<portlet:renderURL var="viewUserSegmentReportsURL">
-				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORTS %>" />
+				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="className" value="<%= UserSegment.class.getName() %>" />
 				<portlet:param name="classPK" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />

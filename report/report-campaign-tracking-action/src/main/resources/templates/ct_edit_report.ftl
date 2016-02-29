@@ -27,7 +27,7 @@
 	type="hidden"
 />
 
-<@liferay_ui["panel"] cssClass="tracking-actions-panel" collapsible=false defaultState="open" extended=false id="trackingActionPanel" helpMessage="metrics-help" persistState=true title="metrics">
+<div class="tracking-actions-panel">
 	<div class="component property-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
 		<div class="property-builder-content form-builder-content" id="formBuilderCB">
 			<div class="tabbable">
@@ -122,7 +122,7 @@
 
 		</div>
 	</div>
-</@>
+</div>
 
 <@liferay_aui["script"] use="liferay-ct-form-builder">
 	var reportBuilder = new A.LiferayCTFormBuilder(

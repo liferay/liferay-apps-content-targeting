@@ -51,6 +51,7 @@ if (Validator.isNull(backURL)) {
 }
 
 Map<String, Object> templateContext = (Map<String, Object>)request.getAttribute("templateContext");
+
 templateContext.put("className", className);
 templateContext.put("classPK", classPK);
 templateContext.put("reportInstance", reportInstance);
@@ -70,7 +71,7 @@ templateContext.put("reportKey", reportKey);
 
 <liferay-portlet:actionURL name="updateReportInstance" var="addReportInstanceURL" />
 
-<aui:form action="<%= addReportInstanceURL %>" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
+<aui:form action="<%= addReportInstanceURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="className" type="hidden" value="<%= className %>" />
@@ -95,18 +96,24 @@ templateContext.put("reportKey", reportKey);
 		</c:choose>
 	</liferay-ui:error>
 
-	<aui:input name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="name" />
 
-	<aui:input name="description" />
+			<aui:input name="description" />
+		</aui:fieldset>
 
-	<%= report.getEditHTML(reportInstance, templateContext) %>
+		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" helpMessage="metrics-help" label="metrics">
+			<%= report.getEditHTML(reportInstance, templateContext) %>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="control-button" type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button cssClass="control-button" onClick="saveAndContinue();" value="save-and-continue" />
+		<aui:button cssClass="btn-lg" onClick="saveAndContinue();" value="save-and-continue" />
 
-		<aui:button cssClass="control-button" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 
 	<aui:script use="aui-toggler,liferay-ct-form-builder">
