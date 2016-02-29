@@ -18,17 +18,21 @@
 
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 boolean includeCheckBox = ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_CAMPAIGN);
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-SearchContainerIterator searchContainerIterator = new CampaignSearchContainerIterator(scopeGroupId, keywords);
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
 portletURL.setParameter("tabs1", "campaigns");
+
+if (Validator.isNotNull(keywords)) {
+	portletURL.setParameter("keywords", keywords);
+}
 
 SearchContainer campaignSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, renderResponse), null, "no-campaigns-were-found");
 
@@ -36,10 +40,37 @@ campaignSearchContainer.setId("campaigns");
 campaignSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
 campaignSearchContainer.setSearch(Validator.isNotNull(keywords));
 
-campaignSearchContainer.setTotal(searchContainerIterator.getTotal());
-campaignSearchContainer.setResults(searchContainerIterator.getResults(campaignSearchContainer.getStart(), campaignSearchContainer.getEnd()));
+boolean orderByAsc = false;
 
-boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && Validator.isNull(keywords);
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator<Campaign> orderByComparator = new CampaignModifiedDateComparator(orderByAsc);
+
+campaignSearchContainer.setOrderByCol(orderByCol);
+campaignSearchContainer.setOrderByComparator(orderByComparator);
+campaignSearchContainer.setOrderByType(orderByType);
+
+if (Validator.isNotNull(keywords)) {
+	Sort sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+
+	BaseModelSearchResult<Campaign> searchResults = CampaignLocalServiceUtil.searchCampaigns(scopeGroupId, keywords, campaignSearchContainer.getStart(), campaignSearchContainer.getEnd(), sort);
+
+	campaignSearchContainer.setTotal(searchResults.getLength());
+	campaignSearchContainer.setResults(searchResults.getBaseModels());
+}
+else {
+	int total = CampaignLocalServiceUtil.getCampaignsCount(scopeGroupId);
+
+	campaignSearchContainer.setTotal(total);
+
+	List results = CampaignLocalServiceUtil.getCampaigns(scopeGroupId, campaignSearchContainer.getStart(), campaignSearchContainer.getEnd(), campaignSearchContainer.getOrderByComparator());
+
+	campaignSearchContainer.setResults(results);
+}
+
+boolean isDisabledManagementBar = (campaignSearchContainer.getTotal() <= 0) && Validator.isNull(keywords);
 %>
 
 <liferay-util:include page="/content_targeting/navigation_bar.jsp" servletContext="<%= application %>">
@@ -62,6 +93,13 @@ boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && V
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"modified-date"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -95,6 +133,11 @@ boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && V
 			<liferay-ui:search-container-column-text
 				name="description"
 				value="<%= campaign.getDescription(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				name="modified-date"
+				value="<%= campaign.getModifiedDate() %>"
 			/>
 
 			<liferay-ui:search-container-column-date
