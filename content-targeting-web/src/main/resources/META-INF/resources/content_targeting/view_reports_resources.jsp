@@ -55,6 +55,7 @@ SearchContainerIterator searchContainerIterator = new ReportSearchContainerItera
 <c:if test="<%= classPK > 0 %>">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-reports-were-found"
+		id="reports"
 		iteratorURL="<%= viewReportsURL %>"
 		rowChecker="<%= reportsRowChecker %>"
 		total="<%= searchContainerIterator.getTotal() %>"
@@ -108,37 +109,3 @@ SearchContainerIterator searchContainerIterator = new ReportSearchContainerItera
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </c:if>
-
-<aui:script use="liferay-util-list-fields">
-	var deleteReports = A.one('#<portlet:namespace />deleteReports');
-
-	if (deleteReports) {
-		A.one('#<portlet:namespace /><%= searchContainerReference.getId(request) %>SearchContainer').on(
-			'click',
-			function() {
-				var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fmReports, '<portlet:namespace />allRowIds').length == 0);
-
-				deleteReports.toggle(!hide);
-			},
-			'input[type=checkbox]'
-		);
-
-		deleteReports.on(
-			'click',
-			function(event) {
-				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-					document.<portlet:namespace />fmReports.<portlet:namespace />reportInstanceIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fmReports, '<portlet:namespace />allRowIds');
-
-					<liferay-portlet:actionURL name="deleteReportInstance" var="deleteReportsURL">
-						<portlet:param
-							name="redirect"
-							value="<%= viewReportsURL.toString() %>"
-						/>
-					</liferay-portlet:actionURL>
-
-					submitForm(document.<portlet:namespace />fmReports, '<%= deleteReportsURL %>');
-				}
-			}
-		);
-	}
-</aui:script>

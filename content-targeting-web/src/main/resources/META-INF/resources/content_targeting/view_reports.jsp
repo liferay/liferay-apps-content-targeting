@@ -37,6 +37,17 @@ for (Report report : reports) {
 	}
 }
 
+boolean hasUpdatePermission = false;
+
+if (instantiableExists) {
+	if (Campaign.class.getName().equals(className) && CampaignPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE)) {
+		hasUpdatePermission = true;
+	}
+	else if (UserSegment.class.getName().equals(className) && UserSegmentPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE)) {
+		hasUpdatePermission = true;
+	}
+}
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("redirect", redirect);
@@ -85,7 +96,10 @@ renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale)
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	includeCheckBox="<%= hasUpdatePermission %>"
+	searchContainerId="reports"
+>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
@@ -100,15 +114,20 @@ renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale)
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
+
+	<c:if test="<%= hasUpdatePermission %>">
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteReports" label="delete" />
+		</liferay-frontend:management-bar-action-buttons>
+	</c:if>
 </liferay-frontend:management-bar>
 
-<aui:form action="<%= portletURL %>" cssClass="container-fluid-1280" method="post" name="fmReports">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="reportInstanceIds" type="hidden" />
+<portlet:actionURL name="deleteReportInstance" var="deleteReportsURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
+<aui:form action="<%= deleteReportsURL %>" cssClass="container-fluid-1280" method="post" name="fmReports">
 	<div id="<portlet:namespace />reportsPanel">
-		<%@ include file="/content_targeting/report_toolbar.jspf" %>
-
 		<liferay-util:include page="/content_targeting/view_reports_resources.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="className" value="<%= className %>" />
 			<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
@@ -116,20 +135,7 @@ renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale)
 	</div>
 </aui:form>
 
-<%
-boolean showAddButton = false;
-
-if (instantiableExists) {
-	if (Campaign.class.getName().equals(className) && CampaignPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE)) {
-	   showAddButton = true;
-	}
-	else if (UserSegment.class.getName().equals(className) && UserSegmentPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE)) {
-		showAddButton = true;
-	}
-}
-%>
-
-<c:if test="<%= showAddButton %>">
+<c:if test="<%= hasUpdatePermission %>">
 	<liferay-frontend:add-menu>
 
 		<%
@@ -178,4 +184,15 @@ if (instantiableExists) {
 			namespace: '<portlet:namespace />'
 		}
 	);
+
+	<c:if test="<%= hasUpdatePermission %>">
+		$('#<portlet:namespace />deleteReports').on(
+			'click',
+			function(event) {
+				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+					submitForm(document.<portlet:namespace />fmReports);
+				}
+			}
+		);
+	</c:if>
 </aui:script>

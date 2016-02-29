@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -60,8 +59,8 @@ public class DeleteReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 				deleteReportInstanceIds = new long[] {reportInstanceId};
 			}
 			else {
-				deleteReportInstanceIds = StringUtil.split(
-					ParamUtil.getString(request, "reportInstanceIds"), 0L);
+				deleteReportInstanceIds = ParamUtil.getLongValues(
+					request, "rowIds");
 			}
 
 			for (long deleteReportInstanceId : deleteReportInstanceIds) {
