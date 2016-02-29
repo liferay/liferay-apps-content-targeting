@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
+
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 String keywords = ParamUtil.getString(request, "keywords");
@@ -29,6 +31,15 @@ if (campaignId > 0) {
 	campaign = CampaignLocalServiceUtil.fetchCampaign(campaignId);
 }
 
+if (Validator.isNull(backURL)) {
+	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
+
+	backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
+	backURLObject.setParameter("tabs1", "campaigns");
+
+	backURL = backURLObject.toString();
+}
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_TACTICS);
@@ -39,6 +50,11 @@ portletURL.setParameter("campaignId", String.valueOf(campaignId));
 SearchContainerIterator searchContainerIterator = new TacticSearchContainerIterator(campaignId, scopeGroupId, keywords);
 
 boolean hasUpdatePermission = CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(campaign.getName(locale));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
