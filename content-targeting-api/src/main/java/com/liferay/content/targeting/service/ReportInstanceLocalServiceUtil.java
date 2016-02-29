@@ -300,6 +300,13 @@ public class ReportInstanceLocalServiceUtil {
 		return getService().getReportInstances(className, classPK, start, end);
 	}
 
+	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
+		java.lang.String className, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		return getService()
+				   .getReportInstances(className, classPK, start, end, obc);
+	}
+
 	/**
 	* Returns a range of all the report instances.
 	*
@@ -355,6 +362,11 @@ public class ReportInstanceLocalServiceUtil {
 		return getService().getReportInstancesCount();
 	}
 
+	public static int getReportInstancesCount(java.lang.String className,
+		long classPK) {
+		return getService().getReportInstancesCount(className, classPK);
+	}
+
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> searchReportInstances(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String keywords, int start, int end)
@@ -362,6 +374,16 @@ public class ReportInstanceLocalServiceUtil {
 		return getService()
 				   .searchReportInstances(groupId, className, classPK,
 			keywords, start, end);
+	}
+
+	public static com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.ReportInstance> searchReportInstances(
+		long groupId, java.lang.String className, long classPK,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchReportInstances(groupId, className, classPK,
+			keywords, start, end, sort);
 	}
 
 	/**

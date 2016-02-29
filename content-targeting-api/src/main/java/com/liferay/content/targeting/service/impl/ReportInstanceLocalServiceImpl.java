@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
@@ -213,6 +214,15 @@ public class ReportInstanceLocalServiceImpl
 
 		return reportInstancePersistence.findByC_C(
 			className, classPK, start, end);
+	}
+
+	@Override
+	public List<ReportInstance> getReportInstances(
+		String className, long classPK, int start, int end,
+		OrderByComparator obc) {
+
+		return reportInstancePersistence.findByC_C(
+			className, classPK, start, end, obc);
 	}
 
 	@Override
