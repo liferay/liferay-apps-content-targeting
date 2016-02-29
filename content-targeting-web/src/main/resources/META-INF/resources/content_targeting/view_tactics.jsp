@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 String redirect = ParamUtil.getString(request, "redirect");
 long campaignId = ParamUtil.getLong(request, "campaignId", 0);
 
@@ -25,30 +27,47 @@ Campaign campaign = null;
 if (campaignId > 0) {
 	campaign = CampaignLocalServiceUtil.fetchCampaign(campaignId);
 }
-%>
 
-<liferay-portlet:renderURL var="searchURL">
-	<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_TACTICS %>" />
-	<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
-	<portlet:param name="classPK" value="<%= String.valueOf(campaignId) %>" />
-	<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
-</liferay-portlet:renderURL>
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_TACTICS);
+portletURL.setParameter("className", Campaign.class.getName());
+portletURL.setParameter("classPK", String.valueOf(campaignId));
+portletURL.setParameter("campaignId", String.valueOf(campaignId));
+%>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= currentURL %>" label="tactics" selected="<%= true %>" />
+		<aui:nav-item href="<%= currentURL %>" label="promotions" selected="<%= true %>" />
 	</aui:nav>
 
 	<%@ include file="/content_targeting/tactic_toolbar.jspf" %>
 
 	<aui:nav-bar-search>
-		<aui:form action="<%= searchURL %>" name="searchFm">
+		<aui:form action="<%= portletURL %>" name="searchFm">
 			<liferay-ui:input-search markupView="lexicon" name="keywords" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<aui:form action="<%= searchURL %>" method="post" name="fmTactics">
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
+<aui:form action="<%= portletURL %>" method="post" name="fmTactics">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="campaignId" type="hidden" value="<%= campaignId %>" />
 	<aui:input name="tacticsIds" type="hidden" />
@@ -59,16 +78,9 @@ if (campaignId > 0) {
 	SearchContainerIterator searchContainerIterator = new TacticSearchContainerIterator(campaignId, scopeGroupId, keywords);
 	%>
 
-	<liferay-portlet:renderURL varImpl="viewTacticsURL">
-		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_TACTICS %>" />
-		<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
-		<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
-		<portlet:param name="classPK" value="<%= String.valueOf(campaignId) %>" />
-	</liferay-portlet:renderURL>
-
 	<liferay-ui:search-container
 		emptyResultsMessage="no-promotions-were-found"
-		iteratorURL="<%= viewTacticsURL %>"
+		iteratorURL="<%= portletURL %>"
 		rowChecker="<%= new RowChecker(liferayPortletResponse) %>"
 		total="<%= searchContainerIterator.getTotal() %>"
 	>
