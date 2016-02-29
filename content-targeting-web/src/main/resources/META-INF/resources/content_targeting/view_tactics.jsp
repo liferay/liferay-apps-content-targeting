@@ -53,10 +53,51 @@ if (campaignId > 0) {
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 
-	<div id="<portlet:namespace />tacticsPanel">
-		<liferay-util:include page="/content_targeting/view_tactics_resources.jsp" servletContext="<%= application %>">
-		</liferay-util:include>
-	</div>
+	<%
+	String tacticKeywords = ParamUtil.getString(request, "tacticKeywords");
+
+	SearchContainerIterator searchContainerIterator = new TacticSearchContainerIterator(campaignId, scopeGroupId, tacticKeywords);
+	%>
+
+	<liferay-portlet:renderURL varImpl="viewTacticsURL">
+		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_TACTICS %>" />
+		<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
+		<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
+		<portlet:param name="classPK" value="<%= String.valueOf(campaignId) %>" />
+	</liferay-portlet:renderURL>
+
+	<liferay-ui:search-container
+		emptyResultsMessage="no-promotions-were-found"
+		iteratorURL="<%= viewTacticsURL %>"
+		rowChecker="<%= new RowChecker(liferayPortletResponse) %>"
+		total="<%= searchContainerIterator.getTotal() %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
+		/>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.content.targeting.model.Tactic"
+			keyProperty="tacticId"
+			modelVar="tactic"
+		>
+			<liferay-ui:search-container-column-text
+				name="name"
+				value="<%= tactic.getName(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="description"
+				value="<%= tactic.getDescription(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				path="/content_targeting/tactic_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
 </aui:form>
 
 <c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
@@ -71,16 +112,33 @@ if (campaignId > 0) {
 	</liferay-frontend:add-menu>
 </c:if>
 
-<aui:script use="liferay-ajax-search">
-	var tacticsPanel = A.one('#<portlet:namespace />tacticsPanel');
-	var inputNode = A.one('#<portlet:namespace />tacticskeywords');
+<aui:script use="liferay-util-list-fields">
+	var deleteTactics = A.one('#<portlet:namespace />deleteTactics');
 
-	var search = new Liferay.AjaxContentSearch(
-		{
-			contentPanel: tacticsPanel,
-			inputNode: inputNode,
-			resourceURL: '<liferay-portlet:resourceURL><portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW_TACTICS_RESOURCES %>" /></liferay-portlet:resourceURL>',
-			namespace: '<portlet:namespace />'
-		}
-	);
+	if (deleteTactics) {
+		A.one('#<portlet:namespace /><%= searchContainerReference.getId(request) %>SearchContainer').on(
+			'click',
+			function() {
+				var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fmTactics, '<portlet:namespace />allRowIds').length == 0);
+
+				deleteTactics.toggle(!hide);
+			},
+			'input[type=checkbox]'
+		);
+
+		deleteTactics.on(
+			'click',
+			function(event) {
+				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+					document.<portlet:namespace />fmTactics.<portlet:namespace />tacticsIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fmTactics, '<portlet:namespace />allRowIds');
+
+					<portlet:actionURL name="deleteTactic" var="deleteTacticsURL">
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:actionURL>
+
+					submitForm(document.<portlet:namespace />fmTactics, '<%= deleteTacticsURL %>');
+				}
+			}
+		);
+	}
 </aui:script>
