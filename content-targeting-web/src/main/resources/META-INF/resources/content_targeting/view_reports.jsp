@@ -261,7 +261,7 @@ boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Va
 
 			<portlet:renderURL var="addReportURL">
 				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_REPORT %>" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 
 				<c:choose>
 					<c:when test="<%= Campaign.class.getName().equals(className) %>">
