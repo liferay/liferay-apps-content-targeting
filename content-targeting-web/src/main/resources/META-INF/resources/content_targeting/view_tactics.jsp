@@ -59,6 +59,18 @@ if (campaignId > 0) {
 	</div>
 </aui:form>
 
+<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
+	<liferay-portlet:renderURL var="addTacticURL">
+		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_TACTIC %>" />
+		<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</liferay-portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-promotion") %>' url="<%= addTacticURL %>" />
+	</liferay-frontend:add-menu>
+</c:if>
+
 <aui:script use="liferay-ajax-search">
 	var tacticsPanel = A.one('#<portlet:namespace />tacticsPanel');
 	var inputNode = A.one('#<portlet:namespace />tacticskeywords');

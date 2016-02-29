@@ -16,25 +16,6 @@
 
 <aui:nav>
 	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
-		<liferay-portlet:renderURL var="redirectURL">
-			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_TACTICS %>" />
-			<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
-			<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(campaignId) %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-portlet:renderURL var="addTacticURL">
-			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_TACTIC %>" />
-			<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
-			<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
-		</liferay-portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= addTacticURL %>"
-			iconCssClass="icon-plus"
-			label='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-promotion") %>'
-		/>
-
 		<aui:nav-item
 			cssClass="hide"
 			iconCssClass="icon-remove"
