@@ -180,6 +180,7 @@ public class PageVisitedRule extends BaseRule {
 
 		try {
 			long liveGroupId = themeDisplay.getSiteGroupIdOrLiveGroupId();
+
 			Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 				liveGroupId, privateLayout, friendlyURL);
 
