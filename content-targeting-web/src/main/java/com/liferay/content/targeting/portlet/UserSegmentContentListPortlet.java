@@ -18,8 +18,8 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
@@ -50,6 +50,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -118,7 +119,7 @@ public class UserSegmentContentListPortlet extends MVCPortlet {
 				entryQuery.setClassNameIds(classNameIds);
 				entryQuery.setEnablePermissions(true);
 
-				assetEntries = AssetEntryServiceUtil.getEntries(entryQuery);
+				assetEntries = _assetEntryService.getEntries(entryQuery);
 
 				renderRequest.setAttribute("view.jsp-results", new ArrayList());
 				renderRequest.setAttribute(
@@ -140,8 +141,8 @@ public class UserSegmentContentListPortlet extends MVCPortlet {
 				renderRequest, "assetEntryId");
 
 			if (assetEntryId > 0) {
-				AssetEntry assetEntry =
-					AssetEntryLocalServiceUtil.fetchAssetEntry(assetEntryId);
+				AssetEntry assetEntry = _assetEntryLocalService.fetchAssetEntry(
+					assetEntryId);
 
 				AssetRendererFactory assetRendererFactory =
 					AssetRendererFactoryRegistryUtil.
@@ -240,7 +241,22 @@ public class UserSegmentContentListPortlet extends MVCPortlet {
 		return super.getPath(portletRequest, portletResponse);
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetEntryService(AssetEntryService assetEntryService) {
+		_assetEntryService = assetEntryService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserSegmentContentListPortlet.class);
+
+	private AssetEntryLocalService _assetEntryLocalService;
+	private AssetEntryService _assetEntryService;
 
 }

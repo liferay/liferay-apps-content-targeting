@@ -30,7 +30,7 @@ import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.ChannelInstanceLocalService;
 import com.liferay.content.targeting.service.ChannelInstanceService;
 import com.liferay.content.targeting.service.TacticService;
-import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -115,9 +115,8 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 					: userSegmentAssetCategoryIds) {
 
 				UserSegment userSegment =
-					UserSegmentLocalServiceUtil.
-						fetchUserSegmentByAssetCategoryId(
-							userSegmentAssetCategoryId);
+					_userSegmentLocalService.fetchUserSegmentByAssetCategoryId(
+						userSegmentAssetCategoryId);
 
 				userSegmentIds[userSegmentCount++] =
 					userSegment.getUserSegmentId();
@@ -216,6 +215,13 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 	)
 	protected void setMVCRenderCommand(MVCRenderCommand mvcRenderCommand) {
 		_mvcRenderCommand = mvcRenderCommand;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
 	}
 
 	protected void unsetChannelInstanceLocalService() {
@@ -341,6 +347,7 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 	private ChannelsRegistry _channelsRegistry;
 	private MVCRenderCommand _mvcRenderCommand;
 	private volatile TacticService _tacticService;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 	private class TacticCallable implements Callable<Tactic> {
 

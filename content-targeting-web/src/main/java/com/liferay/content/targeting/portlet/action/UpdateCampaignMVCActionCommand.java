@@ -22,7 +22,7 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.CampaignService;
-import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -101,9 +101,8 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 					: userSegmentAssetCategoryIds) {
 
 				UserSegment userSegment =
-					UserSegmentLocalServiceUtil.
-						fetchUserSegmentByAssetCategoryId(
-							userSegmentAssetCategoryId);
+					_userSegmentLocalService.fetchUserSegmentByAssetCategoryId(
+						userSegmentAssetCategoryId);
 
 				userSegmentIds[userSegmentCount++] =
 					userSegment.getUserSegmentId();
@@ -180,6 +179,13 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 		_campaignService = campaignService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
 	protected void unsetCampaignService() {
 		_campaignService = null;
 	}
@@ -188,6 +194,7 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 		UpdateCampaignMVCActionCommand.class);
 
 	private CampaignService _campaignService;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 	private class CampaignCallable implements Callable<Campaign> {
 

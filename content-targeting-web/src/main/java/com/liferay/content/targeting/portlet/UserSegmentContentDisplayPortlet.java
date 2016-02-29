@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -212,6 +212,13 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 		return selectableAssetRendererFactories;
 	}
 
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.content.targeting.analytics.web)",
 		unbind = "-"
@@ -238,7 +245,7 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 
 		group = group.getStagingGroup();
 
-		layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+		layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layout.getUuid(), group.getGroupId(), layout.isPrivateLayout());
 
 		return PortletPermissionUtil.contains(
@@ -250,5 +257,6 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 		UserSegmentContentDisplayPortlet.class);
 
 	private ServletContext _analyticsServletContext;
+	private LayoutLocalService _layoutLocalService;
 
 }

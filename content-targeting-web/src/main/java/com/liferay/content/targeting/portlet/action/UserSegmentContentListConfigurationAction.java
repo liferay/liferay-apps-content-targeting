@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -52,6 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -125,7 +126,7 @@ public class UserSegmentContentListConfigurationAction
 		List<String> modelResources = new ArrayList<>();
 
 		for (long classNameId : availableClassNameIds) {
-			ClassName className = ClassNameLocalServiceUtil.getClassName(
+			ClassName className = _classNameLocalService.getClassName(
 				classNameId);
 
 			if (Arrays.binarySearch(classNameIds, classNameId) < 0) {
@@ -230,8 +231,17 @@ public class UserSegmentContentListConfigurationAction
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
 	@Override
 	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
 	}
+
+	private ClassNameLocalService _classNameLocalService;
 
 }
