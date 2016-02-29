@@ -30,6 +30,16 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
 portletURL.setParameter("tabs1", "user-segments");
 
+SearchContainer userSegmentSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, renderResponse), null, "no-user-segments-were-found");
+
+userSegmentSearchContainer.setId("userSegments");
+userSegmentSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
+userSegmentSearchContainer.setSearch(Validator.isNotNull(keywords));
+
+userSegmentSearchContainer.setTotal(searchContainerIterator.getTotal());
+
+userSegmentSearchContainer.setResults(searchContainerIterator.getResults(userSegmentSearchContainer.getStart(), userSegmentSearchContainer.getEnd()));
+
 boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && Validator.isNull(keywords);
 %>
 
@@ -106,16 +116,8 @@ boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && V
 
 <aui:form action="<%= deleteUserSegmentURL %>" cssClass="container-fluid-1280" name="fmUserSegment">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-user-segments-were-found"
-		id="userSegments"
-		iteratorURL="<%= portletURL %>"
-		rowChecker="<%= new EmptyOnClickRowChecker(liferayPortletResponse) %>"
-		total="<%= searchContainerIterator.getTotal() %>"
+		searchContainer="<%= userSegmentSearchContainer %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.UserSegment"
 			keyProperty="userSegmentId"
