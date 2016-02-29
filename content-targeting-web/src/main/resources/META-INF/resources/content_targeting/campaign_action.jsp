@@ -72,17 +72,6 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 		</c:if>
 	</c:if>
 
-	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteCampaign" var="deleteCampaignURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="campaignId" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon-delete
-			url="<%= deleteCampaignURL %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Campaign.class.getName() %>"
@@ -96,6 +85,17 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 			message="permissions"
 			url="<%= permissionsEntryURL %>"
 			useDialog="<%= true %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.DELETE) %>">
+		<portlet:actionURL name="deleteCampaign" var="deleteCampaignURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="campaignId" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete
+			url="<%= deleteCampaignURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>
