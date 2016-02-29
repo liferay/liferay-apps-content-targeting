@@ -85,10 +85,14 @@ else {
 portletURL.setParameter("className", className);
 portletURL.setParameter("classPK", String.valueOf(classPK));
 
+SearchContainerIterator searchContainerIterator = new ReportSearchContainerIterator(scopeGroupId, keywords, className, classPK);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale), "reports"));
+
+boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && Validator.isNull(keywords);
 %>
 
 <c:if test="<%= scopeGroup.isStagingGroup() %>">
@@ -106,14 +110,17 @@ renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale)
 		<aui:nav-item href="<%= currentURL %>" label="reports" selected="<%= true %>" />
 	</aui:nav>
 
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" name="keywords" />
-		</aui:form>
-	</aui:nav-bar-search>
+	<c:if test="<%= !isDisabledManagementBar %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" name="keywords" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
+	disabled="<%= isDisabledManagementBar %>"
 	includeCheckBox="<%= hasUpdatePermission %>"
 	searchContainerId="reports"
 >
@@ -145,11 +152,6 @@ renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale)
 	</portlet:actionURL>
 
 	<aui:form action="<%= deleteReportsURL %>" cssClass="container-fluid-1280" method="post" name="fmReports">
-
-		<%
-		SearchContainerIterator searchContainerIterator = new ReportSearchContainerIterator(scopeGroupId, keywords, className, classPK);
-		%>
-
 		<liferay-ui:search-container
 			emptyResultsMessage="no-reports-were-found"
 			id="reports"
