@@ -87,6 +87,15 @@ portletURL.setParameter("classPK", String.valueOf(classPK));
 
 SearchContainerIterator searchContainerIterator = new ReportSearchContainerIterator(scopeGroupId, keywords, className, classPK);
 
+SearchContainer reportsSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, renderResponse), null, "no-reports-were-found");
+
+reportsSearchContainer.setId("reports");
+reportsSearchContainer.setRowChecker(new ReportInstanceRowChecker(liferayPortletResponse));
+reportsSearchContainer.setSearch(true);
+
+reportsSearchContainer.setTotal(searchContainerIterator.getTotal());
+reportsSearchContainer.setResults(searchContainerIterator.getResults(reportsSearchContainer.getStart(), reportsSearchContainer.getEnd()));
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
@@ -153,16 +162,8 @@ boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && V
 
 	<aui:form action="<%= deleteReportsURL %>" cssClass="container-fluid-1280" method="post" name="fmReports">
 		<liferay-ui:search-container
-			emptyResultsMessage="no-reports-were-found"
-			id="reports"
-			iteratorURL="<%= portletURL %>"
-			rowChecker="<%= new ReportInstanceRowChecker(liferayPortletResponse) %>"
-			total="<%= searchContainerIterator.getTotal() %>"
+			searchContainer="<%= reportsSearchContainer %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.content.targeting.model.ReportInstance"
 				keyProperty="reportInstanceId"
