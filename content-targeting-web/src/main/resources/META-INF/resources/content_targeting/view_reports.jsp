@@ -32,7 +32,7 @@ if (Validator.isNull(backURL)) {
 
 	backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
 
-	if (Campaign.class.getName().equals(className)) {
+	if (className.equals(Campaign.class.getName())) {
 		backURLObject.setParameter("tabs1", "campaigns");
 	}
 	else {
@@ -59,10 +59,10 @@ for (Report report : reports) {
 boolean hasUpdatePermission = false;
 
 if (instantiableExists) {
-	if (Campaign.class.getName().equals(className) && CampaignPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE)) {
+	if (className.equals(Campaign.class.getName()) && CampaignPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE)) {
 		hasUpdatePermission = true;
 	}
-	else if (UserSegment.class.getName().equals(className) && UserSegmentPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE)) {
+	else if (className.equals(UserSegment.class.getName()) && UserSegmentPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE)) {
 		hasUpdatePermission = true;
 	}
 }
@@ -72,11 +72,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("backURL", backURL);
 portletURL.setParameter("redirect", redirect);
 
-if (Campaign.class.getName().equals(className)) {
+if (className.equals(Campaign.class.getName())) {
 	portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
 	portletURL.setParameter("campaignId", String.valueOf(classPK));
 }
-else if (UserSegment.class.getName().equals(className)) {
+else if (className.equals(UserSegment.class.getName())) {
 	portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT);
 	portletURL.setParameter("userSegmentId", String.valueOf(classPK));
 }
@@ -264,7 +264,7 @@ boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Va
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 
 				<c:choose>
-					<c:when test="<%= Campaign.class.getName().equals(className) %>">
+					<c:when test="<%= className.equals(Campaign.class.getName()) %>">
 						<portlet:param name="campaignId" value="<%= String.valueOf(classPK) %>" />
 					</c:when>
 					<c:otherwise>

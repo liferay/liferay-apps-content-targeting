@@ -204,11 +204,6 @@ public class ReportInstanceLocalServiceImpl
 	}
 
 	@Override
-	public int getReportInstancesCount(String className, long classPK) {
-		return reportInstancePersistence.countByC_C(className, classPK);
-	}
-
-	@Override
 	public List<ReportInstance> getReportInstances(
 		String className, long classPK, int start, int end) {
 
@@ -223,6 +218,11 @@ public class ReportInstanceLocalServiceImpl
 
 		return reportInstancePersistence.findByC_C(
 			className, classPK, start, end, obc);
+	}
+
+	@Override
+	public int getReportInstancesCount(String className, long classPK) {
+		return reportInstancePersistence.countByC_C(className, classPK);
 	}
 
 	@Override

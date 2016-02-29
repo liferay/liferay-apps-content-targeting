@@ -37,7 +37,7 @@ if (reportInstanceId > 0) {
 if (Validator.isNull(backURL)) {
 	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
 
-	if (Campaign.class.getName().equals(className)) {
+	if (className.equals(Campaign.class.getName())) {
 		backURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
 		backURLObject.setParameter("campaignId", String.valueOf(classPK));
 	}

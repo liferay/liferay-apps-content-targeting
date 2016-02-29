@@ -72,7 +72,7 @@ long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("sim
 					long primaryKey = 0;
 					String nameWithGroup = "";
 
-					if (Campaign.class.getName().equals(className)) {
+					if (className.equals(Campaign.class.getName())) {
 						nameWithGroup = ((Campaign)element).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
 						primaryKey = ((Campaign)element).getPrimaryKey();
 					}
@@ -127,7 +127,7 @@ long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("sim
 				long primaryKey = 0;
 				String nameWithGroup = "";
 
-				if (Campaign.class.getName().equals(className)) {
+				if (className.equals(Campaign.class.getName())) {
 					nameWithGroup = ((Campaign)notMatchedElement).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
 					primaryKey = ((Campaign)notMatchedElement).getPrimaryKey();
 				}
