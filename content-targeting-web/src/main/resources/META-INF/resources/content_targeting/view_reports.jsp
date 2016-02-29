@@ -208,7 +208,7 @@ boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Va
 				modelVar="reportInstance"
 			>
 
-				<portlet:renderURL var="viewReportURL">
+				<portlet:renderURL var="viewReportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORT %>" />
 					<portlet:param name="className" value="<%= className %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
@@ -219,10 +219,10 @@ boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Va
 
 				<liferay-ui:search-container-column-text
 					cssClass="text-strong"
-					href="<%= viewReportURL %>"
 					name="name"
-					value="<%= reportInstance.getName(locale) %>"
-				/>
+				>
+					<a class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>" href="javascript:;"><%= reportInstance.getName(locale) %></a>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
 					name="description"
@@ -295,6 +295,27 @@ boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Va
 					submitForm(document.<portlet:namespace />fmReports);
 				}
 			}
+		);
+	</aui:script>
+</c:if>
+
+<c:if test="<%= classPK > 0 %>">
+	<aui:script use="aui-base,liferay-url-preview">
+		A.one('#<portlet:namespace />fmReports').delegate(
+			'click',
+			function(event) {
+				var currentTarget = event.currentTarget;
+
+				var urlPreview = new Liferay.UrlPreview(
+					{
+						title: currentTarget.attr('data-title'),
+						url: currentTarget.attr('data-url')
+					}
+				);
+
+				urlPreview.open();
+			},
+			'.preview'
 		);
 	</aui:script>
 </c:if>
