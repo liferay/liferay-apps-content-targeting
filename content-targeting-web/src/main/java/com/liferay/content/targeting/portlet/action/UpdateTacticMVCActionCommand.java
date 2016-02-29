@@ -137,7 +137,7 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 				serviceContext);
 
 			Tactic tactic = TransactionInvokerUtil.invoke(
-				_transactionConfig, tacticCallable);
+				transactionConfig, tacticCallable);
 
 			boolean saveAndContinue = ParamUtil.get(
 				request, "saveAndContinue", false);

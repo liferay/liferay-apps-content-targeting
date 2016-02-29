@@ -405,7 +405,7 @@ public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		com.liferay.content.targeting.portlet.action.EditTacticMVCRenderCommand.class);
+		EditTacticMVCRenderCommand.class);
 
 	private ChannelInstanceLocalService _channelInstanceLocalService;
 	private ChannelInstanceService _channelInstanceService;

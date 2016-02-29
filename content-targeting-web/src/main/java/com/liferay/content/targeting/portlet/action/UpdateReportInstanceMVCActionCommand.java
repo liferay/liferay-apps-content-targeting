@@ -94,7 +94,7 @@ public class UpdateReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 					descriptionMap, serviceContext);
 
 			ReportInstance reportInstance = TransactionInvokerUtil.invoke(
-				_transactionConfig, reportInstanceCallable);
+				transactionConfig, reportInstanceCallable);
 
 			boolean saveAndContinue = ParamUtil.get(
 				request, "saveAndContinue", false);

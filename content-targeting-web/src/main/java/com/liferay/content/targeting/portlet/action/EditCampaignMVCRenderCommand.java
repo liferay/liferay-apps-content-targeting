@@ -140,7 +140,7 @@ public class EditCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		com.liferay.content.targeting.portlet.action.EditCampaignMVCRenderCommand.class);
+		EditCampaignMVCRenderCommand.class);
 
 	private UserSegmentLocalService _userSegmentLocalService;
 

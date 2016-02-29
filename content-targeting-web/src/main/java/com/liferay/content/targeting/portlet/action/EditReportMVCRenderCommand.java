@@ -83,7 +83,7 @@ public class EditReportMVCRenderCommand extends BaseMVCRenderCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		com.liferay.content.targeting.portlet.action.EditReportMVCRenderCommand.class);
+		EditReportMVCRenderCommand.class);
 
 	private ReportsRegistry _reportsRegistry;
 	private TrackingActionsRegistry _trackingActionsRegistry;

@@ -338,7 +338,7 @@ public class EditUserSegmentMVCRenderCommand extends BaseMVCRenderCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		com.liferay.content.targeting.portlet.action.EditUserSegmentMVCRenderCommand.class);
+		EditUserSegmentMVCRenderCommand.class);
 
 	private RuleCategoriesRegistry _ruleCategoriesRegistry;
 	private RuleInstanceLocalService _ruleInstanceLocalService;

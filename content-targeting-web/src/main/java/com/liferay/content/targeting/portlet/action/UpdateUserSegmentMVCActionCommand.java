@@ -106,7 +106,7 @@ public class UpdateUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 				nameMap, descriptionMap, serviceContext);
 
 			UserSegment userSegment = TransactionInvokerUtil.invoke(
-				_transactionConfig, userSegmentCallable);
+				transactionConfig, userSegmentCallable);
 
 			boolean saveAndContinue = ParamUtil.get(
 				request, "saveAndContinue", false);

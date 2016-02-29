@@ -123,7 +123,7 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 				priority, active, userSegmentIds, serviceContext);
 
 			Campaign campaign = TransactionInvokerUtil.invoke(
-				_transactionConfig, campaignCallable);
+				transactionConfig, campaignCallable);
 
 			boolean saveAndContinue = ParamUtil.get(
 				request, "saveAndContinue", false);

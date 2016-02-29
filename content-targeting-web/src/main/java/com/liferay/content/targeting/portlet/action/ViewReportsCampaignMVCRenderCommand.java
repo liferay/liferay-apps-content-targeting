@@ -116,7 +116,7 @@ public class ViewReportsCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		com.liferay.content.targeting.portlet.action.ViewReportsCampaignMVCRenderCommand.class);
+		ViewReportsCampaignMVCRenderCommand.class);
 
 	private ReportInstanceLocalService _reportInstanceLocalService;
 	private ReportsRegistry _reportsRegistry;

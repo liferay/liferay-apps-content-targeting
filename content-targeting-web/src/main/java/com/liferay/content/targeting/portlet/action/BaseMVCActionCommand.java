@@ -69,7 +69,7 @@ public abstract class BaseMVCActionCommand
 		return calendar.getTime();
 	}
 
-	protected TransactionConfig _transactionConfig =
+	protected TransactionConfig transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class},
 			new Class<?>[0]);
