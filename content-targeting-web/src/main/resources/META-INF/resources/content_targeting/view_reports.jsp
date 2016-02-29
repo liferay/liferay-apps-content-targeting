@@ -19,10 +19,26 @@
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+String backURL = ParamUtil.getString(request, "backURL");
 String keywords = ParamUtil.getString(request, "keywords");
 String redirect = ParamUtil.getString(request, "redirect");
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
+
+if (Validator.isNull(backURL)) {
+	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
+
+	backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
+
+	if (Campaign.class.getName().equals(className)) {
+		backURLObject.setParameter("tabs1", "campaigns");
+	}
+	else {
+		backURLObject.setParameter("tabs1", "user-segments");
+	}
+
+	backURL = backURLObject.toString();
+}
 
 Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 
@@ -51,6 +67,7 @@ if (instantiableExists) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
+portletURL.setParameter("backURL", backURL);
 portletURL.setParameter("redirect", redirect);
 
 if (Campaign.class.getName().equals(className)) {
@@ -69,7 +86,7 @@ portletURL.setParameter("className", className);
 portletURL.setParameter("classPK", String.valueOf(classPK));
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale), "reports"));
 %>

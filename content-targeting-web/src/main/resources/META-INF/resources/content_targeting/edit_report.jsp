@@ -46,6 +46,9 @@ if (Validator.isNull(backURL)) {
 		backURLObject.setParameter("userSegmentId", String.valueOf(classPK));
 	}
 
+	backURLObject.setParameter("className", className);
+	backURLObject.setParameter("classPK", String.valueOf(classPK));
+
 	backURL = backURLObject.toString();
 }
 
