@@ -29,7 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CampaignContentReportServiceConfiguration {
 
-	@Meta.AD(deflt = "24", required = false)
+	@Meta.AD(deflt = "24")
 	public int campaignContentReportCheckInterval();
 
 }

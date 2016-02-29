@@ -29,10 +29,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface AnonymousUserUserSegmentServiceConfiguration {
 
-	@Meta.AD(deflt = "1", required = false)
+	@Meta.AD(deflt = "1")
 	public int anonymousUserUserSegmentCheckInterval();
 
-	@Meta.AD(deflt = "3", required = false)
+	@Meta.AD(deflt = "3")
 	public int anonymousUserUserSegmentMaxAge();
 
 }
