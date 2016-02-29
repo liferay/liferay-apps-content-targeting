@@ -84,35 +84,9 @@ SearchContainerIterator searchContainerIterator = new TacticSearchContainerItera
 			value="<%= tactic.getDescription(locale) %>"
 		/>
 
-		<c:if test="<%= editTacticURL != null %>">
-			<liferay-ui:search-container-column-text
-				align="right"
-				name=""
-			>
-				<liferay-ui:icon-menu>
-					<liferay-ui:icon
-						image="edit"
-						method="get"
-						url="<%= editTacticURL %>"
-					/>
-
-					<liferay-portlet:actionURL name="deleteTactic" var="deleteTacticURL">
-						<portlet:param
-							name="redirect"
-							value="<%= viewTacticsURL.toString() %>"
-						/>
-						<portlet:param
-							name="tacticId"
-							value="<%= String.valueOf(tactic.getTacticId()) %>"
-						/>
-					</liferay-portlet:actionURL>
-
-					<liferay-ui:icon-delete
-						url="<%= deleteTacticURL %>"
-					/>
-				</liferay-ui:icon-menu>
-			</liferay-ui:search-container-column-text>
-		</c:if>
+		<liferay-ui:search-container-column-jsp
+			path="/content_targeting/tactic_action.jsp"
+		/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />
