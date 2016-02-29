@@ -19,6 +19,7 @@
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+String keywords = ParamUtil.getString(request, "keywords");
 String redirect = ParamUtil.getString(request, "redirect");
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
@@ -122,18 +123,74 @@ renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale)
 	</c:if>
 </liferay-frontend:management-bar>
 
-<portlet:actionURL name="deleteReportInstance" var="deleteReportsURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
+<c:if test="<%= classPK > 0 %>">
+	<portlet:actionURL name="deleteReportInstance" var="deleteReportsURL">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:actionURL>
 
-<aui:form action="<%= deleteReportsURL %>" cssClass="container-fluid-1280" method="post" name="fmReports">
-	<div id="<portlet:namespace />reportsPanel">
-		<liferay-util:include page="/content_targeting/view_reports_resources.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="className" value="<%= className %>" />
-			<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-		</liferay-util:include>
-	</div>
-</aui:form>
+	<aui:form action="<%= deleteReportsURL %>" cssClass="container-fluid-1280" method="post" name="fmReports">
+
+		<%
+		SearchContainerIterator searchContainerIterator = new ReportSearchContainerIterator(scopeGroupId, keywords, className, classPK);
+		%>
+
+		<liferay-ui:search-container
+			emptyResultsMessage="no-reports-were-found"
+			id="reports"
+			iteratorURL="<%= portletURL %>"
+			rowChecker="<%= new ReportInstanceRowChecker(liferayPortletResponse) %>"
+			total="<%= searchContainerIterator.getTotal() %>"
+		>
+			<liferay-ui:search-container-results
+				results="<%= searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
+			/>
+
+			<liferay-ui:search-container-row
+				className="com.liferay.content.targeting.model.ReportInstance"
+				keyProperty="reportInstanceId"
+				modelVar="reportInstance"
+			>
+
+				<portlet:renderURL var="viewReportURL">
+					<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORT %>" />
+					<portlet:param name="className" value="<%= className %>" />
+					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="reportKey" value="<%= reportInstance.getReportKey() %>" />
+					<portlet:param name="reportInstanceId" value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>" />
+				</portlet:renderURL>
+
+				<liferay-ui:search-container-column-text
+					cssClass="text-strong"
+					href="<%= viewReportURL %>"
+					name="name"
+					value="<%= reportInstance.getName(locale) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					name="description"
+					value="<%= reportInstance.getDescription(locale) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					name="type"
+					value="<%= reportInstance.getTypeName(locale) %>"
+				/>
+
+				<liferay-ui:search-container-column-date
+					name="last-update"
+					value="<%= reportInstance.getModifiedDate() %>"
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					path="/content_targeting/reports_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator markupView="lexicon" />
+		</liferay-ui:search-container>
+	</aui:form>
+</c:if>
 
 <c:if test="<%= hasUpdatePermission %>">
 	<liferay-frontend:add-menu>
@@ -172,20 +229,8 @@ renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale)
 	</liferay-frontend:add-menu>
 </c:if>
 
-<aui:script use="liferay-ajax-search">
-	var reportsPanel = A.one('#<portlet:namespace />reportsPanel');
-	var inputNode = A.one('#<portlet:namespace />reportkeywords');
-
-	var search = new Liferay.AjaxContentSearch(
-		{
-			contentPanel: reportsPanel,
-			inputNode: inputNode,
-			resourceURL: '<liferay-portlet:resourceURL><portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW_REPORTS_RESOURCES %>" /><%= String.valueOf(classPK) %>" /></liferay-portlet:resourceURL>',
-			namespace: '<portlet:namespace />'
-		}
-	);
-
-	<c:if test="<%= hasUpdatePermission %>">
+<c:if test="<%= hasUpdatePermission %>">
+	<aui:script>
 		$('#<portlet:namespace />deleteReports').on(
 			'click',
 			function(event) {
@@ -194,5 +239,5 @@ renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale)
 				}
 			}
 		);
-	</c:if>
-</aui:script>
+	</aui:script>
+</c:if>
