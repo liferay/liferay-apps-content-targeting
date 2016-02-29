@@ -78,7 +78,7 @@ if (Validator.isNull(backURL)) {
 
 <liferay-portlet:actionURL name="updateCampaign" var="addCampaignURL" />
 
-<aui:form action="<%= addCampaignURL %>" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
+<aui:form action="<%= addCampaignURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="campaignId" type="hidden" value="<%= String.valueOf(campaignId) %>" />
 	<aui:input name="campaignTrackingActions" type="hidden" />
@@ -100,45 +100,45 @@ if (Validator.isNull(backURL)) {
 		</c:choose>
 	</liferay-ui:error>
 
-	<aui:input name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="name" />
 
-	<aui:input name="description" />
+			<aui:input name="description" />
 
-	<liferay-util:include page="/macros/user_segment_selector.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="assetCategoryIds" value="<%= userSegmentAssetCategoryIdsAsString %>" />
-		<liferay-util:param name="assetCategoryNames" value="<%= userSegmentAssetCategoryNames %>" />
-		<liferay-util:param name="hiddenInput" value="userSegmentAssetCategoryIds" />
-		<liferay-util:param name="vocabularyGroupIds" value="<%= vocabularyGroupIds %>" />
-		<liferay-util:param name="vocabularyIds" value="<%= vocabularyIds %>" />
-		<liferay-util:param name="warningMessage" value="editing-user-segments-deletes-all-unsaved-campaign-data" />
-	</liferay-util:include>
+			<liferay-util:include page="/macros/user_segment_selector.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="assetCategoryIds" value="<%= userSegmentAssetCategoryIdsAsString %>" />
+				<liferay-util:param name="assetCategoryNames" value="<%= userSegmentAssetCategoryNames %>" />
+				<liferay-util:param name="hiddenInput" value="userSegmentAssetCategoryIds" />
+				<liferay-util:param name="vocabularyGroupIds" value="<%= vocabularyGroupIds %>" />
+				<liferay-util:param name="vocabularyIds" value="<%= vocabularyIds %>" />
+				<liferay-util:param name="warningMessage" value="editing-user-segments-deletes-all-unsaved-campaign-data" />
+			</liferay-util:include>
 
-	<aui:input cssClass="slider-input" helpMessage="priority-help" inlineField="<%= true %>" maxlength="3" name="priority" size="2" type="text" value="<%= priority %>" />
+			<aui:input cssClass="slider-input" helpMessage="priority-help" inlineField="<%= true %>" maxlength="3" name="priority" size="2" type="text" value="<%= priority %>" />
 
-	<span class="slider-holder"></span>
+			<span class="slider-holder"></span>
 
-	<aui:input name="active" value="<%= true %>" />
+			<aui:input name="active" type="toggle-switch" value="<%= (campaign != null) ? campaign.isActive() : true %>" />
+		</aui:fieldset>
 
-	<liferay-ui:panel collapsible="<%= true %>" cssClass="dates-panel" defaultState="open" extended="<%= false %>" helpMessage="" id="datesPanel" persistState="<%= true %>" title="Dates">
+		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" cssClass="dates-panel" label="Dates">
+			<liferay-ui:error key="com.liferay.content.targeting.exception.InvalidDateRangeException" message="please-enter-valid-date-range" />
 
-		<liferay-ui:error
-			key="com.liferay.content.targeting.exception.InvalidDateRangeException"
-			message="please-enter-valid-date-range"
-		/>
+			<aui:input name="startDate" value="<%= startDate %>" />
 
-		<aui:input name="startDate" value="<%= startDate %>" />
+			<aui:input name="endDate" value="<%= endDate %>" />
 
-		<aui:input name="endDate" value="<%= endDate %>" />
-
-		<aui:input helpMessage="time-zone-help" label="time-zone" name="timeZoneId" type="timeZone" value="<%= timeZoneId %>" />
-	</liferay-ui:panel>
+			<aui:input helpMessage="time-zone-help" label="time-zone" name="timeZoneId" type="timeZone" value="<%= timeZoneId %>" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="control-button" type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button cssClass="control-button" onClick="saveAndContinue();" value="save-and-continue" />
+		<aui:button cssClass="btn-lg" onClick="saveAndContinue();" value="save-and-continue" />
 
-		<aui:button cssClass="control-button" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 
 	<aui:script use="liferay-input-slider">
