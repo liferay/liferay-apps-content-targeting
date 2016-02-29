@@ -19,12 +19,6 @@
 <%
 long campaignId = ParamUtil.getLong(request, "campaignId", 0);
 
-Campaign campaign = null;
-
-if (campaignId > 0) {
-	campaign = CampaignLocalServiceUtil.fetchCampaign(campaignId);
-}
-
 String tacticKeywords = ParamUtil.getString(request, "tacticKeywords");
 
 RowChecker tacticsRowChecker = new RowChecker(liferayPortletResponse);
@@ -54,32 +48,12 @@ SearchContainerIterator searchContainerIterator = new TacticSearchContainerItera
 		keyProperty="tacticId"
 		modelVar="tactic"
 	>
-
-		<%
-		String editTacticURL = null;
-		%>
-
-		<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
-
-			<%
-			PortletURL editTacticURLObject = liferayPortletResponse.createRenderURL();
-			editTacticURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_TACTIC);
-			editTacticURLObject.setParameter("redirect", viewTacticsURL.toString());
-			editTacticURLObject.setParameter("tacticId", String.valueOf(tactic.getTacticId()));
-
-			editTacticURL = editTacticURLObject.toString();
-			%>
-
-		</c:if>
-
 		<liferay-ui:search-container-column-text
-			href="<%= editTacticURL %>"
 			name="name"
 			value="<%= tactic.getName(locale) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			href="<%= editTacticURL %>"
 			name="description"
 			value="<%= tactic.getDescription(locale) %>"
 		/>
@@ -112,19 +86,9 @@ SearchContainerIterator searchContainerIterator = new TacticSearchContainerItera
 				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 					document.<portlet:namespace />fmTactics.<portlet:namespace />tacticsIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fmTactics, '<portlet:namespace />allRowIds');
 
-					<liferay-portlet:renderURL var="redirectURL">
-						<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_TACTICS %>" />
-						<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
-						<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
-						<portlet:param name="classPK" value="<%= String.valueOf(campaignId) %>" />
-					</liferay-portlet:renderURL>
-
-					<liferay-portlet:actionURL name="deleteTactic" var="deleteTacticsURL">
-						<portlet:param
-							name="redirect"
-							value="<%= redirectURL.toString() %>"
-						/>
-					</liferay-portlet:actionURL>
+					<portlet:actionURL name="deleteTactic" var="deleteTacticsURL">
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:actionURL>
 
 					submitForm(document.<portlet:namespace />fmTactics, '<%= deleteTacticsURL %>');
 				}

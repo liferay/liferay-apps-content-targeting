@@ -32,16 +32,25 @@ Tactic tactic = (Tactic)row.getObject();
 
 <liferay-ui:icon-menu>
 	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
+
+		<%
+		PortletURL editTacticURL = liferayPortletResponse.createRenderURL();
+
+		editTacticURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_TACTIC);
+		editTacticURL.setParameter("redirect", currentURL);
+		editTacticURL.setParameter("tacticId", String.valueOf(tactic.getTacticId()));
+		%>
+
 		<liferay-ui:icon
 			image="edit"
 			method="get"
 			url="<%= editTacticURL %>"
 		/>
 
-		<liferay-portlet:actionURL name="deleteTactic" var="deleteTacticURL">
-			<portlet:param name="redirect" value="<%= viewTacticsURL.toString() %>" />
+		<portlet:actionURL name="deleteTactic" var="deleteTacticURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="tacticId" value="<%= String.valueOf(tactic.getTacticId()) %>" />
-		</liferay-portlet:actionURL>
+		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
 			url="<%= deleteTacticURL %>"
