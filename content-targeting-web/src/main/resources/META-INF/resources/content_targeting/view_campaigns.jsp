@@ -29,13 +29,16 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
 portletURL.setParameter("tabs1", "campaigns");
+
+boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && Validator.isNull(keywords);
 %>
 
 <liferay-util:include page="/content_targeting/navigation_bar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchEnabled" value="<%= Boolean.TRUE.toString() %>" />
+	<liferay-util:param name="searchEnabled" value="<%= String.valueOf(!isDisabledManagementBar) %>" />
 </liferay-util:include>
 
 <liferay-frontend:management-bar
+	disabled="<%= isDisabledManagementBar %>"
 	includeCheckBox="<%= includeCheckBox %>"
 	searchContainerId="campaigns"
 >
