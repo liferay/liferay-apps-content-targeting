@@ -30,7 +30,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Tactic tactic = (Tactic)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
 
 		<%
@@ -42,8 +42,7 @@ Tactic tactic = (Tactic)row.getObject();
 		%>
 
 		<liferay-ui:icon
-			image="edit"
-			method="get"
+			message="edit"
 			url="<%= editTacticURL %>"
 		/>
 

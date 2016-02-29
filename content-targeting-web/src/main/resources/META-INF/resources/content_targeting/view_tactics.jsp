@@ -21,7 +21,6 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-String redirect = ParamUtil.getString(request, "redirect");
 long campaignId = ParamUtil.getLong(request, "campaignId", 0);
 
 Campaign campaign = null;
@@ -84,7 +83,7 @@ boolean hasUpdatePermission = CampaignPermission.contains(permissionChecker, cam
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteTacticsURL %>" method="post" name="fmTactics">
+<aui:form action="<%= deleteTacticsURL %>" cssClass="container-fluid-1280" method="post" name="fmTactics">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-promotions-were-found"
 		id="tactics"
@@ -102,6 +101,7 @@ boolean hasUpdatePermission = CampaignPermission.contains(permissionChecker, cam
 			modelVar="tactic"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				name="name"
 				value="<%= tactic.getName(locale) %>"
 			/>
@@ -116,7 +116,7 @@ boolean hasUpdatePermission = CampaignPermission.contains(permissionChecker, cam
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
