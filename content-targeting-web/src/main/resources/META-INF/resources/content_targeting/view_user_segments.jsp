@@ -29,6 +29,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
 portletURL.setParameter("tabs1", "user-segments");
+
+boolean isDisabledManagementBar = (searchContainerIterator.getTotal() <= 0) && Validator.isNull(keywords);
 %>
 
 <liferay-ui:error key="com.liferay.content.targeting.exception.UsedUserSegmentException">
@@ -68,10 +70,11 @@ portletURL.setParameter("tabs1", "user-segments");
 </liferay-ui:error>
 
 <liferay-util:include page="/content_targeting/navigation_bar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchEnabled" value="<%= Boolean.TRUE.toString() %>" />
+	<liferay-util:param name="searchEnabled" value="<%= String.valueOf(!isDisabledManagementBar) %>" />
 </liferay-util:include>
 
 <liferay-frontend:management-bar
+	disabled="<%= isDisabledManagementBar %>"
 	includeCheckBox="<%= includeCheckBox %>"
 	searchContainerId="userSegments"
 >
