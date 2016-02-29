@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -319,11 +320,19 @@ public class UserSegmentLocalServiceImpl
 	public Hits search(long groupId, String keywords, int start, int end)
 		throws PortalException {
 
+		return search(groupId, keywords, start, end, null);
+	}
+
+	@Override
+	public Hits search(
+			long groupId, String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
 		Indexer indexer = IndexerRegistryUtil.getIndexer(
 			UserSegment.class.getName());
 
 		SearchContext searchContext = buildSearchContext(
-			groupId, keywords, start, end);
+			groupId, keywords, start, end, sort);
 
 		return indexer.search(searchContext);
 	}
@@ -333,8 +342,16 @@ public class UserSegmentLocalServiceImpl
 			long groupId, String keywords, int start, int end)
 		throws PortalException {
 
+		return searchUserSegments(groupId, keywords, start, end, null);
+	}
+
+	@Override
+	public BaseModelSearchResult<UserSegment> searchUserSegments(
+			long groupId, String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
 		SearchContext searchContext = buildSearchContext(
-			groupId, keywords, start, end);
+			groupId, keywords, start, end, sort);
 
 		return searchUserSegments(searchContext);
 	}
@@ -432,7 +449,7 @@ public class UserSegmentLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-			long groupId, String keywords, int start, int end)
+			long groupId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
@@ -445,6 +462,7 @@ public class UserSegmentLocalServiceImpl
 		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(start);
+		searchContext.setSorts(sort);
 
 		return searchContext;
 	}

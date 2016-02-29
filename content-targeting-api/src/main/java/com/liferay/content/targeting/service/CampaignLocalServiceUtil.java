@@ -491,10 +491,24 @@ public class CampaignLocalServiceUtil {
 		return getService().search(groupId, keywords, start, end);
 	}
 
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().search(groupId, keywords, start, end, sort);
+	}
+
 	public static com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Campaign> searchCampaigns(
 		long groupId, java.lang.String keywords, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().searchCampaigns(groupId, keywords, start, end);
+	}
+
+	public static com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Campaign> searchCampaigns(
+		long groupId, java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().searchCampaigns(groupId, keywords, start, end, sort);
 	}
 
 	public static void setUserSegmentCampaigns(long userSegmentId,

@@ -22,6 +22,7 @@ import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
@@ -46,7 +47,7 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 
 		String reportName = report.getName(locale);
 
-		if (Campaign.class.getName().equals(getClassName())) {
+		if (Validator.equals(Campaign.class.getName(), getClassName())) {
 			Campaign campaign = CampaignLocalServiceUtil.fetchCampaign(
 				getClassPK());
 
@@ -55,7 +56,9 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 					"%s %s", campaign.getName(locale), report.getName(locale));
 			}
 		}
-		else if (UserSegment.class.getName().equals(getClassName())) {
+		else if (Validator.equals(
+					UserSegment.class.getName(), getClassName())) {
+
 			UserSegment userSegment =
 				UserSegmentLocalServiceUtil.fetchUserSegment(getClassPK());
 

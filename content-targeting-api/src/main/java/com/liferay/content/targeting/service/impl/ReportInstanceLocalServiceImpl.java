@@ -33,9 +33,11 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
@@ -210,15 +212,42 @@ public class ReportInstanceLocalServiceImpl
 	}
 
 	@Override
+	public List<ReportInstance> getReportInstances(
+		String className, long classPK, int start, int end,
+		OrderByComparator obc) {
+
+		return reportInstancePersistence.findByC_C(
+			className, classPK, start, end, obc);
+	}
+
+	@Override
+	public int getReportInstancesCount(String className, long classPK) {
+		return reportInstancePersistence.countByC_C(className, classPK);
+	}
+
+	@Override
 	public List<ReportInstance> searchReportInstances(
 			long groupId, String className, long classPK, String keywords,
 			int start, int end)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
-			groupId, className, classPK, keywords, start, end);
+		BaseModelSearchResult<ReportInstance> searchResults =
+			searchReportInstances(
+				groupId, className, classPK, keywords, start, end, null);
 
-		return searchReportInstances(searchContext).getBaseModels();
+		return searchResults.getBaseModels();
+	}
+
+	@Override
+	public BaseModelSearchResult<ReportInstance> searchReportInstances(
+			long groupId, String className, long classPK, String keywords,
+			int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			groupId, className, classPK, keywords, start, end, sort);
+
+		return searchReportInstances(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -247,7 +276,7 @@ public class ReportInstanceLocalServiceImpl
 
 	protected SearchContext buildSearchContext(
 			long groupId, String className, long classPK, String keywords,
-			int start, int end)
+			int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
@@ -273,6 +302,7 @@ public class ReportInstanceLocalServiceImpl
 		searchContext.setEnd(end);
 		searchContext.setKeywords(keywords == null ? "" : keywords);
 		searchContext.setStart(start);
+		searchContext.setSorts(sort);
 
 		return searchContext;
 	}

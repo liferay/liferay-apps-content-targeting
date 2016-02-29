@@ -1,5 +1,7 @@
 *.iml
 .gh.json
+.sass-cache
+.sass_cache_*.css
 .sonar
 /*/bin
 /*/build

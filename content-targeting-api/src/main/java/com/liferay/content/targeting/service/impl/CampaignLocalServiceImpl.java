@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -291,11 +292,19 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	public Hits search(long groupId, String keywords, int start, int end)
 		throws PortalException {
 
+		return search(groupId, keywords, start, end, null);
+	}
+
+	@Override
+	public Hits search(
+			long groupId, String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
 		Indexer indexer = IndexerRegistryUtil.getIndexer(
 			Campaign.class.getName());
 
 		SearchContext searchContext = buildSearchContext(
-			groupId, keywords, start, end);
+			groupId, keywords, start, end, sort);
 
 		return indexer.search(searchContext);
 	}
@@ -305,8 +314,16 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 			long groupId, String keywords, int start, int end)
 		throws PortalException {
 
+		return searchCampaigns(groupId, keywords, start, end, null);
+	}
+
+	@Override
+	public BaseModelSearchResult<Campaign> searchCampaigns(
+			long groupId, String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
 		SearchContext searchContext = buildSearchContext(
-			groupId, keywords, start, end);
+			groupId, keywords, start, end, sort);
 
 		return searchCampaigns(searchContext);
 	}
@@ -385,7 +402,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	}
 
 	protected SearchContext buildSearchContext(
-			long groupId, String keywords, int start, int end)
+			long groupId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
@@ -397,6 +414,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(start);
+		searchContext.setSorts(sort);
 
 		return searchContext;
 	}

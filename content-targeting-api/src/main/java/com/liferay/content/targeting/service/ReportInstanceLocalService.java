@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.ReportInstance;
+import com.liferay.content.targeting.util.BaseModelSearchResult;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -266,6 +268,10 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	public List<ReportInstance> getReportInstances(java.lang.String className,
 		long classPK, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ReportInstance> getReportInstances(java.lang.String className,
+		long classPK, int start, int end, OrderByComparator obc);
+
 	/**
 	* Returns a range of all the report instances.
 	*
@@ -315,9 +321,18 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	public int getReportInstancesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getReportInstancesCount(java.lang.String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ReportInstance> searchReportInstances(long groupId,
 		java.lang.String className, long classPK, java.lang.String keywords,
 		int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<ReportInstance> searchReportInstances(
+		long groupId, java.lang.String className, long classPK,
+		java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
 
 	/**
 	* Updates the report instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -326,6 +326,14 @@ public class ReportInstanceLocalServiceWrapper
 			classPK, start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
+		java.lang.String className, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		return _reportInstanceLocalService.getReportInstances(className,
+			classPK, start, end, obc);
+	}
+
 	/**
 	* Returns a range of all the report instances.
 	*
@@ -386,12 +394,28 @@ public class ReportInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public int getReportInstancesCount(java.lang.String className, long classPK) {
+		return _reportInstanceLocalService.getReportInstancesCount(className,
+			classPK);
+	}
+
+	@Override
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> searchReportInstances(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String keywords, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _reportInstanceLocalService.searchReportInstances(groupId,
 			className, classPK, keywords, start, end);
+	}
+
+	@Override
+	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.ReportInstance> searchReportInstances(
+		long groupId, java.lang.String className, long classPK,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _reportInstanceLocalService.searchReportInstances(groupId,
+			className, classPK, keywords, start, end, sort);
 	}
 
 	/**
