@@ -206,8 +206,8 @@ public class UpdateUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 			PortletResponse response)
 		throws Exception {
 
-		EditUserSegmentMVCActionCommand editUserSegmentMVCActionCommand =
-			(EditUserSegmentMVCActionCommand)_mvcRenderCommand;
+		EditUserSegmentMVCRenderCommand editUserSegmentMVCActionCommand =
+			(EditUserSegmentMVCRenderCommand)_mvcRenderCommand;
 
 		List<RuleInstance> requestRuleInstances =
 			editUserSegmentMVCActionCommand.getRulesFromRequest(

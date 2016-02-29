@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditTacticMVCActionCommand extends BaseMVCRenderCommand {
+public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 
 	@Override
 	public String doRender(
@@ -405,7 +405,7 @@ public class EditTacticMVCActionCommand extends BaseMVCRenderCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditTacticMVCActionCommand.class);
+		com.liferay.content.targeting.portlet.action.EditTacticMVCRenderCommand.class);
 
 	private ChannelInstanceLocalService _channelInstanceLocalService;
 	private ChannelInstanceService _channelInstanceService;

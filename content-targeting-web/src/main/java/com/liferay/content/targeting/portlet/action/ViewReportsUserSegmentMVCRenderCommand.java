@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewReportsUserSegmentMVCActionCommand
+public class ViewReportsUserSegmentMVCRenderCommand
 	extends BaseMVCRenderCommand {
 
 	@Override

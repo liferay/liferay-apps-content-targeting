@@ -243,8 +243,8 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 			PortletResponse response)
 		throws Exception {
 
-		EditTacticMVCActionCommand editTacticMVCActionCommand =
-			(EditTacticMVCActionCommand)_mvcRenderCommand;
+		EditTacticMVCRenderCommand editTacticMVCActionCommand =
+			(EditTacticMVCRenderCommand)_mvcRenderCommand;
 
 		List<ChannelInstance> requestChannelInstances =
 			editTacticMVCActionCommand.getChannelsFromRequest(

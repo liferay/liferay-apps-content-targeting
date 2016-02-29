@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewReportsCampaignMVCActionCommand extends BaseMVCRenderCommand {
+public class ViewReportsCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 
 	@Override
 	public String doRender(
@@ -116,7 +116,7 @@ public class ViewReportsCampaignMVCActionCommand extends BaseMVCRenderCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewReportsCampaignMVCActionCommand.class);
+		com.liferay.content.targeting.portlet.action.ViewReportsCampaignMVCRenderCommand.class);
 
 	private ReportInstanceLocalService _reportInstanceLocalService;
 	private ReportsRegistry _reportsRegistry;

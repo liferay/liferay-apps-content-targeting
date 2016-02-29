@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCampaignMVCActionCommand extends BaseMVCRenderCommand {
+public class EditCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 
 	@Override
 	public String doRender(
@@ -140,7 +140,7 @@ public class EditCampaignMVCActionCommand extends BaseMVCRenderCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditCampaignMVCActionCommand.class);
+		com.liferay.content.targeting.portlet.action.EditCampaignMVCRenderCommand.class);
 
 	private UserSegmentLocalService _userSegmentLocalService;
 

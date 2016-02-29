@@ -38,11 +38,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + PortletKeys.CT_ADMIN,
-		"mvc.command.name=" + ContentTargetingMVCCommand.VIEW_REPORT
+		"mvc.command.name=" + ContentTargetingMVCCommand.EDIT_REPORT
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewReportMVCActionCommand extends BaseMVCRenderCommand {
+public class EditReportMVCRenderCommand extends BaseMVCRenderCommand {
 
 	@Override
 	public String doRender(
@@ -59,7 +59,7 @@ public class ViewReportMVCActionCommand extends BaseMVCRenderCommand {
 
 		renderRequest.setAttribute("templateContext", templateContext);
 
-		return ContentTargetingPath.VIEW_REPORT;
+		return ContentTargetingPath.EDIT_REPORT;
 	}
 
 	@Reference(unbind = "unsetReportsRegistry")
@@ -83,7 +83,7 @@ public class ViewReportMVCActionCommand extends BaseMVCRenderCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewReportMVCActionCommand.class);
+		com.liferay.content.targeting.portlet.action.EditReportMVCRenderCommand.class);
 
 	private ReportsRegistry _reportsRegistry;
 	private TrackingActionsRegistry _trackingActionsRegistry;
