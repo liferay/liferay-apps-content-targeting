@@ -115,13 +115,13 @@ public class TacticModelImpl extends BaseModelImpl<Tactic>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.api.util.ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.content.targeting.model.Tactic"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.api.util.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.content.targeting.model.Tactic"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.api.util.ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.content.targeting.model.Tactic"),
 			true);
 	public static final long CAMPAIGNID_COLUMN_BITMASK = 1L;
@@ -186,10 +186,10 @@ public class TacticModelImpl extends BaseModelImpl<Tactic>
 			{ "userSegmentId", Types.BIGINT }
 		};
 	public static final String MAPPING_TABLE_CT_TACTICS_USERSEGMENTS_SQL_CREATE = "create table CT_Tactics_UserSegments (companyId LONG not null,tacticId LONG not null,userSegmentId LONG not null,primary key (tacticId, userSegmentId))";
-	public static final boolean FINDER_CACHE_ENABLED_CT_TACTICS_USERSEGMENTS = GetterUtil.getBoolean(com.liferay.content.targeting.api.util.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED_CT_TACTICS_USERSEGMENTS = GetterUtil.getBoolean(com.liferay.content.targeting.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.CT_Tactics_UserSegments"),
 			true);
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.content.targeting.api.util.ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.content.targeting.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.content.targeting.model.Tactic"));
 
 	public TacticModelImpl() {
