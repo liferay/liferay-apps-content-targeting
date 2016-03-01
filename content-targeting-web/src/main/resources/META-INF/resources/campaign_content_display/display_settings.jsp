@@ -28,13 +28,15 @@ TemplateHandler templateHandler = (TemplateHandler)request.getAttribute("templat
 	<portlet:param name="cmd" value="update" />
 </liferay-portlet:actionURL>
 
-<div class="display-template">
-	<liferay-ddm:template-selector
-		className="<%= templateHandler.getClassName() %>"
-		displayStyle="<%= displayStyle %>"
-		displayStyleGroupId="<%= displayStyleGroupId %>"
-		displayStyles="<%= ListUtil.toList(displayStyles) %>"
-		label="display-template"
-		refreshURL="<%= configurationURL %>"
-	/>
-</div>
+<aui:fieldset-group markupView="lexicon">
+	<aui:fieldset cssClass="display-template">
+		<liferay-ddm:template-selector
+			className="<%= templateHandler.getClassName() %>"
+			displayStyle="<%= displayStyle %>"
+			displayStyleGroupId="<%= displayStyleGroupId %>"
+			displayStyles="<%= ListUtil.toList(displayStyles) %>"
+			label="display-template"
+			refreshURL="<%= configurationURL %>"
+		/>
+	</aui:fieldset>
+</aui:fieldset-group>

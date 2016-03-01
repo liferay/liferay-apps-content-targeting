@@ -20,39 +20,41 @@
 List<QueryRule> campaignQueryRules = (List<QueryRule>)request.getAttribute("campaignQueryRules");
 %>
 
-<span class="title">
-	<liferay-ui:message key="display-the-following-content" />
+<aui:fieldset-group markupView="lexicon">
+	<aui:fieldset>
+		<h4 class="text-default">
+			<liferay-ui:message key="display-the-following-content" />
 
-	<liferay-ui:icon-help message="the-following-conditions-will-be-evaluated-by-priority" />
-</span>
+			<liferay-ui:icon-help message="the-following-conditions-will-be-evaluated-by-priority" />
+		</h4>
 
-<div class="rules-panel">
-	<div id="<portlet:namespace />queryRules">
-		<aui:fieldset label="">
+		<div class="rules-panel">
+			<div id="<portlet:namespace />queryRules">
 
-			<%
-			for (QueryRule queryRule : campaignQueryRules) {
-				int queryRule_index = campaignQueryRules.indexOf(queryRule);
+				<%
+				for (QueryRule queryRule : campaignQueryRules) {
+					int queryRule_index = campaignQueryRules.indexOf(queryRule);
 
-				request.setAttribute("configuration.queryRule", queryRule);
-				request.setAttribute("configuration.isFirst", queryRule_index == 0);
-			%>
+					request.setAttribute("configuration.queryRule", queryRule);
+					request.setAttribute("configuration.isFirst", queryRule_index == 0);
+				%>
 
-				<div class="lfr-form-row <%= queryRule.getCssClass(queryRule_index) %>">
-					<div class="row-fields">
-						<liferay-util:include page="/campaign_content_display/edit_query_rule.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="portletResource" value="<%= portletName %>" />
-						</liferay-util:include>
+					<div class="lfr-form-row <%= queryRule.getCssClass(queryRule_index) %>">
+						<div class="row-fields">
+							<liferay-util:include page="/campaign_content_display/edit_query_rule.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="portletResource" value="<%= portletName %>" />
+							</liferay-util:include>
+						</div>
 					</div>
-				</div>
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
-		</aui:fieldset>
-	</div>
-</div>
+			</div>
+		</div>
+	</aui:fieldset>
+</aui:fieldset-group>
 
 <liferay-portlet:renderURL portletName="<%= PortletKeys.CT_CAMPAIGN_DISPLAY %>" var="newCampaignRuleURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="mvcPath" value="<%= CampaignContentDisplayPath.EDIT_QUERY_RULE %>" />
@@ -62,7 +64,7 @@ List<QueryRule> campaignQueryRules = (List<QueryRule>)request.getAttribute("camp
 <aui:script use="aui-base,liferay-auto-fields">
 	var autoFields = new Liferay.AutoFields(
 		{
-			contentBox: '#<portlet:namespace />queryRules > fieldset',
+			contentBox: '#<portlet:namespace />queryRules',
 			fieldIndexes: '<portlet:namespace />queryLogicIndexes',
 			namespace: '<portlet:namespace />',
 			sortable: false,
