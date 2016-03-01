@@ -10,4 +10,3 @@ Export-Package:\
 	com.liferay.content.targeting.report.user.segment.content.service.persistence,\
 	com.liferay.content.targeting.report.user.segment.content.util,\
 	com.liferay.content.targeting.report.user.segment.content.util.comparator
-
