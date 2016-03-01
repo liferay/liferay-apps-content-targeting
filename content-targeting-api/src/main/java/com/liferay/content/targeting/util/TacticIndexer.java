@@ -99,8 +99,8 @@ public class TacticIndexer extends BaseIndexer<Tactic> {
 		document.addUID(PORTLET_ID, tactic.getTacticId());
 
 		IndexWriterHelperUtil.deleteDocument(
-			getSearchEngineId(), tactic.getCompanyId(),
-			document.get(Field.UID), isCommitImmediately());
+			getSearchEngineId(), tactic.getCompanyId(), document.get(Field.UID),
+			isCommitImmediately());
 	}
 
 	@Override
