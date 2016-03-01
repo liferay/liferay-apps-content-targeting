@@ -5,7 +5,6 @@ Import-Package:\
 	com.liferay.content.targeting.analytics.util,\
 	com.liferay.content.targeting.api.model,\
 	com.liferay.content.targeting.service,\
-	com.liferay.content.targeting.service.messaging,\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
 Private-Package: com.liferay.content.targeting.tracking.action.form.*
