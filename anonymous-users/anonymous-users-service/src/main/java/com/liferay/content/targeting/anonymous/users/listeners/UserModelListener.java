@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.anonymous.users.hook.listeners;
+package com.liferay.content.targeting.anonymous.users.listeners;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
