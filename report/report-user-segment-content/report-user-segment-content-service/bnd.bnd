@@ -1,0 +1,21 @@
+Bundle-Name: User Segment Content Report Service
+Bundle-SymbolicName: com.liferay.content.targeting.report.user.segment.content.service
+Bundle-Version: 1.1.0
+Export-Package:\
+	com.liferay.content.targeting.report.user.segment.content,\
+	com.liferay.content.targeting.report.user.segment.content.messaging,\
+	com.liferay.content.targeting.report.user.segment.content.model.impl,\
+	com.liferay.content.targeting.report.user.segment.content.service.impl
+Include-Resource:\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0.3)(!(version>=2.0)))"
+Service-Component: com.liferay.content.targeting.report.user.segment.content.*
+Web-ContextPath: /report-user-segment-content
+-baseline: *;version="1.1.0"
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

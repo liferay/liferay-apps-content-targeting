@@ -1,0 +1,13 @@
+Bundle-Name: User Segment Content Report API
+Bundle-SymbolicName: com.liferay.content.targeting.report.user.segment.content.api
+Bundle-Version: 1.1.0
+Export-Package:\
+	com.liferay.content.targeting.report.user.segment.content,\
+	com.liferay.content.targeting.report.user.segment.content.configuration,\
+	com.liferay.content.targeting.report.user.segment.content.exception,\
+	com.liferay.content.targeting.report.user.segment.content.model,\
+	com.liferay.content.targeting.report.user.segment.content.service,\
+	com.liferay.content.targeting.report.user.segment.content.service.persistence,\
+	com.liferay.content.targeting.report.user.segment.content.util,\
+	com.liferay.content.targeting.report.user.segment.content.util.comparator
+
