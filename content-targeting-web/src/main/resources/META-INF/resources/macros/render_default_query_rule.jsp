@@ -82,3 +82,8 @@ String index = ParamUtil.getString(request, "index");
 		</aui:row>
 	</div>
 </div>
+
+<aui:script>
+	Liferay.Util.toggleRadio('<portlet:namespace />contentDefaultValueDo', '<portlet:namespace />contentDefaultBox', '');
+	Liferay.Util.toggleRadio('<portlet:namespace />contentDefaultValueDont', '', '<portlet:namespace />contentDefaultBox');
+</aui:script>
