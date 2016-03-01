@@ -14,6 +14,7 @@ dependencies {
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	provided project(":apps:content-targeting:content-targeting-api")
+	provided project(":apps:content-targeting:content-targeting-service")
 	provided project(":apps:platform:frontend:frontend-taglib")
 	provided project(":apps:platform:osgi-service-tracker-collections")
 	provided project(":apps:platform:portal-configuration:portal-configuration-metatype")

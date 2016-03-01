@@ -1,0 +1,28 @@
+Bundle-Name: Content Targeting Service
+Bundle-SymbolicName: com.liferay.content.targeting.service
+Bundle-Version: 3.0.0
+Export-Package:\
+	com.liferay.content.targeting,\
+	com.liferay.content.targeting.internal,\
+	com.liferay.content.targeting.lar,\
+	com.liferay.content.targeting.model.impl,\
+	com.liferay.content.targeting.service.impl,\
+	com.liferay.content.targeting.service.messaging,\
+	com.liferay.content.targeting.service.persistence.impl,\
+	com.liferay.content.targeting.util
+Import-Package:\
+	!com.sun,\
+	!com.sun.*,\
+	*
+Include-Resource:\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0.3)(!(version>=2.0)))"
+Service-Component: com.liferay.content.targeting.*
+Web-ContextPath: /content-targeting-api
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference
