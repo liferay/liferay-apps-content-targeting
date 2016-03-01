@@ -21,8 +21,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "full-content");
-
-boolean showEditLink = ParamUtil.getBoolean(request, "showEditLink", false);
 %>
 
 <c:if test="<%= assetEntry != null %>">
@@ -38,9 +36,10 @@ boolean showEditLink = ParamUtil.getBoolean(request, "showEditLink", false);
 
 </c:if>
 
-<c:if test='<%= "full-content".equals(displayStyle) %>'>
+<c:if test='<%= displayStyle.equals("full-content") %>'>
 
 	<%
+	assetRenderer.include(request, response, "full_content");
 	%>
 
 </c:if>
