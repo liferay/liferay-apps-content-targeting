@@ -130,10 +130,26 @@ List<QueryRule> campaignQueryRules = (List<QueryRule>)request.getAttribute("camp
 
 					A.one('#<portlet:namespace />assetEntryId' + index).attr('value', event.assetentryid);
 
-					A.one('#<portlet:namespace />assetTitleInfo' + index).html(event.assettitle);
-					A.one('#<portlet:namespace />assetTypeInfo' + index).html(event.assettype);
+					<liferay-portlet:renderURL portletName="<%= PortletKeys.CT_CAMPAIGN_DISPLAY %>" var="previewAssetEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+						<portlet:param name="mvcPath" value="/macros/asset_entry.jsp" />
+					</liferay-portlet:renderURL>
 
-					A.one('#<portlet:namespace />selectedContent' + index).show();
+					var uri = '<%= previewAssetEntryURL %>';
+
+					uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(PortletKeys.CT_CAMPAIGN_DISPLAY) %>assetEntryId=' + event.assetentryid, uri);
+
+					A.io.request(
+						uri,
+						{
+							on: {
+								success: function(event, id, obj) {
+									var responseData = this.get('responseData');
+
+									A.one('#<portlet:namespace />assetEntryContent' + index).setContent(responseData);
+								}
+							}
+						}
+					);
 				}
 			);
 		},
