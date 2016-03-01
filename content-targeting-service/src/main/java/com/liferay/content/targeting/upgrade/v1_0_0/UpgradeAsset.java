@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.hook.upgrade.v1_0_0;
+package com.liferay.content.targeting.upgrade.v1_0_0;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;

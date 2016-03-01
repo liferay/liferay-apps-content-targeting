@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.content.targeting.hook.upgrade;
+package com.liferay.content.targeting.upgrade;
 
-import com.liferay.content.targeting.hook.upgrade.v1_0_0.UpgradeAsset;
+import com.liferay.content.targeting.upgrade.v1_0_0.UpgradeAsset;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
