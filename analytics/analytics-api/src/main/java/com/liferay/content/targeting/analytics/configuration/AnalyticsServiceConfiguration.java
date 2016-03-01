@@ -29,46 +29,46 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface AnalyticsServiceConfiguration {
 
-	@Meta.AD(deflt = "1")
+	@Meta.AD(deflt = "1", required = false)
 	public int analyticsEventsCheckInterval();
 
-	@Meta.AD(deflt = "3")
+	@Meta.AD(deflt = "3", required = false)
 	public int analyticsEventsMaxAge();
 
-	@Meta.AD(deflt = "20000")
+	@Meta.AD(deflt = "20000", required = false)
 	public int analyticsFlushInterval();
 
-	@Meta.AD(deflt = "true")
+	@Meta.AD(deflt = "true", required = false)
 	public boolean contentTrackingEnabled();
 
-	@Meta.AD
+	@Meta.AD(required = false)
 	public String formExcludedIdsRegExp();
 
-	@Meta.AD(deflt = "true")
+	@Meta.AD(deflt = "true", required = false)
 	public boolean formTrackingEnabled();
 
-	@Meta.AD(deflt = "true")
+	@Meta.AD(deflt = "true", required = false)
 	public boolean formInteractionTrackingEnabled();
 
-	@Meta.AD(deflt = "true")
+	@Meta.AD(deflt = "true", required = false)
 	public boolean formSubmitTrackingEnabled();
 
-	@Meta.AD(deflt = "true")
+	@Meta.AD(deflt = "true", required = false)
 	public boolean formViewTrackingEnabled();
 
-	@Meta.AD
+	@Meta.AD(required = false)
 	public String linkExcludedIdsRegExp();
 
-	@Meta.AD(deflt = "false")
+	@Meta.AD(deflt = "false", required = false)
 	public boolean linkTrackingEnabled();
 
-	@Meta.AD(deflt = "false")
+	@Meta.AD(deflt = "false", required = false)
 	public boolean linkClickTrackingEnabled();
 
-	@Meta.AD(deflt = "true")
+	@Meta.AD(deflt = "true", required = false)
 	public boolean pageTrackingEnabled();
 
-	@Meta.AD(deflt = "false")
+	@Meta.AD(deflt = "false", required = false)
 	public boolean youtubeTrackingEnabled();
 
 }

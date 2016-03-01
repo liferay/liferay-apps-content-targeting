@@ -27,10 +27,11 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -64,13 +65,8 @@ public class TacticIndexer extends BaseIndexer<Tactic> {
 	}
 
 	@Override
-	public String[] getClassNames() {
+	public String[] getSearchClassNames() {
 		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
 	}
 
 	@Override
@@ -87,7 +83,8 @@ public class TacticIndexer extends BaseIndexer<Tactic> {
 
 	@Override
 	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, SearchContext searchContext)
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
 		throws Exception {
 
 		addSearchLocalizedTerm(
@@ -101,9 +98,9 @@ public class TacticIndexer extends BaseIndexer<Tactic> {
 
 		document.addUID(PORTLET_ID, tactic.getTacticId());
 
-		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), tactic.getCompanyId(),
-			document.get(Field.UID));
+		IndexWriterHelperUtil.deleteDocument(
+			getSearchEngineId(), tactic.getCompanyId(), document.get(Field.UID),
+			isCommitImmediately());
 	}
 
 	@Override
@@ -156,14 +153,10 @@ public class TacticIndexer extends BaseIndexer<Tactic> {
 		Document document = getDocument(tactic);
 
 		if (document != null) {
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), tactic.getCompanyId(), document);
+			IndexWriterHelperUtil.updateDocument(
+				getSearchEngineId(), tactic.getCompanyId(), document,
+				isCommitImmediately());
 		}
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void reindexTactics(final long companyId) throws PortalException {

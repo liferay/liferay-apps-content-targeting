@@ -29,7 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface UserSegmentContentReportServiceConfiguration {
 
-	@Meta.AD(deflt = "24")
+	@Meta.AD(deflt = "24", required = false)
 	public int userSegmentContentReportCheckInterval();
 
 }
