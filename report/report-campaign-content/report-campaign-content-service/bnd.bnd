@@ -1,0 +1,16 @@
+Bundle-Name: Campaign Content Report Service
+Bundle-SymbolicName: com.liferay.content.targeting.report.campaign.content.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.content.targeting.report.campaign.content,\
+	com.liferay.content.targeting.report.campaign.content.model.impl,\
+	com.liferay.content.targeting.report.campaign.content.service.impl
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+Service-Component: com.liferay.content.targeting.report.campaign.content.*
+Web-ContextPath: /report-campaign-content
+-baseline: *;version="1.0.0"
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

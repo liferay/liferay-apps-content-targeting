@@ -97,13 +97,13 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.report.campaign.content.util.ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.report.campaign.content.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.content.targeting.report.campaign.content.model.CampaignContent"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.report.campaign.content.util.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.report.campaign.content.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.content.targeting.report.campaign.content.model.CampaignContent"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.report.campaign.content.util.ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.report.campaign.content.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.content.targeting.report.campaign.content.model.CampaignContent"),
 			true);
 	public static final long CAMPAIGNID_COLUMN_BITMASK = 1L;
@@ -158,7 +158,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.content.targeting.report.campaign.content.util.ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.content.targeting.report.campaign.content.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.content.targeting.report.campaign.content.model.CampaignContent"));
 
 	public CampaignContentModelImpl() {

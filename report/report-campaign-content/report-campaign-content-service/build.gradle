@@ -1,5 +1,5 @@
 buildService {
-	apiDir = "../report-campaign-content/src/main/java"
+	apiDir = "../report-campaign-content-api/src/main/java"
 	testDir = "../report-campaign-content-test/src/testIntegration/java"
 }
 
@@ -18,7 +18,7 @@ dependencies {
 	provided project(":apps:content-targeting:analytics:analytics-api")
 	provided project(":apps:content-targeting:anonymous-users:anonymous-users-api")
 	provided project(":apps:content-targeting:content-targeting-api")
-	provided project(":apps:platform:portal-configuration:portal-configuration-metatype")
+	provided project(":apps:content-targeting:report:report-campaign-content:report-campaign-content-api")
 	provided project(":apps:platform:portal:portal-upgrade")
 }
 
