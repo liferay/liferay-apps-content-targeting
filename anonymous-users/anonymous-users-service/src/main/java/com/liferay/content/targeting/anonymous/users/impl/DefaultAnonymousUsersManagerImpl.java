@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.content.targeting.anonymous.users.util;
+package com.liferay.content.targeting.anonymous.users.impl;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
+import com.liferay.content.targeting.anonymous.users.util.AnonymousUsersCookieManager;
+import com.liferay.content.targeting.anonymous.users.util.AnonymousUsersManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PortalUtil;

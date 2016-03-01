@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.anonymous.users.util;
+package com.liferay.content.targeting.anonymous.users.impl;
 
 import com.liferay.portal.util.WebKeys;
 

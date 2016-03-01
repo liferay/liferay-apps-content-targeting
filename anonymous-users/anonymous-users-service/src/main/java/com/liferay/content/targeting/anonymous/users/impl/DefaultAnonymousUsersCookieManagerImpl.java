@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.content.targeting.anonymous.users.util;
+package com.liferay.content.targeting.anonymous.users.impl;
 
+import com.liferay.content.targeting.anonymous.users.util.AnonymousUsersCookieManager;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
