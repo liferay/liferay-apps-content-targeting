@@ -25,6 +25,7 @@
 		names="content-selection,display-settings"
 		param="tabs2"
 		refresh="<%= false %>"
+		type="tabs nav-tabs-default"
 	>
 
 		<liferay-ui:section>
@@ -37,6 +38,8 @@
 	</liferay-ui:tabs>
 
 	<aui:button-row>
-		<aui:button type="submit" value="save" />
+		<aui:button cssClass="btn-lg" type="submit" value="save" />
+
+		<aui:button cssClass="btn-lg" type="cancel" />
 	</aui:button-row>
 </aui:form>
