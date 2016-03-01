@@ -249,7 +249,7 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 		throws PortalException {
 
 		return GroupPermissionUtil.contains(
-			permissionChecker, group, ActionKeys.ACCESS_IN_CONTROL_PANEL);
+			permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE);
 	}
 
 	@Reference(unbind = "unsetCampaignLocalService")
