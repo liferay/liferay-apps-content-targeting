@@ -33,6 +33,10 @@ List<QueryRule> campaignQueryRules = (List<QueryRule>)request.getAttribute("camp
 
 				<%
 				for (QueryRule queryRule : campaignQueryRules) {
+					if (queryRule.isDefaultRule()) {
+						continue;
+					}
+
 					int queryRule_index = campaignQueryRules.indexOf(queryRule);
 
 					request.setAttribute("configuration.queryRule", queryRule);
@@ -52,6 +56,37 @@ List<QueryRule> campaignQueryRules = (List<QueryRule>)request.getAttribute("camp
 				%>
 
 			</div>
+
+			<%
+			for (QueryRule queryRule : campaignQueryRules) {
+				if (!queryRule.isDefaultRule()) {
+					 continue;
+				}
+
+				int queryRule_index = campaignQueryRules.indexOf(queryRule);
+			%>
+
+				<div class="lfr-form-row <%= queryRule.getCssClass(queryRule_index) %>">
+					<div class="row-fields">
+						<aui:input name='<%= portletName + "queryIndex" + queryRule.getIndex() %>' type="hidden" usenamespace="<%= false %>" />
+
+						<%
+						request.setAttribute("queryRule", queryRule);
+						%>
+
+						<div class="field-row query-row">
+							<liferay-util:include page="/macros/render_default_query_rule.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="index" value="<%= String.valueOf(queryRule.getIndex()) %>" />
+								<liferay-util:param name="portletNamespace" value="<%= portletName %>" />
+							</liferay-util:include>
+						</div>
+					</div>
+				</div>
+
+			<%
+			}
+			%>
+
 		</div>
 	</aui:fieldset>
 </aui:fieldset-group>
