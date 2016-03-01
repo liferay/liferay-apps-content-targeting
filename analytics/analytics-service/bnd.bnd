@@ -4,7 +4,7 @@ Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.content.targeting.analytics,\
 	com.liferay.content.targeting.analytics.messaging,\
-	com.liferay.content.targeting.analytics.messaging.config,\
+	com.liferay.content.targeting.analytics.messaging.config
 Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\

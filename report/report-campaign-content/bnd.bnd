@@ -4,7 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.content.targeting.report.campaign.content,\
 	com.liferay.content.targeting.report.campaign.content.model,\
-	com.liferay.content.targeting.report.campaign.content.service,\
+	com.liferay.content.targeting.report.campaign.content.service
 Import-Package:\
 	!com.swabunga.spell.engine,\
 	!com.swabunga.spell.event,\
