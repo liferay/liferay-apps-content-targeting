@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.anonymous.users.api.util;
+package com.liferay.content.targeting.analytics.service.util;
 
 import aQute.bnd.annotation.ProviderType;
 
