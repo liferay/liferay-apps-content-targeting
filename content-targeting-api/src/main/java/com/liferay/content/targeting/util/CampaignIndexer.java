@@ -27,10 +27,11 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -64,13 +65,8 @@ public class CampaignIndexer extends BaseIndexer<Campaign> {
 	}
 
 	@Override
-	public String[] getClassNames() {
+	public String[] getSearchClassNames() {
 		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
 	}
 
 	@Override
@@ -87,7 +83,8 @@ public class CampaignIndexer extends BaseIndexer<Campaign> {
 
 	@Override
 	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, SearchContext searchContext)
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
 		throws Exception {
 
 		addSearchLocalizedTerm(
@@ -101,9 +98,9 @@ public class CampaignIndexer extends BaseIndexer<Campaign> {
 
 		document.addUID(PORTLET_ID, campaign.getCampaignId());
 
-		SearchEngineUtil.deleteDocument(
+		IndexWriterHelperUtil.deleteDocument(
 			getSearchEngineId(), campaign.getCompanyId(),
-			document.get(Field.UID));
+			document.get(Field.UID), isCommitImmediately());
 	}
 
 	@Override
@@ -141,8 +138,9 @@ public class CampaignIndexer extends BaseIndexer<Campaign> {
 		Document document = getDocument(campaign);
 
 		if (document != null) {
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), campaign.getCompanyId(), document);
+			IndexWriterHelperUtil.updateDocument(
+				getSearchEngineId(), campaign.getCompanyId(), document,
+				isCommitImmediately());
 		}
 	}
 

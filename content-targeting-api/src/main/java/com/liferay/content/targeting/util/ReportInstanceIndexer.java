@@ -30,9 +30,9 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -67,13 +67,8 @@ public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 	}
 
 	@Override
-	public String[] getClassNames() {
+	public String[] getSearchClassNames() {
 		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
 	}
 
 	@Override
@@ -101,9 +96,9 @@ public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 
 		document.addUID(PORTLET_ID, reportInstance.getReportInstanceId());
 
-		SearchEngineUtil.deleteDocument(
+		IndexWriterHelperUtil.deleteDocument(
 			getSearchEngineId(), reportInstance.getCompanyId(),
-			document.get(Field.UID));
+			document.get(Field.UID), isCommitImmediately());
 	}
 
 	@Override
@@ -147,8 +142,9 @@ public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 		Document document = getDocument(reportInstance);
 
 		if (document != null) {
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), reportInstance.getCompanyId(), document);
+			IndexWriterHelperUtil.updateDocument(
+				getSearchEngineId(), reportInstance.getCompanyId(), document,
+				isCommitImmediately());
 		}
 	}
 
@@ -166,11 +162,6 @@ public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 
 		reindexReportInstances(
 			companyId, _campaignLocalService, _userSegmentLocalService);
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void reindexReportInstances(
