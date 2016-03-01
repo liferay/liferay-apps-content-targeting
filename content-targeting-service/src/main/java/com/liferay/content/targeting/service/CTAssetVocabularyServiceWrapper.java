@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -130,12 +131,14 @@ public class CTAssetVocabularyServiceWrapper
 		return unambiguousVocabularies;
 	}
 
+	@Reference(unbind = "-")
 	protected void setAssetVocabularyLocalService(
 		AssetVocabularyLocalService assetVocabularyLocalService) {
 
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 	}
 
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
