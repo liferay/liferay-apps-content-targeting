@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting;
+package com.liferay.content.targeting.service;
 
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -41,14 +41,14 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = ServiceWrapper.class)
-public class CTAssetVocabularyServiceImpl
+public class CTAssetVocabularyServiceWrapper
 	extends AssetVocabularyServiceWrapper {
 
-	public CTAssetVocabularyServiceImpl() {
+	public CTAssetVocabularyServiceWrapper() {
 		super(null);
 	}
 
-	public CTAssetVocabularyServiceImpl(
+	public CTAssetVocabularyServiceWrapper(
 		AssetVocabularyService assetVocabularyService) {
 
 		super(assetVocabularyService);
