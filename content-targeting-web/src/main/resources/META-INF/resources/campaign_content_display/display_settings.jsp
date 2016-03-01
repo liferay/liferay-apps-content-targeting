@@ -16,27 +16,25 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String displayStyle = GetterUtil.getString(request.getAttribute("displayStyle"));
+String[] displayStyles = GetterUtil.getStringValues(request.getAttribute("displayStyles"));
+long displayStyleGroupId = GetterUtil.getLong(request.getAttribute("displayStyleGroupId"));
+
+TemplateHandler templateHandler = (TemplateHandler)request.getAttribute("templateHandler");
+%>
+
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationURL">
 	<portlet:param name="cmd" value="update" />
 </liferay-portlet:actionURL>
 
-<aui:form action="<%= configurationURL %>" method="post" name="fm">
-	<liferay-ui:tabs
-		names="content-selection,display-settings"
-		param="tabs2"
-		refresh="<%= false %>"
-	>
-
-		<liferay-ui:section>
-			<liferay-util:include page="/campaign_content_display/content_selection.jsp" servletContext="<%= application %>" />
-		</liferay-ui:section>
-
-		<liferay-ui:section>
-			<liferay-util:include page="/campaign_content_display/display_settings.jsp" servletContext="<%= application %>" />
-		</liferay-ui:section>
-	</liferay-ui:tabs>
-
-	<aui:button-row>
-		<aui:button type="submit" value="save" />
-	</aui:button-row>
-</aui:form>
+<div class="display-template">
+	<liferay-ddm:template-selector
+		className="<%= templateHandler.getClassName() %>"
+		displayStyle="<%= displayStyle %>"
+		displayStyleGroupId="<%= displayStyleGroupId %>"
+		displayStyles="<%= ListUtil.toList(displayStyles) %>"
+		label="display-template"
+		refreshURL="<%= configurationURL %>"
+	/>
+</div>
