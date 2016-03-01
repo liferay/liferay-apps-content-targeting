@@ -1,0 +1,10 @@
+Bundle-Name: Score Points Rule API
+Bundle-SymbolicName: com.liferay.content.targeting.rule.score.points.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.content.targeting.rule.score.points.api.model,\
+	com.liferay.content.targeting.rule.score.points.exception,\
+	com.liferay.content.targeting.rule.score.points.model,\
+	com.liferay.content.targeting.rule.score.points.service,\
+	com.liferay.content.targeting.rule.score.points.service.persistence,\
+	com.liferay.content.targeting.rule.score.points.util

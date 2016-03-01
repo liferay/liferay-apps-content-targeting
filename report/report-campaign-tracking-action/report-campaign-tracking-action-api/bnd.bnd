@@ -1,0 +1,13 @@
+Bundle-Name: Campaign Tracking Actions Report API
+Bundle-SymbolicName: com.liferay.content.targeting.report.campaign.tracking.action.api
+Bundle-Version: 1.2.0
+Export-Package:\
+	com.liferay.content.targeting.report.campaign.tracking.action,\
+	com.liferay.content.targeting.report.campaign.tracking.action.configuration,\
+	com.liferay.content.targeting.report.campaign.tracking.action.exception,\
+	com.liferay.content.targeting.report.campaign.tracking.action.model,\
+	com.liferay.content.targeting.report.campaign.tracking.action.service,\
+	com.liferay.content.targeting.report.campaign.tracking.action.service.persistence,\
+	com.liferay.content.targeting.report.campaign.tracking.action.service.util,\
+	com.liferay.content.targeting.report.campaign.tracking.action.util,\
+	com.liferay.content.targeting.report.campaign.tracking.action.util.comparator
