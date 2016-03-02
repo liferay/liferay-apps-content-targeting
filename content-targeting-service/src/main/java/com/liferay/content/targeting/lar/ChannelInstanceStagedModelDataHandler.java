@@ -72,7 +72,8 @@ public class ChannelInstanceStagedModelDataHandler
 	public List<ChannelInstance> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		throw new UnsupportedOperationException();
+		return _channelInstanceLocalService.
+			getChannelInstancesByUuidAndCompanyId(uuid, companyId);
 	}
 
 	@Override
@@ -86,21 +87,21 @@ public class ChannelInstanceStagedModelDataHandler
 	}
 
 	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
-			long channelInstanceId)
-		throws PortletDataException {
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long classPK)
+		throws Exception {
 
 		ChannelInstance existingChannelInstance =
 			_channelInstanceLocalService.fetchChannelInstanceByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
+				uuid, groupId);
 
 		Map<Long, Long> channelInstanceIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				ChannelInstance.class);
 
 		channelInstanceIds.put(
-			channelInstanceId, existingChannelInstance.getChannelInstanceId());
+			classPK, existingChannelInstance.getChannelInstanceId());
 	}
 
 	@Override

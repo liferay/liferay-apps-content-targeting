@@ -70,7 +70,8 @@ public class TacticStagedModelDataHandler
 	public List<Tactic>
 		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
 
-		throw new UnsupportedOperationException();
+		return _tacticLocalService.getTacticsByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override
@@ -84,18 +85,19 @@ public class TacticStagedModelDataHandler
 	}
 
 	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid, long tacticId)
-		throws PortletDataException {
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long classPK)
+		throws Exception {
 
 		Tactic existingTactic = _tacticLocalService.fetchTacticByUuidAndGroupId(
-			uuid, portletDataContext.getCompanyGroupId());
+			uuid, groupId);
 
 		Map<Long, Long> tacticIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Tactic.class);
 
-		tacticIds.put(tacticId, existingTactic.getTacticId());
+		tacticIds.put(classPK, existingTactic.getTacticId());
 	}
 
 	@Reference(unbind = "-")

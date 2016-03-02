@@ -71,7 +71,8 @@ public class RuleInstanceStagedModelDataHandler
 	public List<RuleInstance>
 		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
 
-		throw new UnsupportedOperationException();
+		return _ruleInstanceLocalService.getRuleInstancesByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override
@@ -91,24 +92,6 @@ public class RuleInstanceStagedModelDataHandler
 		}
 
 		return rule.getName(LocaleUtil.getDefault());
-	}
-
-	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
-			long ruleInstanceId)
-		throws PortletDataException {
-
-		RuleInstance existingRuleInstance =
-			_ruleInstanceLocalService.fetchRuleInstanceByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> ruleInstanceIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				RuleInstance.class);
-
-		ruleInstanceIds.put(
-			ruleInstanceId, existingRuleInstance.getRuleInstanceId());
 	}
 
 	@Override
@@ -151,6 +134,24 @@ public class RuleInstanceStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			ruleInstanceElement,
 			ExportImportPathUtil.getModelPath(ruleInstance), ruleInstance);
+	}
+
+	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long classPK)
+		throws Exception {
+
+		RuleInstance existingRuleInstance =
+			_ruleInstanceLocalService.fetchRuleInstanceByUuidAndGroupId(
+				uuid, groupId);
+
+		Map<Long, Long> ruleInstanceIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				RuleInstance.class);
+
+		ruleInstanceIds.put(
+			classPK, existingRuleInstance.getRuleInstanceId());
 	}
 
 	@Override
