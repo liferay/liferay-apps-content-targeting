@@ -8,6 +8,5 @@ Import-Package:\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
 Private-Package: com.liferay.content.targeting.tracking.action.link.*
-Service-Component: com.liferay.content.targeting.tracking.action.link.*
 Web-ContextPath: /tracking-action-link
 -baseline: *;version="1.0.0"

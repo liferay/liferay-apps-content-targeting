@@ -14,7 +14,5 @@ Liferay-Spring-Context: META-INF/spring
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
-Service-Component: com.liferay.content.targeting.anonymous.users.*
-Web-ContextPath: /anonymous-users-api
 -baseline: *;version="2.0.0"
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

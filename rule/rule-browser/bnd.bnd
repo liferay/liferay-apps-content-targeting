@@ -10,6 +10,5 @@ Import-Package:\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
 Private-Package: com.liferay.content.targeting.rule.browser.*
-Service-Component: com.liferay.content.targeting.rule.browser.*
 Web-ContextPath: /rule-browser
 -baseline: *;version="1.0.0"

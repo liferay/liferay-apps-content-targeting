@@ -25,7 +25,7 @@ ServletContext simulatorServletContext = (ServletContext)request.getAttribute("s
 %>
 
 <c:if test="<%= simulatorServletContext != null %>">
-	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(simulatorServletContext.getContextPath()) + "/js/ct_simulator/simulator.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script>
+	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(simulatorServletContext.getContextPath()) + "/js/main.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script>
 </c:if>
 
 <h3 class="list-group-heading"><liferay-ui:message key="category.ct" /></h3>
@@ -38,12 +38,12 @@ ServletContext simulatorServletContext = (ServletContext)request.getAttribute("s
 		value="<%= tabs1 %>"
 	>
 		<liferay-ui:section>
-			<liferay-util:include page="/ct_simulator/view_user_segments.jsp" servletContext="<%= application %>">
+			<liferay-util:include page="/view_user_segments.jsp" servletContext="<%= application %>">
 			</liferay-util:include>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-util:include page="/ct_simulator/view_campaigns.jsp" servletContext="<%= application %>">
+			<liferay-util:include page="/view_campaigns.jsp" servletContext="<%= application %>">
 			</liferay-util:include>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

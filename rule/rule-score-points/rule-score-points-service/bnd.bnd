@@ -11,7 +11,6 @@ Liferay-Spring-Context: META-INF/spring
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
-Service-Component: com.liferay.content.targeting.rule.score.points.*
 Web-ContextPath: /rule-score-points
 -baseline: *;version="1.0.0"
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

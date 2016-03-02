@@ -10,6 +10,5 @@ Import-Package:\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
 Private-Package: com.liferay.content.targeting.rule.age.*
-Service-Component: com.liferay.content.targeting.rule.age.*
 Web-ContextPath: /rule-age
 -baseline: *;version="1.0.0"

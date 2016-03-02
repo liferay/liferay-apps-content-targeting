@@ -10,6 +10,5 @@ Import-Package:\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
 Private-Package: com.liferay.content.targeting.rule.device.*
-Service-Component: com.liferay.content.targeting.rule.device.*
 Web-ContextPath: /rule-device
 -baseline: *;version="1.0.0"

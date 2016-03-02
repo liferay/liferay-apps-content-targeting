@@ -40,7 +40,7 @@ String portletNamespace = PortalUtil.getPortletNamespace(PortletKeys.CT_SIMULATO
 		request.setAttribute("simulatedElementsPKs", simulatedUserSegmentIds);
 		%>
 
-		<liferay-util:include page="/ct_simulator/render_simulator_lists.jsp" servletContext="<%= application %>">
+		<liferay-util:include page="/render_simulator_lists.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="className" value="<%= UserSegment.class.getName() %>" />
 			<liferay-util:param name="containerId" value="userSegmentContainer" />
 			<liferay-util:param name="emptyMessage" value="the-current-user-does-not-belong-to-any-user-segment" />
