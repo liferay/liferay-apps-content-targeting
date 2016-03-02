@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.content.targeting.util;
+package com.liferay.content.targeting.search;
 
-import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.content.targeting.service.permission.UserSegmentPermission;
+import com.liferay.content.targeting.model.Tactic;
+import com.liferay.content.targeting.service.TacticLocalService;
+import com.liferay.content.targeting.service.permission.TacticPermission;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,20 +49,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Indexer.class)
-public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
+public class TacticIndexer extends BaseIndexer<Tactic> {
 
-	public static final String[] CLASS_NAMES = {UserSegment.class.getName()};
+	public static final String[] CLASS_NAMES = {Tactic.class.getName()};
 
 	public static final String PORTLET_ID = PortletKeys.CT_CORE;
 
-	public UserSegmentIndexer() {
+	public TacticIndexer() {
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
 
 	@Override
 	public String getClassName() {
-		return UserSegment.class.getName();
+		return Tactic.class.getName();
 	}
 
 	@Override
@@ -75,11 +76,10 @@ public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		UserSegment userSegment = _userSegmentLocalService.getUserSegment(
-			entryClassPK);
+		Tactic tactic = _tacticLocalService.getTactic(entryClassPK);
 
-		return UserSegmentPermission.contains(
-			permissionChecker, userSegment, ActionKeys.VIEW);
+		return TacticPermission.contains(
+			permissionChecker, tactic, ActionKeys.VIEW);
 	}
 
 	@Override
@@ -94,32 +94,33 @@ public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
 	}
 
 	@Override
-	protected void doDelete(UserSegment userSegment) throws Exception {
+	protected void doDelete(Tactic tactic) throws Exception {
 		Document document = new DocumentImpl();
 
-		document.addUID(PORTLET_ID, userSegment.getUserSegmentId());
+		document.addUID(PORTLET_ID, tactic.getTacticId());
 
 		IndexWriterHelperUtil.deleteDocument(
-			getSearchEngineId(), userSegment.getCompanyId(),
-			document.get(Field.UID), isCommitImmediately());
+			getSearchEngineId(), tactic.getCompanyId(), document.get(Field.UID),
+			isCommitImmediately());
 	}
 
 	@Override
-	protected Document doGetDocument(UserSegment userSegment) throws Exception {
+	protected Document doGetDocument(Tactic tactic) throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing user segment " + userSegment);
+			_log.debug("Indexing tactic " + tactic);
 		}
 
-		Document document = getBaseModelDocument(PORTLET_ID, userSegment);
+		Document document = getBaseModelDocument(PORTLET_ID, tactic);
 
 		document.addLocalizedText(
-			Field.DESCRIPTION, userSegment.getDescriptionMap());
-		document.addLocalizedText(Field.NAME, userSegment.getNameMap());
+			Field.DESCRIPTION, tactic.getDescriptionMap());
+		document.addLocalizedText(Field.NAME, tactic.getNameMap());
 
-		document.addKeyword("userSegmentId", userSegment.getUserSegmentId());
+		document.addKeyword("campaignId", tactic.getCampaignId());
+		document.addKeyword("tacticId", tactic.getTacticId());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("User segment " + userSegment + " indexed successfully");
+			_log.debug("Tactic " + tactic + " indexed successfully");
 		}
 
 		return document;
@@ -136,45 +137,42 @@ public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		UserSegment userSegment = _userSegmentLocalService.getUserSegment(
-			classPK);
+		Tactic tactic = _tacticLocalService.getTactic(classPK);
 
-		doReindex(userSegment);
+		doReindex(tactic);
 	}
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexUserSegments(companyId);
+		reindexTactics(companyId);
 	}
 
 	@Override
-	protected void doReindex(UserSegment userSegment) throws Exception {
-		Document document = getDocument(userSegment);
+	protected void doReindex(Tactic tactic) throws Exception {
+		Document document = getDocument(tactic);
 
 		if (document != null) {
 			IndexWriterHelperUtil.updateDocument(
-				getSearchEngineId(), userSegment.getCompanyId(), document,
+				getSearchEngineId(), tactic.getCompanyId(), document,
 				isCommitImmediately());
 		}
 	}
 
-	protected void reindexUserSegments(final long companyId)
-		throws PortalException {
-
+	protected void reindexTactics(final long companyId) throws PortalException {
 		final IndexableActionableDynamicQuery actionableDynamicQuery =
-			_userSegmentLocalService.getIndexableActionableDynamicQuery();
+			_tacticLocalService.getIndexableActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<UserSegment>() {
+			new ActionableDynamicQuery.PerformActionMethod<Tactic>() {
 
 				@Override
-				public void performAction(UserSegment userSegment) {
+				public void performAction(Tactic tactic) {
 					try {
-						Document document = getDocument(userSegment);
+						Document document = getDocument(tactic);
 
 						if (document != null) {
 							actionableDynamicQuery.addDocuments(document);
@@ -183,8 +181,8 @@ public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to index user segment: " +
-									userSegment.getUserSegmentId(),
+								"Unable to index tactic: " +
+									tactic.getTacticId(),
 								pe);
 						}
 					}
@@ -198,15 +196,14 @@ public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
 	}
 
 	@Reference(unbind = "-")
-	protected void setUserSegmentLocalService(
-		UserSegmentLocalService userSegmentLocalService) {
+	protected void setTacticLocalService(
+		TacticLocalService tacticLocalService) {
 
-		_userSegmentLocalService = userSegmentLocalService;
+		_tacticLocalService = tacticLocalService;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UserSegmentIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(TacticIndexer.class);
 
-	private UserSegmentLocalService _userSegmentLocalService;
+	private TacticLocalService _tacticLocalService;
 
 }

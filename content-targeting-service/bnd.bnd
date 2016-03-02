@@ -6,8 +6,10 @@ Export-Package:\
 	com.liferay.content.targeting.internal,\
 	com.liferay.content.targeting.lar,\
 	com.liferay.content.targeting.model.impl,\
+	com.liferay.content.targeting.search,\
 	com.liferay.content.targeting.service.impl,\
 	com.liferay.content.targeting.service.messaging,\
+	com.liferay.content.targeting.service.permission,\
 	com.liferay.content.targeting.service.persistence.impl,\
 	com.liferay.content.targeting.service.wrapper
 Include-Resource:\

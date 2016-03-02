@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.content.targeting.util;
+package com.liferay.content.targeting.search;
 
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.permission.CampaignPermission;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -10,6 +10,5 @@ Export-Package:\
 	com.liferay.content.targeting.rule.categories,\
 	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.messaging,\
-	com.liferay.content.targeting.service.permission,\
 	com.liferay.content.targeting.service.persistence,\
 	com.liferay.content.targeting.util
