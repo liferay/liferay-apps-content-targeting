@@ -8,12 +8,7 @@ Export-Package:\
 	com.liferay.content.targeting.model.impl,\
 	com.liferay.content.targeting.service.impl,\
 	com.liferay.content.targeting.service.messaging,\
-	com.liferay.content.targeting.service.persistence.impl,\
-	com.liferay.content.targeting.util
-Import-Package:\
-	!com.sun,\
-	!com.sun.*,\
-	*
+	com.liferay.content.targeting.service.persistence.impl
 Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
