@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.content.targeting.internal,\
 	com.liferay.content.targeting.lar,\
 	com.liferay.content.targeting.model.impl,\
+	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.impl,\
 	com.liferay.content.targeting.service.messaging,\
 	com.liferay.content.targeting.service.persistence.impl
@@ -17,7 +18,7 @@ Liferay-Service: true
 Liferay-Spring-Context: META-INF/spring
 Require-Capability:\
 	liferay.extender;\
-	filter:="(&(liferay.extender=spring.extender)(version>=1.0.3)(!(version>=2.0)))"
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 Service-Component: com.liferay.content.targeting.*
 Web-ContextPath: /content-targeting-api
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference
