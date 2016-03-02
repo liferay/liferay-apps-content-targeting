@@ -8,6 +8,5 @@ Import-Package:\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
 Private-Package: com.liferay.content.targeting.analytics.processor.servlet.*
-Service-Component: com.liferay.content.targeting.analytics.processor.*
 Web-ContextPath: /analytics-processor
 -baseline: *;version="1.0.0"

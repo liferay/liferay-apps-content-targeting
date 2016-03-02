@@ -10,6 +10,5 @@ Import-Package:\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
 Private-Package: com.liferay.content.targeting.rule.user.group.member.*
-Service-Component: com.liferay.content.targeting.rule.user.group.member.*
 Web-ContextPath: /rule-user-group-member
 -baseline: *;version="1.0.0"
