@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.service;
+package com.liferay.content.targeting.service.wrapper;
 
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetVocabulary;

@@ -6,10 +6,10 @@ Export-Package:\
 	com.liferay.content.targeting.internal,\
 	com.liferay.content.targeting.lar,\
 	com.liferay.content.targeting.model.impl,\
-	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.impl,\
 	com.liferay.content.targeting.service.messaging,\
-	com.liferay.content.targeting.service.persistence.impl
+	com.liferay.content.targeting.service.persistence.impl,\
+	com.liferay.content.targeting.service.wrapper
 Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
