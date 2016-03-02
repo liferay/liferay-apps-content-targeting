@@ -186,7 +186,4 @@ TemplateHandler templateHandler = (TemplateHandler)request.getAttribute("templat
 		},
 		'.asset-selector a, .lfr-form-row'
 	);
-
-	Liferay.Util.toggleRadio('<portlet:namespace />contentDefaultValueDo', '<portlet:namespace />contentDefaultBox', '');
-	Liferay.Util.toggleRadio('<portlet:namespace />contentDefaultValueDont', '', '<portlet:namespace />contentDefaultBox');
 </aui:script>
