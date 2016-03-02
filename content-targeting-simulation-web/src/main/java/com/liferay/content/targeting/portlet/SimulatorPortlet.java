@@ -39,9 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.control-panel-entry-category=site_administration.configuration",
-		"com.liferay.portlet.control-panel-entry-class=com.liferay.content.targeting.portlet.SimulatorControlPanelEntry",
-		"com.liferay.portlet.control-panel-entry-weight=100",
 		"com.liferay.portlet.css-class-wrapper=content-targeting-simulator-portlet",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
