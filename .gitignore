@@ -20,6 +20,10 @@
 /*/*/classes
 /*/*/javadoc
 /*/*/lib
+/*/*/*/build
+/*/*/*/classes
+/*/*/*/javadoc
+/*/*/*/lib
 /.idea
 /benchmarks/output
 /tools/*/classes
