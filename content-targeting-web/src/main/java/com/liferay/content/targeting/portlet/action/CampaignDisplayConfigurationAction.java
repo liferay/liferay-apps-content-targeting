@@ -22,7 +22,6 @@ import com.liferay.content.targeting.portlet.util.CampaignQueryRule;
 import com.liferay.content.targeting.portlet.util.CampaignQueryRuleUtil;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.service.CampaignLocalService;
-import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
@@ -237,17 +236,8 @@ public class CampaignDisplayConfigurationAction
 		_campaignLocalService = campaignLocalService;
 	}
 
-	@Reference(unbind = "unsetCampaignService")
-	protected void setCampaignService(CampaignService campaignService) {
-		_campaignService = campaignService;
-	}
-
 	protected void unsetCampaignLocalService() {
 		_campaignLocalService = null;
-	}
-
-	protected void unsetCampaignService() {
-		_campaignService = null;
 	}
 
 	@Override
@@ -255,6 +245,5 @@ public class CampaignDisplayConfigurationAction
 	}
 
 	private CampaignLocalService _campaignLocalService;
-	private CampaignService _campaignService;
 
 }
