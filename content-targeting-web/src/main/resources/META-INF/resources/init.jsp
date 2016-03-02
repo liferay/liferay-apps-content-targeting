@@ -75,12 +75,11 @@ page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.TimeZoneUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
+<%@ page import="com.liferay.content.targeting.portlet.display.context.ContentTargetingEditCampaignDisplayContext" %>
 
-<%@ page import="java.util.Calendar" %><%@
-page import="java.util.Collection" %><%@
+<%@ page import="java.util.Collection" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
