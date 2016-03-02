@@ -99,6 +99,7 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.TimeZoneUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
+<%@ page import="com.liferay.portal.kernel.util.Constants" %>
 
 <%@ page import="java.util.Calendar" %><%@
 page import="java.util.Collection" %><%@

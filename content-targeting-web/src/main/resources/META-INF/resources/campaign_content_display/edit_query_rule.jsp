@@ -17,9 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletResource = ParamUtil.getString(request, "portletResource");
-String portletNamespace = PortalUtil.getPortletNamespace(portletResource);
-
 List<Campaign> campaigns = (List<Campaign>)request.getAttribute("campaigns");
 
 CampaignQueryRule campaignQueryRule = (CampaignQueryRule)request.getAttribute("configuration.queryRule");
@@ -41,13 +38,15 @@ if (campaignQueryRule.isValid() && !isFirst) {
 }
 %>
 
+<aui:input name='<%= "queryIndex" + index %>' type="hidden" />
+
 <div class="field-row query-row">
 	<div class="full-view <%= fullViewClass %>">
 		<aui:row>
 			<aui:col width="<%= 50 %>">
 				<p class="text-default"><liferay-ui:message key="if-the-user-matches-this-campaign" /></p>
 
-				<aui:select label="" name='<%= portletNamespace + "campaignId" + index %>' useNamespace="<%= false %>">
+				<aui:select label="" name='<%= "campaignId" + index %>'>
 
 					<%
 					for (Campaign campaign : campaigns) {
@@ -70,7 +69,6 @@ if (campaignQueryRule.isValid() && !isFirst) {
 				%>
 
 				<liferay-util:include page="/macros/render_asset_entry_selector.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="portletNamespace" value="<%= portletNamespace %>" />
 					<liferay-util:param name="index" value="<%= String.valueOf(index) %>" />
 				</liferay-util:include>
 			</aui:col>

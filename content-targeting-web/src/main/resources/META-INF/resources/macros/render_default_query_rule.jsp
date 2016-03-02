@@ -17,17 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletNamespace = ParamUtil.getString(request, "portletNamespace");
-
-if (Validator.isBlank(portletNamespace)) {
-	String portletId = PortalUtil.getPortletId(request);
-
-	portletNamespace = PortalUtil.getPortletNamespace(portletId);
-}
-
 QueryRule queryRule = (QueryRule)request.getAttribute("queryRule");
-
-String index = ParamUtil.getString(request, "index");
 %>
 
 <div class="default-content">
@@ -51,7 +41,6 @@ String index = ParamUtil.getString(request, "index");
 
 						<liferay-util:include page="/macros/render_asset_entry_selector.jsp" servletContext="<%= application %>">
 							<liferay-util:param name="index" value="Default" />
-							<liferay-util:param name="portletNamespace" value="<%= portletNamespace %>" />
 						</liferay-util:include>
 					</div>
 				</div>

@@ -64,21 +64,14 @@ List<QueryRule> campaignQueryRules = (List<QueryRule>)request.getAttribute("camp
 				}
 
 				int queryRule_index = campaignQueryRules.indexOf(queryRule);
+
+				request.setAttribute("queryRule", queryRule);
 			%>
 
 				<div class="lfr-form-row <%= queryRule.getCssClass(queryRule_index) %>">
 					<div class="row-fields">
-						<aui:input name='<%= portletName + "queryIndex" + queryRule.getIndex() %>' type="hidden" usenamespace="<%= false %>" />
-
-						<%
-						request.setAttribute("queryRule", queryRule);
-						%>
-
 						<div class="field-row query-row">
-							<liferay-util:include page="/macros/render_default_query_rule.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="index" value="<%= String.valueOf(queryRule.getIndex()) %>" />
-								<liferay-util:param name="portletNamespace" value="<%= portletName %>" />
-							</liferay-util:include>
+							<liferay-util:include page="/macros/render_default_query_rule.jsp" servletContext="<%= application %>" />
 						</div>
 					</div>
 				</div>
@@ -91,9 +84,8 @@ List<QueryRule> campaignQueryRules = (List<QueryRule>)request.getAttribute("camp
 	</aui:fieldset>
 </aui:fieldset-group>
 
-<liferay-portlet:renderURL portletName="<%= PortletKeys.CT_CAMPAIGN_DISPLAY %>" var="newCampaignRuleURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="mvcPath" value="<%= CampaignContentDisplayPath.EDIT_QUERY_RULE %>" />
-	<portlet:param name="portletResource" value="<%= portletName %>" />
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="newCampaignRuleURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<liferay-portlet:param name="<%= Constants.CMD %>" value="edit_query_rule" />
 </liferay-portlet:renderURL>
 
 <aui:script use="aui-base,liferay-auto-fields">

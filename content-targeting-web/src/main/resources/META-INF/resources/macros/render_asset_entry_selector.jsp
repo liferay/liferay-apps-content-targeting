@@ -17,14 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletNamespace = ParamUtil.getString(request, "portletNamespace");
-
-if (Validator.isBlank(portletNamespace)) {
-	String portletId = PortalUtil.getPortletId(request);
-
-	portletNamespace = PortalUtil.getPortletNamespace(portletId);
-}
-
 List<AssetRendererFactory> assetRendererFactories = (List<AssetRendererFactory>)request.getAttribute("assetRendererFactories");
 
 AssetQueryRule queryRule = (AssetQueryRule)request.getAttribute("queryRule");
@@ -32,10 +24,10 @@ AssetQueryRule queryRule = (AssetQueryRule)request.getAttribute("queryRule");
 String index = ParamUtil.getString(request, "index");
 %>
 
-<aui:input name='<%= portletNamespace + "assetEntryId" + index %>' type="hidden" useNamespace="<%= false %>" value="<%= queryRule.getAssetEntryId() %>" />
+<aui:input name='<%= "assetEntryId" + index %>' type="hidden" value="<%= queryRule.getAssetEntryId() %>" />
 
 <div class="col-md-6">
-	<div id="<%= portletNamespace + "assetEntryContent" + index %>">
+	<div id="<portlet:namespace /><%= "assetEntryContent" + index %>">
 		<c:choose>
 			<c:when test="<%= queryRule.hasAssetEntry() %>">
 				<liferay-util:include page="/macros/asset_entry.jsp" servletContext="<%= application %>">
