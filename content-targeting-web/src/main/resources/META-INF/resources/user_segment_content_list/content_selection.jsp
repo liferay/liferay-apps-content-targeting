@@ -28,75 +28,71 @@ long[] classNameIds = GetterUtil.getLongValues(request.getAttribute("classNameId
 List<String> modelResources = (List<String>)request.getAttribute("modelResources");
 
 boolean selectedValue = !anyAssetType && (classNameIds.length > 1);
-
-String cssClass = "";
-
-if (anyAssetType) {
-	cssClass = "hide";
-}
 %>
 
-<aui:fieldset label="asset-entry-type">
-	<aui:select label="" name="anyAssetType">
-		<aui:option
-			label="any"
-			selected="<%= anyAssetType %>"
-			value="<%= true %>"
-		/>
+<aui:fieldset-group markupView="lexicon">
+	<aui:fieldset>
+		<aui:select label="asset-entry-type" name="anyAssetType">
+			<aui:option
+				label="any"
+				selected="<%= anyAssetType %>"
+				value="<%= true %>"
+			/>
 
-		<aui:option
-			label='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "select-more-than-one") + "..." %>'
-			selected="<%= selectedValue %>"
-			value="<%= false %>"
-		/>
+			<aui:option label='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "select-more-than-one") + "..." %>' selected="<%= selectedValue %>" value="<%= false %>" />
 
-		<optgroup label="<liferay-ui:message key="asset-type" />">
+			<optgroup label="<liferay-ui:message key="asset-type" />">
 
-			<%
-			int i = 0;
+				<%
+				int i = 0;
 
-			for (long classNameId : availableClassNameIds) {
-				selectedValue = (classNameIds.length == 1) && (classNameId == classNameIds[0]);
-			%>
+				for (long classNameId : availableClassNameIds) {
+					selectedValue = (classNameIds.length == 1) && (classNameId == classNameIds[0]);
+				%>
 
-				<aui:option label="<%= modelResources.get(i) %>" selected="<%= selectedValue %>" value="<%= classNameId %>" />
+					<aui:option label="<%= modelResources.get(i) %>" selected="<%= selectedValue %>" value="<%= classNameId %>" />
 
-			<%
-				i++;
-			}
-			%>
+				<%
+					i++;
+				}
+				%>
 
-		</optgroup>
-	</aui:select>
+			</optgroup>
+		</aui:select>
 
-	<aui:input name="classNameIds" type="hidden" />
+		<aui:input name="classNameIds" type="hidden" />
 
-	<div class="<%= cssClass %>" id="<portlet:namespace />classNamesBoxes">
-		<liferay-ui:input-move-boxes
-			leftBoxName="currentClassNameIds"
-			leftList="<%= typesLeftList %>"
-			leftReorder="true"
-			leftTitle="selected"
-			rightBoxName="availableClassNameIds"
-			rightList="<%= typesRightList %>"
-			rightTitle="available"
-		/>
-	</div>
-</aui:fieldset>
+		<div class="<%= anyAssetType ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />classNamesBoxes">
+			<liferay-ui:input-move-boxes
+				leftBoxName="currentClassNameIds"
+				leftList="<%= typesLeftList %>"
+				leftReorder="true"
+				leftTitle="selected"
+				rightBoxName="availableClassNameIds"
+				rightList="<%= typesRightList %>"
+				rightTitle="available"
+			/>
+		</div>
+	</aui:fieldset>
+</aui:fieldset-group>
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveSelectBoxes',
-		function() {
+<aui:script use="liferay-util-list-fields">
+	var Util = Liferay.Util;
+
+	var form = $('#<portlet:namespace />fm');
+
+	form.on(
+		'submit',
+		function(event) {
+			event.preventDefault();
+
 			if (document.<portlet:namespace />fm.<portlet:namespace />classNameIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />classNameIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentClassNameIds);
+				document.<portlet:namespace />fm.<portlet:namespace />classNameIds.value = Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentClassNameIds);
 			}
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
+			submitForm(form);
+		}
 	);
 
-	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType', 'false', '<portlet:namespace />classNamesBoxes');
+	Util.toggleSelectBox('<portlet:namespace />anyAssetType', 'false', '<portlet:namespace />classNamesBoxes');
 </aui:script>
