@@ -30,7 +30,7 @@ List<Campaign> notMatchedCampaigns = (List<Campaign>)request.getAttribute("notMa
 	request.setAttribute("notMatchedElements", notMatchedCampaigns);
 	%>
 
-	<liferay-util:include page="/ct_simulator/render_simulator_lists.jsp" servletContext="<%= application %>">
+	<liferay-util:include page="/render_simulator_lists.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="className" value="<%= Campaign.class.getName() %>" />
 		<liferay-util:param name="containerId" value="campaignsContainer" />
 		<liferay-util:param name="emptyMessage" value="the-current-user-does-not-match-any-campaign" />

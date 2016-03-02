@@ -69,7 +69,7 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 
 	@Override
 	public String getJspPath() {
-		return "/ct_simulator/view.jsp";
+		return "/view.jsp";
 	}
 
 	@Override
@@ -235,7 +235,7 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.content.targeting.web-portlet)",
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.simulation.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

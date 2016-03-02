@@ -44,8 +44,8 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.control-panel-entry-weight=100",
 		"com.liferay.portlet.css-class-wrapper=content-targeting-simulator-portlet",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.header-portlet-css=/css/ct_simulator/main.css",
-		"com.liferay.portlet.header-portlet-javascript=/js/ct_simulator/simulator.js",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/main.js",
 		"com.liferay.portlet.icon=/icons/icon.png",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
@@ -56,12 +56,12 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.add-process-action-success-action=false",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/ct_simulator/view.jsp",
+		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=", "javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {SimulatorPortlet.class, Portlet.class}
+	service = Portlet.class
 )
 public class SimulatorPortlet extends MVCPortlet {
 
