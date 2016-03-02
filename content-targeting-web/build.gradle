@@ -25,8 +25,6 @@ dependencies {
 	provided project(":apps:web-experience-management:asset:asset-publisher-web")
 	provided project(":apps:web-experience-management:export-import:export-import-api")
 	provided project(":apps:web-experience-management:export-import:export-import-service")
-	provided project(":apps:web-experience-management:journal:journal-api")
-	provided project(":apps:web-experience-management:journal:journal-service")
 	provided project(":apps:web-experience-management:portlet-display-template:portlet-display-template")
 }
 
