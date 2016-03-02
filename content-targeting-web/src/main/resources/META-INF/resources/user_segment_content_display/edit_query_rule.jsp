@@ -53,45 +53,17 @@ if (editQueryRule.isValid() && !isFirst) {
 				<aui:col width="15">
 					<span class="query-contains-text"><liferay-ui:message key="if-the-user" /></span>
 
-					<aui:input
-						checked="<%= editQueryRule.isContains() %>"
-						label="belongs"
-						name='<%= portletNamespace + "queryContains" + index %>'
-						type="radio"
-						useNamespace="<%= false %>"
-						value="<%= true %>"
-					/>
+					<aui:input checked="<%= editQueryRule.isContains() %>" label="belongs" name='<%= portletNamespace + "queryContains" + index %>' type="radio" useNamespace="<%= false %>" value="<%= true %>" />
 
-					<aui:input
-						checked="<%= !editQueryRule.isContains() %>"
-						label="does-not-belong"
-						name='<%= portletNamespace + "queryContains" + index %>'
-						type="radio"
-						useNamespace="<%= false %>"
-						value="<%= false %>"
-					/>
+					<aui:input checked="<%= !editQueryRule.isContains() %>" label="does-not-belong" name='<%= portletNamespace + "queryContains" + index %>' type="radio" useNamespace="<%= false %>" value="<%= false %>" />
 				</aui:col>
 
 				<aui:col width="15">
 					<span class="query-and-operator-text"><liferay-ui:message key="to" /></span>
 
-					<aui:input
-						checked="<%= !editQueryRule.isAndOperator() %>"
-						label="any"
-						name='<%= portletNamespace + "queryAndOperator" + index %>'
-						type="radio"
-						useNamespace="<%= false %>"
-						value="<%= false %>"
-					/>
+					<aui:input checked="<%= !editQueryRule.isAndOperator() %>" label="any" name='<%= portletNamespace + "queryAndOperator" + index %>' type="radio" useNamespace="<%= false %>" value="<%= false %>" />
 
-					<aui:input
-						checked="<%= editQueryRule.isAndOperator() %>"
-						label="all"
-						name='<%= portletNamespace + "queryAndOperator" + index %>'
-						type="radio"
-						useNamespace="<%= false %>"
-						value="<%= true %>"
-					/>
+					<aui:input checked="<%= editQueryRule.isAndOperator() %>" label="all" name='<%= portletNamespace + "queryAndOperator" + index %>' type="radio" useNamespace="<%= false %>" value="<%= true %>" />
 				</aui:col>
 
 				<aui:col width="30">
@@ -99,12 +71,7 @@ if (editQueryRule.isValid() && !isFirst) {
 						<span class="query-and-operator-text"><liferay-ui:message key="of-the-following-user-segments" /></span>
 
 						<div class="lfr-tags-selector-content" id='<%= portletNamespace + "assetCategoriesSelector" + index %>'>
-							<aui:input
-								name='<%= portletNamespace + "userSegmentAssetCategoryIds" + index %>'
-								type="hidden"
-								useNamespace="<%= false %>"
-								value="<%= editQueryRule.getUserSegmentAssetCategoryIdsAsString() %>"
-							/>
+							<aui:input name='<%= portletNamespace + "userSegmentAssetCategoryIds" + index %>' type="hidden" useNamespace="<%= false %>" value="<%= editQueryRule.getUserSegmentAssetCategoryIdsAsString() %>" />
 						</div>
 
 						<aui:script use="liferay-asset-categories-selector">
