@@ -33,6 +33,10 @@ List<UserSegmentQueryRule> userSegmentQueryRules = (List<UserSegmentQueryRule>)r
 
 				<%
 				for (UserSegmentQueryRule queryRule : userSegmentQueryRules) {
+					if (queryRule.isDefaultRule()) {
+						continue;
+					}
+
 					int queryRule_index = userSegmentQueryRules.indexOf(queryRule);
 
 					request.setAttribute("configuration.queryRule", queryRule);
@@ -50,6 +54,32 @@ List<UserSegmentQueryRule> userSegmentQueryRules = (List<UserSegmentQueryRule>)r
 				%>
 
 			</div>
+
+			<%
+			for (UserSegmentQueryRule queryRule : userSegmentQueryRules) {
+				if (!queryRule.isDefaultRule()) {
+					continue;
+				}
+
+				int queryRule_index = userSegmentQueryRules.indexOf(queryRule);
+
+				request.setAttribute("queryRule", queryRule);
+			%>
+
+				<div class="lfr-form-row <%= queryRule.getCssClass(queryRule_index) %>">
+					<div class="row-fields">
+						<div class="field-row query-row">
+							<liferay-util:include page="/macros/render_default_query_rule.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="index" value="Default" />
+							</liferay-util:include>
+						</div>
+					</div>
+				</div>
+
+			<%
+			}
+			%>
+
 		</div>
 	</aui:fieldset>
 </aui:fieldset-group>
