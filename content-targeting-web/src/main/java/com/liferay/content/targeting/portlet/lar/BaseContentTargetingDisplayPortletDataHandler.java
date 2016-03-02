@@ -135,7 +135,6 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 
 		portletDataContext.addReferenceElement(
 			portlet, rootElement, assetEntryReferencedStagedModel,
-			AssetEntryReferencedStagedModel.class,
 			PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 		Element assetEntryReferencedStagedModelElement =
