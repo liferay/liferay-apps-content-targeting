@@ -17,9 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletResource = ParamUtil.getString(request, "portletResource");
-String portletNamespace = PortalUtil.getPortletNamespace(portletResource);
-
 String vocabularyGroupIds = GetterUtil.getString(request.getAttribute("vocabularyGroupIds"));
 String vocabularyIds = GetterUtil.getString(request.getAttribute("vocabularyIds"));
 
@@ -44,7 +41,7 @@ if (editQueryRule.isValid() && !isFirst) {
 
 <div class="field-row query-row">
 	<c:if test="<%= !editQueryRule.isDefaultRule() %>">
-		<aui:input name='<%= portletNamespace + "queryIndex" + index %>' type="hidden" useNamespace="<%= false %>" />
+		<aui:input name='<%= "queryIndex" + index %>' type="hidden" />
 	</c:if>
 
 	<c:choose>
@@ -53,35 +50,35 @@ if (editQueryRule.isValid() && !isFirst) {
 				<aui:col width="15">
 					<span class="query-contains-text"><liferay-ui:message key="if-the-user" /></span>
 
-					<aui:input checked="<%= editQueryRule.isContains() %>" label="belongs" name='<%= portletNamespace + "queryContains" + index %>' type="radio" useNamespace="<%= false %>" value="<%= true %>" />
+					<aui:input checked="<%= editQueryRule.isContains() %>" label="belongs" name='<%= "queryContains" + index %>' type="radio" value="<%= true %>" />
 
-					<aui:input checked="<%= !editQueryRule.isContains() %>" label="does-not-belong" name='<%= portletNamespace + "queryContains" + index %>' type="radio" useNamespace="<%= false %>" value="<%= false %>" />
+					<aui:input checked="<%= !editQueryRule.isContains() %>" label="does-not-belong" name='<%= "queryContains" + index %>' type="radio" value="<%= false %>" />
 				</aui:col>
 
 				<aui:col width="15">
 					<span class="query-and-operator-text"><liferay-ui:message key="to" /></span>
 
-					<aui:input checked="<%= !editQueryRule.isAndOperator() %>" label="any" name='<%= portletNamespace + "queryAndOperator" + index %>' type="radio" useNamespace="<%= false %>" value="<%= false %>" />
+					<aui:input checked="<%= !editQueryRule.isAndOperator() %>" label="any" name='<%= "queryAndOperator" + index %>' type="radio" value="<%= false %>" />
 
-					<aui:input checked="<%= editQueryRule.isAndOperator() %>" label="all" name='<%= portletNamespace + "queryAndOperator" + index %>' type="radio" useNamespace="<%= false %>" value="<%= true %>" />
+					<aui:input checked="<%= editQueryRule.isAndOperator() %>" label="all" name='<%= "queryAndOperator" + index %>' type="radio" value="<%= true %>" />
 				</aui:col>
 
 				<aui:col width="30">
 					<div class="user-segment-selector">
 						<span class="query-and-operator-text"><liferay-ui:message key="of-the-following-user-segments" /></span>
 
-						<div class="lfr-tags-selector-content" id='<%= portletNamespace + "assetCategoriesSelector" + index %>'>
-							<aui:input name='<%= portletNamespace + "userSegmentAssetCategoryIds" + index %>' type="hidden" useNamespace="<%= false %>" value="<%= editQueryRule.getUserSegmentAssetCategoryIdsAsString() %>" />
+						<div class="lfr-tags-selector-content" id='<portlet:namespace /><%= "assetCategoriesSelector" + index %>'>
+							<aui:input name='<%= "userSegmentAssetCategoryIds" + index %>' type="hidden" value="<%= editQueryRule.getUserSegmentAssetCategoryIdsAsString() %>" />
 						</div>
 
 						<aui:script use="liferay-asset-categories-selector">
 							var assetCategoriesSelector = new Liferay.AssetCategoriesSelector(
 								{
-									contentBox: '#<%= portletNamespace + "assetCategoriesSelector" + index %>',
+									contentBox: '#<portlet:namespace /><%= "assetCategoriesSelector" + index %>',
 									curEntries: '<%= editQueryRule.getUserSegmentAssetCategoryNames(locale) %>',
 									curEntryIds: '<%= editQueryRule.getUserSegmentAssetCategoryIdsAsString() %>',
-									hiddenInput: '#<%= portletNamespace + "userSegmentAssetCategoryIds" + index %>',
-									instanceVar: '<%= portletNamespace %>',
+									hiddenInput: '#<portlet:namespace /><%= "userSegmentAssetCategoryIds" + index %>',
+									instanceVar: '<portlet:namespace />',
 									vocabularyGroupIds: '<%= vocabularyGroupIds %>',
 									vocabularyIds: '<%= vocabularyIds %>',
 									title: '<liferay-ui:message key="select-user-segments" />'
@@ -106,7 +103,6 @@ if (editQueryRule.isValid() && !isFirst) {
 						%>
 
 						<liferay-util:include page="/macros/render_asset_entry_selector.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="portletNamespace" value="<%= portletNamespace %>" />
 							<liferay-util:param name="index" value="<%= String.valueOf(index) %>" />
 						</liferay-util:include>
 					</div>
@@ -163,9 +159,7 @@ if (editQueryRule.isValid() && !isFirst) {
 
 			<liferay-util:include page="/macros/render_default_query_rule.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="index" value="<%= String.valueOf(index) %>" />
-				<liferay-util:param name="portletNamespace" value="<%= portletNamespace %>" />
 			</liferay-util:include>
 		</c:otherwise>
 	</c:choose>
-
 </div>

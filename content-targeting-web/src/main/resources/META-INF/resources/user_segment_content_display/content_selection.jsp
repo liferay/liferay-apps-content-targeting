@@ -41,9 +41,7 @@ List<UserSegmentQueryRule> userSegmentQueryRules = (List<UserSegmentQueryRule>)r
 
 					<div class="lfr-form-row <%= queryRule.getCssClass(queryRule_index) %>">
 						<div class="row-fields">
-							<liferay-util:include page="/user_segment_content_display/edit_query_rule.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="portletResource" value="<%= portletName %>" />
-							</liferay-util:include>
+							<liferay-util:include page="/user_segment_content_display/edit_query_rule.jsp" servletContext="<%= application %>" />
 						</div>
 					</div>
 
@@ -56,9 +54,8 @@ List<UserSegmentQueryRule> userSegmentQueryRules = (List<UserSegmentQueryRule>)r
 	</aui:fieldset>
 </aui:fieldset-group>
 
-<liferay-portlet:renderURL portletName="<%= PortletKeys.CT_USERSEGMENT_DISPLAY %>" var="newUserSegmentRuleURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="mvcPath" value="<%= UserSegmentContentDisplayPath.EDIT_QUERY_RULE %>" />
-	<portlet:param name="portletResource" value="<%= portletName %>" />
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="newUserSegmentRuleURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<portlet:param name="<%= Constants.CMD %>" value="edit_query_rule" />
 </liferay-portlet:renderURL>
 
 <aui:script use="aui-base,liferay-auto-fields">

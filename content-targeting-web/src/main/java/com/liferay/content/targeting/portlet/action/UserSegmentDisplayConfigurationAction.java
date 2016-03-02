@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -65,6 +66,12 @@ public class UserSegmentDisplayConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {
+		String cmd = ParamUtil.getString(request, Constants.CMD);
+
+		if (cmd.equals("edit_query_rule")) {
+			return "/user_segment_content_display/edit_query_rule.jsp";
+		}
+
 		return "/user_segment_content_display/configuration.jsp";
 	}
 
