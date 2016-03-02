@@ -12,29 +12,34 @@
  * details.
  */
 
-package com.liferay.content.targeting.internal;
+package com.liferay.content.targeting.internal.test;
 
-import com.liferay.content.targeting.InvalidRuleException;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
-import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
+import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil;
 import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RulesEngine;
 import com.liferay.content.targeting.api.model.RulesRegistry;
+import com.liferay.content.targeting.exception.InvalidRuleException;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.RuleInstanceLocalService;
-import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
-import com.liferay.content.targeting.service.test.util.GroupTestUtil;
-import com.liferay.content.targeting.service.test.util.TestPropsValues;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,17 +52,11 @@ import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleException;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -67,45 +66,31 @@ import org.springframework.mock.web.MockHttpServletRequest;
 @RunWith(Arquillian.class)
 public class DefaultRulesEngineImplTest {
 
+	@ClassRule
+	@org.junit.Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
 	@Before
 	public void setUp() throws Exception {
-		try {
-			_bundle.start();
-		}
-		catch (BundleException e) {
-			e.printStackTrace();
-		}
+		_group = GroupTestUtil.addGroup();
 
-		_anonymousUserLocalService = ServiceTrackerUtil.getService(
-			AnonymousUserLocalService.class, _bundle.getBundleContext());
-		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
-			RuleInstanceLocalService.class, _bundle.getBundleContext());
-		_rulesEngine = ServiceTrackerUtil.getService(
-			RulesEngine.class, _bundle.getBundleContext());
-		_rulesRegistry = ServiceTrackerUtil.getService(
-			RulesRegistry.class, _bundle.getBundleContext());
-		_userSegmentLocalService = ServiceTrackerUtil.getService(
-			UserSegmentLocalService.class, _bundle.getBundleContext());
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
 
-		Group group = GroupTestUtil.addGroup();
-
-		_serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId(), TestPropsValues.getUserId());
-
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), "test-category");
 
-		_anonymousUser = _anonymousUserLocalService.addAnonymousUser(
+		_anonymousUser = AnonymousUserLocalServiceUtil.addAnonymousUser(
 			1, "127.0.0.1", StringPool.BLANK, _serviceContext);
-		_userSegment = _userSegmentLocalService.addUserSegment(
+		_userSegment = UserSegmentLocalServiceUtil.addUserSegment(
 			TestPropsValues.getUserId(), nameMap, null, _serviceContext);
-	}
 
-	@After
-	public void tearDown() throws Exception {
-		_anonymousUserLocalService.deleteAnonymousUser(_anonymousUser);
-		_userSegmentLocalService.deleteUserSegment(_userSegment);
+		Registry registry = RegistryUtil.getRegistry();
+
+		_rulesEngine = registry.getService(RulesEngine.class);
+		_rulesRegistry = registry.getService(RulesRegistry.class);
 	}
 
 	@Test
@@ -121,13 +106,14 @@ public class DefaultRulesEngineImplTest {
 
 		String typeSettings = jsonObj.toString();
 
-		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestPropsValues.getUserId(), "TestRule",
-			_userSegment.getUserSegmentId(), typeSettings, _serviceContext);
+		RuleInstance ruleInstance =
+			RuleInstanceLocalServiceUtil.addRuleInstance(
+				TestPropsValues.getUserId(), "TestRule",
+				_userSegment.getUserSegmentId(), typeSettings, _serviceContext);
 
 		HttpServletRequest mockRequest = getMockRequestMatch();
 
-		List<UserSegment> userSegments = new ArrayList<UserSegment>();
+		List<UserSegment> userSegments = new ArrayList<>();
 
 		userSegments.add(_userSegment);
 
@@ -138,7 +124,7 @@ public class DefaultRulesEngineImplTest {
 
 		Assert.assertEquals(userSegmentIds[0], _userSegment.getUserSegmentId());
 
-		_ruleInstanceLocalService.deleteRuleInstance(ruleInstance);
+		RuleInstanceLocalServiceUtil.deleteRuleInstance(ruleInstance);
 		_rulesRegistry.getRules().clear();
 	}
 
@@ -149,17 +135,19 @@ public class DefaultRulesEngineImplTest {
 		_rulesRegistry.getRules().put(rule.getRuleKey(), rule);
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
 		jsonObj.put("lastIP", "127.0.0.1");
 		jsonObj.put("userAgent", "Mozilla");
 
 		String typeSettings = jsonObj.toString();
 
-		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestPropsValues.getUserId(), "TestRule",
-			_userSegment.getUserSegmentId(), typeSettings, _serviceContext);
+		RuleInstance ruleInstance =
+			RuleInstanceLocalServiceUtil.addRuleInstance(
+				TestPropsValues.getUserId(), "TestRule",
+				_userSegment.getUserSegmentId(), typeSettings, _serviceContext);
 
 		List<RuleInstance> ruleInstances =
-			_ruleInstanceLocalService.getRuleInstances(
+			RuleInstanceLocalServiceUtil.getRuleInstances(
 				_userSegment.getUserSegmentId());
 
 		HttpServletRequest mockRequest = getMockRequestMatch();
@@ -167,7 +155,8 @@ public class DefaultRulesEngineImplTest {
 		Assert.assertTrue(
 			_rulesEngine.matches(mockRequest, _anonymousUser, ruleInstances));
 
-		_ruleInstanceLocalService.deleteRuleInstance(ruleInstance);
+		RuleInstanceLocalServiceUtil.deleteRuleInstance(ruleInstance);
+
 		_rulesRegistry.getRules().clear();
 	}
 
@@ -178,17 +167,19 @@ public class DefaultRulesEngineImplTest {
 		_rulesRegistry.getRules().put(rule.getRuleKey(), rule);
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
 		jsonObj.put("lastIP", "127.0.0.1");
 		jsonObj.put("userAgent", "Mozilla");
 
 		String typeSettings = jsonObj.toString();
 
-		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestPropsValues.getUserId(), "TestRule",
-			_userSegment.getUserSegmentId(), typeSettings, _serviceContext);
+		RuleInstance ruleInstance =
+			RuleInstanceLocalServiceUtil.addRuleInstance(
+				TestPropsValues.getUserId(), "TestRule",
+				_userSegment.getUserSegmentId(), typeSettings, _serviceContext);
 
 		List<RuleInstance> ruleInstances =
-			_ruleInstanceLocalService.getRuleInstances(
+			RuleInstanceLocalServiceUtil.getRuleInstances(
 				_userSegment.getUserSegmentId());
 
 		HttpServletRequest mockRequest = getMockRequestNoMatch();
@@ -196,11 +187,12 @@ public class DefaultRulesEngineImplTest {
 		Assert.assertFalse(
 			_rulesEngine.matches(mockRequest, _anonymousUser, ruleInstances));
 
-		_ruleInstanceLocalService.deleteRuleInstance(ruleInstance);
+		RuleInstanceLocalServiceUtil.deleteRuleInstance(ruleInstance);
+
 		_rulesRegistry.getRules().clear();
 	}
 
-	protected  HttpServletRequest getMockRequestMatch() {
+	protected HttpServletRequest getMockRequestMatch() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 
 		request.addHeader("User-Agent", "Mozilla/5.0 AppleWebKit/537.36");
@@ -208,7 +200,7 @@ public class DefaultRulesEngineImplTest {
 		return request;
 	}
 
-	protected  HttpServletRequest getMockRequestNoMatch() {
+	protected HttpServletRequest getMockRequestNoMatch() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 
 		request.addHeader("User-Agent", "GoogleBot");
@@ -216,7 +208,7 @@ public class DefaultRulesEngineImplTest {
 		return request;
 	}
 
-	protected Rule getTestRule() {
+	protected com.liferay.content.targeting.api.model.Rule getTestRule() {
 		Rule rule = new BaseRule() {
 
 			@Override
@@ -259,22 +251,20 @@ public class DefaultRulesEngineImplTest {
 
 				return null;
 			}
+
 		};
 
 		return rule;
 	}
 
 	private AnonymousUser _anonymousUser;
-	private AnonymousUserLocalService _anonymousUserLocalService;
 
-	@ArquillianResource
-	private Bundle _bundle;
+	@DeleteAfterTestRun
+	private Group _group;
 
-	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RulesEngine _rulesEngine;
 	private RulesRegistry _rulesRegistry;
 	private ServiceContext _serviceContext;
 	private UserSegment _userSegment;
-	private UserSegmentLocalService _userSegmentLocalService;
 
 }

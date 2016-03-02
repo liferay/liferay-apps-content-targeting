@@ -12,37 +12,35 @@
  * details.
  */
 
-package com.liferay.content.targeting.service.impl;
+package com.liferay.content.targeting.service.impl.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
-import com.liferay.content.targeting.service.CampaignLocalService;
-import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
-import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
-import com.liferay.content.targeting.service.test.util.GroupTestUtil;
-import com.liferay.content.targeting.service.test.util.TestPropsValues;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
+import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalService;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleException;
 
 /**
  * @author Eduardo Garcia
@@ -50,33 +48,23 @@ import org.osgi.framework.BundleException;
 @RunWith(Arquillian.class)
 public class TrackingActionInstanceLocalServiceImplTest {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
 	@Before
 	public void setUp() throws Exception {
-		try {
-			_bundle.start();
-		}
-		catch (BundleException e) {
-			e.printStackTrace();
-		}
+		_group = GroupTestUtil.addGroup();
 
-		_trackingActionInstanceLocalService = ServiceTrackerUtil.getService(
-			TrackingActionInstanceLocalService.class,
-			_bundle.getBundleContext());
-		_userLocalService = ServiceTrackerUtil.getService(
-			UserLocalService.class, _bundle.getBundleContext());
-		_campaignLocalService = ServiceTrackerUtil.getService(
-			CampaignLocalService.class, _bundle.getBundleContext());
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
 
-		Group group = GroupTestUtil.addGroup();
-
-		_serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId(), TestPropsValues.getUserId());
-
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), "test-campaign");
 
-		_campaign = _campaignLocalService.addCampaign(
+		_campaign = CampaignLocalServiceUtil.addCampaign(
 			TestPropsValues.getUserId(), nameMap, null, new Date(), new Date(),
 			1, true, new long[] {1, 2}, _serviceContext);
 	}
@@ -84,56 +72,53 @@ public class TrackingActionInstanceLocalServiceImplTest {
 	@Test
 	public void testAddAndDeleteTrackingActionInstance() throws Exception {
 		int initTrackingActionInstancesCount =
-			_trackingActionInstanceLocalService.
+			TrackingActionInstanceLocalServiceUtil.
 				getTrackingActionInstancesCount();
 
 		TrackingActionInstance trackingActionInstance =
-			_trackingActionInstanceLocalService.addTrackingActionInstance(
+			TrackingActionInstanceLocalServiceUtil.addTrackingActionInstance(
 				TestPropsValues.getUserId(), "tracking-action-key",
 				_campaign.getCampaignId(), StringPool.BLANK, null, 1, null,
 				null, null, _serviceContext);
 
 		Assert.assertEquals(
 			initTrackingActionInstancesCount + 1,
-			_trackingActionInstanceLocalService.
+			TrackingActionInstanceLocalServiceUtil.
 				getTrackingActionInstancesCount());
 
-		_trackingActionInstanceLocalService.deleteTrackingActionInstance(
+		TrackingActionInstanceLocalServiceUtil.deleteTrackingActionInstance(
 			trackingActionInstance.getTrackingActionInstanceId());
 
 		Assert.assertEquals(
 			initTrackingActionInstancesCount,
-			_trackingActionInstanceLocalService.
+			TrackingActionInstanceLocalServiceUtil.
 				getTrackingActionInstancesCount());
 	}
 
 	@Test
 	public void testDeleteCampaign() throws Exception {
 		int initTrackingActionInstancesCount =
-			_trackingActionInstanceLocalService.
+			TrackingActionInstanceLocalServiceUtil.
 				getTrackingActionInstancesCount();
 
-		_trackingActionInstanceLocalService.addTrackingActionInstance(
+		TrackingActionInstanceLocalServiceUtil.addTrackingActionInstance(
 			TestPropsValues.getUserId(), "tracking-action-key",
 			_campaign.getCampaignId(), StringPool.BLANK, null, 1, null, null,
 			null, _serviceContext);
 
-		_campaignLocalService.deleteCampaign(_campaign.getCampaignId());
+		CampaignLocalServiceUtil.deleteCampaign(_campaign.getCampaignId());
 
 		Assert.assertEquals(
 			initTrackingActionInstancesCount,
-			_trackingActionInstanceLocalService.
+			TrackingActionInstanceLocalServiceUtil.
 				getTrackingActionInstancesCount());
 	}
 
-	@ArquillianResource
-	private Bundle _bundle;
-
 	private Campaign _campaign;
-	private CampaignLocalService _campaignLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
 	private ServiceContext _serviceContext;
-	private TrackingActionInstanceLocalService
-		_trackingActionInstanceLocalService;
-	private UserLocalService _userLocalService;
 
 }

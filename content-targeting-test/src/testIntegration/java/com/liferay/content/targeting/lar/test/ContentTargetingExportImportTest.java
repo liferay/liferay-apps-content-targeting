@@ -12,43 +12,51 @@
  * details.
  */
 
-package com.liferay.content.targeting.test.lar;
+package com.liferay.content.targeting.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.content.targeting.service.test.lar.BasePortletExportImportTestCase;
-import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
-import com.liferay.content.targeting.service.test.util.TestPropsValues;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.lar.test.BasePortletExportImportTestCase;
+import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleException;
 
 /**
  * @author Eduardo Garcia
  */
 @RunWith(Arquillian.class)
+@Sync
 public class ContentTargetingExportImportTest
 	extends BasePortletExportImportTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
 	public String getNamespace() {
@@ -61,18 +69,11 @@ public class ContentTargetingExportImportTest
 	}
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
 		super.setUp();
-
-		try {
-			_bundle.start();
-		}
-		catch (BundleException e) {
-			e.printStackTrace();
-		}
-
-		_userSegmentLocalService = ServiceTrackerUtil.getService(
-			UserSegmentLocalService.class, _bundle.getBundleContext());
 	}
 
 	@Ignore()
@@ -83,20 +84,21 @@ public class ContentTargetingExportImportTest
 
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			groupId, TestPropsValues.getUserId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
 
-		return _userSegmentLocalService.addUserSegment(
+		return UserSegmentLocalServiceUtil.addUserSegment(
 			TestPropsValues.getUserId(), nameMap, null, serviceContext);
 	}
 
 	@Override
 	protected void deleteStagedModel(StagedModel stagedModel) throws Exception {
-		_userSegmentLocalService.deleteUserSegment((UserSegment)stagedModel);
+		UserSegmentLocalServiceUtil.deleteUserSegment((UserSegment)stagedModel);
 	}
 
 	@Override
@@ -119,15 +121,10 @@ public class ContentTargetingExportImportTest
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		return _userSegmentLocalService.getUserSegmentByUuidAndGroupId(
+		return UserSegmentLocalServiceUtil.getUserSegmentByUuidAndGroupId(
 			uuid, groupId);
 	}
-
-	@ArquillianResource
-	private Bundle _bundle;
-
-	private UserSegmentLocalService _userSegmentLocalService;
 
 }
