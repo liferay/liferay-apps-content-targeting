@@ -41,6 +41,7 @@ page import="com.liferay.content.targeting.model.UserSegment" %><%@
 page import="com.liferay.content.targeting.portlet.ContentTargetingMVCCommand" %><%@
 page import="com.liferay.content.targeting.portlet.ContentTargetingPath" %><%@
 page import="com.liferay.content.targeting.portlet.display.context.ContentTargetingEditCampaignDisplayContext" %><%@
+page import="com.liferay.content.targeting.portlet.display.context.ContentTargetingEditReportDisplayContext" %><%@
 page import="com.liferay.content.targeting.portlet.display.context.ContentTargetingEditUserSegmentDisplayContext" %><%@
 page import="com.liferay.content.targeting.portlet.display.context.ContentTargetingViewCampaignDisplayContext" %><%@
 page import="com.liferay.content.targeting.portlet.display.context.ContentTargetingViewReportsDisplayContext" %><%@
