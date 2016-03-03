@@ -16,4 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/display/full_content.jsp" portletId="<%= PortletProviderUtil.getPortletId(AssetEntry.class.getName(), PortletProvider.Action.ADD) %>" />
+<%
+long assetEntryId = ParamUtil.getLong(request, "assetEntryId");
+
+AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(assetEntryId);
+%>
+
+<liferay-ui:asset-display
+	assetEntry="<%= assetEntry %>"
+	template="full_content"
+/>

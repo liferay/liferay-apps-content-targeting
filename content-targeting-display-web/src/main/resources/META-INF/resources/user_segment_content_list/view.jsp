@@ -37,10 +37,19 @@ String portletDisplayTemplateHtml = "";
 				%>
 
 					<div class="asset-entry">
-						<liferay-ui:asset-display
-							assetEntry="<%= assetEntry %>"
-							template="abstract"
-						/>
+						<div class="asset-display">
+							<liferay-ui:asset-display
+								assetEntry="<%= assetEntry %>"
+								template="abstract"
+							/>
+						</div>
+
+						<portlet:renderURL var="viewContentURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
+							<portlet:param name="mvcPath" value="/user_segment_content_list/view_content.jsp" />
+							<portlet:param name="assetEntryId" value="<%= String.valueOf(assetEntry.getEntryId()) %>" />
+						</portlet:renderURL>
+
+						<a href="<%= viewContentURL %>"><liferay-ui:message key="read-more" /></a>
 					</div>
 
 				<%

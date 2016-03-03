@@ -44,8 +44,6 @@ import java.util.List;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -224,20 +222,6 @@ public class UserSegmentContentListPortlet extends MVCPortlet {
 		else {
 			return availableClassNameIds;
 		}
-	}
-
-	@Override
-	protected String getPath(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		String strutsPath = ParamUtil.getString(
-			portletRequest, "struts_action");
-
-		if (strutsPath.equals("/asset_publisher/view_content")) {
-			return "/user_segment_content_list/view_content.jsp";
-		}
-
-		return super.getPath(portletRequest, portletResponse);
 	}
 
 	@Reference(unbind = "-")
