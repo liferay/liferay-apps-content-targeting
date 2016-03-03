@@ -63,15 +63,9 @@ int selectedIndex = ParamUtil.getInteger(request, "selectedIndex");
 		<%
 		for (QueryRule queryRule : queryRules) {
 			int queryRule_index = queryRules.indexOf(queryRule);
-
-			String cssClass = "";
-
-			if (selectedIndex == queryRule_index) {
-				cssClass = "selected";
-			}
 		%>
 
-			<div class="content-preview <%= cssClass %>" data-index="<%= queryRule_index %>" id="<portlet:namespace />PreviewContent<%= queryRule_index %>">
+			<div class="content-preview <%= (selectedIndex == queryRule_index) ? "selected" : StringPool.BLANK %>" data-index="<%= queryRule_index %>" id="<portlet:namespace />PreviewContent<%= queryRule_index %>">
 				<div class="query-rule-image" style="background-image: url(<%= queryRule.getAssetImage(renderRequest) %>);"></div>
 
 				<div class="query-rule-summary"><%= queryRule.getSummary(portletConfig, locale) %></div>

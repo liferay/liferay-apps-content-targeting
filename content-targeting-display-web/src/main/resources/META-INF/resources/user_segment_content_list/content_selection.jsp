@@ -33,11 +33,7 @@ boolean selectedValue = !anyAssetType && (classNameIds.length > 1);
 <aui:fieldset-group markupView="lexicon">
 	<aui:fieldset>
 		<aui:select label="asset-entry-type" name="anyAssetType">
-			<aui:option
-				label="any"
-				selected="<%= anyAssetType %>"
-				value="<%= true %>"
-			/>
+			<aui:option label="any" selected="<%= anyAssetType %>" value="<%= true %>" />
 
 			<aui:option label='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "select-more-than-one") + "..." %>' selected="<%= selectedValue %>" value="<%= false %>" />
 

@@ -17,12 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String containerCssClass = "";
-
-if (portletDisplay.isShowConfigurationIcon()) {
-	containerCssClass = "show-configuration";
-}
-
 boolean isNotConfigured = GetterUtil.getBoolean(request.getAttribute("isNotConfigured"), true);
 
 QueryRule queryRule = (QueryRule)request.getAttribute("queryRule");
@@ -36,7 +30,7 @@ int selectedIndex = GetterUtil.getInteger(request.getAttribute("selectedIndex"))
 boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"), false);
 %>
 
-<div class="content-container <%= containerCssClass %>">
+<div class="content-container <%= portletDisplay.isShowConfigurationIcon() ? "show-configuration" : StringPool.BLANK %>">
 	<div class="full-content" id="<portlet:namespace />FullContent<%= selectedIndex %>">
 		<c:choose>
 			<c:when test="<%= isNotConfigured %>">
