@@ -17,60 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-boolean includeCheckBox = ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_USER_SEGMENT);
-
-String keywords = ParamUtil.getString(request, "keywords");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
-portletURL.setParameter("tabs1", "user-segments");
-
-if (Validator.isNotNull(keywords)) {
-	portletURL.setParameter("keywords", keywords);
-}
-
-SearchContainer userSegmentSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, renderResponse), null, "no-user-segments-were-found");
-
-userSegmentSearchContainer.setId("userSegments");
-userSegmentSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
-userSegmentSearchContainer.setSearch(Validator.isNotNull(keywords));
-
-boolean orderByAsc = false;
-
-if (orderByType.equals("asc")) {
-	orderByAsc = true;
-}
-
-OrderByComparator<UserSegment> orderByComparator = new UserSegmentModifiedDateComparator(orderByAsc);
-
-userSegmentSearchContainer.setOrderByCol(orderByCol);
-userSegmentSearchContainer.setOrderByComparator(orderByComparator);
-userSegmentSearchContainer.setOrderByType(orderByType);
-
-if (Validator.isNotNull(keywords)) {
-	Sort sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
-
-	BaseModelSearchResult<UserSegment> searchResults = UserSegmentLocalServiceUtil.searchUserSegments(scopeGroupId, keywords, userSegmentSearchContainer.getStart(), userSegmentSearchContainer.getEnd(), sort);
-
-	userSegmentSearchContainer.setTotal(searchResults.getLength());
-	userSegmentSearchContainer.setResults(searchResults.getBaseModels());
-}
-else {
-	int total = UserSegmentLocalServiceUtil.getUserSegmentsCount(scopeGroupId);
-
-	userSegmentSearchContainer.setTotal(total);
-
-	List results = UserSegmentLocalServiceUtil.getUserSegments(scopeGroupId, userSegmentSearchContainer.getStart(), userSegmentSearchContainer.getEnd(), userSegmentSearchContainer.getOrderByComparator());
-
-	userSegmentSearchContainer.setResults(results);
-}
-
-boolean isDisabledManagementBar = (userSegmentSearchContainer.getTotal() <= 0) && Validator.isNull(keywords);
+ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDisplayContext = new ContentTargetingViewUserSegmentDisplayContext(renderRequest, renderResponse, request);
 %>
 
 <liferay-ui:error key="com.liferay.content.targeting.exception.UsedUserSegmentException">
@@ -110,37 +57,37 @@ boolean isDisabledManagementBar = (userSegmentSearchContainer.getTotal() <= 0) &
 </liferay-ui:error>
 
 <liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchEnabled" value="<%= String.valueOf(!isDisabledManagementBar) %>" />
+	<liferay-util:param name="searchEnabled" value="<%= String.valueOf(contentTargetingViewUserSegmentDisplayContext.isSearchEnabled()) %>" />
 </liferay-util:include>
 
 <liferay-frontend:management-bar
-	disabled="<%= isDisabledManagementBar %>"
-	includeCheckBox="<%= includeCheckBox %>"
+	disabled="<%= contentTargetingViewUserSegmentDisplayContext.isDisabledManagementBar() %>"
+	includeCheckBox="<%= contentTargetingViewUserSegmentDisplayContext.isIncludeCheckBox() %>"
 	searchContainerId="userSegments"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			portletURL="<%= contentTargetingViewUserSegmentDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= contentTargetingViewUserSegmentDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= contentTargetingViewUserSegmentDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= contentTargetingViewUserSegmentDisplayContext.getOrderByCol() %>"
+			orderByType="<%= contentTargetingViewUserSegmentDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"modified-date"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= contentTargetingViewUserSegmentDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
-	<c:if test="<%= includeCheckBox %>">
+	<c:if test="<%= contentTargetingViewUserSegmentDisplayContext.isIncludeCheckBox() %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteUserSegments" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
@@ -153,7 +100,7 @@ boolean isDisabledManagementBar = (userSegmentSearchContainer.getTotal() <= 0) &
 
 <aui:form action="<%= deleteUserSegmentURL %>" cssClass="container-fluid-1280" name="fmUserSegment">
 	<liferay-ui:search-container
-		searchContainer="<%= userSegmentSearchContainer %>"
+		searchContainer="<%= contentTargetingViewUserSegmentDisplayContext.getUserSegmentSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.UserSegment"
@@ -185,7 +132,7 @@ boolean isDisabledManagementBar = (userSegmentSearchContainer.getTotal() <= 0) &
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_USER_SEGMENT) %>">
+<c:if test="<%= contentTargetingViewUserSegmentDisplayContext.isAddUserSegment() %>">
 	<portlet:renderURL var="addUserSegmentURL">
 		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -196,7 +143,7 @@ boolean isDisabledManagementBar = (userSegmentSearchContainer.getTotal() <= 0) &
 	</liferay-frontend:add-menu>
 </c:if>
 
-<c:if test="<%= includeCheckBox %>">
+<c:if test="<%= contentTargetingViewUserSegmentDisplayContext.isIncludeCheckBox() %>">
 	<aui:script>
 		$('#<portlet:namespace />deleteUserSegments').on(
 			'click',
