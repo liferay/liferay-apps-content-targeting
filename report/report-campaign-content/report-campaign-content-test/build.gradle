@@ -1,0 +1,13 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile project(":apps:content-targeting:analytics:analytics-api")
+	testIntegrationCompile project(":apps:content-targeting:analytics:analytics-service")
+	testIntegrationCompile project(":apps:content-targeting:anonymous-users:anonymous-users-api")
+	testIntegrationCompile project(":apps:content-targeting:anonymous-users:anonymous-users-service")
+	testIntegrationCompile project(":apps:content-targeting:content-targeting-api")
+	testIntegrationCompile project(":apps:content-targeting:content-targeting-service")
+	testIntegrationCompile project(":apps:content-targeting:report:report-campaign-content:report-campaign-content-api")
+	testIntegrationCompile project(":apps:content-targeting:report:report-campaign-content:report-campaign-content-service")
+	testIntegrationCompile project(":apps:web-experience-management:journal:journal-api")
+	testIntegrationCompile project(":core:registry-api")
+}
