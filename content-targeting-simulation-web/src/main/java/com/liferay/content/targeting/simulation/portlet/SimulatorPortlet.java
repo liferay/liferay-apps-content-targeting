@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet;
+package com.liferay.content.targeting.simulation.portlet;
 
 import com.liferay.content.targeting.api.model.UserSegmentSimulator;
 import com.liferay.content.targeting.util.PortletKeys;
