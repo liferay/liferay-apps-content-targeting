@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.css-class-wrapper=content-targeting-portlet",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.header-portlet-css=/css/rules_panel.css",
 		"com.liferay.portlet.header-portlet-javascript=/js/input_slider.js",
 		"com.liferay.portlet.header-portlet-javascript=/js/ct_form_builder.js",
 		"com.liferay.portlet.icon=/icons/icon.png",
