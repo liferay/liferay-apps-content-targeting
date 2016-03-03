@@ -21,41 +21,34 @@ public class ContentTargetingPath {
 
 	public static final String ADD_ASSET_REDIRECT = "/add_asset_redirect.jsp";
 
-	public static final String EDIT_CAMPAIGN =
-		"/content_targeting/edit_campaign.jsp";
+	public static final String EDIT_CAMPAIGN = "/edit_campaign.jsp";
 
-	public static final String EDIT_REPORT =
-		"/content_targeting/edit_report.jsp";
+	public static final String EDIT_REPORT = "/edit_report.jsp";
 
-	public static final String EDIT_TACTIC =
-		"/content_targeting/edit_tactic.jsp";
+	public static final String EDIT_TACTIC = "/edit_tactic.jsp";
 
-	public static final String EDIT_USER_SEGMENT =
-		"/content_targeting/edit_user_segment.jsp";
+	public static final String EDIT_USER_SEGMENT = "/edit_user_segment.jsp";
 
 	public static final String ERROR = "/error.jsp";
 
-	public static final String VIEW = "/content_targeting/view.jsp";
+	public static final String VIEW = "/view.jsp";
 
 	public static final String VIEW_CAMPAIGNS_RESOURCES =
-		"/content_targeting/view_campaigns_resources.jsp";
+		"/view_campaigns_resources.jsp";
 
-	public static final String VIEW_REPORT =
-		"/content_targeting/view_report.jsp";
+	public static final String VIEW_REPORT = "/view_report.jsp";
 
-	public static final String VIEW_REPORTS =
-		"/content_targeting/view_reports.jsp";
+	public static final String VIEW_REPORTS = "/view_reports.jsp";
 
 	public static final String VIEW_REPORTS_RESOURCES =
-		"/content_targeting/view_reports_resources.jsp";
+		"/view_reports_resources.jsp";
 
-	public static final String VIEW_TACTICS =
-		"/content_targeting/view_tactics.jsp";
+	public static final String VIEW_TACTICS = "/view_tactics.jsp";
 
 	public static final String VIEW_TACTICS_RESOURCES =
-		"/content_targeting/view_tactics_resources.jsp";
+		"/view_tactics_resources.jsp";
 
 	public static final String VIEW_USER_SEGMENTS_RESOURCES =
-		"/content_targeting/view_user_segments_resources.jsp";
+		"/view_user_segments_resources.jsp";
 
 }

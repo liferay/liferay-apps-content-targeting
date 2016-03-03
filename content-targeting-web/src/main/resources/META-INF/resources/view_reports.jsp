@@ -240,7 +240,7 @@ boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Va
 				/>
 
 				<liferay-ui:search-container-column-jsp
-					path="/content_targeting/reports_action.jsp"
+					path="/reports_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

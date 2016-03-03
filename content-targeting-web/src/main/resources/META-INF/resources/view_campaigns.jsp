@@ -73,7 +73,7 @@ else {
 boolean isDisabledManagementBar = (campaignSearchContainer.getTotal() <= 0) && Validator.isNull(keywords);
 %>
 
-<liferay-util:include page="/content_targeting/navigation_bar.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchEnabled" value="<%= String.valueOf(!isDisabledManagementBar) %>" />
 </liferay-util:include>
 
@@ -164,7 +164,7 @@ boolean isDisabledManagementBar = (campaignSearchContainer.getTotal() <= 0) && V
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
-				path="/content_targeting/campaign_action.jsp"
+				path="/campaign_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

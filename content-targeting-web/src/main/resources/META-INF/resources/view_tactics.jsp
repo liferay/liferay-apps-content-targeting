@@ -128,7 +128,7 @@ renderResponse.setTitle(campaign.getName(locale));
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				path="/content_targeting/tactic_action.jsp"
+				path="/tactic_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

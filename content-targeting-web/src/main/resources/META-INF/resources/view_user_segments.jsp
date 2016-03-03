@@ -109,7 +109,7 @@ boolean isDisabledManagementBar = (userSegmentSearchContainer.getTotal() <= 0) &
 	</ul>
 </liferay-ui:error>
 
-<liferay-util:include page="/content_targeting/navigation_bar.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchEnabled" value="<%= String.valueOf(!isDisabledManagementBar) %>" />
 </liferay-util:include>
 
@@ -177,7 +177,7 @@ boolean isDisabledManagementBar = (userSegmentSearchContainer.getTotal() <= 0) &
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				path="/content_targeting/user_segments_action.jsp"
+				path="/user_segments_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

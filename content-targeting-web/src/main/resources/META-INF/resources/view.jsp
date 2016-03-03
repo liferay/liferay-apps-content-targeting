@@ -22,9 +22,9 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "user-segments");
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("user-segments") %>'>
-		<liferay-util:include page="/content_targeting/view_user_segments.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/view_user_segments.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= tabs1.equals("campaigns") %>'>
-		<liferay-util:include page="/content_targeting/view_campaigns.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/view_campaigns.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>
