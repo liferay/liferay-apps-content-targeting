@@ -12,39 +12,43 @@
  * details.
  */
 
-package com.liferay.content.targeting.rule.score.points.messaging;
+package com.liferay.content.targeting.rule.score.points.messaging.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
-import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
+import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.score.points.api.model.ScorePointsAssigner;
-import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalService;
-import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
-import com.liferay.content.targeting.service.test.util.GroupTestUtil;
-import com.liferay.content.targeting.service.test.util.TestPropsValues;
+import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalServiceUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.jboss.arquillian.junit.Arquillian;
-
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -52,25 +56,34 @@ import org.osgi.service.component.annotations.Reference;
 @RunWith(Arquillian.class)
 public class DefaultScorePointsAssignerImplTest {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
 	@Before
 	public void setUp() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
-		_serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId(), TestPropsValues.getUserId());
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), "test-category");
 
-		_userSegment = _userSegmentLocalService.addUserSegment(
+		_userSegment = UserSegmentLocalServiceUtil.addUserSegment(
 			TestPropsValues.getUserId(), nameMap, null, _serviceContext);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_scorePointsAssigner = registry.getService(ScorePointsAssigner.class);
 	}
 
 	@Test
 	public void testAssignPoints() throws Exception {
 		int initialScorePointsCount =
-			_scorePointLocalService.getScorePointsCount();
+			ScorePointLocalServiceUtil.getScorePointsCount();
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), "title", StringPool.BLANK,
@@ -84,7 +97,7 @@ public class DefaultScorePointsAssignerImplTest {
 			assetEntry.getEntryId(), _userSegment.getAssetCategoryId());
 
 		AnonymousUser anonymousUser =
-			_anonymousUserLocalService.addAnonymousUser(
+			AnonymousUserLocalServiceUtil.addAnonymousUser(
 				1, "127.0.0.1", StringPool.BLANK, _serviceContext);
 
 		_scorePointsAssigner.assignPoints(
@@ -94,42 +107,14 @@ public class DefaultScorePointsAssignerImplTest {
 
 		Assert.assertEquals(
 			initialScorePointsCount + 1,
-			_scorePointLocalService.getScorePointsCount());
+			ScorePointLocalServiceUtil.getScorePointsCount());
 	}
 
-	@Reference(unbind = "-")
-	protected void setAnonymousUserLocalService(
-		AnonymousUserLocalService anonymousUserLocalService) {
+	@DeleteAfterTestRun
+	private Group _group;
 
-		_anonymousUserLocalService = anonymousUserLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setScorePointLocalService(
-		ScorePointLocalService scorePointLocalService) {
-
-		_scorePointLocalService = scorePointLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setScorePointsAssigner(
-		ScorePointsAssigner scorePointsAssigner) {
-
-		_scorePointsAssigner = scorePointsAssigner;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserSegmentLocalService(
-		UserSegmentLocalService userSegmentLocalService) {
-
-		_userSegmentLocalService = userSegmentLocalService;
-	}
-
-	private AnonymousUserLocalService _anonymousUserLocalService;
-	private ScorePointLocalService _scorePointLocalService;
 	private ScorePointsAssigner _scorePointsAssigner;
 	private ServiceContext _serviceContext;
 	private UserSegment _userSegment;
-	private UserSegmentLocalService _userSegmentLocalService;
 
 }
