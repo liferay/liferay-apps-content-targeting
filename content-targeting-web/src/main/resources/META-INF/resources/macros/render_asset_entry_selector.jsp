@@ -17,42 +17,32 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletNamespace = ParamUtil.getString(request, "portletNamespace");
-
-if (Validator.isBlank(portletNamespace)) {
-	String portletId = PortalUtil.getPortletId(request);
-
-	portletNamespace = PortalUtil.getPortletNamespace(portletId);
-}
-
 List<AssetRendererFactory> assetRendererFactories = (List<AssetRendererFactory>)request.getAttribute("assetRendererFactories");
 
 AssetQueryRule queryRule = (AssetQueryRule)request.getAttribute("queryRule");
 
 String index = ParamUtil.getString(request, "index");
-
-String cssClass = "";
-
-if (!queryRule.hasAssetEntry()) {
-	cssClass = "hide";
-}
 %>
 
-<div class="asset-preview <%= cssClass %>" id='<%= portletNamespace + "selectedContent" + index %>'>
-	<aui:col>
-		<img class="asset-image" src="<%= queryRule.getAssetImage(renderRequest) %>" />
-	</aui:col>
+<aui:input name='<%= "assetEntryId" + index %>' type="hidden" value="<%= queryRule.getAssetEntryId() %>" />
 
-	<aui:col>
-		<div class="asset-title" id='<%= portletNamespace + "assetTitleInfo" + index %>'><%= queryRule.getAssetTitle() %></div>
-		<div class="asset-type" id='<%= portletNamespace + "assetTypeInfo" + index %>'><liferay-ui:message key="type" />: <%= queryRule.getAssetType() %></div>
-	</aui:col>
-</div>
+<div class="col-md-6">
+	<div id="<portlet:namespace /><%= "assetEntryContent" + index %>">
+		<c:choose>
+			<c:when test="<%= queryRule.hasAssetEntry() %>">
+				<liferay-util:include page="/macros/asset_entry.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="assetEntryId" value="<%= String.valueOf(queryRule.getAssetEntryId()) %>" />
+				</liferay-util:include>
+			</c:when>
+			<c:otherwise>
+				<p class="text-default">
+					<liferay-ui:message key="none" />
+				</p>
+			</c:otherwise>
+		</c:choose>
+	</div>
 
-<div class="edit-controls lfr-meta-actions">
-	<aui:input name='<%= portletNamespace + "assetEntryId" + index %>' type="hidden" useNamespace="<%= false %>" value="<%= queryRule.getAssetEntryId() %>" />
-
-	<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "select-content") %>' showWhenSingleIcon="<%= true %>">
+	<liferay-ui:icon-menu direction="right" message='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "select-content") %>' showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 		<%
 		for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
@@ -61,9 +51,8 @@ if (!queryRule.hasAssetEntry()) {
 			<liferay-ui:icon
 				cssClass="asset-selector"
 				data="<%= queryRule.getAssetSelectorIconData(request, assetRendererFactory, index) %>"
-				id='<%= "groupId_" + assetRendererFactory.getTypeName(locale, false) + "_" + String.valueOf(index) %>'
-				message="<%= assetRendererFactory.getTypeName(locale, false) %>"
-				src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
+				id='<%= "groupId_" + assetRendererFactory.getTypeName(locale) + "_" + String.valueOf(index) %>'
+				message="<%= assetRendererFactory.getTypeName(locale) %>"
 				url="javascript:;"
 			/>
 

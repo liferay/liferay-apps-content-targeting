@@ -27,9 +27,11 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
+<%@ page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
+page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
+page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.content.targeting.api.model.Channel" %><%@
 page import="com.liferay.content.targeting.api.model.Report" %><%@
 page import="com.liferay.content.targeting.api.model.ReportsRegistry" %><%@
@@ -42,10 +44,8 @@ page import="com.liferay.content.targeting.model.Campaign" %><%@
 page import="com.liferay.content.targeting.model.ReportInstance" %><%@
 page import="com.liferay.content.targeting.model.Tactic" %><%@
 page import="com.liferay.content.targeting.model.UserSegment" %><%@
-page import="com.liferay.content.targeting.portlet.CampaignContentDisplayPath" %><%@
 page import="com.liferay.content.targeting.portlet.ContentTargetingMVCCommand" %><%@
 page import="com.liferay.content.targeting.portlet.ContentTargetingPath" %><%@
-page import="com.liferay.content.targeting.portlet.UserSegmentContentDisplayPath" %><%@
 page import="com.liferay.content.targeting.portlet.util.AssetQueryRule" %><%@
 page import="com.liferay.content.targeting.portlet.util.CampaignQueryRule" %><%@
 page import="com.liferay.content.targeting.portlet.util.ChannelTemplate" %><%@
@@ -85,6 +85,7 @@ page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@

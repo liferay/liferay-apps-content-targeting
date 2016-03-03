@@ -17,9 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletResource = ParamUtil.getString(request, "portletResource");
-String portletNamespace = PortalUtil.getPortletNamespace(portletResource);
-
 List<Campaign> campaigns = (List<Campaign>)request.getAttribute("campaigns");
 
 CampaignQueryRule campaignQueryRule = (CampaignQueryRule)request.getAttribute("configuration.queryRule");
@@ -41,72 +38,56 @@ if (campaignQueryRule.isValid() && !isFirst) {
 }
 %>
 
+<aui:input name='<%= "queryIndex" + index %>' type="hidden" />
+
 <div class="field-row query-row">
-	<c:choose>
-		<c:when test="<%= campaignQueryRule.isDefaultRule() %>">
-			<aui:input name='<%= portletNamespace + "queryIndex" + index %>' type="hidden" usenamespace="<%= false %>" />
+	<div class="full-view <%= fullViewClass %>">
+		<aui:row>
+			<aui:col width="<%= 50 %>">
+				<p class="text-default"><liferay-ui:message key="if-the-user-matches-this-campaign" /></p>
 
-			<%
-				request.setAttribute("queryRule", campaignQueryRule);
-			%>
+				<aui:select label="" name='<%= "campaignId" + index %>'>
 
-			<liferay-util:include page="/macros/render_default_query_rule.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="index" value="<%= String.valueOf(index) %>" />
-				<liferay-util:param name="portletNamespace" value="<%= portletNamespace %>" />
-			</liferay-util:include>
-		</c:when>
-		<c:otherwise>
-			<div class="full-view <%= fullViewClass %>">
-				<aui:col width="50">
-
-				<span class="query-contains-text"><liferay-ui:message key="if-the-user-matches-this-campaign" /></span>
-
-				<div class="campaign-selector">
-					<aui:select label="" name='<%= portletNamespace + "campaignId" + index %>' useNamespace="<%= false %>">
-
-						<%
-						for (Campaign campaign : campaigns) {
-						%>
+					<%
+					for (Campaign campaign : campaigns) {
+					%>
 
 						<aui:option label="<%= campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId()) %>" selected="<%= (campaignQueryRule.getCampaignId() == campaign.getCampaignId()) %>" value="<%= campaign.getCampaignId() %>" />
 
-						<%
-						}
-						%>
+					<%
+					}
+					%>
 
-					</aui:select>
-				</div>
+				</aui:select>
+			</aui:col>
+
+			<aui:col width="<%= 50 %>">
+				<p class="text-default"><liferay-ui:message key="display-this-content" /></p>
+
+				<%
+				request.setAttribute("queryRule", campaignQueryRule);
+				%>
+
+				<liferay-util:include page="/macros/render_asset_entry_selector.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="index" value="<%= String.valueOf(index) %>" />
+				</liferay-util:include>
+			</aui:col>
+		</aui:row>
+	</div>
+
+	<c:if test="<%= campaignQueryRule.isValid() %>">
+		<div class="summary-view <%= summaryViewClass %>">
+			<aui:row>
+				<aui:col width="<%= 50 %>">
+					<span class="text-default"><liferay-ui:message key="if-the-user-matches-this-campaign" /></span>
+					<strong class="text-default"><%= campaignQueryRule.getCampaignName(locale) %> (<span class="small"><liferay-ui:message key="priority" /> <%= campaignQueryRule.getCampaignPriority() %></span>)</strong>
 				</aui:col>
 
-				<aui:col width="45">
-					<div class="select-asset-selector">
-						<span class="query-and-operator-text"><liferay-ui:message key="display-this-content" /></span>
-
-						<%
-							request.setAttribute("queryRule", campaignQueryRule);
-						%>
-
-						<liferay-util:include page="/macros/render_asset_entry_selector.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="portletNamespace" value="<%= portletNamespace %>" />
-							<liferay-util:param name="index" value="<%= String.valueOf(index) %>" />
-						</liferay-util:include>
-					</div>
+				<aui:col width="<%= 50 %>">
+					<span class="text-default"><liferay-ui:message key="display-this-content" /></span>
+					<strong class="text-default"><%= campaignQueryRule.getAssetTitle() %> (<span class="small"><%= campaignQueryRule.getAssetType() %></span>)</strong>
 				</aui:col>
-			</div>
-
-			<c:if test="<%= campaignQueryRule.isValid() %>">
-				<div class="summary-view <%= summaryViewClass %>">
-					<aui:col width="50">
-						<span class="query-content-text"><liferay-ui:message key="if-the-user-matches-this-campaign" /></span>
-						<span class="query-content-value"><%= campaignQueryRule.getCampaignName(locale) %> (<liferay-ui:message key="priority" /> <%= campaignQueryRule.getCampaignPriority() %>)</span>
-					</aui:col>
-
-				<aui:col width="45">
-					<span class="query-content-text"><liferay-ui:message key="display-this-content" /></span>
-					<span class="query-content-value"><%= campaignQueryRule.getAssetTitle() %> (<span class="query-content-value-type"><%= campaignQueryRule.getAssetType() %></span>)</span>
-				</aui:col>
-				</div>
-			</c:if>
-		</c:otherwise>
-	</c:choose>
+			</aui:row>
+		</div>
+	</c:if>
 </div>

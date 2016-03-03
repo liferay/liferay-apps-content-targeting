@@ -119,26 +119,18 @@ public class DeleteUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "unsetUserSegmentLocalService")
+	@Reference(unbind = "-")
 	protected void setUserSegmentLocalService(
 		UserSegmentLocalService userSegmentLocalService) {
 
 		_userSegmentLocalService = userSegmentLocalService;
 	}
 
-	@Reference(unbind = "unsetUserSegmentService")
+	@Reference(unbind = "-")
 	protected void setUserSegmentService(
 		UserSegmentService userSegmentService) {
 
 		_userSegmentService = userSegmentService;
-	}
-
-	protected void unsetUserSegmentLocalService() {
-		_userSegmentLocalService = null;
-	}
-
-	protected void unsetUserSegmentService() {
-		_userSegmentService = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

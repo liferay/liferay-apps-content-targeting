@@ -128,15 +128,11 @@ public class EditCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 		return ContentTargetingPath.EDIT_CAMPAIGN;
 	}
 
-	@Reference(unbind = "unsetUserSegmentLocalService")
+	@Reference(unbind = "-")
 	protected void setUserSegmentLocalService(
 		UserSegmentLocalService userSegmentLocalService) {
 
 		_userSegmentLocalService = userSegmentLocalService;
-	}
-
-	protected void unsetUserSegmentLocalService() {
-		_userSegmentLocalService = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

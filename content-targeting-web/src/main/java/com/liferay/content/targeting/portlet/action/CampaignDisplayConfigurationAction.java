@@ -22,7 +22,6 @@ import com.liferay.content.targeting.portlet.util.CampaignQueryRule;
 import com.liferay.content.targeting.portlet.util.CampaignQueryRuleUtil;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.service.CampaignLocalService;
-import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
@@ -32,6 +31,7 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -67,6 +67,12 @@ public class CampaignDisplayConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {
+		String cmd = ParamUtil.getString(request, Constants.CMD);
+
+		if (cmd.equals("edit_query_rule")) {
+			return "/campaign_content_display/edit_query_rule.jsp";
+		}
+
 		return "/campaign_content_display/configuration.jsp";
 	}
 
@@ -230,24 +236,11 @@ public class CampaignDisplayConfigurationAction
 		return selectableAssetRendererFactories;
 	}
 
-	@Reference(unbind = "unsetCampaignLocalService")
+	@Reference(unbind = "-")
 	protected void setCampaignLocalService(
 		CampaignLocalService campaignLocalService) {
 
 		_campaignLocalService = campaignLocalService;
-	}
-
-	@Reference(unbind = "unsetCampaignService")
-	protected void setCampaignService(CampaignService campaignService) {
-		_campaignService = campaignService;
-	}
-
-	protected void unsetCampaignLocalService() {
-		_campaignLocalService = null;
-	}
-
-	protected void unsetCampaignService() {
-		_campaignService = null;
 	}
 
 	@Override
@@ -255,6 +248,5 @@ public class CampaignDisplayConfigurationAction
 	}
 
 	private CampaignLocalService _campaignLocalService;
-	private CampaignService _campaignService;
 
 }

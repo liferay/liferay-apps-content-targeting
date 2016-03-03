@@ -16,32 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String displayStyle = GetterUtil.getString(request.getAttribute("displayStyle"));
-String[] displayStyles = GetterUtil.getStringValues(request.getAttribute("displayStyles"));
-long displayStyleGroupId = GetterUtil.getLong(request.getAttribute("displayStyleGroupId"));
-
-TemplateHandler templateHandler = (TemplateHandler)request.getAttribute("templateHandler");
-
-List<KeyValuePair> typesLeftList = (List<KeyValuePair>)request.getAttribute("typesLeftList");
-List<KeyValuePair> typesRightList = (List<KeyValuePair>)request.getAttribute("typesRightList");
-
-boolean anyAssetType = GetterUtil.getBoolean(request.getAttribute("anyAssetType"));
-
-long[] availableClassNameIds = GetterUtil.getLongValues(request.getAttribute("availableClassNameIds"));
-long[] classNameIds = GetterUtil.getLongValues(request.getAttribute("classNameIds"));
-
-List<String> modelResources = (List<String>)request.getAttribute("modelResources");
-
-boolean selectedValue = !anyAssetType && (classNameIds.length > 1);
-
-String cssClass = "";
-
-if (anyAssetType) {
-	cssClass = "hide";
-}
-%>
-
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationURL">
 	<portlet:param name="cmd" value="update" />
 </liferay-portlet:actionURL>
@@ -51,90 +25,21 @@ if (anyAssetType) {
 		names="content-selection,display-settings"
 		param="tabs2"
 		refresh="<%= false %>"
+		type="tabs nav-tabs-default"
 	>
 
 		<liferay-ui:section>
-			<aui:fieldset label="asset-entry-type">
-				<aui:select label="" name="anyAssetType">
-					<aui:option
-						label="any"
-						selected="<%= anyAssetType %>"
-						value="<%= true %>"
-					/>
-
-					<aui:option
-						label='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "select-more-than-one") + "..." %>'
-						selected="<%= selectedValue %>"
-						value="<%= false %>"
-					/>
-
-					<optgroup label="<liferay-ui:message key="asset-type" />">
-
-						<%
-						int i = 0;
-
-						for (long classNameId : availableClassNameIds) {
-							selectedValue = (classNameIds.length == 1) && (classNameId == classNameIds[0]);
-						%>
-
-							<aui:option label="<%= modelResources.get(i) %>" selected="<%= selectedValue %>" value="<%= classNameId %>" />
-
-						<%
-							i++;
-						}
-						%>
-
-					</optgroup>
-				</aui:select>
-
-				<aui:input name="classNameIds" type="hidden" />
-
-				<div class="<%= cssClass %>" id="<portlet:namespace />classNamesBoxes">
-					<liferay-ui:input-move-boxes
-						leftBoxName="currentClassNameIds"
-						leftList="<%= typesLeftList %>"
-						leftReorder="true"
-						leftTitle="selected"
-						rightBoxName="availableClassNameIds"
-						rightList="<%= typesRightList %>"
-						rightTitle="available"
-					/>
-				</div>
-			</aui:fieldset>
+			<liferay-util:include page="/user_segment_content_list/content_selection.jsp" servletContext="<%= application %>" />
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<div class="display-template">
-				<liferay-ddm:template-selector
-					className="<%= templateHandler.getClassName() %>"
-					displayStyle="<%= displayStyle %>"
-					displayStyleGroupId="<%= displayStyleGroupId %>"
-					displayStyles="<%= ListUtil.toList(displayStyles) %>"
-					label="display-template"
-					refreshURL="<%= configurationURL %>"
-				/>
-			</div>
+			<liferay-util:include page="/user_segment_content_list/display_settings.jsp" servletContext="<%= application %>" />
 		</liferay-ui:section>
 	</liferay-ui:tabs>
 
 	<aui:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
+
+		<aui:button cssClass="btn-lg" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveSelectBoxes',
-		function() {
-			if (document.<portlet:namespace />fm.<portlet:namespace />classNameIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />classNameIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentClassNameIds);
-			}
-
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
-
-	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType', 'false', '<portlet:namespace />classNamesBoxes');
-</aui:script>

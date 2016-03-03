@@ -62,7 +62,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=campaign-content-display-portlet",
 		"com.liferay.portlet.display-category=category.ct",
-		"com.liferay.portlet.header-portlet-css=/css/campaign_content_display/main.css",
 		"com.liferay.portlet.header-portlet-css=/css/content_targeting/rules_panel.css",
 		"com.liferay.portlet.header-portlet-css=/css/content_targeting/thumbnails_preview.css",
 		"com.liferay.portlet.header-portlet-javascript=/js/content_targeting/thumbnails_preview.js",
@@ -197,7 +196,7 @@ public class CampaignContentDisplayPortlet extends ContentDisplayPortlet {
 		return selectableAssetRendererFactories;
 	}
 
-	@Reference(unbind = "unsetCampaignLocalService")
+	@Reference(unbind = "-")
 	protected void setCampaignLocalService(
 		CampaignLocalService campaignLocalService) {
 
@@ -243,10 +242,6 @@ public class CampaignContentDisplayPortlet extends ContentDisplayPortlet {
 		return PortletPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), layout.getPlid(),
 			portletDisplay.getPortletName(), ActionKeys.CONFIGURATION);
-	}
-
-	protected void unsetCampaignLocalService() {
-		_campaignLocalService = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -133,7 +133,7 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 			Callable<Tactic> tacticCallable = new TacticCallable(
 				request, response, themeDisplay.getUserId(), campaignId,
 				tacticId, nameMap, descriptionMap, userSegmentIds,
-				serviceContext);
+				_tacticService, serviceContext);
 
 			Tactic tactic = TransactionInvokerUtil.invoke(
 				transactionConfig, tacticCallable);
@@ -190,28 +190,27 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "unsetChannelInstanceLocalService")
+	@Reference(unbind = "-")
 	protected void setChannelInstanceLocalService(
 		ChannelInstanceLocalService channelInstanceLocalService) {
 
 		_channelInstanceLocalService = channelInstanceLocalService;
 	}
 
-	@Reference(unbind = "unsetChannelInstanceService")
+	@Reference(unbind = "-")
 	protected void setChannelInstanceService(
 		ChannelInstanceService channelInstanceService) {
 
 		_channelInstanceService = channelInstanceService;
 	}
 
-	@Reference(unbind = "unsetChannelsRegistry")
+	@Reference
 	protected void setChannelsRegistry(ChannelsRegistry channelsRegistry) {
 		_channelsRegistry = channelsRegistry;
 	}
 
 	@Reference(
-		target = "(mvc.command.name=" + ContentTargetingMVCCommand.EDIT_TACTIC + ")",
-		unbind = "unsetMVCRenderCommand"
+		target = "(mvc.command.name=" + ContentTargetingMVCCommand.EDIT_TACTIC + ")"
 	)
 	protected void setMVCRenderCommand(MVCRenderCommand mvcRenderCommand) {
 		_mvcRenderCommand = mvcRenderCommand;
@@ -224,24 +223,12 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 		_userSegmentLocalService = userSegmentLocalService;
 	}
 
-	protected void unsetChannelInstanceLocalService() {
-		_channelInstanceLocalService = null;
-	}
-
-	protected void unsetChannelInstanceService() {
-		_channelInstanceService = null;
-	}
-
-	protected void unsetChannelsRegistry() {
+	protected void unsetChannelsRegistry(ChannelsRegistry channelsRegistry) {
 		_channelsRegistry = null;
 	}
 
-	protected void unsetMVCRenderCommand() {
+	protected void unsetMVCRenderCommand(MVCRenderCommand mvcRenderCommand) {
 		_mvcRenderCommand = null;
-	}
-
-	protected void unsetTacticService() {
-		_tacticService = null;
 	}
 
 	protected List<InvalidChannelException> updateChannels(
@@ -346,7 +333,7 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 	private ChannelInstanceService _channelInstanceService;
 	private ChannelsRegistry _channelsRegistry;
 	private MVCRenderCommand _mvcRenderCommand;
-	private volatile TacticService _tacticService;
+	private TacticService _tacticService;
 	private UserSegmentLocalService _userSegmentLocalService;
 
 	private class TacticCallable implements Callable<Tactic> {
@@ -381,13 +368,15 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			long userId, long campaignId, long tacticId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			long[] userSegmentIds, ServiceContext serviceContext) {
+			long[] userSegmentIds, TacticService tacticService,
+			ServiceContext serviceContext) {
 
 			_portletRequest = portletRequest;
 			_portletResponse = portletResponse;
 			_userId = userId;
 			_campaignId = campaignId;
 			_tacticId = tacticId;
+			_tacticService = tacticService;
 			_nameMap = nameMap;
 			_descriptionMap = descriptionMap;
 			_userSegmentIds = userSegmentIds;
@@ -401,6 +390,7 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 		private final PortletResponse _portletResponse;
 		private final ServiceContext _serviceContext;
 		private final long _tacticId;
+		private final TacticService _tacticService;
 		private final long _userId;
 		private final long[] _userSegmentIds;
 

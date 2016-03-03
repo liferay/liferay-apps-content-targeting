@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet;
+package com.liferay.content.targeting.simulation.portlet;
 
 import com.liferay.content.targeting.api.model.UserSegmentSimulator;
 import com.liferay.content.targeting.util.PortletKeys;
@@ -92,14 +92,16 @@ public class SimulatorPortlet extends MVCPortlet {
 			selectedUserSegmentIds, httpServletRequest, httpServletResponse);
 	}
 
-	@Reference(unbind = "unsetUserSegmentSimulator")
+	@Reference
 	protected void setUserSegmentSimulator(
 		UserSegmentSimulator userSegmentSimulator) {
 
 		_userSegmentSimulator = userSegmentSimulator;
 	}
 
-	protected void unsetUserSegmentSimulator() {
+	protected void unsetUserSegmentSimulator(
+		UserSegmentSimulator userSegmentSimulator) {
+
 		_userSegmentSimulator = null;
 	}
 

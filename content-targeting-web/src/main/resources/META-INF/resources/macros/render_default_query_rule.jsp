@@ -17,66 +17,62 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletNamespace = ParamUtil.getString(request, "portletNamespace");
-
-if (Validator.isBlank(portletNamespace)) {
-	String portletId = PortalUtil.getPortletId(request);
-
-	portletNamespace = PortalUtil.getPortletNamespace(portletId);
-}
-
 QueryRule queryRule = (QueryRule)request.getAttribute("queryRule");
-
-String index = ParamUtil.getString(request, "index");
 %>
 
 <div class="default-content">
 	<div class="full-view hide">
-		<aui:col width="60">
-			<span class="otherwise-text"><liferay-ui:message key="otherwise" /></span>
-		</aui:col>
+		<aui:row>
+			<aui:col width="<%= 50 %>">
+				<p class="text-default"><liferay-ui:message key="otherwise" /></p>
+			</aui:col>
 
-		<aui:col width="35">
-			<aui:input checked="<%= !queryRule.hasAssetEntry() %>" id="contentDefaultValueDont" label="dont-display-anything" name="contentDefaultValue" type="radio" value="<%= false %>" />
+			<aui:col width="<%= 50 %>">
+				<aui:input checked="<%= !queryRule.hasAssetEntry() %>" id="contentDefaultValueDont" label="dont-display-anything" name="contentDefaultValue" type="radio" value="<%= false %>" />
 
-			<aui:input checked="<%= queryRule.hasAssetEntry() %>" id="contentDefaultValueDo" label="display-this-content" name="contentDefaultValue" type="radio" value="<%= true %>" />
+				<aui:input checked="<%= queryRule.hasAssetEntry() %>" id="contentDefaultValueDo" label="display-this-content" name="contentDefaultValue" type="radio" value="<%= true %>" />
 
-			<div id="<portlet:namespace />contentDefaultBox">
-				<div class="select-asset-selector">
+				<div id="<portlet:namespace />contentDefaultBox">
+					<div class="select-asset-selector">
 
-					<%
-					request.setAttribute("queryRule", queryRule);
-					%>
+						<%
+						request.setAttribute("queryRule", queryRule);
+						%>
 
-					<liferay-util:include page="/macros/render_asset_entry_selector.jsp" servletContext="<%= application %>">
-						<liferay-util:param name="index" value="Default" />
-						<liferay-util:param name="portletNamespace" value="<%= portletNamespace %>" />
-					</liferay-util:include>
+						<liferay-util:include page="/macros/render_asset_entry_selector.jsp" servletContext="<%= application %>">
+							<liferay-util:param name="index" value="Default" />
+						</liferay-util:include>
+					</div>
 				</div>
-			</div>
-		</aui:col>
+			</aui:col>
+		</aui:row>
 	</div>
 
 	<div class="summary-view">
-		<aui:col width="50">
-			<span class="otherwise-text"><liferay-ui:message key="otherwise" /></span>
-		</aui:col>
+		<aui:row>
+			<aui:col width="<%= 50 %>">
+				<p class="text-default"><liferay-ui:message key="otherwise" /></p>
+			</aui:col>
 
-		<aui:col width="45">
-			<span class="default-content-value-text">
-				<c:choose>
-					<c:when test="<%= queryRule.hasAssetEntry() %>">
-						<liferay-ui:message key="display-this-content" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="dont-display-anything" />
-					</c:otherwise>
-				</c:choose>
-			</span>
+			<aui:col width="<%= 50 %>">
+				<span class="text-default">
+					<c:choose>
+						<c:when test="<%= queryRule.hasAssetEntry() %>">
+							<liferay-ui:message key="display-this-content" />
 
-			<c:if test="<%= queryRule.hasAssetEntry() %>">
-				<span class="query-content-value"><%= queryRule.getAssetTitle() %> (<span class="query-content-value-type"><%= queryRule.getAssetType() %></span>)</span>
-			</c:if>
-		</aui:col>
+							<strong class="text-default"><%= queryRule.getAssetTitle() %> (<span class="small"><%= queryRule.getAssetType() %></span>)</strong>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="dont-display-anything" />
+						</c:otherwise>
+					</c:choose>
+				</span>
+			</aui:col>
+		</aui:row>
 	</div>
 </div>
+
+<aui:script>
+	Liferay.Util.toggleRadio('<portlet:namespace />contentDefaultValueDo', '<portlet:namespace />contentDefaultBox', '');
+	Liferay.Util.toggleRadio('<portlet:namespace />contentDefaultValueDont', '', '<portlet:namespace />contentDefaultBox');
+</aui:script>

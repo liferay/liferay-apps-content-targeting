@@ -294,7 +294,7 @@ public abstract class AssetQueryRule implements QueryRule {
 				_assetEntry.getClassName());
 		_assetRenderer = _assetRendererFactory.getAssetRenderer(_assetClassPK);
 		_assetTitle = _assetEntry.getTitle(locale);
-		_assetType = _assetRendererFactory.getTypeName(locale, true);
+		_assetType = _assetRendererFactory.getTypeName(locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AssetQueryRule.class);

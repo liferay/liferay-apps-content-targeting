@@ -60,7 +60,6 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=user-segment-content-list-portlet",
 		"com.liferay.portlet.display-category=category.ct",
-		"com.liferay.portlet.header-portlet-css=/css/user_segment_content_list/main.css",
 		"com.liferay.portlet.header-portlet-javascript=/js/content_targeting/thumbnails_preview.js",
 		"com.liferay.portlet.icon=/icons/user_segment_content_list.png",
 		"com.liferay.portlet.instanceable=true",
@@ -69,12 +68,13 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.render-weight=1",
 		"com.liferay.portlet.scopeable=true",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=User Segment Content List" + PortletKeys.CT_USERSEGMENT_LIST,
+		"javax.portlet.display-name=User Segment Content List",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.config-template=/user_segment_content_list/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/user_segment_content_list/view.jsp",
-		"javax.portlet.name=", "javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.name=" + PortletKeys.CT_USERSEGMENT_LIST,
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},

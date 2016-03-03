@@ -207,7 +207,7 @@ public class IpGeocodeRule extends BaseRule {
 		return jsonObj.toString();
 	}
 
-	@Reference(unbind = "unsetIPGeocoder")
+	@Reference
 	public void setIPGeocoder(IPGeocoder ipGeocoder) {
 		_ipGeocoder = ipGeocoder;
 	}

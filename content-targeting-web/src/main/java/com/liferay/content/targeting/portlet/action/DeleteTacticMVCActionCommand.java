@@ -78,15 +78,11 @@ public class DeleteTacticMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "unsetCampaignService")
+	@Reference(unbind = "-")
 	protected void setTacticLocalService(
 		TacticLocalService tacticLocalService) {
 
 		_tacticLocalService = tacticLocalService;
-	}
-
-	protected void unsetTacticLocalService() {
-		_tacticLocalService = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

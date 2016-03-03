@@ -62,23 +62,25 @@ public class EditReportMVCRenderCommand extends BaseMVCRenderCommand {
 		return ContentTargetingPath.EDIT_REPORT;
 	}
 
-	@Reference(unbind = "unsetReportsRegistry")
+	@Reference
 	protected void setReportsRegistry(ReportsRegistry reportsRegistry) {
 		_reportsRegistry = reportsRegistry;
 	}
 
-	@Reference(unbind = "unsetTrackingActionsRegistry")
+	@Reference
 	protected void setTrackingActionsRegistry(
 		TrackingActionsRegistry trackingActionsRegistry) {
 
 		_trackingActionsRegistry = trackingActionsRegistry;
 	}
 
-	protected void unsetReportsRegistry() {
+	protected void unsetReportsRegistry(ReportsRegistry reportsRegistry) {
 		_reportsRegistry = null;
 	}
 
-	protected void unsetTrackingActionsRegistry() {
+	protected void unsetTrackingActionsRegistry(
+		TrackingActionsRegistry trackingActionsRegistry) {
+
 		_trackingActionsRegistry = null;
 	}
 
