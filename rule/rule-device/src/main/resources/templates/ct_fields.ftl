@@ -16,7 +16,7 @@
 
 <#setting number_format="computer">
 
-<@liferay_util["buffer"] var="infoMessage" >
+<@liferay_util["buffer"] var="infoMessage">
 	<#assign enableLocationLabel = languageUtil.get(request, "site-administration-mdr") />
 
 	<#if mDRURL??>
@@ -29,7 +29,7 @@
 	/>
 </@>
 
-<#if !mdrRuleGroups?has_content >
+<#if !mdrRuleGroups?has_content>
 	<div class="alert alert-warning">
 		<strong><@liferay_ui["message"] key="there-are-no-device-families-available" /></strong>
 

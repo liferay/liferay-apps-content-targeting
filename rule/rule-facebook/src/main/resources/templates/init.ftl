@@ -16,7 +16,7 @@
 
 <#setting number_format="computer">
 
-<#if !isFbLoginEnabled >
+<#if !isFbLoginEnabled>
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-rule-will-not-work-properly-because-login-through-facebook-is-not-enabled" /></strong>
 

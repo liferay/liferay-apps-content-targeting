@@ -16,7 +16,7 @@
 
 <#setting number_format="computer">
 
-<#if !trackingLinkEnabled >
+<#if !trackingLinkEnabled>
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-metric-will-not-work-properly-because-link-tracking-is-not-enabled" /></strong>
 

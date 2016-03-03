@@ -18,7 +18,7 @@
 
 <#setting number_format="computer">
 
-<#if !trackingPageEnabled >
+<#if !trackingPageEnabled>
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-metric-will-not-work-properly-because-page-tracking-is-not-enabled" /></strong>
 

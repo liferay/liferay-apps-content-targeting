@@ -65,6 +65,13 @@ public class CheckML extends BaseSchedulerEntryMessageListener {
 	}
 
 	@Reference(unbind = "-")
+	protected void setCampaignContentLocalService(
+		CampaignContentLocalService campaignContentLocalService) {
+
+		_campaignContentLocalService = campaignContentLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSchedulerEngineHelper(
 		SchedulerEngineHelper schedulerEngineHelper) {
 

@@ -16,7 +16,7 @@
 
 <#setting number_format="computer">
 
-<#if !trackingFormEnabled >
+<#if !trackingFormEnabled>
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-metric-will-not-work-properly-because-form-tracking-is-not-enabled" /></strong>
 
@@ -40,7 +40,7 @@
 	</div>
 </#if>
 
-<@liferay_aui["input"] helpMessage="name-help" label="name" name="{ct_field_guid}alias" type="text" value=alias >
+<@liferay_aui["input"] helpMessage="name-help" label="name" name="{ct_field_guid}alias" type="text" value=alias>
 	<@liferay_aui["validator"] name="required" />
 </@>
 

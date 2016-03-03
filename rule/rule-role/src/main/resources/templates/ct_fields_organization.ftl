@@ -16,7 +16,7 @@
 
 <#setting number_format="computer">
 
-<#if !organizations?has_content >
+<#if !organizations?has_content>
 	<div class="alert alert-warning">
 		<strong><@liferay_ui["message"] key="there-are-no-organizations-available" /></strong>
 
