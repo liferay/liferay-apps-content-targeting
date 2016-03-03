@@ -52,8 +52,8 @@ templateContext.put("reportKey", reportKey);
 	</div>
 </c:if>
 
-<div class="report-description">
+<p class="text-default">
 	<%= report.getDescription(locale) %>
-</div>
+</p>
 
 <%= report.getHTML(reportInstance, templateContext) %>
