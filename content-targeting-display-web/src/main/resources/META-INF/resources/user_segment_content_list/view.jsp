@@ -37,10 +37,10 @@ String portletDisplayTemplateHtml = "";
 				%>
 
 					<div class="asset-entry">
-						<liferay-util:include page="/macros/render_asset_entry.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="displayStyle" value="abstracts" />
-							<liferay-util:param name="showEditLink" value="<%= Boolean.TRUE.toString() %>" />
-						</liferay-util:include>
+						<liferay-ui:asset-display
+							assetEntry="<%= assetEntry %>"
+							template="abstract"
+						/>
 					</div>
 
 				<%

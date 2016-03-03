@@ -52,12 +52,10 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"),
 						<%= portletDisplayTemplateHtml %>
 					</c:when>
 					<c:otherwise>
-
-						<%
-						queryRule.setAssetAttributes(renderRequest);
-						%>
-
-						<liferay-util:include page="/macros/render_asset_entry.jsp" servletContext="<%= application %>" />
+						<liferay-ui:asset-display
+							assetEntry="<%= queryRule.getAssetEntry() %>"
+							template="full_content"
+						/>
 					</c:otherwise>
 				</c:choose>
 

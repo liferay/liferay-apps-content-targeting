@@ -20,18 +20,15 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
-import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 
@@ -162,24 +159,6 @@ public abstract class AssetQueryRule implements QueryRule {
 	@Override
 	public boolean isValid() {
 		return hasAssetEntry();
-	}
-
-	@Override
-	public void setAssetAttributes(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		portletRequest.setAttribute("view.jsp-results", new ArrayList());
-		portletRequest.setAttribute(
-			"view.jsp-assetEntryIndex", Integer.valueOf(0));
-		portletRequest.setAttribute("view.jsp-assetEntry", _assetEntry);
-		portletRequest.setAttribute(
-			"view.jsp-assetRendererFactory", _assetRendererFactory);
-		portletRequest.setAttribute("view.jsp-assetRenderer", _assetRenderer);
-		portletRequest.setAttribute(
-			"view.jsp-title", _assetEntry.getTitle(themeDisplay.getLocale()));
-		portletRequest.setAttribute("view.jsp-show", Boolean.valueOf(false));
-		portletRequest.setAttribute("view.jsp-print", Boolean.valueOf(false));
 	}
 
 	@Override

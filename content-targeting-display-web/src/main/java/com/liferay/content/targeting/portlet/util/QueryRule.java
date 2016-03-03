@@ -58,8 +58,6 @@ public interface QueryRule extends Comparable<QueryRule> {
 
 	public boolean isValid();
 
-	public void setAssetAttributes(PortletRequest portletRequest);
-
 	public void setAssetClassName(String assetClassName);
 
 	public void setAssetClassPK(long assetClassPK);

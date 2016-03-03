@@ -139,8 +139,6 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 
 			if ((queryRule != null) && (queryRule.getAssetEntry() != null)) {
 				results.add(queryRule.getAssetEntry());
-
-				queryRule.setAssetAttributes(renderRequest);
 			}
 			else {
 				renderRequest.setAttribute(
