@@ -1,0 +1,5 @@
+Bundle-Name: Content Targeting Display Web
+Bundle-SymbolicName: com.liferay.content.targeting.display.web
+Bundle-Version: 2.0.0
+Liferay-JS-Config: /js/config.js
+Web-ContextPath: /content-targeting-display-web
