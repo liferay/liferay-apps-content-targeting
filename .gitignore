@@ -13,6 +13,9 @@
 /*/javadoc
 /*/lib
 /*/pmd-reports
+/*/test-classes
+/*/test-coverage
+/*/test-results
 /*/*/build
 /*/*/classes
 /*/*/javadoc
