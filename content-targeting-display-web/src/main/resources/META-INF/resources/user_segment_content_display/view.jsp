@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ServletContext analyticsServletContext = (ServletContext)request.getAttribute("analyticsServletContext");
-
 String containerCssClass = "";
 
 if (portletDisplay.isShowConfigurationIcon()) {
@@ -50,9 +48,14 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"),
 
 				<%
 				request.setAttribute("queryRule", queryRule);
+
+				request.setAttribute("assetClassName", queryRule.getAssetClassName());
+				request.setAttribute("assetClassPK", String.valueOf(queryRule.getAssetClassPK()));
 				%>
 
 				<liferay-util:include page="/macros/edit_icon_link.jsp" servletContext="<%= application %>" />
+
+				<liferay-util:dynamic-include key="com.liferay.content.targeting.display.web#/user_segment_content_display/view.jsp#pre" />
 
 				<c:choose>
 					<c:when test="<%= !Validator.isBlank(portletDisplayTemplateHtml) %>">
@@ -66,10 +69,7 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"),
 					</c:otherwise>
 				</c:choose>
 
-				<liferay-util:include page="/common/analytics/track_content.jsp" servletContext="<%= analyticsServletContext %>">
-					<liferay_util:param name="analyticsClassName" value="<%= queryRule.getAssetClassName() %>" />
-					<liferay_util:param name="analyticsClassPK" value="<%= String.valueOf(queryRule.getAssetClassPK()) %>" />
-				</liferay-util:include>
+				<liferay-util:dynamic-include key="com.liferay.content.targeting.display.web#/user_segment_content_display/view.jsp#post" />
 			</c:when>
 			<c:otherwise>
 				<div class="alert alert-info">

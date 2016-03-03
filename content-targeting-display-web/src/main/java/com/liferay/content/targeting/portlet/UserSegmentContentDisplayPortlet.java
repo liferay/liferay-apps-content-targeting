@@ -103,9 +103,6 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 
 		renderRequest.setAttribute("templateHandler", templateHandler);
 
-		renderRequest.setAttribute(
-			"analyticsServletContext", _analyticsServletContext);
-
 		try {
 			renderRequest.setAttribute(
 				"isNotConfigured", portletPreferences.getMap().isEmpty());
@@ -216,14 +213,6 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 		_layoutLocalService = layoutLocalService;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.content.targeting.analytics.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_analyticsServletContext = servletContext;
-	}
-
 	protected boolean showPreview(ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -253,7 +242,6 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserSegmentContentDisplayPortlet.class);
 
-	private ServletContext _analyticsServletContext;
 	private LayoutLocalService _layoutLocalService;
 
 }

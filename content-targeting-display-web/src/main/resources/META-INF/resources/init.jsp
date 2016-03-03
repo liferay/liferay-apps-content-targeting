@@ -40,8 +40,6 @@ page import="com.liferay.content.targeting.util.PortletKeys" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
@@ -57,8 +55,6 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
-
-<%@ page import="javax.servlet.ServletContext" %>
 
 <liferay-frontend:defineObjects />
 

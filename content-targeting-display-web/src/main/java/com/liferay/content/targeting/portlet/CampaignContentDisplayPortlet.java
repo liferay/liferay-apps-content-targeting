@@ -102,9 +102,6 @@ public class CampaignContentDisplayPortlet extends ContentDisplayPortlet {
 
 		renderRequest.setAttribute("templateHandler", templateHandler);
 
-		renderRequest.setAttribute(
-			"analyticsServletContext", _analyticsServletContext);
-
 		try {
 			renderRequest.setAttribute(
 				"isNotConfigured", portletPreferences.getMap().isEmpty());
@@ -208,14 +205,6 @@ public class CampaignContentDisplayPortlet extends ContentDisplayPortlet {
 		_layoutLocalService = layoutLocalService;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.content.targeting.analytics.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_analyticsServletContext = servletContext;
-	}
-
 	protected boolean showPreview(ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -245,7 +234,6 @@ public class CampaignContentDisplayPortlet extends ContentDisplayPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CampaignContentDisplayPortlet.class);
 
-	private ServletContext _analyticsServletContext;
 	private CampaignLocalService _campaignLocalService;
 	private LayoutLocalService _layoutLocalService;
 
