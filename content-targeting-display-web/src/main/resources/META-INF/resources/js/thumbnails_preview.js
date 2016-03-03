@@ -42,23 +42,8 @@ AUI.add(
 						instance.one('#FullContent' + selectedIndex).hide();
 						instance.one('#PreviewContent' + selectedIndex).removeClass(SELECTED_CLASSNAME);
 
-						var editLink = instance.one('#editLink' + selectedIndex);
-						var iconActions = instance.one('.lfr-icon-actions');
-
-						if (editLink) {
-							editLink.hide();
-							iconActions.hide();
-						}
-
 						instance.one('#FullContent' + index).show();
 						instance.one('#PreviewContent' + index).addClass(SELECTED_CLASSNAME);
-
-						editLink = instance.one('#editLink' + index);
-
-						if (editLink) {
-							editLink.show();
-							iconActions.show();
-						}
 
 						instance.set('selectedIndex', index);
 					}

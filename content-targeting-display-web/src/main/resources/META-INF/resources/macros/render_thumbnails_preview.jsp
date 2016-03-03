@@ -32,11 +32,16 @@ int selectedIndex = ParamUtil.getInteger(request, "selectedIndex");
 		<c:if test="<%= selectedIndex != queryRule_index %>">
 			<div class="full-content hide" id="<portlet:namespace />FullContent<%= queryRule_index %>">
 				<c:if test="<%= queryRule.hasAssetEntry() %>">
+
+					<%
+					request.setAttribute("queryRule", queryRule);
+					%>
+
+					<liferay-util:include page="/macros/edit_icon_link.jsp" servletContext="<%= application %>" />
+
 					<c:choose>
 						<c:when test="<%= queryRule.getTemplate() != null %>">
-
 							<%= queryRule.getTemplate() %>
-
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:asset-display
@@ -79,11 +84,11 @@ int selectedIndex = ParamUtil.getInteger(request, "selectedIndex");
 	</div>
 
 	<aui:script use="liferay-thumbnails-preview">
-	new Liferay.ThumbnailsPreview(
-		{
-			selectedIndex: <%= selectedIndex %>,
-			namespace: '<portlet:namespace />'
-		}
-	);
+		new Liferay.ThumbnailsPreview(
+			{
+				selectedIndex: <%= selectedIndex %>,
+				namespace: '<portlet:namespace />'
+			}
+		);
 	</aui:script>
 </c:if>

@@ -47,6 +47,13 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"),
 				</div>
 			</c:when>
 			<c:when test="<%= !isNotConfigured && queryRule.hasAssetEntry() %>">
+
+				<%
+				request.setAttribute("queryRule", queryRule);
+				%>
+
+				<liferay-util:include page="/macros/edit_icon_link.jsp" servletContext="<%= application %>" />
+
 				<c:choose>
 					<c:when test="<%= !Validator.isBlank(portletDisplayTemplateHtml) %>">
 						<%= portletDisplayTemplateHtml %>
@@ -72,7 +79,6 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"),
 				</div>
 			</c:otherwise>
 		</c:choose>
-
 	</div>
 
 	<c:if test="<%= showPreview %>">
@@ -86,11 +92,3 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"),
 		</liferay-util:include>
 	</c:if>
 </div>
-
-<%
-request.setAttribute("queryRules", campaignQueryRules);
-%>
-
-<liferay-util:include page="/macros/edit_icon_links.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="selectedIndex" value="<%= String.valueOf(selectedIndex) %>" />
-</liferay-util:include>
