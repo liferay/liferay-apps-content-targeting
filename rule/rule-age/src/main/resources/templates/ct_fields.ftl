@@ -16,7 +16,7 @@
 
 <#setting number_format="computer">
 
-<#if !birthdayEnabled >
+<#if !birthdayEnabled>
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-rule-will-not-work-properly-because-the-age-field-has-been-removed" /></strong>
 

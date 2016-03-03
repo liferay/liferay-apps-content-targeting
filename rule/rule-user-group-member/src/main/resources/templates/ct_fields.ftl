@@ -16,7 +16,7 @@
 
 <#setting number_format="computer">
 
-<#if !userGroups?has_content >
+<#if !userGroups?has_content>
 	<div class="alert alert-warning">
 		<strong><@liferay_ui["message"] key="there-are-no-user-groups-available" /></strong>
 

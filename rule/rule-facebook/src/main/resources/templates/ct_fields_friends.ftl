@@ -16,7 +16,7 @@
 
 <#include "init.ftl" />
 
-<@liferay_util["buffer"] var="selectorField" >
+<@liferay_util["buffer"] var="selectorField">
 	<@liferay_aui["select"] inlineField=true label="" name="selector" style="width: auto;">
 		<@liferay_aui["option"]
 			label="more"

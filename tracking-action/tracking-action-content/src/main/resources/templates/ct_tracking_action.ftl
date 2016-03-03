@@ -16,7 +16,7 @@
 
 <#setting number_format="computer">
 
-<#if !trackingContentEnabled >
+<#if !trackingContentEnabled>
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-metric-will-not-work-properly-because-content-tracking-is-not-enabled" /></strong>
 
@@ -73,7 +73,7 @@
 
 		<#assign cssClass = "">
 
-		<#if (assetEntryId <= 0)>
+		<#if assetEntryId <= 0>
 			<#assign cssClass = "hide">
 		</#if>
 

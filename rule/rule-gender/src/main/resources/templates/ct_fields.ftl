@@ -16,7 +16,7 @@
 
 <#setting number_format="computer">
 
-<#if !genderEnabled >
+<#if !genderEnabled>
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-rule-will-not-work-properly-because-the-gender-field-has-been-removed" /></strong>
 

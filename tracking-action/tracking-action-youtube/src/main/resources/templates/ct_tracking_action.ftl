@@ -16,7 +16,7 @@
 
 <#setting number_format="computer">
 
-<#if !trackingYoutubeEnabled >
+<#if !trackingYoutubeEnabled>
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-metric-will-not-work-properly-because-youtube-videos-tracking-is-not-enabled" /></strong>
 
