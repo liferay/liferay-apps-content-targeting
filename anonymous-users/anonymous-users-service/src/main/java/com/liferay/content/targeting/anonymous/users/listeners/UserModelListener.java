@@ -46,15 +46,11 @@ public class UserModelListener extends BaseModelListener<User> {
 		}
 	}
 
-	@Reference(unbind = "unsetAnonymousUserLocalService")
+	@Reference(unbind = "-")
 	protected void setAnonymousUserLocalService(
 		AnonymousUserLocalService anonymousUserLocalService) {
 
 		_anonymousUserLocalService = anonymousUserLocalService;
-	}
-
-	protected void unsetAnonymousUserLocalService() {
-		_anonymousUserLocalService = null;
 	}
 
 	private AnonymousUserLocalService _anonymousUserLocalService;

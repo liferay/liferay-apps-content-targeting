@@ -90,12 +90,12 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 		return true;
 	}
 
-	@Reference(unbind = "unsetRulesRegistry")
+	@Reference
 	public void setRulesRegistry(RulesRegistry rulesRegistry) {
 		_rulesRegistry = rulesRegistry;
 	}
 
-	protected void unsetRulesRegistry() {
+	protected void unsetRulesRegistry(RulesRegistry rulesRegistry) {
 		_rulesRegistry = null;
 	}
 

@@ -236,15 +236,11 @@ public class CampaignDisplayConfigurationAction
 		return selectableAssetRendererFactories;
 	}
 
-	@Reference(unbind = "unsetCampaignLocalService")
+	@Reference(unbind = "-")
 	protected void setCampaignLocalService(
 		CampaignLocalService campaignLocalService) {
 
 		_campaignLocalService = campaignLocalService;
-	}
-
-	protected void unsetCampaignLocalService() {
-		_campaignLocalService = null;
 	}
 
 	@Override

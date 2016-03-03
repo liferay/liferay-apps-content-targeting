@@ -86,21 +86,21 @@ public class ContentTargetingPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference(unbind = "unsetChannelsRegistry")
+	@Reference
 	protected void setChannelsRegistry(ChannelsRegistry channelsRegistry) {
 		_channelsRegistry = channelsRegistry;
 	}
 
-	@Reference(unbind = "unsetReportsRegistry")
+	@Reference
 	protected void setReportsRegistry(ReportsRegistry reportsRegistry) {
 		_reportsRegistry = reportsRegistry;
 	}
 
-	protected void unsetChannelsRegistry() {
+	protected void unsetChannelsRegistry(ChannelsRegistry channelsRegistry) {
 		_channelsRegistry = null;
 	}
 
-	protected void unsetReportsRegistry() {
+	protected void unsetReportsRegistry(ReportsRegistry reportsRegistry) {
 		_reportsRegistry = null;
 	}
 

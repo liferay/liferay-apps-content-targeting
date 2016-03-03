@@ -174,7 +174,7 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "unsetCampaignService")
+	@Reference(unbind = "-")
 	protected void setCampaignService(CampaignService campaignService) {
 		_campaignService = campaignService;
 	}
@@ -184,10 +184,6 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 		UserSegmentLocalService userSegmentLocalService) {
 
 		_userSegmentLocalService = userSegmentLocalService;
-	}
-
-	protected void unsetCampaignService() {
-		_campaignService = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

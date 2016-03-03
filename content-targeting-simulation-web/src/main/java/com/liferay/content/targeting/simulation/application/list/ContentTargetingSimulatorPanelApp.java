@@ -252,36 +252,30 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 			permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE);
 	}
 
-	@Reference(unbind = "unsetCampaignLocalService")
+	@Reference(unbind = "-")
 	protected void setCampaignLocalService(
 		CampaignLocalService campaignLocalService) {
 
 		_campaignLocalService = campaignLocalService;
 	}
 
-	@Reference(unbind = "unsetUserSegmentLocalService")
+	@Reference(unbind = "-")
 	protected void setUserSegmentLocalService(
 		UserSegmentLocalService userSegmentLocalService) {
 
 		_userSegmentLocalService = userSegmentLocalService;
 	}
 
-	@Reference(unbind = "unsetUserSegmentSimulator")
+	@Reference
 	protected void setUserSegmentSimulator(
 		UserSegmentSimulator userSegmentSimulator) {
 
 		_userSegmentSimulator = userSegmentSimulator;
 	}
 
-	protected void unsetCampaignLocalService() {
-		_campaignLocalService = null;
-	}
+	protected void unsetUserSegmentSimulator(
+		UserSegmentSimulator userSegmentSimulator) {
 
-	protected void unsetUserSegmentLocalService() {
-		_userSegmentLocalService = null;
-	}
-
-	protected void unsetUserSegmentSimulator() {
 		_userSegmentSimulator = null;
 	}
 

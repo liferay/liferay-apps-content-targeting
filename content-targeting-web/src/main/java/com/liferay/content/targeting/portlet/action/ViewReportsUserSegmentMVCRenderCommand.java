@@ -92,23 +92,19 @@ public class ViewReportsUserSegmentMVCRenderCommand
 		return ContentTargetingPath.VIEW_REPORTS;
 	}
 
-	@Reference(unbind = "unsetReportInstanceLocalService")
+	@Reference(unbind = "-")
 	protected void setReportInstanceLocalService(
 		ReportInstanceLocalService reportInstanceLocalService) {
 
 		_reportInstanceLocalService = reportInstanceLocalService;
 	}
 
-	@Reference(unbind = "unsetReportsRegistry")
+	@Reference
 	protected void setReportsRegistry(ReportsRegistry reportsRegistry) {
 		_reportsRegistry = reportsRegistry;
 	}
 
-	protected void unsetReportInstanceLocalService() {
-		_reportInstanceLocalService = null;
-	}
-
-	protected void unsetReportsRegistry() {
+	protected void unsetReportsRegistry(ReportsRegistry reportsRegistry) {
 		_reportsRegistry = null;
 	}
 

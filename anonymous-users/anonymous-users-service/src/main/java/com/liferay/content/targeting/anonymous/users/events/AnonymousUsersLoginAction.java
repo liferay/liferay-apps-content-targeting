@@ -58,14 +58,16 @@ public class AnonymousUsersLoginAction extends Action {
 		}
 	}
 
-	@Reference(unbind ="unsetAnonymousUsersCookieManager")
+	@Reference
 	protected void setAnonymousUsersCookieManager(
 		AnonymousUsersCookieManager anonymousUsersCookieManager) {
 
 		_anonymousUsersCookieManager = anonymousUsersCookieManager;
 	}
 
-	protected void unsetAnonymousUsersCookieManager() {
+	protected void unsetAnonymousUsersCookieManager(
+		AnonymousUsersCookieManager anonymousUsersCookieManager) {
+
 		_anonymousUsersCookieManager = null;
 	}
 

@@ -295,45 +295,39 @@ public class EditUserSegmentMVCRenderCommand extends BaseMVCRenderCommand {
 		return ruleInstances;
 	}
 
-	@Reference(unbind = "unsetRuleCategoriesRegistry")
+	@Reference
 	protected void setRuleCategoriesRegistry(
 		RuleCategoriesRegistry ruleCategoriesRegistry) {
 
 		_ruleCategoriesRegistry = ruleCategoriesRegistry;
 	}
 
-	@Reference(unbind = "unsetRuleInstanceLocalService")
+	@Reference(unbind = "-")
 	protected void setRuleInstanceLocalService(
 		RuleInstanceLocalService ruleInstanceLocalService) {
 
 		_ruleInstanceLocalService = ruleInstanceLocalService;
 	}
 
-	@Reference(unbind = "unsetRuleInstanceService")
+	@Reference(unbind = "-")
 	protected void setRuleInstanceService(
 		RuleInstanceService ruleInstanceService) {
 
 		_ruleInstanceService = ruleInstanceService;
 	}
 
-	@Reference(unbind = "unsetRulesRegistry")
+	@Reference
 	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
 		_rulesRegistry = rulesRegistry;
 	}
 
-	protected void unsetRuleCategoriesRegistry() {
+	protected void unsetRuleCategoriesRegistry(
+		RuleCategoriesRegistry ruleCategoriesRegistry) {
+
 		_ruleCategoriesRegistry = null;
 	}
 
-	protected void unsetRuleInstanceLocalService() {
-		_ruleInstanceLocalService = null;
-	}
-
-	protected void unsetRuleInstanceService() {
-		_ruleInstanceService = null;
-	}
-
-	protected void unsetRulesRegistry() {
+	protected void unsetRulesRegistry(RulesRegistry rulesRegistry) {
 		_rulesRegistry = null;
 	}
 

@@ -150,23 +150,19 @@ public class UpdateReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "unsetReportInstanceService")
+	@Reference(unbind = "-")
 	protected void setReportInstanceService(
 		ReportInstanceService reportInstanceService) {
 
 		_reportInstanceService = reportInstanceService;
 	}
 
-	@Reference(unbind = "unsetReportsRegistry")
+	@Reference
 	protected void setReportsRegistry(ReportsRegistry reportsRegistry) {
 		_reportsRegistry = reportsRegistry;
 	}
 
-	protected void unsetReportInstanceService() {
-		_reportInstanceService = null;
-	}
-
-	protected void unsetReportsRegistry() {
+	protected void unsetReportsRegistry(ReportsRegistry reportsRegistry) {
 		_reportsRegistry = null;
 	}
 

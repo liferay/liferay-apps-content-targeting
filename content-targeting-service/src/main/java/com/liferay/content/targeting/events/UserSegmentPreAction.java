@@ -121,18 +121,14 @@ public class UserSegmentPreAction extends Action {
 		return userSegmentsIds;
 	}
 
-	protected void setAnonymousUsersManager() {
-		_anonymousUsersManager = null;
-	}
-
-	@Reference(unbind = "unsetAnonymousUsersManager")
+	@Reference
 	protected void setAnonymousUsersManager(
 		AnonymousUsersManager anonymousUsersManager) {
 
 		_anonymousUsersManager = anonymousUsersManager;
 	}
 
-	@Reference(unbind = "unsetRulesEngine")
+	@Reference
 	protected void setRulesEngine(RulesEngine rulesEngine) {
 		_rulesEngine = rulesEngine;
 	}
@@ -144,18 +140,26 @@ public class UserSegmentPreAction extends Action {
 		_userSegmentLocalService = userSegmentLocalService;
 	}
 
-	@Reference(unbind = "unsetUserSegmentSimulator")
+	@Reference
 	protected void setUserSegmentSimulator(
 		UserSegmentSimulator userSegmentSimulator) {
 
 		_userSegmentSimulator = userSegmentSimulator;
 	}
 
-	protected void unsetRulesEngine() {
+	protected void unsetAnonymousUsersManager(
+		AnonymousUsersManager anonymousUsersManager) {
+
+		_anonymousUsersManager = null;
+	}
+
+	protected void unsetRulesEngine(RulesEngine rulesEngine) {
 		_rulesEngine = null;
 	}
 
-	protected void unsetUserSegmentSimulator() {
+	protected void unsetUserSegmentSimulator(
+		UserSegmentSimulator userSegmentSimulator) {
+
 		_userSegmentSimulator = null;
 	}
 

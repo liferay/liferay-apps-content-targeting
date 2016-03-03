@@ -353,55 +353,43 @@ public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 		}
 	}
 
-	@Reference(unbind = "unsetChannelInstanceLocalService")
+	@Reference(unbind = "-")
 	protected void setChannelInstanceLocalService(
 		ChannelInstanceLocalService channelInstanceLocalService) {
 
 		_channelInstanceLocalService = channelInstanceLocalService;
 	}
 
-	@Reference(unbind = "unsetChannelInstanceService")
+	@Reference(unbind = "-")
 	protected void setChannelInstanceService(
 		ChannelInstanceService channelInstanceService) {
 
 		_channelInstanceService = channelInstanceService;
 	}
 
-	@Reference(unbind = "unsetChannelsRegistry")
+	@Reference
 	protected void setChannelsRegistry(ChannelsRegistry channelsRegistry) {
 		_channelsRegistry = channelsRegistry;
 	}
 
-	@Reference(unbind = "unsetReportsRegistry")
+	@Reference
 	protected void setReportsRegistry(ReportsRegistry reportsRegistry) {
 		_reportsRegistry = reportsRegistry;
 	}
 
-	@Reference(unbind = "unsetUserSegmentLocalService")
+	@Reference(unbind = "-")
 	protected void setUserSegmentLocalService(
 		UserSegmentLocalService userSegmentLocalService) {
 
 		_userSegmentLocalService = userSegmentLocalService;
 	}
 
-	protected void unsetChannelInstanceLocalService() {
-		_channelInstanceLocalService = null;
-	}
-
-	protected void unsetChannelInstanceService() {
-		_channelInstanceService = null;
-	}
-
-	protected void unsetChannelsRegistry() {
+	protected void unsetChannelsRegistry(ChannelsRegistry channelsRegistry) {
 		_channelsRegistry = null;
 	}
 
-	protected void unsetReportsRegistry() {
+	protected void unsetReportsRegistry(ReportsRegistry reportsRegistry) {
 		_reportsRegistry = null;
-	}
-
-	protected void unsetUserSegmentLocalService() {
-		_userSegmentLocalService = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

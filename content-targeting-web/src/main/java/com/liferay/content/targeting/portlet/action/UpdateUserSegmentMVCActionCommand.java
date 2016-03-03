@@ -160,45 +160,36 @@ public class UpdateUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "unsetUserSegmentService")
+	@Reference(unbind = "-")
 	protected void setCampaignService(UserSegmentService userSegmentService) {
 		_userSegmentService = userSegmentService;
 	}
 
 	@Reference(
-		target = "(mvc.command.name=" + ContentTargetingMVCCommand.EDIT_USER_SEGMENT + ")",
-		unbind = "unsetMVCRenderCommand"
+		target = "(mvc.command.name=" + ContentTargetingMVCCommand.EDIT_USER_SEGMENT + ")"
 	)
 	protected void setMVCRenderCommand(MVCRenderCommand mvcRenderCommand) {
 		_mvcRenderCommand = mvcRenderCommand;
 	}
 
-	@Reference(unbind = "unsetRuleInstanceService")
+	@Reference(unbind = "-")
 	protected void setRuleInstanceService(
 		RuleInstanceService ruleInstanceService) {
 
 		_ruleInstanceService = ruleInstanceService;
 	}
 
-	@Reference(unbind = "unsetRulesRegistry")
+	@Reference
 	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
 		_rulesRegistry = rulesRegistry;
 	}
 
-	protected void unsetMVCRenderCommand() {
+	protected void unsetMVCRenderCommand(MVCRenderCommand mvcRenderCommand) {
 		_mvcRenderCommand = null;
 	}
 
-	protected void unsetRuleInstanceService() {
-		_ruleInstanceService = null;
-	}
-
-	protected void unsetRulesRegistry() {
+	protected void unsetRulesRegistry(RulesRegistry rulesRegistry) {
 		_rulesRegistry = null;
-	}
-
-	protected void unsetUserSegmentService() {
-		_userSegmentService = null;
 	}
 
 	protected List<InvalidRuleException> updateRules(

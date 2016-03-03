@@ -196,7 +196,7 @@ public class CampaignContentDisplayPortlet extends ContentDisplayPortlet {
 		return selectableAssetRendererFactories;
 	}
 
-	@Reference(unbind = "unsetCampaignLocalService")
+	@Reference(unbind = "-")
 	protected void setCampaignLocalService(
 		CampaignLocalService campaignLocalService) {
 
@@ -242,10 +242,6 @@ public class CampaignContentDisplayPortlet extends ContentDisplayPortlet {
 		return PortletPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), layout.getPlid(),
 			portletDisplay.getPortletName(), ActionKeys.CONFIGURATION);
-	}
-
-	protected void unsetCampaignLocalService() {
-		_campaignLocalService = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

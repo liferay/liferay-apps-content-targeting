@@ -78,13 +78,9 @@ public class DeleteCampaignMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "unsetCampaignService")
+	@Reference(unbind = "-")
 	protected void setCampaignService(CampaignService campaignService) {
 		_campaignService = campaignService;
-	}
-
-	protected void unsetCampaignService() {
-		_campaignService = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -79,15 +79,11 @@ public class DeleteReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "unsetReportInstanceLocalService")
+	@Reference(unbind = "-")
 	protected void setReportInstanceLocalService(
 		ReportInstanceLocalService reportInstanceLocalService) {
 
 		_reportInstanceLocalService = reportInstanceLocalService;
-	}
-
-	protected void unsetReportInstanceLocalService() {
-		_reportInstanceLocalService = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
