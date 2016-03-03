@@ -23,7 +23,6 @@ import com.liferay.content.targeting.service.TacticLocalService;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -72,7 +71,8 @@ public class ChannelInstanceStagedModelDataHandler
 	public List<ChannelInstance> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		throw new UnsupportedOperationException();
+		return _channelInstanceLocalService.
+			getChannelInstancesByUuidAndCompanyId(uuid, companyId);
 	}
 
 	@Override
@@ -83,24 +83,6 @@ public class ChannelInstanceStagedModelDataHandler
 	@Override
 	public String getDisplayName(ChannelInstance channelInstance) {
 		return channelInstance.getAlias();
-	}
-
-	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
-			long channelInstanceId)
-		throws PortletDataException {
-
-		ChannelInstance existingChannelInstance =
-			_channelInstanceLocalService.fetchChannelInstanceByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> channelInstanceIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				ChannelInstance.class);
-
-		channelInstanceIds.put(
-			channelInstanceId, existingChannelInstance.getChannelInstanceId());
 	}
 
 	@Override
@@ -147,6 +129,24 @@ public class ChannelInstanceStagedModelDataHandler
 			channelInstanceElement,
 			ExportImportPathUtil.getModelPath(channelInstance),
 			channelInstance);
+	}
+
+	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long classPK)
+		throws Exception {
+
+		ChannelInstance existingChannelInstance =
+			_channelInstanceLocalService.fetchChannelInstanceByUuidAndGroupId(
+				uuid, groupId);
+
+		Map<Long, Long> channelInstanceIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				ChannelInstance.class);
+
+		channelInstanceIds.put(
+			classPK, existingChannelInstance.getChannelInstanceId());
 	}
 
 	@Override

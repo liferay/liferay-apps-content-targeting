@@ -23,7 +23,6 @@ import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -74,7 +73,8 @@ public class TrackingActionInstanceStagedModelDataHandler
 	public List<TrackingActionInstance>
 		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
 
-		throw new UnsupportedOperationException();
+		return _trackingActionInstanceLocalService.
+			getTrackingActionInstancesByUuidAndCompanyId(uuid, companyId);
 	}
 
 	@Override
@@ -87,26 +87,6 @@ public class TrackingActionInstanceStagedModelDataHandler
 		TrackingActionInstance trackingActionInstance) {
 
 		return trackingActionInstance.getAlias();
-	}
-
-	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
-			long trackingActionInstanceId)
-		throws PortletDataException {
-
-		TrackingActionInstance existingTrackingActionInstance =
-			_trackingActionInstanceLocalService.
-				fetchTrackingActionInstanceByUuidAndGroupId(
-					uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> trackingActionInstanceIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				TrackingActionInstance.class);
-
-		trackingActionInstanceIds.put(
-			trackingActionInstanceId,
-			existingTrackingActionInstance.getTrackingActionInstanceId());
 	}
 
 	@Override
@@ -154,6 +134,25 @@ public class TrackingActionInstanceStagedModelDataHandler
 			trackingActionInstanceElement,
 			ExportImportPathUtil.getModelPath(trackingActionInstance),
 			trackingActionInstance);
+	}
+
+	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long classPK)
+		throws Exception {
+
+		TrackingActionInstance existingTrackingActionInstance =
+			_trackingActionInstanceLocalService.
+				fetchTrackingActionInstanceByUuidAndGroupId(uuid, groupId);
+
+		Map<Long, Long> trackingActionInstanceIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				TrackingActionInstance.class);
+
+		trackingActionInstanceIds.put(
+			classPK,
+			existingTrackingActionInstance.getTrackingActionInstanceId());
 	}
 
 	@Override

@@ -128,7 +128,7 @@ public class UserSegmentContentDisplayPortletDataHandler
 			}
 			else {
 				portletDataContext.addReferenceElement(
-					portlet, rootElement, userSegment, UserSegment.class,
+					portlet, rootElement, userSegment,
 					PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 				Element campaignElement =

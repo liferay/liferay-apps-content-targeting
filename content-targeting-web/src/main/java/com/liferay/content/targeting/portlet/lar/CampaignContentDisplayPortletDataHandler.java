@@ -108,7 +108,7 @@ public class CampaignContentDisplayPortletDataHandler
 		}
 		else {
 			portletDataContext.addReferenceElement(
-				portlet, rootElement, campaign, Campaign.class,
+				portlet, rootElement, campaign,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			Element campaignElement = portletDataContext.getExportDataElement(

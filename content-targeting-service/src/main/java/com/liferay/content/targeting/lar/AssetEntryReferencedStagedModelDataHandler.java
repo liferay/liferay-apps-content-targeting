@@ -154,12 +154,14 @@ public class AssetEntryReferencedStagedModelDataHandler
 		throw new UnsupportedOperationException();
 	}
 
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid, long classPK)
+	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long classPK)
 		throws Exception {
 
 		AssetEntry existingAssetEntry = _assetEntryLocalService.fetchEntry(
-			uuid, portletDataContext.getCompanyGroupId());
+			uuid, groupId);
 
 		if (existingAssetEntry == null) {
 			return;
@@ -179,8 +181,9 @@ public class AssetEntryReferencedStagedModelDataHandler
 		throws Exception {
 
 		if (assetEntryReferencedStagedModel != null) {
-			doImportCompanyStagedModel(
+			doImportMissingReference(
 				portletDataContext, assetEntryReferencedStagedModel.getUuid(),
+				assetEntryReferencedStagedModel.getGroupId(),
 				assetEntryReferencedStagedModel.getClassPK());
 		}
 	}
@@ -214,7 +217,7 @@ public class AssetEntryReferencedStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setAssetPublisherLocalService(
+	protected void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;

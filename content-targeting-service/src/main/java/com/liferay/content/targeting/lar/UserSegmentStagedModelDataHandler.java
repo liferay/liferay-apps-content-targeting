@@ -77,7 +77,8 @@ public class UserSegmentStagedModelDataHandler
 	public List<UserSegment>
 		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
 
-		throw new UnsupportedOperationException();
+		return _userSegmentLocalService.getUserSegmentsByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override
@@ -88,30 +89,6 @@ public class UserSegmentStagedModelDataHandler
 	@Override
 	public String getDisplayName(UserSegment userSegment) {
 		return userSegment.getName(LocaleUtil.getDefault());
-	}
-
-	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
-			long userSegmentId)
-		throws PortletDataException {
-
-		UserSegment existingUserSegment =
-			_userSegmentLocalService.fetchUserSegmentByUuidAndGroupId(
-				uuid, portletDataContext.getScopeGroupId());
-
-		if (existingUserSegment == null) {
-			existingUserSegment =
-				_userSegmentLocalService.fetchUserSegmentByUuidAndGroupId(
-					uuid, portletDataContext.getCompanyGroupId());
-		}
-
-		Map<Long, Long> userSegmentIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				UserSegment.class);
-
-		userSegmentIds.put(
-			userSegmentId, existingUserSegment.getUserSegmentId());
 	}
 
 	@Override
@@ -197,6 +174,29 @@ public class UserSegmentStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			userSegmentElement, ExportImportPathUtil.getModelPath(userSegment),
 			userSegment);
+	}
+
+	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long classPK)
+		throws Exception {
+
+		UserSegment existingUserSegment =
+			_userSegmentLocalService.fetchUserSegmentByUuidAndGroupId(
+				uuid, groupId);
+
+		if (existingUserSegment == null) {
+			existingUserSegment =
+				_userSegmentLocalService.fetchUserSegmentByUuidAndGroupId(
+					uuid, groupId);
+		}
+
+		Map<Long, Long> userSegmentIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				UserSegment.class);
+
+		userSegmentIds.put(classPK, existingUserSegment.getUserSegmentId());
 	}
 
 	@Override
