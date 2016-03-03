@@ -17,44 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
-String redirect = ParamUtil.getString(request, "redirect");
-long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
+ContentTargetingEditUserSegmentDisplayContext contentTargetingEditUserSegmentDisplayContext = new ContentTargetingEditUserSegmentDisplayContext(liferayPortletResponse, request);
 
-RuleCategoriesRegistry ruleCategoriesRegistry = (RuleCategoriesRegistry)request.getAttribute("ruleCategoriesRegistry");
-
-List<RuleTemplate> addedRuleTemplates = (List<RuleTemplate>)request.getAttribute("addedRuleTemplates");
-List<RuleTemplate> ruleTemplates = (List<RuleTemplate>)request.getAttribute("ruleTemplates");
-
-String cssHasItemsClass = "";
-
-if (!addedRuleTemplates.isEmpty()) {
-	cssHasItemsClass = "has-items";
-}
-
-UserSegment userSegment = null;
-
-String userSegmentTitle = LanguageUtil.get(portletConfig.getResourceBundle(locale), "new-user-segment");
-
-if (userSegmentId > 0) {
-	userSegment = UserSegmentLocalServiceUtil.fetchUserSegment(userSegmentId);
-
-	userSegmentTitle = userSegment.getName(locale);
-}
-
-if (Validator.isNull(backURL)) {
-	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
-
-	backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
-	backURLObject.setParameter("tabs1", "user-segments");
-
-	backURL = backURLObject.toString();
-}
+RuleCategoriesRegistry ruleCategoriesRegistry = contentTargetingEditUserSegmentDisplayContext.getRuleCategoriesRegistry();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(contentTargetingEditUserSegmentDisplayContext.getBackURL());
 
-renderResponse.setTitle(userSegmentTitle);
+renderResponse.setTitle(contentTargetingEditUserSegmentDisplayContext.getUserSegmentTitle());
 %>
 
 <liferay-ui:error key="com.liferay.content.targeting.exception.InvalidRulesException" message="there-is-an-error-in-one-of-your-rules" />
@@ -62,12 +32,12 @@ renderResponse.setTitle(userSegmentTitle);
 <liferay-portlet:actionURL name="updateUserSegment" var="addUserSegmentURL" />
 
 <aui:form action="<%= addUserSegmentURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="userSegmentId" type="hidden" value="<%= String.valueOf(userSegmentId) %>" />
+	<aui:input name="redirect" type="hidden" value="<%= contentTargetingEditUserSegmentDisplayContext.getRedirect() %>" />
+	<aui:input name="userSegmentId" type="hidden" value="<%= String.valueOf(contentTargetingEditUserSegmentDisplayContext.getUserSegmentId()) %>" />
 	<aui:input name="userSegmentRules" type="hidden" />
 	<aui:input name="saveAndContinue" type="hidden" />
 
-	<aui:model-context bean="<%= userSegment %>" model="<%= UserSegment.class %>" />
+	<aui:model-context bean="<%= contentTargetingEditUserSegmentDisplayContext.getUserSegment() %>" model="<%= UserSegment.class %>" />
 
 	<liferay-ui:error key="com.liferay.content.targeting.exception.InvalidNameException">
 		<c:choose>
@@ -119,6 +89,8 @@ renderResponse.setTitle(userSegmentTitle);
 									<ul class="clearfix form-builder-fields-container property-builder-fields-container">
 
 										<%
+										List<RuleTemplate> ruleTemplates = contentTargetingEditUserSegmentDisplayContext.getRuleTemplates();
+
 										for (RuleTemplate template : ruleTemplates) {
 											Rule rule = template.getRule();
 											String templateKey = template.getTemplateKey();
@@ -148,7 +120,7 @@ renderResponse.setTitle(userSegmentTitle);
 					</div>
 
 					<div class="form-builder-content-container property-builder-content-container">
-						<div class="property-builder-canvas form-builder-canvas <%= cssHasItemsClass %>">
+						<div class="property-builder-canvas form-builder-canvas <%= contentTargetingEditUserSegmentDisplayContext.getCssItemsClass() %>">
 							<div class="alert alert-info alert-no-items">
 								<liferay-ui:message key="drag-rules-here-to-configure-this-user-segment" />
 							</div>
@@ -156,6 +128,8 @@ renderResponse.setTitle(userSegmentTitle);
 							<div class="form-builder-drop-container property-builder-drop-container">
 
 								<%
+								List<RuleTemplate> addedRuleTemplates = contentTargetingEditUserSegmentDisplayContext.getAddedRuleTemplates();
+
 								for (RuleTemplate template : addedRuleTemplates) {
 									Rule rule = template.getRule();
 									String templateKey = template.getTemplateKey();
@@ -196,7 +170,7 @@ renderResponse.setTitle(userSegmentTitle);
 
 		<aui:button cssClass="btn-lg" onClick="saveAndContinue();" value="save-and-continue" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= contentTargetingEditUserSegmentDisplayContext.getRedirect() %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 
