@@ -23,7 +23,6 @@ import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -150,8 +149,7 @@ public class RuleInstanceStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				RuleInstance.class);
 
-		ruleInstanceIds.put(
-			classPK, existingRuleInstance.getRuleInstanceId());
+		ruleInstanceIds.put(classPK, existingRuleInstance.getRuleInstanceId());
 	}
 
 	@Override

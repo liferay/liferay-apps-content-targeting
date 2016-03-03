@@ -23,7 +23,6 @@ import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -84,22 +83,6 @@ public class TacticStagedModelDataHandler
 		return tactic.getName(LocaleUtil.getDefault());
 	}
 
-	@Override
-	protected void doImportMissingReference(
-			PortletDataContext portletDataContext, String uuid, long groupId,
-			long classPK)
-		throws Exception {
-
-		Tactic existingTactic = _tacticLocalService.fetchTacticByUuidAndGroupId(
-			uuid, groupId);
-
-		Map<Long, Long> tacticIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Tactic.class);
-
-		tacticIds.put(classPK, existingTactic.getTacticId());
-	}
-
 	@Reference(unbind = "-")
 	public void setUserSegmentLocalService(
 		UserSegmentLocalService userSegmentLocalService) {
@@ -120,6 +103,22 @@ public class TacticStagedModelDataHandler
 			tacticElement, ExportImportPathUtil.getModelPath(tactic), tactic);
 
 		exportChannelInstances(portletDataContext, tactic);
+	}
+
+	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long classPK)
+		throws Exception {
+
+		Tactic existingTactic = _tacticLocalService.fetchTacticByUuidAndGroupId(
+			uuid, groupId);
+
+		Map<Long, Long> tacticIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Tactic.class);
+
+		tacticIds.put(classPK, existingTactic.getTacticId());
 	}
 
 	@Override

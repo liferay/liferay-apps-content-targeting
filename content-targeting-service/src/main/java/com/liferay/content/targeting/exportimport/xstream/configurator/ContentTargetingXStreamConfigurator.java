@@ -14,7 +14,6 @@
 
 package com.liferay.content.targeting.exportimport.xstream.configurator;
 
-import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
 import com.liferay.content.targeting.model.impl.CampaignImpl;
 import com.liferay.content.targeting.model.impl.ChannelInstanceImpl;
 import com.liferay.content.targeting.model.impl.RuleInstanceImpl;
@@ -26,6 +25,7 @@ import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
 import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mate Thurzo
+ * @author Pavel Savinov
  */
 @Component(immediate = true, service = XStreamConfigurator.class)
 public class ContentTargetingXStreamConfigurator
@@ -74,6 +74,5 @@ public class ContentTargetingXStreamConfigurator
 
 	private XStreamAlias[] _xStreamAliases;
 	private XStreamType[] _xStreamTypes;
-
 
 }

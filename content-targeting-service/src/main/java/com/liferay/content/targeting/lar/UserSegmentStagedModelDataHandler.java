@@ -196,8 +196,7 @@ public class UserSegmentStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				UserSegment.class);
 
-		userSegmentIds.put(
-			classPK, existingUserSegment.getUserSegmentId());
+		userSegmentIds.put(classPK, existingUserSegment.getUserSegmentId());
 	}
 
 	@Override
