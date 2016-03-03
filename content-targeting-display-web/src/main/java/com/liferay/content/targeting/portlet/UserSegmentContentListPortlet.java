@@ -234,7 +234,7 @@ public class UserSegmentContentListPortlet extends MVCPortlet {
 			portletRequest, "struts_action");
 
 		if (strutsPath.equals("/asset_publisher/view_content")) {
-			return UserSegmentContentListPath.VIEW_CONTENT;
+			return "/user_segment_content_list/view_content.jsp";
 		}
 
 		return super.getPath(portletRequest, portletResponse);
