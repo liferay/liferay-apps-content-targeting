@@ -18,7 +18,7 @@
 
 <%
 String displayStyle = GetterUtil.getString(request.getAttribute("displayStyle"));
-String[] displayStyles = GetterUtil.getStringValues(request.getAttribute("displayStyles"));
+List<String> displayStyles = (List<String>)(request.getAttribute("displayStyles"));
 long displayStyleGroupId = GetterUtil.getLong(request.getAttribute("displayStyleGroupId"));
 
 TemplateHandler templateHandler = (TemplateHandler)request.getAttribute("templateHandler");
@@ -34,7 +34,7 @@ TemplateHandler templateHandler = (TemplateHandler)request.getAttribute("templat
 			className="<%= templateHandler.getClassName() %>"
 			displayStyle="<%= displayStyle %>"
 			displayStyleGroupId="<%= displayStyleGroupId %>"
-			displayStyles="<%= ListUtil.toList(displayStyles) %>"
+			displayStyles="<%= displayStyles %>"
 			label="display-template"
 			refreshURL="<%= configurationURL %>"
 		/>
