@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.exportimport.xstream.configurator;
+package com.liferay.content.targeting.xstream.configurator;
 
 import com.liferay.content.targeting.model.impl.CampaignImpl;
 import com.liferay.content.targeting.model.impl.ChannelInstanceImpl;
@@ -23,9 +23,9 @@ import com.liferay.content.targeting.model.impl.UserSegmentImpl;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
-import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
+import com.liferay.xstream.configurator.XStreamConfigurator;
 
 import java.util.List;
 
