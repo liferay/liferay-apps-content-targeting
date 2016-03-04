@@ -46,7 +46,7 @@
 	<@liferay_aui["validator"] name="required" />
 </@>
 
-<div class="rules-panel" style="background-color:transparent; margin:0px;">
+<div style="background-color:transparent; margin:0px;">
 	<div class="control-group select-asset-selector">
 		<div class="edit-controls lfr-meta-actions">
 			<@liferay_aui["input"]
