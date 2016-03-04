@@ -76,17 +76,17 @@ public class UserSegmentContentListConfigurationAction
 			HttpServletResponse response)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
 		TemplateHandler templateHandler =
 			TemplateHandlerRegistryUtil.getTemplateHandler(
 				AssetEntry.class.getName());
 
 		request.setAttribute("templateHandler", templateHandler);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
@@ -98,8 +98,7 @@ public class UserSegmentContentListConfigurationAction
 
 		request.setAttribute("displayStyle", displayStyle);
 		request.setAttribute("displayStyleGroupId", displayStyleGroupId);
-		request.setAttribute(
-			"displayStyles", ListUtil.fromString("full-content"));
+		request.setAttribute("displayStyles", ListUtil.fromString("abstracts"));
 
 		long[] availableClassNameIds = getAvailableClassNameIds(
 			themeDisplay.getCompanyId());

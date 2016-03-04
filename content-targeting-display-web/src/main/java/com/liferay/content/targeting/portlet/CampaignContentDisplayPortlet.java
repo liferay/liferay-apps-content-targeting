@@ -48,8 +48,6 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -127,11 +125,6 @@ public class CampaignContentDisplayPortlet extends ContentDisplayPortlet {
 				getSelectableAssetRendererFactories(
 					themeDisplay.getCompanyId()));
 
-			List<AssetEntry> results = new ArrayList<>();
-
-			populatePortletDisplayTemplateViewContext(
-				renderRequest, themeDisplay, results, campaignQueryRules);
-
 			renderRequest.setAttribute(
 				"campaignQueryRules", campaignQueryRules);
 
@@ -143,6 +136,8 @@ public class CampaignContentDisplayPortlet extends ContentDisplayPortlet {
 			renderRequest.setAttribute(
 				"selectedIndex", campaignQueryRules.indexOf(queryRule));
 
+			List<AssetEntry> results = new ArrayList<>();
+
 			if ((queryRule != null) && (queryRule.getAssetEntry() != null)) {
 				results.add(queryRule.getAssetEntry());
 			}
@@ -150,6 +145,9 @@ public class CampaignContentDisplayPortlet extends ContentDisplayPortlet {
 				renderRequest.setAttribute(
 					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 			}
+
+			populatePortletDisplayTemplateViewContext(
+				renderRequest, renderResponse, results, campaignQueryRules);
 		}
 		catch (Exception e) {
 			_log.error("Error in rendering user segment display portlet", e);

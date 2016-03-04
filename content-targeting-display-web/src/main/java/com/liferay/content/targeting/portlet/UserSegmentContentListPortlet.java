@@ -21,12 +21,12 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class UserSegmentContentListPortlet extends MVCPortlet {
+public class UserSegmentContentListPortlet extends ContentDisplayPortlet {
 
 	@Override
 	public void render(
@@ -133,6 +133,10 @@ public class UserSegmentContentListPortlet extends MVCPortlet {
 				renderRequest.setAttribute(
 					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 			}
+
+			populatePortletDisplayTemplateViewContext(
+				renderRequest, renderResponse, assetEntries,
+				new ArrayList<QueryRule>());
 
 			long assetEntryId = ParamUtil.getLong(
 				renderRequest, "assetEntryId");

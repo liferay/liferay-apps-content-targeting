@@ -19,7 +19,7 @@
 <%
 List<AssetEntry> assetEntries = (List<AssetEntry>)request.getAttribute("assetEntries");
 
-String portletDisplayTemplateHtml = "";
+String portletDisplayTemplateHtml = GetterUtil.getString(request.getAttribute("portletDisplayTemplateHtml"));
 %>
 
 <c:choose>

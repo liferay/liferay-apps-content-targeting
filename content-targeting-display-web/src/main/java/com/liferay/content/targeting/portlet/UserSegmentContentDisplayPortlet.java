@@ -49,8 +49,6 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -131,9 +129,6 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 
 			List<AssetEntry> results = new ArrayList<>();
 
-			populatePortletDisplayTemplateViewContext(
-				renderRequest, themeDisplay, results, userSegmentQueryRules);
-
 			if ((queryRule != null) && (queryRule.getAssetEntry() != null)) {
 				results.add(queryRule.getAssetEntry());
 			}
@@ -141,6 +136,9 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 				renderRequest.setAttribute(
 					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 			}
+
+			populatePortletDisplayTemplateViewContext(
+				renderRequest, renderResponse, results, userSegmentQueryRules);
 
 			renderRequest.setAttribute(
 				"showPreview", showPreview(themeDisplay));

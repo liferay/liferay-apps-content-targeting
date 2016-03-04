@@ -82,6 +82,12 @@ public class CampaignDisplayConfigurationAction
 			HttpServletResponse response)
 		throws Exception {
 
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(
+				AssetEntry.class.getName());
+
+		request.setAttribute("templateHandler", templateHandler);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -89,12 +95,6 @@ public class CampaignDisplayConfigurationAction
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		PortletPreferences portletPreferences = portletRequest.getPreferences();
-
-		TemplateHandler templateHandler =
-			TemplateHandlerRegistryUtil.getTemplateHandler(
-				AssetEntry.class.getName());
-
-		request.setAttribute("templateHandler", templateHandler);
 
 		String displayStyle = GetterUtil.getString(
 			portletPreferences.getValue("displayStyle", "full-content"));
