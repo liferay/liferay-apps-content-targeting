@@ -42,6 +42,7 @@ page import="com.liferay.content.targeting.portlet.ContentTargetingMVCCommand" %
 page import="com.liferay.content.targeting.portlet.ContentTargetingPath" %><%@
 page import="com.liferay.content.targeting.portlet.display.context.ContentTargetingEditCampaignDisplayContext" %><%@
 page import="com.liferay.content.targeting.portlet.display.context.ContentTargetingEditReportDisplayContext" %><%@
+page import="com.liferay.content.targeting.portlet.display.context.ContentTargetingEditTacticsDisplayContext" %><%@
 page import="com.liferay.content.targeting.portlet.display.context.ContentTargetingEditUserSegmentDisplayContext" %><%@
 page import="com.liferay.content.targeting.portlet.display.context.ContentTargetingViewCampaignDisplayContext" %><%@
 page import="com.liferay.content.targeting.portlet.display.context.ContentTargetingViewReportsDisplayContext" %><%@
@@ -51,7 +52,6 @@ page import="com.liferay.content.targeting.portlet.util.ChannelTemplate" %><%@
 page import="com.liferay.content.targeting.portlet.util.RuleTemplate" %><%@
 page import="com.liferay.content.targeting.service.CampaignLocalServiceUtil" %><%@
 page import="com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil" %><%@
-page import="com.liferay.content.targeting.service.TacticLocalServiceUtil" %><%@
 page import="com.liferay.content.targeting.service.permission.CampaignPermission" %><%@
 page import="com.liferay.content.targeting.service.permission.UserSegmentPermission" %><%@
 page import="com.liferay.content.targeting.util.ActionKeys" %><%@
@@ -73,8 +73,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="java.util.Collection" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

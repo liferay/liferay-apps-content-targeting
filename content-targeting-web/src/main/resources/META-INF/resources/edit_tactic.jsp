@@ -17,48 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
-String redirect = ParamUtil.getString(request, "redirect");
-
-String campaignUserSegmentsIds = GetterUtil.getString(request.getAttribute("campaignUserSegmentsIds"));
-String userSegmentAssetCategoryIdsAsString = GetterUtil.getString(request.getAttribute("userSegmentAssetCategoryIdsAsString"));
-String userSegmentAssetCategoryNames = GetterUtil.getString(request.getAttribute("userSegmentAssetCategoryNames"));
-String vocabularyGroupIds = GetterUtil.getString(request.getAttribute("vocabularyGroupIds"));
-String vocabularyIds = GetterUtil.getString(request.getAttribute("vocabularyIds"));
-
-List<ChannelTemplate> addedChannelTemplates = (List<ChannelTemplate>)request.getAttribute("addedChannelTemplates");
-List<ChannelTemplate> channelTemplates = (List<ChannelTemplate>)request.getAttribute("channelTemplates");
-
-String cssHasItemsClass = "";
-
-if (addedChannelTemplates.size() > 0) {
-	cssHasItemsClass = "has-items";
-}
-
-long campaignId = ParamUtil.getLong(request, "campaignId");
-long tacticId = ParamUtil.getLong(request, "tacticId");
-
-Tactic tactic = null;
-
-if (tacticId > 0) {
-	tactic = TacticLocalServiceUtil.fetchTactic(tacticId);
-}
-
-if (Validator.isNull(backURL)) {
-	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
-
-	backURLObject.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_TACTICS);
-	backURLObject.setParameter("campaignId", String.valueOf(campaignId));
-	backURLObject.setParameter("className", Campaign.class.getName());
-	backURLObject.setParameter("classPK", String.valueOf(campaignId));
-
-	backURL = backURLObject.toString();
-}
+ContentTargetingEditTacticsDisplayContext contentTargetingEditTacticsDisplayContext = new ContentTargetingEditTacticsDisplayContext(liferayPortletResponse, portletConfig, request);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(contentTargetingEditTacticsDisplayContext.getBackURL());
 
-renderResponse.setTitle((tactic != null) ? tactic.getName(locale) : LanguageUtil.get(portletConfig.getResourceBundle(locale), "new-promotion"));
+renderResponse.setTitle(contentTargetingEditTacticsDisplayContext.getTacticName());
 %>
 
 <liferay-ui:error key="com.liferay.content.targeting.exception.InvalidChannelsException" message="there-is-an-error-in-one-of-your-channels" />
@@ -66,16 +30,16 @@ renderResponse.setTitle((tactic != null) ? tactic.getName(locale) : LanguageUtil
 <portlet:actionURL name="updateTactic" var="addTacticURL" />
 
 <aui:form action="<%= addTacticURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="campaignId" type="hidden" value="<%= campaignId %>" />
-	<aui:input name="campaignUserSegmentsIds" type="hidden" value="<%= campaignUserSegmentsIds %>" />
-	<aui:input name="vocabularyGroupIds" type="hidden" value="<%= vocabularyGroupIds %>" />
-	<aui:input name="vocabularyIds" type="hidden" value="<%= vocabularyIds %>" />
-	<aui:input name="tacticId" type="hidden" value="<%= tacticId %>" />
+	<aui:input name="redirect" type="hidden" value="<%= contentTargetingEditTacticsDisplayContext.getRedirect() %>" />
+	<aui:input name="campaignId" type="hidden" value="<%= contentTargetingEditTacticsDisplayContext.getCampaignId() %>" />
+	<aui:input name="campaignUserSegmentsIds" type="hidden" value="<%= contentTargetingEditTacticsDisplayContext.getCampaignUserSegmentsIds() %>" />
+	<aui:input name="vocabularyGroupIds" type="hidden" value="<%= contentTargetingEditTacticsDisplayContext.getVocabularyGroupIds() %>" />
+	<aui:input name="vocabularyIds" type="hidden" value="<%= contentTargetingEditTacticsDisplayContext.getVocabularyIds() %>" />
+	<aui:input name="tacticId" type="hidden" value="<%= contentTargetingEditTacticsDisplayContext.getTacticId() %>" />
 	<aui:input name="tacticChannels" type="hidden" />
 	<aui:input name="saveAndContinue" type="hidden" />
 
-	<aui:model-context bean="<%= tactic %>" model="<%= Tactic.class %>" />
+	<aui:model-context bean="<%= contentTargetingEditTacticsDisplayContext.getTactic() %>" model="<%= Tactic.class %>" />
 
 	<liferay-ui:error key="com.liferay.content.targeting.exception.InvalidNameException">
 		<c:choose>
@@ -98,12 +62,12 @@ renderResponse.setTitle((tactic != null) ? tactic.getName(locale) : LanguageUtil
 			<aui:input name="description" />
 
 			<liferay-util:include page="/macros/user_segment_selector.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="assetCategoryIds" value="<%= userSegmentAssetCategoryIdsAsString %>" />
-				<liferay-util:param name="assetCategoryNames" value="<%= userSegmentAssetCategoryNames %>" />
-				<liferay-util:param name="filterIds" value="<%= campaignUserSegmentsIds %>" />
+				<liferay-util:param name="assetCategoryIds" value="<%= contentTargetingEditTacticsDisplayContext.getUserSegmentAssetCategoryIdsAsString() %>" />
+				<liferay-util:param name="assetCategoryNames" value="<%= contentTargetingEditTacticsDisplayContext.getUserSegmentAssetCategoryNames() %>" />
+				<liferay-util:param name="filterIds" value="<%= contentTargetingEditTacticsDisplayContext.getCampaignUserSegmentsIds() %>" />
 				<liferay-util:param name="hiddenInput" value="userSegmentAssetCategoryIds" />
-				<liferay-util:param name="vocabularyGroupIds" value="<%= vocabularyGroupIds %>" />
-				<liferay-util:param name="vocabularyIds" value="<%= vocabularyIds %>" />
+				<liferay-util:param name="vocabularyGroupIds" value="<%= contentTargetingEditTacticsDisplayContext.getVocabularyGroupIds() %>" />
+				<liferay-util:param name="vocabularyIds" value="<%= contentTargetingEditTacticsDisplayContext.getVocabularyIds() %>" />
 				<liferay-util:param name="warningMessage" value="editing-user-segments-deletes-all-unsaved-promotion-data" />
 			</liferay-util:include>
 
@@ -135,6 +99,8 @@ renderResponse.setTitle((tactic != null) ? tactic.getName(locale) : LanguageUtil
 									<ul class="clearfix form-builder-fields-container property-builder-fields-container">
 
 										<%
+										List<ChannelTemplate> channelTemplates = contentTargetingEditTacticsDisplayContext.getChannelTemplates();
+
 										for (ChannelTemplate template : channelTemplates) {
 											Channel channel = template.getChannel();
 
@@ -166,7 +132,7 @@ renderResponse.setTitle((tactic != null) ? tactic.getName(locale) : LanguageUtil
 					</div>
 
 					<div class="form-builder-content-container property-builder-content-container">
-						<div class="property-builder-canvas form-builder-canvas <%= cssHasItemsClass %>">
+						<div class="property-builder-canvas form-builder-canvas <%= contentTargetingEditTacticsDisplayContext.getCssItemsClass() %>">
 							<div class="alert alert-info alert-no-items">
 								<liferay-ui:message key="drag-and-drop-the-different-channels-you-want-to-use-for-this-promotion" />
 							</div>
@@ -174,6 +140,8 @@ renderResponse.setTitle((tactic != null) ? tactic.getName(locale) : LanguageUtil
 							<div class="form-builder-drop-container property-builder-drop-container">
 
 								<%
+								List<ChannelTemplate> addedChannelTemplates = contentTargetingEditTacticsDisplayContext.getAddedChannelTemplates();
+
 								for (ChannelTemplate template : addedChannelTemplates) {
 									Channel channel = template.getChannel();
 
@@ -216,7 +184,7 @@ renderResponse.setTitle((tactic != null) ? tactic.getName(locale) : LanguageUtil
 
 		<aui:button cssClass="btn-lg" onClick="saveAndContinue();" value="save-and-continue" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= contentTargetingEditTacticsDisplayContext.getRedirect() %>" type="cancel" />
 	</aui:button-row>
 
 	<aui:script use="aui-toggler,liferay-ct-form-builder">
