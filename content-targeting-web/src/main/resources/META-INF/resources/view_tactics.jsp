@@ -17,44 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
+ContentTargetingViewTacticsDisplayContext contentTargetingViewTacticsDisplayContext = new ContentTargetingViewTacticsDisplayContext(liferayPortletResponse, renderResponse, request);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-
-String keywords = ParamUtil.getString(request, "keywords");
-
-long campaignId = ParamUtil.getLong(request, "campaignId", 0);
-
-Campaign campaign = null;
-
-if (campaignId > 0) {
-	campaign = CampaignLocalServiceUtil.fetchCampaign(campaignId);
-}
-
-if (Validator.isNull(backURL)) {
-	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
-
-	backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
-	backURLObject.setParameter("tabs1", "campaigns");
-
-	backURL = backURLObject.toString();
-}
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_TACTICS);
-portletURL.setParameter("className", Campaign.class.getName());
-portletURL.setParameter("classPK", String.valueOf(campaignId));
-portletURL.setParameter("campaignId", String.valueOf(campaignId));
-
-SearchContainerIterator searchContainerIterator = new TacticSearchContainerIterator(campaignId, scopeGroupId, keywords);
-
-boolean hasUpdatePermission = CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE);
+SearchContainerIterator searchContainerIterator = new TacticSearchContainerIterator(contentTargetingViewTacticsDisplayContext.getCampaignId(), scopeGroupId, contentTargetingViewTacticsDisplayContext.getKeywords());
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(contentTargetingViewTacticsDisplayContext.getBackURL());
 
-renderResponse.setTitle(campaign.getName(locale));
+renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTitle());
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -63,32 +33,32 @@ renderResponse.setTitle(campaign.getName(locale));
 	</aui:nav>
 
 	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL %>" name="searchFm">
+		<aui:form action="<%= contentTargetingViewTacticsDisplayContext.getPortletURL() %>" name="searchFm">
 			<liferay-ui:input-search markupView="lexicon" name="keywords" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= hasUpdatePermission %>"
+	includeCheckBox="<%= contentTargetingViewTacticsDisplayContext.hasUpdatePermission() %>"
 	searchContainerId="tactics"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			portletURL="<%= contentTargetingViewTacticsDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= contentTargetingViewTacticsDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= contentTargetingViewTacticsDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
-	<c:if test="<%= hasUpdatePermission %>">
+	<c:if test="<%= contentTargetingViewTacticsDisplayContext.hasUpdatePermission() %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteTactics" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
@@ -103,7 +73,7 @@ renderResponse.setTitle(campaign.getName(locale));
 	<liferay-ui:search-container
 		emptyResultsMessage="no-promotions-were-found"
 		id="tactics"
-		iteratorURL="<%= portletURL %>"
+		iteratorURL="<%= contentTargetingViewTacticsDisplayContext.getPortletURL() %>"
 		rowChecker="<%= new EmptyOnClickRowChecker(liferayPortletResponse) %>"
 		total="<%= searchContainerIterator.getTotal() %>"
 	>
@@ -132,14 +102,14 @@ renderResponse.setTitle(campaign.getName(locale));
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= contentTargetingViewTacticsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= hasUpdatePermission %>">
+<c:if test="<%= contentTargetingViewTacticsDisplayContext.hasUpdatePermission() %>">
 	<liferay-portlet:renderURL var="addTacticURL">
 		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_TACTIC %>" />
-		<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
+		<portlet:param name="campaignId" value="<%= String.valueOf(contentTargetingViewTacticsDisplayContext.getCampaignId()) %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</liferay-portlet:renderURL>
 
