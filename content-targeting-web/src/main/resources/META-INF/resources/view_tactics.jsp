@@ -30,14 +30,17 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 		<aui:nav-item href="<%= currentURL %>" label="promotions" selected="<%= true %>" />
 	</aui:nav>
 
-	<aui:nav-bar-search>
-		<aui:form action="<%= contentTargetingViewTacticsDisplayContext.getPortletURL() %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" name="keywords" />
-		</aui:form>
-	</aui:nav-bar-search>
+	<c:if test="<%= contentTargetingViewTacticsDisplayContext.isSearchEnabled() %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= contentTargetingViewTacticsDisplayContext.getPortletURL() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" name="keywords" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
+	disabled="<%= contentTargetingViewTacticsDisplayContext.isDisabledManagementBar() %>"
 	includeCheckBox="<%= contentTargetingViewTacticsDisplayContext.hasUpdatePermission() %>"
 	searchContainerId="tactics"
 >

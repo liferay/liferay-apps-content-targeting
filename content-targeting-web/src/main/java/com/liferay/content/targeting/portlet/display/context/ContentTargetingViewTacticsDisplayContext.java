@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -262,12 +263,40 @@ public class ContentTargetingViewTacticsDisplayContext {
 		return _hasUpdatePermission;
 	}
 
+	public boolean isDisabledManagementBar()
+		throws PortalException, PortletException {
+
+		if (_isDisabledManagementBar != null) {
+			return _isDisabledManagementBar;
+		}
+
+		SearchContainer tacticSearchContainer = getTacticSearchContainer();
+
+		_isDisabledManagementBar =
+			(tacticSearchContainer.getTotal() <= 0) &&
+			 Validator.isNull(getKeywords());
+
+		return _isDisabledManagementBar;
+	}
+
+	public boolean isSearchEnabled() throws PortalException, PortletException {
+		if (_isSearchEnabled != null) {
+			return _isSearchEnabled;
+		}
+
+		_isSearchEnabled = !(isDisabledManagementBar());
+
+		return _isSearchEnabled;
+	}
+
 	private String _backURL;
 	private Campaign _campaign;
 	private Long _campaignId;
 	private String _campaignTitle;
 	private String _displayStyle;
 	private Boolean _hasUpdatePermission;
+	private Boolean _isDisabledManagementBar;
+	private Boolean _isSearchEnabled;
 	private String _keywords;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
