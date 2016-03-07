@@ -217,6 +217,11 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setTacticService(TacticService tacticService) {
+		_tacticService = tacticService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserSegmentLocalService(
 		UserSegmentLocalService userSegmentLocalService) {
 
