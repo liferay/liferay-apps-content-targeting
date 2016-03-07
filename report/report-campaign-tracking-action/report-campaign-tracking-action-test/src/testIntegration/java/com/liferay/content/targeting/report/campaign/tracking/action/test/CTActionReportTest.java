@@ -133,6 +133,10 @@ public class CTActionReportTest {
 			new long[] {1}, null, eventType, "127.0.0.1", "ES", "User Agent",
 			"http://localhost", null, _serviceContext);
 
+		Assert.assertEquals(
+			initialCTActionCount,
+			CTActionLocalServiceUtil.getCTActionsCount(reportInstanceId));
+
 		// Test update report with analytics
 
 		report.updateReport(reportInstance);
