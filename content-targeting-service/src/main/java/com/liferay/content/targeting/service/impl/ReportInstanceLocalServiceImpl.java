@@ -75,7 +75,7 @@ public class ReportInstanceLocalServiceImpl
 
 		Report report = reportsRegistry.getReport(reportKey);
 
-		if (!report.isInstantiable() &&
+		if ((report != null) && !report.isInstantiable() &&
 			(reportInstancePersistence.countByR_C_C(
 				reportKey, className, classPK) > 0)) {
 

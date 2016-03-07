@@ -113,6 +113,11 @@ public class CampaignContentReportTest {
 			null, "view", "127.0.0.1", "ES", "User Agent", "http://localhost",
 			null, _serviceContext);
 
+		Assert.assertEquals(
+			initialCampaignContentCount,
+			CampaignContentLocalServiceUtil.getCampaignContentsCount(
+				campaign.getCampaignId()));
+
 		// Test update report with analytics
 
 		report.updateReport(reportInstance);

@@ -201,14 +201,14 @@ public class FacebookEducationRule extends BaseFacebookRule {
 
 	protected boolean matchEducationLevel(User user, String educationLevel) {
 		if (Validator.isNotNull(educationLevel)) {
-			if (educationLevel.equals(_EDUCATION_TYPE_HIGH_SCHOOL) &&
-				!hasEducation(user, _EDUCATION_TYPE_HIGH_SCHOOL)) {
+			if (educationLevel.equals(EDUCATION_TYPE_HIGH_SCHOOL) &&
+				!hasEducation(user, EDUCATION_TYPE_HIGH_SCHOOL)) {
 
 				return false;
 			}
 
-			if (educationLevel.equals(_EDUCATION_TYPE_COLLEGE) &&
-				!hasEducation(user, _EDUCATION_TYPE_COLLEGE)) {
+			if (educationLevel.equals(EDUCATION_TYPE_COLLEGE) &&
+				!hasEducation(user, EDUCATION_TYPE_COLLEGE)) {
 
 				return false;
 			}
@@ -235,9 +235,9 @@ public class FacebookEducationRule extends BaseFacebookRule {
 		return false;
 	}
 
-	private static final String _EDUCATION_TYPE_COLLEGE = "College";
+	protected static final String EDUCATION_TYPE_COLLEGE = "College";
 
-	private static final String _EDUCATION_TYPE_HIGH_SCHOOL = "High School";
+	protected static final String EDUCATION_TYPE_HIGH_SCHOOL = "High School";
 
 	private static final String _FORM_TEMPLATE_PATH_EDUCATION =
 		"templates/ct_fields_education.ftl";

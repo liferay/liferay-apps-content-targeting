@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -37,7 +38,9 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -63,6 +66,12 @@ public class ContentTargetingPortletDataHandlerTest
 		super.setUp();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPrepareManifestSummary() throws Exception {
+	}
+
 	@Override
 	protected void addStagedModels() throws Exception {
 		Map<Locale, String> nameMap = new HashMap<>();
@@ -84,7 +93,7 @@ public class ContentTargetingPortletDataHandlerTest
 
 	@Override
 	protected String getPortletId() {
-		return "ctadmin_WAR_contenttargetingweb";
+		return PortletKeys.CT_ADMIN;
 	}
 
 }

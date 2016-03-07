@@ -112,6 +112,11 @@ public class UserSegmentContentReportTest {
 			"127.0.0.1", "ES", "User Agent", "http://localhost", null,
 			_serviceContext);
 
+		Assert.assertEquals(
+			initialUserSegmentContentCount,
+			UserSegmentContentLocalServiceUtil.getUserSegmentContentsCount(
+				userSegment.getUserSegmentId()));
+
 		// Test update report with analytics
 
 		report.updateReport(reportInstance);

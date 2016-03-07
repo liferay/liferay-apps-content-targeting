@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -65,7 +66,7 @@ public class ContentTargetingExportImportTest
 
 	@Override
 	public String getPortletId() {
-		return "ctadmin_WAR_contenttargetingweb";
+		return PortletKeys.CT_ADMIN;
 	}
 
 	@Before
@@ -80,6 +81,12 @@ public class ContentTargetingExportImportTest
 	@Override
 	@Test
 	public void testExportImportAssetLinks() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testExportImportDeletions() throws Exception {
 	}
 
 	@Override
