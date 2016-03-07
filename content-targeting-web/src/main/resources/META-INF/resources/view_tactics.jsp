@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingViewTacticsDisplayContext contentTargetingViewTacticsDisplayContext = new ContentTargetingViewTacticsDisplayContext(liferayPortletResponse, renderResponse, request);
-
-SearchContainerIterator searchContainerIterator = new TacticSearchContainerIterator(contentTargetingViewTacticsDisplayContext.getCampaignId(), scopeGroupId, contentTargetingViewTacticsDisplayContext.getKeywords());
+ContentTargetingViewTacticsDisplayContext contentTargetingViewTacticsDisplayContext = new ContentTargetingViewTacticsDisplayContext(liferayPortletResponse, renderRequest, renderResponse, request);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(contentTargetingViewTacticsDisplayContext.getBackURL());
@@ -56,6 +54,13 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 			navigationKeys='<%= new String[] {"all"} %>'
 			portletURL="<%= contentTargetingViewTacticsDisplayContext.getPortletURL() %>"
 		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= contentTargetingViewTacticsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= contentTargetingViewTacticsDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"modified-date"} %>'
+			portletURL="<%= contentTargetingViewTacticsDisplayContext.getPortletURL() %>"
+		/>
 	</liferay-frontend:management-bar-filters>
 
 	<c:if test="<%= contentTargetingViewTacticsDisplayContext.hasUpdatePermission() %>">
@@ -71,16 +76,8 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 
 <aui:form action="<%= deleteTacticsURL %>" cssClass="container-fluid-1280" method="post" name="fmTactics">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-promotions-were-found"
-		id="tactics"
-		iteratorURL="<%= contentTargetingViewTacticsDisplayContext.getPortletURL() %>"
-		rowChecker="<%= new EmptyOnClickRowChecker(liferayPortletResponse) %>"
-		total="<%= searchContainerIterator.getTotal() %>"
+	searchContainer="<%= contentTargetingViewTacticsDisplayContext.getTacticSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.Tactic"
 			keyProperty="tacticId"
@@ -102,7 +99,7 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= contentTargetingViewTacticsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

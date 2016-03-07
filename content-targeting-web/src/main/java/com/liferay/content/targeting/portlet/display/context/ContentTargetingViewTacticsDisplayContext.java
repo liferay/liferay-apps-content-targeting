@@ -15,18 +15,31 @@
 package com.liferay.content.targeting.portlet.display.context;
 
 import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.portlet.ContentTargetingPath;
+import com.liferay.content.targeting.portlet.util.comparator.TacticModifiedDateComparator;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
+import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.content.targeting.util.ActionKeys;
+import com.liferay.content.targeting.util.BaseModelSearchResult;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
+
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,9 +51,11 @@ public class ContentTargetingViewTacticsDisplayContext {
 
 	public ContentTargetingViewTacticsDisplayContext(
 		LiferayPortletResponse liferayPortletResponse,
-		RenderResponse renderResponse, HttpServletRequest request) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		HttpServletRequest request) {
 
 		_liferayPortletResponse = liferayPortletResponse;
+		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
 	}
@@ -128,6 +143,27 @@ public class ContentTargetingViewTacticsDisplayContext {
 		return _keywords;
 	}
 
+	public String getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(
+			_request, "orderByCol", "modified-date");
+
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+
+		return _orderByType;
+	}
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
@@ -138,6 +174,70 @@ public class ContentTargetingViewTacticsDisplayContext {
 		portletURL.setParameter("campaignId", String.valueOf(getCampaignId()));
 
 		return portletURL;
+	}
+
+	public SearchContainer getTacticSearchContainer() throws PortalException {
+		if (_tacticSearchContainer != null) {
+			return _tacticSearchContainer;
+		}
+
+		SearchContainer tacticsSearchContainer = new SearchContainer(
+			_renderRequest, getPortletURL(), null, "no-promotions-were-found");
+
+		tacticsSearchContainer.setId("tactics");
+		tacticsSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+		tacticsSearchContainer.setSearch(Validator.isNotNull(getKeywords()));
+
+		String orderByType = getOrderByType();
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<Tactic> orderByComparator =
+			new TacticModifiedDateComparator(orderByAsc);
+
+		tacticsSearchContainer.setOrderByCol(getOrderByCol());
+		tacticsSearchContainer.setOrderByComparator(orderByComparator);
+		tacticsSearchContainer.setOrderByType(orderByType);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		if (Validator.isNotNull(getKeywords())) {
+			Sort sort = new Sort(
+				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+
+			BaseModelSearchResult<Tactic> searchResults =
+				TacticLocalServiceUtil.searchTactics(
+					getCampaignId(), scopeGroupId, getKeywords(),
+					tacticsSearchContainer.getStart(),
+					tacticsSearchContainer.getEnd(), sort);
+
+			tacticsSearchContainer.setTotal(searchResults.getLength());
+			tacticsSearchContainer.setResults(searchResults.getBaseModels());
+		}
+		else {
+			int total = TacticLocalServiceUtil.getTacticsCount(getCampaignId());
+
+			tacticsSearchContainer.setTotal(total);
+
+			List results = TacticLocalServiceUtil.getTactics(
+				getCampaignId(), tacticsSearchContainer.getStart(),
+				tacticsSearchContainer.getEnd(),
+				tacticsSearchContainer.getOrderByComparator());
+
+			tacticsSearchContainer.setResults(results);
+		}
+
+		_tacticSearchContainer = tacticsSearchContainer;
+
+		return _tacticSearchContainer;
 	}
 
 	public boolean hasUpdatePermission() {
@@ -170,7 +270,11 @@ public class ContentTargetingViewTacticsDisplayContext {
 	private Boolean _hasUpdatePermission;
 	private String _keywords;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _orderByCol;
+	private String _orderByType;
+	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private SearchContainer _tacticSearchContainer;
 
 }
