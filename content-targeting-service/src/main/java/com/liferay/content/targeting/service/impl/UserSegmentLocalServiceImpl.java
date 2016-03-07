@@ -489,6 +489,10 @@ public class UserSegmentLocalServiceImpl
 		AssetCategory assetCategory =
 			assetCategoryLocalService.fetchAssetCategory(assetCategoryId);
 
+		if (assetCategory == null) {
+			return;
+		}
+
 		try {
 			assetCategoryLocalService.deleteCategory(assetCategory);
 		}
