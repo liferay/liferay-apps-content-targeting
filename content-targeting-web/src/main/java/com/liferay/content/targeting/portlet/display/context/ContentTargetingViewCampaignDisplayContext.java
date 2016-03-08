@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.portlet.display.context;
 
 import com.liferay.content.targeting.model.Campaign;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.portlet.util.comparator.CampaignModifiedDateComparator;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
@@ -168,7 +167,7 @@ public class ContentTargetingViewCampaignDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
+		portletURL.setParameter("mvcPath", "/view.jsp");
 		portletURL.setParameter("tabs1", "campaigns");
 
 		if (Validator.isNotNull(getKeywords())) {

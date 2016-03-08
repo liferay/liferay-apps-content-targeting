@@ -16,7 +16,6 @@ package com.liferay.content.targeting.portlet.display.context;
 
 import com.liferay.content.targeting.api.model.RuleCategoriesRegistry;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.portlet.util.RuleTemplate;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -65,7 +64,7 @@ public class ContentTargetingEditUserSegmentDisplayContext {
 
 		PortletURL backURLObject = _renderResponse.createRenderURL();
 
-		backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
+		backURLObject.setParameter("mvcPath", "/view.jsp");
 		backURLObject.setParameter("tabs1", "user-segments");
 
 		return backURLObject.toString();

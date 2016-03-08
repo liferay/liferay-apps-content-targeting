@@ -18,7 +18,6 @@ import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -89,7 +88,7 @@ public class ViewReportsUserSegmentMVCRenderCommand
 			}
 		}
 
-		return ContentTargetingPath.VIEW_REPORTS;
+		return "/view_reports.jsp";
 	}
 
 	@Reference(unbind = "-")

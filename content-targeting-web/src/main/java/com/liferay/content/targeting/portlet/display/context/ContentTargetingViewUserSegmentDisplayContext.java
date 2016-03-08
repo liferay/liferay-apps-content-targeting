@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.portlet.display.context;
 
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.portlet.util.comparator.UserSegmentModifiedDateComparator;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
@@ -99,7 +98,7 @@ public class ContentTargetingViewUserSegmentDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
+		portletURL.setParameter("mvcPath", "/view.jsp");
 		portletURL.setParameter("tabs1", "user-segments");
 
 		if (Validator.isNotNull(getKeywords())) {

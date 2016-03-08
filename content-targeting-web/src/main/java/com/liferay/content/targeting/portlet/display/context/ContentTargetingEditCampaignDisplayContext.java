@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.portlet.display.context;
 
 import com.liferay.content.targeting.model.Campaign;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -56,7 +55,7 @@ public class ContentTargetingEditCampaignDisplayContext {
 
 		PortletURL backURLObject = _renderResponse.createRenderURL();
 
-		backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
+		backURLObject.setParameter("mvcPath", "/view.jsp");
 		backURLObject.setParameter("tabs1", "campaigns");
 
 		return backURLObject.toString();

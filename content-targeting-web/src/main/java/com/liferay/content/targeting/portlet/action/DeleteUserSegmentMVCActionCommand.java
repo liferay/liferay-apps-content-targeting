@@ -17,7 +17,6 @@ package com.liferay.content.targeting.portlet.action;
 import com.liferay.content.targeting.exception.UsedUserSegmentException;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.UserSegmentService;
 import com.liferay.content.targeting.util.PortletKeys;
@@ -92,8 +91,7 @@ public class DeleteUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 				else {
 					_log.error("Unable to delete user segment", e);
 
-					actionResponse.setRenderParameter(
-						"mvcPath", ContentTargetingPath.ERROR);
+					actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 
 					return;
 				}
@@ -110,8 +108,7 @@ public class DeleteUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 				PortalUtil.getHttpServletRequest(actionRequest),
 				"usedUserSegments", usedUserSegments);
 
-			actionResponse.setRenderParameter(
-				"mvcPath", ContentTargetingPath.VIEW);
+			actionResponse.setRenderParameter("mvcPath", "/view.jsp");
 			actionResponse.setRenderParameter("tabs1", "user-segments");
 		}
 		else {

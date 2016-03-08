@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.portlet.action;
 
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
@@ -42,7 +41,7 @@ public class ViewTacticsMVCRenderCommand extends BaseMVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-		return ContentTargetingPath.VIEW_TACTICS;
+		return "/view_tactics.jsp";
 	}
 
 }

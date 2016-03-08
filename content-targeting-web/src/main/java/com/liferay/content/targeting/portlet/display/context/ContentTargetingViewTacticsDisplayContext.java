@@ -17,7 +17,6 @@ package com.liferay.content.targeting.portlet.display.context;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.portlet.util.comparator.TacticModifiedDateComparator;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
@@ -67,7 +66,7 @@ public class ContentTargetingViewTacticsDisplayContext {
 
 		PortletURL backURLObject = _renderResponse.createRenderURL();
 
-		backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
+		backURLObject.setParameter("mvcPath", "/view.jsp");
 		backURLObject.setParameter("tabs1", "campaigns");
 
 		return backURLObject.toString();

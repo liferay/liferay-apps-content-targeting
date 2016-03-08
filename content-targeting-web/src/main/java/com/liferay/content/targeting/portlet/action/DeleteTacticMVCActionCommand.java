@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.portlet.action;
 
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.TacticLocalService;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.log.Log;
@@ -73,8 +72,7 @@ public class DeleteTacticMVCActionCommand extends BaseMVCActionCommand {
 
 			SessionErrors.add(actionRequest, e.getClass(), e);
 
-			actionResponse.setRenderParameter(
-				"mvcPath", ContentTargetingPath.ERROR);
+			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 		}
 	}
 

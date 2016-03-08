@@ -18,7 +18,6 @@ import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.log.Log;
@@ -62,7 +61,7 @@ public class ViewReportsCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 		long campaignId = ParamUtil.getLong(renderRequest, "campaignId");
 
 		if (campaignId <= 0) {
-			return ContentTargetingPath.ERROR;
+			return "/error.jsp";
 		}
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -92,7 +91,7 @@ public class ViewReportsCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 				serviceContext);
 		}
 
-		return ContentTargetingPath.VIEW_REPORTS;
+		return "/view_reports.jsp";
 	}
 
 	@Reference(unbind = "-")

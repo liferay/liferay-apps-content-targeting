@@ -20,7 +20,6 @@ import com.liferay.content.targeting.exception.InvalidTrackingActionsException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.PortletKeys;
@@ -132,8 +131,7 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 
 				response.setRenderParameter(
 					"campaignId", String.valueOf(campaign.getCampaignId()));
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
+				response.setRenderParameter("mvcPath", "/edit_campaign.jsp");
 				response.setRenderParameter(
 					"p_p_mode", PortletMode.VIEW.toString());
 				response.setRenderParameter("redirect", redirect);
@@ -159,18 +157,16 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 					PortalUtil.getPortletId(request) +
 						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
+				response.setRenderParameter("mvcPath", "/edit_campaign.jsp");
 			}
 			else {
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.ERROR);
+				response.setRenderParameter("mvcPath", "/error.jsp");
 			}
 		}
 		catch (Throwable t) {
 			_log.error(t);
 
-			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
+			response.setRenderParameter("mvcPath", "/error.jsp");
 		}
 	}
 

@@ -26,16 +26,10 @@ String warningMessage = ParamUtil.getString(request, "warningMessage");
 String filterIds = HtmlUtil.escapeJS(ParamUtil.getString(request, "filterIds", ""));
 %>
 
-<liferay-portlet:renderURL var="viewUserSegments">
-	<portlet:param
-		name="mvcPath"
-		value="<%= ContentTargetingPath.VIEW %>"
-	/>
-	<portlet:param
-		name="tabs1"
-		value="user-segments"
-	/>
-</liferay-portlet:renderURL>
+<portlet:renderURL var="viewUserSegments">
+	<portlet:param name="mvcPath" value="/view.jsp" />
+	<portlet:param name="tabs1" value="user-segments" />
+</portlet:renderURL>
 
 <div class="user-segment-selector">
 	<span class="control-label query-and-operator-text"><liferay-ui:message key="user-segments" /></span>
@@ -49,11 +43,7 @@ String filterIds = HtmlUtil.escapeJS(ParamUtil.getString(request, "filterIds", "
 	/>
 
 	<div class="lfr-tags-selector-content" id="<portlet:namespace />assetCategorySelector">
-		<aui:input
-			name="<%= hiddenInput %>"
-			type="hidden"
-			value="<%= assetCategoryIds %>"
-		/>
+		<aui:input name="<%= hiddenInput %>" type="hidden" value="<%= assetCategoryIds %>" />
 	</div>
 
 	<aui:script use="liferay-asset-categories-selector">

@@ -19,7 +19,6 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.portlet.util.ReportInstanceRowChecker;
 import com.liferay.content.targeting.portlet.util.comparator.ReportInstanceModifiedDateComparator;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
@@ -103,7 +102,7 @@ public class ContentTargetingViewReportsDisplayContext {
 
 		PortletURL backURLObject = _renderResponse.createRenderURL();
 
-		backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
+		backURLObject.setParameter("mvcPath", "/view.jsp");
 
 		if (getClassName().equals(Campaign.class.getName())) {
 			backURLObject.setParameter("tabs1", "campaigns");
@@ -198,8 +197,7 @@ public class ContentTargetingViewReportsDisplayContext {
 				"userSegmentId", String.valueOf(getClassPK()));
 		}
 		else {
-			portletURL.setParameter(
-				"mvcPath", ContentTargetingPath.VIEW_REPORTS);
+			portletURL.setParameter("mvcPath", "/view_reports.jsp");
 		}
 
 		portletURL.setParameter("className", className);

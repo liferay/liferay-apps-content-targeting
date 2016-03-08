@@ -26,7 +26,6 @@ import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.ChannelInstanceLocalService;
 import com.liferay.content.targeting.service.ChannelInstanceService;
 import com.liferay.content.targeting.service.TacticService;
@@ -146,8 +145,7 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 
 				response.setRenderParameter(
 					"campaignId", String.valueOf(campaignId));
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.EDIT_TACTIC);
+				response.setRenderParameter("mvcPath", "/edit_tactic.jsp");
 				response.setRenderParameter("redirect", redirect);
 				response.setRenderParameter(
 					"p_p_mode", PortletMode.VIEW.toString());
@@ -175,18 +173,16 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 					PortalUtil.getPortletId(request) +
 						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.EDIT_TACTIC);
+				response.setRenderParameter("mvcPath", "/edit_tactic.jsp");
 			}
 			else {
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.ERROR);
+				response.setRenderParameter("mvcPath", "/error.jsp");
 			}
 		}
 		catch (Throwable t) {
 			_log.error(t);
 
-			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
+			response.setRenderParameter("mvcPath", "/error.jsp");
 		}
 	}
 

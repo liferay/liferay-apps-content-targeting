@@ -23,14 +23,14 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "user-segments");
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="userSegmentsURL">
-			<portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW %>" />
+			<portlet:param name="mvcPath" value="/view.jsp" />
 			<portlet:param name="tabs1" value="user-segments" />
 		</portlet:renderURL>
 
 		<aui:nav-item href="<%= userSegmentsURL.toString() %>" label="user-segments" selected='<%= tabs1.equals("user-segments") %>' />
 
 		<portlet:renderURL var="campaignsURL">
-			<portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW %>" />
+			<portlet:param name="mvcPath" value="/view.jsp" />
 			<portlet:param name="tabs1" value="campaigns" />
 		</portlet:renderURL>
 
@@ -43,7 +43,7 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "user-segments");
 
 	<c:if test="<%= searchEnabled %>">
 		<portlet:renderURL var="searchURL">
-			<portlet:param name="mvcPath" value="<%= ContentTargetingPath.VIEW %>" />
+			<portlet:param name="mvcPath" value="/view.jsp" />
 
 			<c:choose>
 				<c:when test='<%= tabs1.equals("user-segments") %>'>
