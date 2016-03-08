@@ -18,7 +18,6 @@ import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.log.Log;
@@ -92,14 +91,12 @@ public class UpdateReportMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(request, e.getClass(), e);
 
 			if (e instanceof PrincipalException) {
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.VIEW_REPORT);
+				response.setRenderParameter("mvcPath", "/view_report.jsp");
 			}
 			else {
 				_log.error("Unable to update report", e);
 
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.ERROR);
+				response.setRenderParameter("mvcPath", "/error.jsp");
 			}
 		}
 	}

@@ -17,94 +17,41 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-boolean includeCheckBox = ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_CAMPAIGN);
-
-String keywords = ParamUtil.getString(request, "keywords");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
-portletURL.setParameter("tabs1", "campaigns");
-
-if (Validator.isNotNull(keywords)) {
-	portletURL.setParameter("keywords", keywords);
-}
-
-SearchContainer campaignSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, renderResponse), null, "no-campaigns-were-found");
-
-campaignSearchContainer.setId("campaigns");
-campaignSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
-campaignSearchContainer.setSearch(Validator.isNotNull(keywords));
-
-boolean orderByAsc = false;
-
-if (orderByType.equals("asc")) {
-	orderByAsc = true;
-}
-
-OrderByComparator<Campaign> orderByComparator = new CampaignModifiedDateComparator(orderByAsc);
-
-campaignSearchContainer.setOrderByCol(orderByCol);
-campaignSearchContainer.setOrderByComparator(orderByComparator);
-campaignSearchContainer.setOrderByType(orderByType);
-
-if (Validator.isNotNull(keywords)) {
-	Sort sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
-
-	BaseModelSearchResult<Campaign> searchResults = CampaignLocalServiceUtil.searchCampaigns(scopeGroupId, keywords, campaignSearchContainer.getStart(), campaignSearchContainer.getEnd(), sort);
-
-	campaignSearchContainer.setTotal(searchResults.getLength());
-	campaignSearchContainer.setResults(searchResults.getBaseModels());
-}
-else {
-	int total = CampaignLocalServiceUtil.getCampaignsCount(scopeGroupId);
-
-	campaignSearchContainer.setTotal(total);
-
-	List results = CampaignLocalServiceUtil.getCampaigns(scopeGroupId, campaignSearchContainer.getStart(), campaignSearchContainer.getEnd(), campaignSearchContainer.getOrderByComparator());
-
-	campaignSearchContainer.setResults(results);
-}
-
-boolean isDisabledManagementBar = (campaignSearchContainer.getTotal() <= 0) && Validator.isNull(keywords);
+ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayContext = new ContentTargetingViewCampaignDisplayContext(renderRequest, renderResponse, request);
 %>
 
 <liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchEnabled" value="<%= String.valueOf(!isDisabledManagementBar) %>" />
+	<liferay-util:param name="searchEnabled" value="<%= String.valueOf(contentTargetingViewCampaignDisplayContext.isSearchEnabled()) %>" />
 </liferay-util:include>
 
 <liferay-frontend:management-bar
-	disabled="<%= isDisabledManagementBar %>"
-	includeCheckBox="<%= includeCheckBox %>"
+	disabled="<%= contentTargetingViewCampaignDisplayContext.isDisabledManagementBar() %>"
+	includeCheckBox="<%= contentTargetingViewCampaignDisplayContext.isIncludeCheckBox() %>"
 	searchContainerId="campaigns"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			portletURL="<%= contentTargetingViewCampaignDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= contentTargetingViewCampaignDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= contentTargetingViewCampaignDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= contentTargetingViewCampaignDisplayContext.getOrderByCol() %>"
+			orderByType="<%= contentTargetingViewCampaignDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"modified-date"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= contentTargetingViewCampaignDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
-	<c:if test="<%= includeCheckBox %>">
+	<c:if test="<%= contentTargetingViewCampaignDisplayContext.isIncludeCheckBox() %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteCampaigns" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
@@ -117,7 +64,7 @@ boolean isDisabledManagementBar = (campaignSearchContainer.getTotal() <= 0) && V
 
 <aui:form action="<%= deleteCampaignsURL %>" cssClass="container-fluid-1280" method="post" name="fmCampaigns">
 	<liferay-ui:search-container
-		searchContainer="<%= campaignSearchContainer %>"
+		searchContainer="<%= contentTargetingViewCampaignDisplayContext.getCampaignSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.Campaign"
@@ -172,7 +119,7 @@ boolean isDisabledManagementBar = (campaignSearchContainer.getTotal() <= 0) && V
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= ContentTargetingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_CAMPAIGN) %>">
+<c:if test="<%= contentTargetingViewCampaignDisplayContext.showAddButton() %>">
 	<portlet:renderURL var="addCampaignURL">
 		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -183,7 +130,7 @@ boolean isDisabledManagementBar = (campaignSearchContainer.getTotal() <= 0) && V
 	</liferay-frontend:add-menu>
 </c:if>
 
-<c:if test="<%= includeCheckBox %>">
+<c:if test="<%= contentTargetingViewCampaignDisplayContext.isIncludeCheckBox() %>">
 	<aui:script>
 		$('#<portlet:namespace />deleteCampaigns').on(
 			'click',

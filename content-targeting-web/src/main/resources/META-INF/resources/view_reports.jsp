@@ -17,129 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-String backURL = ParamUtil.getString(request, "backURL");
-String keywords = ParamUtil.getString(request, "keywords");
-String redirect = ParamUtil.getString(request, "redirect");
-String className = ParamUtil.getString(request, "className");
-long classPK = ParamUtil.getLong(request, "classPK");
-
-if (Validator.isNull(backURL)) {
-	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
-
-	backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
-
-	if (className.equals(Campaign.class.getName())) {
-		backURLObject.setParameter("tabs1", "campaigns");
-	}
-	else {
-		backURLObject.setParameter("tabs1", "user-segments");
-	}
-
-	backURL = backURLObject.toString();
-}
-
-Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
-
-boolean instantiableExists = false;
-
-Collection<Report> reports = (Collection<Report>)request.getAttribute("reports");
-
-for (Report report : reports) {
-	if (report.isInstantiable()) {
-		instantiableExists = true;
-
-		break;
-	}
-}
-
-boolean hasUpdatePermission = false;
-
-if (instantiableExists) {
-	if (className.equals(Campaign.class.getName()) && CampaignPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE)) {
-		hasUpdatePermission = true;
-	}
-	else if (className.equals(UserSegment.class.getName()) && UserSegmentPermission.contains(permissionChecker, classPK, ActionKeys.UPDATE)) {
-		hasUpdatePermission = true;
-	}
-}
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("backURL", backURL);
-portletURL.setParameter("redirect", redirect);
-
-if (className.equals(Campaign.class.getName())) {
-	portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
-	portletURL.setParameter("campaignId", String.valueOf(classPK));
-}
-else if (className.equals(UserSegment.class.getName())) {
-	portletURL.setParameter("mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT);
-	portletURL.setParameter("userSegmentId", String.valueOf(classPK));
-}
-else {
-	portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW_REPORTS);
-}
-
-portletURL.setParameter("className", className);
-portletURL.setParameter("classPK", String.valueOf(classPK));
-
-if (Validator.isNotNull(keywords)) {
-	portletURL.setParameter("keywords", keywords);
-}
-
-SearchContainer reportsSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, renderResponse), null, "no-reports-were-found");
-
-reportsSearchContainer.setId("reports");
-reportsSearchContainer.setRowChecker(new ReportInstanceRowChecker(liferayPortletResponse));
-reportsSearchContainer.setSearch(true);
-
-boolean orderByAsc = false;
-
-if (orderByType.equals("asc")) {
-	orderByAsc = true;
-}
-
-OrderByComparator<ReportInstance> orderByComparator = new ReportInstanceModifiedDateComparator(orderByAsc);
-
-reportsSearchContainer.setOrderByCol(orderByCol);
-reportsSearchContainer.setOrderByComparator(orderByComparator);
-reportsSearchContainer.setOrderByType(orderByType);
-
-if (Validator.isNotNull(keywords)) {
-	Sort sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
-
-	BaseModelSearchResult<ReportInstance> searchResults = ReportInstanceLocalServiceUtil.searchReportInstances(scopeGroupId, className, classPK, keywords, reportsSearchContainer.getStart(), reportsSearchContainer.getEnd(), sort);
-
-	reportsSearchContainer.setTotal(searchResults.getLength());
-	reportsSearchContainer.setResults(searchResults.getBaseModels());
-}
-else {
-	int total = ReportInstanceLocalServiceUtil.getReportInstancesCount(className, classPK);
-
-	reportsSearchContainer.setTotal(total);
-
-	List results = ReportInstanceLocalServiceUtil.getReportInstances(className, classPK, reportsSearchContainer.getStart(), reportsSearchContainer.getEnd(), reportsSearchContainer.getOrderByComparator());
-
-	reportsSearchContainer.setResults(results);
-}
+ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayContext = new ContentTargetingViewReportsDisplayContext(portletConfig, renderRequest, renderResponse, request);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(contentTargetingViewReportsDisplayContext.getBackURL());
 
-renderResponse.setTitle(LanguageUtil.get(portletConfig.getResourceBundle(locale), "reports"));
-
-boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Validator.isNull(keywords);
+renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitle());
 %>
 
-<c:if test="<%= scopeGroup.isStagingGroup() %>">
+<c:if test="<%= contentTargetingViewReportsDisplayContext.isStagingGroup() %>">
 	<div class="alert alert-warning">
 		<liferay-ui:message key="the-staging-environment-is-activated-reports-data-refer-to-the-live-environment" />
 
-		<c:if test="<%= classPK <= 0 %>">
+		<c:if test="<%= !contentTargetingViewReportsDisplayContext.hasReports() %>">
 			<strong><liferay-ui:message key="you-must-publish-to-live-before-you-can-view-any-reports" /></strong>
 		</c:if>
 	</div>
@@ -150,9 +40,9 @@ boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Va
 		<aui:nav-item href="<%= currentURL %>" label="reports" selected="<%= true %>" />
 	</aui:nav>
 
-	<c:if test="<%= !isDisabledManagementBar %>">
+	<c:if test="<%= !contentTargetingViewReportsDisplayContext.isDisabledManagementBar() %>">
 		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL %>" name="searchFm">
+			<aui:form action="<%= contentTargetingViewReportsDisplayContext.getPortletURL() %>" name="searchFm">
 				<liferay-ui:input-search markupView="lexicon" name="keywords" />
 			</aui:form>
 		</aui:nav-bar-search>
@@ -160,47 +50,47 @@ boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Va
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= isDisabledManagementBar %>"
-	includeCheckBox="<%= hasUpdatePermission %>"
+	disabled="<%= contentTargetingViewReportsDisplayContext.isDisabledManagementBar() %>"
+	includeCheckBox="<%= contentTargetingViewReportsDisplayContext.isIncludeCheckBox() %>"
 	searchContainerId="reports"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			portletURL="<%= contentTargetingViewReportsDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= contentTargetingViewReportsDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= contentTargetingViewReportsDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= contentTargetingViewReportsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= contentTargetingViewReportsDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"modified-date"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= contentTargetingViewReportsDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
-	<c:if test="<%= hasUpdatePermission %>">
+	<c:if test="<%= contentTargetingViewReportsDisplayContext.isIncludeCheckBox() %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteReports" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 </liferay-frontend:management-bar>
 
-<c:if test="<%= classPK > 0 %>">
+<c:if test="<%= contentTargetingViewReportsDisplayContext.hasReports() %>">
 	<portlet:actionURL name="deleteReportInstance" var="deleteReportsURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= deleteReportsURL %>" cssClass="container-fluid-1280" method="post" name="fmReports">
 		<liferay-ui:search-container
-			searchContainer="<%= reportsSearchContainer %>"
+			searchContainer="<%= contentTargetingViewReportsDisplayContext.getReportsSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.content.targeting.model.ReportInstance"
@@ -210,8 +100,8 @@ boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Va
 
 				<portlet:renderURL var="viewReportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORT %>" />
-					<portlet:param name="className" value="<%= className %>" />
-					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+					<portlet:param name="className" value="<%= contentTargetingViewReportsDisplayContext.getClassName(); %>" />
+					<portlet:param name="classPK" value="<%= String.valueOf(contentTargetingViewReportsDisplayContext.getClassPK()) %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="reportKey" value="<%= reportInstance.getReportKey() %>" />
 					<portlet:param name="reportInstanceId" value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>" />
@@ -249,35 +139,17 @@ boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Va
 	</aui:form>
 </c:if>
 
-<c:if test="<%= hasUpdatePermission %>">
+<c:if test="<%= contentTargetingViewReportsDisplayContext.showAddButton() %>">
 	<liferay-frontend:add-menu>
 
 		<%
-		for (Report report : reports) {
-			if (!report.isInstantiable()) {
-				continue;
-			}
+		for (Report report : contentTargetingViewReportsDisplayContext.getReports()) {
+			PortletURL addReportURL = contentTargetingViewReportsDisplayContext.getAddReportURL();
+
+			addReportURL.setParameter("reportKey", report.getReportKey());
 		%>
 
-			<portlet:renderURL var="addReportURL">
-				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_REPORT %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-
-				<c:choose>
-					<c:when test="<%= className.equals(Campaign.class.getName()) %>">
-						<portlet:param name="campaignId" value="<%= String.valueOf(classPK) %>" />
-					</c:when>
-					<c:otherwise>
-						<portlet:param name="userSegmentId" value="<%= String.valueOf(classPK) %>" />
-					</c:otherwise>
-				</c:choose>
-
-				<portlet:param name="className" value="<%= className %>" />
-				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-				<portlet:param name="reportKey" value="<%= report.getReportKey() %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu-item title="<%= report.getName(locale) %>" url="<%= addReportURL %>" />
+			<liferay-frontend:add-menu-item title="<%= report.getName(locale) %>" url="<%= addReportURL.toString() %>" />
 
 		<%
 		}
@@ -286,7 +158,7 @@ boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Va
 	</liferay-frontend:add-menu>
 </c:if>
 
-<c:if test="<%= hasUpdatePermission %>">
+<c:if test="<%= contentTargetingViewReportsDisplayContext.isIncludeCheckBox() %>">
 	<aui:script>
 		$('#<portlet:namespace />deleteReports').on(
 			'click',
@@ -299,7 +171,7 @@ boolean isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) && Va
 	</aui:script>
 </c:if>
 
-<c:if test="<%= classPK > 0 %>">
+<c:if test="<%= contentTargetingViewReportsDisplayContext.hasReports() %>">
 	<aui:script use="aui-base,liferay-url-preview">
 		A.one('#<portlet:namespace />fmReports').delegate(
 			'click',

@@ -16,7 +16,6 @@ package com.liferay.content.targeting.portlet.action;
 
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
@@ -125,7 +124,7 @@ public class EditCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 			themeDisplay.setIsolated(isolated);
 		}
 
-		return ContentTargetingPath.EDIT_CAMPAIGN;
+		return "/edit_campaign.jsp";
 	}
 
 	@Reference(unbind = "-")

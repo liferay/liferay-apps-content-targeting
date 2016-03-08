@@ -22,7 +22,6 @@ import com.liferay.content.targeting.exception.InvalidRulesException;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.RuleInstanceService;
 import com.liferay.content.targeting.service.UserSegmentService;
 import com.liferay.content.targeting.util.PortletKeys;
@@ -115,7 +114,7 @@ public class UpdateUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 				String redirect = ParamUtil.get(request, "redirect", "");
 
 				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
+					"mvcPath", "/edit_user_segment.jsp");
 				response.setRenderParameter("redirect", redirect);
 				response.setRenderParameter(
 					"p_p_mode", PortletMode.VIEW.toString());
@@ -144,19 +143,18 @@ public class UpdateUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
 				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
+					"mvcPath", "/edit_user_segment.jsp");
 			}
 			else {
 				_log.error(e);
 
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.ERROR);
+				response.setRenderParameter("mvcPath", "/error.jsp");
 			}
 		}
 		catch (Throwable t) {
 			_log.error(t);
 
-			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
+			response.setRenderParameter("mvcPath", "/error.jsp");
 		}
 	}
 

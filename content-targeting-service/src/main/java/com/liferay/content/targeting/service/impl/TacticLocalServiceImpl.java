@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -131,8 +132,16 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 			long campaignId, long groupId, String keywords, int start, int end)
 		throws PortalException {
 
+		return searchTactics(campaignId, groupId, keywords, start, end, null);
+	}
+
+	public BaseModelSearchResult<Tactic> searchTactics(
+			long campaignId, long groupId, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
 		SearchContext searchContext = buildSearchContext(
-			campaignId, groupId, keywords, start, end);
+			campaignId, groupId, keywords, start, end, sort);
 
 		return searchTactics(searchContext);
 	}
@@ -144,6 +153,17 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 		SearchContext searchContext = buildSearchContext(
 			groupId, keywords, start, end);
+
+		return searchTactics(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<Tactic> searchTactics(
+			long groupId, String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			groupId, keywords, start, end, sort);
 
 		return searchTactics(searchContext);
 	}
@@ -177,6 +197,15 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 			long campaignId, long groupId, String keywords, int start, int end)
 		throws PortalException {
 
+		return buildSearchContext(
+			campaignId, groupId, keywords, start, end, null);
+	}
+
+	protected SearchContext buildSearchContext(
+			long campaignId, long groupId, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
 		SearchContext searchContext = new SearchContext();
 
 		Group group = groupLocalService.getGroup(groupId);
@@ -193,12 +222,20 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setKeywords(keywords == null ? "" : keywords);
 		searchContext.setStart(start);
+		searchContext.setSorts(sort);
 
 		return searchContext;
 	}
 
 	protected SearchContext buildSearchContext(
-			long groupId, String keywords, int start, int end)
+		long groupId, String keywords, int start,
+		int end) throws PortalException {
+
+		return buildSearchContext(groupId, keywords, start, end, null);
+	}
+
+	protected SearchContext buildSearchContext(
+			long groupId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
@@ -210,6 +247,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setKeywords(keywords == null ? "" : keywords);
 		searchContext.setStart(start);
+		searchContext.setSorts(sort);
 
 		return searchContext;
 	}

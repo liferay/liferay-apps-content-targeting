@@ -19,7 +19,6 @@ import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
 import com.liferay.content.targeting.service.permission.UserSegmentPermission;
@@ -106,9 +105,6 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 			"contentTargetingMVCCommand",
 			staticModels.get(ContentTargetingMVCCommand.class.getName()));
 		context.put(
-			"contentTargetingPath",
-			staticModels.get(ContentTargetingPath.class.getName()));
-		context.put(
 			"contentTargetingPermission",
 			staticModels.get(ContentTargetingPermission.class.getName()));
 		context.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
@@ -145,7 +141,7 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 		catch (Exception e) {
 			SessionErrors.add(renderRequest, e.getClass());
 
-			return ContentTargetingPath.ERROR;
+			return "/error.jsp";
 		}
 	}
 

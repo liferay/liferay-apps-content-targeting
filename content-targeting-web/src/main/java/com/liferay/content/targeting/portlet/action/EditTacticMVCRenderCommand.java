@@ -23,7 +23,6 @@ import com.liferay.content.targeting.exception.InvalidChannelsException;
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.portlet.util.ChannelTemplate;
 import com.liferay.content.targeting.service.ChannelInstanceLocalService;
 import com.liferay.content.targeting.service.ChannelInstanceService;
@@ -233,7 +232,7 @@ public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 			themeDisplay.setIsolated(isolated);
 		}
 
-		return ContentTargetingPath.EDIT_TACTIC;
+		return "/edit_tactic.jsp";
 	}
 
 	protected String getChannelHtml(

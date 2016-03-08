@@ -21,7 +21,6 @@ import com.liferay.content.targeting.exception.InvalidNameException;
 import com.liferay.content.targeting.exception.InvalidReportException;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.ReportInstanceService;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.log.Log;
@@ -104,8 +103,7 @@ public class UpdateReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 				response.setRenderParameter("className", className);
 				response.setRenderParameter("classPK", String.valueOf(classPK));
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.EDIT_REPORT);
+				response.setRenderParameter("mvcPath", "/edit_report.jsp");
 				response.setRenderParameter("redirect", redirect);
 				response.setRenderParameter(
 					"p_p_mode", PortletMode.VIEW.toString());
@@ -135,18 +133,16 @@ public class UpdateReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 					PortalUtil.getPortletId(request) +
 						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.EDIT_REPORT);
+				response.setRenderParameter("mvcPath", "/edit_report.jsp");
 			}
 			else {
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.ERROR);
+				response.setRenderParameter("mvcPath", "/error.jsp");
 			}
 		}
 		catch (Throwable t) {
 			_log.error(t);
 
-			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
+			response.setRenderParameter("mvcPath", "/error.jsp");
 		}
 	}
 

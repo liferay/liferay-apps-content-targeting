@@ -17,68 +17,30 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
-String redirect = ParamUtil.getString(request, "redirect");
-long campaignId = ParamUtil.getLong(request, "campaignId", 0);
-String userSegmentAssetCategoryIdsAsString = GetterUtil.getString(request.getAttribute("userSegmentAssetCategoryIdsAsString"));
-String userSegmentAssetCategoryNames = GetterUtil.getString(request.getAttribute("userSegmentAssetCategoryNames"));
-String vocabularyGroupIds = GetterUtil.getString(request.getAttribute("vocabularyGroupIds"));
-String vocabularyIds = GetterUtil.getString(request.getAttribute("vocabularyIds"));
-
-Campaign campaign = null;
-
-if (campaignId > 0) {
-	campaign = CampaignLocalServiceUtil.fetchCampaign(campaignId);
-}
-
-Calendar endDate = Calendar.getInstance();
-Calendar startDate = Calendar.getInstance();
-
-int priority = 1;
-
-String timeZoneId = TimeZoneUtil.getDefault().getID();
-
-if (campaign != null) {
-	endDate.setTime(campaign.getEndDate());
-	priority = campaign.getPriority();
-	startDate.setTime(campaign.getStartDate());
-	timeZoneId = campaign.getTimeZoneId();
-}
-else {
-	endDate.add(Calendar.YEAR, 1);
-}
-
-if (Validator.isNull(backURL)) {
-	PortletURL backURLObject = liferayPortletResponse.createRenderURL();
-
-	backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
-	backURLObject.setParameter("tabs1", "campaigns");
-
-	backURL = backURLObject.toString();
-}
+ContentTargetingEditCampaignDisplayContext contentTargetingEditCampaignDisplayContext = new ContentTargetingEditCampaignDisplayContext(renderResponse, portletConfig, request);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(contentTargetingEditCampaignDisplayContext.getBackURL());
 
-renderResponse.setTitle((campaign != null) ? campaign.getName(locale) : LanguageUtil.get(portletConfig.getResourceBundle(locale), "new-campaign"));
+renderResponse.setTitle(contentTargetingEditCampaignDisplayContext.getCampaignTitle());
 %>
 
 <portlet:renderURL var="portletURL">
 	<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
 	<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
-	<portlet:param name="classPK" value="<%= String.valueOf(campaignId) %>" />
-	<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
+	<portlet:param name="classPK" value="<%= String.valueOf(contentTargetingEditCampaignDisplayContext.getCampaignId()) %>" />
+	<portlet:param name="campaignId" value="<%= String.valueOf(contentTargetingEditCampaignDisplayContext.getCampaignId()) %>" />
 </portlet:renderURL>
 
 <portlet:actionURL name="updateCampaign" var="addCampaignURL" />
 
 <aui:form action="<%= addCampaignURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="campaignId" type="hidden" value="<%= String.valueOf(campaignId) %>" />
+	<aui:input name="redirect" type="hidden" value="<%= contentTargetingEditCampaignDisplayContext.getRedirect() %>" />
+	<aui:input name="campaignId" type="hidden" value="<%= String.valueOf(contentTargetingEditCampaignDisplayContext.getCampaignId()) %>" />
 	<aui:input name="campaignTrackingActions" type="hidden" />
 	<aui:input name="saveAndContinue" type="hidden" />
 
-	<aui:model-context bean="<%= campaign %>" model="<%= Campaign.class %>" />
+	<aui:model-context bean="<%= contentTargetingEditCampaignDisplayContext.getCampaign() %>" model="<%= Campaign.class %>" />
 
 	<liferay-ui:error key="com.liferay.content.targeting.exception.InvalidNameException">
 		<c:choose>
@@ -101,29 +63,29 @@ renderResponse.setTitle((campaign != null) ? campaign.getName(locale) : Language
 			<aui:input name="description" />
 
 			<liferay-util:include page="/macros/user_segment_selector.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="assetCategoryIds" value="<%= userSegmentAssetCategoryIdsAsString %>" />
-				<liferay-util:param name="assetCategoryNames" value="<%= userSegmentAssetCategoryNames %>" />
+				<liferay-util:param name="assetCategoryIds" value="<%= contentTargetingEditCampaignDisplayContext.getUserSegmentAssetCategoryIdsAsString() %>" />
+				<liferay-util:param name="assetCategoryNames" value="<%= contentTargetingEditCampaignDisplayContext.getUserSegmentAssetCategoryNames() %>" />
 				<liferay-util:param name="hiddenInput" value="userSegmentAssetCategoryIds" />
-				<liferay-util:param name="vocabularyGroupIds" value="<%= vocabularyGroupIds %>" />
-				<liferay-util:param name="vocabularyIds" value="<%= vocabularyIds %>" />
+				<liferay-util:param name="vocabularyGroupIds" value="<%= contentTargetingEditCampaignDisplayContext.getVocabularyGroupIds() %>" />
+				<liferay-util:param name="vocabularyIds" value="<%= contentTargetingEditCampaignDisplayContext.getVocabularyIds() %>" />
 				<liferay-util:param name="warningMessage" value="editing-user-segments-deletes-all-unsaved-campaign-data" />
 			</liferay-util:include>
 
-			<aui:input cssClass="slider-input" helpMessage="priority-help" inlineField="<%= true %>" maxlength="3" name="priority" size="2" type="text" value="<%= priority %>" />
+			<aui:input cssClass="slider-input" helpMessage="priority-help" inlineField="<%= true %>" maxlength="3" name="priority" size="2" type="text" value="<%= contentTargetingEditCampaignDisplayContext.getPriority() %>" />
 
 			<span class="slider-holder"></span>
 
-			<aui:input name="active" type="toggle-switch" value="<%= (campaign != null) ? campaign.isActive() : true %>" />
+			<aui:input name="active" type="toggle-switch" value="<%= contentTargetingEditCampaignDisplayContext.isActiveCampaign() %>" />
 		</aui:fieldset>
 
 		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" cssClass="dates-panel" label="Dates">
 			<liferay-ui:error key="com.liferay.content.targeting.exception.InvalidDateRangeException" message="please-enter-valid-date-range" />
 
-			<aui:input name="startDate" value="<%= startDate %>" />
+			<aui:input name="startDate" value="<%= contentTargetingEditCampaignDisplayContext.getStartDate() %>" />
 
-			<aui:input name="endDate" value="<%= endDate %>" />
+			<aui:input name="endDate" value="<%= contentTargetingEditCampaignDisplayContext.getEndDate() %>" />
 
-			<aui:input helpMessage="time-zone-help" label="time-zone" name="timeZoneId" type="timeZone" value="<%= timeZoneId %>" />
+			<aui:input helpMessage="time-zone-help" label="time-zone" name="timeZoneId" type="timeZone" value="<%= contentTargetingEditCampaignDisplayContext.getTimeZoneId() %>" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 
@@ -132,7 +94,7 @@ renderResponse.setTitle((campaign != null) ? campaign.getName(locale) : Language
 
 		<aui:button cssClass="btn-lg" onClick="saveAndContinue();" value="save-and-continue" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= contentTargetingEditCampaignDisplayContext.getRedirect() %>" type="cancel" />
 	</aui:button-row>
 
 	<aui:script use="liferay-input-slider">

@@ -17,7 +17,6 @@ package com.liferay.content.targeting.portlet.action;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,7 +58,7 @@ public class ViewReportMVCRenderCommand extends BaseMVCRenderCommand {
 
 		renderRequest.setAttribute("templateContext", templateContext);
 
-		return ContentTargetingPath.VIEW_REPORT;
+		return "/view_report.jsp";
 	}
 
 	@Reference

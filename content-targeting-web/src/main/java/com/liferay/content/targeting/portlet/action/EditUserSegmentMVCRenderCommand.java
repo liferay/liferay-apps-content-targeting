@@ -21,7 +21,6 @@ import com.liferay.content.targeting.exception.InvalidRuleException;
 import com.liferay.content.targeting.exception.InvalidRulesException;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
-import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.portlet.util.RuleTemplate;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.RuleInstanceService;
@@ -175,7 +174,7 @@ public class EditUserSegmentMVCRenderCommand extends BaseMVCRenderCommand {
 			themeDisplay.setIsolated(isolated);
 		}
 
-		return ContentTargetingPath.EDIT_USER_SEGMENT;
+		return "/edit_user_segment.jsp";
 	}
 
 	protected InvalidRulesException getInvalidRulesException(
