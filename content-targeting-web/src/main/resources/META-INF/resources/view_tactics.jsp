@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingViewTacticsDisplayContext contentTargetingViewTacticsDisplayContext = new ContentTargetingViewTacticsDisplayContext(liferayPortletResponse, renderRequest, renderResponse, request);
+ContentTargetingViewTacticsDisplayContext contentTargetingViewTacticsDisplayContext = new ContentTargetingViewTacticsDisplayContext(renderRequest, renderResponse, request);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(contentTargetingViewTacticsDisplayContext.getBackURL());
@@ -41,7 +41,7 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 
 <liferay-frontend:management-bar
 	disabled="<%= contentTargetingViewTacticsDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= contentTargetingViewTacticsDisplayContext.hasUpdatePermission() %>"
+	includeCheckBox="<%= contentTargetingViewTacticsDisplayContext.isIncludeCheckbox() %>"
 	searchContainerId="tactics"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -66,7 +66,7 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 		/>
 	</liferay-frontend:management-bar-filters>
 
-	<c:if test="<%= contentTargetingViewTacticsDisplayContext.hasUpdatePermission() %>">
+	<c:if test="<%= contentTargetingViewTacticsDisplayContext.isIncludeCheckbox() %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteTactics" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
@@ -79,7 +79,7 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 
 <aui:form action="<%= deleteTacticsURL %>" cssClass="container-fluid-1280" method="post" name="fmTactics">
 	<liferay-ui:search-container
-	searchContainer="<%= contentTargetingViewTacticsDisplayContext.getTacticSearchContainer() %>"
+		searchContainer="<%= contentTargetingViewTacticsDisplayContext.getTacticSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.Tactic"
@@ -106,7 +106,7 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= contentTargetingViewTacticsDisplayContext.hasUpdatePermission() %>">
+<c:if test="<%= contentTargetingViewTacticsDisplayContext.showAddButton() %>">
 	<liferay-portlet:renderURL var="addTacticURL">
 		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_TACTIC %>" />
 		<portlet:param name="campaignId" value="<%= String.valueOf(contentTargetingViewTacticsDisplayContext.getCampaignId()) %>" />
@@ -116,7 +116,9 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 	<liferay-frontend:add-menu>
 		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-promotion") %>' url="<%= addTacticURL %>" />
 	</liferay-frontend:add-menu>
+</c:if>
 
+<c:if test="<%= contentTargetingViewTacticsDisplayContext.isIncludeCheckbox() %>">
 	<aui:script use="liferay-util-list-fields">
 		$('#<portlet:namespace />deleteTactics').on(
 			'click',

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingEditUserSegmentDisplayContext contentTargetingEditUserSegmentDisplayContext = new ContentTargetingEditUserSegmentDisplayContext(liferayPortletResponse, request);
+ContentTargetingEditUserSegmentDisplayContext contentTargetingEditUserSegmentDisplayContext = new ContentTargetingEditUserSegmentDisplayContext(renderResponse, request);
 
 RuleCategoriesRegistry ruleCategoriesRegistry = contentTargetingEditUserSegmentDisplayContext.getRuleCategoriesRegistry();
 
@@ -76,12 +76,7 @@ renderResponse.setTitle(contentTargetingEditUserSegmentDisplayContext.getUserSeg
 											<i class="icon-search"></i>
 
 											<div class="search-panels-bar">
-												<aui:input
-													cssClass="search-panels-input search-query"
-													label=""
-													name="searchPanel"
-													type="text"
-												/>
+												<aui:input cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
 											</div>
 										</div>
 									</div>
@@ -89,15 +84,13 @@ renderResponse.setTitle(contentTargetingEditUserSegmentDisplayContext.getUserSeg
 									<ul class="clearfix form-builder-fields-container property-builder-fields-container">
 
 										<%
-										List<RuleTemplate> ruleTemplates = contentTargetingEditUserSegmentDisplayContext.getRuleTemplates();
-
-										for (RuleTemplate template : ruleTemplates) {
+										for (RuleTemplate template : contentTargetingEditUserSegmentDisplayContext.getRuleTemplates()) {
 											Rule rule = template.getRule();
-											String templateKey = template.getTemplateKey();
+
 											RuleCategory ruleCategory = ruleCategoriesRegistry.getRuleCategory(rule.getRuleCategoryKey());
 										%>
 
-											<li class="form-builder-field hide property-builder-field" data-categorydescription="<%= ruleCategory.getDescription(locale) %>" data-categoryicon="<%= ruleCategory.getIcon() %>" data-categorykey="<%= ruleCategory.getCategoryKey() %>" data-categoryname="<%= ruleCategory.getName(locale) %>" data-icon="<%= rule.getIcon() %>" data-key="<%= templateKey %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !rule.isInstantiable() %>">
+											<li class="form-builder-field hide property-builder-field" data-categorydescription="<%= ruleCategory.getDescription(locale) %>" data-categoryicon="<%= ruleCategory.getIcon() %>" data-categorykey="<%= ruleCategory.getCategoryKey() %>" data-categoryname="<%= ruleCategory.getName(locale) %>" data-icon="<%= rule.getIcon() %>" data-key="<%= template.getTemplateKey() %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !rule.isInstantiable() %>">
 												<span class="property-builder-field-icon icon <%= rule.getIcon() %>"></span>
 												<div class="property-builder-field-label">
 													<div class="row">
@@ -128,14 +121,11 @@ renderResponse.setTitle(contentTargetingEditUserSegmentDisplayContext.getUserSeg
 							<div class="form-builder-drop-container property-builder-drop-container">
 
 								<%
-								List<RuleTemplate> addedRuleTemplates = contentTargetingEditUserSegmentDisplayContext.getAddedRuleTemplates();
-
-								for (RuleTemplate template : addedRuleTemplates) {
+								for (RuleTemplate template : contentTargetingEditUserSegmentDisplayContext.getAddedRuleTemplates()) {
 									Rule rule = template.getRule();
-									String templateKey = template.getTemplateKey();
 								%>
 
-									<div class="component form-builder-field hide widget yui3-widget" data-icon="<%= rule.getIcon() %>" data-key="<%= templateKey %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !rule.isInstantiable() %>">
+									<div class="component form-builder-field hide widget yui3-widget" data-icon="<%= rule.getIcon() %>" data-key="<%= template.getTemplateKey() %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !rule.isInstantiable() %>">
 										<div>
 											<div>
 												<div class="field-header">

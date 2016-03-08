@@ -19,7 +19,6 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.portlet.util.RuleTemplate;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -30,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,10 +39,9 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentTargetingEditUserSegmentDisplayContext {
 
 	public ContentTargetingEditUserSegmentDisplayContext(
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request) {
+		RenderResponse renderResponse, HttpServletRequest request) {
 
-		_liferayPortletResponse = liferayPortletResponse;
+		_renderResponse = renderResponse;
 		_request = request;
 	}
 
@@ -58,25 +57,18 @@ public class ContentTargetingEditUserSegmentDisplayContext {
 	}
 
 	public String getBackURL() {
-		if (Validator.isNotNull(_backURL)) {
-			return _backURL;
-		}
-
 		String backURL = ParamUtil.getString(_request, "backURL");
 
-		if (Validator.isNull(backURL)) {
-			PortletURL backURLObject =
-				_liferayPortletResponse.createRenderURL();
-
-			backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
-			backURLObject.setParameter("tabs1", "user-segments");
-
-			backURL = backURLObject.toString();
+		if (Validator.isNotNull(backURL)) {
+			return backURL;
 		}
 
-		_backURL = backURL;
+		PortletURL backURLObject = _renderResponse.createRenderURL();
 
-		return _backURL;
+		backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
+		backURLObject.setParameter("tabs1", "user-segments");
+
+		return backURLObject.toString();
 	}
 
 	public String getCssItemsClass() {
@@ -157,26 +149,26 @@ public class ContentTargetingEditUserSegmentDisplayContext {
 
 		UserSegment userSegment = getUserSegment();
 
-		if (userSegment != null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			Locale locale = themeDisplay.getLocale();
-
-			_userSegmentTitle = userSegment.getName(locale);
-		}
-		else {
+		if (userSegment == null) {
 			_userSegmentTitle = StringPool.BLANK;
+
+			return _userSegmentTitle;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		_userSegmentTitle = userSegment.getName(locale);
 
 		return _userSegmentTitle;
 	}
 
 	private List<RuleTemplate> _addedRuleTemplates;
-	private String _backURL;
 	private String _cssItemsClass;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
+	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private RuleCategoriesRegistry _ruleCategoriesRegistry;
 	private List<RuleTemplate> _ruleTemplates;

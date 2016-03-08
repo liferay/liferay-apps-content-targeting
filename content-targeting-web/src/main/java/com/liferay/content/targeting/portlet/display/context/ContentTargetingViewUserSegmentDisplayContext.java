@@ -112,6 +112,13 @@ public class ContentTargetingViewUserSegmentDisplayContext {
 	public SearchContainer getUserSegmentSearchContainer()
 		throws PortalException {
 
+		if (_userSegmentSearchContainer != null) {
+			return _userSegmentSearchContainer;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		SearchContainer userSegmentSearchContainer = new SearchContainer(
 			_renderRequest, getPortletURL(), null,
 			"no-user-segments-were-found");
@@ -137,18 +144,13 @@ public class ContentTargetingViewUserSegmentDisplayContext {
 		userSegmentSearchContainer.setOrderByComparator(orderByComparator);
 		userSegmentSearchContainer.setOrderByType(orderByType);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long scopeGroupId = themeDisplay.getScopeGroupId();
-
 		if (Validator.isNotNull(getKeywords())) {
 			Sort sort = new Sort(
 				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
 
 			BaseModelSearchResult<UserSegment> searchResults =
 				UserSegmentLocalServiceUtil.searchUserSegments(
-					scopeGroupId, getKeywords(),
+					themeDisplay.getScopeGroupId(), getKeywords(),
 					userSegmentSearchContainer.getStart(),
 					userSegmentSearchContainer.getEnd(), sort);
 
@@ -158,12 +160,13 @@ public class ContentTargetingViewUserSegmentDisplayContext {
 		}
 		else {
 			int total = UserSegmentLocalServiceUtil.getUserSegmentsCount(
-				scopeGroupId);
+				themeDisplay.getScopeGroupId());
 
 			userSegmentSearchContainer.setTotal(total);
 
 			List results = UserSegmentLocalServiceUtil.getUserSegments(
-				scopeGroupId, userSegmentSearchContainer.getStart(),
+				themeDisplay.getScopeGroupId(),
+				userSegmentSearchContainer.getStart(),
 				userSegmentSearchContainer.getEnd(),
 				userSegmentSearchContainer.getOrderByComparator());
 
@@ -173,21 +176,6 @@ public class ContentTargetingViewUserSegmentDisplayContext {
 		_userSegmentSearchContainer = userSegmentSearchContainer;
 
 		return _userSegmentSearchContainer;
-	}
-
-	public boolean isAddUserSegment() {
-		if (_isAddUserSegment != null) {
-			return _isAddUserSegment;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_isAddUserSegment = ContentTargetingPermission.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			ActionKeys.ADD_USER_SEGMENT);
-
-		return _isAddUserSegment;
 	}
 
 	public boolean isDisabledManagementBar()
@@ -227,13 +215,31 @@ public class ContentTargetingViewUserSegmentDisplayContext {
 			return _isSearchEnabled;
 		}
 
-		_isSearchEnabled = !(isDisabledManagementBar());
+		_isSearchEnabled = true;
+
+		if (isDisabledManagementBar()) {
+			_isSearchEnabled = false;
+		}
 
 		return _isSearchEnabled;
 	}
 
+	public boolean showAddButton() {
+		if (_showAddButton != null) {
+			return _showAddButton;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_showAddButton = ContentTargetingPermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			ActionKeys.ADD_USER_SEGMENT);
+
+		return _showAddButton;
+	}
+
 	private String _displayStyle;
-	private Boolean _isAddUserSegment;
 	private Boolean _isDisabledManagementBar;
 	private Boolean _isIncludeCheckBox;
 	private Boolean _isSearchEnabled;
@@ -243,6 +249,7 @@ public class ContentTargetingViewUserSegmentDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private Boolean _showAddButton;
 	private SearchContainer _userSegmentSearchContainer;
 
 }

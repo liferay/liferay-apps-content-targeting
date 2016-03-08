@@ -63,6 +63,9 @@ public class ContentTargetingViewCampaignDisplayContext {
 			return _campaignSearchContainer;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		SearchContainer campaignSearchContainer = new SearchContainer(
 			_renderRequest,
 			PortletURLUtil.clone(getPortletURL(), _renderResponse), null,
@@ -88,18 +91,13 @@ public class ContentTargetingViewCampaignDisplayContext {
 		campaignSearchContainer.setOrderByComparator(orderByComparator);
 		campaignSearchContainer.setOrderByType(orderByType);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long scopeGroupId = themeDisplay.getScopeGroupId();
-
 		if (Validator.isNotNull(getKeywords())) {
 			Sort sort = new Sort(
 				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
 
 			BaseModelSearchResult<Campaign> searchResults =
 				CampaignLocalServiceUtil.searchCampaigns(
-					scopeGroupId, getKeywords(),
+					themeDisplay.getScopeGroupId(), getKeywords(),
 					campaignSearchContainer.getStart(),
 					campaignSearchContainer.getEnd(), sort);
 
@@ -108,12 +106,13 @@ public class ContentTargetingViewCampaignDisplayContext {
 		}
 		else {
 			int total = CampaignLocalServiceUtil.getCampaignsCount(
-				scopeGroupId);
+				themeDisplay.getScopeGroupId());
 
 			campaignSearchContainer.setTotal(total);
 
 			List results = CampaignLocalServiceUtil.getCampaigns(
-				scopeGroupId, campaignSearchContainer.getStart(),
+				themeDisplay.getScopeGroupId(),
+				campaignSearchContainer.getStart(),
 				campaignSearchContainer.getEnd(),
 				campaignSearchContainer.getOrderByComparator());
 
@@ -179,21 +178,6 @@ public class ContentTargetingViewCampaignDisplayContext {
 		return portletURL;
 	}
 
-	public boolean isAddCampaign() {
-		if (_isAddCampaign != null) {
-			return _isAddCampaign;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_isAddCampaign = ContentTargetingPermission.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			ActionKeys.ADD_CAMPAIGN);
-
-		return _isAddCampaign;
-	}
-
 	public boolean isDisabledManagementBar()
 		throws PortalException, PortletException {
 
@@ -229,14 +213,32 @@ public class ContentTargetingViewCampaignDisplayContext {
 			return _isSearchEnabled;
 		}
 
-		_isSearchEnabled = !(isDisabledManagementBar());
+		_isSearchEnabled = true;
+
+		if (isDisabledManagementBar()) {
+			_isSearchEnabled = false;
+		}
 
 		return _isSearchEnabled;
 	}
 
+	public boolean showAddButton() {
+		if (_showAddButton != null) {
+			return _showAddButton;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_showAddButton = ContentTargetingPermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			ActionKeys.ADD_CAMPAIGN);
+
+		return _showAddButton;
+	}
+
 	private SearchContainer _campaignSearchContainer;
 	private String _displayStyle;
-	private Boolean _isAddCampaign;
 	private Boolean _isDisabledManagementBar;
 	private Boolean _isIncludeCheckBox;
 	private Boolean _isSearchEnabled;
@@ -246,5 +248,6 @@ public class ContentTargetingViewCampaignDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private Boolean _showAddButton;
 
 }

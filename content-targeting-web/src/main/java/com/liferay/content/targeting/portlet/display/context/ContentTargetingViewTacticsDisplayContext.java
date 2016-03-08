@@ -27,7 +27,6 @@ import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -51,36 +50,27 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentTargetingViewTacticsDisplayContext {
 
 	public ContentTargetingViewTacticsDisplayContext(
-		LiferayPortletResponse liferayPortletResponse,
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		HttpServletRequest request) {
 
-		_liferayPortletResponse = liferayPortletResponse;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
 	}
 
 	public String getBackURL() {
-		if (Validator.isNotNull(_backURL)) {
-			return _backURL;
-		}
-
 		String backURL = ParamUtil.getString(_request, "backURL");
 
-		if (Validator.isNull(backURL)) {
-			PortletURL backURLObject =
-				_liferayPortletResponse.createRenderURL();
-
-			backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
-			backURLObject.setParameter("tabs1", "campaigns");
-
-			backURL = backURLObject.toString();
+		if (Validator.isNotNull(backURL)) {
+			return backURL;
 		}
 
-		_backURL = backURL;
+		PortletURL backURLObject = _renderResponse.createRenderURL();
 
-		return _backURL;
+		backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
+		backURLObject.setParameter("tabs1", "campaigns");
+
+		return backURLObject.toString();
 	}
 
 	public Campaign getCampaign() {
@@ -112,10 +102,10 @@ public class ContentTargetingViewTacticsDisplayContext {
 			return _campaignTitle;
 		}
 
-		Campaign campaign = getCampaign();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Campaign campaign = getCampaign();
 
 		if (campaign != null) {
 			_campaignTitle = campaign.getName(themeDisplay.getLocale());
@@ -182,6 +172,9 @@ public class ContentTargetingViewTacticsDisplayContext {
 			return _tacticSearchContainer;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		SearchContainer tacticsSearchContainer = new SearchContainer(
 			_renderRequest, getPortletURL(), null, "no-promotions-were-found");
 
@@ -205,19 +198,14 @@ public class ContentTargetingViewTacticsDisplayContext {
 		tacticsSearchContainer.setOrderByComparator(orderByComparator);
 		tacticsSearchContainer.setOrderByType(orderByType);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long scopeGroupId = themeDisplay.getScopeGroupId();
-
 		if (Validator.isNotNull(getKeywords())) {
 			Sort sort = new Sort(
 				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
 
 			BaseModelSearchResult<Tactic> searchResults =
 				TacticLocalServiceUtil.searchTactics(
-					getCampaignId(), scopeGroupId, getKeywords(),
-					tacticsSearchContainer.getStart(),
+					getCampaignId(), themeDisplay.getScopeGroupId(),
+					getKeywords(), tacticsSearchContainer.getStart(),
 					tacticsSearchContainer.getEnd(), sort);
 
 			tacticsSearchContainer.setTotal(searchResults.getLength());
@@ -246,14 +234,12 @@ public class ContentTargetingViewTacticsDisplayContext {
 			return _hasUpdatePermission;
 		}
 
-		Campaign campaign = getCampaign();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (campaign != null) {
+		if (getCampaign() != null) {
 			_hasUpdatePermission = CampaignPermission.contains(
-				themeDisplay.getPermissionChecker(), campaign,
+				themeDisplay.getPermissionChecker(), getCampaign(),
 				ActionKeys.UPDATE);
 		}
 		else {
@@ -272,11 +258,25 @@ public class ContentTargetingViewTacticsDisplayContext {
 
 		SearchContainer tacticSearchContainer = getTacticSearchContainer();
 
-		_isDisabledManagementBar =
-			(tacticSearchContainer.getTotal() <= 0) &&
-			 Validator.isNull(getKeywords());
+		_isDisabledManagementBar = true;
+
+		if (tacticSearchContainer.getTotal() > 0) {
+			_isDisabledManagementBar = false;
+		}
+
+		if (Validator.isNotNull(getKeywords())) {
+			_isDisabledManagementBar = false;
+		}
 
 		return _isDisabledManagementBar;
+	}
+
+	public boolean isIncludeCheckbox() {
+		if (hasUpdatePermission()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSearchEnabled() throws PortalException, PortletException {
@@ -284,12 +284,23 @@ public class ContentTargetingViewTacticsDisplayContext {
 			return _isSearchEnabled;
 		}
 
-		_isSearchEnabled = !(isDisabledManagementBar());
+		_isSearchEnabled = true;
+
+		if (isDisabledManagementBar()) {
+			_isSearchEnabled = false;
+		}
 
 		return _isSearchEnabled;
 	}
 
-	private String _backURL;
+	public boolean showAddButton() {
+		if (hasUpdatePermission()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private Campaign _campaign;
 	private Long _campaignId;
 	private String _campaignTitle;
@@ -298,7 +309,6 @@ public class ContentTargetingViewTacticsDisplayContext {
 	private Boolean _isDisabledManagementBar;
 	private Boolean _isSearchEnabled;
 	private String _keywords;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingEditReportDisplayContext contentTargetingEditReportDisplayContext = new ContentTargetingEditReportDisplayContext(liferayPortletResponse, portletConfig, request);
+ContentTargetingEditReportDisplayContext contentTargetingEditReportDisplayContext = new ContentTargetingEditReportDisplayContext(renderResponse, portletConfig, request);
 
 String className = contentTargetingEditReportDisplayContext.getClassName();
 
@@ -69,9 +69,7 @@ renderResponse.setTitle(contentTargetingEditReportDisplayContext.getReportTitle(
 		</aui:fieldset>
 
 		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" helpMessage="metrics-help" label="metrics">
-			<c:if test="<%= (report != null) && (contentTargetingEditReportDisplayContext.getReportInstance() != null) %>">
-				<%= report.getEditHTML(contentTargetingEditReportDisplayContext.getReportInstance(), contentTargetingEditReportDisplayContext.getTemplateContext()) %>
-			</c:if>
+			<%= report.getEditHTML(contentTargetingEditReportDisplayContext.getReportInstance(), contentTargetingEditReportDisplayContext.getTemplateContext()) %>
 		</aui:fieldset>
 	</aui:fieldset-group>
 

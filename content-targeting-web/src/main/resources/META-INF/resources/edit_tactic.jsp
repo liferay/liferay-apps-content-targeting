@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingEditTacticsDisplayContext contentTargetingEditTacticsDisplayContext = new ContentTargetingEditTacticsDisplayContext(liferayPortletResponse, portletConfig, request);
+ContentTargetingEditTacticsDisplayContext contentTargetingEditTacticsDisplayContext = new ContentTargetingEditTacticsDisplayContext(renderResponse, portletConfig, request);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(contentTargetingEditTacticsDisplayContext.getBackURL());
@@ -99,15 +99,11 @@ renderResponse.setTitle(contentTargetingEditTacticsDisplayContext.getTacticName(
 									<ul class="clearfix form-builder-fields-container property-builder-fields-container">
 
 										<%
-										List<ChannelTemplate> channelTemplates = contentTargetingEditTacticsDisplayContext.getChannelTemplates();
-
-										for (ChannelTemplate template : channelTemplates) {
+										for (ChannelTemplate template : contentTargetingEditTacticsDisplayContext.getChannelTemplates()) {
 											Channel channel = template.getChannel();
-
-											String templateKey = template.getTemplateKey();
 										%>
 
-											<li class="form-builder-field hide property-builder-field" data-icon="<%= channel.getIcon() %>" data-key="<%= templateKey %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !channel.isInstantiable() %>">
+											<li class="form-builder-field hide property-builder-field" data-icon="<%= channel.getIcon() %>" data-key="<%= template.getTemplateKey() %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !channel.isInstantiable() %>">
 												<span class="property-builder-field-icon icon <%= channel.getIcon() %>"></span>
 
 												<div class="property-builder-field-label">
@@ -140,15 +136,11 @@ renderResponse.setTitle(contentTargetingEditTacticsDisplayContext.getTacticName(
 							<div class="form-builder-drop-container property-builder-drop-container">
 
 								<%
-								List<ChannelTemplate> addedChannelTemplates = contentTargetingEditTacticsDisplayContext.getAddedChannelTemplates();
-
-								for (ChannelTemplate template : addedChannelTemplates) {
+								for (ChannelTemplate template : contentTargetingEditTacticsDisplayContext.getAddedChannelTemplates()) {
 									Channel channel = template.getChannel();
-
-									String templateKey = template.getTemplateKey();
 								%>
 
-									<div class="component form-builder-field hide widget yui3-widget" data-icon="<%= channel.getIcon() %>" data-key="<%= templateKey %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !channel.isInstantiable() %>">
+									<div class="component form-builder-field hide widget yui3-widget" data-icon="<%= channel.getIcon() %>" data-key="<%= template.getTemplateKey() %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !channel.isInstantiable() %>">
 										<div>
 											<div>
 												<div class="field-header">

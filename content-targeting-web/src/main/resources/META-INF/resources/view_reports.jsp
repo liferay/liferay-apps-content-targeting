@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayContext = new ContentTargetingViewReportsDisplayContext(liferayPortletResponse, portletConfig, renderRequest, renderResponse, request);
-
-String className = contentTargetingViewReportsDisplayContext.getClassName();
+ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayContext = new ContentTargetingViewReportsDisplayContext(portletConfig, renderRequest, renderResponse, request);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(contentTargetingViewReportsDisplayContext.getBackURL());
@@ -53,7 +51,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 
 <liferay-frontend:management-bar
 	disabled="<%= contentTargetingViewReportsDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= contentTargetingViewReportsDisplayContext.hasUpdatePermission() %>"
+	includeCheckBox="<%= contentTargetingViewReportsDisplayContext.isIncludeCheckBox() %>"
 	searchContainerId="reports"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -78,7 +76,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 		/>
 	</liferay-frontend:management-bar-filters>
 
-	<c:if test="<%= contentTargetingViewReportsDisplayContext.hasUpdatePermission() %>">
+	<c:if test="<%= contentTargetingViewReportsDisplayContext.isIncludeCheckBox() %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteReports" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
@@ -102,7 +100,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 
 				<portlet:renderURL var="viewReportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORT %>" />
-					<portlet:param name="className" value="<%= className %>" />
+					<portlet:param name="className" value="<%= contentTargetingViewReportsDisplayContext.getClassName(); %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(contentTargetingViewReportsDisplayContext.getClassPK()) %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="reportKey" value="<%= reportInstance.getReportKey() %>" />
@@ -141,37 +139,17 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 	</aui:form>
 </c:if>
 
-<c:if test="<%= contentTargetingViewReportsDisplayContext.hasUpdatePermission() %>">
+<c:if test="<%= contentTargetingViewReportsDisplayContext.showAddButton() %>">
 	<liferay-frontend:add-menu>
 
 		<%
-		Collection<Report> reports = contentTargetingViewReportsDisplayContext.getReports();
+		for (Report report : contentTargetingViewReportsDisplayContext.getReports()) {
+			PortletURL addReportURL = contentTargetingViewReportsDisplayContext.getAddReportURL();
 
-		for (Report report : reports) {
-			if (!report.isInstantiable()) {
-				continue;
-			}
+			addReportURL.setParameter("reportKey", report.getReportKey());
 		%>
 
-			<portlet:renderURL var="addReportURL">
-				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_REPORT %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-
-				<c:choose>
-					<c:when test="<%= className.equals(Campaign.class.getName()) %>">
-						<portlet:param name="campaignId" value="<%= String.valueOf(contentTargetingViewReportsDisplayContext.getClassPK()) %>" />
-					</c:when>
-					<c:otherwise>
-						<portlet:param name="userSegmentId" value="<%= String.valueOf(contentTargetingViewReportsDisplayContext.getClassPK()) %>" />
-					</c:otherwise>
-				</c:choose>
-
-				<portlet:param name="className" value="<%= className %>" />
-				<portlet:param name="classPK" value="<%= String.valueOf(contentTargetingViewReportsDisplayContext.getClassPK()) %>" />
-				<portlet:param name="reportKey" value="<%= report.getReportKey() %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu-item title="<%= report.getName(locale) %>" url="<%= addReportURL %>" />
+			<liferay-frontend:add-menu-item title="<%= report.getName(locale) %>" url="<%= addReportURL.toString() %>" />
 
 		<%
 		}
@@ -180,7 +158,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 	</liferay-frontend:add-menu>
 </c:if>
 
-<c:if test="<%= contentTargetingViewReportsDisplayContext.hasUpdatePermission() %>">
+<c:if test="<%= contentTargetingViewReportsDisplayContext.isIncludeCheckBox() %>">
 	<aui:script>
 		$('#<portlet:namespace />deleteReports').on(
 			'click',

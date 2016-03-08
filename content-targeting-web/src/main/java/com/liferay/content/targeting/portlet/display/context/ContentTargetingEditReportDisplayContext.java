@@ -21,7 +21,6 @@ import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,6 +30,7 @@ import java.util.Map;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,51 +40,44 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentTargetingEditReportDisplayContext {
 
 	public ContentTargetingEditReportDisplayContext(
-		LiferayPortletResponse liferayPortletResponse,
-		PortletConfig portletConfig, HttpServletRequest request) {
+		RenderResponse renderResponse, PortletConfig portletConfig,
+		HttpServletRequest request) {
 
-		_liferayPortletResponse = liferayPortletResponse;
+		_renderResponse = renderResponse;
 		_portletConfig = portletConfig;
 		_request = request;
 	}
 
 	public String getBackURL() {
-		if (Validator.isNotNull(_backURL)) {
-			return _backURL;
-		}
-
 		String backURL = ParamUtil.getString(_request, "backURL");
 
-		if (Validator.isNull(backURL)) {
-			PortletURL backURLObject =
-				_liferayPortletResponse.createRenderURL();
-
-			String className = getClassName();
-
-			if (className.equals(Campaign.class.getName())) {
-				backURLObject.setParameter(
-					"mvcRenderCommandName",
-					ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
-				backURLObject.setParameter(
-					"campaignId", String.valueOf(getClassPK()));
-			}
-			else {
-				backURLObject.setParameter(
-					"mvcRenderCommandName",
-					ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT);
-				backURLObject.setParameter(
-					"userSegmentId", String.valueOf(getClassPK()));
-			}
-
-			backURLObject.setParameter("className", className);
-			backURLObject.setParameter("classPK", String.valueOf(getClassPK()));
-
-			backURL = backURLObject.toString();
+		if (Validator.isNotNull(backURL)) {
+			return backURL;
 		}
 
-		_backURL = backURL;
+		PortletURL backURLObject = _renderResponse.createRenderURL();
 
-		return _backURL;
+		String className = getClassName();
+
+		if (className.equals(Campaign.class.getName())) {
+			backURLObject.setParameter(
+				"mvcRenderCommandName",
+				ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
+			backURLObject.setParameter(
+				"campaignId", String.valueOf(getClassPK()));
+		}
+		else {
+			backURLObject.setParameter(
+				"mvcRenderCommandName",
+				ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT);
+			backURLObject.setParameter(
+				"userSegmentId", String.valueOf(getClassPK()));
+		}
+
+		backURLObject.setParameter("className", className);
+		backURLObject.setParameter("classPK", String.valueOf(getClassPK()));
+
+		return backURLObject.toString();
 	}
 
 	public String getClassName() {
@@ -207,12 +200,11 @@ public class ContentTargetingEditReportDisplayContext {
 		return _templateContext;
 	}
 
-	private String _backURL;
 	private String _className;
 	private Long _classPK;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortletConfig _portletConfig;
 	private String _redirect;
+	private final RenderResponse _renderResponse;
 	private Report _report;
 	private ReportInstance _reportInstance;
 	private Long _reportInstanceId;

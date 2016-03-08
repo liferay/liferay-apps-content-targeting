@@ -18,7 +18,6 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -30,6 +29,7 @@ import java.util.Calendar;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,34 +39,27 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentTargetingEditCampaignDisplayContext {
 
 	public ContentTargetingEditCampaignDisplayContext(
-		LiferayPortletResponse liferayPortletResponse,
-		PortletConfig portletConfig, HttpServletRequest request) {
+		RenderResponse renderResponse, PortletConfig portletConfig,
+		HttpServletRequest request) {
 
-		_liferayPortletResponse = liferayPortletResponse;
+		_renderResponse = renderResponse;
 		_portletConfig = portletConfig;
 		_request = request;
 	}
 
 	public String getBackURL() {
-		if (Validator.isNotNull(_backURL)) {
-			return _backURL;
-		}
-
 		String backURL = ParamUtil.getString(_request, "backURL");
 
-		if (Validator.isNull(backURL)) {
-			PortletURL backURLObject =
-				_liferayPortletResponse.createRenderURL();
-
-			backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
-			backURLObject.setParameter("tabs1", "campaigns");
-
-			backURL = backURLObject.toString();
+		if (Validator.isNotNull(backURL)) {
+			return backURL;
 		}
 
-		_backURL = backURL;
+		PortletURL backURLObject = _renderResponse.createRenderURL();
 
-		return _backURL;
+		backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
+		backURLObject.setParameter("tabs1", "campaigns");
+
+		return backURLObject.toString();
 	}
 
 	public Campaign getCampaign() {
@@ -98,10 +91,10 @@ public class ContentTargetingEditCampaignDisplayContext {
 			return _campaignTitle;
 		}
 
-		Campaign campaign = getCampaign();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Campaign campaign = getCampaign();
 
 		if (campaign != null) {
 			_campaignTitle = campaign.getName(themeDisplay.getLocale());
@@ -250,15 +243,14 @@ public class ContentTargetingEditCampaignDisplayContext {
 		return true;
 	}
 
-	private String _backURL;
 	private Campaign _campaign;
 	private Long _campaignId;
 	private String _campaignTitle;
 	private Calendar _endDate;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortletConfig _portletConfig;
 	private Integer _priority;
 	private String _redirect;
+	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private Calendar _startDate;
 	private String _timeZoneId;

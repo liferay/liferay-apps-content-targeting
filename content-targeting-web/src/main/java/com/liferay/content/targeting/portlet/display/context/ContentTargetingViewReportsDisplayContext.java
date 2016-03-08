@@ -31,14 +31,15 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -59,41 +60,59 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentTargetingViewReportsDisplayContext {
 
 	public ContentTargetingViewReportsDisplayContext(
-		LiferayPortletResponse liferayPortletResponse,
 		PortletConfig portletConfig, RenderRequest renderRequest,
 		RenderResponse renderResponse, HttpServletRequest request) {
 
-		_liferayPortletResponse = liferayPortletResponse;
 		_portletConfig = portletConfig;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
 	}
 
+	public PortletURL getAddReportURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL addReportURL = _renderResponse.createRenderURL();
+
+		addReportURL.setParameter(
+			"mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_REPORT);
+		addReportURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		if (getClassName().equals(Campaign.class.getName())) {
+			addReportURL.setParameter(
+				"campaignId", String.valueOf(getClassPK()));
+		}
+		else {
+			addReportURL.setParameter(
+				"userSegmentId", String.valueOf(getClassPK()));
+		}
+
+		addReportURL.setParameter("className", getClassName());
+		addReportURL.setParameter("classPK", String.valueOf(getClassPK()));
+
+		return addReportURL;
+	}
+
 	public String getBackURL() {
 		String backURL = ParamUtil.getString(_request, "backURL");
 
-		if (Validator.isNull(backURL)) {
-			PortletURL backURLObject =
-				_liferayPortletResponse.createRenderURL();
-
-			backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
-
-			String className = getClassName();
-
-			if (className.equals(Campaign.class.getName())) {
-				backURLObject.setParameter("tabs1", "campaigns");
-			}
-			else {
-				backURLObject.setParameter("tabs1", "user-segments");
-			}
-
-			backURL = backURLObject.toString();
+		if (Validator.isNotNull(backURL)) {
+			return backURL;
 		}
 
-		_backURL = backURL;
+		PortletURL backURLObject = _renderResponse.createRenderURL();
 
-		return _backURL;
+		backURLObject.setParameter("mvcPath", ContentTargetingPath.VIEW);
+
+		if (getClassName().equals(Campaign.class.getName())) {
+			backURLObject.setParameter("tabs1", "campaigns");
+		}
+		else {
+			backURLObject.setParameter("tabs1", "user-segments");
+		}
+
+		return backURLObject.toString();
 	}
 
 	public String getClassName() {
@@ -203,12 +222,23 @@ public class ContentTargetingViewReportsDisplayContext {
 		return _redirect;
 	}
 
-	public Collection<Report> getReports() {
+	public List<Report> getReports() {
 		if (_reports != null) {
 			return _reports;
 		}
 
-		_reports = (Collection<Report>)_request.getAttribute("reports");
+		_reports = (List<Report>)_request.getAttribute("reports");
+
+		_reports = ListUtil.filter(
+			_reports,
+			new PredicateFilter<Report>() {
+
+				@Override
+				public boolean filter(Report report) {
+					return report.isInstantiable();
+				}
+
+			});
 
 		return _reports;
 	}
@@ -219,7 +249,7 @@ public class ContentTargetingViewReportsDisplayContext {
 
 		reportsSearchContainer.setId("reports");
 		reportsSearchContainer.setRowChecker(
-			new ReportInstanceRowChecker(_liferayPortletResponse));
+			new ReportInstanceRowChecker(_renderResponse));
 		reportsSearchContainer.setSearch(true);
 
 		boolean orderByAsc = false;
@@ -363,6 +393,14 @@ public class ContentTargetingViewReportsDisplayContext {
 		return _isDisabledManagementBar;
 	}
 
+	public boolean isIncludeCheckBox() throws PortalException {
+		if (hasUpdatePermission()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isStagingGroup() {
 		long scopeGroupId = getScopeGroupId();
 
@@ -371,21 +409,27 @@ public class ContentTargetingViewReportsDisplayContext {
 		return scopeGroup.isStagingGroup();
 	}
 
-	private String _backURL;
+	public boolean showAddButton() throws PortalException {
+		if (hasUpdatePermission()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _className;
 	private Long _classPK;
 	private String _displayStyle;
 	private Boolean _hasUpdatePermission;
 	private Boolean _isDisabledManagementBar;
 	private String _keywords;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortletConfig _portletConfig;
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private Collection<Report> _reports;
+	private List<Report> _reports;
 	private SearchContainer _reportsSearchContainer;
 	private String _reportsTitle;
 	private final HttpServletRequest _request;

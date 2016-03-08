@@ -119,7 +119,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= contentTargetingViewCampaignDisplayContext.isAddCampaign() %>">
+<c:if test="<%= contentTargetingViewCampaignDisplayContext.showAddButton() %>">
 	<portlet:renderURL var="addCampaignURL">
 		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
