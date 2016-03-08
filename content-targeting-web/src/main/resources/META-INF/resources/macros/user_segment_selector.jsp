@@ -36,8 +36,9 @@ String filterIds = HtmlUtil.escapeJS(ParamUtil.getString(request, "filterIds", "
 
 	<liferay-ui:icon
 		id="manageUserSegments"
-		image="configuration"
+		icon="cog"
 		label="<%= false %>"
+		markupView="lexicon"
 		message="manage-user-segments"
 		url="javascript:;"
 	/>
