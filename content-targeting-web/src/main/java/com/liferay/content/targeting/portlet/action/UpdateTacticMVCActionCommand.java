@@ -381,10 +381,10 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 			_userId = userId;
 			_campaignId = campaignId;
 			_tacticId = tacticId;
-			_tacticService = tacticService;
 			_nameMap = nameMap;
 			_descriptionMap = descriptionMap;
 			_userSegmentIds = userSegmentIds;
+			_tacticService = tacticService;
 			_serviceContext = serviceContext;
 		}
 
