@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.PrintWriter;
 
-import java.util.Arrays;
-
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -46,10 +44,10 @@ public abstract class TrackingDynamicInclude extends BaseDynamicInclude {
 		stringBundler.append("', referrers: [{");
 		stringBundler.append("referrerClassName: '");
 		stringBundler.append(referrerClassName);
-		stringBundler.append("', referrerClassPKs: '");
+		stringBundler.append("', referrerClassPKs: ");
 		stringBundler.append(
-			Arrays.deepToString(ArrayUtil.toArray(referrerClassPKs)));
-		stringBundler.append("'}]});</script>");
+			ArrayUtil.toString(ArrayUtil.toArray(referrerClassPKs), "", ","));
+		stringBundler.append("}]});</script>");
 
 		PrintWriter printWriter = response.getWriter();
 

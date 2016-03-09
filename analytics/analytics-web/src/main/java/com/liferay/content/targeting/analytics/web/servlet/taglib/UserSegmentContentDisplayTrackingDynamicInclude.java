@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
@@ -43,10 +45,22 @@ public class UserSegmentContentDisplayTrackingDynamicInclude
 		long assetClassPK = GetterUtil.getLong(
 			(String)request.getAttribute("assetClassPK"));
 
+		String analyticsReferrerClassName =
+			"com.liferay.content.targeting.model.UserSegment";
+		long[] analyticsReferrerIds = (long[])request.getAttribute(
+			"userSegmentIds");
+
+		analyticsReferrerClassName = HtmlUtil.escapeJS(
+			ParamUtil.getString(
+				request, "analyticsReferrerClassName",
+				analyticsReferrerClassName));
+		analyticsReferrerIds = ParamUtil.getLongValues(
+			request, "analyticsReferrerClassPKs", analyticsReferrerIds);
+
 		try {
 			doInclude(
-				response, "view", assetClassName, assetClassPK, assetClassName,
-				new long[] {assetClassPK});
+				response, "view", assetClassName, assetClassPK,
+				analyticsReferrerClassName, analyticsReferrerIds);
 		}
 		catch (Exception e) {
 			_log.error("Unable to include analytics tracking JS", e);
