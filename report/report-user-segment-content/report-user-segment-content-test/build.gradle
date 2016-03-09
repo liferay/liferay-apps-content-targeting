@@ -8,6 +8,6 @@ dependencies {
 	testIntegrationCompile project(":apps:content-targeting:content-targeting-service")
 	testIntegrationCompile project(":apps:content-targeting:report:report-user-segment-content:report-user-segment-content-api")
 	testIntegrationCompile project(":apps:content-targeting:report:report-user-segment-content:report-user-segment-content-service")
-	testIntegrationCompile project(":apps:web-experience-management:journal:journal-api")
+	testIntegrationCompile project(":apps:web-experience:journal:journal-api")
 	testIntegrationCompile project(":core:registry-api")
 }

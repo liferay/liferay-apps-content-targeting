@@ -7,6 +7,6 @@ dependencies {
 	testIntegrationCompile project(":apps:content-targeting:content-targeting-api")
 	testIntegrationCompile project(":apps:content-targeting:content-targeting-service")
 	testIntegrationCompile project(":apps:content-targeting:rule:rule-device")
-	testIntegrationCompile project(":apps:platform:mobile-device-rules:mobile-device-rules-api")
+	testIntegrationCompile project(":apps:foundation:mobile-device-rules:mobile-device-rules-api")
 	testIntegrationCompile project(":core:registry-api")
 }

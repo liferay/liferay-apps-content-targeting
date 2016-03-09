@@ -21,7 +21,7 @@ dependencies {
 	provided project(":apps:content-targeting:content-targeting-api")
 	provided project(":apps:content-targeting:content-targeting-service")
 	provided project(":apps:content-targeting:rule:rule-score-points:rule-score-points-api")
-	provided project(":apps:platform:portal:portal-upgrade")
+	provided project(":apps:foundation:portal:portal-upgrade")
 }
 
 liferay {

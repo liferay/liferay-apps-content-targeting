@@ -1,6 +1,7 @@
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.4"
+	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.4"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.1"
@@ -13,8 +14,7 @@ dependencies {
 	provided project(":apps:content-targeting:analytics:analytics-api")
 	provided project(":apps:content-targeting:anonymous-users:anonymous-users-api")
 	provided project(":apps:content-targeting:content-targeting-api")
-	provided project(":apps:platform:portal-configuration:portal-configuration-metatype")
-	provided project(":apps:platform:portal:portal-upgrade")
+	provided project(":apps:foundation:portal:portal-upgrade")
 }
 
 liferay {
