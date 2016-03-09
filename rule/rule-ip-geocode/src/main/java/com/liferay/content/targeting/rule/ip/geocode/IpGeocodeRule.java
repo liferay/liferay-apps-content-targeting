@@ -97,8 +97,8 @@ public class IpGeocodeRule extends BaseRule {
 		if (country == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Couldn't get country from " +
-						countryId + ", evaluation failed.");
+					"Couldn't get country from " + countryId +
+						", evaluation failed.");
 			}
 
 			return false;
@@ -117,8 +117,8 @@ public class IpGeocodeRule extends BaseRule {
 		if (countryCode == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Couldn't get countryCode from " +
-						ip + ", evaluation failed.");
+					"Couldn't get countryCode from " + ip +
+						", evaluation failed.");
 			}
 
 			return false;

@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.content.targeting.report.user.segment.content.configuration.UserSegmentContentReportServiceConfiguration",
 	localization = "content/Language",
-	name = "%content.targeting.report.user.segment.content.configuration.name"
+	name = "content.targeting.report.user.segment.content.configuration.name"
 )
 public interface UserSegmentContentReportServiceConfiguration {
 

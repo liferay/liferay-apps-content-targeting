@@ -405,8 +405,7 @@ public class CTActionReport extends BaseReport {
 						reportInstanceId);
 				}
 
-			}
-		);
+			});
 	}
 
 	@Override

@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.content.targeting.analytics.configuration.AnalyticsServiceConfiguration",
 	localization = "content/Language",
-	name = "%content.targeting.analytics.service.configuration.name"
+	name = "content.targeting.analytics.service.configuration.name"
 )
 public interface AnalyticsServiceConfiguration {
 

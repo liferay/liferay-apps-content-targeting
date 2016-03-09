@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.content.targeting.report.campaign.tracking.action.configuration.CampaignTrackingActionReportServiceConfiguration",
 	localization = "content/Language",
-	name = "%content.targeting.report.campaign.tracking.action.configuration.name"
+	name = "content.targeting.report.campaign.tracking.action.configuration.name"
 )
 public interface CampaignTrackingActionReportServiceConfiguration {
 

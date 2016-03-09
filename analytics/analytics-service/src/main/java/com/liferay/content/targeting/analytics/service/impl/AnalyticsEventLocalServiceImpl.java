@@ -154,8 +154,7 @@ public class AnalyticsEventLocalServiceImpl
 					deleteAnalyticsEvents(company.getCompanyId(), getMaxAge());
 				}
 
-			}
-		);
+			});
 
 		actionableDynamicQuery.performActions();
 	}

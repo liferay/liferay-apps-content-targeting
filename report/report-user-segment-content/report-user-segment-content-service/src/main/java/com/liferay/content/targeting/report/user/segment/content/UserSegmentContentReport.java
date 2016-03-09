@@ -107,8 +107,7 @@ public class UserSegmentContentReport extends BaseReport {
 						getUserSegmentContentsCount(classPK);
 				}
 
-			}
-		);
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

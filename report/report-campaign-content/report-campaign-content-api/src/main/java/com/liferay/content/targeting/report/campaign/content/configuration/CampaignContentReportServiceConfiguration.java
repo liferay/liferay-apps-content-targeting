@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.content.targeting.report.campaign.content.configuration.CampaignContentReportServiceConfiguration",
 	localization = "content/Language",
-	name = "%content.targeting.report.campaign.content.configuration.name"
+	name = "content.targeting.report.campaign.content.configuration.name"
 )
 public interface CampaignContentReportServiceConfiguration {
 

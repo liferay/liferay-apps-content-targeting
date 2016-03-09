@@ -119,9 +119,8 @@ public class ChannelInstanceStagedModelDataHandler
 			e.printStackTrace();
 			_log.error(
 				"Cannot export custom data for channel " +
-					channel.getName(LocaleUtil.getDefault()) +
-						" in tactic" +
-							tactic.getName(LocaleUtil.getDefault()),
+					channel.getName(LocaleUtil.getDefault()) + " in tactic" +
+						tactic.getName(LocaleUtil.getDefault()),
 				e);
 		}
 

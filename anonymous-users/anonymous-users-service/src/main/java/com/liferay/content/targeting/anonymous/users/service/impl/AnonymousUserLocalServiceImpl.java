@@ -93,8 +93,7 @@ public class AnonymousUserLocalServiceImpl
 						company.getCompanyId(), getMaxAge(), false);
 				}
 
-			}
-		);
+			});
 
 		actionableDynamicQuery.performActions();
 	}

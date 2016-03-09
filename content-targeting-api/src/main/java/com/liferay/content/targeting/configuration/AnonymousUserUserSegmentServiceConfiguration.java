@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.content.targeting.configuration.AnonymousUserUserSegmentServiceConfiguration",
 	localization = "content/Language",
-	name = "%com.liferay.content.targeting.configuration.name"
+	name = "com.liferay.content.targeting.configuration.name"
 )
 public interface AnonymousUserUserSegmentServiceConfiguration {
 

@@ -107,8 +107,7 @@ public class CampaignContentReport extends BaseReport {
 							classPK);
 				}
 
-			}
-		);
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
