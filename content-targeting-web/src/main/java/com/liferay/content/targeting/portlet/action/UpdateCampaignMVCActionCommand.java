@@ -20,11 +20,14 @@ import com.liferay.content.targeting.exception.InvalidTrackingActionsException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
+import com.liferay.content.targeting.portlet.display.context.ContentTargetingEditCampaignDisplayContext;
 import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -144,6 +147,19 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception e) {
 			PortalUtil.copyRequestParameters(request, response);
+
+			LiferayPortletRequest liferayPortletRequest = PortalUtil.getLiferayPortletRequest(request);
+			LiferayPortletResponse liferayPortletResponse = PortalUtil.getLiferayPortletResponse(response);
+
+			ContentTargetingEditCampaignDisplayContext
+				contentTargetingEditCampaignDisplayContext =
+				new ContentTargetingEditCampaignDisplayContext(
+					liferayPortletRequest, liferayPortletResponse,
+					_userSegmentLocalService);
+
+			request.setAttribute(
+				"contentTargetingEditCampaignDisplayContext",
+				contentTargetingEditCampaignDisplayContext);
 
 			SessionErrors.add(request, e.getClass(), e);
 

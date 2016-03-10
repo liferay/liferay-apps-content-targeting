@@ -14,23 +14,15 @@
 
 package com.liferay.content.targeting.portlet.action;
 
-import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
+import com.liferay.content.targeting.portlet.display.context.ContentTargetingEditCampaignDisplayContext;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
-import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -56,73 +48,16 @@ public class EditCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-		long campaignId = ParamUtil.getLong(renderRequest, "campaignId");
+		ContentTargetingEditCampaignDisplayContext
+			contentTargetingEditCampaignDisplayContext =
+				new ContentTargetingEditCampaignDisplayContext(
+					(LiferayPortletRequest) renderRequest,
+					(LiferayPortletResponse) renderResponse,
+					_userSegmentLocalService);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		boolean isolated = themeDisplay.isIsolated();
-
-		try {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
-
-			long[] vocabularyGroupIds = new long[1];
-			long[] vocabularyIds = new long[1];
-
-			if (themeDisplay.getScopeGroupId() ==
-					themeDisplay.getCompanyGroupId()) {
-
-				vocabularyGroupIds[0] = themeDisplay.getCompanyGroupId();
-
-				vocabularyIds[0] = UserSegmentUtil.getAssetVocabularyId(
-					themeDisplay.getUserId(), serviceContext);
-			}
-			else {
-				vocabularyGroupIds =
-					ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
-						themeDisplay.getSiteGroupId());
-				vocabularyIds = UserSegmentUtil.getAssetVocabularyIds(
-					vocabularyGroupIds);
-			}
-
-			renderRequest.setAttribute(
-				"vocabularyGroupIds", StringUtil.merge(vocabularyGroupIds));
-			renderRequest.setAttribute(
-				"vocabularyIds", StringUtil.merge(vocabularyIds));
-
-			String userSegmentAssetCategoryIdsAsString = StringPool.BLANK;
-			String userSegmentAssetCategoryNames = StringPool.BLANK;
-
-			if (campaignId > 0) {
-				List<UserSegment> campaignUserSegments = null;
-
-				campaignUserSegments =
-					_userSegmentLocalService.getCampaignUserSegments(
-						campaignId);
-
-				long[] userSegmentAssetCategoryIds =
-					ContentTargetingUtil.getAssetCategoryIds(
-						campaignUserSegments);
-
-				userSegmentAssetCategoryIdsAsString = StringUtil.merge(
-					userSegmentAssetCategoryIds);
-
-				userSegmentAssetCategoryNames =
-					ContentTargetingUtil.getAssetCategoryNames(
-						userSegmentAssetCategoryIds, themeDisplay.getLocale());
-			}
-
-			renderRequest.setAttribute(
-				"userSegmentAssetCategoryIdsAsString",
-				userSegmentAssetCategoryIdsAsString);
-			renderRequest.setAttribute(
-				"userSegmentAssetCategoryNames", userSegmentAssetCategoryNames);
-		}
-		finally {
-			themeDisplay.setIsolated(isolated);
-		}
+		renderRequest.setAttribute(
+			"contentTargetingEditCampaignDisplayContext",
+			contentTargetingEditCampaignDisplayContext);
 
 		return "/edit_campaign.jsp";
 	}
