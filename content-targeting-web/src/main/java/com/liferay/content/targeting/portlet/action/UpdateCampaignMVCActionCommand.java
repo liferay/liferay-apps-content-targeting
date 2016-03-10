@@ -148,14 +148,16 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception e) {
 			PortalUtil.copyRequestParameters(request, response);
 
-			LiferayPortletRequest liferayPortletRequest = PortalUtil.getLiferayPortletRequest(request);
-			LiferayPortletResponse liferayPortletResponse = PortalUtil.getLiferayPortletResponse(response);
+			LiferayPortletRequest liferayPortletRequest =
+				PortalUtil.getLiferayPortletRequest(request);
+			LiferayPortletResponse liferayPortletResponse =
+				PortalUtil.getLiferayPortletResponse(response);
 
 			ContentTargetingEditCampaignDisplayContext
 				contentTargetingEditCampaignDisplayContext =
-				new ContentTargetingEditCampaignDisplayContext(
-					liferayPortletRequest, liferayPortletResponse,
-					_userSegmentLocalService);
+					new ContentTargetingEditCampaignDisplayContext(
+						liferayPortletRequest, liferayPortletResponse,
+						_userSegmentLocalService);
 
 			request.setAttribute(
 				"contentTargetingEditCampaignDisplayContext",

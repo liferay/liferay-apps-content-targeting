@@ -49,7 +49,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentTargetingEditCampaignDisplayContext {
 
 	public ContentTargetingEditCampaignDisplayContext(
-		LiferayPortletRequest liferayPortletRequest, LiferayPortletResponse liferayPortletResponse,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
 		UserSegmentLocalService userSegmentLocalService) {
 
 		_liferayPortletRequest = liferayPortletRequest;
@@ -328,10 +329,10 @@ public class ContentTargetingEditCampaignDisplayContext {
 	private Long _campaignId;
 	private String _campaignTitle;
 	private Calendar _endDate;
-	private Integer _priority;
-	private String _redirect;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private Integer _priority;
+	private String _redirect;
 	private final HttpServletRequest _request;
 	private Calendar _startDate;
 	private final ThemeDisplay _themeDisplay;

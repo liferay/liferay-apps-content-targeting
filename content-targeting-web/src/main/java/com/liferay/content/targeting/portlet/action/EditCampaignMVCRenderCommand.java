@@ -51,8 +51,8 @@ public class EditCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 		ContentTargetingEditCampaignDisplayContext
 			contentTargetingEditCampaignDisplayContext =
 				new ContentTargetingEditCampaignDisplayContext(
-					(LiferayPortletRequest) renderRequest,
-					(LiferayPortletResponse) renderResponse,
+					(LiferayPortletRequest)renderRequest,
+					(LiferayPortletResponse)renderResponse,
 					_userSegmentLocalService);
 
 		renderRequest.setAttribute(
