@@ -13,14 +13,15 @@
  * details.
  */
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 <%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-
-<%@ taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
@@ -55,27 +56,11 @@ int youngerThan = GetterUtil.getInteger(displayContext.get("youngerThan"), 100);
 	<div class="alert alert-error">
 		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-the-age-field-has-been-removed" /></strong>
 
-		<#assign />
-
-		<#if portalSettingsURL??>
-			<#assign enableLocationLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationLabel + "</a>" />
-		</#if>
-
-		<liferay-ui:message
-			arguments="<%= enableLocationLabel %>"
-			key="it-can-be-enabled-in-x"
-		/>
+		<liferay-ui:message arguments="<%= enableLocationLabel %>" key="it-can-be-enabled-in-x" />
 	</div>
 </c:if>
 
-<aui:input
-	cssClass="slider-input"
-	inlineField="<%= true %>"
-	maxlength="3"
-	name="olderThan"
-	size="2"
-	value="<%= olderThan %>"
-/>
+<aui:input cssClass="slider-input" inlineField="<%= true %>" maxlength="3" name="olderThan" size="2" value="<%= olderThan %>" />
 
 <aui:input cssClass="slider-input" inlineField="<%= true %>" maxlength="3" name="youngerThan" size="2" value="<%= youngerThan %>">
 	<aui:validator errorMessage="the-age-range-is-invalid" name="custom">

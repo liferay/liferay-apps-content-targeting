@@ -144,10 +144,6 @@ public abstract class BaseTrackingAction implements TrackingAction {
 		return true;
 	}
 
-	protected String getFormTemplatePath() {
-		return _FORM_TEMPLATE_PATH;
-	}
-
 	@Override
 	public String processTrackingAction(
 		PortletRequest request, PortletResponse response, String id,
@@ -182,6 +178,10 @@ public abstract class BaseTrackingAction implements TrackingAction {
 		sb.append(".");
 
 		return sb.toString();
+	}
+
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH;
 	}
 
 	protected void populateContext(

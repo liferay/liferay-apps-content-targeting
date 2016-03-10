@@ -131,14 +131,6 @@ public abstract class BaseReport implements Report {
 		return true;
 	}
 
-	protected String getEditFormTemplatePath() {
-		return _EDIT_FORM_TEMPLATE_PATH;
-	}
-
-	protected String getFormTemplatePath() {
-		return _FORM_TEMPLATE_PATH;
-	}
-
 	@Override
 	public String processEditReport(
 			PortletRequest request, PortletResponse response,
@@ -156,6 +148,14 @@ public abstract class BaseReport implements Report {
 	@Override
 	public void updateReport(ReportInstance reportInstance) {
 		updateReport(reportInstance.getClassPK());
+	}
+
+	protected String getEditFormTemplatePath() {
+		return _EDIT_FORM_TEMPLATE_PATH;
+	}
+
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH;
 	}
 
 	protected void populateContext(Map<String, Object> context) {
