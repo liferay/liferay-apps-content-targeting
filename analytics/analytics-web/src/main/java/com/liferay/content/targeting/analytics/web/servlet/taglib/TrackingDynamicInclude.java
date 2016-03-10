@@ -44,10 +44,10 @@ public abstract class TrackingDynamicInclude extends BaseDynamicInclude {
 		stringBundler.append("', referrers: [{");
 		stringBundler.append("referrerClassName: '");
 		stringBundler.append(referrerClassName);
-		stringBundler.append("', referrerClassPKs: ");
+		stringBundler.append("', referrerClassPKs: '");
 		stringBundler.append(
 			ArrayUtil.toString(ArrayUtil.toArray(referrerClassPKs), "", ","));
-		stringBundler.append("}]});</script>");
+		stringBundler.append("'}]});</script>");
 
 		PrintWriter printWriter = response.getWriter();
 
