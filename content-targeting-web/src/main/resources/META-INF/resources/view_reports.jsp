@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayContext = new ContentTargetingViewReportsDisplayContext(portletConfig, renderRequest, renderResponse, request);
+ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayContext = new ContentTargetingViewReportsDisplayContext(renderRequest, renderResponse);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(contentTargetingViewReportsDisplayContext.getBackURL());

@@ -22,7 +22,9 @@ import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -30,6 +32,7 @@ import java.util.Map;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,12 +43,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentTargetingEditReportDisplayContext {
 
 	public ContentTargetingEditReportDisplayContext(
-		RenderResponse renderResponse, PortletConfig portletConfig,
-		HttpServletRequest request) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_portletConfig = portletConfig;
-		_request = request;
+
+		_request = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public String getBackURL() {
@@ -173,8 +176,12 @@ public class ContentTargetingEditReportDisplayContext {
 			_reportTitle = reportInstance.getName(themeDisplay.getLocale());
 		}
 		else {
+			PortletConfig portletConfig =
+				(PortletConfig)_renderRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_CONFIG);
+
 			_reportTitle = LanguageUtil.get(
-				_portletConfig.getResourceBundle(themeDisplay.getLocale()),
+				portletConfig.getResourceBundle(themeDisplay.getLocale()),
 				"new-report");
 		}
 
@@ -202,8 +209,8 @@ public class ContentTargetingEditReportDisplayContext {
 
 	private String _className;
 	private Long _classPK;
-	private final PortletConfig _portletConfig;
 	private String _redirect;
+	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Report _report;
 	private ReportInstance _reportInstance;

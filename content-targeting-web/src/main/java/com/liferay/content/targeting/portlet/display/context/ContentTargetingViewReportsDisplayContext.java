@@ -35,9 +35,11 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -59,13 +61,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentTargetingViewReportsDisplayContext {
 
 	public ContentTargetingViewReportsDisplayContext(
-		PortletConfig portletConfig, RenderRequest renderRequest,
-		RenderResponse renderResponse, HttpServletRequest request) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_portletConfig = portletConfig;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = request;
+
+		_request = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public PortletURL getAddReportURL() {
@@ -305,8 +306,12 @@ public class ContentTargetingViewReportsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		PortletConfig portletConfig =
+			(PortletConfig)_renderRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
+
 		_reportsTitle = LanguageUtil.get(
-			_portletConfig.getResourceBundle(themeDisplay.getLocale()),
+			portletConfig.getResourceBundle(themeDisplay.getLocale()),
 			"reports");
 
 		return _reportsTitle;
@@ -423,7 +428,6 @@ public class ContentTargetingViewReportsDisplayContext {
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
-	private final PortletConfig _portletConfig;
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

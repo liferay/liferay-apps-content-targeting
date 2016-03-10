@@ -20,6 +20,7 @@ import com.liferay.content.targeting.portlet.util.RuleTemplate;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,10 +40,11 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentTargetingEditUserSegmentDisplayContext {
 
 	public ContentTargetingEditUserSegmentDisplayContext(
-		RenderResponse renderResponse, HttpServletRequest request) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderResponse = renderResponse;
-		_request = request;
+
+		_request = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public List<RuleTemplate> getAddedRuleTemplates() {

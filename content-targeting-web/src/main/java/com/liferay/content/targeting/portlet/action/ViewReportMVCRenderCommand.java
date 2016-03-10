@@ -18,8 +18,6 @@ import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.util.PortletKeys;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import java.util.Map;
@@ -82,9 +80,6 @@ public class ViewReportMVCRenderCommand extends BaseMVCRenderCommand {
 
 		_trackingActionsRegistry = null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ViewReportMVCRenderCommand.class);
 
 	private ReportsRegistry _reportsRegistry;
 	private TrackingActionsRegistry _trackingActionsRegistry;

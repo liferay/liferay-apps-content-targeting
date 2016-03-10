@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -47,12 +48,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentTargetingViewCampaignDisplayContext {
 
 	public ContentTargetingViewCampaignDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest request) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_request = request;
+
+		_request = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public SearchContainer getCampaignSearchContainer()

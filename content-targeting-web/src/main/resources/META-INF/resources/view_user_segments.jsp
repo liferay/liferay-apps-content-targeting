@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDisplayContext = new ContentTargetingViewUserSegmentDisplayContext(renderRequest, renderResponse, request);
+ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDisplayContext = new ContentTargetingViewUserSegmentDisplayContext(renderRequest, renderResponse);
 %>
 
 <liferay-ui:error key="com.liferay.content.targeting.exception.UsedUserSegmentException">
