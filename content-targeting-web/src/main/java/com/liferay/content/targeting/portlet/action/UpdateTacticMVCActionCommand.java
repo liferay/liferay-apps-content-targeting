@@ -26,6 +26,7 @@ import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
+import com.liferay.content.targeting.portlet.display.context.ContentTargetingEditTacticsDisplayContext;
 import com.liferay.content.targeting.service.ChannelInstanceLocalService;
 import com.liferay.content.targeting.service.ChannelInstanceService;
 import com.liferay.content.targeting.service.TacticService;
@@ -34,6 +35,8 @@ import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -160,6 +163,21 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception e) {
 			PortalUtil.copyRequestParameters(request, response);
+
+			LiferayPortletRequest liferayPortletRequest =
+				PortalUtil.getLiferayPortletRequest(request);
+			LiferayPortletResponse liferayPortletResponse =
+				PortalUtil.getLiferayPortletResponse(response);
+
+			ContentTargetingEditTacticsDisplayContext
+				contentTargetingEditTacticsDisplayContext =
+					new ContentTargetingEditTacticsDisplayContext(
+						liferayPortletRequest, liferayPortletResponse,
+						_userSegmentLocalService);
+
+			request.setAttribute(
+				"contentTargetingEditTacticsDisplayContext",
+				contentTargetingEditTacticsDisplayContext);
 
 			SessionErrors.add(request, e.getClass(), e);
 

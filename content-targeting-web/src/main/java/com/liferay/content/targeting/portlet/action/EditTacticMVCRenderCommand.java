@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
@@ -89,7 +91,8 @@ public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 			ContentTargetingEditTacticsDisplayContext
 				contentTargetingEditTacticsDisplayContext =
 					new ContentTargetingEditTacticsDisplayContext(
-						renderRequest, renderResponse,
+						(LiferayPortletRequest)renderRequest,
+						(LiferayPortletResponse)renderResponse,
 						_userSegmentLocalService);
 
 			renderRequest.setAttribute(

@@ -25,6 +25,8 @@ import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,8 +41,6 @@ import java.util.List;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,14 +50,15 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentTargetingEditTacticsDisplayContext {
 
 	public ContentTargetingEditTacticsDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
 		UserSegmentLocalService userSegmentLocalService) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
+		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 		_userSegmentLocalService = userSegmentLocalService;
 
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -82,7 +83,8 @@ public class ContentTargetingEditTacticsDisplayContext {
 		String backURL = ParamUtil.getString(_request, "backURL");
 
 		if (Validator.isNull(backURL)) {
-			PortletURL backURLObject = _renderResponse.createRenderURL();
+			PortletURL backURLObject =
+				_liferayPortletResponse.createRenderURL();
 
 			backURLObject.setParameter(
 				"mvcRenderCommandName",
@@ -201,7 +203,7 @@ public class ContentTargetingEditTacticsDisplayContext {
 		}
 		else {
 			PortletConfig portletConfig =
-				(PortletConfig)_renderRequest.getAttribute(
+				(PortletConfig) _liferayPortletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_CONFIG);
 
 			_tacticName = LanguageUtil.get(
@@ -314,9 +316,9 @@ public class ContentTargetingEditTacticsDisplayContext {
 	private String _campaignUserSegmentsIds;
 	private List<ChannelTemplate> _channelTemplates;
 	private String _cssItemsClass;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private Tactic _tactic;
 	private Long _tacticId;
