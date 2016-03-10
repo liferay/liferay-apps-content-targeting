@@ -146,6 +146,12 @@ public class ContentTargetingContextUtil {
 
 		request.setAttribute("displayContext", context);
 
+		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader(
+			request, servletContext.getClassLoader());
+
+		request.setAttribute(
+			WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
+
 		ThemeUtil.includeJSP(
 			servletContext, request, bufferResponse, path, theme);
 
@@ -182,11 +188,10 @@ public class ContentTargetingContextUtil {
 		// Aggregate language bundles
 
 		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader(
-			request, clazz);
+			request, clazz.getClassLoader());
 
 		request.setAttribute(
-			WebKeys.RESOURCE_BUNDLE_LOADER,
-			getResourceBundleLoader(request, clazz));
+			WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
 
 		String languageId = LanguageUtil.getLanguageId(request);
 
@@ -266,7 +271,7 @@ public class ContentTargetingContextUtil {
 	}
 
 	protected static ResourceBundleLoader getResourceBundleLoader(
-		HttpServletRequest request, Class clazz) {
+		HttpServletRequest request, ClassLoader classLoader) {
 
 		ResourceBundleLoader resourceBundleLoader =
 			(ResourceBundleLoader)request.getAttribute(
@@ -275,7 +280,7 @@ public class ContentTargetingContextUtil {
 		if (resourceBundleLoader != null) {
 			resourceBundleLoader = new AggregateResourceBundleLoader(
 				resourceBundleLoader,
-				new ClassResourceBundleLoader("content.Language", clazz));
+				new ClassResourceBundleLoader("content.Language", classLoader));
 		}
 
 		return resourceBundleLoader;
