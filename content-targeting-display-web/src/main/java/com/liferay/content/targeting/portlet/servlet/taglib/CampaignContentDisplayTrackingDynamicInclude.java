@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.portlet.servlet.taglib;
 
 import com.liferay.content.targeting.analytics.web.servlet.taglib.TrackingDynamicInclude;
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -46,15 +47,13 @@ public class CampaignContentDisplayTrackingDynamicInclude
 		long assetClassPK = GetterUtil.getLong(
 			(String)request.getAttribute("assetClassPK"));
 
-		String analyticsReferrerClassName =
-			"com.liferay.content.targeting.model.UserSegment";
+		String analyticsReferrerClassName = UserSegment.class.getName();
 		long[] analyticsReferrerIds = (long[])request.getAttribute(
 			"userSegmentIds");
 
-		analyticsReferrerClassName = HtmlUtil.escapeJS(
-			ParamUtil.getString(
-				request, "analyticsReferrerClassName",
-				analyticsReferrerClassName));
+		analyticsReferrerClassName = ParamUtil.getString(
+			request, "analyticsReferrerClassName",
+			analyticsReferrerClassName);
 		analyticsReferrerIds = ParamUtil.getLongValues(
 			request, "analyticsReferrerClassPKs", analyticsReferrerIds);
 
