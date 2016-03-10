@@ -65,12 +65,12 @@ public abstract class BaseReport implements Report {
 			populateEditContext(reportInstance, context);
 
 			content = ContentTargetingContextUtil.parseTemplate(
-				getClass(), _EDIT_FORM_TEMPLATE_PATH, context);
+				getClass(), getEditFormTemplatePath(), context);
 		}
 		catch (Exception e) {
 			_log.error(
 				"Error while processing edit report form template " +
-					_EDIT_FORM_TEMPLATE_PATH,
+					getEditFormTemplatePath(),
 				e);
 		}
 
@@ -92,12 +92,12 @@ public abstract class BaseReport implements Report {
 			populateContext(reportInstance, context);
 
 			content = ContentTargetingContextUtil.parseTemplate(
-				getClass(), _FORM_TEMPLATE_PATH, context);
+				getClass(), getFormTemplatePath(), context);
 		}
 		catch (Exception e) {
 			_log.error(
 				"Error while processing report form template " +
-					_FORM_TEMPLATE_PATH,
+					getFormTemplatePath(),
 				e);
 		}
 
@@ -129,6 +129,14 @@ public abstract class BaseReport implements Report {
 	@Override
 	public boolean isVisible(long classPK) {
 		return true;
+	}
+
+	protected String getEditFormTemplatePath() {
+		return _EDIT_FORM_TEMPLATE_PATH;
+	}
+
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH;
 	}
 
 	@Override

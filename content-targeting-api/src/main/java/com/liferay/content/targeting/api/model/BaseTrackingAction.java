@@ -88,12 +88,12 @@ public abstract class BaseTrackingAction implements TrackingAction {
 			populateContext(trackingActionInstance, context, values);
 
 			content = ContentTargetingContextUtil.parseTemplate(
-				getClass(), _FORM_TEMPLATE_PATH, context);
+				getClass(), getFormTemplatePath(), context);
 		}
 		catch (Exception e) {
 			_log.error(
 				"Error while processing tracking action form template " +
-					_FORM_TEMPLATE_PATH,
+					getFormTemplatePath(),
 				e);
 		}
 
@@ -142,6 +142,10 @@ public abstract class BaseTrackingAction implements TrackingAction {
 	@Override
 	public boolean isVisible(String className, long classPK) {
 		return true;
+	}
+
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH;
 	}
 
 	@Override
