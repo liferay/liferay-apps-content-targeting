@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.content.targeting.analytics.web.servlet.taglib;
+package com.liferay.content.targeting.portlet.servlet.taglib;
 
+import com.liferay.content.targeting.analytics.web.servlet.taglib.TrackingDynamicInclude;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
