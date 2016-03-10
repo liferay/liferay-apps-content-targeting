@@ -16,14 +16,22 @@ package com.liferay.content.targeting.portlet.display.context;
 
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.Tactic;
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.portlet.util.ChannelTemplate;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
+import com.liferay.content.targeting.util.ContentTargetingUtil;
+import com.liferay.content.targeting.util.UserSegmentUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -31,6 +39,8 @@ import java.util.List;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,12 +50,17 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentTargetingEditTacticsDisplayContext {
 
 	public ContentTargetingEditTacticsDisplayContext(
-		LiferayPortletResponse liferayPortletResponse,
-		PortletConfig portletConfig, HttpServletRequest request) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		UserSegmentLocalService userSegmentLocalService) {
 
-		_liferayPortletResponse = liferayPortletResponse;
-		_portletConfig = portletConfig;
-		_request = request;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
+		_userSegmentLocalService = userSegmentLocalService;
+
+		_request = PortalUtil.getHttpServletRequest(renderRequest);
+
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<ChannelTemplate> getAddedChannelTemplates() {
@@ -67,8 +82,7 @@ public class ContentTargetingEditTacticsDisplayContext {
 		String backURL = ParamUtil.getString(_request, "backURL");
 
 		if (Validator.isNull(backURL)) {
-			PortletURL backURLObject =
-				_liferayPortletResponse.createRenderURL();
+			PortletURL backURLObject = _renderResponse.createRenderURL();
 
 			backURLObject.setParameter(
 				"mvcRenderCommandName",
@@ -186,8 +200,12 @@ public class ContentTargetingEditTacticsDisplayContext {
 			_tacticName = tactic.getName(themeDisplay.getLocale());
 		}
 		else {
+			PortletConfig portletConfig =
+				(PortletConfig)_renderRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_CONFIG);
+
 			_tacticName = LanguageUtil.get(
-				_portletConfig.getResourceBundle(themeDisplay.getLocale()),
+				portletConfig.getResourceBundle(themeDisplay.getLocale()),
 				"new-promotion");
 		}
 
@@ -199,8 +217,12 @@ public class ContentTargetingEditTacticsDisplayContext {
 			return _userSegmentAssetCategoryIdsAsString;
 		}
 
-		_userSegmentAssetCategoryIdsAsString = GetterUtil.getString(
-			_request.getAttribute("userSegmentAssetCategoryIdsAsString"));
+		long[] userSegmentAssetCategoryIds =
+			ContentTargetingUtil.getAssetCategoryIds(
+				_getCampaignUserSegments());
+
+		_userSegmentAssetCategoryIdsAsString = StringUtil.merge(
+			userSegmentAssetCategoryIds);
 
 		return _userSegmentAssetCategoryIdsAsString;
 	}
@@ -210,49 +232,99 @@ public class ContentTargetingEditTacticsDisplayContext {
 			return _userSegmentAssetCategoryNames;
 		}
 
-		_userSegmentAssetCategoryNames = GetterUtil.getString(
-			_request.getAttribute("userSegmentAssetCategoryNames"));
+		long[] userSegmentAssetCategoryIds =
+			ContentTargetingUtil.getAssetCategoryIds(
+				_getCampaignUserSegments());
+
+		_userSegmentAssetCategoryNames =
+			ContentTargetingUtil.getAssetCategoryNames(
+				userSegmentAssetCategoryIds, _themeDisplay.getLocale());
 
 		return _userSegmentAssetCategoryNames;
 	}
 
-	public String getVocabularyGroupIds() {
+	public String getVocabularyGroupIds() throws PortalException {
 		if (Validator.isNotNull(_vocabularyGroupIds)) {
 			return _vocabularyGroupIds;
 		}
 
-		_vocabularyGroupIds = GetterUtil.getString(
-			_request.getAttribute("vocabularyGroupIds"));
+		long[] vocabularyGroupIds = new long[1];
+
+		if (_themeDisplay.getScopeGroupId() ==
+				_themeDisplay.getCompanyGroupId()) {
+
+			vocabularyGroupIds[0] = _themeDisplay.getCompanyGroupId();
+		}
+		else {
+			vocabularyGroupIds =
+				ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+					_themeDisplay.getSiteGroupId());
+		}
+
+		_vocabularyGroupIds = StringUtil.merge(vocabularyGroupIds);
 
 		return _vocabularyGroupIds;
 	}
 
-	public String getVocabularyIds() {
+	public String getVocabularyIds() throws PortalException {
 		if (Validator.isNotNull(_vocabularyIds)) {
 			return _vocabularyIds;
 		}
 
-		_vocabularyIds = GetterUtil.getString(
-			_request.getAttribute("vocabularyIds"));
+		long[] vocabularyIds = new long[1];
+
+		if (_themeDisplay.getScopeGroupId() ==
+				_themeDisplay.getCompanyGroupId()) {
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setScopeGroupId(_themeDisplay.getScopeGroupId());
+
+			vocabularyIds[0] = UserSegmentUtil.getAssetVocabularyId(
+				_themeDisplay.getUserId(), serviceContext);
+		}
+		else {
+			long[] vocabularyGroupsIds = StringUtil.split(
+				getVocabularyGroupIds(), 0L);
+
+			vocabularyIds = UserSegmentUtil.getAssetVocabularyIds(
+				vocabularyGroupsIds);
+		}
+
+		_vocabularyIds = StringUtil.merge(vocabularyIds);
 
 		return _vocabularyIds;
+	}
+
+	private List<UserSegment> _getCampaignUserSegments() {
+		if (_campaignUserSegments != null) {
+			return _campaignUserSegments;
+		}
+
+		_campaignUserSegments =
+			_userSegmentLocalService.getCampaignUserSegments(getCampaignId());
+
+		return _campaignUserSegments;
 	}
 
 	private List<ChannelTemplate> _addedChannelTemplates;
 	private String _backURL;
 	private Long _campaignId;
+	private List<UserSegment> _campaignUserSegments;
 	private String _campaignUserSegmentsIds;
 	private List<ChannelTemplate> _channelTemplates;
 	private String _cssItemsClass;
-	private final LiferayPortletResponse _liferayPortletResponse;
-	private final PortletConfig _portletConfig;
 	private String _redirect;
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private Tactic _tactic;
 	private Long _tacticId;
 	private String _tacticName;
+	private final ThemeDisplay _themeDisplay;
 	private String _userSegmentAssetCategoryIdsAsString;
 	private String _userSegmentAssetCategoryNames;
+	private final UserSegmentLocalService _userSegmentLocalService;
 	private String _vocabularyGroupIds;
 	private String _vocabularyIds;
 

@@ -16,28 +16,23 @@ package com.liferay.content.targeting.portlet.action;
 
 import com.liferay.content.targeting.api.model.Channel;
 import com.liferay.content.targeting.api.model.ChannelsRegistry;
-import com.liferay.content.targeting.api.model.Report;
-import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.exception.InvalidChannelException;
 import com.liferay.content.targeting.exception.InvalidChannelsException;
 import com.liferay.content.targeting.model.ChannelInstance;
-import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingMVCCommand;
+import com.liferay.content.targeting.portlet.display.context.ContentTargetingEditTacticsDisplayContext;
 import com.liferay.content.targeting.portlet.util.ChannelTemplate;
 import com.liferay.content.targeting.service.ChannelInstanceLocalService;
 import com.liferay.content.targeting.service.ChannelInstanceService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
-import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -46,7 +41,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -84,7 +78,6 @@ public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-		long campaignId = ParamUtil.getLong(renderRequest, "campaignId");
 		long tacticId = ParamUtil.getLong(renderRequest, "tacticId");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -93,66 +86,15 @@ public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 		boolean isolated = themeDisplay.isIsolated();
 
 		try {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
-
-			long[] vocabularyGroupIds = new long[1];
-			long[] vocabularyIds = new long[1];
-
-			if (themeDisplay.getScopeGroupId() ==
-					themeDisplay.getCompanyGroupId()) {
-
-				vocabularyGroupIds[0] = themeDisplay.getCompanyGroupId();
-
-				vocabularyIds[0] = UserSegmentUtil.getAssetVocabularyId(
-					themeDisplay.getUserId(), serviceContext);
-			}
-			else {
-				vocabularyGroupIds =
-					ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
-						themeDisplay.getSiteGroupId());
-				vocabularyIds = UserSegmentUtil.getAssetVocabularyIds(
-					vocabularyGroupIds);
-			}
+			ContentTargetingEditTacticsDisplayContext
+				contentTargetingEditTacticsDisplayContext =
+					new ContentTargetingEditTacticsDisplayContext(
+						renderRequest, renderResponse,
+						_userSegmentLocalService);
 
 			renderRequest.setAttribute(
-				"vocabularyGroupIds", StringUtil.merge(vocabularyGroupIds));
-			renderRequest.setAttribute(
-				"vocabularyIds", StringUtil.merge(vocabularyIds));
-
-			String userSegmentAssetCategoryIdsAsString = StringPool.BLANK;
-			String userSegmentAssetCategoryNames = StringPool.BLANK;
-
-			List<UserSegment> campaignUserSegments = null;
-
-			campaignUserSegments =
-				_userSegmentLocalService.getCampaignUserSegments(campaignId);
-
-			long[] userSegmentAssetCategoryIds =
-				ContentTargetingUtil.getAssetCategoryIds(campaignUserSegments);
-
-			userSegmentAssetCategoryIdsAsString = StringUtil.merge(
-				userSegmentAssetCategoryIds);
-
-			userSegmentAssetCategoryNames =
-				ContentTargetingUtil.getAssetCategoryNames(
-					userSegmentAssetCategoryIds, themeDisplay.getLocale());
-
-			renderRequest.setAttribute(
-				"userSegmentAssetCategoryIdsAsString",
-				userSegmentAssetCategoryIdsAsString);
-			renderRequest.setAttribute(
-				"userSegmentAssetCategoryNames", userSegmentAssetCategoryNames);
-
-			Map<String, Report> reports = _reportsRegistry.getReports(
-				UserSegment.class.getName());
-
-			renderRequest.setAttribute("reports", reports.values());
-
-			Map<String, Channel> channels = _channelsRegistry.getChannels();
-
-			renderRequest.setAttribute("channels", channels.values());
+				"contentTargetingEditTacticsDisplayContext",
+				contentTargetingEditTacticsDisplayContext);
 
 			List<ChannelInstance> channelInstances = getChannelsFromRequest(
 				renderRequest, renderResponse);
@@ -165,9 +107,6 @@ public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 			List<ChannelTemplate> addedChannelTemplates = new ArrayList<>();
 
 			if (!channelInstances.isEmpty()) {
-				renderRequest.setAttribute(
-					"channelInstances", channelInstances);
-
 				InvalidChannelsException ice = getInvalidChannelsException(
 					renderRequest);
 
@@ -208,6 +147,8 @@ public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 				"addedChannelTemplates", addedChannelTemplates);
 
 			List<ChannelTemplate> channelTemplates = new ArrayList<>();
+
+			Map<String, Channel> channels = _channelsRegistry.getChannels();
 
 			for (Channel channel : channels.values()) {
 				if (!channel.isVisible()) {
@@ -371,11 +312,6 @@ public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 		_channelsRegistry = channelsRegistry;
 	}
 
-	@Reference
-	protected void setReportsRegistry(ReportsRegistry reportsRegistry) {
-		_reportsRegistry = reportsRegistry;
-	}
-
 	@Reference(unbind = "-")
 	protected void setUserSegmentLocalService(
 		UserSegmentLocalService userSegmentLocalService) {
@@ -387,17 +323,12 @@ public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 		_channelsRegistry = null;
 	}
 
-	protected void unsetReportsRegistry(ReportsRegistry reportsRegistry) {
-		_reportsRegistry = null;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditTacticMVCRenderCommand.class);
 
 	private ChannelInstanceLocalService _channelInstanceLocalService;
 	private ChannelInstanceService _channelInstanceService;
 	private ChannelsRegistry _channelsRegistry;
-	private ReportsRegistry _reportsRegistry;
 	private UserSegmentLocalService _userSegmentLocalService;
 
 }

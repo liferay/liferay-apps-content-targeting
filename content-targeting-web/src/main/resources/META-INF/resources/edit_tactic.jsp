@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingEditTacticsDisplayContext contentTargetingEditTacticsDisplayContext = new ContentTargetingEditTacticsDisplayContext(liferayPortletResponse, portletConfig, request);
+ContentTargetingEditTacticsDisplayContext contentTargetingEditTacticsDisplayContext = (ContentTargetingEditTacticsDisplayContext)request.getAttribute("contentTargetingEditTacticsDisplayContext");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(contentTargetingEditTacticsDisplayContext.getBackURL());
