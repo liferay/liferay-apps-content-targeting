@@ -14,8 +14,7 @@
 
 package com.liferay.content.targeting.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.content.targeting.configuration.AnonymousUserUserSegmentServiceConfiguration;
 import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
@@ -48,7 +47,7 @@ public class CheckAnonymousUserUserSegmentsMessageListener
 	protected void activate(Map<String, Object> properties) {
 		AnonymousUserUserSegmentServiceConfiguration
 			anonymousUserUserSegmentServiceConfiguration =
-				Configurable.createConfigurable(
+				ConfigurableUtil.createConfigurable(
 					AnonymousUserUserSegmentServiceConfiguration.class,
 					properties);
 

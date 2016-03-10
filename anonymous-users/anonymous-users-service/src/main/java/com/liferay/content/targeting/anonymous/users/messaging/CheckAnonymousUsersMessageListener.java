@@ -14,8 +14,7 @@
 
 package com.liferay.content.targeting.anonymous.users.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.content.targeting.anonymous.users.configuration.AnonymousUserServiceConfiguration;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
@@ -44,7 +43,7 @@ public class CheckAnonymousUsersMessageListener
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		AnonymousUserServiceConfiguration anonymousUsersServiceConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				AnonymousUserServiceConfiguration.class, properties);
 
 		schedulerEntryImpl.setTrigger(

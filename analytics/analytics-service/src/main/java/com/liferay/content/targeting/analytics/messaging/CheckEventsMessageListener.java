@@ -14,8 +14,7 @@
 
 package com.liferay.content.targeting.analytics.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.content.targeting.analytics.configuration.AnalyticsServiceConfiguration;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
@@ -49,7 +48,7 @@ public class CheckEventsMessageListener
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		AnalyticsServiceConfiguration analyticsServiceConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				AnalyticsServiceConfiguration.class, properties);
 
 		schedulerEntryImpl.setTrigger(
