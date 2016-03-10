@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
@@ -52,8 +51,7 @@ public class CampaignContentDisplayTrackingDynamicInclude
 			"userSegmentIds");
 
 		analyticsReferrerClassName = ParamUtil.getString(
-			request, "analyticsReferrerClassName",
-			analyticsReferrerClassName);
+			request, "analyticsReferrerClassName", analyticsReferrerClassName);
 		analyticsReferrerIds = ParamUtil.getLongValues(
 			request, "analyticsReferrerClassPKs", analyticsReferrerIds);
 
