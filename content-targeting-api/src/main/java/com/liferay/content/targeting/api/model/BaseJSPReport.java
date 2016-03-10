@@ -38,13 +38,13 @@ public abstract class BaseJSPReport extends BaseReport {
 		try {
 			populateEditContext(reportInstance, context);
 
-			content = ContentTargetingContextUtil.parseTemplate(
-				getClass(), getEditTemplatePath(), context);
+			content = ContentTargetingContextUtil.includeJSP(
+				_servletContext, getEditFormTemplatePath(), context);
 		}
 		catch (Exception e) {
 			_log.error(
 				"Error while processing edit report form template " +
-					getEditTemplatePath(),
+					getEditFormTemplatePath(),
 				e);
 		}
 
@@ -77,7 +77,8 @@ public abstract class BaseJSPReport extends BaseReport {
 		_servletContext = servletContext;
 	}
 
-	protected String getEditTemplatePath() {
+	@Override
+	protected String getEditFormTemplatePath() {
 		return _EDIT_FORM_TEMPLATE_PATH;
 	}
 
