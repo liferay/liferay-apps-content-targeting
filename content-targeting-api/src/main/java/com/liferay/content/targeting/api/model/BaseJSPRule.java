@@ -15,19 +15,14 @@
 package com.liferay.content.targeting.api.model;
 
 import com.liferay.content.targeting.model.RuleInstance;
+import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.taglib.util.ThemeUtil;
 
 import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eduardo Garcia
@@ -44,24 +39,8 @@ public abstract class BaseJSPRule extends BaseRule {
 		try {
 			populateContext(ruleInstance, context, values);
 
-			HttpServletRequest request = (HttpServletRequest)context.get(
-				"request");
-
-			HttpServletResponse response = (HttpServletResponse)context.get(
-				"response");
-
-			Theme theme = (Theme)context.get(WebKeys.THEME);
-
-			BufferCacheServletResponse bufferResponse =
-				new BufferCacheServletResponse(response);
-
-			request.setAttribute("displayContext", context);
-
-			ThemeUtil.includeJSP(
-				_servletContext, request, bufferResponse, getFormTemplatePath(),
-				theme);
-
-			content = bufferResponse.getString();
+			content = ContentTargetingContextUtil.includeJSP(
+				_servletContext, getFormTemplatePath(), context);
 		}
 		catch (Exception e) {
 			_log.error(

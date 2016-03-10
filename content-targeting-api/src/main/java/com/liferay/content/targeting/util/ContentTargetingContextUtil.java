@@ -19,9 +19,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.taglib.util.ThemeUtil;
 
 import freemarker.cache.ClassTemplateLoader;
 
@@ -48,6 +51,7 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -126,6 +130,26 @@ public class ContentTargetingContextUtil {
 		}
 
 		return false;
+	}
+
+	public static String includeJSP(
+		ServletContext servletContext, String path,
+		Map<String, Object> context) throws Exception {
+
+		HttpServletRequest request = (HttpServletRequest)context.get("request");
+		HttpServletResponse response = (HttpServletResponse)context.get(
+			"response");
+		Theme theme = (Theme)context.get(WebKeys.THEME);
+
+		BufferCacheServletResponse bufferResponse =
+			new BufferCacheServletResponse(response);
+
+		request.setAttribute("displayContext", context);
+
+		ThemeUtil.includeJSP(
+			servletContext, request, bufferResponse, path, theme);
+
+		return bufferResponse.getString();
 	}
 
 	public static String parseTemplate(
