@@ -12,12 +12,16 @@
  * details.
  */
 
-package com.liferay.content.targeting.analytics.web.servlet.taglib;
+package com.liferay.content.targeting.portlet.servlet.taglib;
 
+import com.liferay.content.targeting.analytics.web.servlet.taglib.TrackingDynamicInclude;
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
@@ -30,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class CampaignContentDisplayTrackingDynamicInclude
+public class UserSegmentContentDisplayTrackingDynamicInclude
 	extends TrackingDynamicInclude {
 
 	@Override
@@ -43,15 +47,20 @@ public class CampaignContentDisplayTrackingDynamicInclude
 		long assetClassPK = GetterUtil.getLong(
 			(String)request.getAttribute("assetClassPK"));
 
-		String referrerClassName = (String)request.getAttribute(
-			"referrerClassName");
-		long referrerClassPK = GetterUtil.getLong(
-			(String)request.getAttribute("referrerClassPK"));
+		String analyticsReferrerClassName = UserSegment.class.getName();
+		long[] analyticsReferrerIds = (long[])request.getAttribute(
+			"userSegmentIds");
+
+		analyticsReferrerClassName = ParamUtil.getString(
+			request, "analyticsReferrerClassName",
+			analyticsReferrerClassName);
+		analyticsReferrerIds = ParamUtil.getLongValues(
+			request, "analyticsReferrerClassPKs", analyticsReferrerIds);
 
 		try {
 			doInclude(
 				response, "view", assetClassName, assetClassPK,
-				referrerClassName, new long[] {referrerClassPK});
+				analyticsReferrerClassName, analyticsReferrerIds);
 		}
 		catch (Exception e) {
 			_log.error("Unable to include analytics tracking JS", e);
@@ -62,10 +71,10 @@ public class CampaignContentDisplayTrackingDynamicInclude
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
 			"com.liferay.content.targeting.display.web#" +
-				"/campaign_content_display/view.jsp#post");
+				"/user_segment_content_display/view.jsp#post");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CampaignContentDisplayTrackingDynamicInclude.class);
+		UserSegmentContentDisplayTrackingDynamicInclude.class);
 
 }

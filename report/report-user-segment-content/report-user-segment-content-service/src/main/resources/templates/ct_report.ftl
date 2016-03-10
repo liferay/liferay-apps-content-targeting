@@ -24,8 +24,8 @@
 
 <@portlet["renderURL"] varImpl="portletURL">
 	<@portlet["param"]
-		name="mvcPath"
-		value="${contentTargetingPath.VIEW_REPORT}"
+		name="mvcRenderCommandName"
+		value="${contentTargetingMVCCommand.VIEW_REPORT}"
 	/>
 	<@portlet["param"]
 		name="redirect"

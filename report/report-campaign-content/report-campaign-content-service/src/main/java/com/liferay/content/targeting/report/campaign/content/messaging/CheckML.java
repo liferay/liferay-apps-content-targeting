@@ -14,8 +14,7 @@
 
 package com.liferay.content.targeting.report.campaign.content.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.content.targeting.report.campaign.content.configuration.CampaignContentReportServiceConfiguration;
 import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalService;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
@@ -44,7 +43,7 @@ public class CheckML extends BaseSchedulerEntryMessageListener {
 	protected void activate(Map<String, Object> properties) {
 		CampaignContentReportServiceConfiguration
 			campaignContentReportServiceConfiguration =
-				Configurable.createConfigurable(
+				ConfigurableUtil.createConfigurable(
 					CampaignContentReportServiceConfiguration.class,
 					properties);
 

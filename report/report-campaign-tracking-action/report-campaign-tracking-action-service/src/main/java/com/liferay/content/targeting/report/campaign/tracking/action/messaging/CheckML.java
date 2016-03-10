@@ -14,8 +14,7 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.content.targeting.report.campaign.tracking.action.configuration.CampaignTrackingActionReportServiceConfiguration;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService;
@@ -45,7 +44,7 @@ public class CheckML extends BaseSchedulerEntryMessageListener {
 	protected void activate(Map<String, Object> properties) {
 		CampaignTrackingActionReportServiceConfiguration
 			campaignTrackingActionReportServiceConfiguration =
-				Configurable.createConfigurable(
+				ConfigurableUtil.createConfigurable(
 					CampaignTrackingActionReportServiceConfiguration.class,
 					properties);
 

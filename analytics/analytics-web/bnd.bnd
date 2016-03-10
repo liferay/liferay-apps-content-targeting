@@ -2,8 +2,8 @@ Bundle-Name: Analytics Web
 Bundle-SymbolicName: com.liferay.content.targeting.analytics.web
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.content.targeting.web.filter,\
-	com.liferay.content.targeting.web.servlet.taglib
+	com.liferay.content.targeting.analytics.web.filter,\
+	com.liferay.content.targeting.analytics.web.servlet.taglib
 Liferay-JS-Config: /js/analytics/config.js
 Private-Package: com.liferay.content.targeting.analytics.web.*
 Web-ContextPath: /analytics-web

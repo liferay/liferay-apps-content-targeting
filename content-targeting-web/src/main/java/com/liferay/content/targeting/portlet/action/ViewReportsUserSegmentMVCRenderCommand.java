@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
@@ -66,7 +67,7 @@ public class ViewReportsUserSegmentMVCRenderCommand
 		Map<String, Report> reports = _reportsRegistry.getReports(
 			UserSegment.class.getName());
 
-		renderRequest.setAttribute("reports", reports.values());
+		renderRequest.setAttribute("reports", new ArrayList(reports.values()));
 
 		if (userSegmentId > 0) {
 			for (Report report : reports.values()) {
