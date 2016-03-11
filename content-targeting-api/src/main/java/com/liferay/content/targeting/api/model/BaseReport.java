@@ -52,18 +52,7 @@ public abstract class BaseReport implements Report {
 
 	@Override
 	public String getDescription(Locale locale) {
-		Class<?> clazz = getClass();
-
-		String key = clazz.getName().concat(".description");
-
-		String description = ContentTargetingUtil.getModelResource(
-			locale, clazz, key);
-
-		if (description.equals(key)) {
-			description = StringPool.BLANK;
-		}
-
-		return description;
+		return ContentTargetingUtil.getDescription(getClass(), locale);
 	}
 
 	@Override
@@ -122,10 +111,7 @@ public abstract class BaseReport implements Report {
 
 	@Override
 	public String getName(Locale locale) {
-		Class<?> clazz = getClass();
-
-		return ContentTargetingUtil.getModelResource(
-			locale, clazz, clazz.getName());
+		return ContentTargetingUtil.getName(getClass(), locale);
 	}
 
 	@Override

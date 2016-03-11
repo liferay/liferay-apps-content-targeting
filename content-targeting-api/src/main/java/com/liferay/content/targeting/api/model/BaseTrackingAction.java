@@ -74,18 +74,7 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 	@Override
 	public String getDescription(Locale locale) {
-		Class<?> clazz = getClass();
-
-		String key = clazz.getName().concat(".description");
-
-		String description = ContentTargetingUtil.getModelResource(
-			locale, clazz, key);
-
-		if (description.endsWith(key)) {
-			description = getShortDescription(locale);
-		}
-
-		return description;
+		return ContentTargetingUtil.getDescription(getClass(), locale);
 	}
 
 	@Override
@@ -118,26 +107,12 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 	@Override
 	public String getName(Locale locale) {
-		Class<?> clazz = getClass();
-
-		return ContentTargetingUtil.getModelResource(
-			locale, clazz, clazz.getName());
+		return ContentTargetingUtil.getName(getClass(), locale);
 	}
 
 	@Override
 	public String getShortDescription(Locale locale) {
-		Class<?> clazz = getClass();
-
-		String key = clazz.getName().concat(".shortDescription");
-
-		String shortDescription = ContentTargetingUtil.getModelResource(
-			locale, clazz, key);
-
-		if (shortDescription.endsWith(key)) {
-			shortDescription = StringPool.BLANK;
-		}
-
-		return shortDescription;
+		return ContentTargetingUtil.getShortDescription(getClass(), locale);
 	}
 
 	@Override
