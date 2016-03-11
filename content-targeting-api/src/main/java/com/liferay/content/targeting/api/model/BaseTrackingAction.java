@@ -44,16 +44,18 @@ public abstract class BaseTrackingAction implements TrackingAction {
 	@Override
 	public void activate() {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Tracking Action activate: " + getClass().getSimpleName());
+			Class<?> clazz = getClass();
+
+			_log.debug("Tracking Action activate: " + clazz.getSimpleName());
 		}
 	}
 
 	@Override
 	public void deActivate() {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Tracking Action deactivate: " + getClass().getSimpleName());
+			Class<?> clazz = getClass();
+
+			_log.debug("Tracking Action deactivate: " + clazz.getSimpleName());
 		}
 	}
 
@@ -72,10 +74,12 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 	@Override
 	public String getDescription(Locale locale) {
-		String key = getClass().getName().concat(".description");
+		Class<?> clazz = getClass();
+
+		String key = clazz.getName().concat(".description");
 
 		String description = ContentTargetingUtil.getModelResource(
-			locale, getClass(), key);
+			locale, clazz, key);
 
 		if (description.endsWith(key)) {
 			description = getShortDescription(locale);
@@ -114,16 +118,20 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 	@Override
 	public String getName(Locale locale) {
+		Class<?> clazz = getClass();
+
 		return ContentTargetingUtil.getModelResource(
-			locale, getClass(), getClass().getName());
+			locale, clazz, clazz.getName());
 	}
 
 	@Override
 	public String getShortDescription(Locale locale) {
-		String key = getClass().getName().concat(".shortDescription");
+		Class<?> clazz = getClass();
+
+		String key = clazz.getName().concat(".shortDescription");
 
 		String shortDescription = ContentTargetingUtil.getModelResource(
-			locale, getClass(), key);
+			locale, clazz, key);
 
 		if (shortDescription.endsWith(key)) {
 			shortDescription = StringPool.BLANK;
@@ -134,7 +142,9 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 	@Override
 	public String getTrackingActionKey() {
-		return getClass().getSimpleName();
+		Class<?> clazz = getClass();
+
+		return clazz.getSimpleName();
 	}
 
 	@Override

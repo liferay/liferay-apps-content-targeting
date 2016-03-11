@@ -39,15 +39,19 @@ public abstract class BaseRule implements Rule {
 
 	@Override
 	public void activate() {
+		Class<?> clazz = getClass();
+
 		if (_log.isDebugEnabled()) {
-			_log.debug("Rule activate: " + getClass().getSimpleName());
+			_log.debug("Rule activate: " + clazz.getSimpleName());
 		}
 	}
 
 	@Override
 	public void deActivate() {
+		Class<?> clazz = getClass();
+
 		if (_log.isDebugEnabled()) {
-			_log.debug("Rule deactivate: " + getClass().getSimpleName());
+			_log.debug("Rule deactivate: " + clazz.getSimpleName());
 		}
 	}
 
@@ -65,10 +69,12 @@ public abstract class BaseRule implements Rule {
 
 	@Override
 	public String getDescription(Locale locale) {
-		String key = getClass().getName().concat(".description");
+		Class<?> clazz = getClass();
+
+		String key = clazz.getName().concat(".description");
 
 		String description = ContentTargetingUtil.getModelResource(
-			locale, getClass(), key);
+			locale, clazz, key);
 
 		if (description.endsWith(key)) {
 			description = getShortDescription(locale);
@@ -107,8 +113,10 @@ public abstract class BaseRule implements Rule {
 
 	@Override
 	public String getName(Locale locale) {
+		Class<?> clazz = getClass();
+
 		return ContentTargetingUtil.getModelResource(
-			locale, getClass(), getClass().getName());
+			locale, clazz, clazz.getName());
 	}
 
 	@Override
@@ -118,15 +126,19 @@ public abstract class BaseRule implements Rule {
 
 	@Override
 	public String getRuleKey() {
-		return getClass().getSimpleName();
+		Class<?> clazz = getClass();
+
+		return clazz.getSimpleName();
 	}
 
 	@Override
 	public String getShortDescription(Locale locale) {
-		String key = getClass().getName().concat(".shortDescription");
+		Class<?> clazz = getClass();
 
-		String shortDescription = ResourceActionsUtil.getModelResource(
-			locale, key);
+		String key = clazz.getName().concat(".shortDescription");
+
+		String shortDescription = ContentTargetingUtil.getModelResource(
+			locale, clazz, key);
 
 		if (shortDescription.endsWith(key)) {
 			shortDescription = StringPool.BLANK;

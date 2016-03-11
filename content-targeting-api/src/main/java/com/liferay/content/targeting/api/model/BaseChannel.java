@@ -44,14 +44,18 @@ public abstract class BaseChannel implements Channel {
 	@Override
 	public void activate() {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Channel activate: " + getClass().getSimpleName());
+			Class<?> clazz = getClass();
+
+			_log.debug("Channel activate: " + clazz.getSimpleName());
 		}
 	}
 
 	@Override
 	public void deActivate() {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Channel deactivate: " + getClass().getSimpleName());
+			Class<?> clazz = getClass();
+
+			_log.debug("Channel deactivate: " + clazz.getSimpleName());
 		}
 	}
 
@@ -70,15 +74,19 @@ public abstract class BaseChannel implements Channel {
 
 	@Override
 	public String getChannelKey() {
-		return getClass().getSimpleName();
+		Class<?> clazz = getClass();
+
+		return clazz.getSimpleName();
 	}
 
 	@Override
 	public String getDescription(Locale locale) {
-		String key = getClass().getName().concat(".description");
+		Class<?> clazz = getClass();
+
+		String key = clazz.getName().concat(".description");
 
 		String description = ContentTargetingUtil.getModelResource(
-			locale, getClass(), key);
+			locale, clazz, key);
 
 		if (description.endsWith(key)) {
 			description = getShortDescription(locale);
@@ -117,16 +125,20 @@ public abstract class BaseChannel implements Channel {
 
 	@Override
 	public String getName(Locale locale) {
+		Class<?> clazz = getClass();
+
 		return ContentTargetingUtil.getModelResource(
-			locale, getClass(), getClass().getName());
+			locale, clazz, clazz.getName());
 	}
 
 	@Override
 	public String getShortDescription(Locale locale) {
-		String key = getClass().getName().concat(".shortDescription");
+		Class<?> clazz = getClass();
+
+		String key = clazz.getName().concat(".shortDescription");
 
 		String shortDescription = ContentTargetingUtil.getModelResource(
-			locale, getClass(), key);
+			locale, clazz, key);
 
 		if (shortDescription.endsWith(key)) {
 			shortDescription = StringPool.BLANK;

@@ -35,23 +35,29 @@ public abstract class BaseReport implements Report {
 	@Override
 	public void activate() {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Report activate: " + getClass().getSimpleName());
+			Class<?> clazz = getClass();
+
+			_log.debug("Report activate: " + clazz.getSimpleName());
 		}
 	}
 
 	@Override
 	public void deActivate() {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Report deactivate: " + getClass().getSimpleName());
+			Class<?> clazz = getClass();
+
+			_log.debug("Report deactivate: " + clazz.getSimpleName());
 		}
 	}
 
 	@Override
 	public String getDescription(Locale locale) {
-		String key = getClass().getName().concat(".description");
+		Class<?> clazz = getClass();
+
+		String key = clazz.getName().concat(".description");
 
 		String description = ContentTargetingUtil.getModelResource(
-			locale, getClass(), key);
+			locale, clazz, key);
 
 		if (description.equals(key)) {
 			description = StringPool.BLANK;
@@ -116,13 +122,17 @@ public abstract class BaseReport implements Report {
 
 	@Override
 	public String getName(Locale locale) {
+		Class<?> clazz = getClass();
+
 		return ContentTargetingUtil.getModelResource(
-			locale, getClass(), getClass().getName());
+			locale, clazz, clazz.getName());
 	}
 
 	@Override
 	public String getReportKey() {
-		return getClass().getSimpleName();
+		Class<?> clazz = getClass();
+
+		return clazz.getSimpleName();
 	}
 
 	@Override

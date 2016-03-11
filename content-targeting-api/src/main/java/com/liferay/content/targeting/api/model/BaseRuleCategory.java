@@ -33,15 +33,18 @@ public abstract class BaseRuleCategory implements RuleCategory {
 	@Activate
 	public void activate() {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Rule Category activate: " + getClass().getSimpleName());
+			Class<?> clazz = getClass();
+
+			_log.debug("Rule Category activate: " + clazz.getSimpleName());
 		}
 	}
 
 	@Deactivate
 	public void deActivate() {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Rule Category deactivate: " + getClass().getSimpleName());
+			Class<?> clazz = getClass();
+
+			_log.debug("Rule Category deactivate: " + clazz.getSimpleName());
 		}
 	}
 
@@ -52,10 +55,12 @@ public abstract class BaseRuleCategory implements RuleCategory {
 
 	@Override
 	public String getDescription(Locale locale) {
-		String key = getClass().getName().concat(".description");
+		Class<?> clazz = getClass();
+
+		String key = clazz.getName().concat(".description");
 
 		String description = ContentTargetingUtil.getModelResource(
-			locale, getClass(), key);
+			locale, clazz, key);
 
 		if (description.equals(key)) {
 			description = StringPool.BLANK;
@@ -71,8 +76,9 @@ public abstract class BaseRuleCategory implements RuleCategory {
 
 	@Override
 	public String getName(Locale locale) {
-		return ResourceActionsUtil.getModelResource(
-			locale, getClass().getName());
+		Class<?> clazz = getClass();
+
+		return ResourceActionsUtil.getModelResource(locale, clazz.getName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
