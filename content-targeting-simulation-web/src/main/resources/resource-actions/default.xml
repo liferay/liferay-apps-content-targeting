@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_content_targeting_portlet_SimulatorPortlet</portlet-name>
+		<portlet-name>com_liferay_content_targeting_simulation_web_portlet_SimulatorPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>CONFIGURATION</action-key>

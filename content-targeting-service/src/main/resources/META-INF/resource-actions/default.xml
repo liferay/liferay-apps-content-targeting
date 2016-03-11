@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.content.targeting.model</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_content_targeting_portlet_ContentTargetingPortlet</portlet-name>
+			<portlet-name>com_liferay_content_targeting_web_portlet_ContentTargetingPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -30,7 +30,7 @@
 	<model-resource>
 		<model-name>com.liferay.content.targeting.model.Campaign</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_content_targeting_portlet_ContentTargetingPortlet</portlet-name>
+			<portlet-name>com_liferay_content_targeting_web_portlet_ContentTargetingPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -52,7 +52,7 @@
 	<model-resource>
 		<model-name>com.liferay.content.targeting.model.ReportInstance</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_content_targeting_portlet_ContentTargetingPortlet</portlet-name>
+			<portlet-name>com_liferay_content_targeting_web_portlet_ContentTargetingPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -76,7 +76,7 @@
 	<model-resource>
 		<model-name>com.liferay.content.targeting.model.Tactic</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_content_targeting_portlet_ContentTargetingPortlet</portlet-name>
+			<portlet-name>com_liferay_content_targeting_web_portlet_ContentTargetingPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -96,7 +96,7 @@
 	<model-resource>
 		<model-name>com.liferay.content.targeting.model.UserSegment</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_content_targeting_portlet_ContentTargetingPortlet</portlet-name>
+			<portlet-name>com_liferay_content_targeting_web_portlet_ContentTargetingPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
