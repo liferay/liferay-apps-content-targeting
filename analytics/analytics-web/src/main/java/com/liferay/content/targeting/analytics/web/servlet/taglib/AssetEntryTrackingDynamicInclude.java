@@ -44,9 +44,8 @@ public class AssetEntryTrackingDynamicInclude extends TrackingDynamicInclude {
 		if (assetEntry != null) {
 			try {
 				doInclude(
-					response, "view", AssetEntry.class.getName(),
-					assetEntry.getClassPK(), AssetEntry.class.getName(),
-					new long[] {assetEntry.getClassPK()});
+					request, response, "view", AssetEntry.class.getName(),
+					assetEntry.getClassPK());
 			}
 			catch (Exception e) {
 				_log.error("Unable to include analytics tracking JS", e);

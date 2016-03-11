@@ -45,9 +45,8 @@ public class MBThreadMessageTrackingDynamicInclude
 		if (message != null) {
 			try {
 				doInclude(
-					response, "view", MBMessage.class.getName(),
-					message.getPrimaryKey(), MBMessage.class.getName(),
-					new long[] {message.getPrimaryKey()});
+					request, response, "view", MBMessage.class.getName(),
+					message.getPrimaryKey());
 			}
 			catch (Exception e) {
 				_log.error("Unable to include analytics tracking JS", e);

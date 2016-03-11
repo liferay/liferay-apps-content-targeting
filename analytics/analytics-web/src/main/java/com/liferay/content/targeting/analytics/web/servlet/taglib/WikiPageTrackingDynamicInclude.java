@@ -45,9 +45,8 @@ public class WikiPageTrackingDynamicInclude extends TrackingDynamicInclude {
 		if (wikiPage != null) {
 			try {
 				doInclude(
-					response, "view", WikiPage.class.getName(),
-					wikiPage.getPrimaryKey(), WikiPage.class.getName(),
-					new long[] {wikiPage.getPrimaryKey()});
+					request, response, "view", WikiPage.class.getName(),
+					wikiPage.getPrimaryKey());
 			}
 			catch (Exception e) {
 				_log.error("Unable to include analytics tracking JS", e);

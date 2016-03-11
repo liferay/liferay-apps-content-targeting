@@ -46,9 +46,8 @@ public class FileEntryTrackingDynamicInclude extends TrackingDynamicInclude {
 		if (fileEntry != null) {
 			try {
 				doInclude(
-					response, "view", DLFileEntry.class.getName(),
-					fileEntry.getPrimaryKey(), DLFileEntry.class.getName(),
-					new long[] {fileEntry.getPrimaryKey()});
+					request, response, "view", DLFileEntry.class.getName(),
+					fileEntry.getPrimaryKey());
 			}
 			catch (Exception e) {
 				_log.error("Unable to include analytics tracking JS", e);

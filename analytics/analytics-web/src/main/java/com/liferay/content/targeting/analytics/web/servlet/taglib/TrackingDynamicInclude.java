@@ -14,12 +14,16 @@
 
 package com.liferay.content.targeting.analytics.web.servlet.taglib;
 
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -28,9 +32,29 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class TrackingDynamicInclude extends BaseDynamicInclude {
 
 	protected void doInclude(
-			HttpServletResponse response, String eventName, String className,
-			long classPK, String referrerClassName, long[] referrerClassPKs)
+			HttpServletRequest request, HttpServletResponse response,
+			String eventName, String className, long classPK)
 		throws Exception {
+
+		String referrerClassName = UserSegment.class.getName();
+		long[] referrerClassPKs = GetterUtil.getLongValues(
+			request.getAttribute("userSegmentIds"));
+
+		doInclude(
+			request, response, eventName, className, classPK, referrerClassName,
+			referrerClassPKs);
+	}
+
+	protected void doInclude(
+			HttpServletRequest request, HttpServletResponse response,
+			String eventName, String className, long classPK,
+			String referrerClassName, long[] referrerClassPKs)
+		throws Exception {
+
+		referrerClassName = ParamUtil.getString(
+			request, "analyticsReferrerClassName", referrerClassName);
+		referrerClassPKs = ParamUtil.getLongValues(
+			request, "analyticsReferrerClassPKs", referrerClassPKs);
 
 		StringBundler stringBundler = new StringBundler(13);
 
