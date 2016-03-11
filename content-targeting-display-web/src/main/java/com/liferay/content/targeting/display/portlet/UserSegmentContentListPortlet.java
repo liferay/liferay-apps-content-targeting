@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet;
+package com.liferay.content.targeting.display.portlet;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -21,7 +21,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.content.targeting.portlet.util.QueryRule;
+import com.liferay.content.targeting.display.portlet.util.QueryRule;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;

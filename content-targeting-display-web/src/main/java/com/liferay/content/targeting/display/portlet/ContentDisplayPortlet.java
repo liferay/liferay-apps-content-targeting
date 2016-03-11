@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet;
+package com.liferay.content.targeting.display.portlet;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.publisher.web.util.AssetPublisherHelper;
-import com.liferay.content.targeting.portlet.util.QueryRule;
+import com.liferay.content.targeting.display.portlet.util.QueryRule;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.PortletDisplay;

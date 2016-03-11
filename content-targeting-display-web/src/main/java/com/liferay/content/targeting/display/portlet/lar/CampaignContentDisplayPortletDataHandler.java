@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet.lar;
+package com.liferay.content.targeting.display.portlet.lar;
 
+import com.liferay.content.targeting.display.portlet.util.CampaignQueryRuleUtil;
+import com.liferay.content.targeting.display.portlet.util.QueryRule;
 import com.liferay.content.targeting.model.Campaign;
-import com.liferay.content.targeting.portlet.util.CampaignQueryRuleUtil;
-import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;

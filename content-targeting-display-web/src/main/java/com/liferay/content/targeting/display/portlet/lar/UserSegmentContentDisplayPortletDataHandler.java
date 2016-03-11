@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet.lar;
+package com.liferay.content.targeting.display.portlet.lar;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.content.targeting.display.portlet.util.QueryRule;
+import com.liferay.content.targeting.display.portlet.util.UserSegmentQueryRuleUtil;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.portlet.util.QueryRule;
-import com.liferay.content.targeting.portlet.util.UserSegmentQueryRuleUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;

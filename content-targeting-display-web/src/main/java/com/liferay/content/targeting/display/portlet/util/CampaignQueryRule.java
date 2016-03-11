@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet.util;
+package com.liferay.content.targeting.display.portlet.util;
 
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;

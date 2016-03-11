@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet.action;
+package com.liferay.content.targeting.display.portlet.action;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.content.targeting.display.portlet.util.CampaignQueryRule;
+import com.liferay.content.targeting.display.portlet.util.CampaignQueryRuleUtil;
+import com.liferay.content.targeting.display.portlet.util.QueryRule;
 import com.liferay.content.targeting.model.Campaign;
-import com.liferay.content.targeting.portlet.util.CampaignQueryRule;
-import com.liferay.content.targeting.portlet.util.CampaignQueryRuleUtil;
-import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;

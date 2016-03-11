@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet.action;
+package com.liferay.content.targeting.display.portlet.action;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;

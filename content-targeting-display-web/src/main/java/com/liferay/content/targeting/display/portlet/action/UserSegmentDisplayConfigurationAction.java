@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet.action;
+package com.liferay.content.targeting.display.portlet.action;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.content.targeting.portlet.util.QueryRule;
-import com.liferay.content.targeting.portlet.util.UserSegmentQueryRule;
-import com.liferay.content.targeting.portlet.util.UserSegmentQueryRuleUtil;
+import com.liferay.content.targeting.display.portlet.util.QueryRule;
+import com.liferay.content.targeting.display.portlet.util.UserSegmentQueryRule;
+import com.liferay.content.targeting.display.portlet.util.UserSegmentQueryRuleUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.UserSegmentUtil;

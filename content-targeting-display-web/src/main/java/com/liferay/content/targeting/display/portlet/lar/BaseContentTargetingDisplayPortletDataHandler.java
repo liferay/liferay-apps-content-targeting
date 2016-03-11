@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet.lar;
+package com.liferay.content.targeting.display.portlet.lar;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.content.targeting.display.portlet.util.QueryRule;
 import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
-import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;

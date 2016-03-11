@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet.servlet.taglib;
+package com.liferay.content.targeting.display.portlet.servlet.taglib;
 
 import com.liferay.content.targeting.analytics.web.servlet.taglib.TrackingDynamicInclude;
 import com.liferay.content.targeting.model.UserSegment;

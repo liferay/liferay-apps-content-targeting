@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet.util;
+package com.liferay.content.targeting.display.portlet.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;

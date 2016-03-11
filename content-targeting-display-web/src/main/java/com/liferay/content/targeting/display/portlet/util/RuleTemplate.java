@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet.util;
+package com.liferay.content.targeting.display.portlet.util;
 
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.portal.kernel.util.StringPool;

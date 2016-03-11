@@ -12,17 +12,18 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet;
+package com.liferay.content.targeting.display.portlet;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.content.targeting.portlet.util.QueryRule;
-import com.liferay.content.targeting.portlet.util.UserSegmentQueryRuleUtil;
+import com.liferay.content.targeting.display.portlet.util.CampaignQueryRuleUtil;
+import com.liferay.content.targeting.display.portlet.util.QueryRule;
+import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
-import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,13 +31,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
@@ -53,18 +52,18 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo Garcia
  */
 @Component(
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.css-class-wrapper=user-segment-content-display-portlet",
+		"com.liferay.portlet.css-class-wrapper=campaign-content-display-portlet",
 		"com.liferay.portlet.display-category=category.ct",
 		"com.liferay.portlet.header-portlet-css=/css/rules_panel.css",
 		"com.liferay.portlet.header-portlet-css=/css/thumbnails_preview.css",
 		"com.liferay.portlet.header-portlet-javascript=/js/thumbnails_preview.js",
-		"com.liferay.portlet.icon=/icons/user_segment_content_display.png",
+		"com.liferay.portlet.icon=/icons/campaign_content_display.png",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
@@ -72,18 +71,18 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.render-weight=1",
 		"com.liferay.portlet.scopeable=true",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=User Segment Content Display" + PortletKeys.CT_USERSEGMENT_DISPLAY,
+		"javax.portlet.display-name=Campaign Content Display" + PortletKeys.CT_CAMPAIGN_DISPLAY,
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.config-template=/user_segment_content_display/configuration.jsp",
+		"javax.portlet.init-param.config-template=/campaign_content_display/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/user_segment_content_display/view.jsp",
+		"javax.portlet.init-param.view-template=/campaign_content_display/view.jsp",
 		"javax.portlet.name=", "javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )
-public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
+public class CampaignContentDisplayPortlet extends ContentDisplayPortlet {
 
 	@Override
 	public void render(
@@ -105,27 +104,37 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 			renderRequest.setAttribute(
 				"isNotConfigured", portletPreferences.getMap().isEmpty());
 
-			List<QueryRule> userSegmentQueryRules =
-				UserSegmentQueryRuleUtil.getUserSegmentQueryRules(
+			List<QueryRule> campaignQueryRules =
+				CampaignQueryRuleUtil.getCampaignQueryRules(
 					portletPreferences, themeDisplay.getLocale(), false);
 
+			long[] groupIds =
+				ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+					themeDisplay.getScopeGroupId());
+
+			List<Campaign> campaigns = _campaignLocalService.getCampaigns(
+				groupIds);
+
+			renderRequest.setAttribute("campaigns", campaigns);
+
 			renderRequest.setAttribute(
-				"userSegmentQueryRules", userSegmentQueryRules);
+				"showPreview", showPreview(themeDisplay));
 
-			long[] userSegmentIds = (long[])renderRequest.getAttribute(
-				WebKeys.USER_SEGMENT_IDS);
+			renderRequest.setAttribute(
+				"assetRendererFactories",
+				getSelectableAssetRendererFactories(
+					themeDisplay.getCompanyId()));
 
-			long[] userSegmentAssetCategoryIds =
-				ContentTargetingUtil.getAssetCategoryIds(
-					themeDisplay.getSiteGroupIdOrLiveGroupId(), userSegmentIds);
+			renderRequest.setAttribute(
+				"campaignQueryRules", campaignQueryRules);
 
-			QueryRule queryRule = UserSegmentQueryRuleUtil.match(
-				userSegmentAssetCategoryIds, userSegmentQueryRules);
+			QueryRule queryRule = CampaignQueryRuleUtil.match(
+				getCampaignIds(campaigns), campaignQueryRules);
 
 			renderRequest.setAttribute("queryRule", queryRule);
 
 			renderRequest.setAttribute(
-				"selectedIndex", userSegmentQueryRules.indexOf(queryRule));
+				"selectedIndex", campaignQueryRules.indexOf(queryRule));
 
 			List<AssetEntry> results = new ArrayList<>();
 
@@ -138,49 +147,25 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 			}
 
 			populatePortletDisplayTemplateViewContext(
-				renderRequest, renderResponse, results, userSegmentQueryRules);
-
-			renderRequest.setAttribute(
-				"showPreview", showPreview(themeDisplay));
-
-			renderRequest.setAttribute(
-				"assetRendererFactories",
-				getSelectableAssetRendererFactories(
-					themeDisplay.getCompanyId()));
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
-
-			long[] vocabularyGroupIds = new long[1];
-			long[] vocabularyIds = new long[1];
-
-			if (themeDisplay.getScopeGroupId() ==
-					themeDisplay.getCompanyGroupId()) {
-
-				vocabularyGroupIds[0] = themeDisplay.getCompanyGroupId();
-
-				vocabularyIds[0] = UserSegmentUtil.getAssetVocabularyId(
-					themeDisplay.getUserId(), serviceContext);
-			}
-			else {
-				vocabularyGroupIds =
-					ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
-						themeDisplay.getSiteGroupId());
-				vocabularyIds = UserSegmentUtil.getAssetVocabularyIds(
-					vocabularyGroupIds);
-			}
-
-			renderRequest.setAttribute(
-				"vocabularyGroupIds", StringUtil.merge(vocabularyGroupIds));
-			renderRequest.setAttribute(
-				"vocabularyIds", StringUtil.merge(vocabularyIds));
+				renderRequest, renderResponse, results, campaignQueryRules);
 		}
 		catch (Exception e) {
 			_log.error("Error in rendering user segment display portlet", e);
 		}
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	protected long[] getCampaignIds(List<Campaign> campaigns) {
+		long[] campaignIds = new long[campaigns.size()];
+
+		for (int i = 0; i < campaigns.size(); i++) {
+			Campaign campaign = campaigns.get(i);
+
+			campaignIds[i] = campaign.getCampaignId();
+		}
+
+		return campaignIds;
 	}
 
 	protected List<AssetRendererFactory> getSelectableAssetRendererFactories(
@@ -202,6 +187,13 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 		}
 
 		return selectableAssetRendererFactories;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCampaignLocalService(
+		CampaignLocalService campaignLocalService) {
+
+		_campaignLocalService = campaignLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -238,8 +230,9 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserSegmentContentDisplayPortlet.class);
+		CampaignContentDisplayPortlet.class);
 
+	private CampaignLocalService _campaignLocalService;
 	private LayoutLocalService _layoutLocalService;
 
 }
