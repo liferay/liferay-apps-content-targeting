@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingEditReportDisplayContext contentTargetingEditReportDisplayContext = new ContentTargetingEditReportDisplayContext(renderResponse, portletConfig, request);
+ContentTargetingEditReportDisplayContext contentTargetingEditReportDisplayContext = new ContentTargetingEditReportDisplayContext(renderRequest, renderResponse);
 
 String className = contentTargetingEditReportDisplayContext.getClassName();
 

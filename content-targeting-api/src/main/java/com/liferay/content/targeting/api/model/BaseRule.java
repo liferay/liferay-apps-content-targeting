@@ -39,15 +39,19 @@ public abstract class BaseRule implements Rule {
 
 	@Override
 	public void activate() {
+		Class<?> clazz = getClass();
+
 		if (_log.isDebugEnabled()) {
-			_log.debug("Rule activate: " + getClass().getSimpleName());
+			_log.debug("Rule activate: " + clazz.getSimpleName());
 		}
 	}
 
 	@Override
 	public void deActivate() {
+		Class<?> clazz = getClass();
+
 		if (_log.isDebugEnabled()) {
-			_log.debug("Rule deactivate: " + getClass().getSimpleName());
+			_log.debug("Rule deactivate: " + clazz.getSimpleName());
 		}
 	}
 
@@ -65,16 +69,7 @@ public abstract class BaseRule implements Rule {
 
 	@Override
 	public String getDescription(Locale locale) {
-		String key = getClass().getName().concat(".description");
-
-		String description = ContentTargetingUtil.getModelResource(
-			locale, getClass(), key);
-
-		if (description.endsWith(key)) {
-			description = getShortDescription(locale);
-		}
-
-		return description;
+		return ContentTargetingUtil.getDescription(getClass(), locale);
 	}
 
 	@Override
@@ -107,8 +102,7 @@ public abstract class BaseRule implements Rule {
 
 	@Override
 	public String getName(Locale locale) {
-		return ContentTargetingUtil.getModelResource(
-			locale, getClass(), getClass().getName());
+		return ContentTargetingUtil.getName(getClass(), locale);
 	}
 
 	@Override
@@ -118,21 +112,14 @@ public abstract class BaseRule implements Rule {
 
 	@Override
 	public String getRuleKey() {
-		return getClass().getSimpleName();
+		Class<?> clazz = getClass();
+
+		return clazz.getSimpleName();
 	}
 
 	@Override
 	public String getShortDescription(Locale locale) {
-		String key = getClass().getName().concat(".shortDescription");
-
-		String shortDescription = ResourceActionsUtil.getModelResource(
-			locale, key);
-
-		if (shortDescription.endsWith(key)) {
-			shortDescription = StringPool.BLANK;
-		}
-
-		return shortDescription;
+		return ContentTargetingUtil.getShortDescription(getClass(), locale);
 	}
 
 	@Override

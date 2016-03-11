@@ -94,14 +94,16 @@ public class ReportInstanceLocalServiceImpl
 		ReportInstance reportInstance = reportInstancePersistence.create(
 			reportInstanceId);
 
-		reportInstance.setCreateDate(new Date());
+		Date now = new Date();
+
+		reportInstance.setCreateDate(now);
 		reportInstance.setUuid(serviceContext.getUuid());
 		reportInstance.setGroupId(groupId);
 		reportInstance.setCompanyId(user.getCompanyId());
 		reportInstance.setUserId(user.getUserId());
 		reportInstance.setUserName(user.getFullName());
 
-		reportInstance.setModifiedDate(new Date());
+		reportInstance.setModifiedDate(now);
 		reportInstance.setReportKey(reportKey);
 		reportInstance.setClassName(className);
 		reportInstance.setClassPK(classPK);

@@ -53,8 +53,8 @@ public class JournalArticleTrackingDynamicInclude
 		if (classPK > 0) {
 			try {
 				doInclude(
-					response, "view", JournalArticle.class.getName(), classPK,
-					JournalArticle.class.getName(), new long[] {classPK});
+					request, response, "view", JournalArticle.class.getName(),
+					classPK);
 			}
 			catch (Exception e) {
 				_log.error("Unable to include analytics tracking JS", e);

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingEditUserSegmentDisplayContext contentTargetingEditUserSegmentDisplayContext = new ContentTargetingEditUserSegmentDisplayContext(renderResponse, request);
+ContentTargetingEditUserSegmentDisplayContext contentTargetingEditUserSegmentDisplayContext = new ContentTargetingEditUserSegmentDisplayContext(renderRequest, renderResponse);
 
 RuleCategoriesRegistry ruleCategoriesRegistry = contentTargetingEditUserSegmentDisplayContext.getRuleCategoriesRegistry();
 

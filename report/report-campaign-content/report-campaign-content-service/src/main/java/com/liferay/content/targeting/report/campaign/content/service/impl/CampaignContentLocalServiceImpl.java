@@ -109,8 +109,12 @@ public class CampaignContentLocalServiceImpl
 				CampaignContentReport.class.getSimpleName(),
 				Campaign.class.getName(), campaignId);
 
-		if (reportInstance != null) {
-			modifiedDate = reportInstance.getModifiedDate();
+		Date reportInstanceModifiedDate = reportInstance.getModifiedDate();
+
+		if ((reportInstance != null) &&
+			reportInstanceModifiedDate.after(reportInstance.getCreateDate())) {
+
+			modifiedDate = reportInstanceModifiedDate;
 		}
 
 		addCampaignContentsFromAnalytics(campaignId, modifiedDate);

@@ -20,21 +20,23 @@ package com.liferay.content.targeting.util;
 public class PortletKeys extends com.liferay.portal.kernel.util.PortletKeys {
 
 	public static final String CT_ADMIN =
-		"com_liferay_content_targeting_portlet_ContentTargetingPortlet";
+		"com_liferay_content_targeting_web_portlet_ContentTargetingPortlet";
 
 	public static final String CT_CAMPAIGN_DISPLAY =
-		"com_liferay_content_targeting_portlet_CampaignContentDisplayPortlet";
+		"com_liferay_content_targeting_display_web_portlet_" +
+			"CampaignContentDisplayPortlet";
 
 	public static final String CT_CORE = "ctcore";
 
 	public static final String CT_SIMULATOR =
-		"com_liferay_content_targeting_portlet_SimulatorPortlet";
+		"com_liferay_content_targeting_simulation_web_portlet_SimulatorPortlet";
 
 	public static final String CT_USERSEGMENT_DISPLAY =
-		"com_liferay_content_targeting_portlet_" +
+		"com_liferay_content_targeting_display_web_portlet_" +
 			"UserSegmentContentDisplayPortlet";
 
 	public static final String CT_USERSEGMENT_LIST =
-		"com_liferay_content_targeting_portlet_UserSegmentContentListPortlet";
+		"com_liferay_content_targeting_display_web_portlet_" +
+			"UserSegmentContentListPortlet";
 
 }

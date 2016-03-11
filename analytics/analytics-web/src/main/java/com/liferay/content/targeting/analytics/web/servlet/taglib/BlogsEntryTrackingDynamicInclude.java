@@ -45,9 +45,8 @@ public class BlogsEntryTrackingDynamicInclude extends TrackingDynamicInclude {
 		if (blogsEntry != null) {
 			try {
 				doInclude(
-					response, "view", BlogsEntry.class.getName(),
-					blogsEntry.getPrimaryKey(), BlogsEntry.class.getName(),
-					new long[] {blogsEntry.getPrimaryKey()});
+					request, response, "view", BlogsEntry.class.getName(),
+					blogsEntry.getPrimaryKey());
 			}
 			catch (Exception e) {
 				_log.error("Unable to include analytics tracking JS", e);

@@ -17,7 +17,6 @@ package com.liferay.content.targeting.api.model;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
@@ -33,15 +32,18 @@ public abstract class BaseRuleCategory implements RuleCategory {
 	@Activate
 	public void activate() {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Rule Category activate: " + getClass().getSimpleName());
+			Class<?> clazz = getClass();
+
+			_log.debug("Rule Category activate: " + clazz.getSimpleName());
 		}
 	}
 
 	@Deactivate
 	public void deActivate() {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Rule Category deactivate: " + getClass().getSimpleName());
+			Class<?> clazz = getClass();
+
+			_log.debug("Rule Category deactivate: " + clazz.getSimpleName());
 		}
 	}
 
@@ -52,16 +54,7 @@ public abstract class BaseRuleCategory implements RuleCategory {
 
 	@Override
 	public String getDescription(Locale locale) {
-		String key = getClass().getName().concat(".description");
-
-		String description = ContentTargetingUtil.getModelResource(
-			locale, getClass(), key);
-
-		if (description.equals(key)) {
-			description = StringPool.BLANK;
-		}
-
-		return description;
+		return ContentTargetingUtil.getDescription(getClass(), locale);
 	}
 
 	@Override
@@ -71,8 +64,7 @@ public abstract class BaseRuleCategory implements RuleCategory {
 
 	@Override
 	public String getName(Locale locale) {
-		return ResourceActionsUtil.getModelResource(
-			locale, getClass().getName());
+		return ContentTargetingUtil.getName(getClass(), locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -14,6 +14,7 @@ dependencies {
 	provided project(":apps:collaboration:message-boards:message-boards-api")
 	provided project(":apps:collaboration:wiki:wiki-api")
 	provided project(":apps:content-targeting:analytics:analytics-api")
+	provided project(":apps:content-targeting:content-targeting-api")
 	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
 	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:web-experience:journal:journal-api")

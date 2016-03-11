@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_content_targeting_portlet_CampaignContentDisplayPortlet</portlet-name>
+		<portlet-name>com_liferay_content_targeting_display_web_portlet_CampaignContentDisplayPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_TO_PAGE</action-key>
@@ -22,7 +22,7 @@
 		</permissions>
 	</portlet-resource>
 	<portlet-resource>
-		<portlet-name>com_liferay_content_targeting_portlet_UserSegmentContentDisplayPortlet</portlet-name>
+		<portlet-name>com_liferay_content_targeting_display_web_portlet_UserSegmentContentDisplayPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_TO_PAGE</action-key>
@@ -41,7 +41,7 @@
 		</permissions>
 	</portlet-resource>
 	<portlet-resource>
-		<portlet-name>com_liferay_content_targeting_portlet_UserSegmentContentListPortlet</portlet-name>
+		<portlet-name>com_liferay_content_targeting_display_web_portlet_UserSegmentContentListPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_TO_PAGE</action-key>

@@ -202,6 +202,18 @@ public class ContentTargetingUtil {
 		return data;
 	}
 
+	public static String getDescription(Class<?> clazz, Locale locale) {
+		String key = clazz.getName().concat(".description");
+
+		String description = getModelResource(locale, clazz, key);
+
+		if (description.endsWith(key)) {
+			description = getShortDescription(clazz, locale);
+		}
+
+		return description;
+	}
+
 	public static String getModelResource(
 		Locale locale, Class clazz, String name) {
 
@@ -223,6 +235,22 @@ public class ContentTargetingUtil {
 		catch (MissingResourceException mre) {
 			return ResourceActionsUtil.getModelResource(locale, name);
 		}
+	}
+
+	public static String getName(Class<?> clazz, Locale locale) {
+		return getModelResource(locale, clazz, clazz.getName());
+	}
+
+	public static String getShortDescription(Class<?> clazz, Locale locale) {
+		String key = clazz.getName().concat(".shortDescription");
+
+		String shortDescription = getModelResource(locale, clazz, key);
+
+		if (shortDescription.endsWith(key)) {
+			shortDescription = StringPool.BLANK;
+		}
+
+		return shortDescription;
 	}
 
 	public static boolean isStaged(long liveGroupId, String portletId)

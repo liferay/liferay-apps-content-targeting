@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingEditCampaignDisplayContext contentTargetingEditCampaignDisplayContext = new ContentTargetingEditCampaignDisplayContext(renderResponse, portletConfig, request);
+ContentTargetingEditCampaignDisplayContext contentTargetingEditCampaignDisplayContext = (ContentTargetingEditCampaignDisplayContext)renderRequest.getAttribute("contentTargetingEditCampaignDisplayContext");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(contentTargetingEditCampaignDisplayContext.getBackURL());
