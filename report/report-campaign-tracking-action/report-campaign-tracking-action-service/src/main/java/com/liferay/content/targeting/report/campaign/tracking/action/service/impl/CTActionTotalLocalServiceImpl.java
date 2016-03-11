@@ -135,8 +135,12 @@ public class CTActionTotalLocalServiceImpl
 		ReportInstance reportInstance =
 			_reportInstanceLocalService.fetchReportInstance(reportInstanceId);
 
-		if (reportInstance != null) {
-			modifiedDate = reportInstance.getModifiedDate();
+		Date reportInstanceModifiedDate = reportInstance.getModifiedDate();
+
+		if ((reportInstance != null) &&
+			reportInstanceModifiedDate.after(reportInstance.getCreateDate())) {
+
+			modifiedDate = reportInstanceModifiedDate;
 		}
 
 		List<CTActionTotal> ctActionTotals =

@@ -113,8 +113,12 @@ public class UserSegmentContentLocalServiceImpl
 				UserSegmentContentReport.class.getSimpleName(),
 				UserSegment.class.getName(), userSegmentId);
 
-		if (reportInstance != null) {
-			modifiedDate = reportInstance.getModifiedDate();
+		Date reportInstanceModifiedDate = reportInstance.getModifiedDate();
+
+		if ((reportInstance != null) &&
+			reportInstanceModifiedDate.after(reportInstance.getCreateDate())) {
+
+			modifiedDate = reportInstanceModifiedDate;
 		}
 
 		addUserSegmentContentsFromAnalytics(userSegmentId, modifiedDate);
