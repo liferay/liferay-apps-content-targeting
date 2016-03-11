@@ -3,25 +3,6 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_content_targeting_display_web_portlet_CampaignContentDisplayPortlet</portlet-name>
-		<permissions>
-			<supports>
-				<action-key>ADD_TO_PAGE</action-key>
-				<action-key>CONFIGURATION</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>CONFIGURATION</action-key>
-			</guest-unsupported>
-		</permissions>
-	</portlet-resource>
-	<portlet-resource>
 		<portlet-name>com_liferay_content_targeting_web_portlet_ContentTargetingPortlet</portlet-name>
 		<permissions>
 			<supports>
@@ -32,44 +13,6 @@
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
-			<guest-unsupported>
-				<action-key>CONFIGURATION</action-key>
-			</guest-unsupported>
-		</permissions>
-	</portlet-resource>
-	<portlet-resource>
-		<portlet-name>com_liferay_content_targeting_display_web_portlet_UserSegmentContentDisplayPortlet</portlet-name>
-		<permissions>
-			<supports>
-				<action-key>ADD_TO_PAGE</action-key>
-				<action-key>CONFIGURATION</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>CONFIGURATION</action-key>
-			</guest-unsupported>
-		</permissions>
-	</portlet-resource>
-	<portlet-resource>
-		<portlet-name>com_liferay_content_targeting_display_web_portlet_UserSegmentContentListPortlet</portlet-name>
-		<permissions>
-			<supports>
-				<action-key>ADD_TO_PAGE</action-key>
-				<action-key>CONFIGURATION</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
 			<guest-unsupported>
 				<action-key>CONFIGURATION</action-key>
 			</guest-unsupported>
