@@ -17,7 +17,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-web")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
-	provided project(":apps:foundation:frontend:frontend-taglib")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
 	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:web-experience:application-list:application-list-api")

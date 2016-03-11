@@ -15,7 +15,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-taglib")
-	provided project(":apps:foundation:frontend:frontend-taglib")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:web-experience:asset:asset-publisher-web")
 	provided project(":apps:web-experience:portlet-display-template:portlet-display-template")
 }
