@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.content.targeting.analytics.api
 Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.content.targeting.analytics,\
-	com.liferay.content.targeting.analytics.api.util,\
 	com.liferay.content.targeting.analytics.configuration,\
 	com.liferay.content.targeting.analytics.exception,\
 	com.liferay.content.targeting.analytics.model,\
