@@ -935,7 +935,7 @@ public abstract class UserSegmentServiceBaseImpl extends BaseServiceImpl
 			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql, new int[0]);
+					sql);
 
 			sqlUpdate.update();
 		}
