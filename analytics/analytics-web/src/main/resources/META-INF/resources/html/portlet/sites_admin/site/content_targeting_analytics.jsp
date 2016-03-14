@@ -69,7 +69,7 @@ boolean trackAnalyticsYoutube = PrefsPropsUtil.getBoolean(company.getCompanyId()
 	<liferay-ui:message arguments="<%= liveGroup.getDescriptiveName(themeDisplay.getLocale()) %>" key="select-the-elements-and-actions-that-will-be-tracked-by-content-targeting-analytics-in-the-site-x" />
 
 	<%
-	String checkPortalAnalyticsLabel = LanguageUtil.get(locale, "portal-settings-content-targeting-analytics");
+	String checkPortalAnalyticsLabel = LanguageUtil.get(locale, "content-targeting-analytics");
 	String checkPortalAnalyticsOptionLabel = LanguageUtil.get(locale, "this-option-has-been-disabled-by-the-portal-administrator");
 	%>
 
