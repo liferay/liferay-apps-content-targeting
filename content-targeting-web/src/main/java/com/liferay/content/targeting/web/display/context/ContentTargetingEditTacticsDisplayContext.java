@@ -14,7 +14,6 @@
 
 package com.liferay.content.targeting.web.display.context;
 
-import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
@@ -91,9 +90,6 @@ public class ContentTargetingEditTacticsDisplayContext {
 				ContentTargetingMVCCommand.VIEW_TACTICS);
 			backURLObject.setParameter(
 				"campaignId", String.valueOf(getCampaignId()));
-			backURLObject.setParameter("className", Campaign.class.getName());
-			backURLObject.setParameter(
-				"classPK", String.valueOf(getCampaignId()));
 
 			backURL = backURLObject.toString();
 		}
@@ -159,7 +155,22 @@ public class ContentTargetingEditTacticsDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			PortletURL redirectURLObject =
+				_liferayPortletResponse.createRenderURL();
+
+			redirectURLObject.setParameter(
+				"mvcRenderCommandName",
+				ContentTargetingMVCCommand.VIEW_TACTICS);
+			redirectURLObject.setParameter(
+				"campaignId", String.valueOf(getCampaignId()));
+
+			redirect = redirectURLObject.toString();
+		}
+
+		_redirect = redirect;
 
 		return _redirect;
 	}

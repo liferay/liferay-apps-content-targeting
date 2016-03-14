@@ -30,10 +30,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editCampaignURL">
 			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="campaignId" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
-			<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -59,9 +56,6 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 		<c:if test="<%= channelsCount > 0 %>">
 			<portlet:renderURL var="viewCampaignTacticsURL">
 				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_TACTICS %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
-				<portlet:param name="classPK" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
 				<portlet:param name="campaignId" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
 			</portlet:renderURL>
 

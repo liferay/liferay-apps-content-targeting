@@ -92,7 +92,18 @@ public class ContentTargetingEditUserSegmentDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			PortletURL redirectURLObject = _renderResponse.createRenderURL();
+
+			redirectURLObject.setParameter("mvcPath", "/view.jsp");
+			redirectURLObject.setParameter("tabs1", "user-segments");
+
+			redirect = redirectURLObject.toString();
+		}
+
+		_redirect = redirect;
 
 		return _redirect;
 	}

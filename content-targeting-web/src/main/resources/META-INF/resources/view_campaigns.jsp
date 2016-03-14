@@ -122,7 +122,6 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 <c:if test="<%= contentTargetingViewCampaignDisplayContext.showAddButton() %>">
 	<portlet:renderURL var="addCampaignURL">
 		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
