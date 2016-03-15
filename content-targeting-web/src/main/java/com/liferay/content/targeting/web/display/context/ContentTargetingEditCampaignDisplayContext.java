@@ -167,7 +167,19 @@ public class ContentTargetingEditCampaignDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			PortletURL redirectURLObject =
+				_liferayPortletResponse.createRenderURL();
+
+			redirectURLObject.setParameter("mvcPath", "/view.jsp");
+			redirectURLObject.setParameter("tabs1", "campaigns");
+
+			redirect = redirectURLObject.toString();
+		}
+
+		_redirect = redirect;
 
 		return _redirect;
 	}

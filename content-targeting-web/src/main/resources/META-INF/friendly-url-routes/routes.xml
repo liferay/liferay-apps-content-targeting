@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_0_0.dtd">
+
+<routes>
+	<route>
+		<pattern>/admin/campaign/{campaignId:\d+}/promotion/{tacticId:\d+}/edit</pattern>
+		<implicit-parameter name="mvcRenderCommandName">editTactic</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin/campaign/{campaignId:\d+}/promotion/new</pattern>
+		<implicit-parameter name="mvcRenderCommandName">editTactic</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin/campaign/{campaignId:\d+}/promotions</pattern>
+		<implicit-parameter name="mvcRenderCommandName">viewTactics</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin/user-segment/{userSegmentId:\d+}/edit</pattern>
+		<implicit-parameter name="mvcRenderCommandName">editUserSegment</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin/user-segment/new</pattern>
+		<implicit-parameter name="mvcRenderCommandName">editUserSegment</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin/campaign/{campaignId:\d+}/edit</pattern>
+		<implicit-parameter name="mvcRenderCommandName">editCampaign</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin/campaign/new</pattern>
+		<implicit-parameter name="mvcRenderCommandName">editCampaign</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin/{tabs1}</pattern>
+		<implicit-parameter name="mvcPath">/view.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin</pattern>
+		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern></pattern>
+		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+</routes>

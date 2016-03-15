@@ -34,7 +34,6 @@ Tactic tactic = (Tactic)row.getObject();
 	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editTacticURL">
 			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_TACTIC %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
 			<portlet:param name="tacticId" value="<%= String.valueOf(tactic.getTacticId()) %>" />
 		</portlet:renderURL>

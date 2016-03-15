@@ -28,9 +28,6 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 	<c:if test="<%= UserSegmentPermission.contains(permissionChecker, userSegment, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editUserSegmentURL">
 			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="className" value="<%= UserSegment.class.getName() %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
 			<portlet:param name="userSegmentId" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
 		</portlet:renderURL>
 

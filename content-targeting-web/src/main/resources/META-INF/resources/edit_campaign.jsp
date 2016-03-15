@@ -25,13 +25,6 @@ portletDisplay.setURLBack(contentTargetingEditCampaignDisplayContext.getBackURL(
 renderResponse.setTitle(contentTargetingEditCampaignDisplayContext.getCampaignTitle());
 %>
 
-<portlet:renderURL var="portletURL">
-	<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
-	<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
-	<portlet:param name="classPK" value="<%= String.valueOf(contentTargetingEditCampaignDisplayContext.getCampaignId()) %>" />
-	<portlet:param name="campaignId" value="<%= String.valueOf(contentTargetingEditCampaignDisplayContext.getCampaignId()) %>" />
-</portlet:renderURL>
-
 <portlet:actionURL name="updateCampaign" var="addCampaignURL" />
 
 <aui:form action="<%= addCampaignURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">

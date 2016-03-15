@@ -135,7 +135,6 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 <c:if test="<%= contentTargetingViewUserSegmentDisplayContext.showAddButton() %>">
 	<portlet:renderURL var="addUserSegmentURL">
 		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>

@@ -110,7 +110,6 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 	<liferay-portlet:renderURL var="addTacticURL">
 		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_TACTIC %>" />
 		<portlet:param name="campaignId" value="<%= String.valueOf(contentTargetingViewTacticsDisplayContext.getCampaignId()) %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu>
