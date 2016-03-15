@@ -11,3 +11,6 @@ Export-Package:\
 	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.persistence,\
 	com.liferay.content.targeting.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Audience Targeting
+-include: ../app.bnd

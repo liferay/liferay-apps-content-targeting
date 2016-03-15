@@ -8,3 +8,6 @@ Export-Package:\
 	com.liferay.content.targeting.rule.score.points.service,\
 	com.liferay.content.targeting.rule.score.points.service.persistence,\
 	com.liferay.content.targeting.rule.score.points.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Score Points Rule
+-include: ../../../app.bnd

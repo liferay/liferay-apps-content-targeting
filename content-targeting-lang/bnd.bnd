@@ -1,3 +1,6 @@
 Bundle-Name: Content Targeting Lang
 Bundle-SymbolicName: com.liferay.content.targeting.lang
 Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Audience Targeting
+-include: ../app.bnd

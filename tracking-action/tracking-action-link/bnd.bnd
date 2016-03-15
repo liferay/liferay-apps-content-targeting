@@ -7,6 +7,9 @@ Import-Package:\
 	com.liferay.content.targeting.service,\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Link Tracking Action
 Private-Package: com.liferay.content.targeting.tracking.action.link.*
 Web-ContextPath: /tracking-action-link
 -baseline: *;version="1.0.0"
+-include: ../../app.bnd

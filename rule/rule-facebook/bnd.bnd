@@ -10,6 +10,9 @@ Import-Package:\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
 Include-Resource: @lib/restfb.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Facebook Rule
 Private-Package: com.liferay.content.targeting.rule.facebook.*
 Web-ContextPath: /rule-facebook
 -baseline: *;version="1.0.0"
+-include: ../../app.bnd

@@ -9,6 +9,9 @@ Import-Package:\
 	com.liferay.content.targeting.service,\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Time Rule
 Private-Package: com.liferay.content.targeting.rule.time.*
 Web-ContextPath: /rule-time
 -baseline: *;version="1.0.0"
+-include: ../../app.bnd

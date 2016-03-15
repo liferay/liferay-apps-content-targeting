@@ -10,3 +10,6 @@ Export-Package:\
 	com.liferay.content.targeting.report.campaign.content.service.util,\
 	com.liferay.content.targeting.report.campaign.content.util,\
 	com.liferay.content.targeting.report.campaign.content.util.comparator
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Campaign Content Report
+-include: ../../../app.bnd

@@ -6,6 +6,9 @@ Export-Package:\
 	com.liferay.content.targeting.rule.score.points.messaging.config,\
 	com.liferay.content.targeting.rule.score.points.model.impl,\
 	com.liferay.content.targeting.rule.score.points.service.impl
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Score Points Rule
+Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 Liferay-Spring-Context: META-INF/spring
 Require-Capability:\
@@ -13,4 +16,9 @@ Require-Capability:\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 Web-ContextPath: /rule-score-points
 -baseline: *;version="1.0.0"
+-include: ../../../app.bnd
+-liferay-includeresource:\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

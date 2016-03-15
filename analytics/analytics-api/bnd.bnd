@@ -10,3 +10,6 @@ Export-Package:\
 	com.liferay.content.targeting.analytics.service,\
 	com.liferay.content.targeting.analytics.service.persistence,\
 	com.liferay.content.targeting.analytics.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Analytics
+-include: ../../app.bnd

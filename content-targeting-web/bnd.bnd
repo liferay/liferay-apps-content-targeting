@@ -62,4 +62,7 @@ Import-Package:\
 	freemarker.template,\
 	*
 Liferay-JS-Config: /js/config.js
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Audience Targeting
 Web-ContextPath: /content-targeting-web
+-include: ../app.bnd

@@ -5,14 +5,18 @@ Export-Package:\
 	com.liferay.content.targeting.anonymous.users,\
 	com.liferay.content.targeting.anonymous.users.util
 Import-Package: *;resolution:="optional"
-Include-Resource:\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Anonymous Users
+Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 Liferay-Spring-Context: META-INF/spring
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 -baseline: *;version="2.0.0"
+-include: ../../app.bnd
+-liferay-includeresource:\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

@@ -7,6 +7,9 @@ Import-Package:\
 	com.liferay.content.targeting.service,\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Form Tracking Action
 Private-Package: com.liferay.content.targeting.tracking.action.form.*
 Web-ContextPath: /tracking-action-form
 -baseline: *;version="1.0.0"
+-include: ../../app.bnd
