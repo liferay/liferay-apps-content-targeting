@@ -7,7 +7,7 @@ Export-Package:\
 	com.liferay.content.targeting.analytics.messaging.config
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Analytics
-Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true
 Liferay-Spring-Context: META-INF/spring
 Require-Capability:\
