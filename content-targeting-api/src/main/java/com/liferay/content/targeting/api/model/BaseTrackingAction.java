@@ -88,12 +88,12 @@ public abstract class BaseTrackingAction implements TrackingAction {
 			populateContext(trackingActionInstance, context, values);
 
 			content = ContentTargetingContextUtil.parseTemplate(
-				getClass(), _FORM_TEMPLATE_PATH, context);
+				getClass(), getFormTemplatePath(), context);
 		}
 		catch (Exception e) {
 			_log.error(
 				"Error while processing tracking action form template " +
-					_FORM_TEMPLATE_PATH,
+					getFormTemplatePath(),
 				e);
 		}
 
@@ -178,6 +178,10 @@ public abstract class BaseTrackingAction implements TrackingAction {
 		sb.append(".");
 
 		return sb.toString();
+	}
+
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH;
 	}
 
 	protected void populateContext(

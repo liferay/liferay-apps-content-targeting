@@ -20,8 +20,8 @@ dependencies {
 	provided project(":apps:content-targeting:anonymous-users:anonymous-users-api")
 	provided project(":apps:content-targeting:content-targeting-api")
 	provided project(":apps:content-targeting:report:report-user-segment-content:report-user-segment-content-api")
-	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
+	provided project(":apps:foundation:portal:portal-upgrade")
 }
 
 liferay {

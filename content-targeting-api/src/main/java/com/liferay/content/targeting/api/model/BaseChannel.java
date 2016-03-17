@@ -95,12 +95,12 @@ public abstract class BaseChannel implements Channel {
 			populateContext(channelInstance, context, values);
 
 			content = ContentTargetingContextUtil.parseTemplate(
-				getClass(), _FORM_TEMPLATE_PATH, context);
+				getClass(), getFormTemplatePath(), context);
 		}
 		catch (Exception e) {
 			_log.error(
 				"Error while processing channel form template " +
-					_FORM_TEMPLATE_PATH,
+					getFormTemplatePath(),
 				e);
 		}
 
@@ -177,6 +177,10 @@ public abstract class BaseChannel implements Channel {
 		sb.append(".");
 
 		return sb.toString();
+	}
+
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH;
 	}
 
 	protected void populateContext(
