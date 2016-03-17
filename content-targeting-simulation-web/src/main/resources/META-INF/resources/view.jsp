@@ -26,25 +26,51 @@ ServletContext simulatorServletContext = (ServletContext)request.getAttribute("s
 
 <c:if test="<%= simulatorServletContext != null %>">
 	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(simulatorServletContext.getContextPath()) + "/js/main.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script>
+	<link href="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(simulatorServletContext.getContextPath()) + "/css/main.css", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" rel="stylesheet" type="text/css">
 </c:if>
 
 <h3 class="list-group-heading"><liferay-ui:message key="category.ct" /></h3>
 
 <div class="container-fluid content-targeting-simulator">
-	<liferay-ui:tabs
-		names='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "user-segments") + "," + LanguageUtil.get(portletConfig.getResourceBundle(locale), "campaigns") %>'
-		refresh="<%= false %>"
-		type="pills"
-		value="<%= tabs1 %>"
-	>
-		<liferay-ui:section>
-			<liferay-util:include page="/view_user_segments.jsp" servletContext="<%= application %>">
-			</liferay-util:include>
-		</liferay-ui:section>
+	<div aria-multiselectable="true" class="panel-group" data-qa-id="contentTargetingSimulatorBody" id="<portlet:namespace />Accordion" role="tablist">
+		<div class="panel">
+			<div class="panel-heading" id="<portlet:namespace />UserSegmentsHeading" role="tab">
+				<div class="panel-title">
+					<div aria-controls="#<portlet:namespace />UserSegmentsCollapse" aria-expanded="<%= true %>" class="collapse-icon collapse-icon-middle panel-toggler" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace />UserSegmentsCollapse" role="button">
+						<span class="category-name truncate-text"><%= LanguageUtil.get(resourceBundle, "user-segments") %></span>
 
-		<liferay-ui:section>
-			<liferay-util:include page="/view_campaigns.jsp" servletContext="<%= application %>">
-			</liferay-util:include>
-		</liferay-ui:section>
-	</liferay-ui:tabs>
+						<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+
+						<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+					</div>
+				</div>
+			</div>
+
+			<div aria-expanded="false" aria-labelledby="<portlet:namespace />UserSegmentsHeading" class="collapse in panel-collapse" id="<portlet:namespace />UserSegmentsCollapse" role="tabpanel">
+				<div class="panel-body">
+					<liferay-util:include page="/view_user_segments.jsp" servletContext="<%= application %>" />
+				</div>
+			</div>
+		</div>
+
+		<div class="panel">
+			<div class="panel-heading" id="<portlet:namespace />CampaignsHeading" role="tab">
+				<div class="panel-title">
+					<div aria-controls="#<portlet:namespace />CampaignsCollapse" aria-expanded="<%= true %>" class="collapse-icon collapse-icon-middle collapsed panel-toggler" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace />CampaignsCollapse" role="button">
+						<span class="category-name truncate-text"><%= LanguageUtil.get(resourceBundle, "campaigns") %></span>
+
+						<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+
+						<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+					</div>
+				</div>
+			</div>
+
+			<div aria-expanded="false" aria-labelledby="<portlet:namespace />CampaignsHeading" class="collapse panel-collapse" id="<portlet:namespace />CampaignsCollapse" role="tabpanel">
+				<div class="panel-body">
+					<liferay-util:include page="/view_campaigns.jsp" servletContext="<%= application %>" />
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

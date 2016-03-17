@@ -29,7 +29,7 @@ String portletNamespace = PortalUtil.getPortletNamespace(PortletKeys.CT_SIMULATO
 
 <liferay-portlet:actionURL name="simulateUserSegment" portletName="<%= PortletKeys.CT_SIMULATOR %>" var="simulateUserSegmentURL" />
 
-<div id="<portlet:namespace />userSegmentContainer">
+<div class="container-fluid" id="<portlet:namespace />userSegmentContainer">
 	<aui:form action="<%= simulateUserSegmentURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault();" + renderResponse.getNamespace() + "saveUserSegments();" %>'>
 		<aui:input name='<%= portletNamespace + "selectedUserSegmentIds" %>' type="hidden" useNamespace="<%= false %>" />
 		<aui:input name='<%= portletNamespace + "stopSimulation" %>' type="hidden" useNamespace="<%= false %>" value="false" />
@@ -47,37 +47,15 @@ String portletNamespace = PortalUtil.getPortletNamespace(PortletKeys.CT_SIMULATO
 			<liferay-util:param name="name" value="user-segment" />
 			<liferay-util:param name="showSearch" value="<%= String.valueOf(showUserSegmentSearch) %>" />
 		</liferay-util:include>
-
-		<aui:button-row cssClass="button-holder">
-			<aui:button
-				type="submit"
-				value="simulate"
-			/>
-			<aui:button
-				name="stopSimulationButton"
-				value="stop-simulation"
-			/>
-		</aui:button-row>
 	</aui:form>
 </div>
 
 <aui:script use="aui-toggler,liferay-simulator-search,liferay-util-list-fields">
-	<portlet:namespace />saveUserSegments = function() {
+	<portlet:namespace />updateSimulation = function() {
 		document.<portlet:namespace />fm.<%= portletNamespace %>selectedUserSegmentIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm);
 
 		submitUserSegments();
 	}
-
-	var stopSimulationButton = A.one('#<portlet:namespace/>stopSimulationButton');
-
-	stopSimulationButton.on(
-		'click',
-		function(event) {
-			document.<portlet:namespace />fm.<%= portletNamespace %>stopSimulation.value = 'true';
-
-			submitUserSegments();
-		}
-	);
 
 	submitUserSegments = function() {
 		var loadingMask = A.getBody().plug(A.LoadingMask).loadingmask;
