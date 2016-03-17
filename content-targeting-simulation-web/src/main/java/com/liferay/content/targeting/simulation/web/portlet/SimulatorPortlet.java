@@ -17,10 +17,12 @@ package com.liferay.content.targeting.simulation.web.portlet;
 import com.liferay.content.targeting.api.model.UserSegmentSimulator;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -76,20 +78,26 @@ public class SimulatorPortlet extends MVCPortlet {
 		boolean stopSimulation = ParamUtil.getBoolean(
 			request, "stopSimulation");
 
-		if (stopSimulation) {
-			_userSegmentSimulator.removeAllUserSegmentIds(
-				httpServletRequest, httpServletResponse);
+		_userSegmentSimulator.removeAllUserSegmentIds(
+			httpServletRequest, httpServletResponse);
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONPortletResponseUtil.writeJSON(request, response, jsonObject);
+
+		if (stopSimulation) {
 			request.setAttribute(WebKeys.USER_SEGMENT_IDS, null);
 
 			return;
 		}
+		else {
+			long[] selectedUserSegmentIds = ParamUtil.getLongValues(
+				request, "selectedUserSegmentIds");
 
-		long[] selectedUserSegmentIds = StringUtil.split(
-			ParamUtil.getString(request, "selectedUserSegmentIds"), 0L);
-
-		_userSegmentSimulator.setUserSegmentIds(
-			selectedUserSegmentIds, httpServletRequest, httpServletResponse);
+			_userSegmentSimulator.setUserSegmentIds(
+				selectedUserSegmentIds, httpServletRequest,
+				httpServletResponse);
+		}
 	}
 
 	@Reference

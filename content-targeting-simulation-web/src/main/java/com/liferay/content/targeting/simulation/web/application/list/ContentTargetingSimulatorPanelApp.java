@@ -60,8 +60,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + SimulationPanelCategory.SIMULATION,
-		"service.ranking:Integer=110"
+		"panel.app.order:Integer=90",
+		"panel.category.key=" + SimulationPanelCategory.SIMULATION
 	},
 	service = PanelApp.class
 )
