@@ -14,9 +14,9 @@
 
 package com.liferay.content.targeting.messaging;
 
-import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.content.targeting.configuration.AnonymousUserUserSegmentServiceConfiguration;
 import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;

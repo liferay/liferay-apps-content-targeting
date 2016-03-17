@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.messaging;
 
-import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.content.targeting.report.campaign.tracking.action.configuration.CampaignTrackingActionReportServiceConfiguration;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
