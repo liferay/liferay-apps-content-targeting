@@ -5,11 +5,7 @@ AUI.add(
 
 		var Node = A.Node;
 
-		var SELECTOR_CHECKBOX = '.input-checkbox-wrapper';
-
 		var SELECTOR_ELEMENT = '.element';
-
-		var TPL_PAGINATION = '<div class="pagination"></div>';
 
 		var SearchImpl = A.Component.create(
 			{
@@ -37,11 +33,18 @@ AUI.add(
 						validator: Lang.isString
 					},
 					itemsPerPage: {
-						value: 10
+						value: 6
 					},
 					name: {
 						validator: Lang.isString
+					},
+					portletNamespace: {
+						validator: Lang.isString
+					},
+					portletURL: {
+						validator: Lang.isString
 					}
+
 				},
 
 				AUGMENTS: [Liferay.PortletBase],
@@ -56,18 +59,7 @@ AUI.add(
 
 						var elementContainer = instance.byId(instance.get('containerId'));
 
-						instance._togglerDelegate = new A.TogglerDelegate(
-							{
-								animated: true,
-								closeAllOnExpand: false,
-								container: elementContainer,
-								content: '.category-content',
-								expanded: true,
-								header: '.category-header'
-							}
-						);
-
-						instance._updatePagination(elementContainer.all('.matched'), elementContainer.all('.not-matched'));
+						instance._elementsContainer = elementContainer;
 
 						instance._createSimulatorSearch();
 
@@ -80,24 +72,6 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
-					_afterPaginationChangeRequest: function(event, elements) {
-						var instance = this;
-
-						var itemsPerPage = instance.get('itemsPerPage');
-
-						var page = event.state.page - 1;
-
-						instance._hideElements(elements);
-
-						var start = page * itemsPerPage;
-
-						elements.slice(start, start + itemsPerPage).each(
-							function(item, index, collection) {
-								item.ancestor(SELECTOR_CHECKBOX).show();
-							}
-						);
-					},
-
 					_bindUI: function() {
 						var instance = this;
 
@@ -106,6 +80,14 @@ AUI.add(
 						if (instance._simulatorSearch) {
 							instance._eventHandles.push(
 								instance._simulatorSearch.on('results', instance._onSimulatorSearchResults, instance)
+							);
+						}
+
+						var name = instance.get('name');
+
+						if (name == 'user-segment') {
+							instance._eventHandles.push(
+								instance._elementsContainer.delegate('click', instance._onElementClick, '.element', instance)
 							);
 						}
 					},
@@ -122,7 +104,7 @@ AUI.add(
 								results.push(
 									{
 										node: item,
-										title: item.ancestor(SELECTOR_CHECKBOX).text()
+										title: item.one('div').text()
 									}
 								);
 							}
@@ -164,9 +146,73 @@ AUI.add(
 					_hideElements: function(elements) {
 						elements.each(
 							function(item, index, collection) {
-								item.ancestor(SELECTOR_CHECKBOX).hide();
+								item.hide();
 							}
 						);
+					},
+
+					_onElementClick: function(event) {
+						var instance = this;
+
+						var element = event.target.hasClass('element') ?
+							event.target : event.target.ancestor('div.element');
+
+						var matched = element.hasClass('matched');
+
+						if (matched) {
+							element.addClass('not-matched');
+							element.removeClass('matched');
+						}
+						else {
+							element.addClass('matched');
+							element.removeClass('not-matched');
+						}
+
+						var portletURL = instance.get('portletURL');
+
+						var selectedUserSegmentIds = [];
+
+						A.all('div.element.matched').each(
+							function(elementDiv) {
+								var userSegmentId = elementDiv.getData().elementid;
+
+								selectedUserSegmentIds.push(userSegmentId);
+							}
+						);
+
+						var namespacedUserSegments = instance.get('portletNamespace') + 'selectedUserSegmentIds';
+
+						var data = {};
+						data[namespacedUserSegments] = selectedUserSegmentIds;
+
+						A.io.request(
+							portletURL,
+							{
+								data: data,
+								method: 'post',
+								on: {
+									success: function(event, id, obj) {
+										var deviceDialog = A.one('.lfr-simulation-device > .lfr-device');
+
+										if (deviceDialog) {
+											var dialogId = deviceDialog.get('id');
+
+											var deviceDialogWindow = Liferay.Util.getWindow(dialogId);
+
+											deviceDialogWindow.iframe.set('uri', deviceDialogWindow.iframeConfig.uri + "&t=" + Math.random());
+
+											deviceDialogWindow.iframe.on(
+												'load',
+												function() {
+													instance._resetSimulator();
+												}
+											);
+										}
+									}
+								}
+							}
+						);
+
 					},
 
 					_onSimulatorSearchResults: function(event) {
@@ -185,7 +231,7 @@ AUI.add(
 							function(item, index, collection) {
 								var node = item.raw.node;
 
-								node.ancestor(SELECTOR_CHECKBOX).show();
+								node.show();
 
 								if (node.hasClass('matched')) {
 									matchedElements.push(node);
@@ -196,8 +242,6 @@ AUI.add(
 							}
 						);
 
-						instance._updatePagination(new A.NodeList(matchedElements), new A.NodeList(notMatchedElements));
-
 						if (instance._togglerDelegate) {
 							instance._togglerDelegate.expandAll(
 								{
@@ -207,73 +251,23 @@ AUI.add(
 						}
 					},
 
-					_refreshPagination: function(boundingBox, elements) {
+					_resetSimulator: function() {
 						var instance = this;
 
-						var itemsPerPage = instance.get('itemsPerPage');
+						var portletURL = instance.get('portletURL');
 
-						var totalPages = instance._getTotalPages(elements.size(), itemsPerPage);
+						var stopSimulation = instance.get('portletNamespace') + 'stopSimulation';
 
-						instance._hideElements(elements.slice(itemsPerPage));
+						var data = {};
+						data[stopSimulation] = true;
 
-						var pagination = new Liferay.Pagination(
+						A.io.request(
+							portletURL,
 							{
-								boundingBox: boundingBox,
-								circular: false,
-								itemsPerPage: itemsPerPage,
-								namespace: instance.NS,
-								page: 1,
-								results: elements.size(),
-								total: totalPages,
-								visible: totalPages > 1
+								data: data,
+								method: 'post'
 							}
-						).render();
-
-						var paginationChangeRequestHandle = pagination.after('changeRequest', A.rbind('_afterPaginationChangeRequest', instance, elements));
-
-						return {
-							handle: paginationChangeRequestHandle,
-							pagination: pagination
-						};
-					},
-
-					_updatePagination: function(matchedElements, notMatchedElements) {
-						var instance = this;
-
-						if (instance._paginations) {
-							A.Array.each(
-								instance._paginations,
-								function(item) {
-									item.pagination.destroy();
-									item.handle.detach();
-								}
-							);
-						}
-
-						instance._paginations = [];
-
-						var paginatorMatchedContainer = instance.byId('paginator' + instance.get('name') + 'MatchedContainer');
-
-						var matchedBoundingBox = Node.create(
-							Lang.sub(
-								TPL_PAGINATION
-							)
 						);
-
-						paginatorMatchedContainer.append(matchedBoundingBox);
-
-						var paginatorNotMatchedContainer = instance.byId('paginator' + instance.get('name') + 'NotMatchedContainer');
-
-						var notMatchedBoundingBox = Node.create(
-							Lang.sub(
-								TPL_PAGINATION
-							)
-						);
-
-						paginatorNotMatchedContainer.append(notMatchedBoundingBox);
-
-						instance._paginations.push(instance._refreshPagination(matchedBoundingBox, matchedElements));
-						instance._paginations.push(instance._refreshPagination(notMatchedBoundingBox, notMatchedElements));
 					}
 				}
 			}
@@ -283,6 +277,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-toggler', 'autocomplete-base', 'autocomplete-filters', 'liferay-pagination', 'liferay-portlet-base']
+		requires: ['aui-base', 'aui-io-request', 'aui-toggler', 'autocomplete-base', 'autocomplete-filters', 'liferay-portlet-base']
 	}
 );
