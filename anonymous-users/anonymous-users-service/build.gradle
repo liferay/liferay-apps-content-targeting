@@ -18,6 +18,7 @@ dependencies {
 	provided group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
 	provided project(":apps:content-targeting:anonymous-users:anonymous-users-api")
 	provided project(":apps:foundation:portal:portal-upgrade")
+	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 }
 
 liferay {
