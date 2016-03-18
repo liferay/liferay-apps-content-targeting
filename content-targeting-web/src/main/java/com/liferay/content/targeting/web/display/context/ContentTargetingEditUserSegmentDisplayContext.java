@@ -18,7 +18,9 @@ import com.liferay.content.targeting.api.model.RuleCategoriesRegistry;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.web.util.RuleTemplate;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -26,8 +28,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Locale;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -42,6 +44,7 @@ public class ContentTargetingEditUserSegmentDisplayContext {
 	public ContentTargetingEditUserSegmentDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
@@ -162,18 +165,21 @@ public class ContentTargetingEditUserSegmentDisplayContext {
 
 		UserSegment userSegment = getUserSegment();
 
-		if (userSegment == null) {
-			_userSegmentTitle = StringPool.BLANK;
-
-			return _userSegmentTitle;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Locale locale = themeDisplay.getLocale();
+		if (userSegment != null) {
+			_userSegmentTitle = userSegment.getName(themeDisplay.getLocale());
+		}
+		else {
+			PortletConfig portletConfig =
+				(PortletConfig)_renderRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		_userSegmentTitle = userSegment.getName(locale);
+			_userSegmentTitle = LanguageUtil.get(
+				portletConfig.getResourceBundle(themeDisplay.getLocale()),
+				"new-user-segment");
+		}
 
 		return _userSegmentTitle;
 	}
@@ -181,6 +187,7 @@ public class ContentTargetingEditUserSegmentDisplayContext {
 	private List<RuleTemplate> _addedRuleTemplates;
 	private String _cssItemsClass;
 	private String _redirect;
+	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private RuleCategoriesRegistry _ruleCategoriesRegistry;
