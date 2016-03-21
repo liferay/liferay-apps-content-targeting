@@ -31,7 +31,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= contentTargetingViewCampaignDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= contentTargetingViewCampaignDisplayContext.getDisplayStyle() %>"
 		/>
@@ -68,54 +68,116 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.Campaign"
+			cssClass="entry-display-style"
 			keyProperty="campaignId"
 			modelVar="campaign"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
-				name="name"
-				value="<%= campaign.getName(locale) %>"
-			/>
+			<c:choose>
+				<c:when test="<%= contentTargetingViewCampaignDisplayContext.isDescriptiveView() %>">
+					<liferay-ui:search-container-column-icon
+						icon="page"
+						toggleRowChecker="<%= true %>"
+					/>
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= campaign.getDescription(locale) %>"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h4>
+							<%= HtmlUtil.escape(campaign.getName(locale)) %>
+						</h4>
 
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				value="<%= campaign.getModifiedDate() %>"
-			/>
+						<c:if test="<%= Validator.isNotNull(campaign.getDescription(locale)) %>">
+							<p class="text-default">
+								<%= HtmlUtil.escape(campaign.getDescription(locale)) %>
+							</p>
+						</c:if>
 
-			<liferay-ui:search-container-column-date
-				name="start-date"
-				value="<%= campaign.getStartDate() %>"
-			/>
+						<div class="text-default">
 
-			<liferay-ui:search-container-column-date
-				name="end-date"
-				value="<%= campaign.getEndDate() %>"
-			/>
+							<span class="label text-default">
+								<strong>
+									<liferay-ui:message key="<%= campaign.getStatus() %>" />
+								</strong>
+							</span>
 
-			<liferay-ui:search-container-column-text
-				name="priority"
-				value="<%= String.valueOf(campaign.getPriority()) %>"
-			/>
+							<span class="label text-default">
+								<strong>
+									<liferay-ui:message key="priority" />:
+								</strong>
 
-			<liferay-ui:search-container-column-text
-				name="status"
-			>
-				<span class="label <%= CampaignConstants.getStatusCssClass(campaign.getStatus()) %>">
-					<liferay-ui:message key="<%= campaign.getStatus() %>" />
-				</span>
-			</liferay-ui:search-container-column-text>
+								<%= campaign.getPriority() %>
+							</span>
 
-			<liferay-ui:search-container-column-jsp
-				path="/campaign_action.jsp"
-			/>
+							<span class="label text-default">
+								<strong>
+									<liferay-ui:message key="start-date" />:
+								</strong>
+
+								<%= dateFormatDateTime.format(campaign.getStartDate()) %>
+							</span>
+
+							<span class="label text-default">
+								<strong>
+									<liferay-ui:message key="end-date" />:
+								</strong>
+
+								<%= dateFormatDateTime.format(campaign.getEndDate()) %>
+							</span>
+						</div>
+
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="list-group-item-field"
+						path="/campaign_action.jsp"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
+						name="name"
+						value="<%= campaign.getName(locale) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="description"
+						value="<%= campaign.getDescription(locale) %>"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="modified-date"
+						value="<%= campaign.getModifiedDate() %>"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="start-date"
+						value="<%= campaign.getStartDate() %>"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="end-date"
+						value="<%= campaign.getEndDate() %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="priority"
+						value="<%= String.valueOf(campaign.getPriority()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="status"
+					>
+						<liferay-ui:message key="<%= campaign.getStatus() %>" />
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/campaign_action.jsp"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= contentTargetingViewCampaignDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

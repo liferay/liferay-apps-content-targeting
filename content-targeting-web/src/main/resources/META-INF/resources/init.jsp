@@ -43,7 +43,6 @@ page import="com.liferay.content.targeting.service.ReportInstanceLocalServiceUti
 page import="com.liferay.content.targeting.service.permission.CampaignPermission" %><%@
 page import="com.liferay.content.targeting.service.permission.UserSegmentPermission" %><%@
 page import="com.liferay.content.targeting.util.ActionKeys" %><%@
-page import="com.liferay.content.targeting.util.CampaignConstants" %><%@
 page import="com.liferay.content.targeting.web.display.context.ContentTargetingEditCampaignDisplayContext" %><%@
 page import="com.liferay.content.targeting.web.display.context.ContentTargetingEditReportDisplayContext" %><%@
 page import="com.liferay.content.targeting.web.display.context.ContentTargetingEditTacticsDisplayContext" %><%@
@@ -61,6 +60,7 @@ page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
+page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -68,6 +68,8 @@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
+
+<%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
@@ -79,3 +81,7 @@ page import="java.util.Map" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+%>

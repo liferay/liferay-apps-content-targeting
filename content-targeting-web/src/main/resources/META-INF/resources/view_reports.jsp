@@ -56,7 +56,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= contentTargetingViewReportsDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= contentTargetingViewReportsDisplayContext.getDisplayStyle() %>"
 		/>
@@ -94,6 +94,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.content.targeting.model.ReportInstance"
+				cssClass="entry-display-style"
 				keyProperty="reportInstanceId"
 				modelVar="reportInstance"
 			>
@@ -107,34 +108,65 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 					<portlet:param name="reportInstanceId" value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:search-container-column-text
-					cssClass="text-strong"
-					name="name"
-				>
-					<a class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>" href="javascript:;"><%= reportInstance.getName(locale) %></a>
-				</liferay-ui:search-container-column-text>
+				<c:choose>
+					<c:when test="<%= contentTargetingViewReportsDisplayContext.isDescriptiveView() %>">
+						<liferay-ui:search-container-column-icon
+							icon="page"
+							toggleRowChecker="<%= true %>"
+						/>
 
-				<liferay-ui:search-container-column-text
-					name="description"
-					value="<%= reportInstance.getDescription(locale) %>"
-				/>
+						<liferay-ui:search-container-column-text
+							colspan="<%= 2 %>"
+						>
+							<h4>
+								<a class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>" href="javascript:;"><%= reportInstance.getName(locale) %></a>
+							</h4>
 
-				<liferay-ui:search-container-column-text
-					name="type"
-					value="<%= reportInstance.getTypeName(locale) %>"
-				/>
+							<p class="text-default">
+								<%= HtmlUtil.escape(reportInstance.getDescription(locale)) %>
+							</p>
 
-				<liferay-ui:search-container-column-date
-					name="modified-date"
-					value="<%= reportInstance.getModifiedDate() %>"
-				/>
+							<div class="text-default">
+								<%= reportInstance.getTypeName(locale) %>
+							</div>
+						</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-jsp
-					path="/reports_action.jsp"
-				/>
+						<liferay-ui:search-container-column-jsp
+							cssClass="list-group-item-field"
+							path="/reports_action.jsp"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:search-container-column-text
+							cssClass="text-strong"
+							name="name"
+						>
+							<a class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>" href="javascript:;"><%= reportInstance.getName(locale) %></a>
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-text
+							name="description"
+							value="<%= HtmlUtil.escape(reportInstance.getDescription(locale)) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							name="type"
+							value="<%= reportInstance.getTypeName(locale) %>"
+						/>
+
+						<liferay-ui:search-container-column-date
+							name="modified-date"
+							value="<%= reportInstance.getModifiedDate() %>"
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							path="/reports_action.jsp"
+						/>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator displayStyle="<%= contentTargetingViewReportsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </c:if>

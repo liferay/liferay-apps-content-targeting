@@ -67,7 +67,7 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= contentTargetingViewUserSegmentDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= contentTargetingViewUserSegmentDisplayContext.getDisplayStyle() %>"
 		/>
@@ -100,35 +100,64 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 
 <aui:form action="<%= deleteUserSegmentURL %>" cssClass="container-fluid-1280" name="fmUserSegment">
 	<liferay-ui:search-container
+		id="userSegments"
 		searchContainer="<%= contentTargetingViewUserSegmentDisplayContext.getUserSegmentSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.UserSegment"
+			cssClass="entry-display-style"
 			keyProperty="userSegmentId"
 			modelVar="userSegment"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
-				name="name"
-				value="<%= userSegment.getName(locale) %>"
-			/>
+			<c:choose>
+				<c:when test="<%= contentTargetingViewUserSegmentDisplayContext.isDescriptiveView() %>">
+					<liferay-ui:search-container-column-icon
+						icon="page"
+						toggleRowChecker="<%= true %>"
+					/>
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= userSegment.getDescription(locale) %>"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h4>
+							<%= HtmlUtil.escape(userSegment.getName(locale)) %>
+						</h4>
 
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				value="<%= userSegment.getModifiedDate() %>"
-			/>
+						<p class="text-default">
+							<%= HtmlUtil.escape(userSegment.getDescription(locale)) %>
+						</p>
+					</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-jsp
-				path="/user_segments_action.jsp"
-			/>
+					<liferay-ui:search-container-column-jsp
+						cssClass="list-group-item-field"
+						path="/user_segments_action.jsp"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
+						name="name"
+						value="<%= userSegment.getName(locale) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="description"
+						value="<%= userSegment.getDescription(locale) %>"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="modified-date"
+						value="<%= userSegment.getModifiedDate() %>"
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						path="/user_segments_action.jsp"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= contentTargetingViewUserSegmentDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

@@ -46,7 +46,7 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= contentTargetingViewTacticsDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= contentTargetingViewTacticsDisplayContext.getDisplayStyle() %>"
 		/>
@@ -83,26 +83,54 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.Tactic"
+			cssClass="entry-display-style"
 			keyProperty="tacticId"
 			modelVar="tactic"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
-				name="name"
-				value="<%= tactic.getName(locale) %>"
-			/>
+			<c:choose>
+				<c:when test="<%= contentTargetingViewTacticsDisplayContext.isDescriptiveView() %>">
+					<liferay-ui:search-container-column-icon
+						icon="page"
+						toggleRowChecker="<%= true %>"
+					/>
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= tactic.getDescription(locale) %>"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h4>
+							<%= HtmlUtil.escape(tactic.getName(locale)) %>
+						</h4>
 
-			<liferay-ui:search-container-column-jsp
-				path="/tactic_action.jsp"
-			/>
+						<p class="text-default">
+							<%= HtmlUtil.escape(tactic.getDescription(locale)) %>
+						</p>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="list-group-item-field"
+						path="/tactic_action.jsp"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
+						name="name"
+						value="<%= tactic.getName(locale) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="description"
+						value="<%= tactic.getDescription(locale) %>"
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						path="/tactic_action.jsp"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= contentTargetingViewTacticsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
