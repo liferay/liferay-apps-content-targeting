@@ -18,8 +18,8 @@ dependencies {
 	provided project(":apps:content-targeting:analytics:analytics-api")
 	provided project(":apps:foundation:osgi:osgi-util")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
-	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:foundation:portal:portal-spring-extender")
+	provided project(":apps:foundation:portal:portal-upgrade")
 }
 
 liferay {

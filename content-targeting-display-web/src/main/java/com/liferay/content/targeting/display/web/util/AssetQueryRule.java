@@ -287,6 +287,6 @@ public abstract class AssetQueryRule implements QueryRule {
 	private String _assetTitle = StringPool.BLANK;
 	private String _assetType = StringPool.BLANK;
 	private int _index;
-	private String _template = null;
+	private String _template;
 
 }

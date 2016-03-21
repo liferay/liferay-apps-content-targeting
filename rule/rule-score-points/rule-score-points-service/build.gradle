@@ -20,8 +20,8 @@ dependencies {
 	provided project(":apps:content-targeting:content-targeting-service")
 	provided project(":apps:content-targeting:rule:rule-score-points:rule-score-points-api")
 	provided project(":apps:foundation:osgi:osgi-util")
-	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:foundation:portal:portal-spring-extender")
+	provided project(":apps:foundation:portal:portal-upgrade")
 }
 
 liferay {
