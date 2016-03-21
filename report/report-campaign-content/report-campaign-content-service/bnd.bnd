@@ -10,9 +10,6 @@ Liferay-Releng-Module-Group-Title: Campaign Content Report
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 Liferay-Spring-Context: META-INF/spring
-Require-Capability:\
-	liferay.extender;\
-	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 Web-ContextPath: /report-campaign-content
 -baseline: *;version="1.0.0"
 -include: ../../../app.bnd
