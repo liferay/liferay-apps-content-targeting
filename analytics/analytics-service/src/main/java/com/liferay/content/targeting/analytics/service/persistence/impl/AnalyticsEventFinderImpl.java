@@ -15,12 +15,12 @@
 package com.liferay.content.targeting.analytics.service.persistence.impl;
 
 import com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventFinder;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -52,9 +52,7 @@ public class AnalyticsEventFinderImpl
 		try {
 			session = openSession();
 
-			CustomSQLUtil.reloadCustomSQL();
-
-			String sql = CustomSQLUtil.get(FIND_BY_C_GtC_R_R);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_GtC_R_R);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

@@ -17,6 +17,7 @@ dependencies {
 	provided project(":apps:content-targeting:anonymous-users:anonymous-users-api")
 	provided project(":apps:foundation:osgi:osgi-util")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
+	provided project(":apps:foundation:portal:portal-dao-orm-custom-sql")
 	provided project(":apps:foundation:portal:portal-spring-extender")
 	provided project(":apps:foundation:portal:portal-upgrade")
 }

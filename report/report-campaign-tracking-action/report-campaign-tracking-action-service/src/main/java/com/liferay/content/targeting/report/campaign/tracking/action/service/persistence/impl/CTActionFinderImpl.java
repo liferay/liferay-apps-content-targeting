@@ -15,12 +15,12 @@
 package com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.impl;
 
 import com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionFinder;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -46,7 +46,8 @@ public class CTActionFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_ANALYICS_WITH_CLASS_NAME);
+			String sql = CustomSQLUtil.get(
+				getClass(), FIND_BY_ANALYICS_WITH_CLASS_NAME);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -80,7 +81,8 @@ public class CTActionFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_ANALYICS_WITH_ELEMENT_ID);
+			String sql = CustomSQLUtil.get(
+				getClass(), FIND_BY_ANALYICS_WITH_ELEMENT_ID);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

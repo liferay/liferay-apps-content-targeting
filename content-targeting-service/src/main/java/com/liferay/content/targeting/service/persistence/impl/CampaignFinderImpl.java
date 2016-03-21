@@ -19,6 +19,7 @@ import com.liferay.content.targeting.model.impl.CampaignImpl;
 import com.liferay.content.targeting.model.impl.CampaignModelImpl;
 import com.liferay.content.targeting.service.persistence.CampaignFinder;
 import com.liferay.content.targeting.service.persistence.CampaignUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.Serializable;
 
@@ -128,9 +128,7 @@ public class CampaignFinderImpl
 		try {
 			session = openSession();
 
-			CustomSQLUtil.reloadCustomSQL();
-
-			String sql = CustomSQLUtil.get(FIND_BY_G_D_A_U);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_D_A_U);
 
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));

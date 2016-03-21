@@ -17,8 +17,5 @@ Require-Capability:\
 Web-ContextPath: /rule-score-points
 -baseline: *;version="1.0.0"
 -include: ../../../app.bnd
--liferay-includeresource:\
-	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
+-liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference
