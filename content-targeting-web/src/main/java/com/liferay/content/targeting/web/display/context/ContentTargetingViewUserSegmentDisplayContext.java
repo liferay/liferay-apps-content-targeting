@@ -51,6 +51,11 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		super(liferayPortletRequest, liferayPortletResponse);
 	}
 
+	@Override
+	public String[] getDisplayViews() {
+		return _USER_SEGMENTS_DISPLAY_VIEWS;
+	}
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -205,6 +210,9 @@ public class ContentTargetingViewUserSegmentDisplayContext
 
 		return _showAddButton;
 	}
+
+	private static final String[] _USER_SEGMENTS_DISPLAY_VIEWS =
+		new String[] {"descriptive", "icon", "list"};
 
 	private Boolean _isDisabledManagementBar;
 	private Boolean _isIncludeCheckBox;

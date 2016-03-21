@@ -120,6 +120,11 @@ public class ContentTargetingViewCampaignDisplayContext
 		return _campaignSearchContainer;
 	}
 
+	@Override
+	public String[] getDisplayViews() {
+		return _CAMPAIGN_DISPLAY_VIEWS;
+	}
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -203,6 +208,9 @@ public class ContentTargetingViewCampaignDisplayContext
 
 		return _showAddButton;
 	}
+
+	private static final String[] _CAMPAIGN_DISPLAY_VIEWS =
+		new String[] {"descriptive", "icon", "list"};
 
 	private SearchContainer _campaignSearchContainer;
 	private Boolean _isDisabledManagementBar;

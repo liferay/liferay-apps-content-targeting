@@ -111,6 +111,11 @@ public class ContentTargetingViewTacticsDisplayContext
 		return _campaignTitle;
 	}
 
+	@Override
+	public String[] getDisplayViews() {
+		return _TACTICS_DISPLAY_VIEWS;
+	}
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -269,6 +274,9 @@ public class ContentTargetingViewTacticsDisplayContext
 
 		return false;
 	}
+
+	private static final String[] _TACTICS_DISPLAY_VIEWS =
+		new String[] {"descriptive", "icon", "list"};
 
 	private Campaign _campaign;
 	private Long _campaignId;

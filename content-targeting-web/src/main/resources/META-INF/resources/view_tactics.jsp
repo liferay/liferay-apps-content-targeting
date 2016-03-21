@@ -46,7 +46,7 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "icon", "list"} %>'
+			displayViews="<%= contentTargetingViewTacticsDisplayContext.getDisplayViews() %>"
 			portletURL="<%= contentTargetingViewTacticsDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= contentTargetingViewTacticsDisplayContext.getDisplayStyle() %>"
 		/>

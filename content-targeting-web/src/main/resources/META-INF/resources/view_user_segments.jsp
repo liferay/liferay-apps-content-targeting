@@ -67,7 +67,7 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "icon", "list"} %>'
+			displayViews="<%= contentTargetingViewUserSegmentDisplayContext.getDisplayViews() %>"
 			portletURL="<%= contentTargetingViewUserSegmentDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= contentTargetingViewUserSegmentDisplayContext.getDisplayStyle() %>"
 		/>

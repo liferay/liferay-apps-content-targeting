@@ -132,6 +132,11 @@ public class ContentTargetingViewReportsDisplayContext
 		return _classPK;
 	}
 
+	@Override
+	public String[] getDisplayViews() {
+		return _REPORTS_DISPLAY_VIEWS;
+	}
+
 	public PortletURL getPortletURL() {
 		String className = getClassName();
 
@@ -388,6 +393,9 @@ public class ContentTargetingViewReportsDisplayContext
 
 		return false;
 	}
+
+	private static final String[] _REPORTS_DISPLAY_VIEWS =
+		new String[] {"descriptive", "icon", "list"};
 
 	private String _className;
 	private Long _classPK;

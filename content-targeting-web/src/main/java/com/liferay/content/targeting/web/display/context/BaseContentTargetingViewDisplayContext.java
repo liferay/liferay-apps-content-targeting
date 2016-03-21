@@ -19,8 +19,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,14 +50,26 @@ public class BaseContentTargetingViewDisplayContext {
 
 		String displayStyle = ParamUtil.getString(request, "displayStyle");
 
+		String[] displayViews = getDisplayViews();
+
+		String defaultDisplayStyle = StringPool.BLANK;
+
+		if (ArrayUtil.isNotEmpty(displayViews)) {
+			defaultDisplayStyle = displayViews[0];
+		}
+
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
 		if (Validator.isNull(displayStyle)) {
 			displayStyle = portalPreferences.getValue(
-				PortletKeys.CT_ADMIN, "display-style", "list");
+				PortletKeys.CT_ADMIN, "display-style", defaultDisplayStyle);
 		}
 		else {
+			if (!ArrayUtil.contains(displayViews, displayStyle, false)) {
+				displayStyle = defaultDisplayStyle;
+			}
+
 			portalPreferences.setValue(
 				PortletKeys.CT_ADMIN, "display-style", displayStyle);
 		}
@@ -63,6 +77,10 @@ public class BaseContentTargetingViewDisplayContext {
 		_displayStyle = displayStyle;
 
 		return _displayStyle;
+	}
+
+	public String[] getDisplayViews() {
+		return _BASE_DISPLAY_VIEWS;
 	}
 
 	public String getKeywords() {
@@ -123,6 +141,8 @@ public class BaseContentTargetingViewDisplayContext {
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final HttpServletRequest request;
+
+	private static final String[] _BASE_DISPLAY_VIEWS = new String[] {"list"};
 
 	private String _displayStyle;
 	private String _keywords;

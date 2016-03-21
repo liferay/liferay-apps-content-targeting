@@ -31,7 +31,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "icon", "list"} %>'
+			displayViews="<%= contentTargetingViewCampaignDisplayContext.getDisplayViews() %>"
 			portletURL="<%= contentTargetingViewCampaignDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= contentTargetingViewCampaignDisplayContext.getDisplayStyle() %>"
 		/>
