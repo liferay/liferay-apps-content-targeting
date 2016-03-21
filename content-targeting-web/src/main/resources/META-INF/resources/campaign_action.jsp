@@ -39,11 +39,16 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 		/>
 
 		<c:if test="<%= reportsCount > 0 %>">
+
+			<%
+			long classNameId = PortalUtil.getClassNameId(Campaign.class.getName());
+			%>
+
 			<portlet:renderURL var="viewCampaignReportsURL">
 				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="campaignId" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
-				<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
+				<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 				<portlet:param name="classPK" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
 			</portlet:renderURL>
 

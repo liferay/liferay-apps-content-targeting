@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -116,9 +117,19 @@ public class ContentTargetingViewReportsDisplayContext
 			return _className;
 		}
 
-		_className = ParamUtil.getString(request, "className");
+		_className = PortalUtil.getClassName(getClassNameId());
 
 		return _className;
+	}
+
+	public long getClassNameId() {
+		if (Validator.isNotNull(_classNameId)) {
+			return _classNameId;
+		}
+
+		_classNameId = ParamUtil.getLong(request, "classNameId");
+
+		return _classNameId;
 	}
 
 	public Long getClassPK() {
@@ -385,6 +396,7 @@ public class ContentTargetingViewReportsDisplayContext
 		new String[] {"descriptive", "icon", "list"};
 
 	private String _className;
+	private Long _classNameId;
 	private Long _classPK;
 	private Boolean _hasUpdatePermission;
 	private Boolean _isDisabledManagementBar;
