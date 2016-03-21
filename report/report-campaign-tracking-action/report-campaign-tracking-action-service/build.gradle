@@ -6,8 +6,6 @@ buildService {
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.bnd.util", version: "1.0.1"
-	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.4"
-	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.4"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
@@ -20,8 +18,10 @@ dependencies {
 	provided project(":apps:content-targeting:anonymous-users:anonymous-users-api")
 	provided project(":apps:content-targeting:content-targeting-api")
 	provided project(":apps:content-targeting:report:report-campaign-tracking-action:report-campaign-tracking-action-api")
+	provided project(":apps:foundation:osgi:osgi-util")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:foundation:portal:portal-upgrade")
+	provided project(":apps:foundation:portal:portal-spring-extender")
 }
 
 liferay {
