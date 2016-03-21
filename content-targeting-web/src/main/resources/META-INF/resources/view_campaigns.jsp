@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayContext = new ContentTargetingViewCampaignDisplayContext(renderRequest, renderResponse);
+ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayContext = new ContentTargetingViewCampaignDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
 <liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
