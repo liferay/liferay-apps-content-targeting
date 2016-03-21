@@ -16,6 +16,8 @@ package com.liferay.content.targeting.internal;
 
 import com.liferay.content.targeting.api.model.UserSegmentSimulator;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -23,6 +25,7 @@ import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,19 +47,34 @@ public class PortalPreferencesUserSegmentSimulator
 
 		long userId = PortalUtil.getUserId(request);
 
-		PortalPreferences preferences = getPortalPreferences(userId);
+		while (true) {
+			try {
+				PortalPreferences preferences = getPortalPreferences(userId);
 
-		String[] simulatedUserSegmentIds = preferences.getValues(
-			"content-targeting", "simulatedUserSegmentIds", new String[0]);
+				String[] simulatedUserSegmentIds = preferences.getValues(
+					"content-targeting", "simulatedUserSegmentIds",
+					new String[0]);
 
-		simulatedUserSegmentIds = ArrayUtil.append(
-			simulatedUserSegmentIds, String.valueOf(userSegmentId));
+				simulatedUserSegmentIds = ArrayUtil.append(
+					simulatedUserSegmentIds, String.valueOf(userSegmentId));
 
-		preferences.setValues(
-			"content-targeting", "simulatedUserSegmentIds",
-			simulatedUserSegmentIds);
-		preferences.setValue(
-			"content-targeting", "simulation", String.valueOf(true));
+				preferences.setValues(
+					"content-targeting", "simulatedUserSegmentIds",
+					simulatedUserSegmentIds);
+				preferences.setValue(
+					"content-targeting", "simulation", String.valueOf(true));
+
+				break;
+			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -85,12 +103,26 @@ public class PortalPreferencesUserSegmentSimulator
 
 		long userId = PortalUtil.getUserId(request);
 
-		PortalPreferences preferences = getPortalPreferences(userId);
+		while (true) {
+			try {
+				PortalPreferences preferences = getPortalPreferences(userId);
 
-		preferences.setValues(
-			"content-targeting", "simulatedUserSegmentIds", null);
-		preferences.setValue(
-			"content-targeting", "simulation", String.valueOf(false));
+				preferences.setValues(
+					"content-targeting", "simulatedUserSegmentIds", null);
+				preferences.setValue(
+					"content-targeting", "simulation", String.valueOf(false));
+
+				break;
+			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -100,21 +132,37 @@ public class PortalPreferencesUserSegmentSimulator
 
 		long userId = PortalUtil.getUserId(request);
 
-		PortalPreferences preferences = getPortalPreferences(userId);
+		while (true) {
+			try {
+				PortalPreferences preferences = getPortalPreferences(userId);
 
-		String[] simulatedUserSegmentIds = preferences.getValues(
-			"content-targeting", "simulatedUserSegmentIds", new String[0]);
+				String[] simulatedUserSegmentIds = preferences.getValues(
+					"content-targeting", "simulatedUserSegmentIds",
+					new String[0]);
 
-		simulatedUserSegmentIds = ArrayUtil.remove(
-			simulatedUserSegmentIds, String.valueOf(userSegmentId));
+				simulatedUserSegmentIds = ArrayUtil.remove(
+					simulatedUserSegmentIds, String.valueOf(userSegmentId));
 
-		preferences.setValues(
-			"content-targeting", "simulatedUserSegmentIds",
-			simulatedUserSegmentIds);
+				preferences.setValues(
+					"content-targeting", "simulatedUserSegmentIds",
+					simulatedUserSegmentIds);
 
-		if (simulatedUserSegmentIds.length == 0) {
-			preferences.setValue(
-				"content-targeting", "simulation", String.valueOf(false));
+				if (simulatedUserSegmentIds.length == 0) {
+					preferences.setValue(
+						"content-targeting", "simulation",
+						String.valueOf(false));
+				}
+
+				break;
+			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				break;
+			}
 		}
 	}
 
@@ -125,13 +173,27 @@ public class PortalPreferencesUserSegmentSimulator
 
 		long userId = PortalUtil.getUserId(request);
 
-		PortalPreferences preferences = getPortalPreferences(userId);
+		while (true) {
+			try {
+				PortalPreferences preferences = getPortalPreferences(userId);
 
-		preferences.setValues(
-			"content-targeting", "simulatedUserSegmentIds",
-			ArrayUtil.toStringArray(userSegmentIds));
-		preferences.setValue(
-			"content-targeting", "simulation", String.valueOf(true));
+				preferences.setValues(
+					"content-targeting", "simulatedUserSegmentIds",
+					ArrayUtil.toStringArray(userSegmentIds));
+				preferences.setValue(
+					"content-targeting", "simulation", String.valueOf(true));
+
+				break;
+			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				break;
+			}
+		}
 	}
 
 	protected long[] getLongArray(String[] array) {
@@ -163,5 +225,8 @@ public class PortalPreferencesUserSegmentSimulator
 
 		return null;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PortalPreferencesUserSegmentSimulator.class);
 
 }
