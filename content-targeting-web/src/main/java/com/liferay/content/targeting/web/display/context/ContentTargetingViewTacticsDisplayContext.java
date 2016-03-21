@@ -24,6 +24,7 @@ import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.content.targeting.web.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.web.util.comparator.TacticModifiedDateComparator;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -120,6 +121,18 @@ public class ContentTargetingViewTacticsDisplayContext
 		portletURL.setParameter("campaignId", String.valueOf(getCampaignId()));
 
 		return portletURL;
+	}
+
+	public RowChecker getRowChecker() throws PortalException {
+		if (_rowChecker != null) {
+			return _rowChecker;
+		}
+
+		SearchContainer searchContainer = getTacticSearchContainer();
+
+		_rowChecker = searchContainer.getRowChecker();
+
+		return _rowChecker;
 	}
 
 	public SearchContainer getTacticSearchContainer() throws PortalException {
@@ -263,6 +276,7 @@ public class ContentTargetingViewTacticsDisplayContext
 	private Boolean _hasUpdatePermission;
 	private Boolean _isDisabledManagementBar;
 	private Boolean _isSearchEnabled;
+	private RowChecker _rowChecker;
 	private SearchContainer _tacticSearchContainer;
 
 }

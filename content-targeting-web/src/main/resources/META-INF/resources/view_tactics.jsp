@@ -46,7 +46,7 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"descriptive", "icon", "list"} %>'
 			portletURL="<%= contentTargetingViewTacticsDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= contentTargetingViewTacticsDisplayContext.getDisplayStyle() %>"
 		/>
@@ -110,6 +110,23 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 						cssClass="list-group-item-field"
 						path="/tactic_action.jsp"
 					/>
+				</c:when>
+				<c:when test="<%= contentTargetingViewTacticsDisplayContext.isIconView() %>">
+
+					<%
+						row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+						actionJsp="/tactic_action.jsp"
+						actionJspServletContext="<%= application %>"
+						icon="page"
+						resultRow="<%= row %>"
+						rowChecker="<%= contentTargetingViewTacticsDisplayContext.getRowChecker() %>"
+						title="<%= tactic.getName(locale) %>"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text

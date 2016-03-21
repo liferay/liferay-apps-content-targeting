@@ -31,7 +31,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"descriptive", "icon", "list"} %>'
 			portletURL="<%= contentTargetingViewCampaignDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= contentTargetingViewCampaignDisplayContext.getDisplayStyle() %>"
 		/>
@@ -131,6 +131,30 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 						cssClass="list-group-item-field"
 						path="/campaign_action.jsp"
 					/>
+				</c:when>
+				<c:when test="<%= contentTargetingViewCampaignDisplayContext.isIconView() %>">
+
+					<%
+						row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/campaign_action.jsp"
+							actionJspServletContext="<%= application %>"
+							icon="page"
+							resultRow="<%= row %>"
+							rowChecker="<%= contentTargetingViewCampaignDisplayContext.getRowChecker() %>"
+							title="<%= campaign.getName(locale) %>"
+						>
+							<liferay-frontend:vertical-card-footer>
+								<liferay-ui:message key="<%= campaign.getStatus() %>" />
+								<p>
+									<liferay-ui:message key="priority" />: <%= campaign.getPriority() %>
+								</p>
+							</liferay-frontend:vertical-card-footer>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text

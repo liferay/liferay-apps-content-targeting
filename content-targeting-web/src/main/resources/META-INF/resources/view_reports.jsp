@@ -56,7 +56,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"descriptive", "icon", "list"} %>'
 			portletURL="<%= contentTargetingViewReportsDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= contentTargetingViewReportsDisplayContext.getDisplayStyle() %>"
 		/>
@@ -135,6 +135,23 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 							cssClass="list-group-item-field"
 							path="/reports_action.jsp"
 						/>
+					</c:when>
+					<c:when test="<%= contentTargetingViewReportsDisplayContext.isIconView() %>">
+
+						<%
+							row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+						%>
+
+						<liferay-ui:search-container-column-text>
+							<liferay-frontend:icon-vertical-card
+								actionJsp="/reports_action.jsp"
+								actionJspServletContext="<%= application %>"
+								icon="page"
+								resultRow="<%= row %>"
+								rowChecker="<%= contentTargetingViewReportsDisplayContext.getRowChecker() %>"
+								title="<%= reportInstance.getName(locale) %>"
+							/>
+						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
