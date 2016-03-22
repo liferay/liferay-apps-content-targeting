@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -39,7 +41,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -50,30 +51,25 @@ import java.util.List;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Jürgen Kappler
  */
-public class ContentTargetingViewReportsDisplayContext {
+public class ContentTargetingViewReportsDisplayContext
+	extends BaseContentTargetingViewDisplayContext {
 
 	public ContentTargetingViewReportsDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
-
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		super(liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public PortletURL getAddReportURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL addReportURL = _renderResponse.createRenderURL();
+		PortletURL addReportURL = liferayPortletResponse.createRenderURL();
 
 		addReportURL.setParameter(
 			"mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_REPORT);
@@ -95,13 +91,13 @@ public class ContentTargetingViewReportsDisplayContext {
 	}
 
 	public String getBackURL() {
-		String backURL = ParamUtil.getString(_request, "backURL");
+		String backURL = ParamUtil.getString(request, "backURL");
 
 		if (Validator.isNotNull(backURL)) {
 			return backURL;
 		}
 
-		PortletURL backURLObject = _renderResponse.createRenderURL();
+		PortletURL backURLObject = liferayPortletResponse.createRenderURL();
 
 		backURLObject.setParameter("mvcPath", "/view.jsp");
 
@@ -120,7 +116,7 @@ public class ContentTargetingViewReportsDisplayContext {
 			return _className;
 		}
 
-		_className = ParamUtil.getString(_request, "className");
+		_className = ParamUtil.getString(request, "className");
 
 		return _className;
 	}
@@ -130,56 +126,20 @@ public class ContentTargetingViewReportsDisplayContext {
 			return _classPK;
 		}
 
-		_classPK = ParamUtil.getLong(_request, "classPK");
+		_classPK = ParamUtil.getLong(request, "classPK");
 
 		return _classPK;
 	}
 
-	public String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
-		}
-
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
-
-		return _displayStyle;
-	}
-
-	public String getKeywords() {
-		if (Validator.isNotNull(_keywords)) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_request, "keywords");
-
-		return _keywords;
-	}
-
-	public String getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "modified-date");
-
-		return _orderByCol;
-	}
-
-	public String getOrderByType() {
-		if (Validator.isNotNull(_orderByType)) {
-			return _orderByType;
-		}
-
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
-
-		return _orderByType;
+	@Override
+	public String[] getDisplayViews() {
+		return _REPORTS_DISPLAY_VIEWS;
 	}
 
 	public PortletURL getPortletURL() {
 		String className = getClassName();
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("backURL", getBackURL());
 		portletURL.setParameter("redirect", getRedirect());
@@ -216,7 +176,7 @@ public class ContentTargetingViewReportsDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_request, "redirect");
+		_redirect = ParamUtil.getString(request, "redirect");
 
 		return _redirect;
 	}
@@ -226,7 +186,7 @@ public class ContentTargetingViewReportsDisplayContext {
 			return _reports;
 		}
 
-		_reports = (List<Report>)_request.getAttribute("reports");
+		_reports = (List<Report>)request.getAttribute("reports");
 
 		_reports = ListUtil.filter(
 			_reports,
@@ -244,11 +204,12 @@ public class ContentTargetingViewReportsDisplayContext {
 
 	public SearchContainer getReportsSearchContainer() throws PortalException {
 		SearchContainer reportsSearchContainer = new SearchContainer(
-			_renderRequest, getPortletURL(), null, "no-reports-were-found");
+			liferayPortletRequest, getPortletURL(), null,
+			"no-reports-were-found");
 
 		reportsSearchContainer.setId("reports");
 		reportsSearchContainer.setRowChecker(
-			new ReportInstanceRowChecker(_renderResponse));
+			new ReportInstanceRowChecker(liferayPortletResponse));
 		reportsSearchContainer.setSearch(true);
 
 		boolean orderByAsc = false;
@@ -303,11 +264,11 @@ public class ContentTargetingViewReportsDisplayContext {
 			return _reportsTitle;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletConfig portletConfig =
-			(PortletConfig)_renderRequest.getAttribute(
+			(PortletConfig)liferayPortletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		_reportsTitle = LanguageUtil.get(
@@ -322,7 +283,7 @@ public class ContentTargetingViewReportsDisplayContext {
 			return _scopeGroupId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_scopeGroupId = themeDisplay.getScopeGroupId();
@@ -356,7 +317,7 @@ public class ContentTargetingViewReportsDisplayContext {
 		if (instantiableExists) {
 			String className = getClassName();
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			PermissionChecker permissionChecker =
@@ -420,21 +381,17 @@ public class ContentTargetingViewReportsDisplayContext {
 		return false;
 	}
 
+	private static final String[] _REPORTS_DISPLAY_VIEWS =
+		new String[] {"descriptive", "icon", "list"};
+
 	private String _className;
 	private Long _classPK;
-	private String _displayStyle;
 	private Boolean _hasUpdatePermission;
 	private Boolean _isDisabledManagementBar;
-	private String _keywords;
-	private String _orderByCol;
-	private String _orderByType;
 	private String _redirect;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
 	private List<Report> _reports;
 	private SearchContainer _reportsSearchContainer;
 	private String _reportsTitle;
-	private final HttpServletRequest _request;
 	private Long _scopeGroupId;
 
 }

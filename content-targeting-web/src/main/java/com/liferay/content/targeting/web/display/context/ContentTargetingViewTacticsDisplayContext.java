@@ -26,12 +26,13 @@ import com.liferay.content.targeting.web.util.comparator.TacticModifiedDateCompa
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -39,33 +40,28 @@ import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Jürgen Kappler
  */
-public class ContentTargetingViewTacticsDisplayContext {
+public class ContentTargetingViewTacticsDisplayContext
+	extends BaseContentTargetingViewDisplayContext {
 
 	public ContentTargetingViewTacticsDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
-
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		super(liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getBackURL() {
-		String backURL = ParamUtil.getString(_request, "backURL");
+		String backURL = ParamUtil.getString(request, "backURL");
 
 		if (Validator.isNotNull(backURL)) {
 			return backURL;
 		}
 
-		PortletURL backURLObject = _renderResponse.createRenderURL();
+		PortletURL backURLObject = liferayPortletResponse.createRenderURL();
 
 		backURLObject.setParameter("mvcPath", "/view.jsp");
 		backURLObject.setParameter("tabs1", "campaigns");
@@ -92,7 +88,7 @@ public class ContentTargetingViewTacticsDisplayContext {
 			return _campaignId;
 		}
 
-		_campaignId = ParamUtil.getLong(_request, "campaignId", 0);
+		_campaignId = ParamUtil.getLong(request, "campaignId", 0);
 
 		return _campaignId;
 	}
@@ -102,7 +98,7 @@ public class ContentTargetingViewTacticsDisplayContext {
 			return _campaignTitle;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Campaign campaign = getCampaign();
@@ -114,49 +110,13 @@ public class ContentTargetingViewTacticsDisplayContext {
 		return _campaignTitle;
 	}
 
-	public String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
-		}
-
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
-
-		return _displayStyle;
-	}
-
-	public String getKeywords() {
-		if (Validator.isNotNull(_keywords)) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_request, "keywords");
-
-		return _keywords;
-	}
-
-	public String getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "modified-date");
-
-		return _orderByCol;
-	}
-
-	public String getOrderByType() {
-		if (Validator.isNotNull(_orderByType)) {
-			return _orderByType;
-		}
-
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
-
-		return _orderByType;
+	@Override
+	public String[] getDisplayViews() {
+		return _TACTICS_DISPLAY_VIEWS;
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_TACTICS);
@@ -172,15 +132,16 @@ public class ContentTargetingViewTacticsDisplayContext {
 			return _tacticSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		SearchContainer tacticsSearchContainer = new SearchContainer(
-			_renderRequest, getPortletURL(), null, "no-promotions-were-found");
+			liferayPortletRequest, getPortletURL(), null,
+			"no-promotions-were-found");
 
 		tacticsSearchContainer.setId("tactics");
 		tacticsSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 		tacticsSearchContainer.setSearch(Validator.isNotNull(getKeywords()));
 
 		String orderByType = getOrderByType();
@@ -234,7 +195,7 @@ public class ContentTargetingViewTacticsDisplayContext {
 			return _hasUpdatePermission;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		if (getCampaign() != null) {
@@ -301,19 +262,15 @@ public class ContentTargetingViewTacticsDisplayContext {
 		return false;
 	}
 
+	private static final String[] _TACTICS_DISPLAY_VIEWS =
+		new String[] {"descriptive", "icon", "list"};
+
 	private Campaign _campaign;
 	private Long _campaignId;
 	private String _campaignTitle;
-	private String _displayStyle;
 	private Boolean _hasUpdatePermission;
 	private Boolean _isDisabledManagementBar;
 	private Boolean _isSearchEnabled;
-	private String _keywords;
-	private String _orderByCol;
-	private String _orderByType;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
 	private SearchContainer _tacticSearchContainer;
 
 }

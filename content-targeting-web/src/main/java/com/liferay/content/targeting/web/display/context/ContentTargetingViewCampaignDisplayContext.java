@@ -23,13 +23,13 @@ import com.liferay.content.targeting.web.util.comparator.CampaignModifiedDateCom
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -37,23 +37,18 @@ import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Jürgen Kappler
  */
-public class ContentTargetingViewCampaignDisplayContext {
+public class ContentTargetingViewCampaignDisplayContext
+	extends BaseContentTargetingViewDisplayContext {
 
 	public ContentTargetingViewCampaignDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
-
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		super(liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public SearchContainer getCampaignSearchContainer()
@@ -63,17 +58,17 @@ public class ContentTargetingViewCampaignDisplayContext {
 			return _campaignSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		SearchContainer campaignSearchContainer = new SearchContainer(
-			_renderRequest,
-			PortletURLUtil.clone(getPortletURL(), _renderResponse), null,
+			liferayPortletRequest,
+			PortletURLUtil.clone(getPortletURL(), liferayPortletResponse), null,
 			"no-campaigns-were-found");
 
 		campaignSearchContainer.setId("campaigns");
 		campaignSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 		campaignSearchContainer.setSearch(Validator.isNotNull(getKeywords()));
 
 		String orderByType = getOrderByType();
@@ -124,49 +119,13 @@ public class ContentTargetingViewCampaignDisplayContext {
 		return _campaignSearchContainer;
 	}
 
-	public String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
-		}
-
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
-
-		return _displayStyle;
-	}
-
-	public String getKeywords() {
-		if (Validator.isNotNull(_keywords)) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_request, "keywords");
-
-		return _keywords;
-	}
-
-	public String getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "modified-date");
-
-		return _orderByCol;
-	}
-
-	public String getOrderByType() {
-		if (Validator.isNotNull(_orderByType)) {
-			return _orderByType;
-		}
-
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
-
-		return _orderByType;
+	@Override
+	public String[] getDisplayViews() {
+		return _CAMPAIGN_DISPLAY_VIEWS;
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
 		portletURL.setParameter("tabs1", "campaigns");
@@ -198,7 +157,7 @@ public class ContentTargetingViewCampaignDisplayContext {
 			return _isIncludeCheckBox;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_isIncludeCheckBox = ContentTargetingPermission.contains(
@@ -227,7 +186,7 @@ public class ContentTargetingViewCampaignDisplayContext {
 			return _showAddButton;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_showAddButton = ContentTargetingPermission.contains(
@@ -237,17 +196,13 @@ public class ContentTargetingViewCampaignDisplayContext {
 		return _showAddButton;
 	}
 
+	private static final String[] _CAMPAIGN_DISPLAY_VIEWS =
+		new String[] {"descriptive", "icon", "list"};
+
 	private SearchContainer _campaignSearchContainer;
-	private String _displayStyle;
 	private Boolean _isDisabledManagementBar;
 	private Boolean _isIncludeCheckBox;
 	private Boolean _isSearchEnabled;
-	private String _keywords;
-	private String _orderByCol;
-	private String _orderByType;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
 	private Boolean _showAddButton;
 
 }
