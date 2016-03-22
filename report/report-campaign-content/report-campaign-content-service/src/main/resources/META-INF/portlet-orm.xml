@@ -12,7 +12,7 @@
 			<id name="campaignContentId" />
 			<basic name="companyId" />
 			<basic name="campaignId" />
-			<basic name="className" />
+			<basic name="classNameId" />
 			<basic name="classPK" />
 			<basic name="eventType" />
 			<basic name="count" />

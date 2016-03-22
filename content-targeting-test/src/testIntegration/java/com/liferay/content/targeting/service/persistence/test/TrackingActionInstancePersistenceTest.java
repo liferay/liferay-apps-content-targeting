@@ -146,7 +146,7 @@ public class TrackingActionInstancePersistenceTest {
 
 		newTrackingActionInstance.setAlias(RandomTestUtil.randomString());
 
-		newTrackingActionInstance.setReferrerClassName(RandomTestUtil.randomString());
+		newTrackingActionInstance.setReferrerClassNameId(RandomTestUtil.nextLong());
 
 		newTrackingActionInstance.setReferrerClassPK(RandomTestUtil.nextLong());
 
@@ -187,8 +187,8 @@ public class TrackingActionInstancePersistenceTest {
 			newTrackingActionInstance.getReportInstanceId());
 		Assert.assertEquals(existingTrackingActionInstance.getAlias(),
 			newTrackingActionInstance.getAlias());
-		Assert.assertEquals(existingTrackingActionInstance.getReferrerClassName(),
-			newTrackingActionInstance.getReferrerClassName());
+		Assert.assertEquals(existingTrackingActionInstance.getReferrerClassNameId(),
+			newTrackingActionInstance.getReferrerClassNameId());
 		Assert.assertEquals(existingTrackingActionInstance.getReferrerClassPK(),
 			newTrackingActionInstance.getReferrerClassPK());
 		Assert.assertEquals(existingTrackingActionInstance.getElementId(),
@@ -288,21 +288,23 @@ public class TrackingActionInstancePersistenceTest {
 	@Test
 	public void testCountByC_R_R_E() throws Exception {
 		_persistence.countByC_R_R_E(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextLong(), StringPool.BLANK);
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			StringPool.BLANK);
 
-		_persistence.countByC_R_R_E(0L, StringPool.NULL, 0L, StringPool.NULL);
+		_persistence.countByC_R_R_E(0L, 0L, 0L, StringPool.NULL);
 
-		_persistence.countByC_R_R_E(0L, (String)null, 0L, (String)null);
+		_persistence.countByC_R_R_E(0L, 0L, 0L, (String)null);
 	}
 
 	@Test
 	public void testCountByR_R_R_E() throws Exception {
 		_persistence.countByR_R_R_E(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextLong(), StringPool.BLANK);
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			StringPool.BLANK);
 
-		_persistence.countByR_R_R_E(0L, StringPool.NULL, 0L, StringPool.NULL);
+		_persistence.countByR_R_R_E(0L, 0L, 0L, StringPool.NULL);
 
-		_persistence.countByR_R_R_E(0L, (String)null, 0L, (String)null);
+		_persistence.countByR_R_R_E(0L, 0L, 0L, (String)null);
 	}
 
 	@Test
@@ -334,7 +336,7 @@ public class TrackingActionInstancePersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "trackingActionKey", true,
 			"campaignId", true, "reportInstanceId", true, "alias", true,
-			"referrerClassName", true, "referrerClassPK", true, "elementId",
+			"referrerClassNameId", true, "referrerClassPK", true, "elementId",
 			true, "eventType", true);
 	}
 
@@ -607,7 +609,7 @@ public class TrackingActionInstancePersistenceTest {
 
 		trackingActionInstance.setAlias(RandomTestUtil.randomString());
 
-		trackingActionInstance.setReferrerClassName(RandomTestUtil.randomString());
+		trackingActionInstance.setReferrerClassNameId(RandomTestUtil.nextLong());
 
 		trackingActionInstance.setReferrerClassPK(RandomTestUtil.nextLong());
 

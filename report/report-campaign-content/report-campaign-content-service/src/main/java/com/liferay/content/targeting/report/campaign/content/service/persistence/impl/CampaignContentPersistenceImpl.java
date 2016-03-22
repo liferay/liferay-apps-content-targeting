@@ -1171,36 +1171,36 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 			CampaignContentImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C_C_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName()
 			},
 			CampaignContentModelImpl.CAMPAIGNID_COLUMN_BITMASK |
-			CampaignContentModelImpl.CLASSNAME_COLUMN_BITMASK |
+			CampaignContentModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			CampaignContentModelImpl.CLASSPK_COLUMN_BITMASK |
 			CampaignContentModelImpl.EVENTTYPE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C_C_E = new FinderPath(CampaignContentModelImpl.ENTITY_CACHE_ENABLED,
 			CampaignContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName()
 			});
 
 	/**
-	 * Returns the campaign content where campaignId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or throws a {@link NoSuchCampaignContentException} if it could not be found.
+	 * Returns the campaign content where campaignId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; or throws a {@link NoSuchCampaignContentException} if it could not be found.
 	 *
 	 * @param campaignId the campaign ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the matching campaign content
 	 * @throws NoSuchCampaignContentException if a matching campaign content could not be found
 	 */
 	@Override
-	public CampaignContent findByC_C_C_E(long campaignId, String className,
+	public CampaignContent findByC_C_C_E(long campaignId, long classNameId,
 		long classPK, String eventType) throws NoSuchCampaignContentException {
-		CampaignContent campaignContent = fetchByC_C_C_E(campaignId, className,
-				classPK, eventType);
+		CampaignContent campaignContent = fetchByC_C_C_E(campaignId,
+				classNameId, classPK, eventType);
 
 		if (campaignContent == null) {
 			StringBundler msg = new StringBundler(10);
@@ -1210,8 +1210,8 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 			msg.append("campaignId=");
 			msg.append(campaignId);
 
-			msg.append(", className=");
-			msg.append(className);
+			msg.append(", classNameId=");
+			msg.append(classNameId);
 
 			msg.append(", classPK=");
 			msg.append(classPK);
@@ -1232,35 +1232,35 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	}
 
 	/**
-	 * Returns the campaign content where campaignId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the campaign content where campaignId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param campaignId the campaign ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the matching campaign content, or <code>null</code> if a matching campaign content could not be found
 	 */
 	@Override
-	public CampaignContent fetchByC_C_C_E(long campaignId, String className,
+	public CampaignContent fetchByC_C_C_E(long campaignId, long classNameId,
 		long classPK, String eventType) {
-		return fetchByC_C_C_E(campaignId, className, classPK, eventType, true);
+		return fetchByC_C_C_E(campaignId, classNameId, classPK, eventType, true);
 	}
 
 	/**
-	 * Returns the campaign content where campaignId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the campaign content where campaignId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param campaignId the campaign ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching campaign content, or <code>null</code> if a matching campaign content could not be found
 	 */
 	@Override
-	public CampaignContent fetchByC_C_C_E(long campaignId, String className,
+	public CampaignContent fetchByC_C_C_E(long campaignId, long classNameId,
 		long classPK, String eventType, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
-				campaignId, className, classPK, eventType
+				campaignId, classNameId, classPK, eventType
 			};
 
 		Object result = null;
@@ -1274,7 +1274,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 			CampaignContent campaignContent = (CampaignContent)result;
 
 			if ((campaignId != campaignContent.getCampaignId()) ||
-					!Validator.equals(className, campaignContent.getClassName()) ||
+					(classNameId != campaignContent.getClassNameId()) ||
 					(classPK != campaignContent.getClassPK()) ||
 					!Validator.equals(eventType, campaignContent.getEventType())) {
 				result = null;
@@ -1288,19 +1288,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 			query.append(_FINDER_COLUMN_C_C_C_E_CAMPAIGNID_2);
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_C_C_C_E_CLASSPK_2);
 
@@ -1331,9 +1319,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 				qPos.add(campaignId);
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -1355,8 +1341,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 					cacheResult(campaignContent);
 
 					if ((campaignContent.getCampaignId() != campaignId) ||
-							(campaignContent.getClassName() == null) ||
-							!campaignContent.getClassName().equals(className) ||
+							(campaignContent.getClassNameId() != classNameId) ||
 							(campaignContent.getClassPK() != classPK) ||
 							(campaignContent.getEventType() == null) ||
 							!campaignContent.getEventType().equals(eventType)) {
@@ -1385,39 +1370,39 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	}
 
 	/**
-	 * Removes the campaign content where campaignId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; from the database.
+	 * Removes the campaign content where campaignId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; from the database.
 	 *
 	 * @param campaignId the campaign ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the campaign content that was removed
 	 */
 	@Override
-	public CampaignContent removeByC_C_C_E(long campaignId, String className,
+	public CampaignContent removeByC_C_C_E(long campaignId, long classNameId,
 		long classPK, String eventType) throws NoSuchCampaignContentException {
-		CampaignContent campaignContent = findByC_C_C_E(campaignId, className,
-				classPK, eventType);
+		CampaignContent campaignContent = findByC_C_C_E(campaignId,
+				classNameId, classPK, eventType);
 
 		return remove(campaignContent);
 	}
 
 	/**
-	 * Returns the number of campaign contents where campaignId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the number of campaign contents where campaignId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * @param campaignId the campaign ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the number of matching campaign contents
 	 */
 	@Override
-	public int countByC_C_C_E(long campaignId, String className, long classPK,
+	public int countByC_C_C_E(long campaignId, long classNameId, long classPK,
 		String eventType) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C_C_E;
 
 		Object[] finderArgs = new Object[] {
-				campaignId, className, classPK, eventType
+				campaignId, classNameId, classPK, eventType
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -1429,19 +1414,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 			query.append(_FINDER_COLUMN_C_C_C_E_CAMPAIGNID_2);
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_C_C_C_E_CLASSPK_2);
 
@@ -1472,9 +1445,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 				qPos.add(campaignId);
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -1500,9 +1471,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 	}
 
 	private static final String _FINDER_COLUMN_C_C_C_E_CAMPAIGNID_2 = "campaignContent.campaignId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_C_E_CLASSNAME_1 = "campaignContent.className IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_C_C_E_CLASSNAME_2 = "campaignContent.className = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_C_E_CLASSNAME_3 = "(campaignContent.className IS NULL OR campaignContent.className = '') AND ";
+	private static final String _FINDER_COLUMN_C_C_C_E_CLASSNAMEID_2 = "campaignContent.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_E_CLASSPK_2 = "campaignContent.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_E_EVENTTYPE_1 = "campaignContent.eventType IS NULL";
 	private static final String _FINDER_COLUMN_C_C_C_E_EVENTTYPE_2 = "campaignContent.eventType = ?";
@@ -1525,8 +1494,9 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
 			new Object[] {
-				campaignContent.getCampaignId(), campaignContent.getClassName(),
-				campaignContent.getClassPK(), campaignContent.getEventType()
+				campaignContent.getCampaignId(),
+				campaignContent.getClassNameId(), campaignContent.getClassPK(),
+				campaignContent.getEventType()
 			}, campaignContent);
 
 		campaignContent.resetOriginalValues();
@@ -1604,7 +1574,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 		if (isNew) {
 			Object[] args = new Object[] {
 					campaignContentModelImpl.getCampaignId(),
-					campaignContentModelImpl.getClassName(),
+					campaignContentModelImpl.getClassNameId(),
 					campaignContentModelImpl.getClassPK(),
 					campaignContentModelImpl.getEventType()
 				};
@@ -1619,7 +1589,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 					FINDER_PATH_FETCH_BY_C_C_C_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						campaignContentModelImpl.getCampaignId(),
-						campaignContentModelImpl.getClassName(),
+						campaignContentModelImpl.getClassNameId(),
 						campaignContentModelImpl.getClassPK(),
 						campaignContentModelImpl.getEventType()
 					};
@@ -1636,7 +1606,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 		CampaignContentModelImpl campaignContentModelImpl) {
 		Object[] args = new Object[] {
 				campaignContentModelImpl.getCampaignId(),
-				campaignContentModelImpl.getClassName(),
+				campaignContentModelImpl.getClassNameId(),
 				campaignContentModelImpl.getClassPK(),
 				campaignContentModelImpl.getEventType()
 			};
@@ -1648,7 +1618,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 				FINDER_PATH_FETCH_BY_C_C_C_E.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					campaignContentModelImpl.getOriginalCampaignId(),
-					campaignContentModelImpl.getOriginalClassName(),
+					campaignContentModelImpl.getOriginalClassNameId(),
 					campaignContentModelImpl.getOriginalClassPK(),
 					campaignContentModelImpl.getOriginalEventType()
 				};
@@ -1840,7 +1810,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 		campaignContentImpl.setCampaignContentId(campaignContent.getCampaignContentId());
 		campaignContentImpl.setCompanyId(campaignContent.getCompanyId());
 		campaignContentImpl.setCampaignId(campaignContent.getCampaignId());
-		campaignContentImpl.setClassName(campaignContent.getClassName());
+		campaignContentImpl.setClassNameId(campaignContent.getClassNameId());
 		campaignContentImpl.setClassPK(campaignContent.getClassPK());
 		campaignContentImpl.setEventType(campaignContent.getEventType());
 		campaignContentImpl.setCount(campaignContent.getCount());

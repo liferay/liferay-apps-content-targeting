@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -42,8 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserSegmentContentModel extends BaseModel<UserSegmentContent>,
-	ShardedModel {
+public interface UserSegmentContentModel extends AttachedModel,
+	BaseModel<UserSegmentContent>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -109,25 +110,37 @@ public interface UserSegmentContentModel extends BaseModel<UserSegmentContent>,
 	public void setUserSegmentId(long userSegmentId);
 
 	/**
-	 * Returns the class name of this user segment content.
+	 * Returns the fully qualified class name of this user segment content.
 	 *
-	 * @return the class name of this user segment content
+	 * @return the fully qualified class name of this user segment content
 	 */
-	@AutoEscape
+	@Override
 	public String getClassName();
 
-	/**
-	 * Sets the class name of this user segment content.
-	 *
-	 * @param className the class name of this user segment content
-	 */
 	public void setClassName(String className);
+
+	/**
+	 * Returns the class name ID of this user segment content.
+	 *
+	 * @return the class name ID of this user segment content
+	 */
+	@Override
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this user segment content.
+	 *
+	 * @param classNameId the class name ID of this user segment content
+	 */
+	@Override
+	public void setClassNameId(long classNameId);
 
 	/**
 	 * Returns the class p k of this user segment content.
 	 *
 	 * @return the class p k of this user segment content
 	 */
+	@Override
 	public long getClassPK();
 
 	/**
@@ -135,6 +148,7 @@ public interface UserSegmentContentModel extends BaseModel<UserSegmentContent>,
 	 *
 	 * @param classPK the class p k of this user segment content
 	 */
+	@Override
 	public void setClassPK(long classPK);
 
 	/**

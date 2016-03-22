@@ -294,7 +294,7 @@ public interface TrackingActionInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
-		long reportInstanceId, java.lang.String className, long classPK,
+		long reportInstanceId, long classNameId, long classPK,
 		java.lang.String eventType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -358,10 +358,10 @@ public class TrackingActionInstanceLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
-		long reportInstanceId, java.lang.String className, long classPK,
+		long reportInstanceId, long classNameId, long classPK,
 		java.lang.String eventType) {
 		return _trackingActionInstanceLocalService.getTrackingActionInstancesByReportInstanceId(reportInstanceId,
-			className, classPK, eventType);
+			classNameId, classPK, eventType);
 	}
 
 	@Override

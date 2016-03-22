@@ -144,7 +144,7 @@ public class ReportInstancePersistenceTest {
 
 		newReportInstance.setDescription(RandomTestUtil.randomString());
 
-		newReportInstance.setClassName(RandomTestUtil.randomString());
+		newReportInstance.setClassNameId(RandomTestUtil.nextLong());
 
 		newReportInstance.setClassPK(RandomTestUtil.nextLong());
 
@@ -178,8 +178,8 @@ public class ReportInstancePersistenceTest {
 			newReportInstance.getName());
 		Assert.assertEquals(existingReportInstance.getDescription(),
 			newReportInstance.getDescription());
-		Assert.assertEquals(existingReportInstance.getClassName(),
-			newReportInstance.getClassName());
+		Assert.assertEquals(existingReportInstance.getClassNameId(),
+			newReportInstance.getClassNameId());
 		Assert.assertEquals(existingReportInstance.getClassPK(),
 			newReportInstance.getClassPK());
 		Assert.assertEquals(existingReportInstance.getTypeSettings(),
@@ -215,21 +215,20 @@ public class ReportInstancePersistenceTest {
 
 	@Test
 	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-		_persistence.countByC_C(StringPool.NULL, 0L);
-
-		_persistence.countByC_C((String)null, 0L);
+		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
 	public void testCountByR_C_C() throws Exception {
-		_persistence.countByR_C_C(StringPool.BLANK, StringPool.BLANK,
+		_persistence.countByR_C_C(StringPool.BLANK, RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByR_C_C(StringPool.NULL, StringPool.NULL, 0L);
+		_persistence.countByR_C_C(StringPool.NULL, 0L, 0L);
 
-		_persistence.countByR_C_C((String)null, (String)null, 0L);
+		_persistence.countByR_C_C((String)null, 0L, 0L);
 	}
 
 	@Test
@@ -259,7 +258,7 @@ public class ReportInstancePersistenceTest {
 			true, "reportInstanceId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "reportKey", true, "name", true,
-			"description", true, "className", true, "classPK", true);
+			"description", true, "classNameId", true, "classPK", true);
 	}
 
 	@Test
@@ -497,7 +496,7 @@ public class ReportInstancePersistenceTest {
 
 		reportInstance.setDescription(RandomTestUtil.randomString());
 
-		reportInstance.setClassName(RandomTestUtil.randomString());
+		reportInstance.setClassNameId(RandomTestUtil.nextLong());
 
 		reportInstance.setClassPK(RandomTestUtil.nextLong());
 

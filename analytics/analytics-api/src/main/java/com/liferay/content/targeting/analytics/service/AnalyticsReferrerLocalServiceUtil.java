@@ -42,10 +42,12 @@ public class AnalyticsReferrerLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.content.targeting.analytics.service.impl.AnalyticsReferrerLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.content.targeting.analytics.model.AnalyticsReferrer addAnalyticsReferrer(
-		long analyticsEventId, java.lang.String className, long classPK)
+		long analyticsEventId, java.lang.String referrerClassName,
+		long referrerClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addAnalyticsReferrer(analyticsEventId, className, classPK);
+				   .addAnalyticsReferrer(analyticsEventId, referrerClassName,
+			referrerClassPK);
 	}
 
 	/**
@@ -204,22 +206,22 @@ public class AnalyticsReferrerLocalServiceUtil {
 	}
 
 	public static int getAnalyticsReferrerCount(long analyticsEventId,
-		java.lang.String className, long classPK) {
+		java.lang.String referrerClassName, long referrerClassPK) {
 		return getService()
-				   .getAnalyticsReferrerCount(analyticsEventId, className,
-			classPK);
+				   .getAnalyticsReferrerCount(analyticsEventId,
+			referrerClassName, referrerClassPK);
 	}
 
 	public static int getAnalyticsReferrerCount(long[] analyticsEventIds,
-		java.lang.String className, long classPK) {
+		java.lang.String referrerClassName, long classPK) {
 		return getService()
-				   .getAnalyticsReferrerCount(analyticsEventIds, className,
-			classPK);
+				   .getAnalyticsReferrerCount(analyticsEventIds,
+			referrerClassName, classPK);
 	}
 
-	public static int getAnalyticsReferrerCount(java.lang.String className,
-		long classPK) {
-		return getService().getAnalyticsReferrerCount(className, classPK);
+	public static int getAnalyticsReferrerCount(
+		java.lang.String referrerClassName, long classPK) {
+		return getService().getAnalyticsReferrerCount(referrerClassName, classPK);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(

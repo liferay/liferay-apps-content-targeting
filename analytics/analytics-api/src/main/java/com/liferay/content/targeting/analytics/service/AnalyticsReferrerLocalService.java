@@ -61,7 +61,8 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link AnalyticsReferrerLocalServiceUtil} to access the analytics referrer local service. Add custom service methods to {@link com.liferay.content.targeting.analytics.service.impl.AnalyticsReferrerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public AnalyticsReferrer addAnalyticsReferrer(long analyticsEventId,
-		java.lang.String className, long classPK) throws PortalException;
+		java.lang.String referrerClassName, long referrerClassPK)
+		throws PortalException;
 
 	/**
 	* Adds the analytics referrer to the database. Also notifies the appropriate model listeners.
@@ -187,14 +188,14 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsReferrerCount(long analyticsEventId,
-		java.lang.String className, long classPK);
+		java.lang.String referrerClassName, long referrerClassPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsReferrerCount(long[] analyticsEventIds,
-		java.lang.String className, long classPK);
+		java.lang.String referrerClassName, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAnalyticsReferrerCount(java.lang.String className,
+	public int getAnalyticsReferrerCount(java.lang.String referrerClassName,
 		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

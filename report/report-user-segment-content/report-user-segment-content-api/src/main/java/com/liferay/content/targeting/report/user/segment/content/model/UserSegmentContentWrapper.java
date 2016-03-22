@@ -61,7 +61,7 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 		attributes.put("userSegmentContentId", getUserSegmentContentId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userSegmentId", getUserSegmentId());
-		attributes.put("className", getClassName());
+		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("eventType", getEventType());
 		attributes.put("count", getCount());
@@ -90,10 +90,10 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 			setUserSegmentId(userSegmentId);
 		}
 
-		String className = (String)attributes.get("className");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (className != null) {
-			setClassName(className);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
 		}
 
 		Long classPK = (Long)attributes.get("classPK");
@@ -133,13 +133,23 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 	}
 
 	/**
-	* Returns the class name of this user segment content.
+	* Returns the fully qualified class name of this user segment content.
 	*
-	* @return the class name of this user segment content
+	* @return the fully qualified class name of this user segment content
 	*/
 	@Override
 	public java.lang.String getClassName() {
 		return _userSegmentContent.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this user segment content.
+	*
+	* @return the class name ID of this user segment content
+	*/
+	@Override
+	public long getClassNameId() {
+		return _userSegmentContent.getClassNameId();
 	}
 
 	/**
@@ -272,14 +282,19 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 		_userSegmentContent.setCachedModel(cachedModel);
 	}
 
-	/**
-	* Sets the class name of this user segment content.
-	*
-	* @param className the class name of this user segment content
-	*/
 	@Override
 	public void setClassName(java.lang.String className) {
 		_userSegmentContent.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this user segment content.
+	*
+	* @param classNameId the class name ID of this user segment content
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_userSegmentContent.setClassNameId(classNameId);
 	}
 
 	/**

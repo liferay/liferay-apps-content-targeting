@@ -85,7 +85,7 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 			{ "campaignId", Types.BIGINT },
 			{ "reportInstanceId", Types.BIGINT },
 			{ "alias_", Types.VARCHAR },
-			{ "referrerClassName", Types.VARCHAR },
+			{ "referrerClassNameId", Types.BIGINT },
 			{ "referrerClassPK", Types.BIGINT },
 			{ "elementId", Types.VARCHAR },
 			{ "eventType", Types.VARCHAR },
@@ -106,14 +106,14 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		TABLE_COLUMNS_MAP.put("campaignId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("reportInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("alias_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("referrerClassName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("referrerClassNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("referrerClassPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("elementId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("eventType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CT_TrackingActionInstance (uuid_ VARCHAR(75) null,trackingActionInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,trackingActionKey VARCHAR(75) null,campaignId LONG,reportInstanceId LONG,alias_ VARCHAR(75) null,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,typeSettings TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_TrackingActionInstance (uuid_ VARCHAR(75) null,trackingActionInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,trackingActionKey VARCHAR(75) null,campaignId LONG,reportInstanceId LONG,alias_ VARCHAR(75) null,referrerClassNameId LONG,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_TrackingActionInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY trackingActionInstance.trackingActionKey DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_TrackingActionInstance.trackingActionKey DESC";
@@ -135,7 +135,7 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 	public static final long ELEMENTID_COLUMN_BITMASK = 8L;
 	public static final long EVENTTYPE_COLUMN_BITMASK = 16L;
 	public static final long GROUPID_COLUMN_BITMASK = 32L;
-	public static final long REFERRERCLASSNAME_COLUMN_BITMASK = 64L;
+	public static final long REFERRERCLASSNAMEID_COLUMN_BITMASK = 64L;
 	public static final long REFERRERCLASSPK_COLUMN_BITMASK = 128L;
 	public static final long REPORTINSTANCEID_COLUMN_BITMASK = 256L;
 	public static final long UUID_COLUMN_BITMASK = 512L;
@@ -167,7 +167,7 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		model.setCampaignId(soapModel.getCampaignId());
 		model.setReportInstanceId(soapModel.getReportInstanceId());
 		model.setAlias(soapModel.getAlias());
-		model.setReferrerClassName(soapModel.getReferrerClassName());
+		model.setReferrerClassNameId(soapModel.getReferrerClassNameId());
 		model.setReferrerClassPK(soapModel.getReferrerClassPK());
 		model.setElementId(soapModel.getElementId());
 		model.setEventType(soapModel.getEventType());
@@ -249,7 +249,7 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("alias", getAlias());
-		attributes.put("referrerClassName", getReferrerClassName());
+		attributes.put("referrerClassNameId", getReferrerClassNameId());
 		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
@@ -336,10 +336,10 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 			setAlias(alias);
 		}
 
-		String referrerClassName = (String)attributes.get("referrerClassName");
+		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");
 
-		if (referrerClassName != null) {
-			setReferrerClassName(referrerClassName);
+		if (referrerClassNameId != null) {
+			setReferrerClassNameId(referrerClassNameId);
 		}
 
 		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
@@ -611,28 +611,25 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 
 	@JSON
 	@Override
-	public String getReferrerClassName() {
-		if (_referrerClassName == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _referrerClassName;
-		}
+	public long getReferrerClassNameId() {
+		return _referrerClassNameId;
 	}
 
 	@Override
-	public void setReferrerClassName(String referrerClassName) {
-		_columnBitmask |= REFERRERCLASSNAME_COLUMN_BITMASK;
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		_columnBitmask |= REFERRERCLASSNAMEID_COLUMN_BITMASK;
 
-		if (_originalReferrerClassName == null) {
-			_originalReferrerClassName = _referrerClassName;
+		if (!_setOriginalReferrerClassNameId) {
+			_setOriginalReferrerClassNameId = true;
+
+			_originalReferrerClassNameId = _referrerClassNameId;
 		}
 
-		_referrerClassName = referrerClassName;
+		_referrerClassNameId = referrerClassNameId;
 	}
 
-	public String getOriginalReferrerClassName() {
-		return GetterUtil.getString(_originalReferrerClassName);
+	public long getOriginalReferrerClassNameId() {
+		return _originalReferrerClassNameId;
 	}
 
 	@JSON
@@ -775,7 +772,7 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		trackingActionInstanceImpl.setCampaignId(getCampaignId());
 		trackingActionInstanceImpl.setReportInstanceId(getReportInstanceId());
 		trackingActionInstanceImpl.setAlias(getAlias());
-		trackingActionInstanceImpl.setReferrerClassName(getReferrerClassName());
+		trackingActionInstanceImpl.setReferrerClassNameId(getReferrerClassNameId());
 		trackingActionInstanceImpl.setReferrerClassPK(getReferrerClassPK());
 		trackingActionInstanceImpl.setElementId(getElementId());
 		trackingActionInstanceImpl.setEventType(getEventType());
@@ -865,7 +862,9 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 
 		trackingActionInstanceModelImpl._originalAlias = trackingActionInstanceModelImpl._alias;
 
-		trackingActionInstanceModelImpl._originalReferrerClassName = trackingActionInstanceModelImpl._referrerClassName;
+		trackingActionInstanceModelImpl._originalReferrerClassNameId = trackingActionInstanceModelImpl._referrerClassNameId;
+
+		trackingActionInstanceModelImpl._setOriginalReferrerClassNameId = false;
 
 		trackingActionInstanceModelImpl._originalReferrerClassPK = trackingActionInstanceModelImpl._referrerClassPK;
 
@@ -944,13 +943,7 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 			trackingActionInstanceCacheModel.alias = null;
 		}
 
-		trackingActionInstanceCacheModel.referrerClassName = getReferrerClassName();
-
-		String referrerClassName = trackingActionInstanceCacheModel.referrerClassName;
-
-		if ((referrerClassName != null) && (referrerClassName.length() == 0)) {
-			trackingActionInstanceCacheModel.referrerClassName = null;
-		}
+		trackingActionInstanceCacheModel.referrerClassNameId = getReferrerClassNameId();
 
 		trackingActionInstanceCacheModel.referrerClassPK = getReferrerClassPK();
 
@@ -1009,8 +1002,8 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		sb.append(getReportInstanceId());
 		sb.append(", alias=");
 		sb.append(getAlias());
-		sb.append(", referrerClassName=");
-		sb.append(getReferrerClassName());
+		sb.append(", referrerClassNameId=");
+		sb.append(getReferrerClassNameId());
 		sb.append(", referrerClassPK=");
 		sb.append(getReferrerClassPK());
 		sb.append(", elementId=");
@@ -1081,8 +1074,8 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		sb.append(getAlias());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>referrerClassName</column-name><column-value><![CDATA[");
-		sb.append(getReferrerClassName());
+			"<column><column-name>referrerClassNameId</column-name><column-value><![CDATA[");
+		sb.append(getReferrerClassNameId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>referrerClassPK</column-name><column-value><![CDATA[");
@@ -1133,8 +1126,9 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 	private boolean _setOriginalReportInstanceId;
 	private String _alias;
 	private String _originalAlias;
-	private String _referrerClassName;
-	private String _originalReferrerClassName;
+	private long _referrerClassNameId;
+	private long _originalReferrerClassNameId;
+	private boolean _setOriginalReferrerClassNameId;
 	private long _referrerClassPK;
 	private long _originalReferrerClassPK;
 	private boolean _setOriginalReferrerClassPK;

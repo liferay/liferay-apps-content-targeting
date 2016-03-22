@@ -38,7 +38,7 @@ public class AnalyticsEventSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setAnonymousUserId(model.getAnonymousUserId());
-		soapModel.setClassName(model.getClassName());
+		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setElementId(model.getElementId());
 		soapModel.setEventType(model.getEventType());
@@ -132,12 +132,12 @@ public class AnalyticsEventSoap implements Serializable {
 		_anonymousUserId = anonymousUserId;
 	}
 
-	public String getClassName() {
-		return _className;
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
-	public void setClassName(String className) {
-		_className = className;
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
 	}
 
 	public long getClassPK() {
@@ -216,7 +216,7 @@ public class AnalyticsEventSoap implements Serializable {
 	private long _companyId;
 	private long _userId;
 	private long _anonymousUserId;
-	private String _className;
+	private long _classNameId;
 	private long _classPK;
 	private String _elementId;
 	private String _eventType;

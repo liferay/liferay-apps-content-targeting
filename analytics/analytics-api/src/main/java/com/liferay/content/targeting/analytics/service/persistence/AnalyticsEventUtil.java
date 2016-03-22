@@ -803,46 +803,46 @@ public class AnalyticsEventUtil {
 	}
 
 	/**
-	* Returns all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @return the matching analytics events
 	*/
-	public static List<AnalyticsEvent> findByC_C_E(java.lang.String className,
+	public static List<AnalyticsEvent> findByC_C_E(long classNameId,
 		long classPK, java.lang.String eventType) {
-		return getPersistence().findByC_C_E(className, classPK, eventType);
+		return getPersistence().findByC_C_E(classNameId, classPK, eventType);
 	}
 
 	/**
-	* Returns a range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns a range of all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param start the lower bound of the range of analytics events
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @return the range of matching analytics events
 	*/
-	public static List<AnalyticsEvent> findByC_C_E(java.lang.String className,
+	public static List<AnalyticsEvent> findByC_C_E(long classNameId,
 		long classPK, java.lang.String eventType, int start, int end) {
 		return getPersistence()
-				   .findByC_C_E(className, classPK, eventType, start, end);
+				   .findByC_C_E(classNameId, classPK, eventType, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns an ordered range of all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param start the lower bound of the range of analytics events
@@ -850,22 +850,22 @@ public class AnalyticsEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching analytics events
 	*/
-	public static List<AnalyticsEvent> findByC_C_E(java.lang.String className,
+	public static List<AnalyticsEvent> findByC_C_E(long classNameId,
 		long classPK, java.lang.String eventType, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
-				   .findByC_C_E(className, classPK, eventType, start, end,
+				   .findByC_C_E(classNameId, classPK, eventType, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns an ordered range of all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param start the lower bound of the range of analytics events
@@ -874,92 +874,92 @@ public class AnalyticsEventUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching analytics events
 	*/
-	public static List<AnalyticsEvent> findByC_C_E(java.lang.String className,
+	public static List<AnalyticsEvent> findByC_C_E(long classNameId,
 		long classPK, java.lang.String eventType, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByC_C_E(className, classPK, eventType, start, end,
+				   .findByC_C_E(classNameId, classPK, eventType, start, end,
 			orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the first analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static AnalyticsEvent findByC_C_E_First(java.lang.String className,
+	public static AnalyticsEvent findByC_C_E_First(long classNameId,
 		long classPK, java.lang.String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
-				   .findByC_C_E_First(className, classPK, eventType,
+				   .findByC_C_E_First(classNameId, classPK, eventType,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the first analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
-	public static AnalyticsEvent fetchByC_C_E_First(
-		java.lang.String className, long classPK, java.lang.String eventType,
+	public static AnalyticsEvent fetchByC_C_E_First(long classNameId,
+		long classPK, java.lang.String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
-				   .fetchByC_C_E_First(className, classPK, eventType,
+				   .fetchByC_C_E_First(classNameId, classPK, eventType,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the last analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static AnalyticsEvent findByC_C_E_Last(java.lang.String className,
+	public static AnalyticsEvent findByC_C_E_Last(long classNameId,
 		long classPK, java.lang.String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
-				   .findByC_C_E_Last(className, classPK, eventType,
+				   .findByC_C_E_Last(classNameId, classPK, eventType,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the last analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
-	public static AnalyticsEvent fetchByC_C_E_Last(java.lang.String className,
+	public static AnalyticsEvent fetchByC_C_E_Last(long classNameId,
 		long classPK, java.lang.String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
-				   .fetchByC_C_E_Last(className, classPK, eventType,
+				   .fetchByC_C_E_Last(classNameId, classPK, eventType,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the analytics events before and after the current analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the analytics events before and after the current analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* @param analyticsEventId the primary key of the current analytics event
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -967,38 +967,38 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByC_C_E_PrevAndNext(
-		long analyticsEventId, java.lang.String className, long classPK,
+		long analyticsEventId, long classNameId, long classPK,
 		java.lang.String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
-				   .findByC_C_E_PrevAndNext(analyticsEventId, className,
+				   .findByC_C_E_PrevAndNext(analyticsEventId, classNameId,
 			classPK, eventType, orderByComparator);
 	}
 
 	/**
-	* Removes all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; from the database.
+	* Removes all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; from the database.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	*/
-	public static void removeByC_C_E(java.lang.String className, long classPK,
+	public static void removeByC_C_E(long classNameId, long classPK,
 		java.lang.String eventType) {
-		getPersistence().removeByC_C_E(className, classPK, eventType);
+		getPersistence().removeByC_C_E(classNameId, classPK, eventType);
 	}
 
 	/**
-	* Returns the number of analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the number of analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @return the number of matching analytics events
 	*/
-	public static int countByC_C_E(java.lang.String className, long classPK,
+	public static int countByC_C_E(long classNameId, long classPK,
 		java.lang.String eventType) {
-		return getPersistence().countByC_C_E(className, classPK, eventType);
+		return getPersistence().countByC_C_E(classNameId, classPK, eventType);
 	}
 
 	/**
@@ -1204,29 +1204,30 @@ public class AnalyticsEventUtil {
 	}
 
 	/**
-	* Returns all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns all the analytics events where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* @param anonymousUserId the anonymous user ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @return the matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByA_C_C_E(long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType) {
+		long classNameId, long classPK, java.lang.String eventType) {
 		return getPersistence()
-				   .findByA_C_C_E(anonymousUserId, className, classPK, eventType);
+				   .findByA_C_C_E(anonymousUserId, classNameId, classPK,
+			eventType);
 	}
 
 	/**
-	* Returns a range of all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns a range of all the analytics events where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param anonymousUserId the anonymous user ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param start the lower bound of the range of analytics events
@@ -1234,22 +1235,22 @@ public class AnalyticsEventUtil {
 	* @return the range of matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByA_C_C_E(long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType,
-		int start, int end) {
+		long classNameId, long classPK, java.lang.String eventType, int start,
+		int end) {
 		return getPersistence()
-				   .findByA_C_C_E(anonymousUserId, className, classPK,
+				   .findByA_C_C_E(anonymousUserId, classNameId, classPK,
 			eventType, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns an ordered range of all the analytics events where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param anonymousUserId the anonymous user ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param start the lower bound of the range of analytics events
@@ -1258,22 +1259,22 @@ public class AnalyticsEventUtil {
 	* @return the ordered range of matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByA_C_C_E(long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType,
-		int start, int end, OrderByComparator<AnalyticsEvent> orderByComparator) {
+		long classNameId, long classPK, java.lang.String eventType, int start,
+		int end, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
-				   .findByA_C_C_E(anonymousUserId, className, classPK,
+				   .findByA_C_C_E(anonymousUserId, classNameId, classPK,
 			eventType, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns an ordered range of all the analytics events where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param anonymousUserId the anonymous user ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param start the lower bound of the range of analytics events
@@ -1283,20 +1284,19 @@ public class AnalyticsEventUtil {
 	* @return the ordered range of matching analytics events
 	*/
 	public static List<AnalyticsEvent> findByA_C_C_E(long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType,
-		int start, int end,
-		OrderByComparator<AnalyticsEvent> orderByComparator,
+		long classNameId, long classPK, java.lang.String eventType, int start,
+		int end, OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByA_C_C_E(anonymousUserId, className, classPK,
+				   .findByA_C_C_E(anonymousUserId, classNameId, classPK,
 			eventType, start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first analytics event in the ordered set where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the first analytics event in the ordered set where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* @param anonymousUserId the anonymous user ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1304,37 +1304,37 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByA_C_C_E_First(long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType,
+		long classNameId, long classPK, java.lang.String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
-				   .findByA_C_C_E_First(anonymousUserId, className, classPK,
+				   .findByA_C_C_E_First(anonymousUserId, classNameId, classPK,
 			eventType, orderByComparator);
 	}
 
 	/**
-	* Returns the first analytics event in the ordered set where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the first analytics event in the ordered set where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* @param anonymousUserId the anonymous user ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent fetchByA_C_C_E_First(long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType,
+		long classNameId, long classPK, java.lang.String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
-				   .fetchByA_C_C_E_First(anonymousUserId, className, classPK,
+				   .fetchByA_C_C_E_First(anonymousUserId, classNameId, classPK,
 			eventType, orderByComparator);
 	}
 
 	/**
-	* Returns the last analytics event in the ordered set where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the last analytics event in the ordered set where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* @param anonymousUserId the anonymous user ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1342,38 +1342,38 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByA_C_C_E_Last(long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType,
+		long classNameId, long classPK, java.lang.String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
-				   .findByA_C_C_E_Last(anonymousUserId, className, classPK,
+				   .findByA_C_C_E_Last(anonymousUserId, classNameId, classPK,
 			eventType, orderByComparator);
 	}
 
 	/**
-	* Returns the last analytics event in the ordered set where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the last analytics event in the ordered set where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* @param anonymousUserId the anonymous user ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent fetchByA_C_C_E_Last(long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType,
+		long classNameId, long classPK, java.lang.String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
-				   .fetchByA_C_C_E_Last(anonymousUserId, className, classPK,
+				   .fetchByA_C_C_E_Last(anonymousUserId, classNameId, classPK,
 			eventType, orderByComparator);
 	}
 
 	/**
-	* Returns the analytics events before and after the current analytics event in the ordered set where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the analytics events before and after the current analytics event in the ordered set where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* @param analyticsEventId the primary key of the current analytics event
 	* @param anonymousUserId the anonymous user ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1381,69 +1381,68 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByA_C_C_E_PrevAndNext(
-		long analyticsEventId, long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType,
+		long analyticsEventId, long anonymousUserId, long classNameId,
+		long classPK, java.lang.String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
 				   .findByA_C_C_E_PrevAndNext(analyticsEventId,
-			anonymousUserId, className, classPK, eventType, orderByComparator);
+			anonymousUserId, classNameId, classPK, eventType, orderByComparator);
 	}
 
 	/**
-	* Removes all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; from the database.
+	* Removes all the analytics events where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; from the database.
 	*
 	* @param anonymousUserId the anonymous user ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	*/
-	public static void removeByA_C_C_E(long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType) {
+	public static void removeByA_C_C_E(long anonymousUserId, long classNameId,
+		long classPK, java.lang.String eventType) {
 		getPersistence()
-			.removeByA_C_C_E(anonymousUserId, className, classPK, eventType);
+			.removeByA_C_C_E(anonymousUserId, classNameId, classPK, eventType);
 	}
 
 	/**
-	* Returns the number of analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the number of analytics events where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* @param anonymousUserId the anonymous user ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @return the number of matching analytics events
 	*/
-	public static int countByA_C_C_E(long anonymousUserId,
-		java.lang.String className, long classPK, java.lang.String eventType) {
+	public static int countByA_C_C_E(long anonymousUserId, long classNameId,
+		long classPK, java.lang.String eventType) {
 		return getPersistence()
-				   .countByA_C_C_E(anonymousUserId, className, classPK,
+				   .countByA_C_C_E(anonymousUserId, classNameId, classPK,
 			eventType);
 	}
 
 	/**
-	* Returns all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	* Returns all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param createDate the create date
 	* @return the matching analytics events
 	*/
-	public static List<AnalyticsEvent> findByC_C_E_GtD(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		Date createDate) {
+	public static List<AnalyticsEvent> findByC_C_E_GtD(long classNameId,
+		long classPK, java.lang.String eventType, Date createDate) {
 		return getPersistence()
-				   .findByC_C_E_GtD(className, classPK, eventType, createDate);
+				   .findByC_C_E_GtD(classNameId, classPK, eventType, createDate);
 	}
 
 	/**
-	* Returns a range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	* Returns a range of all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param createDate the create date
@@ -1451,22 +1450,22 @@ public class AnalyticsEventUtil {
 	* @param end the upper bound of the range of analytics events (not inclusive)
 	* @return the range of matching analytics events
 	*/
-	public static List<AnalyticsEvent> findByC_C_E_GtD(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		Date createDate, int start, int end) {
+	public static List<AnalyticsEvent> findByC_C_E_GtD(long classNameId,
+		long classPK, java.lang.String eventType, Date createDate, int start,
+		int end) {
 		return getPersistence()
-				   .findByC_C_E_GtD(className, classPK, eventType, createDate,
-			start, end);
+				   .findByC_C_E_GtD(classNameId, classPK, eventType,
+			createDate, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	* Returns an ordered range of all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param createDate the create date
@@ -1475,23 +1474,22 @@ public class AnalyticsEventUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching analytics events
 	*/
-	public static List<AnalyticsEvent> findByC_C_E_GtD(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		Date createDate, int start, int end,
-		OrderByComparator<AnalyticsEvent> orderByComparator) {
+	public static List<AnalyticsEvent> findByC_C_E_GtD(long classNameId,
+		long classPK, java.lang.String eventType, Date createDate, int start,
+		int end, OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
-				   .findByC_C_E_GtD(className, classPK, eventType, createDate,
-			start, end, orderByComparator);
+				   .findByC_C_E_GtD(classNameId, classPK, eventType,
+			createDate, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	* Returns an ordered range of all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param createDate the create date
@@ -1501,20 +1499,19 @@ public class AnalyticsEventUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching analytics events
 	*/
-	public static List<AnalyticsEvent> findByC_C_E_GtD(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		Date createDate, int start, int end,
-		OrderByComparator<AnalyticsEvent> orderByComparator,
+	public static List<AnalyticsEvent> findByC_C_E_GtD(long classNameId,
+		long classPK, java.lang.String eventType, Date createDate, int start,
+		int end, OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByC_C_E_GtD(className, classPK, eventType, createDate,
-			start, end, orderByComparator, retrieveFromCache);
+				   .findByC_C_E_GtD(classNameId, classPK, eventType,
+			createDate, start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	* Returns the first analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param createDate the create date
@@ -1522,37 +1519,37 @@ public class AnalyticsEventUtil {
 	* @return the first matching analytics event
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static AnalyticsEvent findByC_C_E_GtD_First(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
+	public static AnalyticsEvent findByC_C_E_GtD_First(long classNameId,
+		long classPK, java.lang.String eventType, Date createDate,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
-				   .findByC_C_E_GtD_First(className, classPK, eventType,
+				   .findByC_C_E_GtD_First(classNameId, classPK, eventType,
 			createDate, orderByComparator);
 	}
 
 	/**
-	* Returns the first analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	* Returns the first analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
-	public static AnalyticsEvent fetchByC_C_E_GtD_First(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
+	public static AnalyticsEvent fetchByC_C_E_GtD_First(long classNameId,
+		long classPK, java.lang.String eventType, Date createDate,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
-				   .fetchByC_C_E_GtD_First(className, classPK, eventType,
+				   .fetchByC_C_E_GtD_First(classNameId, classPK, eventType,
 			createDate, orderByComparator);
 	}
 
 	/**
-	* Returns the last analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	* Returns the last analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param createDate the create date
@@ -1560,38 +1557,38 @@ public class AnalyticsEventUtil {
 	* @return the last matching analytics event
 	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
-	public static AnalyticsEvent findByC_C_E_GtD_Last(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator)
+	public static AnalyticsEvent findByC_C_E_GtD_Last(long classNameId,
+		long classPK, java.lang.String eventType, Date createDate,
+		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
-				   .findByC_C_E_GtD_Last(className, classPK, eventType,
+				   .findByC_C_E_GtD_Last(classNameId, classPK, eventType,
 			createDate, orderByComparator);
 	}
 
 	/**
-	* Returns the last analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	* Returns the last analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	*/
-	public static AnalyticsEvent fetchByC_C_E_GtD_Last(
-		java.lang.String className, long classPK, java.lang.String eventType,
-		Date createDate, OrderByComparator<AnalyticsEvent> orderByComparator) {
+	public static AnalyticsEvent fetchByC_C_E_GtD_Last(long classNameId,
+		long classPK, java.lang.String eventType, Date createDate,
+		OrderByComparator<AnalyticsEvent> orderByComparator) {
 		return getPersistence()
-				   .fetchByC_C_E_GtD_Last(className, classPK, eventType,
+				   .fetchByC_C_E_GtD_Last(classNameId, classPK, eventType,
 			createDate, orderByComparator);
 	}
 
 	/**
-	* Returns the analytics events before and after the current analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	* Returns the analytics events before and after the current analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
 	* @param analyticsEventId the primary key of the current analytics event
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param createDate the create date
@@ -1600,42 +1597,42 @@ public class AnalyticsEventUtil {
 	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByC_C_E_GtD_PrevAndNext(
-		long analyticsEventId, java.lang.String className, long classPK,
+		long analyticsEventId, long classNameId, long classPK,
 		java.lang.String eventType, Date createDate,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
 		return getPersistence()
-				   .findByC_C_E_GtD_PrevAndNext(analyticsEventId, className,
+				   .findByC_C_E_GtD_PrevAndNext(analyticsEventId, classNameId,
 			classPK, eventType, createDate, orderByComparator);
 	}
 
 	/**
-	* Removes all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63; from the database.
+	* Removes all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63; from the database.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param createDate the create date
 	*/
-	public static void removeByC_C_E_GtD(java.lang.String className,
-		long classPK, java.lang.String eventType, Date createDate) {
+	public static void removeByC_C_E_GtD(long classNameId, long classPK,
+		java.lang.String eventType, Date createDate) {
 		getPersistence()
-			.removeByC_C_E_GtD(className, classPK, eventType, createDate);
+			.removeByC_C_E_GtD(classNameId, classPK, eventType, createDate);
 	}
 
 	/**
-	* Returns the number of analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	* Returns the number of analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param createDate the create date
 	* @return the number of matching analytics events
 	*/
-	public static int countByC_C_E_GtD(java.lang.String className,
-		long classPK, java.lang.String eventType, Date createDate) {
+	public static int countByC_C_E_GtD(long classNameId, long classPK,
+		java.lang.String eventType, Date createDate) {
 		return getPersistence()
-				   .countByC_C_E_GtD(className, classPK, eventType, createDate);
+				   .countByC_C_E_GtD(classNameId, classPK, eventType, createDate);
 	}
 
 	/**

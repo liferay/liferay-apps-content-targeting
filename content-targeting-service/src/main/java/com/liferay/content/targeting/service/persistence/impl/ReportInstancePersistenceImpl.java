@@ -1489,7 +1489,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 			ReportInstanceImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_C",
 			new String[] {
-				String.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -1498,55 +1498,55 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 			ReportInstanceModelImpl.FINDER_CACHE_ENABLED,
 			ReportInstanceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] { String.class.getName(), Long.class.getName() },
-			ReportInstanceModelImpl.CLASSNAME_COLUMN_BITMASK |
+			new String[] { Long.class.getName(), Long.class.getName() },
+			ReportInstanceModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			ReportInstanceModelImpl.CLASSPK_COLUMN_BITMASK |
 			ReportInstanceModelImpl.REPORTKEY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(ReportInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			ReportInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] { String.class.getName(), Long.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns all the report instances where className = &#63; and classPK = &#63;.
+	 * Returns all the report instances where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the matching report instances
 	 */
 	@Override
-	public List<ReportInstance> findByC_C(String className, long classPK) {
-		return findByC_C(className, classPK, QueryUtil.ALL_POS,
+	public List<ReportInstance> findByC_C(long classNameId, long classPK) {
+		return findByC_C(classNameId, classPK, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the report instances where className = &#63; and classPK = &#63;.
+	 * Returns a range of all the report instances where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param start the lower bound of the range of report instances
 	 * @param end the upper bound of the range of report instances (not inclusive)
 	 * @return the range of matching report instances
 	 */
 	@Override
-	public List<ReportInstance> findByC_C(String className, long classPK,
+	public List<ReportInstance> findByC_C(long classNameId, long classPK,
 		int start, int end) {
-		return findByC_C(className, classPK, start, end, null);
+		return findByC_C(classNameId, classPK, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the report instances where className = &#63; and classPK = &#63;.
+	 * Returns an ordered range of all the report instances where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param start the lower bound of the range of report instances
 	 * @param end the upper bound of the range of report instances (not inclusive)
@@ -1554,19 +1554,20 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @return the ordered range of matching report instances
 	 */
 	@Override
-	public List<ReportInstance> findByC_C(String className, long classPK,
+	public List<ReportInstance> findByC_C(long classNameId, long classPK,
 		int start, int end, OrderByComparator<ReportInstance> orderByComparator) {
-		return findByC_C(className, classPK, start, end, orderByComparator, true);
+		return findByC_C(classNameId, classPK, start, end, orderByComparator,
+			true);
 	}
 
 	/**
-	 * Returns an ordered range of all the report instances where className = &#63; and classPK = &#63;.
+	 * Returns an ordered range of all the report instances where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param start the lower bound of the range of report instances
 	 * @param end the upper bound of the range of report instances (not inclusive)
@@ -1575,7 +1576,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @return the ordered range of matching report instances
 	 */
 	@Override
-	public List<ReportInstance> findByC_C(String className, long classPK,
+	public List<ReportInstance> findByC_C(long classNameId, long classPK,
 		int start, int end,
 		OrderByComparator<ReportInstance> orderByComparator,
 		boolean retrieveFromCache) {
@@ -1587,12 +1588,12 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C;
-			finderArgs = new Object[] { className, classPK };
+			finderArgs = new Object[] { classNameId, classPK };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C;
 			finderArgs = new Object[] {
-					className, classPK,
+					classNameId, classPK,
 					
 					start, end, orderByComparator
 				};
@@ -1606,8 +1607,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ReportInstance reportInstance : list) {
-					if (!Validator.equals(className,
-								reportInstance.getClassName()) ||
+					if ((classNameId != reportInstance.getClassNameId()) ||
 							(classPK != reportInstance.getClassPK())) {
 						list = null;
 
@@ -1630,19 +1630,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 			query.append(_SQL_SELECT_REPORTINSTANCE_WHERE);
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_C_C_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_C_C_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
@@ -1666,9 +1654,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -1703,19 +1689,19 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Returns the first report instance in the ordered set where className = &#63; and classPK = &#63;.
+	 * Returns the first report instance in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching report instance
 	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
-	public ReportInstance findByC_C_First(String className, long classPK,
+	public ReportInstance findByC_C_First(long classNameId, long classPK,
 		OrderByComparator<ReportInstance> orderByComparator)
 		throws NoSuchReportInstanceException {
-		ReportInstance reportInstance = fetchByC_C_First(className, classPK,
+		ReportInstance reportInstance = fetchByC_C_First(classNameId, classPK,
 				orderByComparator);
 
 		if (reportInstance != null) {
@@ -1726,8 +1712,8 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("className=");
-		msg.append(className);
+		msg.append("classNameId=");
+		msg.append(classNameId);
 
 		msg.append(", classPK=");
 		msg.append(classPK);
@@ -1738,17 +1724,17 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Returns the first report instance in the ordered set where className = &#63; and classPK = &#63;.
+	 * Returns the first report instance in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching report instance, or <code>null</code> if a matching report instance could not be found
 	 */
 	@Override
-	public ReportInstance fetchByC_C_First(String className, long classPK,
+	public ReportInstance fetchByC_C_First(long classNameId, long classPK,
 		OrderByComparator<ReportInstance> orderByComparator) {
-		List<ReportInstance> list = findByC_C(className, classPK, 0, 1,
+		List<ReportInstance> list = findByC_C(classNameId, classPK, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1759,19 +1745,19 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Returns the last report instance in the ordered set where className = &#63; and classPK = &#63;.
+	 * Returns the last report instance in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching report instance
 	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
-	public ReportInstance findByC_C_Last(String className, long classPK,
+	public ReportInstance findByC_C_Last(long classNameId, long classPK,
 		OrderByComparator<ReportInstance> orderByComparator)
 		throws NoSuchReportInstanceException {
-		ReportInstance reportInstance = fetchByC_C_Last(className, classPK,
+		ReportInstance reportInstance = fetchByC_C_Last(classNameId, classPK,
 				orderByComparator);
 
 		if (reportInstance != null) {
@@ -1782,8 +1768,8 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("className=");
-		msg.append(className);
+		msg.append("classNameId=");
+		msg.append(classNameId);
 
 		msg.append(", classPK=");
 		msg.append(classPK);
@@ -1794,23 +1780,23 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Returns the last report instance in the ordered set where className = &#63; and classPK = &#63;.
+	 * Returns the last report instance in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching report instance, or <code>null</code> if a matching report instance could not be found
 	 */
 	@Override
-	public ReportInstance fetchByC_C_Last(String className, long classPK,
+	public ReportInstance fetchByC_C_Last(long classNameId, long classPK,
 		OrderByComparator<ReportInstance> orderByComparator) {
-		int count = countByC_C(className, classPK);
+		int count = countByC_C(classNameId, classPK);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<ReportInstance> list = findByC_C(className, classPK, count - 1,
+		List<ReportInstance> list = findByC_C(classNameId, classPK, count - 1,
 				count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1821,10 +1807,10 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Returns the report instances before and after the current report instance in the ordered set where className = &#63; and classPK = &#63;.
+	 * Returns the report instances before and after the current report instance in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param reportInstanceId the primary key of the current report instance
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next report instance
@@ -1832,7 +1818,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 */
 	@Override
 	public ReportInstance[] findByC_C_PrevAndNext(long reportInstanceId,
-		String className, long classPK,
+		long classNameId, long classPK,
 		OrderByComparator<ReportInstance> orderByComparator)
 		throws NoSuchReportInstanceException {
 		ReportInstance reportInstance = findByPrimaryKey(reportInstanceId);
@@ -1844,13 +1830,13 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 			ReportInstance[] array = new ReportInstanceImpl[3];
 
-			array[0] = getByC_C_PrevAndNext(session, reportInstance, className,
-					classPK, orderByComparator, true);
+			array[0] = getByC_C_PrevAndNext(session, reportInstance,
+					classNameId, classPK, orderByComparator, true);
 
 			array[1] = reportInstance;
 
-			array[2] = getByC_C_PrevAndNext(session, reportInstance, className,
-					classPK, orderByComparator, false);
+			array[2] = getByC_C_PrevAndNext(session, reportInstance,
+					classNameId, classPK, orderByComparator, false);
 
 			return array;
 		}
@@ -1863,7 +1849,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	protected ReportInstance getByC_C_PrevAndNext(Session session,
-		ReportInstance reportInstance, String className, long classPK,
+		ReportInstance reportInstance, long classNameId, long classPK,
 		OrderByComparator<ReportInstance> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -1878,19 +1864,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 		query.append(_SQL_SELECT_REPORTINSTANCE_WHERE);
 
-		boolean bindClassName = false;
-
-		if (className == null) {
-			query.append(_FINDER_COLUMN_C_C_CLASSNAME_1);
-		}
-		else if (className.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_C_C_CLASSNAME_3);
-		}
-		else {
-			bindClassName = true;
-
-			query.append(_FINDER_COLUMN_C_C_CLASSNAME_2);
-		}
+		query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
 		query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
@@ -1962,9 +1936,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (bindClassName) {
-			qPos.add(className);
-		}
+		qPos.add(classNameId);
 
 		qPos.add(classPK);
 
@@ -1987,31 +1959,31 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Removes all the report instances where className = &#63; and classPK = &#63; from the database.
+	 * Removes all the report instances where classNameId = &#63; and classPK = &#63; from the database.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 */
 	@Override
-	public void removeByC_C(String className, long classPK) {
-		for (ReportInstance reportInstance : findByC_C(className, classPK,
+	public void removeByC_C(long classNameId, long classPK) {
+		for (ReportInstance reportInstance : findByC_C(classNameId, classPK,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(reportInstance);
 		}
 	}
 
 	/**
-	 * Returns the number of report instances where className = &#63; and classPK = &#63;.
+	 * Returns the number of report instances where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the number of matching report instances
 	 */
 	@Override
-	public int countByC_C(String className, long classPK) {
+	public int countByC_C(long classNameId, long classPK) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C;
 
-		Object[] finderArgs = new Object[] { className, classPK };
+		Object[] finderArgs = new Object[] { classNameId, classPK };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -2020,19 +1992,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 			query.append(_SQL_COUNT_REPORTINSTANCE_WHERE);
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_C_C_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_C_C_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_C_C_CLASSPK_2);
 
@@ -2047,9 +2007,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -2070,16 +2028,14 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_CLASSNAME_1 = "reportInstance.className IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_C_CLASSNAME_2 = "reportInstance.className = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_CLASSNAME_3 = "(reportInstance.className IS NULL OR reportInstance.className = '') AND ";
+	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "reportInstance.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "reportInstance.classPK = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_C_C = new FinderPath(ReportInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			ReportInstanceModelImpl.FINDER_CACHE_ENABLED,
 			ReportInstanceImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByR_C_C",
 			new String[] {
-				String.class.getName(), String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
@@ -2090,64 +2046,64 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 			ReportInstanceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_C_C",
 			new String[] {
-				String.class.getName(), String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			},
 			ReportInstanceModelImpl.REPORTKEY_COLUMN_BITMASK |
-			ReportInstanceModelImpl.CLASSNAME_COLUMN_BITMASK |
+			ReportInstanceModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			ReportInstanceModelImpl.CLASSPK_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_R_C_C = new FinderPath(ReportInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			ReportInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_C_C",
 			new String[] {
-				String.class.getName(), String.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			});
 
 	/**
-	 * Returns all the report instances where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	 * Returns all the report instances where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param reportKey the report key
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the matching report instances
 	 */
 	@Override
-	public List<ReportInstance> findByR_C_C(String reportKey, String className,
+	public List<ReportInstance> findByR_C_C(String reportKey, long classNameId,
 		long classPK) {
-		return findByR_C_C(reportKey, className, classPK, QueryUtil.ALL_POS,
+		return findByR_C_C(reportKey, classNameId, classPK, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the report instances where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	 * Returns a range of all the report instances where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param reportKey the report key
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param start the lower bound of the range of report instances
 	 * @param end the upper bound of the range of report instances (not inclusive)
 	 * @return the range of matching report instances
 	 */
 	@Override
-	public List<ReportInstance> findByR_C_C(String reportKey, String className,
+	public List<ReportInstance> findByR_C_C(String reportKey, long classNameId,
 		long classPK, int start, int end) {
-		return findByR_C_C(reportKey, className, classPK, start, end, null);
+		return findByR_C_C(reportKey, classNameId, classPK, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the report instances where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	 * Returns an ordered range of all the report instances where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param reportKey the report key
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param start the lower bound of the range of report instances
 	 * @param end the upper bound of the range of report instances (not inclusive)
@@ -2155,22 +2111,22 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @return the ordered range of matching report instances
 	 */
 	@Override
-	public List<ReportInstance> findByR_C_C(String reportKey, String className,
+	public List<ReportInstance> findByR_C_C(String reportKey, long classNameId,
 		long classPK, int start, int end,
 		OrderByComparator<ReportInstance> orderByComparator) {
-		return findByR_C_C(reportKey, className, classPK, start, end,
+		return findByR_C_C(reportKey, classNameId, classPK, start, end,
 			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the report instances where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	 * Returns an ordered range of all the report instances where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param reportKey the report key
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param start the lower bound of the range of report instances
 	 * @param end the upper bound of the range of report instances (not inclusive)
@@ -2179,7 +2135,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @return the ordered range of matching report instances
 	 */
 	@Override
-	public List<ReportInstance> findByR_C_C(String reportKey, String className,
+	public List<ReportInstance> findByR_C_C(String reportKey, long classNameId,
 		long classPK, int start, int end,
 		OrderByComparator<ReportInstance> orderByComparator,
 		boolean retrieveFromCache) {
@@ -2191,12 +2147,12 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_C_C;
-			finderArgs = new Object[] { reportKey, className, classPK };
+			finderArgs = new Object[] { reportKey, classNameId, classPK };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_R_C_C;
 			finderArgs = new Object[] {
-					reportKey, className, classPK,
+					reportKey, classNameId, classPK,
 					
 					start, end, orderByComparator
 				};
@@ -2212,8 +2168,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 				for (ReportInstance reportInstance : list) {
 					if (!Validator.equals(reportKey,
 								reportInstance.getReportKey()) ||
-							!Validator.equals(className,
-								reportInstance.getClassName()) ||
+							(classNameId != reportInstance.getClassNameId()) ||
 							(classPK != reportInstance.getClassPK())) {
 						list = null;
 
@@ -2250,19 +2205,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 				query.append(_FINDER_COLUMN_R_C_C_REPORTKEY_2);
 			}
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_R_C_C_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_C_C_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_R_C_C_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_R_C_C_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_R_C_C_CLASSPK_2);
 
@@ -2290,9 +2233,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 					qPos.add(reportKey);
 				}
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -2327,21 +2268,21 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Returns the first report instance in the ordered set where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	 * Returns the first report instance in the ordered set where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param reportKey the report key
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching report instance
 	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
-	public ReportInstance findByR_C_C_First(String reportKey, String className,
+	public ReportInstance findByR_C_C_First(String reportKey, long classNameId,
 		long classPK, OrderByComparator<ReportInstance> orderByComparator)
 		throws NoSuchReportInstanceException {
 		ReportInstance reportInstance = fetchByR_C_C_First(reportKey,
-				className, classPK, orderByComparator);
+				classNameId, classPK, orderByComparator);
 
 		if (reportInstance != null) {
 			return reportInstance;
@@ -2354,8 +2295,8 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 		msg.append("reportKey=");
 		msg.append(reportKey);
 
-		msg.append(", className=");
-		msg.append(className);
+		msg.append(", classNameId=");
+		msg.append(classNameId);
 
 		msg.append(", classPK=");
 		msg.append(classPK);
@@ -2366,20 +2307,20 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Returns the first report instance in the ordered set where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	 * Returns the first report instance in the ordered set where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param reportKey the report key
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching report instance, or <code>null</code> if a matching report instance could not be found
 	 */
 	@Override
 	public ReportInstance fetchByR_C_C_First(String reportKey,
-		String className, long classPK,
+		long classNameId, long classPK,
 		OrderByComparator<ReportInstance> orderByComparator) {
-		List<ReportInstance> list = findByR_C_C(reportKey, className, classPK,
-				0, 1, orderByComparator);
+		List<ReportInstance> list = findByR_C_C(reportKey, classNameId,
+				classPK, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2389,21 +2330,21 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Returns the last report instance in the ordered set where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	 * Returns the last report instance in the ordered set where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param reportKey the report key
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching report instance
 	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
-	public ReportInstance findByR_C_C_Last(String reportKey, String className,
+	public ReportInstance findByR_C_C_Last(String reportKey, long classNameId,
 		long classPK, OrderByComparator<ReportInstance> orderByComparator)
 		throws NoSuchReportInstanceException {
-		ReportInstance reportInstance = fetchByR_C_C_Last(reportKey, className,
-				classPK, orderByComparator);
+		ReportInstance reportInstance = fetchByR_C_C_Last(reportKey,
+				classNameId, classPK, orderByComparator);
 
 		if (reportInstance != null) {
 			return reportInstance;
@@ -2416,8 +2357,8 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 		msg.append("reportKey=");
 		msg.append(reportKey);
 
-		msg.append(", className=");
-		msg.append(className);
+		msg.append(", classNameId=");
+		msg.append(classNameId);
 
 		msg.append(", classPK=");
 		msg.append(classPK);
@@ -2428,25 +2369,25 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Returns the last report instance in the ordered set where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	 * Returns the last report instance in the ordered set where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param reportKey the report key
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching report instance, or <code>null</code> if a matching report instance could not be found
 	 */
 	@Override
-	public ReportInstance fetchByR_C_C_Last(String reportKey, String className,
+	public ReportInstance fetchByR_C_C_Last(String reportKey, long classNameId,
 		long classPK, OrderByComparator<ReportInstance> orderByComparator) {
-		int count = countByR_C_C(reportKey, className, classPK);
+		int count = countByR_C_C(reportKey, classNameId, classPK);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<ReportInstance> list = findByR_C_C(reportKey, className, classPK,
-				count - 1, count, orderByComparator);
+		List<ReportInstance> list = findByR_C_C(reportKey, classNameId,
+				classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2456,11 +2397,11 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Returns the report instances before and after the current report instance in the ordered set where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	 * Returns the report instances before and after the current report instance in the ordered set where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param reportInstanceId the primary key of the current report instance
 	 * @param reportKey the report key
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next report instance
@@ -2468,7 +2409,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 */
 	@Override
 	public ReportInstance[] findByR_C_C_PrevAndNext(long reportInstanceId,
-		String reportKey, String className, long classPK,
+		String reportKey, long classNameId, long classPK,
 		OrderByComparator<ReportInstance> orderByComparator)
 		throws NoSuchReportInstanceException {
 		ReportInstance reportInstance = findByPrimaryKey(reportInstanceId);
@@ -2481,12 +2422,12 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 			ReportInstance[] array = new ReportInstanceImpl[3];
 
 			array[0] = getByR_C_C_PrevAndNext(session, reportInstance,
-					reportKey, className, classPK, orderByComparator, true);
+					reportKey, classNameId, classPK, orderByComparator, true);
 
 			array[1] = reportInstance;
 
 			array[2] = getByR_C_C_PrevAndNext(session, reportInstance,
-					reportKey, className, classPK, orderByComparator, false);
+					reportKey, classNameId, classPK, orderByComparator, false);
 
 			return array;
 		}
@@ -2499,7 +2440,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	protected ReportInstance getByR_C_C_PrevAndNext(Session session,
-		ReportInstance reportInstance, String reportKey, String className,
+		ReportInstance reportInstance, String reportKey, long classNameId,
 		long classPK, OrderByComparator<ReportInstance> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -2529,19 +2470,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 			query.append(_FINDER_COLUMN_R_C_C_REPORTKEY_2);
 		}
 
-		boolean bindClassName = false;
-
-		if (className == null) {
-			query.append(_FINDER_COLUMN_R_C_C_CLASSNAME_1);
-		}
-		else if (className.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_R_C_C_CLASSNAME_3);
-		}
-		else {
-			bindClassName = true;
-
-			query.append(_FINDER_COLUMN_R_C_C_CLASSNAME_2);
-		}
+		query.append(_FINDER_COLUMN_R_C_C_CLASSNAMEID_2);
 
 		query.append(_FINDER_COLUMN_R_C_C_CLASSPK_2);
 
@@ -2617,9 +2546,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 			qPos.add(reportKey);
 		}
 
-		if (bindClassName) {
-			qPos.add(className);
-		}
+		qPos.add(classNameId);
 
 		qPos.add(classPK);
 
@@ -2642,33 +2569,33 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Removes all the report instances where reportKey = &#63; and className = &#63; and classPK = &#63; from the database.
+	 * Removes all the report instances where reportKey = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param reportKey the report key
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 */
 	@Override
-	public void removeByR_C_C(String reportKey, String className, long classPK) {
-		for (ReportInstance reportInstance : findByR_C_C(reportKey, className,
-				classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+	public void removeByR_C_C(String reportKey, long classNameId, long classPK) {
+		for (ReportInstance reportInstance : findByR_C_C(reportKey,
+				classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(reportInstance);
 		}
 	}
 
 	/**
-	 * Returns the number of report instances where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	 * Returns the number of report instances where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param reportKey the report key
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the number of matching report instances
 	 */
 	@Override
-	public int countByR_C_C(String reportKey, String className, long classPK) {
+	public int countByR_C_C(String reportKey, long classNameId, long classPK) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_C_C;
 
-		Object[] finderArgs = new Object[] { reportKey, className, classPK };
+		Object[] finderArgs = new Object[] { reportKey, classNameId, classPK };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -2691,19 +2618,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 				query.append(_FINDER_COLUMN_R_C_C_REPORTKEY_2);
 			}
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_R_C_C_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_C_C_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_R_C_C_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_R_C_C_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_R_C_C_CLASSPK_2);
 
@@ -2722,9 +2637,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 					qPos.add(reportKey);
 				}
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -2748,9 +2661,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	private static final String _FINDER_COLUMN_R_C_C_REPORTKEY_1 = "reportInstance.reportKey IS NULL AND ";
 	private static final String _FINDER_COLUMN_R_C_C_REPORTKEY_2 = "reportInstance.reportKey = ? AND ";
 	private static final String _FINDER_COLUMN_R_C_C_REPORTKEY_3 = "(reportInstance.reportKey IS NULL OR reportInstance.reportKey = '') AND ";
-	private static final String _FINDER_COLUMN_R_C_C_CLASSNAME_1 = "reportInstance.className IS NULL AND ";
-	private static final String _FINDER_COLUMN_R_C_C_CLASSNAME_2 = "reportInstance.className = ? AND ";
-	private static final String _FINDER_COLUMN_R_C_C_CLASSNAME_3 = "(reportInstance.className IS NULL OR reportInstance.className = '') AND ";
+	private static final String _FINDER_COLUMN_R_C_C_CLASSNAMEID_2 = "reportInstance.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_R_C_C_CLASSPK_2 = "reportInstance.classPK = ?";
 
 	public ReportInstancePersistenceImpl() {
@@ -3105,7 +3016,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 			if ((reportInstanceModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						reportInstanceModelImpl.getOriginalClassName(),
+						reportInstanceModelImpl.getOriginalClassNameId(),
 						reportInstanceModelImpl.getOriginalClassPK()
 					};
 
@@ -3114,7 +3025,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 					args);
 
 				args = new Object[] {
-						reportInstanceModelImpl.getClassName(),
+						reportInstanceModelImpl.getClassNameId(),
 						reportInstanceModelImpl.getClassPK()
 					};
 
@@ -3127,7 +3038,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						reportInstanceModelImpl.getOriginalReportKey(),
-						reportInstanceModelImpl.getOriginalClassName(),
+						reportInstanceModelImpl.getOriginalClassNameId(),
 						reportInstanceModelImpl.getOriginalClassPK()
 					};
 
@@ -3137,7 +3048,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 				args = new Object[] {
 						reportInstanceModelImpl.getReportKey(),
-						reportInstanceModelImpl.getClassName(),
+						reportInstanceModelImpl.getClassNameId(),
 						reportInstanceModelImpl.getClassPK()
 					};
 
@@ -3180,7 +3091,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 		reportInstanceImpl.setReportKey(reportInstance.getReportKey());
 		reportInstanceImpl.setName(reportInstance.getName());
 		reportInstanceImpl.setDescription(reportInstance.getDescription());
-		reportInstanceImpl.setClassName(reportInstance.getClassName());
+		reportInstanceImpl.setClassNameId(reportInstance.getClassNameId());
 		reportInstanceImpl.setClassPK(reportInstance.getClassPK());
 		reportInstanceImpl.setTypeSettings(reportInstance.getTypeSettings());
 

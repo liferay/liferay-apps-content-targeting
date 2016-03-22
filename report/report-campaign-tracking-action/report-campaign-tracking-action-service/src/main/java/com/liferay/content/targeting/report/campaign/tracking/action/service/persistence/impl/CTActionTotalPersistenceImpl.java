@@ -1686,12 +1686,11 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 			CTActionTotalImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByR_R_R_E_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName()
 			},
 			CTActionTotalModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
-			CTActionTotalModelImpl.REFERRERCLASSNAME_COLUMN_BITMASK |
+			CTActionTotalModelImpl.REFERRERCLASSNAMEID_COLUMN_BITMASK |
 			CTActionTotalModelImpl.REFERRERCLASSPK_COLUMN_BITMASK |
 			CTActionTotalModelImpl.ELEMENTID_COLUMN_BITMASK |
 			CTActionTotalModelImpl.EVENTTYPE_COLUMN_BITMASK);
@@ -1699,16 +1698,15 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 			CTActionTotalModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R_R_E_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName()
 			});
 
 	/**
-	 * Returns the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link NoSuchCTActionTotalException} if it could not be found.
+	 * Returns the c t action total where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link NoSuchCTActionTotalException} if it could not be found.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
@@ -1717,10 +1715,10 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 */
 	@Override
 	public CTActionTotal findByR_R_R_E_E(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String elementId,
+		long referrerClassNameId, long referrerClassPK, String elementId,
 		String eventType) throws NoSuchCTActionTotalException {
 		CTActionTotal ctActionTotal = fetchByR_R_R_E_E(reportInstanceId,
-				referrerClassName, referrerClassPK, elementId, eventType);
+				referrerClassNameId, referrerClassPK, elementId, eventType);
 
 		if (ctActionTotal == null) {
 			StringBundler msg = new StringBundler(12);
@@ -1730,8 +1728,8 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 			msg.append("reportInstanceId=");
 			msg.append(reportInstanceId);
 
-			msg.append(", referrerClassName=");
-			msg.append(referrerClassName);
+			msg.append(", referrerClassNameId=");
+			msg.append(referrerClassNameId);
 
 			msg.append(", referrerClassPK=");
 			msg.append(referrerClassPK);
@@ -1755,10 +1753,10 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	}
 
 	/**
-	 * Returns the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the c t action total where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
@@ -1766,17 +1764,17 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 */
 	@Override
 	public CTActionTotal fetchByR_R_R_E_E(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String elementId,
+		long referrerClassNameId, long referrerClassPK, String elementId,
 		String eventType) {
-		return fetchByR_R_R_E_E(reportInstanceId, referrerClassName,
+		return fetchByR_R_R_E_E(reportInstanceId, referrerClassNameId,
 			referrerClassPK, elementId, eventType, true);
 	}
 
 	/**
-	 * Returns the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the c t action total where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
@@ -1785,11 +1783,11 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 */
 	@Override
 	public CTActionTotal fetchByR_R_R_E_E(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String elementId,
+		long referrerClassNameId, long referrerClassPK, String elementId,
 		String eventType, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
-				reportInstanceId, referrerClassName, referrerClassPK, elementId,
-				eventType
+				reportInstanceId, referrerClassNameId, referrerClassPK,
+				elementId, eventType
 			};
 
 		Object result = null;
@@ -1803,8 +1801,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 			CTActionTotal ctActionTotal = (CTActionTotal)result;
 
 			if ((reportInstanceId != ctActionTotal.getReportInstanceId()) ||
-					!Validator.equals(referrerClassName,
-						ctActionTotal.getReferrerClassName()) ||
+					(referrerClassNameId != ctActionTotal.getReferrerClassNameId()) ||
 					(referrerClassPK != ctActionTotal.getReferrerClassPK()) ||
 					!Validator.equals(elementId, ctActionTotal.getElementId()) ||
 					!Validator.equals(eventType, ctActionTotal.getEventType())) {
@@ -1819,19 +1816,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 			query.append(_FINDER_COLUMN_R_R_R_E_E_REPORTINSTANCEID_2);
 
-			boolean bindReferrerClassName = false;
-
-			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_1);
-			}
-			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_3);
-			}
-			else {
-				bindReferrerClassName = true;
-
-				query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSPK_2);
 
@@ -1876,9 +1861,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 				qPos.add(reportInstanceId);
 
-				if (bindReferrerClassName) {
-					qPos.add(referrerClassName);
-				}
+				qPos.add(referrerClassNameId);
 
 				qPos.add(referrerClassPK);
 
@@ -1904,9 +1887,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 					cacheResult(ctActionTotal);
 
 					if ((ctActionTotal.getReportInstanceId() != reportInstanceId) ||
-							(ctActionTotal.getReferrerClassName() == null) ||
-							!ctActionTotal.getReferrerClassName()
-											  .equals(referrerClassName) ||
+							(ctActionTotal.getReferrerClassNameId() != referrerClassNameId) ||
 							(ctActionTotal.getReferrerClassPK() != referrerClassPK) ||
 							(ctActionTotal.getElementId() == null) ||
 							!ctActionTotal.getElementId().equals(elementId) ||
@@ -1937,10 +1918,10 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	}
 
 	/**
-	 * Removes the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
+	 * Removes the c t action total where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
@@ -1948,19 +1929,19 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 */
 	@Override
 	public CTActionTotal removeByR_R_R_E_E(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String elementId,
+		long referrerClassNameId, long referrerClassPK, String elementId,
 		String eventType) throws NoSuchCTActionTotalException {
 		CTActionTotal ctActionTotal = findByR_R_R_E_E(reportInstanceId,
-				referrerClassName, referrerClassPK, elementId, eventType);
+				referrerClassNameId, referrerClassPK, elementId, eventType);
 
 		return remove(ctActionTotal);
 	}
 
 	/**
-	 * Returns the number of c t action totals where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
+	 * Returns the number of c t action totals where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
@@ -1968,13 +1949,13 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 */
 	@Override
 	public int countByR_R_R_E_E(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String elementId,
+		long referrerClassNameId, long referrerClassPK, String elementId,
 		String eventType) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_R_R_E_E;
 
 		Object[] finderArgs = new Object[] {
-				reportInstanceId, referrerClassName, referrerClassPK, elementId,
-				eventType
+				reportInstanceId, referrerClassNameId, referrerClassPK,
+				elementId, eventType
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -1986,19 +1967,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 			query.append(_FINDER_COLUMN_R_R_R_E_E_REPORTINSTANCEID_2);
 
-			boolean bindReferrerClassName = false;
-
-			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_1);
-			}
-			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_3);
-			}
-			else {
-				bindReferrerClassName = true;
-
-				query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSPK_2);
 
@@ -2043,9 +2012,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 				qPos.add(reportInstanceId);
 
-				if (bindReferrerClassName) {
-					qPos.add(referrerClassName);
-				}
+				qPos.add(referrerClassNameId);
 
 				qPos.add(referrerClassPK);
 
@@ -2075,9 +2042,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	}
 
 	private static final String _FINDER_COLUMN_R_R_R_E_E_REPORTINSTANCEID_2 = "ctActionTotal.reportInstanceId = ? AND ";
-	private static final String _FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_1 = "ctActionTotal.referrerClassName IS NULL AND ";
-	private static final String _FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_2 = "ctActionTotal.referrerClassName = ? AND ";
-	private static final String _FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_3 = "(ctActionTotal.referrerClassName IS NULL OR ctActionTotal.referrerClassName = '') AND ";
+	private static final String _FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAMEID_2 = "ctActionTotal.referrerClassNameId = ? AND ";
 	private static final String _FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSPK_2 = "ctActionTotal.referrerClassPK = ? AND ";
 	private static final String _FINDER_COLUMN_R_R_R_E_E_ELEMENTID_1 = "ctActionTotal.elementId IS NULL AND ";
 	private static final String _FINDER_COLUMN_R_R_R_E_E_ELEMENTID_2 = "ctActionTotal.elementId = ? AND ";
@@ -2104,7 +2069,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 		finderCache.putResult(FINDER_PATH_FETCH_BY_R_R_R_E_E,
 			new Object[] {
 				ctActionTotal.getReportInstanceId(),
-				ctActionTotal.getReferrerClassName(),
+				ctActionTotal.getReferrerClassNameId(),
 				ctActionTotal.getReferrerClassPK(), ctActionTotal.getElementId(),
 				ctActionTotal.getEventType()
 			}, ctActionTotal);
@@ -2183,7 +2148,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 		if (isNew) {
 			Object[] args = new Object[] {
 					ctActionTotalModelImpl.getReportInstanceId(),
-					ctActionTotalModelImpl.getReferrerClassName(),
+					ctActionTotalModelImpl.getReferrerClassNameId(),
 					ctActionTotalModelImpl.getReferrerClassPK(),
 					ctActionTotalModelImpl.getElementId(),
 					ctActionTotalModelImpl.getEventType()
@@ -2199,7 +2164,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 					FINDER_PATH_FETCH_BY_R_R_R_E_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						ctActionTotalModelImpl.getReportInstanceId(),
-						ctActionTotalModelImpl.getReferrerClassName(),
+						ctActionTotalModelImpl.getReferrerClassNameId(),
 						ctActionTotalModelImpl.getReferrerClassPK(),
 						ctActionTotalModelImpl.getElementId(),
 						ctActionTotalModelImpl.getEventType()
@@ -2217,7 +2182,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 		CTActionTotalModelImpl ctActionTotalModelImpl) {
 		Object[] args = new Object[] {
 				ctActionTotalModelImpl.getReportInstanceId(),
-				ctActionTotalModelImpl.getReferrerClassName(),
+				ctActionTotalModelImpl.getReferrerClassNameId(),
 				ctActionTotalModelImpl.getReferrerClassPK(),
 				ctActionTotalModelImpl.getElementId(),
 				ctActionTotalModelImpl.getEventType()
@@ -2230,7 +2195,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 				FINDER_PATH_FETCH_BY_R_R_R_E_E.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					ctActionTotalModelImpl.getOriginalReportInstanceId(),
-					ctActionTotalModelImpl.getOriginalReferrerClassName(),
+					ctActionTotalModelImpl.getOriginalReferrerClassNameId(),
 					ctActionTotalModelImpl.getOriginalReferrerClassPK(),
 					ctActionTotalModelImpl.getOriginalElementId(),
 					ctActionTotalModelImpl.getOriginalEventType()
@@ -2444,7 +2409,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 		ctActionTotalImpl.setCampaignId(ctActionTotal.getCampaignId());
 		ctActionTotalImpl.setReportInstanceId(ctActionTotal.getReportInstanceId());
 		ctActionTotalImpl.setAlias(ctActionTotal.getAlias());
-		ctActionTotalImpl.setReferrerClassName(ctActionTotal.getReferrerClassName());
+		ctActionTotalImpl.setReferrerClassNameId(ctActionTotal.getReferrerClassNameId());
 		ctActionTotalImpl.setReferrerClassPK(ctActionTotal.getReferrerClassPK());
 		ctActionTotalImpl.setElementId(ctActionTotal.getElementId());
 		ctActionTotalImpl.setEventType(ctActionTotal.getEventType());

@@ -151,19 +151,18 @@ public interface CTActionModel extends BaseModel<CTAction>, ShardedModel {
 	public void setAlias(String alias);
 
 	/**
-	 * Returns the referrer class name of this c t action.
+	 * Returns the referrer class name ID of this c t action.
 	 *
-	 * @return the referrer class name of this c t action
+	 * @return the referrer class name ID of this c t action
 	 */
-	@AutoEscape
-	public String getReferrerClassName();
+	public long getReferrerClassNameId();
 
 	/**
-	 * Sets the referrer class name of this c t action.
+	 * Sets the referrer class name ID of this c t action.
 	 *
-	 * @param referrerClassName the referrer class name of this c t action
+	 * @param referrerClassNameId the referrer class name ID of this c t action
 	 */
-	public void setReferrerClassName(String referrerClassName);
+	public void setReferrerClassNameId(long referrerClassNameId);
 
 	/**
 	 * Returns the referrer class p k of this c t action.

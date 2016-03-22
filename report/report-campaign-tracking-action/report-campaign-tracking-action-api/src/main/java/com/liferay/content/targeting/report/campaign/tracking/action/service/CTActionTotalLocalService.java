@@ -76,14 +76,13 @@ public interface CTActionTotalLocalService extends BaseLocalService,
 		java.lang.String eventType, int count) throws PortalException;
 
 	public CTActionTotal addCTActionTotal(long reportInstanceId,
-		java.lang.String alias, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType, int count) throws PortalException;
+		java.lang.String alias, long referrerClassNameId, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType, int count)
+		throws PortalException;
 
 	public CTActionTotal addCTActionTotal(long reportInstanceId,
-		java.lang.String alias, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String eventType, int count)
-		throws PortalException;
+		java.lang.String alias, long referrerClassNameId, long referrerClassPK,
+		java.lang.String eventType, int count) throws PortalException;
 
 	public void checkCTActionTotalEvents() throws PortalException;
 
@@ -203,7 +202,7 @@ public interface CTActionTotalLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CTActionTotal getCTActionTotal(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws PortalException;
 

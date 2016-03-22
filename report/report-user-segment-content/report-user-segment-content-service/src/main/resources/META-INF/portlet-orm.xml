@@ -12,7 +12,7 @@
 			<id name="userSegmentContentId" />
 			<basic name="companyId" />
 			<basic name="userSegmentId" />
-			<basic name="className" />
+			<basic name="classNameId" />
 			<basic name="classPK" />
 			<basic name="eventType" />
 			<basic name="count" />

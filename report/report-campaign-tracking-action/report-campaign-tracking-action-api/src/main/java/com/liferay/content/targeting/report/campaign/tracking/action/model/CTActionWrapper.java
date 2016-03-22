@@ -63,7 +63,7 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("alias", getAlias());
-		attributes.put("referrerClassName", getReferrerClassName());
+		attributes.put("referrerClassNameId", getReferrerClassNameId());
 		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
@@ -111,10 +111,10 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 			setAlias(alias);
 		}
 
-		String referrerClassName = (String)attributes.get("referrerClassName");
+		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");
 
-		if (referrerClassName != null) {
-			setReferrerClassName(referrerClassName);
+		if (referrerClassNameId != null) {
+			setReferrerClassNameId(referrerClassNameId);
 		}
 
 		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
@@ -260,13 +260,13 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 	}
 
 	/**
-	* Returns the referrer class name of this c t action.
+	* Returns the referrer class name ID of this c t action.
 	*
-	* @return the referrer class name of this c t action
+	* @return the referrer class name ID of this c t action
 	*/
 	@Override
-	public java.lang.String getReferrerClassName() {
-		return _ctAction.getReferrerClassName();
+	public long getReferrerClassNameId() {
+		return _ctAction.getReferrerClassNameId();
 	}
 
 	/**
@@ -451,13 +451,13 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 	}
 
 	/**
-	* Sets the referrer class name of this c t action.
+	* Sets the referrer class name ID of this c t action.
 	*
-	* @param referrerClassName the referrer class name of this c t action
+	* @param referrerClassNameId the referrer class name ID of this c t action
 	*/
 	@Override
-	public void setReferrerClassName(java.lang.String referrerClassName) {
-		_ctAction.setReferrerClassName(referrerClassName);
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		_ctAction.setReferrerClassNameId(referrerClassNameId);
 	}
 
 	/**

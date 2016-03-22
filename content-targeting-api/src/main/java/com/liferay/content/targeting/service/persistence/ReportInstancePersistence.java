@@ -372,57 +372,57 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
-	* Returns all the report instances where className = &#63; and classPK = &#63;.
+	* Returns all the report instances where classNameId = &#63; and classPK = &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching report instances
 	*/
-	public java.util.List<ReportInstance> findByC_C(
-		java.lang.String className, long classPK);
+	public java.util.List<ReportInstance> findByC_C(long classNameId,
+		long classPK);
 
 	/**
-	* Returns a range of all the report instances where className = &#63; and classPK = &#63;.
+	* Returns a range of all the report instances where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param start the lower bound of the range of report instances
 	* @param end the upper bound of the range of report instances (not inclusive)
 	* @return the range of matching report instances
 	*/
-	public java.util.List<ReportInstance> findByC_C(
-		java.lang.String className, long classPK, int start, int end);
+	public java.util.List<ReportInstance> findByC_C(long classNameId,
+		long classPK, int start, int end);
 
 	/**
-	* Returns an ordered range of all the report instances where className = &#63; and classPK = &#63;.
+	* Returns an ordered range of all the report instances where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param start the lower bound of the range of report instances
 	* @param end the upper bound of the range of report instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching report instances
 	*/
-	public java.util.List<ReportInstance> findByC_C(
-		java.lang.String className, long classPK, int start, int end,
+	public java.util.List<ReportInstance> findByC_C(long classNameId,
+		long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator);
 
 	/**
-	* Returns an ordered range of all the report instances where className = &#63; and classPK = &#63;.
+	* Returns an ordered range of all the report instances where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param start the lower bound of the range of report instances
 	* @param end the upper bound of the range of report instances (not inclusive)
@@ -430,133 +430,129 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching report instances
 	*/
-	public java.util.List<ReportInstance> findByC_C(
-		java.lang.String className, long classPK, int start, int end,
+	public java.util.List<ReportInstance> findByC_C(long classNameId,
+		long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	* Returns the first report instance in the ordered set where className = &#63; and classPK = &#63;.
+	* Returns the first report instance in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching report instance
 	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
-	public ReportInstance findByC_C_First(java.lang.String className,
-		long classPK,
+	public ReportInstance findByC_C_First(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator)
 		throws NoSuchReportInstanceException;
 
 	/**
-	* Returns the first report instance in the ordered set where className = &#63; and classPK = &#63;.
+	* Returns the first report instance in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching report instance, or <code>null</code> if a matching report instance could not be found
 	*/
-	public ReportInstance fetchByC_C_First(java.lang.String className,
-		long classPK,
+	public ReportInstance fetchByC_C_First(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator);
 
 	/**
-	* Returns the last report instance in the ordered set where className = &#63; and classPK = &#63;.
+	* Returns the last report instance in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching report instance
 	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
-	public ReportInstance findByC_C_Last(java.lang.String className,
-		long classPK,
+	public ReportInstance findByC_C_Last(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator)
 		throws NoSuchReportInstanceException;
 
 	/**
-	* Returns the last report instance in the ordered set where className = &#63; and classPK = &#63;.
+	* Returns the last report instance in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching report instance, or <code>null</code> if a matching report instance could not be found
 	*/
-	public ReportInstance fetchByC_C_Last(java.lang.String className,
-		long classPK,
+	public ReportInstance fetchByC_C_Last(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator);
 
 	/**
-	* Returns the report instances before and after the current report instance in the ordered set where className = &#63; and classPK = &#63;.
+	* Returns the report instances before and after the current report instance in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param reportInstanceId the primary key of the current report instance
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next report instance
 	* @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	*/
 	public ReportInstance[] findByC_C_PrevAndNext(long reportInstanceId,
-		java.lang.String className, long classPK,
+		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator)
 		throws NoSuchReportInstanceException;
 
 	/**
-	* Removes all the report instances where className = &#63; and classPK = &#63; from the database.
+	* Removes all the report instances where classNameId = &#63; and classPK = &#63; from the database.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	*/
-	public void removeByC_C(java.lang.String className, long classPK);
+	public void removeByC_C(long classNameId, long classPK);
 
 	/**
-	* Returns the number of report instances where className = &#63; and classPK = &#63;.
+	* Returns the number of report instances where classNameId = &#63; and classPK = &#63;.
 	*
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching report instances
 	*/
-	public int countByC_C(java.lang.String className, long classPK);
+	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	* Returns all the report instances where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	* Returns all the report instances where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param reportKey the report key
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching report instances
 	*/
 	public java.util.List<ReportInstance> findByR_C_C(
-		java.lang.String reportKey, java.lang.String className, long classPK);
+		java.lang.String reportKey, long classNameId, long classPK);
 
 	/**
-	* Returns a range of all the report instances where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	* Returns a range of all the report instances where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportKey the report key
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param start the lower bound of the range of report instances
 	* @param end the upper bound of the range of report instances (not inclusive)
 	* @return the range of matching report instances
 	*/
 	public java.util.List<ReportInstance> findByR_C_C(
-		java.lang.String reportKey, java.lang.String className, long classPK,
-		int start, int end);
+		java.lang.String reportKey, long classNameId, long classPK, int start,
+		int end);
 
 	/**
-	* Returns an ordered range of all the report instances where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	* Returns an ordered range of all the report instances where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportKey the report key
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param start the lower bound of the range of report instances
 	* @param end the upper bound of the range of report instances (not inclusive)
@@ -564,19 +560,19 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @return the ordered range of matching report instances
 	*/
 	public java.util.List<ReportInstance> findByR_C_C(
-		java.lang.String reportKey, java.lang.String className, long classPK,
-		int start, int end,
+		java.lang.String reportKey, long classNameId, long classPK, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator);
 
 	/**
-	* Returns an ordered range of all the report instances where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	* Returns an ordered range of all the report instances where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportKey the report key
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param start the lower bound of the range of report instances
 	* @param end the upper bound of the range of report instances (not inclusive)
@@ -585,103 +581,103 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @return the ordered range of matching report instances
 	*/
 	public java.util.List<ReportInstance> findByR_C_C(
-		java.lang.String reportKey, java.lang.String className, long classPK,
-		int start, int end,
+		java.lang.String reportKey, long classNameId, long classPK, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	* Returns the first report instance in the ordered set where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	* Returns the first report instance in the ordered set where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param reportKey the report key
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching report instance
 	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
 	public ReportInstance findByR_C_C_First(java.lang.String reportKey,
-		java.lang.String className, long classPK,
+		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator)
 		throws NoSuchReportInstanceException;
 
 	/**
-	* Returns the first report instance in the ordered set where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	* Returns the first report instance in the ordered set where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param reportKey the report key
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching report instance, or <code>null</code> if a matching report instance could not be found
 	*/
 	public ReportInstance fetchByR_C_C_First(java.lang.String reportKey,
-		java.lang.String className, long classPK,
+		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator);
 
 	/**
-	* Returns the last report instance in the ordered set where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	* Returns the last report instance in the ordered set where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param reportKey the report key
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching report instance
 	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
 	public ReportInstance findByR_C_C_Last(java.lang.String reportKey,
-		java.lang.String className, long classPK,
+		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator)
 		throws NoSuchReportInstanceException;
 
 	/**
-	* Returns the last report instance in the ordered set where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	* Returns the last report instance in the ordered set where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param reportKey the report key
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching report instance, or <code>null</code> if a matching report instance could not be found
 	*/
 	public ReportInstance fetchByR_C_C_Last(java.lang.String reportKey,
-		java.lang.String className, long classPK,
+		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator);
 
 	/**
-	* Returns the report instances before and after the current report instance in the ordered set where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	* Returns the report instances before and after the current report instance in the ordered set where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param reportInstanceId the primary key of the current report instance
 	* @param reportKey the report key
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next report instance
 	* @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	*/
 	public ReportInstance[] findByR_C_C_PrevAndNext(long reportInstanceId,
-		java.lang.String reportKey, java.lang.String className, long classPK,
+		java.lang.String reportKey, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator)
 		throws NoSuchReportInstanceException;
 
 	/**
-	* Removes all the report instances where reportKey = &#63; and className = &#63; and classPK = &#63; from the database.
+	* Removes all the report instances where reportKey = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param reportKey the report key
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	*/
-	public void removeByR_C_C(java.lang.String reportKey,
-		java.lang.String className, long classPK);
+	public void removeByR_C_C(java.lang.String reportKey, long classNameId,
+		long classPK);
 
 	/**
-	* Returns the number of report instances where reportKey = &#63; and className = &#63; and classPK = &#63;.
+	* Returns the number of report instances where reportKey = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param reportKey the report key
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching report instances
 	*/
-	public int countByR_C_C(java.lang.String reportKey,
-		java.lang.String className, long classPK);
+	public int countByR_C_C(java.lang.String reportKey, long classNameId,
+		long classPK);
 
 	/**
 	* Caches the report instance in the entity cache if it is enabled.

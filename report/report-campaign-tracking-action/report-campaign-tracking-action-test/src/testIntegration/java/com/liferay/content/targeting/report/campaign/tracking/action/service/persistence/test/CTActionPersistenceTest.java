@@ -134,7 +134,7 @@ public class CTActionPersistenceTest {
 
 		newCTAction.setAlias(RandomTestUtil.randomString());
 
-		newCTAction.setReferrerClassName(RandomTestUtil.randomString());
+		newCTAction.setReferrerClassNameId(RandomTestUtil.nextLong());
 
 		newCTAction.setReferrerClassPK(RandomTestUtil.nextLong());
 
@@ -161,8 +161,8 @@ public class CTActionPersistenceTest {
 		Assert.assertEquals(existingCTAction.getUserSegmentId(),
 			newCTAction.getUserSegmentId());
 		Assert.assertEquals(existingCTAction.getAlias(), newCTAction.getAlias());
-		Assert.assertEquals(existingCTAction.getReferrerClassName(),
-			newCTAction.getReferrerClassName());
+		Assert.assertEquals(existingCTAction.getReferrerClassNameId(),
+			newCTAction.getReferrerClassNameId());
 		Assert.assertEquals(existingCTAction.getReferrerClassPK(),
 			newCTAction.getReferrerClassPK());
 		Assert.assertEquals(existingCTAction.getElementId(),
@@ -208,24 +208,22 @@ public class CTActionPersistenceTest {
 
 	@Test
 	public void testCountByR_R_R() throws Exception {
-		_persistence.countByR_R_R(RandomTestUtil.nextLong(), StringPool.BLANK,
-			RandomTestUtil.nextLong());
+		_persistence.countByR_R_R(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByR_R_R(0L, StringPool.NULL, 0L);
-
-		_persistence.countByR_R_R(0L, (String)null, 0L);
+		_persistence.countByR_R_R(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByR_U_R_R_E_E() throws Exception {
 		_persistence.countByR_U_R_R_E_E(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK,
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
 
-		_persistence.countByR_U_R_R_E_E(0L, 0L, StringPool.NULL, 0L,
-			StringPool.NULL, StringPool.NULL);
+		_persistence.countByR_U_R_R_E_E(0L, 0L, 0L, 0L, StringPool.NULL,
+			StringPool.NULL);
 
-		_persistence.countByR_U_R_R_E_E(0L, 0L, (String)null, 0L, (String)null,
+		_persistence.countByR_U_R_R_E_E(0L, 0L, 0L, 0L, (String)null,
 			(String)null);
 	}
 
@@ -255,7 +253,7 @@ public class CTActionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CT_CTA_CTAction",
 			"CTActionId", true, "companyId", true, "campaignId", true,
 			"reportInstanceId", true, "userSegmentId", true, "alias", true,
-			"referrerClassName", true, "referrerClassPK", true, "elementId",
+			"referrerClassNameId", true, "referrerClassPK", true, "elementId",
 			true, "eventType", true, "count", true, "modifiedDate", true);
 	}
 
@@ -465,10 +463,10 @@ public class CTActionPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingCTAction.getUserSegmentId()),
 			ReflectionTestUtil.<Long>invoke(existingCTAction,
 				"getOriginalUserSegmentId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(
-				existingCTAction.getReferrerClassName(),
-				ReflectionTestUtil.invoke(existingCTAction,
-					"getOriginalReferrerClassName", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingCTAction.getReferrerClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingCTAction,
+				"getOriginalReferrerClassNameId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(existingCTAction.getReferrerClassPK()),
 			ReflectionTestUtil.<Long>invoke(existingCTAction,
 				"getOriginalReferrerClassPK", new Class<?>[0]));
@@ -495,7 +493,7 @@ public class CTActionPersistenceTest {
 
 		ctAction.setAlias(RandomTestUtil.randomString());
 
-		ctAction.setReferrerClassName(RandomTestUtil.randomString());
+		ctAction.setReferrerClassNameId(RandomTestUtil.nextLong());
 
 		ctAction.setReferrerClassPK(RandomTestUtil.nextLong());
 

@@ -76,8 +76,8 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		sb.append(userId);
 		sb.append(", anonymousUserId=");
 		sb.append(anonymousUserId);
-		sb.append(", className=");
-		sb.append(className);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
 		sb.append(", elementId=");
@@ -109,14 +109,7 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		analyticsEventImpl.setCompanyId(companyId);
 		analyticsEventImpl.setUserId(userId);
 		analyticsEventImpl.setAnonymousUserId(anonymousUserId);
-
-		if (className == null) {
-			analyticsEventImpl.setClassName(StringPool.BLANK);
-		}
-		else {
-			analyticsEventImpl.setClassName(className);
-		}
-
+		analyticsEventImpl.setClassNameId(classNameId);
 		analyticsEventImpl.setClassPK(classPK);
 
 		if (elementId == null) {
@@ -189,7 +182,8 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		userId = objectInput.readLong();
 
 		anonymousUserId = objectInput.readLong();
-		className = objectInput.readUTF();
+
+		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
@@ -213,12 +207,7 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 
 		objectOutput.writeLong(anonymousUserId);
 
-		if (className == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(className);
-		}
+		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
 
@@ -278,7 +267,7 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 	public long companyId;
 	public long userId;
 	public long anonymousUserId;
-	public String className;
+	public long classNameId;
 	public long classPK;
 	public String elementId;
 	public String eventType;

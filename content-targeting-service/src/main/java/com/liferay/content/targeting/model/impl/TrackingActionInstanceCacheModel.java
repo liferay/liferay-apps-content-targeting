@@ -92,8 +92,8 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		sb.append(reportInstanceId);
 		sb.append(", alias=");
 		sb.append(alias);
-		sb.append(", referrerClassName=");
-		sb.append(referrerClassName);
+		sb.append(", referrerClassNameId=");
+		sb.append(referrerClassNameId);
 		sb.append(", referrerClassPK=");
 		sb.append(referrerClassPK);
 		sb.append(", elementId=");
@@ -161,13 +161,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 			trackingActionInstanceImpl.setAlias(alias);
 		}
 
-		if (referrerClassName == null) {
-			trackingActionInstanceImpl.setReferrerClassName(StringPool.BLANK);
-		}
-		else {
-			trackingActionInstanceImpl.setReferrerClassName(referrerClassName);
-		}
-
+		trackingActionInstanceImpl.setReferrerClassNameId(referrerClassNameId);
 		trackingActionInstanceImpl.setReferrerClassPK(referrerClassPK);
 
 		if (elementId == null) {
@@ -216,7 +210,8 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 
 		reportInstanceId = objectInput.readLong();
 		alias = objectInput.readUTF();
-		referrerClassName = objectInput.readUTF();
+
+		referrerClassNameId = objectInput.readLong();
 
 		referrerClassPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
@@ -270,12 +265,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 			objectOutput.writeUTF(alias);
 		}
 
-		if (referrerClassName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(referrerClassName);
-		}
+		objectOutput.writeLong(referrerClassNameId);
 
 		objectOutput.writeLong(referrerClassPK);
 
@@ -313,7 +303,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 	public long campaignId;
 	public long reportInstanceId;
 	public String alias;
-	public String referrerClassName;
+	public long referrerClassNameId;
 	public long referrerClassPK;
 	public String elementId;
 	public String eventType;

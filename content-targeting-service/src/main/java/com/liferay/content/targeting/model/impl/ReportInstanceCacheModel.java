@@ -90,8 +90,8 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", className=");
-		sb.append(className);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
 		sb.append(", typeSettings=");
@@ -159,13 +159,7 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 			reportInstanceImpl.setDescription(description);
 		}
 
-		if (className == null) {
-			reportInstanceImpl.setClassName(StringPool.BLANK);
-		}
-		else {
-			reportInstanceImpl.setClassName(className);
-		}
-
+		reportInstanceImpl.setClassNameId(classNameId);
 		reportInstanceImpl.setClassPK(classPK);
 
 		if (typeSettings == null) {
@@ -197,7 +191,8 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 		reportKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
-		className = objectInput.readUTF();
+
+		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
 		typeSettings = objectInput.readUTF();
@@ -252,12 +247,7 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 			objectOutput.writeUTF(description);
 		}
 
-		if (className == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(className);
-		}
+		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
 
@@ -280,7 +270,7 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 	public String reportKey;
 	public String name;
 	public String description;
-	public String className;
+	public long classNameId;
 	public long classPK;
 	public String typeSettings;
 }

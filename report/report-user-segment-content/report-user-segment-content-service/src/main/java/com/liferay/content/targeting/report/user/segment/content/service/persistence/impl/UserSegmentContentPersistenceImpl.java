@@ -1188,26 +1188,26 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 			UserSegmentContentImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C_C_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName()
 			},
 			UserSegmentContentModelImpl.USERSEGMENTID_COLUMN_BITMASK |
-			UserSegmentContentModelImpl.CLASSNAME_COLUMN_BITMASK |
+			UserSegmentContentModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			UserSegmentContentModelImpl.CLASSPK_COLUMN_BITMASK |
 			UserSegmentContentModelImpl.EVENTTYPE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C_C_E = new FinderPath(UserSegmentContentModelImpl.ENTITY_CACHE_ENABLED,
 			UserSegmentContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName()
 			});
 
 	/**
-	 * Returns the user segment content where userSegmentId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or throws a {@link NoSuchUserSegmentContentException} if it could not be found.
+	 * Returns the user segment content where userSegmentId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; or throws a {@link NoSuchUserSegmentContentException} if it could not be found.
 	 *
 	 * @param userSegmentId the user segment ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the matching user segment content
@@ -1215,10 +1215,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 */
 	@Override
 	public UserSegmentContent findByC_C_C_E(long userSegmentId,
-		String className, long classPK, String eventType)
+		long classNameId, long classPK, String eventType)
 		throws NoSuchUserSegmentContentException {
 		UserSegmentContent userSegmentContent = fetchByC_C_C_E(userSegmentId,
-				className, classPK, eventType);
+				classNameId, classPK, eventType);
 
 		if (userSegmentContent == null) {
 			StringBundler msg = new StringBundler(10);
@@ -1228,8 +1228,8 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 			msg.append("userSegmentId=");
 			msg.append(userSegmentId);
 
-			msg.append(", className=");
-			msg.append(className);
+			msg.append(", classNameId=");
+			msg.append(classNameId);
 
 			msg.append(", classPK=");
 			msg.append(classPK);
@@ -1250,25 +1250,26 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	}
 
 	/**
-	 * Returns the user segment content where userSegmentId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the user segment content where userSegmentId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param userSegmentId the user segment ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the matching user segment content, or <code>null</code> if a matching user segment content could not be found
 	 */
 	@Override
 	public UserSegmentContent fetchByC_C_C_E(long userSegmentId,
-		String className, long classPK, String eventType) {
-		return fetchByC_C_C_E(userSegmentId, className, classPK, eventType, true);
+		long classNameId, long classPK, String eventType) {
+		return fetchByC_C_C_E(userSegmentId, classNameId, classPK, eventType,
+			true);
 	}
 
 	/**
-	 * Returns the user segment content where userSegmentId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user segment content where userSegmentId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userSegmentId the user segment ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param retrieveFromCache whether to retrieve from the finder cache
@@ -1276,10 +1277,10 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	 */
 	@Override
 	public UserSegmentContent fetchByC_C_C_E(long userSegmentId,
-		String className, long classPK, String eventType,
+		long classNameId, long classPK, String eventType,
 		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
-				userSegmentId, className, classPK, eventType
+				userSegmentId, classNameId, classPK, eventType
 			};
 
 		Object result = null;
@@ -1293,8 +1294,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 			UserSegmentContent userSegmentContent = (UserSegmentContent)result;
 
 			if ((userSegmentId != userSegmentContent.getUserSegmentId()) ||
-					!Validator.equals(className,
-						userSegmentContent.getClassName()) ||
+					(classNameId != userSegmentContent.getClassNameId()) ||
 					(classPK != userSegmentContent.getClassPK()) ||
 					!Validator.equals(eventType,
 						userSegmentContent.getEventType())) {
@@ -1309,19 +1309,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 			query.append(_FINDER_COLUMN_C_C_C_E_USERSEGMENTID_2);
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_C_C_C_E_CLASSPK_2);
 
@@ -1352,9 +1340,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 				qPos.add(userSegmentId);
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -1376,8 +1362,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 					cacheResult(userSegmentContent);
 
 					if ((userSegmentContent.getUserSegmentId() != userSegmentId) ||
-							(userSegmentContent.getClassName() == null) ||
-							!userSegmentContent.getClassName().equals(className) ||
+							(userSegmentContent.getClassNameId() != classNameId) ||
 							(userSegmentContent.getClassPK() != classPK) ||
 							(userSegmentContent.getEventType() == null) ||
 							!userSegmentContent.getEventType().equals(eventType)) {
@@ -1406,40 +1391,40 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	}
 
 	/**
-	 * Removes the user segment content where userSegmentId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; from the database.
+	 * Removes the user segment content where userSegmentId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; from the database.
 	 *
 	 * @param userSegmentId the user segment ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the user segment content that was removed
 	 */
 	@Override
 	public UserSegmentContent removeByC_C_C_E(long userSegmentId,
-		String className, long classPK, String eventType)
+		long classNameId, long classPK, String eventType)
 		throws NoSuchUserSegmentContentException {
 		UserSegmentContent userSegmentContent = findByC_C_C_E(userSegmentId,
-				className, classPK, eventType);
+				classNameId, classPK, eventType);
 
 		return remove(userSegmentContent);
 	}
 
 	/**
-	 * Returns the number of user segment contents where userSegmentId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the number of user segment contents where userSegmentId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * @param userSegmentId the user segment ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the number of matching user segment contents
 	 */
 	@Override
-	public int countByC_C_C_E(long userSegmentId, String className,
+	public int countByC_C_C_E(long userSegmentId, long classNameId,
 		long classPK, String eventType) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C_C_E;
 
 		Object[] finderArgs = new Object[] {
-				userSegmentId, className, classPK, eventType
+				userSegmentId, classNameId, classPK, eventType
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -1451,19 +1436,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 			query.append(_FINDER_COLUMN_C_C_C_E_USERSEGMENTID_2);
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_C_C_C_E_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_C_C_C_E_CLASSPK_2);
 
@@ -1494,9 +1467,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 
 				qPos.add(userSegmentId);
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -1522,9 +1493,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 	}
 
 	private static final String _FINDER_COLUMN_C_C_C_E_USERSEGMENTID_2 = "userSegmentContent.userSegmentId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_C_E_CLASSNAME_1 = "userSegmentContent.className IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_C_C_E_CLASSNAME_2 = "userSegmentContent.className = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_C_E_CLASSNAME_3 = "(userSegmentContent.className IS NULL OR userSegmentContent.className = '') AND ";
+	private static final String _FINDER_COLUMN_C_C_C_E_CLASSNAMEID_2 = "userSegmentContent.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_E_CLASSPK_2 = "userSegmentContent.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_E_EVENTTYPE_1 = "userSegmentContent.eventType IS NULL";
 	private static final String _FINDER_COLUMN_C_C_C_E_EVENTTYPE_2 = "userSegmentContent.eventType = ?";
@@ -1548,7 +1517,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 		finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C_E,
 			new Object[] {
 				userSegmentContent.getUserSegmentId(),
-				userSegmentContent.getClassName(),
+				userSegmentContent.getClassNameId(),
 				userSegmentContent.getClassPK(),
 				userSegmentContent.getEventType()
 			}, userSegmentContent);
@@ -1628,7 +1597,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 		if (isNew) {
 			Object[] args = new Object[] {
 					userSegmentContentModelImpl.getUserSegmentId(),
-					userSegmentContentModelImpl.getClassName(),
+					userSegmentContentModelImpl.getClassNameId(),
 					userSegmentContentModelImpl.getClassPK(),
 					userSegmentContentModelImpl.getEventType()
 				};
@@ -1643,7 +1612,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 					FINDER_PATH_FETCH_BY_C_C_C_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						userSegmentContentModelImpl.getUserSegmentId(),
-						userSegmentContentModelImpl.getClassName(),
+						userSegmentContentModelImpl.getClassNameId(),
 						userSegmentContentModelImpl.getClassPK(),
 						userSegmentContentModelImpl.getEventType()
 					};
@@ -1660,7 +1629,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 		UserSegmentContentModelImpl userSegmentContentModelImpl) {
 		Object[] args = new Object[] {
 				userSegmentContentModelImpl.getUserSegmentId(),
-				userSegmentContentModelImpl.getClassName(),
+				userSegmentContentModelImpl.getClassNameId(),
 				userSegmentContentModelImpl.getClassPK(),
 				userSegmentContentModelImpl.getEventType()
 			};
@@ -1672,7 +1641,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 				FINDER_PATH_FETCH_BY_C_C_C_E.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					userSegmentContentModelImpl.getOriginalUserSegmentId(),
-					userSegmentContentModelImpl.getOriginalClassName(),
+					userSegmentContentModelImpl.getOriginalClassNameId(),
 					userSegmentContentModelImpl.getOriginalClassPK(),
 					userSegmentContentModelImpl.getOriginalEventType()
 				};
@@ -1870,7 +1839,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 		userSegmentContentImpl.setUserSegmentContentId(userSegmentContent.getUserSegmentContentId());
 		userSegmentContentImpl.setCompanyId(userSegmentContent.getCompanyId());
 		userSegmentContentImpl.setUserSegmentId(userSegmentContent.getUserSegmentId());
-		userSegmentContentImpl.setClassName(userSegmentContent.getClassName());
+		userSegmentContentImpl.setClassNameId(userSegmentContent.getClassNameId());
 		userSegmentContentImpl.setClassPK(userSegmentContent.getClassPK());
 		userSegmentContentImpl.setEventType(userSegmentContent.getEventType());
 		userSegmentContentImpl.setCount(userSegmentContent.getCount());

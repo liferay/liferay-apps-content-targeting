@@ -37,7 +37,7 @@ public class CampaignContentSoap implements Serializable {
 		soapModel.setCampaignContentId(model.getCampaignContentId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCampaignId(model.getCampaignId());
-		soapModel.setClassName(model.getClassName());
+		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setEventType(model.getEventType());
 		soapModel.setCount(model.getCount());
@@ -120,12 +120,12 @@ public class CampaignContentSoap implements Serializable {
 		_campaignId = campaignId;
 	}
 
-	public String getClassName() {
-		return _className;
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
-	public void setClassName(String className) {
-		_className = className;
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
 	}
 
 	public long getClassPK() {
@@ -163,7 +163,7 @@ public class CampaignContentSoap implements Serializable {
 	private long _campaignContentId;
 	private long _companyId;
 	private long _campaignId;
-	private String _className;
+	private long _classNameId;
 	private long _classPK;
 	private String _eventType;
 	private int _count;

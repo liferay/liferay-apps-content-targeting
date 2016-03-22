@@ -132,7 +132,7 @@ public class CTActionTotalPersistenceTest {
 
 		newCTActionTotal.setAlias(RandomTestUtil.randomString());
 
-		newCTActionTotal.setReferrerClassName(RandomTestUtil.randomString());
+		newCTActionTotal.setReferrerClassNameId(RandomTestUtil.nextLong());
 
 		newCTActionTotal.setReferrerClassPK(RandomTestUtil.nextLong());
 
@@ -158,8 +158,8 @@ public class CTActionTotalPersistenceTest {
 			newCTActionTotal.getReportInstanceId());
 		Assert.assertEquals(existingCTActionTotal.getAlias(),
 			newCTActionTotal.getAlias());
-		Assert.assertEquals(existingCTActionTotal.getReferrerClassName(),
-			newCTActionTotal.getReferrerClassName());
+		Assert.assertEquals(existingCTActionTotal.getReferrerClassNameId(),
+			newCTActionTotal.getReferrerClassNameId());
 		Assert.assertEquals(existingCTActionTotal.getReferrerClassPK(),
 			newCTActionTotal.getReferrerClassPK());
 		Assert.assertEquals(existingCTActionTotal.getElementId(),
@@ -198,14 +198,13 @@ public class CTActionTotalPersistenceTest {
 	@Test
 	public void testCountByR_R_R_E_E() throws Exception {
 		_persistence.countByR_R_R_E_E(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextLong(), StringPool.BLANK,
-			StringPool.BLANK);
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			StringPool.BLANK, StringPool.BLANK);
 
-		_persistence.countByR_R_R_E_E(0L, StringPool.NULL, 0L, StringPool.NULL,
+		_persistence.countByR_R_R_E_E(0L, 0L, 0L, StringPool.NULL,
 			StringPool.NULL);
 
-		_persistence.countByR_R_R_E_E(0L, (String)null, 0L, (String)null,
-			(String)null);
+		_persistence.countByR_R_R_E_E(0L, 0L, 0L, (String)null, (String)null);
 	}
 
 	@Test
@@ -233,9 +232,9 @@ public class CTActionTotalPersistenceTest {
 	protected OrderByComparator<CTActionTotal> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CT_CTA_CTActionTotal",
 			"CTActionTotalId", true, "companyId", true, "campaignId", true,
-			"reportInstanceId", true, "alias", true, "referrerClassName", true,
-			"referrerClassPK", true, "elementId", true, "eventType", true,
-			"count", true, "modifiedDate", true);
+			"reportInstanceId", true, "alias", true, "referrerClassNameId",
+			true, "referrerClassPK", true, "elementId", true, "eventType",
+			true, "count", true, "modifiedDate", true);
 	}
 
 	@Test
@@ -444,10 +443,10 @@ public class CTActionTotalPersistenceTest {
 				existingCTActionTotal.getReportInstanceId()),
 			ReflectionTestUtil.<Long>invoke(existingCTActionTotal,
 				"getOriginalReportInstanceId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(
-				existingCTActionTotal.getReferrerClassName(),
-				ReflectionTestUtil.invoke(existingCTActionTotal,
-					"getOriginalReferrerClassName", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingCTActionTotal.getReferrerClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingCTActionTotal,
+				"getOriginalReferrerClassNameId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(
 				existingCTActionTotal.getReferrerClassPK()),
 			ReflectionTestUtil.<Long>invoke(existingCTActionTotal,
@@ -475,7 +474,7 @@ public class CTActionTotalPersistenceTest {
 
 		ctActionTotal.setAlias(RandomTestUtil.randomString());
 
-		ctActionTotal.setReferrerClassName(RandomTestUtil.randomString());
+		ctActionTotal.setReferrerClassNameId(RandomTestUtil.nextLong());
 
 		ctActionTotal.setReferrerClassPK(RandomTestUtil.nextLong());
 

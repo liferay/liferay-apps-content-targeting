@@ -629,10 +629,10 @@ public class CTActionTotalUtil {
 	}
 
 	/**
-	* Returns the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link NoSuchCTActionTotalException} if it could not be found.
+	* Returns the c t action total where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link NoSuchCTActionTotalException} if it could not be found.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
@@ -640,37 +640,37 @@ public class CTActionTotalUtil {
 	* @throws NoSuchCTActionTotalException if a matching c t action total could not be found
 	*/
 	public static CTActionTotal findByR_R_R_E_E(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionTotalException {
 		return getPersistence()
-				   .findByR_R_R_E_E(reportInstanceId, referrerClassName,
+				   .findByR_R_R_E_E(reportInstanceId, referrerClassNameId,
 			referrerClassPK, elementId, eventType);
 	}
 
 	/**
-	* Returns the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the c t action total where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the matching c t action total, or <code>null</code> if a matching c t action total could not be found
 	*/
 	public static CTActionTotal fetchByR_R_R_E_E(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType) {
 		return getPersistence()
-				   .fetchByR_R_R_E_E(reportInstanceId, referrerClassName,
+				   .fetchByR_R_R_E_E(reportInstanceId, referrerClassNameId,
 			referrerClassPK, elementId, eventType);
 	}
 
 	/**
-	* Returns the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the c t action total where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
@@ -678,48 +678,48 @@ public class CTActionTotalUtil {
 	* @return the matching c t action total, or <code>null</code> if a matching c t action total could not be found
 	*/
 	public static CTActionTotal fetchByR_R_R_E_E(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByR_R_R_E_E(reportInstanceId, referrerClassName,
+				   .fetchByR_R_R_E_E(reportInstanceId, referrerClassNameId,
 			referrerClassPK, elementId, eventType, retrieveFromCache);
 	}
 
 	/**
-	* Removes the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
+	* Removes the c t action total where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the c t action total that was removed
 	*/
 	public static CTActionTotal removeByR_R_R_E_E(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionTotalException {
 		return getPersistence()
-				   .removeByR_R_R_E_E(reportInstanceId, referrerClassName,
+				   .removeByR_R_R_E_E(reportInstanceId, referrerClassNameId,
 			referrerClassPK, elementId, eventType);
 	}
 
 	/**
-	* Returns the number of c t action totals where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
+	* Returns the number of c t action totals where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the number of matching c t action totals
 	*/
 	public static int countByR_R_R_E_E(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType) {
 		return getPersistence()
-				   .countByR_R_R_E_E(reportInstanceId, referrerClassName,
+				   .countByR_R_R_E_E(reportInstanceId, referrerClassNameId,
 			referrerClassPK, elementId, eventType);
 	}
 

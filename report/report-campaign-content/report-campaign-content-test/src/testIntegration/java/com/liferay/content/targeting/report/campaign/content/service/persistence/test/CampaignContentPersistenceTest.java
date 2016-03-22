@@ -128,7 +128,7 @@ public class CampaignContentPersistenceTest {
 
 		newCampaignContent.setCampaignId(RandomTestUtil.nextLong());
 
-		newCampaignContent.setClassName(RandomTestUtil.randomString());
+		newCampaignContent.setClassNameId(RandomTestUtil.nextLong());
 
 		newCampaignContent.setClassPK(RandomTestUtil.nextLong());
 
@@ -148,8 +148,8 @@ public class CampaignContentPersistenceTest {
 			newCampaignContent.getCompanyId());
 		Assert.assertEquals(existingCampaignContent.getCampaignId(),
 			newCampaignContent.getCampaignId());
-		Assert.assertEquals(existingCampaignContent.getClassName(),
-			newCampaignContent.getClassName());
+		Assert.assertEquals(existingCampaignContent.getClassNameId(),
+			newCampaignContent.getClassNameId());
 		Assert.assertEquals(existingCampaignContent.getClassPK(),
 			newCampaignContent.getClassPK());
 		Assert.assertEquals(existingCampaignContent.getEventType(),
@@ -179,11 +179,12 @@ public class CampaignContentPersistenceTest {
 	@Test
 	public void testCountByC_C_C_E() throws Exception {
 		_persistence.countByC_C_C_E(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextLong(), StringPool.BLANK);
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			StringPool.BLANK);
 
-		_persistence.countByC_C_C_E(0L, StringPool.NULL, 0L, StringPool.NULL);
+		_persistence.countByC_C_C_E(0L, 0L, 0L, StringPool.NULL);
 
-		_persistence.countByC_C_C_E(0L, (String)null, 0L, (String)null);
+		_persistence.countByC_C_C_E(0L, 0L, 0L, (String)null);
 	}
 
 	@Test
@@ -211,7 +212,7 @@ public class CampaignContentPersistenceTest {
 	protected OrderByComparator<CampaignContent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CT_CCR_CampaignContent",
 			"campaignContentId", true, "companyId", true, "campaignId", true,
-			"className", true, "classPK", true, "eventType", true, "count",
+			"classNameId", true, "classPK", true, "eventType", true, "count",
 			true, "modifiedDate", true);
 	}
 
@@ -421,10 +422,10 @@ public class CampaignContentPersistenceTest {
 				existingCampaignContent.getCampaignId()),
 			ReflectionTestUtil.<Long>invoke(existingCampaignContent,
 				"getOriginalCampaignId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(
-				existingCampaignContent.getClassName(),
-				ReflectionTestUtil.invoke(existingCampaignContent,
-					"getOriginalClassName", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingCampaignContent.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingCampaignContent,
+				"getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(existingCampaignContent.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(existingCampaignContent,
 				"getOriginalClassPK", new Class<?>[0]));
@@ -443,7 +444,7 @@ public class CampaignContentPersistenceTest {
 
 		campaignContent.setCampaignId(RandomTestUtil.nextLong());
 
-		campaignContent.setClassName(RandomTestUtil.randomString());
+		campaignContent.setClassNameId(RandomTestUtil.nextLong());
 
 		campaignContent.setClassPK(RandomTestUtil.nextLong());
 

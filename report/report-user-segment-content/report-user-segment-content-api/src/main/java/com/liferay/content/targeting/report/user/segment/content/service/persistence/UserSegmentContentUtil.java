@@ -468,84 +468,87 @@ public class UserSegmentContentUtil {
 	}
 
 	/**
-	* Returns the user segment content where userSegmentId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or throws a {@link NoSuchUserSegmentContentException} if it could not be found.
+	* Returns the user segment content where userSegmentId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; or throws a {@link NoSuchUserSegmentContentException} if it could not be found.
 	*
 	* @param userSegmentId the user segment ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @return the matching user segment content
 	* @throws NoSuchUserSegmentContentException if a matching user segment content could not be found
 	*/
 	public static UserSegmentContent findByC_C_C_E(long userSegmentId,
-		java.lang.String className, long classPK, java.lang.String eventType)
+		long classNameId, long classPK, java.lang.String eventType)
 		throws com.liferay.content.targeting.report.user.segment.content.exception.NoSuchUserSegmentContentException {
 		return getPersistence()
-				   .findByC_C_C_E(userSegmentId, className, classPK, eventType);
+				   .findByC_C_C_E(userSegmentId, classNameId, classPK, eventType);
 	}
 
 	/**
-	* Returns the user segment content where userSegmentId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the user segment content where userSegmentId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param userSegmentId the user segment ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @return the matching user segment content, or <code>null</code> if a matching user segment content could not be found
 	*/
 	public static UserSegmentContent fetchByC_C_C_E(long userSegmentId,
-		java.lang.String className, long classPK, java.lang.String eventType) {
+		long classNameId, long classPK, java.lang.String eventType) {
 		return getPersistence()
-				   .fetchByC_C_C_E(userSegmentId, className, classPK, eventType);
+				   .fetchByC_C_C_E(userSegmentId, classNameId, classPK,
+			eventType);
 	}
 
 	/**
-	* Returns the user segment content where userSegmentId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the user segment content where userSegmentId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param userSegmentId the user segment ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching user segment content, or <code>null</code> if a matching user segment content could not be found
 	*/
 	public static UserSegmentContent fetchByC_C_C_E(long userSegmentId,
-		java.lang.String className, long classPK, java.lang.String eventType,
+		long classNameId, long classPK, java.lang.String eventType,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByC_C_C_E(userSegmentId, className, classPK,
+				   .fetchByC_C_C_E(userSegmentId, classNameId, classPK,
 			eventType, retrieveFromCache);
 	}
 
 	/**
-	* Removes the user segment content where userSegmentId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; from the database.
+	* Removes the user segment content where userSegmentId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; from the database.
 	*
 	* @param userSegmentId the user segment ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @return the user segment content that was removed
 	*/
 	public static UserSegmentContent removeByC_C_C_E(long userSegmentId,
-		java.lang.String className, long classPK, java.lang.String eventType)
+		long classNameId, long classPK, java.lang.String eventType)
 		throws com.liferay.content.targeting.report.user.segment.content.exception.NoSuchUserSegmentContentException {
 		return getPersistence()
-				   .removeByC_C_C_E(userSegmentId, className, classPK, eventType);
+				   .removeByC_C_C_E(userSegmentId, classNameId, classPK,
+			eventType);
 	}
 
 	/**
-	* Returns the number of user segment contents where userSegmentId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	* Returns the number of user segment contents where userSegmentId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	*
 	* @param userSegmentId the user segment ID
-	* @param className the class name
+	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param eventType the event type
 	* @return the number of matching user segment contents
 	*/
-	public static int countByC_C_C_E(long userSegmentId,
-		java.lang.String className, long classPK, java.lang.String eventType) {
+	public static int countByC_C_C_E(long userSegmentId, long classNameId,
+		long classPK, java.lang.String eventType) {
 		return getPersistence()
-				   .countByC_C_C_E(userSegmentId, className, classPK, eventType);
+				   .countByC_C_C_E(userSegmentId, classNameId, classPK,
+			eventType);
 	}
 
 	/**

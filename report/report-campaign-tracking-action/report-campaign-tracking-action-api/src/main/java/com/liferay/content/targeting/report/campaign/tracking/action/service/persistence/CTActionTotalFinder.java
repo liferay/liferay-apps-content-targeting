@@ -22,7 +22,7 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface CTActionTotalFinder {
-	public java.util.List<java.lang.Object[]> findByAnalyticsWithClassName(
+	public java.util.List<java.lang.Object[]> findByAnalyticsWithClassNameId(
 		java.util.Date modifiedDate);
 
 	public java.util.List<java.lang.Object[]> findByAnalyticsWithElementId(

@@ -113,7 +113,7 @@
 			<basic name="reportKey" />
 			<basic name="name" />
 			<basic name="description" />
-			<basic name="className" />
+			<basic name="classNameId" />
 			<basic name="classPK" />
 			<basic name="typeSettings" />
 			<transient name="descriptionCurrentLanguageId" />

@@ -2300,7 +2300,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			AnalyticsEventImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_C_E",
 			new String[] {
-				String.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
@@ -2311,10 +2311,10 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			AnalyticsEventImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_E",
 			new String[] {
-				String.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			AnalyticsEventModelImpl.CLASSNAME_COLUMN_BITMASK |
+			AnalyticsEventModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			AnalyticsEventModelImpl.CLASSPK_COLUMN_BITMASK |
 			AnalyticsEventModelImpl.EVENTTYPE_COLUMN_BITMASK |
 			AnalyticsEventModelImpl.CREATEDATE_COLUMN_BITMASK);
@@ -2322,33 +2322,33 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			AnalyticsEventModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_E",
 			new String[] {
-				String.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			});
 
 	/**
-	 * Returns all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the matching analytics events
 	 */
 	@Override
-	public List<AnalyticsEvent> findByC_C_E(String className, long classPK,
+	public List<AnalyticsEvent> findByC_C_E(long classNameId, long classPK,
 		String eventType) {
-		return findByC_C_E(className, classPK, eventType, QueryUtil.ALL_POS,
+		return findByC_C_E(classNameId, classPK, eventType, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns a range of all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of analytics events
@@ -2356,19 +2356,19 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @return the range of matching analytics events
 	 */
 	@Override
-	public List<AnalyticsEvent> findByC_C_E(String className, long classPK,
+	public List<AnalyticsEvent> findByC_C_E(long classNameId, long classPK,
 		String eventType, int start, int end) {
-		return findByC_C_E(className, classPK, eventType, start, end, null);
+		return findByC_C_E(classNameId, classPK, eventType, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns an ordered range of all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of analytics events
@@ -2377,21 +2377,21 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @return the ordered range of matching analytics events
 	 */
 	@Override
-	public List<AnalyticsEvent> findByC_C_E(String className, long classPK,
+	public List<AnalyticsEvent> findByC_C_E(long classNameId, long classPK,
 		String eventType, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
-		return findByC_C_E(className, classPK, eventType, start, end,
+		return findByC_C_E(classNameId, classPK, eventType, start, end,
 			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns an ordered range of all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of analytics events
@@ -2401,7 +2401,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @return the ordered range of matching analytics events
 	 */
 	@Override
-	public List<AnalyticsEvent> findByC_C_E(String className, long classPK,
+	public List<AnalyticsEvent> findByC_C_E(long classNameId, long classPK,
 		String eventType, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache) {
@@ -2413,12 +2413,12 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_E;
-			finderArgs = new Object[] { className, classPK, eventType };
+			finderArgs = new Object[] { classNameId, classPK, eventType };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_E;
 			finderArgs = new Object[] {
-					className, classPK, eventType,
+					classNameId, classPK, eventType,
 					
 					start, end, orderByComparator
 				};
@@ -2432,8 +2432,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnalyticsEvent analyticsEvent : list) {
-					if (!Validator.equals(className,
-								analyticsEvent.getClassName()) ||
+					if ((classNameId != analyticsEvent.getClassNameId()) ||
 							(classPK != analyticsEvent.getClassPK()) ||
 							!Validator.equals(eventType,
 								analyticsEvent.getEventType())) {
@@ -2458,19 +2457,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_C_C_E_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_E_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_C_C_E_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_C_C_E_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_C_C_E_CLASSPK_2);
 
@@ -2508,9 +2495,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -2549,9 +2534,9 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the first analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the first analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2559,11 +2544,11 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
-	public AnalyticsEvent findByC_C_E_First(String className, long classPK,
+	public AnalyticsEvent findByC_C_E_First(long classNameId, long classPK,
 		String eventType, OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws NoSuchAnalyticsEventException {
-		AnalyticsEvent analyticsEvent = fetchByC_C_E_First(className, classPK,
-				eventType, orderByComparator);
+		AnalyticsEvent analyticsEvent = fetchByC_C_E_First(classNameId,
+				classPK, eventType, orderByComparator);
 
 		if (analyticsEvent != null) {
 			return analyticsEvent;
@@ -2573,8 +2558,8 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("className=");
-		msg.append(className);
+		msg.append("classNameId=");
+		msg.append(classNameId);
 
 		msg.append(", classPK=");
 		msg.append(classPK);
@@ -2588,19 +2573,19 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the first analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the first analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	 */
 	@Override
-	public AnalyticsEvent fetchByC_C_E_First(String className, long classPK,
+	public AnalyticsEvent fetchByC_C_E_First(long classNameId, long classPK,
 		String eventType, OrderByComparator<AnalyticsEvent> orderByComparator) {
-		List<AnalyticsEvent> list = findByC_C_E(className, classPK, eventType,
-				0, 1, orderByComparator);
+		List<AnalyticsEvent> list = findByC_C_E(classNameId, classPK,
+				eventType, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2610,9 +2595,9 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the last analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the last analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2620,10 +2605,10 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
-	public AnalyticsEvent findByC_C_E_Last(String className, long classPK,
+	public AnalyticsEvent findByC_C_E_Last(long classNameId, long classPK,
 		String eventType, OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws NoSuchAnalyticsEventException {
-		AnalyticsEvent analyticsEvent = fetchByC_C_E_Last(className, classPK,
+		AnalyticsEvent analyticsEvent = fetchByC_C_E_Last(classNameId, classPK,
 				eventType, orderByComparator);
 
 		if (analyticsEvent != null) {
@@ -2634,8 +2619,8 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("className=");
-		msg.append(className);
+		msg.append("classNameId=");
+		msg.append(classNameId);
 
 		msg.append(", classPK=");
 		msg.append(classPK);
@@ -2649,25 +2634,25 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the last analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the last analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	 */
 	@Override
-	public AnalyticsEvent fetchByC_C_E_Last(String className, long classPK,
+	public AnalyticsEvent fetchByC_C_E_Last(long classNameId, long classPK,
 		String eventType, OrderByComparator<AnalyticsEvent> orderByComparator) {
-		int count = countByC_C_E(className, classPK, eventType);
+		int count = countByC_C_E(classNameId, classPK, eventType);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<AnalyticsEvent> list = findByC_C_E(className, classPK, eventType,
-				count - 1, count, orderByComparator);
+		List<AnalyticsEvent> list = findByC_C_E(classNameId, classPK,
+				eventType, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2677,10 +2662,10 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the analytics events before and after the current analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the analytics events before and after the current analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * @param analyticsEventId the primary key of the current analytics event
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2689,7 +2674,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 */
 	@Override
 	public AnalyticsEvent[] findByC_C_E_PrevAndNext(long analyticsEventId,
-		String className, long classPK, String eventType,
+		long classNameId, long classPK, String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws NoSuchAnalyticsEventException {
 		AnalyticsEvent analyticsEvent = findByPrimaryKey(analyticsEventId);
@@ -2702,12 +2687,12 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			AnalyticsEvent[] array = new AnalyticsEventImpl[3];
 
 			array[0] = getByC_C_E_PrevAndNext(session, analyticsEvent,
-					className, classPK, eventType, orderByComparator, true);
+					classNameId, classPK, eventType, orderByComparator, true);
 
 			array[1] = analyticsEvent;
 
 			array[2] = getByC_C_E_PrevAndNext(session, analyticsEvent,
-					className, classPK, eventType, orderByComparator, false);
+					classNameId, classPK, eventType, orderByComparator, false);
 
 			return array;
 		}
@@ -2720,7 +2705,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	protected AnalyticsEvent getByC_C_E_PrevAndNext(Session session,
-		AnalyticsEvent analyticsEvent, String className, long classPK,
+		AnalyticsEvent analyticsEvent, long classNameId, long classPK,
 		String eventType, OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -2736,19 +2721,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
 
-		boolean bindClassName = false;
-
-		if (className == null) {
-			query.append(_FINDER_COLUMN_C_C_E_CLASSNAME_1);
-		}
-		else if (className.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_C_C_E_CLASSNAME_3);
-		}
-		else {
-			bindClassName = true;
-
-			query.append(_FINDER_COLUMN_C_C_E_CLASSNAME_2);
-		}
+		query.append(_FINDER_COLUMN_C_C_E_CLASSNAMEID_2);
 
 		query.append(_FINDER_COLUMN_C_C_E_CLASSPK_2);
 
@@ -2834,9 +2807,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (bindClassName) {
-			qPos.add(className);
-		}
+		qPos.add(classNameId);
 
 		qPos.add(classPK);
 
@@ -2863,33 +2834,33 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Removes all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; from the database.
+	 * Removes all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; from the database.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 */
 	@Override
-	public void removeByC_C_E(String className, long classPK, String eventType) {
-		for (AnalyticsEvent analyticsEvent : findByC_C_E(className, classPK,
+	public void removeByC_C_E(long classNameId, long classPK, String eventType) {
+		for (AnalyticsEvent analyticsEvent : findByC_C_E(classNameId, classPK,
 				eventType, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(analyticsEvent);
 		}
 	}
 
 	/**
-	 * Returns the number of analytics events where className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the number of analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the number of matching analytics events
 	 */
 	@Override
-	public int countByC_C_E(String className, long classPK, String eventType) {
+	public int countByC_C_E(long classNameId, long classPK, String eventType) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C_E;
 
-		Object[] finderArgs = new Object[] { className, classPK, eventType };
+		Object[] finderArgs = new Object[] { classNameId, classPK, eventType };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -2898,19 +2869,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			query.append(_SQL_COUNT_ANALYTICSEVENT_WHERE);
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_C_C_E_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_E_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_C_C_E_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_C_C_E_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_C_C_E_CLASSPK_2);
 
@@ -2939,9 +2898,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -2966,9 +2923,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_E_CLASSNAME_1 = "analyticsEvent.className IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_C_E_CLASSNAME_2 = "analyticsEvent.className = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_E_CLASSNAME_3 = "(analyticsEvent.className IS NULL OR analyticsEvent.className = '') AND ";
+	private static final String _FINDER_COLUMN_C_C_E_CLASSNAMEID_2 = "analyticsEvent.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_E_CLASSPK_2 = "analyticsEvent.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_E_EVENTTYPE_1 = "analyticsEvent.eventType IS NULL";
 	private static final String _FINDER_COLUMN_C_C_E_EVENTTYPE_2 = "analyticsEvent.eventType = ?";
@@ -3678,8 +3633,8 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			AnalyticsEventImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByA_C_C_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -3690,11 +3645,11 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			AnalyticsEventImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_C_C_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName()
 			},
 			AnalyticsEventModelImpl.ANONYMOUSUSERID_COLUMN_BITMASK |
-			AnalyticsEventModelImpl.CLASSNAME_COLUMN_BITMASK |
+			AnalyticsEventModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			AnalyticsEventModelImpl.CLASSPK_COLUMN_BITMASK |
 			AnalyticsEventModelImpl.EVENTTYPE_COLUMN_BITMASK |
 			AnalyticsEventModelImpl.CREATEDATE_COLUMN_BITMASK);
@@ -3702,35 +3657,35 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			AnalyticsEventModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_C_C_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName()
 			});
 
 	/**
-	 * Returns all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns all the analytics events where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * @param anonymousUserId the anonymous user ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the matching analytics events
 	 */
 	@Override
 	public List<AnalyticsEvent> findByA_C_C_E(long anonymousUserId,
-		String className, long classPK, String eventType) {
-		return findByA_C_C_E(anonymousUserId, className, classPK, eventType,
+		long classNameId, long classPK, String eventType) {
+		return findByA_C_C_E(anonymousUserId, classNameId, classPK, eventType,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns a range of all the analytics events where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param anonymousUserId the anonymous user ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of analytics events
@@ -3739,20 +3694,20 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 */
 	@Override
 	public List<AnalyticsEvent> findByA_C_C_E(long anonymousUserId,
-		String className, long classPK, String eventType, int start, int end) {
-		return findByA_C_C_E(anonymousUserId, className, classPK, eventType,
+		long classNameId, long classPK, String eventType, int start, int end) {
+		return findByA_C_C_E(anonymousUserId, classNameId, classPK, eventType,
 			start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns an ordered range of all the analytics events where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param anonymousUserId the anonymous user ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of analytics events
@@ -3762,21 +3717,21 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 */
 	@Override
 	public List<AnalyticsEvent> findByA_C_C_E(long anonymousUserId,
-		String className, long classPK, String eventType, int start, int end,
+		long classNameId, long classPK, String eventType, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
-		return findByA_C_C_E(anonymousUserId, className, classPK, eventType,
+		return findByA_C_C_E(anonymousUserId, classNameId, classPK, eventType,
 			start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns an ordered range of all the analytics events where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param anonymousUserId the anonymous user ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of analytics events
@@ -3787,7 +3742,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 */
 	@Override
 	public List<AnalyticsEvent> findByA_C_C_E(long anonymousUserId,
-		String className, long classPK, String eventType, int start, int end,
+		long classNameId, long classPK, String eventType, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -3799,13 +3754,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_C_C_E;
 			finderArgs = new Object[] {
-					anonymousUserId, className, classPK, eventType
+					anonymousUserId, classNameId, classPK, eventType
 				};
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_A_C_C_E;
 			finderArgs = new Object[] {
-					anonymousUserId, className, classPK, eventType,
+					anonymousUserId, classNameId, classPK, eventType,
 					
 					start, end, orderByComparator
 				};
@@ -3820,8 +3775,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			if ((list != null) && !list.isEmpty()) {
 				for (AnalyticsEvent analyticsEvent : list) {
 					if ((anonymousUserId != analyticsEvent.getAnonymousUserId()) ||
-							!Validator.equals(className,
-								analyticsEvent.getClassName()) ||
+							(classNameId != analyticsEvent.getClassNameId()) ||
 							(classPK != analyticsEvent.getClassPK()) ||
 							!Validator.equals(eventType,
 								analyticsEvent.getEventType())) {
@@ -3848,19 +3802,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			query.append(_FINDER_COLUMN_A_C_C_E_ANONYMOUSUSERID_2);
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_A_C_C_E_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_A_C_C_E_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_A_C_C_E_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_A_C_C_E_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_A_C_C_E_CLASSPK_2);
 
@@ -3900,9 +3842,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 				qPos.add(anonymousUserId);
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -3941,10 +3881,10 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the first analytics event in the ordered set where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the first analytics event in the ordered set where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * @param anonymousUserId the anonymous user ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -3953,11 +3893,11 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 */
 	@Override
 	public AnalyticsEvent findByA_C_C_E_First(long anonymousUserId,
-		String className, long classPK, String eventType,
+		long classNameId, long classPK, String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws NoSuchAnalyticsEventException {
 		AnalyticsEvent analyticsEvent = fetchByA_C_C_E_First(anonymousUserId,
-				className, classPK, eventType, orderByComparator);
+				classNameId, classPK, eventType, orderByComparator);
 
 		if (analyticsEvent != null) {
 			return analyticsEvent;
@@ -3970,8 +3910,8 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		msg.append("anonymousUserId=");
 		msg.append(anonymousUserId);
 
-		msg.append(", className=");
-		msg.append(className);
+		msg.append(", classNameId=");
+		msg.append(classNameId);
 
 		msg.append(", classPK=");
 		msg.append(classPK);
@@ -3985,10 +3925,10 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the first analytics event in the ordered set where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the first analytics event in the ordered set where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * @param anonymousUserId the anonymous user ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -3996,9 +3936,9 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 */
 	@Override
 	public AnalyticsEvent fetchByA_C_C_E_First(long anonymousUserId,
-		String className, long classPK, String eventType,
+		long classNameId, long classPK, String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
-		List<AnalyticsEvent> list = findByA_C_C_E(anonymousUserId, className,
+		List<AnalyticsEvent> list = findByA_C_C_E(anonymousUserId, classNameId,
 				classPK, eventType, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4009,10 +3949,10 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the last analytics event in the ordered set where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the last analytics event in the ordered set where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * @param anonymousUserId the anonymous user ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -4021,11 +3961,11 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 */
 	@Override
 	public AnalyticsEvent findByA_C_C_E_Last(long anonymousUserId,
-		String className, long classPK, String eventType,
+		long classNameId, long classPK, String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws NoSuchAnalyticsEventException {
 		AnalyticsEvent analyticsEvent = fetchByA_C_C_E_Last(anonymousUserId,
-				className, classPK, eventType, orderByComparator);
+				classNameId, classPK, eventType, orderByComparator);
 
 		if (analyticsEvent != null) {
 			return analyticsEvent;
@@ -4038,8 +3978,8 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		msg.append("anonymousUserId=");
 		msg.append(anonymousUserId);
 
-		msg.append(", className=");
-		msg.append(className);
+		msg.append(", classNameId=");
+		msg.append(classNameId);
 
 		msg.append(", classPK=");
 		msg.append(classPK);
@@ -4053,10 +3993,10 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the last analytics event in the ordered set where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the last analytics event in the ordered set where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * @param anonymousUserId the anonymous user ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -4064,16 +4004,16 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 */
 	@Override
 	public AnalyticsEvent fetchByA_C_C_E_Last(long anonymousUserId,
-		String className, long classPK, String eventType,
+		long classNameId, long classPK, String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
-		int count = countByA_C_C_E(anonymousUserId, className, classPK,
+		int count = countByA_C_C_E(anonymousUserId, classNameId, classPK,
 				eventType);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<AnalyticsEvent> list = findByA_C_C_E(anonymousUserId, className,
+		List<AnalyticsEvent> list = findByA_C_C_E(anonymousUserId, classNameId,
 				classPK, eventType, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4084,11 +4024,11 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the analytics events before and after the current analytics event in the ordered set where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the analytics events before and after the current analytics event in the ordered set where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * @param analyticsEventId the primary key of the current analytics event
 	 * @param anonymousUserId the anonymous user ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -4097,7 +4037,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 */
 	@Override
 	public AnalyticsEvent[] findByA_C_C_E_PrevAndNext(long analyticsEventId,
-		long anonymousUserId, String className, long classPK, String eventType,
+		long anonymousUserId, long classNameId, long classPK, String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws NoSuchAnalyticsEventException {
 		AnalyticsEvent analyticsEvent = findByPrimaryKey(analyticsEventId);
@@ -4110,13 +4050,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			AnalyticsEvent[] array = new AnalyticsEventImpl[3];
 
 			array[0] = getByA_C_C_E_PrevAndNext(session, analyticsEvent,
-					anonymousUserId, className, classPK, eventType,
+					anonymousUserId, classNameId, classPK, eventType,
 					orderByComparator, true);
 
 			array[1] = analyticsEvent;
 
 			array[2] = getByA_C_C_E_PrevAndNext(session, analyticsEvent,
-					anonymousUserId, className, classPK, eventType,
+					anonymousUserId, classNameId, classPK, eventType,
 					orderByComparator, false);
 
 			return array;
@@ -4130,7 +4070,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	protected AnalyticsEvent getByA_C_C_E_PrevAndNext(Session session,
-		AnalyticsEvent analyticsEvent, long anonymousUserId, String className,
+		AnalyticsEvent analyticsEvent, long anonymousUserId, long classNameId,
 		long classPK, String eventType,
 		OrderByComparator<AnalyticsEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
@@ -4148,19 +4088,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		query.append(_FINDER_COLUMN_A_C_C_E_ANONYMOUSUSERID_2);
 
-		boolean bindClassName = false;
-
-		if (className == null) {
-			query.append(_FINDER_COLUMN_A_C_C_E_CLASSNAME_1);
-		}
-		else if (className.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_A_C_C_E_CLASSNAME_3);
-		}
-		else {
-			bindClassName = true;
-
-			query.append(_FINDER_COLUMN_A_C_C_E_CLASSNAME_2);
-		}
+		query.append(_FINDER_COLUMN_A_C_C_E_CLASSNAMEID_2);
 
 		query.append(_FINDER_COLUMN_A_C_C_E_CLASSPK_2);
 
@@ -4248,9 +4176,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		qPos.add(anonymousUserId);
 
-		if (bindClassName) {
-			qPos.add(className);
-		}
+		qPos.add(classNameId);
 
 		qPos.add(classPK);
 
@@ -4277,39 +4203,39 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Removes all the analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63; from the database.
+	 * Removes all the analytics events where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63; from the database.
 	 *
 	 * @param anonymousUserId the anonymous user ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 */
 	@Override
-	public void removeByA_C_C_E(long anonymousUserId, String className,
+	public void removeByA_C_C_E(long anonymousUserId, long classNameId,
 		long classPK, String eventType) {
 		for (AnalyticsEvent analyticsEvent : findByA_C_C_E(anonymousUserId,
-				className, classPK, eventType, QueryUtil.ALL_POS,
+				classNameId, classPK, eventType, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(analyticsEvent);
 		}
 	}
 
 	/**
-	 * Returns the number of analytics events where anonymousUserId = &#63; and className = &#63; and classPK = &#63; and eventType = &#63;.
+	 * Returns the number of analytics events where anonymousUserId = &#63; and classNameId = &#63; and classPK = &#63; and eventType = &#63;.
 	 *
 	 * @param anonymousUserId the anonymous user ID
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @return the number of matching analytics events
 	 */
 	@Override
-	public int countByA_C_C_E(long anonymousUserId, String className,
+	public int countByA_C_C_E(long anonymousUserId, long classNameId,
 		long classPK, String eventType) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_A_C_C_E;
 
 		Object[] finderArgs = new Object[] {
-				anonymousUserId, className, classPK, eventType
+				anonymousUserId, classNameId, classPK, eventType
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -4321,19 +4247,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			query.append(_FINDER_COLUMN_A_C_C_E_ANONYMOUSUSERID_2);
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_A_C_C_E_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_A_C_C_E_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_A_C_C_E_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_A_C_C_E_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_A_C_C_E_CLASSPK_2);
 
@@ -4364,9 +4278,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 				qPos.add(anonymousUserId);
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -4392,9 +4304,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	private static final String _FINDER_COLUMN_A_C_C_E_ANONYMOUSUSERID_2 = "analyticsEvent.anonymousUserId = ? AND ";
-	private static final String _FINDER_COLUMN_A_C_C_E_CLASSNAME_1 = "analyticsEvent.className IS NULL AND ";
-	private static final String _FINDER_COLUMN_A_C_C_E_CLASSNAME_2 = "analyticsEvent.className = ? AND ";
-	private static final String _FINDER_COLUMN_A_C_C_E_CLASSNAME_3 = "(analyticsEvent.className IS NULL OR analyticsEvent.className = '') AND ";
+	private static final String _FINDER_COLUMN_A_C_C_E_CLASSNAMEID_2 = "analyticsEvent.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_A_C_C_E_CLASSPK_2 = "analyticsEvent.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_A_C_C_E_EVENTTYPE_1 = "analyticsEvent.eventType IS NULL";
 	private static final String _FINDER_COLUMN_A_C_C_E_EVENTTYPE_2 = "analyticsEvent.eventType = ?";
@@ -4405,7 +4315,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			AnalyticsEventImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_C_E_GtD",
 			new String[] {
-				String.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Date.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
@@ -4416,34 +4326,34 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			AnalyticsEventModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_E_GtD",
 			new String[] {
-				String.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Date.class.getName()
 			});
 
 	/**
-	 * Returns all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	 * Returns all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param createDate the create date
 	 * @return the matching analytics events
 	 */
 	@Override
-	public List<AnalyticsEvent> findByC_C_E_GtD(String className, long classPK,
+	public List<AnalyticsEvent> findByC_C_E_GtD(long classNameId, long classPK,
 		String eventType, Date createDate) {
-		return findByC_C_E_GtD(className, classPK, eventType, createDate,
+		return findByC_C_E_GtD(classNameId, classPK, eventType, createDate,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	 * Returns a range of all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param createDate the create date
@@ -4452,20 +4362,20 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @return the range of matching analytics events
 	 */
 	@Override
-	public List<AnalyticsEvent> findByC_C_E_GtD(String className, long classPK,
+	public List<AnalyticsEvent> findByC_C_E_GtD(long classNameId, long classPK,
 		String eventType, Date createDate, int start, int end) {
-		return findByC_C_E_GtD(className, classPK, eventType, createDate,
+		return findByC_C_E_GtD(classNameId, classPK, eventType, createDate,
 			start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	 * Returns an ordered range of all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param createDate the create date
@@ -4475,21 +4385,21 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @return the ordered range of matching analytics events
 	 */
 	@Override
-	public List<AnalyticsEvent> findByC_C_E_GtD(String className, long classPK,
+	public List<AnalyticsEvent> findByC_C_E_GtD(long classNameId, long classPK,
 		String eventType, Date createDate, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
-		return findByC_C_E_GtD(className, classPK, eventType, createDate,
+		return findByC_C_E_GtD(classNameId, classPK, eventType, createDate,
 			start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	 * Returns an ordered range of all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param createDate the create date
@@ -4500,7 +4410,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @return the ordered range of matching analytics events
 	 */
 	@Override
-	public List<AnalyticsEvent> findByC_C_E_GtD(String className, long classPK,
+	public List<AnalyticsEvent> findByC_C_E_GtD(long classNameId, long classPK,
 		String eventType, Date createDate, int start, int end,
 		OrderByComparator<AnalyticsEvent> orderByComparator,
 		boolean retrieveFromCache) {
@@ -4510,7 +4420,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_E_GTD;
 		finderArgs = new Object[] {
-				className, classPK, eventType, createDate,
+				classNameId, classPK, eventType, createDate,
 				
 				start, end, orderByComparator
 			};
@@ -4523,8 +4433,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnalyticsEvent analyticsEvent : list) {
-					if (!Validator.equals(className,
-								analyticsEvent.getClassName()) ||
+					if ((classNameId != analyticsEvent.getClassNameId()) ||
 							(classPK != analyticsEvent.getClassPK()) ||
 							!Validator.equals(eventType,
 								analyticsEvent.getEventType()) ||
@@ -4551,19 +4460,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSPK_2);
 
@@ -4612,9 +4509,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -4657,9 +4552,9 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the first analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	 * Returns the first analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param createDate the create date
@@ -4668,11 +4563,11 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
-	public AnalyticsEvent findByC_C_E_GtD_First(String className, long classPK,
+	public AnalyticsEvent findByC_C_E_GtD_First(long classNameId, long classPK,
 		String eventType, Date createDate,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws NoSuchAnalyticsEventException {
-		AnalyticsEvent analyticsEvent = fetchByC_C_E_GtD_First(className,
+		AnalyticsEvent analyticsEvent = fetchByC_C_E_GtD_First(classNameId,
 				classPK, eventType, createDate, orderByComparator);
 
 		if (analyticsEvent != null) {
@@ -4683,8 +4578,8 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("className=");
-		msg.append(className);
+		msg.append("classNameId=");
+		msg.append(classNameId);
 
 		msg.append(", classPK=");
 		msg.append(classPK);
@@ -4701,9 +4596,9 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the first analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	 * Returns the first analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param createDate the create date
@@ -4711,10 +4606,10 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	 */
 	@Override
-	public AnalyticsEvent fetchByC_C_E_GtD_First(String className,
+	public AnalyticsEvent fetchByC_C_E_GtD_First(long classNameId,
 		long classPK, String eventType, Date createDate,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
-		List<AnalyticsEvent> list = findByC_C_E_GtD(className, classPK,
+		List<AnalyticsEvent> list = findByC_C_E_GtD(classNameId, classPK,
 				eventType, createDate, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4725,9 +4620,9 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the last analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	 * Returns the last analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param createDate the create date
@@ -4736,11 +4631,11 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
-	public AnalyticsEvent findByC_C_E_GtD_Last(String className, long classPK,
+	public AnalyticsEvent findByC_C_E_GtD_Last(long classNameId, long classPK,
 		String eventType, Date createDate,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws NoSuchAnalyticsEventException {
-		AnalyticsEvent analyticsEvent = fetchByC_C_E_GtD_Last(className,
+		AnalyticsEvent analyticsEvent = fetchByC_C_E_GtD_Last(classNameId,
 				classPK, eventType, createDate, orderByComparator);
 
 		if (analyticsEvent != null) {
@@ -4751,8 +4646,8 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("className=");
-		msg.append(className);
+		msg.append("classNameId=");
+		msg.append(classNameId);
 
 		msg.append(", classPK=");
 		msg.append(classPK);
@@ -4769,9 +4664,9 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the last analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	 * Returns the last analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param createDate the create date
@@ -4779,16 +4674,16 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
 	 */
 	@Override
-	public AnalyticsEvent fetchByC_C_E_GtD_Last(String className, long classPK,
+	public AnalyticsEvent fetchByC_C_E_GtD_Last(long classNameId, long classPK,
 		String eventType, Date createDate,
 		OrderByComparator<AnalyticsEvent> orderByComparator) {
-		int count = countByC_C_E_GtD(className, classPK, eventType, createDate);
+		int count = countByC_C_E_GtD(classNameId, classPK, eventType, createDate);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<AnalyticsEvent> list = findByC_C_E_GtD(className, classPK,
+		List<AnalyticsEvent> list = findByC_C_E_GtD(classNameId, classPK,
 				eventType, createDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4799,10 +4694,10 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the analytics events before and after the current analytics event in the ordered set where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	 * Returns the analytics events before and after the current analytics event in the ordered set where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	 *
 	 * @param analyticsEventId the primary key of the current analytics event
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param createDate the create date
@@ -4812,7 +4707,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 */
 	@Override
 	public AnalyticsEvent[] findByC_C_E_GtD_PrevAndNext(long analyticsEventId,
-		String className, long classPK, String eventType, Date createDate,
+		long classNameId, long classPK, String eventType, Date createDate,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
 		throws NoSuchAnalyticsEventException {
 		AnalyticsEvent analyticsEvent = findByPrimaryKey(analyticsEventId);
@@ -4825,13 +4720,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			AnalyticsEvent[] array = new AnalyticsEventImpl[3];
 
 			array[0] = getByC_C_E_GtD_PrevAndNext(session, analyticsEvent,
-					className, classPK, eventType, createDate,
+					classNameId, classPK, eventType, createDate,
 					orderByComparator, true);
 
 			array[1] = analyticsEvent;
 
 			array[2] = getByC_C_E_GtD_PrevAndNext(session, analyticsEvent,
-					className, classPK, eventType, createDate,
+					classNameId, classPK, eventType, createDate,
 					orderByComparator, false);
 
 			return array;
@@ -4845,7 +4740,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	protected AnalyticsEvent getByC_C_E_GtD_PrevAndNext(Session session,
-		AnalyticsEvent analyticsEvent, String className, long classPK,
+		AnalyticsEvent analyticsEvent, long classNameId, long classPK,
 		String eventType, Date createDate,
 		OrderByComparator<AnalyticsEvent> orderByComparator, boolean previous) {
 		StringBundler query = null;
@@ -4861,19 +4756,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
 
-		boolean bindClassName = false;
-
-		if (className == null) {
-			query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSNAME_1);
-		}
-		else if (className.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSNAME_3);
-		}
-		else {
-			bindClassName = true;
-
-			query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSNAME_2);
-		}
+		query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSNAMEID_2);
 
 		query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSPK_2);
 
@@ -4970,9 +4853,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		if (bindClassName) {
-			qPos.add(className);
-		}
+		qPos.add(classNameId);
 
 		qPos.add(classPK);
 
@@ -5003,17 +4884,17 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Removes all the analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63; from the database.
+	 * Removes all the analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63; from the database.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param createDate the create date
 	 */
 	@Override
-	public void removeByC_C_E_GtD(String className, long classPK,
+	public void removeByC_C_E_GtD(long classNameId, long classPK,
 		String eventType, Date createDate) {
-		for (AnalyticsEvent analyticsEvent : findByC_C_E_GtD(className,
+		for (AnalyticsEvent analyticsEvent : findByC_C_E_GtD(classNameId,
 				classPK, eventType, createDate, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(analyticsEvent);
@@ -5021,21 +4902,21 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the number of analytics events where className = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	 * Returns the number of analytics events where classNameId = &#63; and classPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	 *
-	 * @param className the class name
+	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param eventType the event type
 	 * @param createDate the create date
 	 * @return the number of matching analytics events
 	 */
 	@Override
-	public int countByC_C_E_GtD(String className, long classPK,
+	public int countByC_C_E_GtD(long classNameId, long classPK,
 		String eventType, Date createDate) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_C_E_GTD;
 
 		Object[] finderArgs = new Object[] {
-				className, classPK, eventType, createDate
+				classNameId, classPK, eventType, createDate
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -5045,19 +4926,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			query.append(_SQL_COUNT_ANALYTICSEVENT_WHERE);
 
-			boolean bindClassName = false;
-
-			if (className == null) {
-				query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSNAME_1);
-			}
-			else if (className.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSNAME_3);
-			}
-			else {
-				bindClassName = true;
-
-				query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_C_C_E_GTD_CLASSPK_2);
 
@@ -5097,9 +4966,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindClassName) {
-					qPos.add(className);
-				}
+				qPos.add(classNameId);
 
 				qPos.add(classPK);
 
@@ -5128,9 +4995,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_E_GTD_CLASSNAME_1 = "analyticsEvent.className IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_C_E_GTD_CLASSNAME_2 = "analyticsEvent.className = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_E_GTD_CLASSNAME_3 = "(analyticsEvent.className IS NULL OR analyticsEvent.className = '') AND ";
+	private static final String _FINDER_COLUMN_C_C_E_GTD_CLASSNAMEID_2 = "analyticsEvent.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_E_GTD_CLASSPK_2 = "analyticsEvent.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_E_GTD_EVENTTYPE_1 = "analyticsEvent.eventType IS NULL AND ";
 	private static final String _FINDER_COLUMN_C_C_E_GTD_EVENTTYPE_2 = "analyticsEvent.eventType = ? AND ";
@@ -5377,7 +5242,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 			if ((analyticsEventModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						analyticsEventModelImpl.getOriginalClassName(),
+						analyticsEventModelImpl.getOriginalClassNameId(),
 						analyticsEventModelImpl.getOriginalClassPK(),
 						analyticsEventModelImpl.getOriginalEventType()
 					};
@@ -5387,7 +5252,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 					args);
 
 				args = new Object[] {
-						analyticsEventModelImpl.getClassName(),
+						analyticsEventModelImpl.getClassNameId(),
 						analyticsEventModelImpl.getClassPK(),
 						analyticsEventModelImpl.getEventType()
 					};
@@ -5401,7 +5266,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_C_C_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						analyticsEventModelImpl.getOriginalAnonymousUserId(),
-						analyticsEventModelImpl.getOriginalClassName(),
+						analyticsEventModelImpl.getOriginalClassNameId(),
 						analyticsEventModelImpl.getOriginalClassPK(),
 						analyticsEventModelImpl.getOriginalEventType()
 					};
@@ -5412,7 +5277,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 				args = new Object[] {
 						analyticsEventModelImpl.getAnonymousUserId(),
-						analyticsEventModelImpl.getClassName(),
+						analyticsEventModelImpl.getClassNameId(),
 						analyticsEventModelImpl.getClassPK(),
 						analyticsEventModelImpl.getEventType()
 					};
@@ -5446,7 +5311,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		analyticsEventImpl.setCompanyId(analyticsEvent.getCompanyId());
 		analyticsEventImpl.setUserId(analyticsEvent.getUserId());
 		analyticsEventImpl.setAnonymousUserId(analyticsEvent.getAnonymousUserId());
-		analyticsEventImpl.setClassName(analyticsEvent.getClassName());
+		analyticsEventImpl.setClassNameId(analyticsEvent.getClassNameId());
 		analyticsEventImpl.setClassPK(analyticsEvent.getClassPK());
 		analyticsEventImpl.setElementId(analyticsEvent.getElementId());
 		analyticsEventImpl.setEventType(analyticsEvent.getEventType());

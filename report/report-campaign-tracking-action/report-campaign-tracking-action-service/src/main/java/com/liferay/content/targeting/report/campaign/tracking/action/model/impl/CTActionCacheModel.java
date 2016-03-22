@@ -79,8 +79,8 @@ public class CTActionCacheModel implements CacheModel<CTAction>, Externalizable 
 		sb.append(userSegmentId);
 		sb.append(", alias=");
 		sb.append(alias);
-		sb.append(", referrerClassName=");
-		sb.append(referrerClassName);
+		sb.append(", referrerClassNameId=");
+		sb.append(referrerClassNameId);
 		sb.append(", referrerClassPK=");
 		sb.append(referrerClassPK);
 		sb.append(", elementId=");
@@ -113,13 +113,7 @@ public class CTActionCacheModel implements CacheModel<CTAction>, Externalizable 
 			ctActionImpl.setAlias(alias);
 		}
 
-		if (referrerClassName == null) {
-			ctActionImpl.setReferrerClassName(StringPool.BLANK);
-		}
-		else {
-			ctActionImpl.setReferrerClassName(referrerClassName);
-		}
-
+		ctActionImpl.setReferrerClassNameId(referrerClassNameId);
 		ctActionImpl.setReferrerClassPK(referrerClassPK);
 
 		if (elementId == null) {
@@ -162,7 +156,8 @@ public class CTActionCacheModel implements CacheModel<CTAction>, Externalizable 
 
 		userSegmentId = objectInput.readLong();
 		alias = objectInput.readUTF();
-		referrerClassName = objectInput.readUTF();
+
+		referrerClassNameId = objectInput.readLong();
 
 		referrerClassPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
@@ -192,12 +187,7 @@ public class CTActionCacheModel implements CacheModel<CTAction>, Externalizable 
 			objectOutput.writeUTF(alias);
 		}
 
-		if (referrerClassName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(referrerClassName);
-		}
+		objectOutput.writeLong(referrerClassNameId);
 
 		objectOutput.writeLong(referrerClassPK);
 
@@ -225,7 +215,7 @@ public class CTActionCacheModel implements CacheModel<CTAction>, Externalizable 
 	public long reportInstanceId;
 	public long userSegmentId;
 	public String alias;
-	public String referrerClassName;
+	public long referrerClassNameId;
 	public long referrerClassPK;
 	public String elementId;
 	public String eventType;

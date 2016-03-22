@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -123,7 +122,7 @@ public class AnalyticsReferrerPersistenceTest {
 
 		newAnalyticsReferrer.setAnalyticsEventId(RandomTestUtil.nextLong());
 
-		newAnalyticsReferrer.setReferrerClassName(RandomTestUtil.randomString());
+		newAnalyticsReferrer.setReferrerClassNameId(RandomTestUtil.nextLong());
 
 		newAnalyticsReferrer.setReferrerClassPK(RandomTestUtil.nextLong());
 
@@ -135,8 +134,8 @@ public class AnalyticsReferrerPersistenceTest {
 			newAnalyticsReferrer.getAnalyticsReferrerId());
 		Assert.assertEquals(existingAnalyticsReferrer.getAnalyticsEventId(),
 			newAnalyticsReferrer.getAnalyticsEventId());
-		Assert.assertEquals(existingAnalyticsReferrer.getReferrerClassName(),
-			newAnalyticsReferrer.getReferrerClassName());
+		Assert.assertEquals(existingAnalyticsReferrer.getReferrerClassNameId(),
+			newAnalyticsReferrer.getReferrerClassNameId());
 		Assert.assertEquals(existingAnalyticsReferrer.getReferrerClassPK(),
 			newAnalyticsReferrer.getReferrerClassPK());
 	}
@@ -150,27 +149,24 @@ public class AnalyticsReferrerPersistenceTest {
 
 	@Test
 	public void testCountByR_R() throws Exception {
-		_persistence.countByR_R(StringPool.BLANK, RandomTestUtil.nextLong());
+		_persistence.countByR_R(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-		_persistence.countByR_R(StringPool.NULL, 0L);
-
-		_persistence.countByR_R((String)null, 0L);
+		_persistence.countByR_R(0L, 0L);
 	}
 
 	@Test
 	public void testCountByA_R_R() throws Exception {
-		_persistence.countByA_R_R(RandomTestUtil.nextLong(), StringPool.BLANK,
-			RandomTestUtil.nextLong());
+		_persistence.countByA_R_R(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByA_R_R(0L, StringPool.NULL, 0L);
-
-		_persistence.countByA_R_R(0L, (String)null, 0L);
+		_persistence.countByA_R_R(0L, 0L, 0L);
 	}
 
 	@Test
 	public void testCountByA_R_RArrayable() throws Exception {
 		_persistence.countByA_R_R(new long[] { RandomTestUtil.nextLong(), 0L },
-			RandomTestUtil.randomString(), RandomTestUtil.nextLong());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 	}
 
 	@Test
@@ -198,7 +194,7 @@ public class AnalyticsReferrerPersistenceTest {
 	protected OrderByComparator<AnalyticsReferrer> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CT_Analytics_AnalyticsReferrer",
 			"analyticsReferrerId", true, "analyticsEventId", true,
-			"referrerClassName", true, "referrerClassPK", true);
+			"referrerClassNameId", true, "referrerClassPK", true);
 	}
 
 	@Test
@@ -403,7 +399,7 @@ public class AnalyticsReferrerPersistenceTest {
 
 		analyticsReferrer.setAnalyticsEventId(RandomTestUtil.nextLong());
 
-		analyticsReferrer.setReferrerClassName(RandomTestUtil.randomString());
+		analyticsReferrer.setReferrerClassNameId(RandomTestUtil.nextLong());
 
 		analyticsReferrer.setReferrerClassPK(RandomTestUtil.nextLong());
 

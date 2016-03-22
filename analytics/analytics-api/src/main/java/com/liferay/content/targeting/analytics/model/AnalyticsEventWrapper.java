@@ -62,7 +62,7 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("anonymousUserId", getAnonymousUserId());
-		attributes.put("className", getClassName());
+		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
@@ -102,10 +102,10 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 			setAnonymousUserId(anonymousUserId);
 		}
 
-		String className = (String)attributes.get("className");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (className != null) {
-			setClassName(className);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
 		}
 
 		Long classPK = (Long)attributes.get("classPK");
@@ -215,13 +215,23 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	}
 
 	/**
-	* Returns the class name of this analytics event.
+	* Returns the fully qualified class name of this analytics event.
 	*
-	* @return the class name of this analytics event
+	* @return the fully qualified class name of this analytics event
 	*/
 	@Override
 	public java.lang.String getClassName() {
 		return _analyticsEvent.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this analytics event.
+	*
+	* @return the class name ID of this analytics event
+	*/
+	@Override
+	public long getClassNameId() {
+		return _analyticsEvent.getClassNameId();
 	}
 
 	/**
@@ -424,14 +434,19 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 		_analyticsEvent.setCachedModel(cachedModel);
 	}
 
-	/**
-	* Sets the class name of this analytics event.
-	*
-	* @param className the class name of this analytics event
-	*/
 	@Override
 	public void setClassName(java.lang.String className) {
 		_analyticsEvent.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this analytics event.
+	*
+	* @param classNameId the class name ID of this analytics event
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_analyticsEvent.setClassNameId(classNameId);
 	}
 
 	/**

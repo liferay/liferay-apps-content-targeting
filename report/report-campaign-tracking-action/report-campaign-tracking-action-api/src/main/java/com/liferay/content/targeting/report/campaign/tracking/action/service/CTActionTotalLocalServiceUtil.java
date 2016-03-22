@@ -64,22 +64,22 @@ public class CTActionTotalLocalServiceUtil {
 
 	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
 		long reportInstanceId, java.lang.String alias,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCTActionTotal(reportInstanceId, alias,
-			referrerClassName, referrerClassPK, elementId, eventType, count);
+			referrerClassNameId, referrerClassPK, elementId, eventType, count);
 	}
 
 	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
 		long reportInstanceId, java.lang.String alias,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCTActionTotal(reportInstanceId, alias,
-			referrerClassName, referrerClassPK, eventType, count);
+			referrerClassNameId, referrerClassPK, eventType, count);
 	}
 
 	public static void checkCTActionTotalEvents()
@@ -237,12 +237,11 @@ public class CTActionTotalLocalServiceUtil {
 	}
 
 	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal getCTActionTotal(
-		long reportInstanceId, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType)
+		long reportInstanceId, long referrerClassNameId, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCTActionTotal(reportInstanceId, referrerClassName,
+				   .getCTActionTotal(reportInstanceId, referrerClassNameId,
 			referrerClassPK, elementId, eventType);
 	}
 

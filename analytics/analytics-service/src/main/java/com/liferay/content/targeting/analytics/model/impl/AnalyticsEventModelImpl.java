@@ -33,9 +33,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -75,7 +77,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "anonymousUserId", Types.BIGINT },
-			{ "className", Types.VARCHAR },
+			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "elementId", Types.VARCHAR },
 			{ "eventType", Types.VARCHAR },
@@ -93,7 +95,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("anonymousUserId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("className", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("elementId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("eventType", Types.VARCHAR);
@@ -105,7 +107,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CT_Analytics_AnalyticsEvent (analyticsEventId LONG not null primary key,companyId LONG,userId LONG,anonymousUserId LONG,className VARCHAR(75) null,classPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,clientIP VARCHAR(75) null,userAgent STRING null,languageId VARCHAR(75) null,URL STRING null,additionalInfo TEXT null,createDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_Analytics_AnalyticsEvent (analyticsEventId LONG not null primary key,companyId LONG,userId LONG,anonymousUserId LONG,classNameId LONG,classPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,clientIP VARCHAR(75) null,userAgent STRING null,languageId VARCHAR(75) null,URL STRING null,additionalInfo TEXT null,createDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_Analytics_AnalyticsEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY analyticsEvent.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_Analytics_AnalyticsEvent.createDate DESC";
@@ -122,7 +124,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 				"value.object.column.bitmask.enabled.com.liferay.content.targeting.analytics.model.AnalyticsEvent"),
 			true);
 	public static final long ANONYMOUSUSERID_COLUMN_BITMASK = 1L;
-	public static final long CLASSNAME_COLUMN_BITMASK = 2L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
 	public static final long CLASSPK_COLUMN_BITMASK = 4L;
 	public static final long COMPANYID_COLUMN_BITMASK = 8L;
 	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
@@ -146,7 +148,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setAnonymousUserId(soapModel.getAnonymousUserId());
-		model.setClassName(soapModel.getClassName());
+		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
 		model.setElementId(soapModel.getElementId());
 		model.setEventType(soapModel.getEventType());
@@ -224,7 +226,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("anonymousUserId", getAnonymousUserId());
-		attributes.put("className", getClassName());
+		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
@@ -267,10 +269,10 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 			setAnonymousUserId(anonymousUserId);
 		}
 
-		String className = (String)attributes.get("className");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (className != null) {
-			setClassName(className);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
 		}
 
 		Long classPK = (Long)attributes.get("classPK");
@@ -428,30 +430,47 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		return _originalAnonymousUserId;
 	}
 
-	@JSON
 	@Override
 	public String getClassName() {
-		if (_className == null) {
+		if (getClassNameId() <= 0) {
 			return StringPool.BLANK;
 		}
-		else {
-			return _className;
-		}
+
+		return PortalUtil.getClassName(getClassNameId());
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_columnBitmask |= CLASSNAME_COLUMN_BITMASK;
+		long classNameId = 0;
 
-		if (_originalClassName == null) {
-			_originalClassName = _className;
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
 		}
 
-		_className = className;
+		setClassNameId(classNameId);
 	}
 
-	public String getOriginalClassName() {
-		return GetterUtil.getString(_originalClassName);
+	@JSON
+	@Override
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	@Override
+	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
+		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -665,7 +684,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		analyticsEventImpl.setCompanyId(getCompanyId());
 		analyticsEventImpl.setUserId(getUserId());
 		analyticsEventImpl.setAnonymousUserId(getAnonymousUserId());
-		analyticsEventImpl.setClassName(getClassName());
+		analyticsEventImpl.setClassNameId(getClassNameId());
 		analyticsEventImpl.setClassPK(getClassPK());
 		analyticsEventImpl.setElementId(getElementId());
 		analyticsEventImpl.setEventType(getEventType());
@@ -746,7 +765,9 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 		analyticsEventModelImpl._setOriginalAnonymousUserId = false;
 
-		analyticsEventModelImpl._originalClassName = analyticsEventModelImpl._className;
+		analyticsEventModelImpl._originalClassNameId = analyticsEventModelImpl._classNameId;
+
+		analyticsEventModelImpl._setOriginalClassNameId = false;
 
 		analyticsEventModelImpl._originalClassPK = analyticsEventModelImpl._classPK;
 
@@ -773,13 +794,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 		analyticsEventCacheModel.anonymousUserId = getAnonymousUserId();
 
-		analyticsEventCacheModel.className = getClassName();
-
-		String className = analyticsEventCacheModel.className;
-
-		if ((className != null) && (className.length() == 0)) {
-			analyticsEventCacheModel.className = null;
-		}
+		analyticsEventCacheModel.classNameId = getClassNameId();
 
 		analyticsEventCacheModel.classPK = getClassPK();
 
@@ -863,8 +878,8 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		sb.append(getUserId());
 		sb.append(", anonymousUserId=");
 		sb.append(getAnonymousUserId());
-		sb.append(", className=");
-		sb.append(getClassName());
+		sb.append(", classNameId=");
+		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
 		sb.append(", elementId=");
@@ -914,8 +929,8 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		sb.append(getAnonymousUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>className</column-name><column-value><![CDATA[");
-		sb.append(getClassName());
+			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
+		sb.append(getClassNameId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>classPK</column-name><column-value><![CDATA[");
@@ -971,8 +986,9 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 	private long _anonymousUserId;
 	private long _originalAnonymousUserId;
 	private boolean _setOriginalAnonymousUserId;
-	private String _className;
-	private String _originalClassName;
+	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;

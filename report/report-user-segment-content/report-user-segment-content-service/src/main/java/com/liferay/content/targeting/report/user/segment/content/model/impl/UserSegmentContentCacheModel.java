@@ -74,8 +74,8 @@ public class UserSegmentContentCacheModel implements CacheModel<UserSegmentConte
 		sb.append(companyId);
 		sb.append(", userSegmentId=");
 		sb.append(userSegmentId);
-		sb.append(", className=");
-		sb.append(className);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
 		sb.append(", eventType=");
@@ -96,14 +96,7 @@ public class UserSegmentContentCacheModel implements CacheModel<UserSegmentConte
 		userSegmentContentImpl.setUserSegmentContentId(userSegmentContentId);
 		userSegmentContentImpl.setCompanyId(companyId);
 		userSegmentContentImpl.setUserSegmentId(userSegmentId);
-
-		if (className == null) {
-			userSegmentContentImpl.setClassName(StringPool.BLANK);
-		}
-		else {
-			userSegmentContentImpl.setClassName(className);
-		}
-
+		userSegmentContentImpl.setClassNameId(classNameId);
 		userSegmentContentImpl.setClassPK(classPK);
 
 		if (eventType == null) {
@@ -134,7 +127,8 @@ public class UserSegmentContentCacheModel implements CacheModel<UserSegmentConte
 		companyId = objectInput.readLong();
 
 		userSegmentId = objectInput.readLong();
-		className = objectInput.readUTF();
+
+		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
 		eventType = objectInput.readUTF();
@@ -152,12 +146,7 @@ public class UserSegmentContentCacheModel implements CacheModel<UserSegmentConte
 
 		objectOutput.writeLong(userSegmentId);
 
-		if (className == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(className);
-		}
+		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
 
@@ -175,7 +164,7 @@ public class UserSegmentContentCacheModel implements CacheModel<UserSegmentConte
 	public long userSegmentContentId;
 	public long companyId;
 	public long userSegmentId;
-	public String className;
+	public long classNameId;
 	public long classPK;
 	public String eventType;
 	public int count;

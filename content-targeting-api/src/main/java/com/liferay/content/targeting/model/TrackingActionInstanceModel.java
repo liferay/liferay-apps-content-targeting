@@ -269,19 +269,18 @@ public interface TrackingActionInstanceModel extends BaseModel<TrackingActionIns
 	public void setAlias(String alias);
 
 	/**
-	 * Returns the referrer class name of this tracking action instance.
+	 * Returns the referrer class name ID of this tracking action instance.
 	 *
-	 * @return the referrer class name of this tracking action instance
+	 * @return the referrer class name ID of this tracking action instance
 	 */
-	@AutoEscape
-	public String getReferrerClassName();
+	public long getReferrerClassNameId();
 
 	/**
-	 * Sets the referrer class name of this tracking action instance.
+	 * Sets the referrer class name ID of this tracking action instance.
 	 *
-	 * @param referrerClassName the referrer class name of this tracking action instance
+	 * @param referrerClassNameId the referrer class name ID of this tracking action instance
 	 */
-	public void setReferrerClassName(String referrerClassName);
+	public void setReferrerClassNameId(long referrerClassNameId);
 
 	/**
 	 * Returns the referrer class p k of this tracking action instance.
