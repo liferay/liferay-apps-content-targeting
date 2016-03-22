@@ -39,7 +39,7 @@ public class CTActionFinderImpl
 
 	@Override
 	public List<Object[]> findByAnalyticsWithClassNameId(
-		long campaignId, Date modifiedDate) {
+		long reportInstanceId, Date modifiedDate) {
 
 		Session session = null;
 
@@ -56,10 +56,11 @@ public class CTActionFinderImpl
 			q.addScalar("classPK", Type.LONG);
 			q.addScalar("eventType", Type.STRING);
 			q.addScalar("alias_", Type.STRING);
+			q.addScalar("campaignId", Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(campaignId);
+			qPos.add(reportInstanceId);
 			qPos.add(modifiedDate);
 
 			return q.list();
@@ -90,6 +91,7 @@ public class CTActionFinderImpl
 			q.addScalar("elementId", Type.STRING);
 			q.addScalar("eventType", Type.STRING);
 			q.addScalar("alias_", Type.STRING);
+			q.addScalar("campaignId", Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 

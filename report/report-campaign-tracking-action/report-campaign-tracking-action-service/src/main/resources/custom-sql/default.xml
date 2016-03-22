@@ -4,7 +4,7 @@
 	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionFinder.findByAnalyticsWithClassNameId">
 		<![CDATA[
 			SELECT
-				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.classNameId AS classNameId, CT_Analytics_AnalyticsEvent.classPK AS classPK, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias_, CT_TrackingActionInstance.campaignId
+				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.classNameId AS classNameId, CT_Analytics_AnalyticsEvent.classPK AS classPK, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias_, CT_TrackingActionInstance.campaignId AS campaignId
 			FROM
 				CT_Analytics_AnalyticsEvent
 			INNER JOIN
@@ -25,7 +25,7 @@
 	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionFinder.findByAnalyticsWithElementId">
 		<![CDATA[
 			SELECT
-				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.elementId AS elementId, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias_, CT_TrackingActionInstance.campaignId
+				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.elementId AS elementId, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias_, CT_TrackingActionInstance.campaignId AS campaignId
 			FROM
 				CT_Analytics_AnalyticsEvent
 			INNER JOIN
