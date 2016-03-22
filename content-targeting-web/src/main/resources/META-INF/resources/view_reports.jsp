@@ -137,7 +137,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 					<c:when test="<%= contentTargetingViewReportsDisplayContext.isIconView() %>">
 
 						<%
-						row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6");
+						row.setCssClass("col-md-2 col-sm-4 col-xs-6");
 						%>
 
 						<liferay-ui:search-container-column-text>
