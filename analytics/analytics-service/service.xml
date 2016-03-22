@@ -17,7 +17,7 @@
 		<!-- Other fields -->
 
 		<column name="anonymousUserId" type="long" />
-		<column name="className" type="String" />
+		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="elementId" type="String" />
 		<column name="eventType" type="String" />
@@ -56,7 +56,7 @@
 		</finder>
 
 		<finder name="C_C_E" return-type="Collection">
-			<finder-column name="className" />
+			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="eventType" />
 		</finder>
@@ -69,13 +69,13 @@
 
 		<finder name="A_C_C_E" return-type="Collection">
 			<finder-column name="anonymousUserId" />
-			<finder-column name="className" />
+			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="eventType" />
 		</finder>
 
 		<finder name="C_C_E_GtD" return-type="Collection">
-			<finder-column name="className" />
+			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="eventType" />
 			<finder-column name="createDate" comparator="&gt;" />
@@ -95,7 +95,7 @@
 		<!-- Other fields -->
 
 		<column name="analyticsEventId" type="long" />
-		<column name="referrerClassName" type="String" />
+		<column name="referrerClassNameId" type="long" />
 		<column name="referrerClassPK" type="long" />
 
 		<!-- Finder methods -->
@@ -105,13 +105,13 @@
 		</finder>
 
 		<finder name="R_R" return-type="Collection">
-			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassNameId" />
 			<finder-column name="referrerClassPK" />
 		</finder>
 
 		<finder name="A_R_R" return-type="Collection">
 			<finder-column name="analyticsEventId" arrayable-operator="or" />
-			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassNameId" />
 			<finder-column name="referrerClassPK" />
 		</finder>
 	</entity>

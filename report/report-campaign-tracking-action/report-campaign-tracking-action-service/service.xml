@@ -19,7 +19,7 @@
 		<column name="reportInstanceId" type="long" />
 		<column name="userSegmentId" type="long" />
 		<column name="alias" type="String" />
-		<column name="referrerClassName" type="String" />
+		<column name="referrerClassNameId" type="long" />
 		<column name="referrerClassPK" type="long" />
 		<column name="elementId" type="String" />
 		<column name="eventType" type="String" />
@@ -54,14 +54,14 @@
 
 		<finder name="R_R_R" return-type="Collection">
 			<finder-column name="reportInstanceId" />
-			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassNameId" />
 			<finder-column name="referrerClassPK" />
 		</finder>
 
 		<finder name="R_U_R_R_E_E" return-type="CTAction" unique="true">
 			<finder-column name="reportInstanceId" />
 			<finder-column name="userSegmentId" />
-			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassNameId" />
 			<finder-column name="referrerClassPK" />
 			<finder-column name="elementId" />
 			<finder-column name="eventType" />
@@ -84,7 +84,7 @@
 		<column name="campaignId" type="long" />
 		<column name="reportInstanceId" type="long" />
 		<column name="alias" type="String" />
-		<column name="referrerClassName" type="String" />
+		<column name="referrerClassNameId" type="long" />
 		<column name="referrerClassPK" type="long" />
 		<column name="elementId" type="String" />
 		<column name="eventType" type="String" />
@@ -114,7 +114,7 @@
 
 		<finder name="R_R_R_E_E" return-type="CTAction" unique="true">
 			<finder-column name="reportInstanceId" />
-			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassNameId" />
 			<finder-column name="referrerClassPK" />
 			<finder-column name="elementId" />
 			<finder-column name="eventType" />
