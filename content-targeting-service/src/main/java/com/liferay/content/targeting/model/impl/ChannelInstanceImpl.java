@@ -30,18 +30,22 @@ public class ChannelInstanceImpl extends ChannelInstanceBaseImpl {
 	public ChannelInstanceImpl() {
 	}
 
+	@Override
 	public String getChannelGuid() {
 		return _channelGuid;
 	}
 
+	@Override
 	public Map<String, String> getValues() {
 		return _values;
 	}
 
+	@Override
 	public void setChannelGuid(String channelGuid) {
 		_channelGuid = channelGuid;
 	}
 
+	@Override
 	public void setValues(Map<String, String> values) {
 		this._values = values;
 	}

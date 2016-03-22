@@ -188,8 +188,10 @@ public class TrackingActionInstanceLocalServiceImpl
 	public List<TrackingActionInstance> getTrackingActionInstances(
 		long campaignId, String className, long classPK, String eventType) {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return trackingActionInstancePersistence.findByC_R_R_E(
-			campaignId, className, classPK, eventType);
+			campaignId, classNameId, classPK, eventType);
 	}
 
 	@Override
@@ -212,11 +214,11 @@ public class TrackingActionInstanceLocalServiceImpl
 	@Override
 	public List<TrackingActionInstance>
 		getTrackingActionInstancesByReportInstanceId(
-			long reportInstanceId, String className, long classPK,
+			long reportInstanceId, long classNameId, long classPK,
 			String eventType) {
 
 		return trackingActionInstancePersistence.findByR_R_R_E(
-			reportInstanceId, className, classPK, eventType);
+			reportInstanceId, classNameId, classPK, eventType);
 	}
 
 	@Override

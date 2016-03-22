@@ -31,14 +31,14 @@ import java.util.List;
 public class CTActionFinderImpl
 	extends CTActionFinderBaseImpl implements CTActionFinder {
 
-	public static final String FIND_BY_ANALYICS_WITH_CLASS_NAME =
-		CTActionFinder.class.getName() + ".findByAnalyticsWithClassName";
+	public static final String FIND_BY_ANALYICS_WITH_CLASS_NAME_ID =
+		CTActionFinder.class.getName() + ".findByAnalyticsWithClassNameId";
 
 	public static final String FIND_BY_ANALYICS_WITH_ELEMENT_ID =
 		CTActionFinder.class.getName() + ".findByAnalyticsWithElementId";
 
 	@Override
-	public List<Object[]> findByAnalyticsWithClassName(
+	public List<Object[]> findByAnalyticsWithClassNameId(
 		long campaignId, Date modifiedDate) {
 
 		Session session = null;
@@ -47,12 +47,12 @@ public class CTActionFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				getClass(), FIND_BY_ANALYICS_WITH_CLASS_NAME);
+				getClass(), FIND_BY_ANALYICS_WITH_CLASS_NAME_ID);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("referrerClassPK", Type.LONG);
-			q.addScalar("className", Type.STRING);
+			q.addScalar("classNameId", Type.LONG);
 			q.addScalar("classPK", Type.LONG);
 			q.addScalar("eventType", Type.STRING);
 			q.addScalar("alias_", Type.STRING);

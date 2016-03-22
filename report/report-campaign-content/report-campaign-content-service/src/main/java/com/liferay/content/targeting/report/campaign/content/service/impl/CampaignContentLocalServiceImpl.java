@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
@@ -125,8 +125,10 @@ public class CampaignContentLocalServiceImpl
 			long campaignId, String className, long classPK, String eventType)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return campaignContentPersistence.fetchByC_C_C_E(
-			campaignId, className, classPK, eventType);
+			campaignId, classNameId, classPK, eventType);
 	}
 
 	@Override
@@ -174,11 +176,13 @@ public class CampaignContentLocalServiceImpl
 		// Process analytics and store data
 
 		for (Object[] analyticsEvent : analyticsEvents) {
-			String className = (String)analyticsEvent[0];
+			long classNameId = (Long)analyticsEvent[0];
 			long classPK = (Long)analyticsEvent[1];
 			int count = (Integer)analyticsEvent[2];
 
-			if (Validator.isNotNull(className) && (classPK > 0)) {
+			if ((classNameId > 0) && (classPK > 0)) {
+				String className = PortalUtil.getClassName(classNameId);
+
 				addCampaignContent(
 					campaignId, className, classPK, "view", count);
 			}

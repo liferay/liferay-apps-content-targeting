@@ -39,7 +39,8 @@ public class AnalyticsReferrerLocalServiceImpl
 
 	@Override
 	public AnalyticsReferrer addAnalyticsReferrer(
-			long analyticsEventId, String className, long classPK)
+			long analyticsEventId, String referrerClassName,
+			long referrerClassPK)
 		throws PortalException {
 
 		long analyticsReferrerId = counterLocalService.increment();
@@ -48,8 +49,8 @@ public class AnalyticsReferrerLocalServiceImpl
 			analyticsReferrerPersistence.create(analyticsReferrerId);
 
 		analyticsReferrer.setAnalyticsEventId(analyticsEventId);
-		analyticsReferrer.setReferrerClassName(className);
-		analyticsReferrer.setReferrerClassPK(classPK);
+		analyticsReferrer.setReferrerClassName(referrerClassName);
+		analyticsReferrer.setReferrerClassPK(referrerClassPK);
 
 		analyticsReferrerPersistence.update(analyticsReferrer);
 
@@ -58,23 +59,32 @@ public class AnalyticsReferrerLocalServiceImpl
 
 	@Override
 	public int getAnalyticsReferrerCount(
-		long analyticsEventId, String className, long classPK) {
+		long analyticsEventId, String referrerClassName, long referrerClassPK) {
 
 		return getAnalyticsReferrerCount(
-			new long[] {analyticsEventId}, className, classPK);
+			new long[] {analyticsEventId}, referrerClassName, referrerClassPK);
 	}
 
 	@Override
 	public int getAnalyticsReferrerCount(
-		long[] analyticsEventIds, String className, long classPK) {
+		long[] analyticsEventIds, String referrerClassName, long classPK) {
+
+		long referrerClassNameId = classNameLocalService.getClassNameId(
+			referrerClassName);
 
 		return analyticsReferrerPersistence.countByA_R_R(
-			analyticsEventIds, className, classPK);
+			analyticsEventIds, referrerClassNameId, classPK);
 	}
 
 	@Override
-	public int getAnalyticsReferrerCount(String className, long classPK) {
-		return analyticsReferrerPersistence.countByR_R(className, classPK);
+	public int getAnalyticsReferrerCount(
+		String referrerClassName, long classPK) {
+
+		long referrerClassNameId = classNameLocalService.getClassNameId(
+			referrerClassName);
+
+		return analyticsReferrerPersistence.countByR_R(
+			referrerClassNameId, classPK);
 	}
 
 	@Override

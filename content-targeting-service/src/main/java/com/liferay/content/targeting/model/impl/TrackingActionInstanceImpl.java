@@ -14,6 +14,10 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Map;
 
 /**
@@ -35,18 +39,42 @@ public class TrackingActionInstanceImpl extends TrackingActionInstanceBaseImpl {
 	public TrackingActionInstanceImpl() {
 	}
 
+	@Override
+	public String getReferrerClassName() {
+		if (getReferrerClassNameId() <= 0) {
+			return StringPool.BLANK;
+		}
+
+		return PortalUtil.getClassName(getReferrerClassNameId());
+	}
+
+	@Override
 	public String getTrackingActionGuid() {
 		return _trackingActionGuid;
 	}
 
+	@Override
 	public Map<String, String> getValues() {
 		return _values;
 	}
 
+	@Override
+	public void setReferrerClassName(String referrerClassName) {
+		long referrerClassNameId = 0;
+
+		if (Validator.isNotNull(referrerClassName)) {
+			referrerClassNameId = PortalUtil.getClassNameId(referrerClassName);
+		}
+
+		setReferrerClassNameId(referrerClassNameId);
+	}
+
+	@Override
 	public void setTrackingActionGuid(String trackingActionGuid) {
 		_trackingActionGuid = trackingActionGuid;
 	}
 
+	@Override
 	public void setValues(Map<String, String> values) {
 		this._values = values;
 	}

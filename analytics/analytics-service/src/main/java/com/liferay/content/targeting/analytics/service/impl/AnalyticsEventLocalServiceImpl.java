@@ -213,8 +213,10 @@ public class AnalyticsEventLocalServiceImpl
 			String eventType)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return analyticsEventPersistence.findByA_C_C_E(
-			anonymousUserId, className, classPK, eventType);
+			anonymousUserId, classNameId, classPK, eventType);
 	}
 
 	@Override
@@ -222,8 +224,10 @@ public class AnalyticsEventLocalServiceImpl
 			String className, long classPK, String eventType)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return analyticsEventPersistence.findByC_C_E(
-			className, classPK, eventType);
+			classNameId, classPK, eventType);
 	}
 
 	@Override
@@ -231,8 +235,10 @@ public class AnalyticsEventLocalServiceImpl
 			String className, long classPK, String eventType, Date createDate)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return analyticsEventPersistence.findByC_C_E_GtD(
-			className, classPK, eventType, createDate);
+			classNameId, classPK, eventType, createDate);
 	}
 
 	@Override
@@ -274,8 +280,10 @@ public class AnalyticsEventLocalServiceImpl
 			String eventType)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return analyticsEventPersistence.countByA_C_C_E(
-			anonymousUserId, className, classPK, eventType);
+			anonymousUserId, classNameId, classPK, eventType);
 	}
 
 	@Override
@@ -283,8 +291,10 @@ public class AnalyticsEventLocalServiceImpl
 			String className, long classPK, String eventType)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return analyticsEventPersistence.countByC_C_E(
-			className, classPK, eventType);
+			classNameId, classPK, eventType);
 	}
 
 	@Override
@@ -292,8 +302,10 @@ public class AnalyticsEventLocalServiceImpl
 			String className, long classPK, String eventType, Date createDate)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return analyticsEventPersistence.countByC_C_E_GtD(
-			className, classPK, eventType, createDate);
+			classNameId, classPK, eventType, createDate);
 	}
 
 	@Override
@@ -305,8 +317,11 @@ public class AnalyticsEventLocalServiceImpl
 		long[] analyticsEventsIds = getAnalyticsEventsIds(
 			className, classPK, eventType, createDate);
 
+		long referrerClassNameId = classNameLocalService.getClassNameId(
+			referrerClassName);
+
 		return analyticsReferrerPersistence.countByA_R_R(
-			analyticsEventsIds, referrerClassName, referrerClassPK);
+			analyticsEventsIds, referrerClassNameId, referrerClassPK);
 	}
 
 	@Override
@@ -318,8 +333,11 @@ public class AnalyticsEventLocalServiceImpl
 		long[] analyticsEventsIds = getAnalyticsEventsIds(
 			elementId, eventType, createDate);
 
+		long referrerClassNameId = classNameLocalService.getClassNameId(
+			referrerClassName);
+
 		return analyticsReferrerPersistence.countByA_R_R(
-			analyticsEventsIds, referrerClassName, referrerClassPK);
+			analyticsEventsIds, referrerClassNameId, referrerClassPK);
 	}
 
 	@Override
@@ -336,9 +354,11 @@ public class AnalyticsEventLocalServiceImpl
 			String className, long classPK, String eventType, Date createDate)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		List<AnalyticsEvent> analyticsEvents =
 			analyticsEventPersistence.findByC_C_E_GtD(
-				className, classPK, eventType, createDate);
+				classNameId, classPK, eventType, createDate);
 
 		return getAnalyticsEventsIds(analyticsEvents);
 	}

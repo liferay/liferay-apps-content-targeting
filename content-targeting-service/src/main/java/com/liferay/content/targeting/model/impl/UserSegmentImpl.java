@@ -43,6 +43,7 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 	public UserSegmentImpl() {
 	}
 
+	@Override
 	public long getAssetCategoryId(long groupId) {
 		long assetCategoryId = getAssetCategoryId();
 
@@ -71,6 +72,7 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 		return assetCategoryId;
 	}
 
+	@Override
 	public String getNameWithGroupName(Locale locale, long groupId) {
 		String name = getName(locale);
 
@@ -102,11 +104,13 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 		return name;
 	}
 
+	@Override
 	public List<RuleInstance> getRuleInstances() {
 		return RuleInstanceLocalServiceUtil.getRuleInstances(
 			getUserSegmentId());
 	}
 
+	@Override
 	public boolean isRuleEnabled(Rule rule) throws Exception {
 		if (rule.isInstantiable()) {
 			return true;
