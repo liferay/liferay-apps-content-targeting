@@ -146,7 +146,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 								actionJspServletContext="<%= application %>"
 								icon="page"
 								resultRow="<%= row %>"
-								rowChecker="<%= contentTargetingViewReportsDisplayContext.getRowChecker() %>"
+								rowChecker="<%= searchContainer.getRowChecker() %>"
 								title="<%= reportInstance.getName(locale) %>"
 							/>
 						</liferay-ui:search-container-column-text>

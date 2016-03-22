@@ -143,7 +143,7 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 							actionJspServletContext="<%= application %>"
 							icon="page"
 							resultRow="<%= row %>"
-							rowChecker="<%= contentTargetingViewUserSegmentDisplayContext.getRowChecker() %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= userSegment.getName(locale) %>"
 						/>
 					</liferay-ui:search-container-column-text>

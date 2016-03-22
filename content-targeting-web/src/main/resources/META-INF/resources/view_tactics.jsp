@@ -121,7 +121,7 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 						actionJspServletContext="<%= application %>"
 						icon="page"
 						resultRow="<%= row %>"
-						rowChecker="<%= contentTargetingViewTacticsDisplayContext.getRowChecker() %>"
+						rowChecker="<%= searchContainer.getRowChecker() %>"
 						title="<%= tactic.getName(locale) %>"
 						/>
 					</liferay-ui:search-container-column-text>

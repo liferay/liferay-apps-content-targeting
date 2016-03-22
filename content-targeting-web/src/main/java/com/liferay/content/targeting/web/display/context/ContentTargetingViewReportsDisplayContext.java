@@ -26,7 +26,6 @@ import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.content.targeting.web.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.web.util.ReportInstanceRowChecker;
 import com.liferay.content.targeting.web.util.comparator.ReportInstanceModifiedDateComparator;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -279,18 +278,6 @@ public class ContentTargetingViewReportsDisplayContext
 		return _reportsTitle;
 	}
 
-	public RowChecker getRowChecker() throws PortalException {
-		if (_rowChecker != null) {
-			return _rowChecker;
-		}
-
-		SearchContainer searchContainer = getReportsSearchContainer();
-
-		_rowChecker = searchContainer.getRowChecker();
-
-		return _rowChecker;
-	}
-
 	public long getScopeGroupId() {
 		if (_scopeGroupId != null) {
 			return _scopeGroupId;
@@ -405,7 +392,6 @@ public class ContentTargetingViewReportsDisplayContext
 	private List<Report> _reports;
 	private SearchContainer _reportsSearchContainer;
 	private String _reportsTitle;
-	private RowChecker _rowChecker;
 	private Long _scopeGroupId;
 
 }

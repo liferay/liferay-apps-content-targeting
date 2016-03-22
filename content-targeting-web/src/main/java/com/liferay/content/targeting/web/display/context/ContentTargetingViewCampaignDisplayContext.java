@@ -21,7 +21,6 @@ import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.content.targeting.web.util.comparator.CampaignModifiedDateComparator;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -138,18 +137,6 @@ public class ContentTargetingViewCampaignDisplayContext
 		return portletURL;
 	}
 
-	public RowChecker getRowChecker() throws PortalException, PortletException {
-		if (_rowChecker != null) {
-			return _rowChecker;
-		}
-
-		SearchContainer searchContainer = getCampaignSearchContainer();
-
-		_rowChecker = searchContainer.getRowChecker();
-
-		return _rowChecker;
-	}
-
 	public boolean isDisabledManagementBar()
 		throws PortalException, PortletException {
 
@@ -216,7 +203,6 @@ public class ContentTargetingViewCampaignDisplayContext
 	private Boolean _isDisabledManagementBar;
 	private Boolean _isIncludeCheckBox;
 	private Boolean _isSearchEnabled;
-	private RowChecker _rowChecker;
 	private Boolean _showAddButton;
 
 }

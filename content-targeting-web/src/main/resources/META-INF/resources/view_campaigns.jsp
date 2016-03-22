@@ -142,7 +142,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 							actionJspServletContext="<%= application %>"
 							icon="page"
 							resultRow="<%= row %>"
-							rowChecker="<%= contentTargetingViewCampaignDisplayContext.getRowChecker() %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= campaign.getName(locale) %>"
 						>
 							<liferay-frontend:vertical-card-footer>
