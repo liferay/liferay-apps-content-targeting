@@ -1,4 +1,4 @@
-Bundle-Name: Analytics Service
+Bundle-Name: Liferay Content Targeting Analytics Service
 Bundle-SymbolicName: com.liferay.content.targeting.analytics.service
 Bundle-Version: 2.0.0
 Export-Package:\

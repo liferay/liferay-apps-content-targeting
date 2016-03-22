@@ -1,4 +1,4 @@
-Bundle-Name: Analytics API
+Bundle-Name: Liferay Content Targeting Analytics API
 Bundle-SymbolicName: com.liferay.content.targeting.analytics.api
 Bundle-Version: 2.0.0
 Export-Package:\

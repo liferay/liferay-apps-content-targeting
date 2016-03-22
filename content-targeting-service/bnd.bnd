@@ -1,4 +1,4 @@
-Bundle-Name: Content Targeting Service
+Bundle-Name: Liferay Content Targeting Service
 Bundle-SymbolicName: com.liferay.content.targeting.service
 Bundle-Version: 3.0.0
 Export-Package:\

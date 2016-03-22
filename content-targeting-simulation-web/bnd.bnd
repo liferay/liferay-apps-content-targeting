@@ -1,4 +1,4 @@
-Bundle-Name: Content Targeting Simulation Web
+Bundle-Name: Liferay Content Targeting Simulation Web
 Bundle-SymbolicName: com.liferay.content.targeting.simulation.web
 Bundle-Version: 2.0.0
 Liferay-JS-Config: /js/config.js

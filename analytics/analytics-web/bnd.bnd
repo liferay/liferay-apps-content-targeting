@@ -1,4 +1,4 @@
-Bundle-Name: Analytics Web
+Bundle-Name: Liferay Content Targeting Analytics Web
 Bundle-SymbolicName: com.liferay.content.targeting.analytics.web
 Bundle-Version: 1.0.0
 Export-Package:\

@@ -1,4 +1,4 @@
-Bundle-Name: Campaign Tracking Actions Report API
+Bundle-Name: Liferay Content Targeting Campaign Tracking Actions Report API
 Bundle-SymbolicName: com.liferay.content.targeting.report.campaign.tracking.action.api
 Bundle-Version: 1.2.0
 Export-Package:\
