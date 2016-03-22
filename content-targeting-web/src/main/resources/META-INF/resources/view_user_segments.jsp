@@ -105,7 +105,6 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.UserSegment"
-			cssClass="entry-display-style"
 			keyProperty="userSegmentId"
 			modelVar="userSegment"
 		>
@@ -129,14 +128,13 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="list-group-item-field"
 						path="/user_segments_action.jsp"
 					/>
 				</c:when>
 				<c:when test="<%= contentTargetingViewUserSegmentDisplayContext.isIconView() %>">
 
 					<%
-						row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
 					%>
 
 					<liferay-ui:search-container-column-text>
@@ -152,22 +150,27 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="text-strong"
+						cssClass="content-column name-column title-column"
 						name="name"
+						truncate="<%= true %>"
 						value="<%= userSegment.getName(locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="content-column description-column"
 						name="description"
+						truncate="<%= true %>"
 						value="<%= userSegment.getDescription(locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="status-column text-column"
 						name="modified-date"
 						value="<%= userSegment.getModifiedDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action-column"
 						path="/user_segments_action.jsp"
 					/>
 				</c:otherwise>

@@ -83,7 +83,6 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.Tactic"
-			cssClass="entry-display-style"
 			keyProperty="tacticId"
 			modelVar="tactic"
 		>
@@ -107,14 +106,13 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="list-group-item-field"
 						path="/tactic_action.jsp"
 					/>
 				</c:when>
 				<c:when test="<%= contentTargetingViewTacticsDisplayContext.isIconView() %>">
 
 					<%
-						row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
 					%>
 
 					<liferay-ui:search-container-column-text>
@@ -130,17 +128,21 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="text-strong"
+						cssClass="content-column name-column title-column"
 						name="name"
+						truncate="<%= true %>"
 						value="<%= tactic.getName(locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="content-column description-column"
 						name="description"
+						truncate="<%= true %>"
 						value="<%= tactic.getDescription(locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action-column"
 						path="/tactic_action.jsp"
 					/>
 				</c:otherwise>

@@ -94,7 +94,6 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.content.targeting.model.ReportInstance"
-				cssClass="entry-display-style"
 				keyProperty="reportInstanceId"
 				modelVar="reportInstance"
 			>
@@ -132,14 +131,13 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-jsp
-							cssClass="list-group-item-field"
 							path="/reports_action.jsp"
 						/>
 					</c:when>
 					<c:when test="<%= contentTargetingViewReportsDisplayContext.isIconView() %>">
 
 						<%
-							row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+						row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6");
 						%>
 
 						<liferay-ui:search-container-column-text>
@@ -155,28 +153,34 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
-							cssClass="text-strong"
+							cssClass="content-column name-column title-column"
 							name="name"
+							truncate="<%= true %>"
 						>
 							<a class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>" href="javascript:;"><%= reportInstance.getName(locale) %></a>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
+							cssClass="content-column description-column"
 							name="description"
+							truncate="<%= true %>"
 							value="<%= HtmlUtil.escape(reportInstance.getDescription(locale)) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
+							cssClass="text-column type-column"
 							name="type"
 							value="<%= reportInstance.getTypeName(locale) %>"
 						/>
 
 						<liferay-ui:search-container-column-date
+							cssClass="modified-date-column text-column"
 							name="modified-date"
 							value="<%= reportInstance.getModifiedDate() %>"
 						/>
 
 						<liferay-ui:search-container-column-jsp
+							cssClass="entry-action-column"
 							path="/reports_action.jsp"
 						/>
 					</c:otherwise>

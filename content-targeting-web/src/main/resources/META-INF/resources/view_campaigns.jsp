@@ -68,7 +68,6 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.Campaign"
-			cssClass="entry-display-style"
 			keyProperty="campaignId"
 			modelVar="campaign"
 		>
@@ -128,14 +127,13 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="list-group-item-field"
 						path="/campaign_action.jsp"
 					/>
 				</c:when>
 				<c:when test="<%= contentTargetingViewCampaignDisplayContext.isIconView() %>">
 
 					<%
-						row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
 					%>
 
 					<liferay-ui:search-container-column-text>
@@ -158,43 +156,52 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="text-strong"
+						cssClass="content-column name-column title-column"
 						name="name"
+						truncate="<%= true %>"
 						value="<%= campaign.getName(locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="content-column description-column"
 						name="description"
+						truncate="<%= true %>"
 						value="<%= campaign.getDescription(locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="modified-date-column text-column"
 						name="modified-date"
 						value="<%= campaign.getModifiedDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="start-date-column text-column"
 						name="start-date"
 						value="<%= campaign.getStartDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="end-date-column text-column"
 						name="end-date"
 						value="<%= campaign.getEndDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="priority-column text-column"
 						name="priority"
 						value="<%= String.valueOf(campaign.getPriority()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="status-column text-column"
 						name="status"
 					>
 						<liferay-ui:message key="<%= campaign.getStatus() %>" />
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action-column"
 						path="/campaign_action.jsp"
 					/>
 				</c:otherwise>
