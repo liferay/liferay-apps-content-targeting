@@ -115,7 +115,7 @@ public class BaseContentTargetingViewDisplayContext {
 	}
 
 	public boolean isDescriptiveView() {
-		if (getDisplayStyle().equals("descriptive")) {
+		if (Validator.equals(getDisplayStyle(), "descriptive")) {
 			return true;
 		}
 
@@ -123,7 +123,7 @@ public class BaseContentTargetingViewDisplayContext {
 	}
 
 	public boolean isIconView() {
-		if (getDisplayStyle().equals("icon")) {
+		if (Validator.equals(getDisplayStyle(), "icon")) {
 			return true;
 		}
 
@@ -131,7 +131,7 @@ public class BaseContentTargetingViewDisplayContext {
 	}
 
 	public boolean isListView() {
-		if (getDisplayStyle().equals("list")) {
+		if (Validator.equals(getDisplayStyle(), "list")) {
 			return true;
 		}
 
