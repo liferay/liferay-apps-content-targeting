@@ -5,7 +5,7 @@
 		<field name="campaignContentId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="campaignId" type="long" />
-		<field name="className" type="String" />
+		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="eventType" type="String" />
 		<field name="count" type="int" />

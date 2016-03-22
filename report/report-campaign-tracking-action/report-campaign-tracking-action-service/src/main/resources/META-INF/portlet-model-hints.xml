@@ -8,7 +8,7 @@
 		<field name="reportInstanceId" type="long" />
 		<field name="userSegmentId" type="long" />
 		<field name="alias" type="String" />
-		<field name="referrerClassName" type="String" />
+		<field name="referrerClassNameId" type="long" />
 		<field name="referrerClassPK" type="long" />
 		<field name="elementId" type="String" />
 		<field name="eventType" type="String" />
@@ -21,7 +21,7 @@
 		<field name="campaignId" type="long" />
 		<field name="reportInstanceId" type="long" />
 		<field name="alias" type="String" />
-		<field name="referrerClassName" type="String" />
+		<field name="referrerClassNameId" type="long" />
 		<field name="referrerClassPK" type="long" />
 		<field name="elementId" type="String" />
 		<field name="eventType" type="String" />
