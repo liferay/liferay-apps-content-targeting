@@ -4,4 +4,3 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Visited Rule
 -baseline: *;version="1.0.0"
--include: ../../app.bnd

@@ -12,4 +12,3 @@ Liferay-Releng-Module-Group-Title: Content Tracking Action
 Private-Package: com.liferay.content.targeting.tracking.action.content.*
 Web-ContextPath: /tracking-action-content
 -baseline: *;version="1.0.0"
--include: ../../app.bnd

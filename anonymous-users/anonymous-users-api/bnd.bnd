@@ -11,4 +11,3 @@ Export-Package:\
 	com.liferay.content.targeting.anonymous.users.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Anonymous Users
--include: ../../app.bnd

@@ -13,4 +13,3 @@ Export-Package:\
 	com.liferay.content.targeting.report.campaign.tracking.action.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Campaign Tracking Actions Report
--include: ../../../app.bnd

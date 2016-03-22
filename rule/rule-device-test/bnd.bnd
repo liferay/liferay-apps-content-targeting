@@ -5,4 +5,3 @@ Export-Package: com.liferay.content.targeting.rule.device.test.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Device Rule
 -baseline: *;version="1.0.0"
--include: ../../app.bnd

@@ -11,4 +11,3 @@ Export-Package:\
 	com.liferay.content.targeting.report.user.segment.content.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: User Segment Content Report
--include: ../../../app.bnd

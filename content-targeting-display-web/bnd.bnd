@@ -5,4 +5,3 @@ Liferay-JS-Config: /js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Audience Targeting
 Web-ContextPath: /content-targeting-display-web
--include: ../app.bnd

@@ -13,4 +13,3 @@ Private-Package: com.liferay.content.targeting.tracking.action.page.*
 Service-Component: com.liferay.content.targeting.tracking.action.page.*
 Web-ContextPath: /tracking-action-page
 -baseline: *;version="1.0.0"
--include: ../../app.bnd

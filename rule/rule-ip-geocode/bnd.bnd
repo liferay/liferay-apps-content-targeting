@@ -15,4 +15,3 @@ Liferay-Releng-Module-Group-Title: Ip Geocode Rule
 Private-Package: com.liferay.content.targeting.rule.ip.geocode.*
 Web-ContextPath: /rule-ip-geocode
 -baseline: *;version="1.0.0"
--include: ../../app.bnd

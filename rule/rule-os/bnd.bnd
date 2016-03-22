@@ -14,4 +14,3 @@ Liferay-Releng-Module-Group-Title: OS Rule
 Private-Package: com.liferay.content.targeting.rule.os.*
 Web-ContextPath: /rule-os
 -baseline: *;version="1.0.0"
--include: ../../app.bnd

@@ -14,4 +14,3 @@ Liferay-Releng-Module-Group-Title: Device Rule
 Private-Package: com.liferay.content.targeting.rule.device.*
 Web-ContextPath: /rule-device
 -baseline: *;version="1.0.0"
--include: ../../app.bnd

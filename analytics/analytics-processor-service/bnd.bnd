@@ -11,4 +11,3 @@ Liferay-Releng-Module-Group-Title: Analytics
 Private-Package: com.liferay.content.targeting.analytics.processor.servlet.*
 Web-ContextPath: /analytics-processor
 -baseline: *;version="1.0.0"
--include: ../../app.bnd
