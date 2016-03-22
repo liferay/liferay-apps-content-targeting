@@ -286,67 +286,66 @@ public class AnalyticsReferrerUtil {
 	}
 
 	/**
-	* Returns all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns all the analytics referrers where referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @return the matching analytics referrers
 	*/
-	public static List<AnalyticsReferrer> findByR_R(
-		java.lang.String referrerClassName, long referrerClassPK) {
-		return getPersistence().findByR_R(referrerClassName, referrerClassPK);
+	public static List<AnalyticsReferrer> findByR_R(long referrerClassNameId,
+		long referrerClassPK) {
+		return getPersistence().findByR_R(referrerClassNameId, referrerClassPK);
 	}
 
 	/**
-	* Returns a range of all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns a range of all the analytics referrers where referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param start the lower bound of the range of analytics referrers
 	* @param end the upper bound of the range of analytics referrers (not inclusive)
 	* @return the range of matching analytics referrers
 	*/
-	public static List<AnalyticsReferrer> findByR_R(
-		java.lang.String referrerClassName, long referrerClassPK, int start,
-		int end) {
+	public static List<AnalyticsReferrer> findByR_R(long referrerClassNameId,
+		long referrerClassPK, int start, int end) {
 		return getPersistence()
-				   .findByR_R(referrerClassName, referrerClassPK, start, end);
+				   .findByR_R(referrerClassNameId, referrerClassPK, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns an ordered range of all the analytics referrers where referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param start the lower bound of the range of analytics referrers
 	* @param end the upper bound of the range of analytics referrers (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching analytics referrers
 	*/
-	public static List<AnalyticsReferrer> findByR_R(
-		java.lang.String referrerClassName, long referrerClassPK, int start,
-		int end, OrderByComparator<AnalyticsReferrer> orderByComparator) {
+	public static List<AnalyticsReferrer> findByR_R(long referrerClassNameId,
+		long referrerClassPK, int start, int end,
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		return getPersistence()
-				   .findByR_R(referrerClassName, referrerClassPK, start, end,
+				   .findByR_R(referrerClassNameId, referrerClassPK, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns an ordered range of all the analytics referrers where referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param start the lower bound of the range of analytics referrers
 	* @param end the upper bound of the range of analytics referrers (not inclusive)
@@ -354,172 +353,170 @@ public class AnalyticsReferrerUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching analytics referrers
 	*/
-	public static List<AnalyticsReferrer> findByR_R(
-		java.lang.String referrerClassName, long referrerClassPK, int start,
-		int end, OrderByComparator<AnalyticsReferrer> orderByComparator,
+	public static List<AnalyticsReferrer> findByR_R(long referrerClassNameId,
+		long referrerClassPK, int start, int end,
+		OrderByComparator<AnalyticsReferrer> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByR_R(referrerClassName, referrerClassPK, start, end,
+				   .findByR_R(referrerClassNameId, referrerClassPK, start, end,
 			orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the first analytics referrer in the ordered set where referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics referrer
 	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
-	public static AnalyticsReferrer findByR_R_First(
-		java.lang.String referrerClassName, long referrerClassPK,
+	public static AnalyticsReferrer findByR_R_First(long referrerClassNameId,
+		long referrerClassPK,
 		OrderByComparator<AnalyticsReferrer> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException {
 		return getPersistence()
-				   .findByR_R_First(referrerClassName, referrerClassPK,
+				   .findByR_R_First(referrerClassNameId, referrerClassPK,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the first analytics referrer in the ordered set where referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
 	*/
-	public static AnalyticsReferrer fetchByR_R_First(
-		java.lang.String referrerClassName, long referrerClassPK,
+	public static AnalyticsReferrer fetchByR_R_First(long referrerClassNameId,
+		long referrerClassPK,
 		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		return getPersistence()
-				   .fetchByR_R_First(referrerClassName, referrerClassPK,
+				   .fetchByR_R_First(referrerClassNameId, referrerClassPK,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the last analytics referrer in the ordered set where referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics referrer
 	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
-	public static AnalyticsReferrer findByR_R_Last(
-		java.lang.String referrerClassName, long referrerClassPK,
+	public static AnalyticsReferrer findByR_R_Last(long referrerClassNameId,
+		long referrerClassPK,
 		OrderByComparator<AnalyticsReferrer> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException {
 		return getPersistence()
-				   .findByR_R_Last(referrerClassName, referrerClassPK,
+				   .findByR_R_Last(referrerClassNameId, referrerClassPK,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the last analytics referrer in the ordered set where referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
 	*/
-	public static AnalyticsReferrer fetchByR_R_Last(
-		java.lang.String referrerClassName, long referrerClassPK,
+	public static AnalyticsReferrer fetchByR_R_Last(long referrerClassNameId,
+		long referrerClassPK,
 		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		return getPersistence()
-				   .fetchByR_R_Last(referrerClassName, referrerClassPK,
+				   .fetchByR_R_Last(referrerClassNameId, referrerClassPK,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the analytics referrers before and after the current analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the analytics referrers before and after the current analytics referrer in the ordered set where referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param analyticsReferrerId the primary key of the current analytics referrer
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics referrer
 	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public static AnalyticsReferrer[] findByR_R_PrevAndNext(
-		long analyticsReferrerId, java.lang.String referrerClassName,
+		long analyticsReferrerId, long referrerClassNameId,
 		long referrerClassPK,
 		OrderByComparator<AnalyticsReferrer> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException {
 		return getPersistence()
 				   .findByR_R_PrevAndNext(analyticsReferrerId,
-			referrerClassName, referrerClassPK, orderByComparator);
+			referrerClassNameId, referrerClassPK, orderByComparator);
 	}
 
 	/**
-	* Removes all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63; from the database.
+	* Removes all the analytics referrers where referrerClassNameId = &#63; and referrerClassPK = &#63; from the database.
 	*
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	*/
-	public static void removeByR_R(java.lang.String referrerClassName,
+	public static void removeByR_R(long referrerClassNameId,
 		long referrerClassPK) {
-		getPersistence().removeByR_R(referrerClassName, referrerClassPK);
+		getPersistence().removeByR_R(referrerClassNameId, referrerClassPK);
 	}
 
 	/**
-	* Returns the number of analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the number of analytics referrers where referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @return the number of matching analytics referrers
 	*/
-	public static int countByR_R(java.lang.String referrerClassName,
-		long referrerClassPK) {
-		return getPersistence().countByR_R(referrerClassName, referrerClassPK);
+	public static int countByR_R(long referrerClassNameId, long referrerClassPK) {
+		return getPersistence().countByR_R(referrerClassNameId, referrerClassPK);
 	}
 
 	/**
-	* Returns all the analytics referrers where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns all the analytics referrers where analyticsEventId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param analyticsEventId the analytics event ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @return the matching analytics referrers
 	*/
 	public static List<AnalyticsReferrer> findByA_R_R(long analyticsEventId,
-		java.lang.String referrerClassName, long referrerClassPK) {
+		long referrerClassNameId, long referrerClassPK) {
 		return getPersistence()
-				   .findByA_R_R(analyticsEventId, referrerClassName,
+				   .findByA_R_R(analyticsEventId, referrerClassNameId,
 			referrerClassPK);
 	}
 
 	/**
-	* Returns a range of all the analytics referrers where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns a range of all the analytics referrers where analyticsEventId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param analyticsEventId the analytics event ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param start the lower bound of the range of analytics referrers
 	* @param end the upper bound of the range of analytics referrers (not inclusive)
 	* @return the range of matching analytics referrers
 	*/
 	public static List<AnalyticsReferrer> findByA_R_R(long analyticsEventId,
-		java.lang.String referrerClassName, long referrerClassPK, int start,
-		int end) {
+		long referrerClassNameId, long referrerClassPK, int start, int end) {
 		return getPersistence()
-				   .findByA_R_R(analyticsEventId, referrerClassName,
+				   .findByA_R_R(analyticsEventId, referrerClassNameId,
 			referrerClassPK, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the analytics referrers where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns an ordered range of all the analytics referrers where analyticsEventId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param analyticsEventId the analytics event ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param start the lower bound of the range of analytics referrers
 	* @param end the upper bound of the range of analytics referrers (not inclusive)
@@ -527,22 +524,22 @@ public class AnalyticsReferrerUtil {
 	* @return the ordered range of matching analytics referrers
 	*/
 	public static List<AnalyticsReferrer> findByA_R_R(long analyticsEventId,
-		java.lang.String referrerClassName, long referrerClassPK, int start,
-		int end, OrderByComparator<AnalyticsReferrer> orderByComparator) {
+		long referrerClassNameId, long referrerClassPK, int start, int end,
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		return getPersistence()
-				   .findByA_R_R(analyticsEventId, referrerClassName,
+				   .findByA_R_R(analyticsEventId, referrerClassNameId,
 			referrerClassPK, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the analytics referrers where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns an ordered range of all the analytics referrers where analyticsEventId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param analyticsEventId the analytics event ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param start the lower bound of the range of analytics referrers
 	* @param end the upper bound of the range of analytics referrers (not inclusive)
@@ -551,92 +548,92 @@ public class AnalyticsReferrerUtil {
 	* @return the ordered range of matching analytics referrers
 	*/
 	public static List<AnalyticsReferrer> findByA_R_R(long analyticsEventId,
-		java.lang.String referrerClassName, long referrerClassPK, int start,
-		int end, OrderByComparator<AnalyticsReferrer> orderByComparator,
+		long referrerClassNameId, long referrerClassPK, int start, int end,
+		OrderByComparator<AnalyticsReferrer> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByA_R_R(analyticsEventId, referrerClassName,
+				   .findByA_R_R(analyticsEventId, referrerClassNameId,
 			referrerClassPK, start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first analytics referrer in the ordered set where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the first analytics referrer in the ordered set where analyticsEventId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param analyticsEventId the analytics event ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics referrer
 	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public static AnalyticsReferrer findByA_R_R_First(long analyticsEventId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<AnalyticsReferrer> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException {
 		return getPersistence()
-				   .findByA_R_R_First(analyticsEventId, referrerClassName,
+				   .findByA_R_R_First(analyticsEventId, referrerClassNameId,
 			referrerClassPK, orderByComparator);
 	}
 
 	/**
-	* Returns the first analytics referrer in the ordered set where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the first analytics referrer in the ordered set where analyticsEventId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param analyticsEventId the analytics event ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
 	*/
 	public static AnalyticsReferrer fetchByA_R_R_First(long analyticsEventId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		return getPersistence()
-				   .fetchByA_R_R_First(analyticsEventId, referrerClassName,
+				   .fetchByA_R_R_First(analyticsEventId, referrerClassNameId,
 			referrerClassPK, orderByComparator);
 	}
 
 	/**
-	* Returns the last analytics referrer in the ordered set where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the last analytics referrer in the ordered set where analyticsEventId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param analyticsEventId the analytics event ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics referrer
 	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public static AnalyticsReferrer findByA_R_R_Last(long analyticsEventId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<AnalyticsReferrer> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException {
 		return getPersistence()
-				   .findByA_R_R_Last(analyticsEventId, referrerClassName,
+				   .findByA_R_R_Last(analyticsEventId, referrerClassNameId,
 			referrerClassPK, orderByComparator);
 	}
 
 	/**
-	* Returns the last analytics referrer in the ordered set where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the last analytics referrer in the ordered set where analyticsEventId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param analyticsEventId the analytics event ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
 	*/
 	public static AnalyticsReferrer fetchByA_R_R_Last(long analyticsEventId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		return getPersistence()
-				   .fetchByA_R_R_Last(analyticsEventId, referrerClassName,
+				   .fetchByA_R_R_Last(analyticsEventId, referrerClassNameId,
 			referrerClassPK, orderByComparator);
 	}
 
 	/**
-	* Returns the analytics referrers before and after the current analytics referrer in the ordered set where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the analytics referrers before and after the current analytics referrer in the ordered set where analyticsEventId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param analyticsReferrerId the primary key of the current analytics referrer
 	* @param analyticsEventId the analytics event ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics referrer
@@ -644,66 +641,65 @@ public class AnalyticsReferrerUtil {
 	*/
 	public static AnalyticsReferrer[] findByA_R_R_PrevAndNext(
 		long analyticsReferrerId, long analyticsEventId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<AnalyticsReferrer> orderByComparator)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException {
 		return getPersistence()
 				   .findByA_R_R_PrevAndNext(analyticsReferrerId,
-			analyticsEventId, referrerClassName, referrerClassPK,
+			analyticsEventId, referrerClassNameId, referrerClassPK,
 			orderByComparator);
 	}
 
 	/**
-	* Returns all the analytics referrers where analyticsEventId = any &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns all the analytics referrers where analyticsEventId = any &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param analyticsEventIds the analytics event IDs
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @return the matching analytics referrers
 	*/
 	public static List<AnalyticsReferrer> findByA_R_R(
-		long[] analyticsEventIds, java.lang.String referrerClassName,
-		long referrerClassPK) {
+		long[] analyticsEventIds, long referrerClassNameId, long referrerClassPK) {
 		return getPersistence()
-				   .findByA_R_R(analyticsEventIds, referrerClassName,
+				   .findByA_R_R(analyticsEventIds, referrerClassNameId,
 			referrerClassPK);
 	}
 
 	/**
-	* Returns a range of all the analytics referrers where analyticsEventId = any &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns a range of all the analytics referrers where analyticsEventId = any &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param analyticsEventIds the analytics event IDs
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param start the lower bound of the range of analytics referrers
 	* @param end the upper bound of the range of analytics referrers (not inclusive)
 	* @return the range of matching analytics referrers
 	*/
 	public static List<AnalyticsReferrer> findByA_R_R(
-		long[] analyticsEventIds, java.lang.String referrerClassName,
+		long[] analyticsEventIds, long referrerClassNameId,
 		long referrerClassPK, int start, int end) {
 		return getPersistence()
-				   .findByA_R_R(analyticsEventIds, referrerClassName,
+				   .findByA_R_R(analyticsEventIds, referrerClassNameId,
 			referrerClassPK, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the analytics referrers where analyticsEventId = any &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns an ordered range of all the analytics referrers where analyticsEventId = any &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param analyticsEventIds the analytics event IDs
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param start the lower bound of the range of analytics referrers
 	* @param end the upper bound of the range of analytics referrers (not inclusive)
@@ -711,23 +707,23 @@ public class AnalyticsReferrerUtil {
 	* @return the ordered range of matching analytics referrers
 	*/
 	public static List<AnalyticsReferrer> findByA_R_R(
-		long[] analyticsEventIds, java.lang.String referrerClassName,
+		long[] analyticsEventIds, long referrerClassNameId,
 		long referrerClassPK, int start, int end,
 		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		return getPersistence()
-				   .findByA_R_R(analyticsEventIds, referrerClassName,
+				   .findByA_R_R(analyticsEventIds, referrerClassNameId,
 			referrerClassPK, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the analytics referrers where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;, optionally using the finder cache.
+	* Returns an ordered range of all the analytics referrers where analyticsEventId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;, optionally using the finder cache.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param analyticsEventId the analytics event ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param start the lower bound of the range of analytics referrers
 	* @param end the upper bound of the range of analytics referrers (not inclusive)
@@ -736,55 +732,56 @@ public class AnalyticsReferrerUtil {
 	* @return the ordered range of matching analytics referrers
 	*/
 	public static List<AnalyticsReferrer> findByA_R_R(
-		long[] analyticsEventIds, java.lang.String referrerClassName,
+		long[] analyticsEventIds, long referrerClassNameId,
 		long referrerClassPK, int start, int end,
 		OrderByComparator<AnalyticsReferrer> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByA_R_R(analyticsEventIds, referrerClassName,
+				   .findByA_R_R(analyticsEventIds, referrerClassNameId,
 			referrerClassPK, start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Removes all the analytics referrers where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; from the database.
+	* Removes all the analytics referrers where analyticsEventId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; from the database.
 	*
 	* @param analyticsEventId the analytics event ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	*/
 	public static void removeByA_R_R(long analyticsEventId,
-		java.lang.String referrerClassName, long referrerClassPK) {
+		long referrerClassNameId, long referrerClassPK) {
 		getPersistence()
-			.removeByA_R_R(analyticsEventId, referrerClassName, referrerClassPK);
-	}
-
-	/**
-	* Returns the number of analytics referrers where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
-	*
-	* @param analyticsEventId the analytics event ID
-	* @param referrerClassName the referrer class name
-	* @param referrerClassPK the referrer class p k
-	* @return the number of matching analytics referrers
-	*/
-	public static int countByA_R_R(long analyticsEventId,
-		java.lang.String referrerClassName, long referrerClassPK) {
-		return getPersistence()
-				   .countByA_R_R(analyticsEventId, referrerClassName,
+			.removeByA_R_R(analyticsEventId, referrerClassNameId,
 			referrerClassPK);
 	}
 
 	/**
-	* Returns the number of analytics referrers where analyticsEventId = any &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the number of analytics referrers where analyticsEventId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
+	*
+	* @param analyticsEventId the analytics event ID
+	* @param referrerClassNameId the referrer class name ID
+	* @param referrerClassPK the referrer class p k
+	* @return the number of matching analytics referrers
+	*/
+	public static int countByA_R_R(long analyticsEventId,
+		long referrerClassNameId, long referrerClassPK) {
+		return getPersistence()
+				   .countByA_R_R(analyticsEventId, referrerClassNameId,
+			referrerClassPK);
+	}
+
+	/**
+	* Returns the number of analytics referrers where analyticsEventId = any &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param analyticsEventIds the analytics event IDs
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @return the number of matching analytics referrers
 	*/
 	public static int countByA_R_R(long[] analyticsEventIds,
-		java.lang.String referrerClassName, long referrerClassPK) {
+		long referrerClassNameId, long referrerClassPK) {
 		return getPersistence()
-				   .countByA_R_R(analyticsEventIds, referrerClassName,
+				   .countByA_R_R(analyticsEventIds, referrerClassNameId,
 			referrerClassPK);
 	}
 

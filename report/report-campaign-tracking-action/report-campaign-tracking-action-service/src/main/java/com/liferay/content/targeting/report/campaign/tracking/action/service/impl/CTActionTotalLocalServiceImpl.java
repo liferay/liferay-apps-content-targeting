@@ -51,23 +51,23 @@ public class CTActionTotalLocalServiceImpl
 
 	@Override
 	public CTActionTotal addCTActionTotal(
-			long reportInstanceId, String alias, String referrerClassName,
+			long reportInstanceId, String alias, long referrerClassNameId,
 			long referrerClassPK, String eventType, int count)
 		throws PortalException {
 
 		return addCTActionTotal(
-			reportInstanceId, alias, referrerClassName, referrerClassPK,
+			reportInstanceId, alias, referrerClassNameId, referrerClassPK,
 			StringPool.BLANK, eventType, count);
 	}
 
 	@Override
 	public CTActionTotal addCTActionTotal(
-			long reportInstanceId, String alias, String referrerClassName,
+			long reportInstanceId, String alias, long referrerClassNameId,
 			long referrerClassPK, String elementId, String eventType, int count)
 		throws PortalException {
 
 		CTActionTotal ctActionTotal = getCTActionTotal(
-			reportInstanceId, referrerClassName, referrerClassPK, elementId,
+			reportInstanceId, referrerClassNameId, referrerClassPK, elementId,
 			eventType);
 
 		if (ctActionTotal == null) {
@@ -83,7 +83,7 @@ public class CTActionTotalLocalServiceImpl
 			ctActionTotal.setCampaignId(reportInstance.getClassPK());
 			ctActionTotal.setReportInstanceId(reportInstanceId);
 			ctActionTotal.setAlias(alias);
-			ctActionTotal.setReferrerClassName(referrerClassName);
+			ctActionTotal.setReferrerClassNameId(referrerClassNameId);
 			ctActionTotal.setReferrerClassPK(referrerClassPK);
 			ctActionTotal.setElementId(elementId);
 			ctActionTotal.setEventType(eventType);
@@ -104,8 +104,7 @@ public class CTActionTotalLocalServiceImpl
 		throws PortalException {
 
 		return addCTActionTotal(
-			reportInstanceId, alias, StringPool.BLANK, -1, elementId, eventType,
-			count);
+			reportInstanceId, alias, -1, -1, elementId, eventType, count);
 	}
 
 	@Override
@@ -158,7 +157,7 @@ public class CTActionTotalLocalServiceImpl
 
 		addCTActionsTotalFromAnalyticsWithElementId(
 			reportInstanceId, modifiedDate);
-		addCTActionsTotalFromAnalyticsWithClassName(
+		addCTActionsTotalFromAnalyticsWithClassNameId(
 			reportInstanceId, modifiedDate);
 	}
 
@@ -199,24 +198,24 @@ public class CTActionTotalLocalServiceImpl
 
 	@Override
 	public CTActionTotal getCTActionTotal(
-			long reportInstanceId, String referrerClassName,
+			long reportInstanceId, long referrerClassNameId,
 			long referrerClassPK, String elementId, String eventType)
 		throws PortalException {
 
 		return ctActionTotalPersistence.fetchByR_R_R_E_E(
-			reportInstanceId, referrerClassName, referrerClassPK, elementId,
+			reportInstanceId, referrerClassNameId, referrerClassPK, elementId,
 			eventType);
 	}
 
-	protected void addCTActionsTotalFromAnalyticsWithClassName(
+	protected void addCTActionsTotalFromAnalyticsWithClassNameId(
 			long reportInstanceId, Date date)
 		throws PortalException {
 
 		List<Object[]> ctActionTotalAnalyticsList =
-			ctActionTotalFinder.findByAnalyticsWithClassName(date);
+			ctActionTotalFinder.findByAnalyticsWithClassNameId(date);
 
 		for (Object[] ctActionTotalAnalytics : ctActionTotalAnalyticsList) {
-			String className = (String)ctActionTotalAnalytics[0];
+			long classNameId = (Long)ctActionTotalAnalytics[0];
 			long classPK = (Long)ctActionTotalAnalytics[1];
 			String eventType = (String)ctActionTotalAnalytics[2];
 			int count = (Integer)ctActionTotalAnalytics[3];
@@ -224,13 +223,13 @@ public class CTActionTotalLocalServiceImpl
 			List<TrackingActionInstance> trackingActionInstances =
 				_trackingActionInstaceLocalService.
 					getTrackingActionInstancesByReportInstanceId(
-						reportInstanceId, className, classPK, eventType);
+						reportInstanceId, classNameId, classPK, eventType);
 
 			if (trackingActionInstances.isEmpty()) {
 				trackingActionInstances =
 					_trackingActionInstaceLocalService.
 						getTrackingActionInstancesByReportInstanceId(
-							reportInstanceId, className, classPK, "all");
+							reportInstanceId, classNameId, classPK, "all");
 
 				if (trackingActionInstances.isEmpty()) {
 					continue;
@@ -241,8 +240,8 @@ public class CTActionTotalLocalServiceImpl
 				trackingActionInstances.get(0);
 
 			addCTActionTotal(
-				reportInstanceId, trackingActionInstance.getAlias(), className,
-				classPK, eventType, count);
+				reportInstanceId, trackingActionInstance.getAlias(),
+				classNameId, classPK, eventType, count);
 		}
 	}
 

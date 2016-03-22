@@ -128,7 +128,7 @@ public class UserSegmentContentPersistenceTest {
 
 		newUserSegmentContent.setUserSegmentId(RandomTestUtil.nextLong());
 
-		newUserSegmentContent.setClassName(RandomTestUtil.randomString());
+		newUserSegmentContent.setClassNameId(RandomTestUtil.nextLong());
 
 		newUserSegmentContent.setClassPK(RandomTestUtil.nextLong());
 
@@ -148,8 +148,8 @@ public class UserSegmentContentPersistenceTest {
 			newUserSegmentContent.getCompanyId());
 		Assert.assertEquals(existingUserSegmentContent.getUserSegmentId(),
 			newUserSegmentContent.getUserSegmentId());
-		Assert.assertEquals(existingUserSegmentContent.getClassName(),
-			newUserSegmentContent.getClassName());
+		Assert.assertEquals(existingUserSegmentContent.getClassNameId(),
+			newUserSegmentContent.getClassNameId());
 		Assert.assertEquals(existingUserSegmentContent.getClassPK(),
 			newUserSegmentContent.getClassPK());
 		Assert.assertEquals(existingUserSegmentContent.getEventType(),
@@ -179,11 +179,12 @@ public class UserSegmentContentPersistenceTest {
 	@Test
 	public void testCountByC_C_C_E() throws Exception {
 		_persistence.countByC_C_C_E(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextLong(), StringPool.BLANK);
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			StringPool.BLANK);
 
-		_persistence.countByC_C_C_E(0L, StringPool.NULL, 0L, StringPool.NULL);
+		_persistence.countByC_C_C_E(0L, 0L, 0L, StringPool.NULL);
 
-		_persistence.countByC_C_C_E(0L, (String)null, 0L, (String)null);
+		_persistence.countByC_C_C_E(0L, 0L, 0L, (String)null);
 	}
 
 	@Test
@@ -211,7 +212,7 @@ public class UserSegmentContentPersistenceTest {
 	protected OrderByComparator<UserSegmentContent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CT_USCR_UserSegmentContent",
 			"userSegmentContentId", true, "companyId", true, "userSegmentId",
-			true, "className", true, "classPK", true, "eventType", true,
+			true, "classNameId", true, "classPK", true, "eventType", true,
 			"count", true, "modifiedDate", true);
 	}
 
@@ -422,10 +423,10 @@ public class UserSegmentContentPersistenceTest {
 				existingUserSegmentContent.getUserSegmentId()),
 			ReflectionTestUtil.<Long>invoke(existingUserSegmentContent,
 				"getOriginalUserSegmentId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(
-				existingUserSegmentContent.getClassName(),
-				ReflectionTestUtil.invoke(existingUserSegmentContent,
-					"getOriginalClassName", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingUserSegmentContent.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingUserSegmentContent,
+				"getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(
 				existingUserSegmentContent.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(existingUserSegmentContent,
@@ -446,7 +447,7 @@ public class UserSegmentContentPersistenceTest {
 
 		userSegmentContent.setUserSegmentId(RandomTestUtil.nextLong());
 
-		userSegmentContent.setClassName(RandomTestUtil.randomString());
+		userSegmentContent.setClassNameId(RandomTestUtil.nextLong());
 
 		userSegmentContent.setClassPK(RandomTestUtil.nextLong());
 

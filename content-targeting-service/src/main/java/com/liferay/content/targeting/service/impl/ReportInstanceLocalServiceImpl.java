@@ -75,9 +75,11 @@ public class ReportInstanceLocalServiceImpl
 
 		Report report = reportsRegistry.getReport(reportKey);
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		if ((report != null) && !report.isInstantiable() &&
 			(reportInstancePersistence.countByR_C_C(
-				reportKey, className, classPK) > 0)) {
+				reportKey, classNameId, classPK) > 0)) {
 
 			throw new DuplicateReportInstanceException(
 				"A report instance of the type " + reportKey + " already " +
@@ -166,9 +168,11 @@ public class ReportInstanceLocalServiceImpl
 	public ReportInstance fetchReportInstance(
 		String reportKey, String className, long classPK) {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		List<ReportInstance> reportInstances =
 			reportInstancePersistence.findByR_C_C(
-				reportKey, className, classPK);
+				reportKey, classNameId, classPK);
 
 		if (reportInstances.isEmpty() || (reportInstances.size() > 1)) {
 			return null;
@@ -181,8 +185,10 @@ public class ReportInstanceLocalServiceImpl
 	public List<ReportInstance> findReportInstances(
 		String reportKey, String className, long classPK) {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return reportInstancePersistence.findByR_C_C(
-			reportKey, className, classPK);
+			reportKey, classNameId, classPK);
 	}
 
 	@Override
@@ -194,23 +200,29 @@ public class ReportInstanceLocalServiceImpl
 	public int getReportInstanceCount(
 		String reportKey, String className, long classPK) {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return reportInstancePersistence.countByR_C_C(
-			reportKey, className, classPK);
+			reportKey, classNameId, classPK);
 	}
 
 	@Override
 	public List<ReportInstance> getReportInstances(
 		String className, long classPK) {
 
-		return reportInstancePersistence.findByC_C(className, classPK);
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return reportInstancePersistence.findByC_C(classNameId, classPK);
 	}
 
 	@Override
 	public List<ReportInstance> getReportInstances(
 		String className, long classPK, int start, int end) {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return reportInstancePersistence.findByC_C(
-			className, classPK, start, end);
+			classNameId, classPK, start, end);
 	}
 
 	@Override
@@ -218,13 +230,17 @@ public class ReportInstanceLocalServiceImpl
 		String className, long classPK, int start, int end,
 		OrderByComparator obc) {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return reportInstancePersistence.findByC_C(
-			className, classPK, start, end, obc);
+			classNameId, classPK, start, end, obc);
 	}
 
 	@Override
 	public int getReportInstancesCount(String className, long classPK) {
-		return reportInstancePersistence.countByC_C(className, classPK);
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return reportInstancePersistence.countByC_C(classNameId, classPK);
 	}
 
 	@Override

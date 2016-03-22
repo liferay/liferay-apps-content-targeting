@@ -56,9 +56,13 @@ public interface TrackingActionInstance extends TrackingActionInstanceModel,
 			}
 		};
 
+	public java.lang.String getReferrerClassName();
+
 	public java.lang.String getTrackingActionGuid();
 
 	public java.util.Map<java.lang.String, java.lang.String> getValues();
+
+	public void setReferrerClassName(java.lang.String referrerClassName);
 
 	public void setTrackingActionGuid(java.lang.String trackingActionGuid);
 

@@ -30,9 +30,11 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -71,7 +73,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 			{ "campaignContentId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "campaignId", Types.BIGINT },
-			{ "className", Types.VARCHAR },
+			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "eventType", Types.VARCHAR },
 			{ "count", Types.INTEGER },
@@ -83,14 +85,14 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 		TABLE_COLUMNS_MAP.put("campaignContentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("campaignId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("className", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("eventType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("count", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CT_CCR_CampaignContent (campaignContentId LONG not null primary key,companyId LONG,campaignId LONG,className VARCHAR(75) null,classPK LONG,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_CCR_CampaignContent (campaignContentId LONG not null primary key,companyId LONG,campaignId LONG,classNameId LONG,classPK LONG,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_CCR_CampaignContent";
 	public static final String ORDER_BY_JPQL = " ORDER BY campaignContent.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_CCR_CampaignContent.modifiedDate DESC";
@@ -107,7 +109,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 				"value.object.column.bitmask.enabled.com.liferay.content.targeting.report.campaign.content.model.CampaignContent"),
 			true);
 	public static final long CAMPAIGNID_COLUMN_BITMASK = 1L;
-	public static final long CLASSNAME_COLUMN_BITMASK = 2L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
 	public static final long CLASSPK_COLUMN_BITMASK = 4L;
 	public static final long EVENTTYPE_COLUMN_BITMASK = 8L;
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 16L;
@@ -128,7 +130,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 		model.setCampaignContentId(soapModel.getCampaignContentId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setCampaignId(soapModel.getCampaignId());
-		model.setClassName(soapModel.getClassName());
+		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
 		model.setEventType(soapModel.getEventType());
 		model.setCount(soapModel.getCount());
@@ -201,7 +203,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 		attributes.put("campaignContentId", getCampaignContentId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("campaignId", getCampaignId());
-		attributes.put("className", getClassName());
+		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("eventType", getEventType());
 		attributes.put("count", getCount());
@@ -233,10 +235,10 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 			setCampaignId(campaignId);
 		}
 
-		String className = (String)attributes.get("className");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (className != null) {
-			setClassName(className);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
 		}
 
 		Long classPK = (Long)attributes.get("classPK");
@@ -309,30 +311,47 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 		return _originalCampaignId;
 	}
 
-	@JSON
 	@Override
 	public String getClassName() {
-		if (_className == null) {
+		if (getClassNameId() <= 0) {
 			return StringPool.BLANK;
 		}
-		else {
-			return _className;
-		}
+
+		return PortalUtil.getClassName(getClassNameId());
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_columnBitmask |= CLASSNAME_COLUMN_BITMASK;
+		long classNameId = 0;
 
-		if (_originalClassName == null) {
-			_originalClassName = _className;
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
 		}
 
-		_className = className;
+		setClassNameId(classNameId);
 	}
 
-	public String getOriginalClassName() {
-		return GetterUtil.getString(_originalClassName);
+	@JSON
+	@Override
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	@Override
+	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
+		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -450,7 +469,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 		campaignContentImpl.setCampaignContentId(getCampaignContentId());
 		campaignContentImpl.setCompanyId(getCompanyId());
 		campaignContentImpl.setCampaignId(getCampaignId());
-		campaignContentImpl.setClassName(getClassName());
+		campaignContentImpl.setClassNameId(getClassNameId());
 		campaignContentImpl.setClassPK(getClassPK());
 		campaignContentImpl.setEventType(getEventType());
 		campaignContentImpl.setCount(getCount());
@@ -522,7 +541,9 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 
 		campaignContentModelImpl._setOriginalCampaignId = false;
 
-		campaignContentModelImpl._originalClassName = campaignContentModelImpl._className;
+		campaignContentModelImpl._originalClassNameId = campaignContentModelImpl._classNameId;
+
+		campaignContentModelImpl._setOriginalClassNameId = false;
 
 		campaignContentModelImpl._originalClassPK = campaignContentModelImpl._classPK;
 
@@ -545,13 +566,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 
 		campaignContentCacheModel.campaignId = getCampaignId();
 
-		campaignContentCacheModel.className = getClassName();
-
-		String className = campaignContentCacheModel.className;
-
-		if ((className != null) && (className.length() == 0)) {
-			campaignContentCacheModel.className = null;
-		}
+		campaignContentCacheModel.classNameId = getClassNameId();
 
 		campaignContentCacheModel.classPK = getClassPK();
 
@@ -587,8 +602,8 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 		sb.append(getCompanyId());
 		sb.append(", campaignId=");
 		sb.append(getCampaignId());
-		sb.append(", className=");
-		sb.append(getClassName());
+		sb.append(", classNameId=");
+		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
 		sb.append(", eventType=");
@@ -624,8 +639,8 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 		sb.append(getCampaignId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>className</column-name><column-value><![CDATA[");
-		sb.append(getClassName());
+			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
+		sb.append(getClassNameId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>classPK</column-name><column-value><![CDATA[");
@@ -658,8 +673,9 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 	private long _campaignId;
 	private long _originalCampaignId;
 	private boolean _setOriginalCampaignId;
-	private String _className;
-	private String _originalClassName;
+	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;

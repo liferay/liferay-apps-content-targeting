@@ -1,7 +1,6 @@
-Bundle-Name: User Segment Content Report Test
+Bundle-Name: Liferay Content Targeting User Segment Content Report Test
 Bundle-SymbolicName: com.liferay.content.targeting.report.user.segment.content.test
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: User Segment Content Report
 -baseline: *;version="1.0.0"
--include: ../../../app.bnd

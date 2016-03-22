@@ -39,7 +39,7 @@ public class CTActionTotalSoap implements Serializable {
 		soapModel.setCampaignId(model.getCampaignId());
 		soapModel.setReportInstanceId(model.getReportInstanceId());
 		soapModel.setAlias(model.getAlias());
-		soapModel.setReferrerClassName(model.getReferrerClassName());
+		soapModel.setReferrerClassNameId(model.getReferrerClassNameId());
 		soapModel.setReferrerClassPK(model.getReferrerClassPK());
 		soapModel.setElementId(model.getElementId());
 		soapModel.setEventType(model.getEventType());
@@ -137,12 +137,12 @@ public class CTActionTotalSoap implements Serializable {
 		_alias = alias;
 	}
 
-	public String getReferrerClassName() {
-		return _referrerClassName;
+	public long getReferrerClassNameId() {
+		return _referrerClassNameId;
 	}
 
-	public void setReferrerClassName(String referrerClassName) {
-		_referrerClassName = referrerClassName;
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		_referrerClassNameId = referrerClassNameId;
 	}
 
 	public long getReferrerClassPK() {
@@ -190,7 +190,7 @@ public class CTActionTotalSoap implements Serializable {
 	private long _campaignId;
 	private long _reportInstanceId;
 	private String _alias;
-	private String _referrerClassName;
+	private long _referrerClassNameId;
 	private long _referrerClassPK;
 	private String _elementId;
 	private String _eventType;

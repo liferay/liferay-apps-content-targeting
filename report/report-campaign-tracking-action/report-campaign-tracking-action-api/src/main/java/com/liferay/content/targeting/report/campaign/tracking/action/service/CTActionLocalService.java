@@ -76,14 +76,13 @@ public interface CTActionLocalService extends BaseLocalService,
 		java.lang.String eventType, int count) throws PortalException;
 
 	public CTAction addCTAction(long reportInstanceId, long userSegmentId,
-		java.lang.String alias, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType, int count) throws PortalException;
+		java.lang.String alias, long referrerClassNameId, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType, int count)
+		throws PortalException;
 
 	public CTAction addCTAction(long reportInstanceId, long userSegmentId,
-		java.lang.String alias, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String eventType, int count)
-		throws PortalException;
+		java.lang.String alias, long referrerClassNameId, long referrerClassPK,
+		java.lang.String eventType, int count) throws PortalException;
 
 	public void checkCTActionEvents() throws PortalException;
 
@@ -201,7 +200,7 @@ public interface CTActionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CTAction getCTAction(long reportInstanceId, long userSegmentId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws PortalException;
 
@@ -210,8 +209,8 @@ public interface CTActionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTAction> getCTActions(long reportInstanceId,
-		java.lang.String className, long classPK) throws PortalException;
+	public List<CTAction> getCTActions(long reportInstanceId, long classNameId,
+		long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTAction> getCTActions(long reportInstanceId,

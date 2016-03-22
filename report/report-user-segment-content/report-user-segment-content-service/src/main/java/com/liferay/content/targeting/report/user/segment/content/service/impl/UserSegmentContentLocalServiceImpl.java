@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
@@ -130,8 +130,10 @@ public class UserSegmentContentLocalServiceImpl
 			String eventType)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		return userSegmentContentPersistence.fetchByC_C_C_E(
-			userSegmentId, className, classPK, eventType);
+			userSegmentId, classNameId, classPK, eventType);
 	}
 
 	@Override
@@ -183,11 +185,13 @@ public class UserSegmentContentLocalServiceImpl
 		// Process analytics and store data
 
 		for (Object[] analyticsEvent : analyticsEvents) {
-			String className = (String)analyticsEvent[0];
+			long classNameId = (Long)analyticsEvent[0];
 			long classPK = (Long)analyticsEvent[1];
 			int count = (Integer)analyticsEvent[2];
 
-			if (Validator.isNotNull(className) && (classPK > 0)) {
+			if ((classNameId > 0) && (classPK > 0)) {
+				String className = PortalUtil.getClassName(classNameId);
+
 				addUserSegmentContent(
 					userSegmentId, className, classPK, "view", count);
 			}

@@ -78,8 +78,8 @@ public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 		sb.append(reportInstanceId);
 		sb.append(", alias=");
 		sb.append(alias);
-		sb.append(", referrerClassName=");
-		sb.append(referrerClassName);
+		sb.append(", referrerClassNameId=");
+		sb.append(referrerClassNameId);
 		sb.append(", referrerClassPK=");
 		sb.append(referrerClassPK);
 		sb.append(", elementId=");
@@ -111,13 +111,7 @@ public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 			ctActionTotalImpl.setAlias(alias);
 		}
 
-		if (referrerClassName == null) {
-			ctActionTotalImpl.setReferrerClassName(StringPool.BLANK);
-		}
-		else {
-			ctActionTotalImpl.setReferrerClassName(referrerClassName);
-		}
-
+		ctActionTotalImpl.setReferrerClassNameId(referrerClassNameId);
 		ctActionTotalImpl.setReferrerClassPK(referrerClassPK);
 
 		if (elementId == null) {
@@ -158,7 +152,8 @@ public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 
 		reportInstanceId = objectInput.readLong();
 		alias = objectInput.readUTF();
-		referrerClassName = objectInput.readUTF();
+
+		referrerClassNameId = objectInput.readLong();
 
 		referrerClassPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
@@ -186,12 +181,7 @@ public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 			objectOutput.writeUTF(alias);
 		}
 
-		if (referrerClassName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(referrerClassName);
-		}
+		objectOutput.writeLong(referrerClassNameId);
 
 		objectOutput.writeLong(referrerClassPK);
 
@@ -218,7 +208,7 @@ public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 	public long campaignId;
 	public long reportInstanceId;
 	public String alias;
-	public String referrerClassName;
+	public long referrerClassNameId;
 	public long referrerClassPK;
 	public String elementId;
 	public String eventType;

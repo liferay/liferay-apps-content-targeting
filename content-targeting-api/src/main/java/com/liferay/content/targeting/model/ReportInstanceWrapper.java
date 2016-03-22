@@ -71,7 +71,7 @@ public class ReportInstanceWrapper implements ReportInstance,
 		attributes.put("reportKey", getReportKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("className", getClassName());
+		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("typeSettings", getTypeSettings());
 
@@ -146,10 +146,10 @@ public class ReportInstanceWrapper implements ReportInstance,
 			setDescription(description);
 		}
 
-		String className = (String)attributes.get("className");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (className != null) {
-			setClassName(className);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
 		}
 
 		Long classPK = (Long)attributes.get("classPK");
@@ -182,13 +182,23 @@ public class ReportInstanceWrapper implements ReportInstance,
 	}
 
 	/**
-	* Returns the class name of this report instance.
+	* Returns the fully qualified class name of this report instance.
 	*
-	* @return the class name of this report instance
+	* @return the fully qualified class name of this report instance
 	*/
 	@Override
 	public java.lang.String getClassName() {
 		return _reportInstance.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this report instance.
+	*
+	* @return the class name ID of this report instance
+	*/
+	@Override
+	public long getClassNameId() {
+		return _reportInstance.getClassNameId();
 	}
 
 	/**
@@ -549,14 +559,19 @@ public class ReportInstanceWrapper implements ReportInstance,
 		_reportInstance.setCachedModel(cachedModel);
 	}
 
-	/**
-	* Sets the class name of this report instance.
-	*
-	* @param className the class name of this report instance
-	*/
 	@Override
 	public void setClassName(java.lang.String className) {
 		_reportInstance.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this report instance.
+	*
+	* @param classNameId the class name ID of this report instance
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_reportInstance.setClassNameId(classNameId);
 	}
 
 	/**

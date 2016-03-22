@@ -73,7 +73,7 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("alias", getAlias());
-		attributes.put("referrerClassName", getReferrerClassName());
+		attributes.put("referrerClassNameId", getReferrerClassNameId());
 		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
@@ -157,10 +157,10 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 			setAlias(alias);
 		}
 
-		String referrerClassName = (String)attributes.get("referrerClassName");
+		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");
 
-		if (referrerClassName != null) {
-			setReferrerClassName(referrerClassName);
+		if (referrerClassNameId != null) {
+			setReferrerClassNameId(referrerClassNameId);
 		}
 
 		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
@@ -299,14 +299,19 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 		return _trackingActionInstance.getPrimaryKeyObj();
 	}
 
-	/**
-	* Returns the referrer class name of this tracking action instance.
-	*
-	* @return the referrer class name of this tracking action instance
-	*/
 	@Override
 	public java.lang.String getReferrerClassName() {
 		return _trackingActionInstance.getReferrerClassName();
+	}
+
+	/**
+	* Returns the referrer class name ID of this tracking action instance.
+	*
+	* @return the referrer class name ID of this tracking action instance
+	*/
+	@Override
+	public long getReferrerClassNameId() {
+		return _trackingActionInstance.getReferrerClassNameId();
 	}
 
 	/**
@@ -555,14 +560,19 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 		_trackingActionInstance.setPrimaryKeyObj(primaryKeyObj);
 	}
 
-	/**
-	* Sets the referrer class name of this tracking action instance.
-	*
-	* @param referrerClassName the referrer class name of this tracking action instance
-	*/
 	@Override
 	public void setReferrerClassName(java.lang.String referrerClassName) {
 		_trackingActionInstance.setReferrerClassName(referrerClassName);
+	}
+
+	/**
+	* Sets the referrer class name ID of this tracking action instance.
+	*
+	* @param referrerClassNameId the referrer class name ID of this tracking action instance
+	*/
+	@Override
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		_trackingActionInstance.setReferrerClassNameId(referrerClassNameId);
 	}
 
 	/**

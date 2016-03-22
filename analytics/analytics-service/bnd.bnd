@@ -1,4 +1,4 @@
-Bundle-Name: Analytics Service
+Bundle-Name: Liferay Content Targeting Analytics Service
 Bundle-SymbolicName: com.liferay.content.targeting.analytics.service
 Bundle-Version: 2.0.0
 Export-Package:\
@@ -14,6 +14,6 @@ Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=3.0)))"
 -baseline: *;version="2.0.0"
--include: ../../app.bnd
+
 -liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

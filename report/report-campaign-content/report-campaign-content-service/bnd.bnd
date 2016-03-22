@@ -1,4 +1,4 @@
-Bundle-Name: Campaign Content Report Service
+Bundle-Name: Liferay Content Targeting Campaign Content Report Service
 Bundle-SymbolicName: com.liferay.content.targeting.report.campaign.content.service
 Bundle-Version: 1.0.0
 Export-Package:\
@@ -12,6 +12,6 @@ Liferay-Service: true
 Liferay-Spring-Context: META-INF/spring
 Web-ContextPath: /report-campaign-content
 -baseline: *;version="1.0.0"
--include: ../../../app.bnd
+
 -liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

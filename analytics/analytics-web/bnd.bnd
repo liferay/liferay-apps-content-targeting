@@ -1,4 +1,4 @@
-Bundle-Name: Analytics Web
+Bundle-Name: Liferay Content Targeting Analytics Web
 Bundle-SymbolicName: com.liferay.content.targeting.analytics.web
 Bundle-Version: 1.0.0
 Export-Package:\
@@ -9,4 +9,3 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Analytics
 Web-ContextPath: /analytics-web
 -baseline: *;version="1.0.0"
--include: ../../app.bnd

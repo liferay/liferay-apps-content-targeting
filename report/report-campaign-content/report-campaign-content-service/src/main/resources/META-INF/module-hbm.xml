@@ -9,7 +9,7 @@
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="className" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="count" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />

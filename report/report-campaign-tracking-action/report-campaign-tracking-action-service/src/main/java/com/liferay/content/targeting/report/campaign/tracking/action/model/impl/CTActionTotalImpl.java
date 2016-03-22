@@ -44,7 +44,7 @@ public class CTActionTotalImpl extends CTActionTotalBaseImpl {
 		}
 		else {
 			ctActions = CTActionLocalServiceUtil.getCTActions(
-				getReportInstanceId(), getReferrerClassName(),
+				getReportInstanceId(), getReferrerClassNameId(),
 				getReferrerClassPK());
 		}
 

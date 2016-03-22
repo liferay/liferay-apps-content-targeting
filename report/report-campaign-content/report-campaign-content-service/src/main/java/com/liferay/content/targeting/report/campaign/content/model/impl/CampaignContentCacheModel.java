@@ -74,8 +74,8 @@ public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 		sb.append(companyId);
 		sb.append(", campaignId=");
 		sb.append(campaignId);
-		sb.append(", className=");
-		sb.append(className);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
 		sb.append(", eventType=");
@@ -96,14 +96,7 @@ public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 		campaignContentImpl.setCampaignContentId(campaignContentId);
 		campaignContentImpl.setCompanyId(companyId);
 		campaignContentImpl.setCampaignId(campaignId);
-
-		if (className == null) {
-			campaignContentImpl.setClassName(StringPool.BLANK);
-		}
-		else {
-			campaignContentImpl.setClassName(className);
-		}
-
+		campaignContentImpl.setClassNameId(classNameId);
 		campaignContentImpl.setClassPK(classPK);
 
 		if (eventType == null) {
@@ -134,7 +127,8 @@ public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 		companyId = objectInput.readLong();
 
 		campaignId = objectInput.readLong();
-		className = objectInput.readUTF();
+
+		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
 		eventType = objectInput.readUTF();
@@ -152,12 +146,7 @@ public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 
 		objectOutput.writeLong(campaignId);
 
-		if (className == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(className);
-		}
+		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
 
@@ -175,7 +164,7 @@ public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 	public long campaignContentId;
 	public long companyId;
 	public long campaignId;
-	public String className;
+	public long classNameId;
 	public long classPK;
 	public String eventType;
 	public int count;

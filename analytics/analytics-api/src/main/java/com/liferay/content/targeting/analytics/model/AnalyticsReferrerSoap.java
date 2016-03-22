@@ -35,7 +35,7 @@ public class AnalyticsReferrerSoap implements Serializable {
 
 		soapModel.setAnalyticsReferrerId(model.getAnalyticsReferrerId());
 		soapModel.setAnalyticsEventId(model.getAnalyticsEventId());
-		soapModel.setReferrerClassName(model.getReferrerClassName());
+		soapModel.setReferrerClassNameId(model.getReferrerClassNameId());
 		soapModel.setReferrerClassPK(model.getReferrerClassPK());
 
 		return soapModel;
@@ -108,12 +108,12 @@ public class AnalyticsReferrerSoap implements Serializable {
 		_analyticsEventId = analyticsEventId;
 	}
 
-	public String getReferrerClassName() {
-		return _referrerClassName;
+	public long getReferrerClassNameId() {
+		return _referrerClassNameId;
 	}
 
-	public void setReferrerClassName(String referrerClassName) {
-		_referrerClassName = referrerClassName;
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		_referrerClassNameId = referrerClassNameId;
 	}
 
 	public long getReferrerClassPK() {
@@ -126,6 +126,6 @@ public class AnalyticsReferrerSoap implements Serializable {
 
 	private long _analyticsReferrerId;
 	private long _analyticsEventId;
-	private String _referrerClassName;
+	private long _referrerClassNameId;
 	private long _referrerClassPK;
 }

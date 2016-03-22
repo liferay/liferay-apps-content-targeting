@@ -63,7 +63,7 @@ public class CTActionTotalWrapper implements CTActionTotal,
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("alias", getAlias());
-		attributes.put("referrerClassName", getReferrerClassName());
+		attributes.put("referrerClassNameId", getReferrerClassNameId());
 		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
@@ -105,10 +105,10 @@ public class CTActionTotalWrapper implements CTActionTotal,
 			setAlias(alias);
 		}
 
-		String referrerClassName = (String)attributes.get("referrerClassName");
+		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");
 
-		if (referrerClassName != null) {
-			setReferrerClassName(referrerClassName);
+		if (referrerClassNameId != null) {
+			setReferrerClassNameId(referrerClassNameId);
 		}
 
 		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
@@ -254,13 +254,13 @@ public class CTActionTotalWrapper implements CTActionTotal,
 	}
 
 	/**
-	* Returns the referrer class name of this c t action total.
+	* Returns the referrer class name ID of this c t action total.
 	*
-	* @return the referrer class name of this c t action total
+	* @return the referrer class name ID of this c t action total
 	*/
 	@Override
-	public java.lang.String getReferrerClassName() {
-		return _ctActionTotal.getReferrerClassName();
+	public long getReferrerClassNameId() {
+		return _ctActionTotal.getReferrerClassNameId();
 	}
 
 	/**
@@ -436,13 +436,13 @@ public class CTActionTotalWrapper implements CTActionTotal,
 	}
 
 	/**
-	* Sets the referrer class name of this c t action total.
+	* Sets the referrer class name ID of this c t action total.
 	*
-	* @param referrerClassName the referrer class name of this c t action total
+	* @param referrerClassNameId the referrer class name ID of this c t action total
 	*/
 	@Override
-	public void setReferrerClassName(java.lang.String referrerClassName) {
-		_ctActionTotal.setReferrerClassName(referrerClassName);
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		_ctActionTotal.setReferrerClassNameId(referrerClassNameId);
 	}
 
 	/**

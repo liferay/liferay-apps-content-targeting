@@ -31,25 +31,25 @@ import java.util.List;
 public class CTActionTotalFinderImpl
 	extends CTActionTotalFinderBaseImpl implements CTActionTotalFinder {
 
-	public static final String FIND_BY_ANALYICS_WITH_CLASS_NAME =
-		CTActionTotalFinder.class.getName() + ".findByAnalyticsWithClassName";
+	public static final String FIND_BY_ANALYICS_WITH_CLASS_NAME_ID =
+		CTActionTotalFinder.class.getName() + ".findByAnalyticsWithClassNameId";
 
 	public static final String FIND_BY_ANALYICS_WITH_ELEMENT_ID =
 		CTActionTotalFinder.class.getName() + ".findByAnalyticsWithElementId";
 
 	@Override
-	public List<Object[]> findByAnalyticsWithClassName(Date modifiedDate) {
+	public List<Object[]> findByAnalyticsWithClassNameId(Date modifiedDate) {
 		Session session = null;
 
 		try {
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				getClass(), FIND_BY_ANALYICS_WITH_CLASS_NAME);
+				getClass(), FIND_BY_ANALYICS_WITH_CLASS_NAME_ID);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar("className", Type.STRING);
+			q.addScalar("classNameId", Type.LONG);
 			q.addScalar("classPK", Type.LONG);
 			q.addScalar("eventType", Type.STRING);
 			q.addScalar("count", Type.INTEGER);

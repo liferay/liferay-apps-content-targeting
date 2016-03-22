@@ -1,2 +1,2 @@
-create unique index IX_6A8F32C1 on CT_CCR_CampaignContent (campaignId, className[$COLUMN_LENGTH:75$], classPK, eventType[$COLUMN_LENGTH:75$]);
+create unique index IX_6A8F32C1 on CT_CCR_CampaignContent (campaignId, classNameId, classPK, eventType[$COLUMN_LENGTH:75$]);
 create index IX_B40D935E on CT_CCR_CampaignContent (campaignId, modifiedDate);

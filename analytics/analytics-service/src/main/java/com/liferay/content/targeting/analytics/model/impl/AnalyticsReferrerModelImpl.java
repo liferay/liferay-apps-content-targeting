@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -68,7 +67,7 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "analyticsReferrerId", Types.BIGINT },
 			{ "analyticsEventId", Types.BIGINT },
-			{ "referrerClassName", Types.VARCHAR },
+			{ "referrerClassNameId", Types.BIGINT },
 			{ "referrerClassPK", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -76,11 +75,11 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 	static {
 		TABLE_COLUMNS_MAP.put("analyticsReferrerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("analyticsEventId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("referrerClassName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("referrerClassNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("referrerClassPK", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CT_Analytics_AnalyticsReferrer (analyticsReferrerId LONG not null primary key,analyticsEventId LONG,referrerClassName VARCHAR(75) null,referrerClassPK LONG)";
+	public static final String TABLE_SQL_CREATE = "create table CT_Analytics_AnalyticsReferrer (analyticsReferrerId LONG not null primary key,analyticsEventId LONG,referrerClassNameId LONG,referrerClassPK LONG)";
 	public static final String TABLE_SQL_DROP = "drop table CT_Analytics_AnalyticsReferrer";
 	public static final String ORDER_BY_JPQL = " ORDER BY analyticsReferrer.analyticsReferrerId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_Analytics_AnalyticsReferrer.analyticsReferrerId ASC";
@@ -97,7 +96,7 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 				"value.object.column.bitmask.enabled.com.liferay.content.targeting.analytics.model.AnalyticsReferrer"),
 			true);
 	public static final long ANALYTICSEVENTID_COLUMN_BITMASK = 1L;
-	public static final long REFERRERCLASSNAME_COLUMN_BITMASK = 2L;
+	public static final long REFERRERCLASSNAMEID_COLUMN_BITMASK = 2L;
 	public static final long REFERRERCLASSPK_COLUMN_BITMASK = 4L;
 	public static final long ANALYTICSREFERRERID_COLUMN_BITMASK = 8L;
 
@@ -116,7 +115,7 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 
 		model.setAnalyticsReferrerId(soapModel.getAnalyticsReferrerId());
 		model.setAnalyticsEventId(soapModel.getAnalyticsEventId());
-		model.setReferrerClassName(soapModel.getReferrerClassName());
+		model.setReferrerClassNameId(soapModel.getReferrerClassNameId());
 		model.setReferrerClassPK(soapModel.getReferrerClassPK());
 
 		return model;
@@ -185,7 +184,7 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 
 		attributes.put("analyticsReferrerId", getAnalyticsReferrerId());
 		attributes.put("analyticsEventId", getAnalyticsEventId());
-		attributes.put("referrerClassName", getReferrerClassName());
+		attributes.put("referrerClassNameId", getReferrerClassNameId());
 		attributes.put("referrerClassPK", getReferrerClassPK());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -208,10 +207,10 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 			setAnalyticsEventId(analyticsEventId);
 		}
 
-		String referrerClassName = (String)attributes.get("referrerClassName");
+		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");
 
-		if (referrerClassName != null) {
-			setReferrerClassName(referrerClassName);
+		if (referrerClassNameId != null) {
+			setReferrerClassNameId(referrerClassNameId);
 		}
 
 		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
@@ -257,28 +256,25 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 
 	@JSON
 	@Override
-	public String getReferrerClassName() {
-		if (_referrerClassName == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _referrerClassName;
-		}
+	public long getReferrerClassNameId() {
+		return _referrerClassNameId;
 	}
 
 	@Override
-	public void setReferrerClassName(String referrerClassName) {
-		_columnBitmask |= REFERRERCLASSNAME_COLUMN_BITMASK;
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		_columnBitmask |= REFERRERCLASSNAMEID_COLUMN_BITMASK;
 
-		if (_originalReferrerClassName == null) {
-			_originalReferrerClassName = _referrerClassName;
+		if (!_setOriginalReferrerClassNameId) {
+			_setOriginalReferrerClassNameId = true;
+
+			_originalReferrerClassNameId = _referrerClassNameId;
 		}
 
-		_referrerClassName = referrerClassName;
+		_referrerClassNameId = referrerClassNameId;
 	}
 
-	public String getOriginalReferrerClassName() {
-		return GetterUtil.getString(_originalReferrerClassName);
+	public long getOriginalReferrerClassNameId() {
+		return _originalReferrerClassNameId;
 	}
 
 	@JSON
@@ -337,7 +333,7 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 
 		analyticsReferrerImpl.setAnalyticsReferrerId(getAnalyticsReferrerId());
 		analyticsReferrerImpl.setAnalyticsEventId(getAnalyticsEventId());
-		analyticsReferrerImpl.setReferrerClassName(getReferrerClassName());
+		analyticsReferrerImpl.setReferrerClassNameId(getReferrerClassNameId());
 		analyticsReferrerImpl.setReferrerClassPK(getReferrerClassPK());
 
 		analyticsReferrerImpl.resetOriginalValues();
@@ -405,7 +401,9 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 
 		analyticsReferrerModelImpl._setOriginalAnalyticsEventId = false;
 
-		analyticsReferrerModelImpl._originalReferrerClassName = analyticsReferrerModelImpl._referrerClassName;
+		analyticsReferrerModelImpl._originalReferrerClassNameId = analyticsReferrerModelImpl._referrerClassNameId;
+
+		analyticsReferrerModelImpl._setOriginalReferrerClassNameId = false;
 
 		analyticsReferrerModelImpl._originalReferrerClassPK = analyticsReferrerModelImpl._referrerClassPK;
 
@@ -422,13 +420,7 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 
 		analyticsReferrerCacheModel.analyticsEventId = getAnalyticsEventId();
 
-		analyticsReferrerCacheModel.referrerClassName = getReferrerClassName();
-
-		String referrerClassName = analyticsReferrerCacheModel.referrerClassName;
-
-		if ((referrerClassName != null) && (referrerClassName.length() == 0)) {
-			analyticsReferrerCacheModel.referrerClassName = null;
-		}
+		analyticsReferrerCacheModel.referrerClassNameId = getReferrerClassNameId();
 
 		analyticsReferrerCacheModel.referrerClassPK = getReferrerClassPK();
 
@@ -443,8 +435,8 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 		sb.append(getAnalyticsReferrerId());
 		sb.append(", analyticsEventId=");
 		sb.append(getAnalyticsEventId());
-		sb.append(", referrerClassName=");
-		sb.append(getReferrerClassName());
+		sb.append(", referrerClassNameId=");
+		sb.append(getReferrerClassNameId());
 		sb.append(", referrerClassPK=");
 		sb.append(getReferrerClassPK());
 		sb.append("}");
@@ -470,8 +462,8 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 		sb.append(getAnalyticsEventId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>referrerClassName</column-name><column-value><![CDATA[");
-		sb.append(getReferrerClassName());
+			"<column><column-name>referrerClassNameId</column-name><column-value><![CDATA[");
+		sb.append(getReferrerClassNameId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>referrerClassPK</column-name><column-value><![CDATA[");
@@ -491,8 +483,9 @@ public class AnalyticsReferrerModelImpl extends BaseModelImpl<AnalyticsReferrer>
 	private long _analyticsEventId;
 	private long _originalAnalyticsEventId;
 	private boolean _setOriginalAnalyticsEventId;
-	private String _referrerClassName;
-	private String _originalReferrerClassName;
+	private long _referrerClassNameId;
+	private long _originalReferrerClassNameId;
+	private boolean _setOriginalReferrerClassNameId;
 	private long _referrerClassPK;
 	private long _originalReferrerClassPK;
 	private boolean _setOriginalReferrerClassPK;

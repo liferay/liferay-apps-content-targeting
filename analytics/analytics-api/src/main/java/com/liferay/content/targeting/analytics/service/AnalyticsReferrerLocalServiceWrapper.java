@@ -36,10 +36,11 @@ public class AnalyticsReferrerLocalServiceWrapper
 
 	@Override
 	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer addAnalyticsReferrer(
-		long analyticsEventId, java.lang.String className, long classPK)
+		long analyticsEventId, java.lang.String referrerClassName,
+		long referrerClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _analyticsReferrerLocalService.addAnalyticsReferrer(analyticsEventId,
-			className, classPK);
+			referrerClassName, referrerClassPK);
 	}
 
 	/**
@@ -215,22 +216,22 @@ public class AnalyticsReferrerLocalServiceWrapper
 
 	@Override
 	public int getAnalyticsReferrerCount(long analyticsEventId,
-		java.lang.String className, long classPK) {
+		java.lang.String referrerClassName, long referrerClassPK) {
 		return _analyticsReferrerLocalService.getAnalyticsReferrerCount(analyticsEventId,
-			className, classPK);
+			referrerClassName, referrerClassPK);
 	}
 
 	@Override
 	public int getAnalyticsReferrerCount(long[] analyticsEventIds,
-		java.lang.String className, long classPK) {
+		java.lang.String referrerClassName, long classPK) {
 		return _analyticsReferrerLocalService.getAnalyticsReferrerCount(analyticsEventIds,
-			className, classPK);
+			referrerClassName, classPK);
 	}
 
 	@Override
-	public int getAnalyticsReferrerCount(java.lang.String className,
+	public int getAnalyticsReferrerCount(java.lang.String referrerClassName,
 		long classPK) {
-		return _analyticsReferrerLocalService.getAnalyticsReferrerCount(className,
+		return _analyticsReferrerLocalService.getAnalyticsReferrerCount(referrerClassName,
 			classPK);
 	}
 

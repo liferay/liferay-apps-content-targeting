@@ -35,6 +35,7 @@ public class RuleInstanceImpl extends RuleInstanceBaseImpl {
 	public RuleInstanceImpl() {
 	}
 
+	@Override
 	public String getRuleGuid() {
 		return _ruleGuid;
 	}
@@ -53,14 +54,17 @@ public class RuleInstanceImpl extends RuleInstanceBaseImpl {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	public Map<String, String> getValues() {
 		return _values;
 	}
 
+	@Override
 	public void setRuleGuid(String ruleGuid) {
 		_ruleGuid = ruleGuid;
 	}
 
+	@Override
 	public void setValues(Map<String, String> values) {
 		this._values = values;
 	}

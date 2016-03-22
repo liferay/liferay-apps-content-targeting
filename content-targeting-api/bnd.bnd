@@ -1,4 +1,4 @@
-Bundle-Name: Content Targeting API
+Bundle-Name: Liferay Content Targeting API
 Bundle-SymbolicName: com.liferay.content.targeting.api
 Bundle-Version: 3.0.0
 Export-Package:\
@@ -13,4 +13,3 @@ Export-Package:\
 	com.liferay.content.targeting.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Audience Targeting
--include: ../app.bnd

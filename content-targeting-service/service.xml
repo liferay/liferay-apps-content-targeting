@@ -189,7 +189,7 @@
 		<column name="reportKey" type="String" />
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
-		<column name="className" type="String" />
+		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="typeSettings" type="String" />
 
@@ -202,12 +202,12 @@
 		<!-- Finder methods -->
 
 		<finder name="C_C" return-type="Collection">
-			<finder-column name="className" />
+			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
 		<finder name="R_C_C" return-type="Collection">
 			<finder-column name="reportKey" />
-			<finder-column name="className" />
+			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
 
@@ -326,7 +326,7 @@
 		<column name="campaignId" type="long" />
 		<column name="reportInstanceId" type="long" />
 		<column name="alias" type="String" />
-		<column name="referrerClassName" type="String" />
+		<column name="referrerClassNameId" type="long" />
 		<column name="referrerClassPK" type="long" />
 		<column name="elementId" type="String" />
 		<column name="eventType" type="String" />
@@ -369,13 +369,13 @@
 		</finder>
 		<finder name="C_R_R_E" return-type="Collection">
 			<finder-column name="campaignId" />
-			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassNameId" />
 			<finder-column name="referrerClassPK" />
 			<finder-column name="eventType" />
 		</finder>
 		<finder name="R_R_R_E" return-type="Collection">
 			<finder-column name="reportInstanceId" />
-			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassNameId" />
 			<finder-column name="referrerClassPK" />
 			<finder-column name="eventType" />
 		</finder>

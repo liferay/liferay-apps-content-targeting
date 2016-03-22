@@ -39,6 +39,7 @@ public class CampaignImpl extends CampaignBaseImpl {
 	public CampaignImpl() {
 	}
 
+	@Override
 	public String getNameWithGroupName(Locale locale, long groupId) {
 		String name = getName(locale);
 

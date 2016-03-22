@@ -37,6 +37,7 @@ import java.util.Locale;
  */
 public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 
+	@Override
 	public String getReportName(Locale locale) {
 		Report report = ReportInstanceLocalServiceUtil.getReport(
 			getReportKey());
@@ -72,6 +73,7 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 		return reportName;
 	}
 
+	@Override
 	public String getTypeName(Locale locale) {
 		Report report = ReportInstanceLocalServiceUtil.getReport(
 			getReportKey());
@@ -87,6 +89,7 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 		return report.getName(locale);
 	}
 
+	@Override
 	public boolean isInstantiable() {
 		Report report = ReportInstanceLocalServiceUtil.getReport(
 			getReportKey());

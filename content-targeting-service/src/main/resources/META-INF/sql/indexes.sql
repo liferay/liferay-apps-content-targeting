@@ -24,8 +24,8 @@ create index IX_5FBDCA07 on CT_ChannelInstance (tacticId, channelKey[$COLUMN_LEN
 create index IX_246DEE04 on CT_ChannelInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_4DE22586 on CT_ChannelInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_3E22574D on CT_ReportInstance (className[$COLUMN_LENGTH:75$], classPK);
-create index IX_956562EE on CT_ReportInstance (reportKey[$COLUMN_LENGTH:75$], className[$COLUMN_LENGTH:75$], classPK);
+create index IX_A3312432 on CT_ReportInstance (classNameId, classPK);
+create index IX_35DFCB93 on CT_ReportInstance (reportKey[$COLUMN_LENGTH:75$], classNameId, classPK);
 create index IX_CDD8AA51 on CT_ReportInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_FF799113 on CT_ReportInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 
@@ -46,11 +46,11 @@ create index IX_D2685D0 on CT_Tactics_UserSegments (userSegmentId);
 
 create unique index IX_FE48A6B8 on CT_TrackingActionInstance (campaignId, alias_[$COLUMN_LENGTH:75$]);
 create index IX_8DDDDC52 on CT_TrackingActionInstance (campaignId, elementId[$COLUMN_LENGTH:75$], eventType[$COLUMN_LENGTH:75$]);
-create index IX_A96A17F on CT_TrackingActionInstance (campaignId, referrerClassName[$COLUMN_LENGTH:75$], referrerClassPK, eventType[$COLUMN_LENGTH:75$]);
+create index IX_B5161A3A on CT_TrackingActionInstance (campaignId, referrerClassNameId, referrerClassPK, eventType[$COLUMN_LENGTH:75$]);
 create index IX_8EAC9E74 on CT_TrackingActionInstance (groupId);
 create unique index IX_5D0CB811 on CT_TrackingActionInstance (reportInstanceId, alias_[$COLUMN_LENGTH:75$]);
 create index IX_94F81DEB on CT_TrackingActionInstance (reportInstanceId, elementId[$COLUMN_LENGTH:75$], eventType[$COLUMN_LENGTH:75$]);
-create index IX_9DBA2E06 on CT_TrackingActionInstance (reportInstanceId, referrerClassName[$COLUMN_LENGTH:75$], referrerClassPK, eventType[$COLUMN_LENGTH:75$]);
+create index IX_D88A101 on CT_TrackingActionInstance (reportInstanceId, referrerClassNameId, referrerClassPK, eventType[$COLUMN_LENGTH:75$]);
 create index IX_5544BB6A on CT_TrackingActionInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_D8B9146C on CT_TrackingActionInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 
@@ -75,8 +75,8 @@ create index IX_F79663D5 on ChannelInstance (tacticId, channelKey[$COLUMN_LENGTH
 create index IX_15479ED2 on ChannelInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_736DB1D4 on ChannelInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_687EC03F on ReportInstance (className[$COLUMN_LENGTH:75$], classPK);
-create index IX_AA64EBC on ReportInstance (reportKey[$COLUMN_LENGTH:75$], className[$COLUMN_LENGTH:75$], classPK);
+create index IX_687EC03F on ReportInstance (classNameId, classPK);
+create index IX_AA64EBC on ReportInstance (reportKey[$COLUMN_LENGTH:75$], classNameId, classPK);
 create index IX_59BEA7C3 on ReportInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_53444305 on ReportInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 
@@ -97,11 +97,11 @@ create index IX_2E573B1E on Tactics_UserSegments (userSegmentId);
 
 create unique index IX_26DFDAA on TrackingActionInstance (campaignId, alias_[$COLUMN_LENGTH:75$]);
 create index IX_945F23C4 on TrackingActionInstance (campaignId, elementId[$COLUMN_LENGTH:75$], eventType[$COLUMN_LENGTH:75$]);
-create index IX_C00A3E4D on TrackingActionInstance (campaignId, referrerClassName[$COLUMN_LENGTH:75$], referrerClassPK, eventType[$COLUMN_LENGTH:75$]);
+create index IX_C00A3E4D on TrackingActionInstance (campaignId, referrerClassNameId, referrerClassPK, eventType[$COLUMN_LENGTH:75$]);
 create index IX_B4382AC2 on TrackingActionInstance (groupId);
 create unique index IX_4AFD9183 on TrackingActionInstance (reportInstanceId, alias_[$COLUMN_LENGTH:75$]);
 create index IX_5FAE87DD on TrackingActionInstance (reportInstanceId, elementId[$COLUMN_LENGTH:75$], eventType[$COLUMN_LENGTH:75$]);
-create index IX_E4C7854 on TrackingActionInstance (reportInstanceId, referrerClassName[$COLUMN_LENGTH:75$], referrerClassPK, eventType[$COLUMN_LENGTH:75$]);
+create index IX_E4C7854 on TrackingActionInstance (reportInstanceId, referrerClassNameId, referrerClassPK, eventType[$COLUMN_LENGTH:75$]);
 create index IX_D45726DC on TrackingActionInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_3BF3B45E on TrackingActionInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 

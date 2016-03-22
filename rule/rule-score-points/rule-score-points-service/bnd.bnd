@@ -1,4 +1,4 @@
-Bundle-Name: Score Points Rule Service
+Bundle-Name: Liferay Content Targeting Score Points Rule Service
 Bundle-SymbolicName: com.liferay.content.targeting.rule.score.points.service
 Bundle-Version: 1.0.0
 Export-Package:\
@@ -16,6 +16,6 @@ Require-Capability:\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=3.0)))"
 Web-ContextPath: /rule-score-points
 -baseline: *;version="1.0.0"
--include: ../../../app.bnd
+
 -liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

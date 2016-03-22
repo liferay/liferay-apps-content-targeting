@@ -54,4 +54,8 @@ public interface AnalyticsReferrer extends AnalyticsReferrerModel, PersistedMode
 				return AnalyticsReferrer.class;
 			}
 		};
+
+	public java.lang.String getReferrerClassName();
+
+	public void setReferrerClassName(java.lang.String referrerClassName);
 }

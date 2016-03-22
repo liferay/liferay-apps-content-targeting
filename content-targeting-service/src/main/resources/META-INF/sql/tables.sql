@@ -71,7 +71,7 @@ create table CT_ReportInstance (
 	reportKey VARCHAR(75) null,
 	name STRING null,
 	description STRING null,
-	className VARCHAR(75) null,
+	classNameId LONG,
 	classPK LONG,
 	typeSettings TEXT null
 );
@@ -124,7 +124,7 @@ create table CT_TrackingActionInstance (
 	campaignId LONG,
 	reportInstanceId LONG,
 	alias_ VARCHAR(75) null,
-	referrerClassName VARCHAR(75) null,
+	referrerClassNameId LONG,
 	referrerClassPK LONG,
 	elementId VARCHAR(75) null,
 	eventType VARCHAR(75) null,
@@ -198,7 +198,7 @@ create table ReportInstance (
 	reportKey VARCHAR(75) null,
 	name STRING null,
 	description STRING null,
-	className VARCHAR(75) null,
+	classNameId LONG,
 	classPK LONG,
 	typeSettings TEXT null
 );
@@ -251,7 +251,7 @@ create table TrackingActionInstance (
 	campaignId LONG,
 	reportInstanceId LONG,
 	alias_ VARCHAR(75) null,
-	referrerClassName VARCHAR(75) null,
+	referrerClassNameId LONG,
 	referrerClassPK LONG,
 	elementId VARCHAR(75) null,
 	eventType VARCHAR(75) null,

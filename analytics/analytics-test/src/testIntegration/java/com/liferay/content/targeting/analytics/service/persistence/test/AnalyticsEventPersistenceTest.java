@@ -128,7 +128,7 @@ public class AnalyticsEventPersistenceTest {
 
 		newAnalyticsEvent.setAnonymousUserId(RandomTestUtil.nextLong());
 
-		newAnalyticsEvent.setClassName(RandomTestUtil.randomString());
+		newAnalyticsEvent.setClassNameId(RandomTestUtil.nextLong());
 
 		newAnalyticsEvent.setClassPK(RandomTestUtil.nextLong());
 
@@ -160,8 +160,8 @@ public class AnalyticsEventPersistenceTest {
 			newAnalyticsEvent.getUserId());
 		Assert.assertEquals(existingAnalyticsEvent.getAnonymousUserId(),
 			newAnalyticsEvent.getAnonymousUserId());
-		Assert.assertEquals(existingAnalyticsEvent.getClassName(),
-			newAnalyticsEvent.getClassName());
+		Assert.assertEquals(existingAnalyticsEvent.getClassNameId(),
+			newAnalyticsEvent.getClassNameId());
 		Assert.assertEquals(existingAnalyticsEvent.getClassPK(),
 			newAnalyticsEvent.getClassPK());
 		Assert.assertEquals(existingAnalyticsEvent.getElementId(),
@@ -216,12 +216,12 @@ public class AnalyticsEventPersistenceTest {
 
 	@Test
 	public void testCountByC_C_E() throws Exception {
-		_persistence.countByC_C_E(StringPool.BLANK, RandomTestUtil.nextLong(),
-			StringPool.BLANK);
+		_persistence.countByC_C_E(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK);
 
-		_persistence.countByC_C_E(StringPool.NULL, 0L, StringPool.NULL);
+		_persistence.countByC_C_E(0L, 0L, StringPool.NULL);
 
-		_persistence.countByC_C_E((String)null, 0L, (String)null);
+		_persistence.countByC_C_E(0L, 0L, (String)null);
 	}
 
 	@Test
@@ -239,23 +239,24 @@ public class AnalyticsEventPersistenceTest {
 	@Test
 	public void testCountByA_C_C_E() throws Exception {
 		_persistence.countByA_C_C_E(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextLong(), StringPool.BLANK);
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			StringPool.BLANK);
 
-		_persistence.countByA_C_C_E(0L, StringPool.NULL, 0L, StringPool.NULL);
+		_persistence.countByA_C_C_E(0L, 0L, 0L, StringPool.NULL);
 
-		_persistence.countByA_C_C_E(0L, (String)null, 0L, (String)null);
+		_persistence.countByA_C_C_E(0L, 0L, 0L, (String)null);
 	}
 
 	@Test
 	public void testCountByC_C_E_GtD() throws Exception {
-		_persistence.countByC_C_E_GtD(StringPool.BLANK,
+		_persistence.countByC_C_E_GtD(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), StringPool.BLANK,
 			RandomTestUtil.nextDate());
 
-		_persistence.countByC_C_E_GtD(StringPool.NULL, 0L, StringPool.NULL,
+		_persistence.countByC_C_E_GtD(0L, 0L, StringPool.NULL,
 			RandomTestUtil.nextDate());
 
-		_persistence.countByC_C_E_GtD((String)null, 0L, (String)null,
+		_persistence.countByC_C_E_GtD(0L, 0L, (String)null,
 			RandomTestUtil.nextDate());
 	}
 
@@ -284,7 +285,7 @@ public class AnalyticsEventPersistenceTest {
 	protected OrderByComparator<AnalyticsEvent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CT_Analytics_AnalyticsEvent",
 			"analyticsEventId", true, "companyId", true, "userId", true,
-			"anonymousUserId", true, "className", true, "classPK", true,
+			"anonymousUserId", true, "classNameId", true, "classPK", true,
 			"elementId", true, "eventType", true, "clientIP", true,
 			"userAgent", true, "languageId", true, "URL", true, "createDate",
 			true);
@@ -495,7 +496,7 @@ public class AnalyticsEventPersistenceTest {
 
 		analyticsEvent.setAnonymousUserId(RandomTestUtil.nextLong());
 
-		analyticsEvent.setClassName(RandomTestUtil.randomString());
+		analyticsEvent.setClassNameId(RandomTestUtil.nextLong());
 
 		analyticsEvent.setClassPK(RandomTestUtil.nextLong());
 

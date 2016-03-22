@@ -20,6 +20,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
+import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -48,8 +49,9 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface ReportInstanceModel extends BaseModel<ReportInstance>,
-	GroupedModel, LocalizedModel, ShardedModel, StagedAuditedModel {
+public interface ReportInstanceModel extends AttachedModel,
+	BaseModel<ReportInstance>, GroupedModel, LocalizedModel, ShardedModel,
+	StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -430,25 +432,37 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance>,
 		Locale defaultLocale);
 
 	/**
-	 * Returns the class name of this report instance.
+	 * Returns the fully qualified class name of this report instance.
 	 *
-	 * @return the class name of this report instance
+	 * @return the fully qualified class name of this report instance
 	 */
-	@AutoEscape
+	@Override
 	public String getClassName();
 
-	/**
-	 * Sets the class name of this report instance.
-	 *
-	 * @param className the class name of this report instance
-	 */
 	public void setClassName(String className);
+
+	/**
+	 * Returns the class name ID of this report instance.
+	 *
+	 * @return the class name ID of this report instance
+	 */
+	@Override
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this report instance.
+	 *
+	 * @param classNameId the class name ID of this report instance
+	 */
+	@Override
+	public void setClassNameId(long classNameId);
 
 	/**
 	 * Returns the class p k of this report instance.
 	 *
 	 * @return the class p k of this report instance
 	 */
+	@Override
 	public long getClassPK();
 
 	/**
@@ -456,6 +470,7 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance>,
 	 *
 	 * @param classPK the class p k of this report instance
 	 */
+	@Override
 	public void setClassPK(long classPK);
 
 	/**

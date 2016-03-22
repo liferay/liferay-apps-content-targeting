@@ -1,4 +1,4 @@
-Bundle-Name: Content Targeting Service
+Bundle-Name: Liferay Content Targeting Service
 Bundle-SymbolicName: com.liferay.content.targeting.service
 Bundle-Version: 3.0.0
 Export-Package:\
@@ -19,6 +19,6 @@ Liferay-Spring-Context: META-INF/spring
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=3.0)))"
--include: ../app.bnd
+
 -liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

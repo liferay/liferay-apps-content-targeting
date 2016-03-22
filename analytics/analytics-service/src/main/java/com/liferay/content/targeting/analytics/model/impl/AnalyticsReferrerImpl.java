@@ -14,6 +14,10 @@
 
 package com.liferay.content.targeting.analytics.model.impl;
 
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+
 /**
  * The extended model implementation for the AnalyticsReferrer service. Represents a row in the &quot;CT_Analytics_AnalyticsReferrer&quot; database table, with each column mapped to a property of this class.
  *
@@ -26,6 +30,26 @@ package com.liferay.content.targeting.analytics.model.impl;
 public class AnalyticsReferrerImpl extends AnalyticsReferrerBaseImpl {
 
 	public AnalyticsReferrerImpl() {
+	}
+
+	@Override
+	public String getReferrerClassName() {
+		if (getReferrerClassNameId() <= 0) {
+			return StringPool.BLANK;
+		}
+
+		return PortalUtil.getClassName(getReferrerClassNameId());
+	}
+
+	@Override
+	public void setReferrerClassName(String referrerClassName) {
+		long referrerClassNameId = 0;
+
+		if (Validator.isNotNull(referrerClassName)) {
+			referrerClassNameId = PortalUtil.getClassNameId(referrerClassName);
+		}
+
+		setReferrerClassNameId(referrerClassNameId);
 	}
 
 }

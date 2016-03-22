@@ -13,7 +13,7 @@
 			<basic name="companyId" />
 			<basic name="userId" />
 			<basic name="anonymousUserId" />
-			<basic name="className" />
+			<basic name="classNameId" />
 			<basic name="classPK" />
 			<basic name="elementId" />
 			<basic name="eventType" />

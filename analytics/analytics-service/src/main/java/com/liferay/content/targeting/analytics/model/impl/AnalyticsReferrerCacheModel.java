@@ -21,7 +21,6 @@ import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -70,8 +69,8 @@ public class AnalyticsReferrerCacheModel implements CacheModel<AnalyticsReferrer
 		sb.append(analyticsReferrerId);
 		sb.append(", analyticsEventId=");
 		sb.append(analyticsEventId);
-		sb.append(", referrerClassName=");
-		sb.append(referrerClassName);
+		sb.append(", referrerClassNameId=");
+		sb.append(referrerClassNameId);
 		sb.append(", referrerClassPK=");
 		sb.append(referrerClassPK);
 		sb.append("}");
@@ -85,14 +84,7 @@ public class AnalyticsReferrerCacheModel implements CacheModel<AnalyticsReferrer
 
 		analyticsReferrerImpl.setAnalyticsReferrerId(analyticsReferrerId);
 		analyticsReferrerImpl.setAnalyticsEventId(analyticsEventId);
-
-		if (referrerClassName == null) {
-			analyticsReferrerImpl.setReferrerClassName(StringPool.BLANK);
-		}
-		else {
-			analyticsReferrerImpl.setReferrerClassName(referrerClassName);
-		}
-
+		analyticsReferrerImpl.setReferrerClassNameId(referrerClassNameId);
 		analyticsReferrerImpl.setReferrerClassPK(referrerClassPK);
 
 		analyticsReferrerImpl.resetOriginalValues();
@@ -105,7 +97,8 @@ public class AnalyticsReferrerCacheModel implements CacheModel<AnalyticsReferrer
 		analyticsReferrerId = objectInput.readLong();
 
 		analyticsEventId = objectInput.readLong();
-		referrerClassName = objectInput.readUTF();
+
+		referrerClassNameId = objectInput.readLong();
 
 		referrerClassPK = objectInput.readLong();
 	}
@@ -117,18 +110,13 @@ public class AnalyticsReferrerCacheModel implements CacheModel<AnalyticsReferrer
 
 		objectOutput.writeLong(analyticsEventId);
 
-		if (referrerClassName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(referrerClassName);
-		}
+		objectOutput.writeLong(referrerClassNameId);
 
 		objectOutput.writeLong(referrerClassPK);
 	}
 
 	public long analyticsReferrerId;
 	public long analyticsEventId;
-	public String referrerClassName;
+	public long referrerClassNameId;
 	public long referrerClassPK;
 }

@@ -4945,8 +4945,8 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			TrackingActionInstanceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_R_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -4957,11 +4957,11 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			TrackingActionInstanceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_R_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName()
 			},
 			TrackingActionInstanceModelImpl.CAMPAIGNID_COLUMN_BITMASK |
-			TrackingActionInstanceModelImpl.REFERRERCLASSNAME_COLUMN_BITMASK |
+			TrackingActionInstanceModelImpl.REFERRERCLASSNAMEID_COLUMN_BITMASK |
 			TrackingActionInstanceModelImpl.REFERRERCLASSPK_COLUMN_BITMASK |
 			TrackingActionInstanceModelImpl.EVENTTYPE_COLUMN_BITMASK |
 			TrackingActionInstanceModelImpl.TRACKINGACTIONKEY_COLUMN_BITMASK);
@@ -4969,35 +4969,35 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_R_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName()
 			});
 
 	/**
-	 * Returns all the tracking action instances where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns all the tracking action instances where campaignId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param campaignId the campaign ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @return the matching tracking action instances
 	 */
 	@Override
 	public List<TrackingActionInstance> findByC_R_R_E(long campaignId,
-		String referrerClassName, long referrerClassPK, String eventType) {
-		return findByC_R_R_E(campaignId, referrerClassName, referrerClassPK,
+		long referrerClassNameId, long referrerClassPK, String eventType) {
+		return findByC_R_R_E(campaignId, referrerClassNameId, referrerClassPK,
 			eventType, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the tracking action instances where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns a range of all the tracking action instances where campaignId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param campaignId the campaign ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of tracking action instances
@@ -5006,21 +5006,21 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public List<TrackingActionInstance> findByC_R_R_E(long campaignId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		int start, int end) {
-		return findByC_R_R_E(campaignId, referrerClassName, referrerClassPK,
+		return findByC_R_R_E(campaignId, referrerClassNameId, referrerClassPK,
 			eventType, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the tracking action instances where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns an ordered range of all the tracking action instances where campaignId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param campaignId the campaign ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of tracking action instances
@@ -5030,22 +5030,22 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public List<TrackingActionInstance> findByC_R_R_E(long campaignId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		int start, int end,
 		OrderByComparator<TrackingActionInstance> orderByComparator) {
-		return findByC_R_R_E(campaignId, referrerClassName, referrerClassPK,
+		return findByC_R_R_E(campaignId, referrerClassNameId, referrerClassPK,
 			eventType, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the tracking action instances where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns an ordered range of all the tracking action instances where campaignId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param campaignId the campaign ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of tracking action instances
@@ -5056,7 +5056,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public List<TrackingActionInstance> findByC_R_R_E(long campaignId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		int start, int end,
 		OrderByComparator<TrackingActionInstance> orderByComparator,
 		boolean retrieveFromCache) {
@@ -5069,13 +5069,13 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R_E;
 			finderArgs = new Object[] {
-					campaignId, referrerClassName, referrerClassPK, eventType
+					campaignId, referrerClassNameId, referrerClassPK, eventType
 				};
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_R_R_E;
 			finderArgs = new Object[] {
-					campaignId, referrerClassName, referrerClassPK, eventType,
+					campaignId, referrerClassNameId, referrerClassPK, eventType,
 					
 					start, end, orderByComparator
 				};
@@ -5090,8 +5090,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			if ((list != null) && !list.isEmpty()) {
 				for (TrackingActionInstance trackingActionInstance : list) {
 					if ((campaignId != trackingActionInstance.getCampaignId()) ||
-							!Validator.equals(referrerClassName,
-								trackingActionInstance.getReferrerClassName()) ||
+							(referrerClassNameId != trackingActionInstance.getReferrerClassNameId()) ||
 							(referrerClassPK != trackingActionInstance.getReferrerClassPK()) ||
 							!Validator.equals(eventType,
 								trackingActionInstance.getEventType())) {
@@ -5118,19 +5117,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			query.append(_FINDER_COLUMN_C_R_R_E_CAMPAIGNID_2);
 
-			boolean bindReferrerClassName = false;
-
-			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAME_1);
-			}
-			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAME_3);
-			}
-			else {
-				bindReferrerClassName = true;
-
-				query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSPK_2);
 
@@ -5170,9 +5157,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 				qPos.add(campaignId);
 
-				if (bindReferrerClassName) {
-					qPos.add(referrerClassName);
-				}
+				qPos.add(referrerClassNameId);
 
 				qPos.add(referrerClassPK);
 
@@ -5211,10 +5196,10 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Returns the first tracking action instance in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns the first tracking action instance in the ordered set where campaignId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param campaignId the campaign ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -5223,11 +5208,12 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public TrackingActionInstance findByC_R_R_E_First(long campaignId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		OrderByComparator<TrackingActionInstance> orderByComparator)
 		throws NoSuchTrackingActionInstanceException {
 		TrackingActionInstance trackingActionInstance = fetchByC_R_R_E_First(campaignId,
-				referrerClassName, referrerClassPK, eventType, orderByComparator);
+				referrerClassNameId, referrerClassPK, eventType,
+				orderByComparator);
 
 		if (trackingActionInstance != null) {
 			return trackingActionInstance;
@@ -5240,8 +5226,8 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		msg.append("campaignId=");
 		msg.append(campaignId);
 
-		msg.append(", referrerClassName=");
-		msg.append(referrerClassName);
+		msg.append(", referrerClassNameId=");
+		msg.append(referrerClassNameId);
 
 		msg.append(", referrerClassPK=");
 		msg.append(referrerClassPK);
@@ -5255,10 +5241,10 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Returns the first tracking action instance in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns the first tracking action instance in the ordered set where campaignId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param campaignId the campaign ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -5266,10 +5252,10 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public TrackingActionInstance fetchByC_R_R_E_First(long campaignId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		OrderByComparator<TrackingActionInstance> orderByComparator) {
 		List<TrackingActionInstance> list = findByC_R_R_E(campaignId,
-				referrerClassName, referrerClassPK, eventType, 0, 1,
+				referrerClassNameId, referrerClassPK, eventType, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5280,10 +5266,10 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Returns the last tracking action instance in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns the last tracking action instance in the ordered set where campaignId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param campaignId the campaign ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -5292,11 +5278,12 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public TrackingActionInstance findByC_R_R_E_Last(long campaignId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		OrderByComparator<TrackingActionInstance> orderByComparator)
 		throws NoSuchTrackingActionInstanceException {
 		TrackingActionInstance trackingActionInstance = fetchByC_R_R_E_Last(campaignId,
-				referrerClassName, referrerClassPK, eventType, orderByComparator);
+				referrerClassNameId, referrerClassPK, eventType,
+				orderByComparator);
 
 		if (trackingActionInstance != null) {
 			return trackingActionInstance;
@@ -5309,8 +5296,8 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		msg.append("campaignId=");
 		msg.append(campaignId);
 
-		msg.append(", referrerClassName=");
-		msg.append(referrerClassName);
+		msg.append(", referrerClassNameId=");
+		msg.append(referrerClassNameId);
 
 		msg.append(", referrerClassPK=");
 		msg.append(referrerClassPK);
@@ -5324,10 +5311,10 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Returns the last tracking action instance in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns the last tracking action instance in the ordered set where campaignId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param campaignId the campaign ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -5335,9 +5322,9 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public TrackingActionInstance fetchByC_R_R_E_Last(long campaignId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		OrderByComparator<TrackingActionInstance> orderByComparator) {
-		int count = countByC_R_R_E(campaignId, referrerClassName,
+		int count = countByC_R_R_E(campaignId, referrerClassNameId,
 				referrerClassPK, eventType);
 
 		if (count == 0) {
@@ -5345,7 +5332,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		}
 
 		List<TrackingActionInstance> list = findByC_R_R_E(campaignId,
-				referrerClassName, referrerClassPK, eventType, count - 1,
+				referrerClassNameId, referrerClassPK, eventType, count - 1,
 				count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5356,11 +5343,11 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Returns the tracking action instances before and after the current tracking action instance in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns the tracking action instances before and after the current tracking action instance in the ordered set where campaignId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param trackingActionInstanceId the primary key of the current tracking action instance
 	 * @param campaignId the campaign ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -5370,7 +5357,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	@Override
 	public TrackingActionInstance[] findByC_R_R_E_PrevAndNext(
 		long trackingActionInstanceId, long campaignId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		OrderByComparator<TrackingActionInstance> orderByComparator)
 		throws NoSuchTrackingActionInstanceException {
 		TrackingActionInstance trackingActionInstance = findByPrimaryKey(trackingActionInstanceId);
@@ -5383,13 +5370,13 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			TrackingActionInstance[] array = new TrackingActionInstanceImpl[3];
 
 			array[0] = getByC_R_R_E_PrevAndNext(session,
-					trackingActionInstance, campaignId, referrerClassName,
+					trackingActionInstance, campaignId, referrerClassNameId,
 					referrerClassPK, eventType, orderByComparator, true);
 
 			array[1] = trackingActionInstance;
 
 			array[2] = getByC_R_R_E_PrevAndNext(session,
-					trackingActionInstance, campaignId, referrerClassName,
+					trackingActionInstance, campaignId, referrerClassNameId,
 					referrerClassPK, eventType, orderByComparator, false);
 
 			return array;
@@ -5404,7 +5391,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 	protected TrackingActionInstance getByC_R_R_E_PrevAndNext(Session session,
 		TrackingActionInstance trackingActionInstance, long campaignId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		OrderByComparator<TrackingActionInstance> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -5422,19 +5409,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 		query.append(_FINDER_COLUMN_C_R_R_E_CAMPAIGNID_2);
 
-		boolean bindReferrerClassName = false;
-
-		if (referrerClassName == null) {
-			query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAME_1);
-		}
-		else if (referrerClassName.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAME_3);
-		}
-		else {
-			bindReferrerClassName = true;
-
-			query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAME_2);
-		}
+		query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAMEID_2);
 
 		query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSPK_2);
 
@@ -5522,9 +5497,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 		qPos.add(campaignId);
 
-		if (bindReferrerClassName) {
-			qPos.add(referrerClassName);
-		}
+		qPos.add(referrerClassNameId);
 
 		qPos.add(referrerClassPK);
 
@@ -5551,39 +5524,39 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Removes all the tracking action instances where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63; from the database.
+	 * Removes all the tracking action instances where campaignId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63; from the database.
 	 *
 	 * @param campaignId the campaign ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 */
 	@Override
-	public void removeByC_R_R_E(long campaignId, String referrerClassName,
+	public void removeByC_R_R_E(long campaignId, long referrerClassNameId,
 		long referrerClassPK, String eventType) {
 		for (TrackingActionInstance trackingActionInstance : findByC_R_R_E(
-				campaignId, referrerClassName, referrerClassPK, eventType,
+				campaignId, referrerClassNameId, referrerClassPK, eventType,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(trackingActionInstance);
 		}
 	}
 
 	/**
-	 * Returns the number of tracking action instances where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns the number of tracking action instances where campaignId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param campaignId the campaign ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @return the number of matching tracking action instances
 	 */
 	@Override
-	public int countByC_R_R_E(long campaignId, String referrerClassName,
+	public int countByC_R_R_E(long campaignId, long referrerClassNameId,
 		long referrerClassPK, String eventType) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_R_R_E;
 
 		Object[] finderArgs = new Object[] {
-				campaignId, referrerClassName, referrerClassPK, eventType
+				campaignId, referrerClassNameId, referrerClassPK, eventType
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -5595,19 +5568,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			query.append(_FINDER_COLUMN_C_R_R_E_CAMPAIGNID_2);
 
-			boolean bindReferrerClassName = false;
-
-			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAME_1);
-			}
-			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAME_3);
-			}
-			else {
-				bindReferrerClassName = true;
-
-				query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_C_R_R_E_REFERRERCLASSPK_2);
 
@@ -5638,9 +5599,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 				qPos.add(campaignId);
 
-				if (bindReferrerClassName) {
-					qPos.add(referrerClassName);
-				}
+				qPos.add(referrerClassNameId);
 
 				qPos.add(referrerClassPK);
 
@@ -5666,9 +5625,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	private static final String _FINDER_COLUMN_C_R_R_E_CAMPAIGNID_2 = "trackingActionInstance.campaignId = ? AND ";
-	private static final String _FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAME_1 = "trackingActionInstance.referrerClassName IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAME_2 = "trackingActionInstance.referrerClassName = ? AND ";
-	private static final String _FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAME_3 = "(trackingActionInstance.referrerClassName IS NULL OR trackingActionInstance.referrerClassName = '') AND ";
+	private static final String _FINDER_COLUMN_C_R_R_E_REFERRERCLASSNAMEID_2 = "trackingActionInstance.referrerClassNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_R_R_E_REFERRERCLASSPK_2 = "trackingActionInstance.referrerClassPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_R_R_E_EVENTTYPE_1 = "trackingActionInstance.eventType IS NULL";
 	private static final String _FINDER_COLUMN_C_R_R_E_EVENTTYPE_2 = "trackingActionInstance.eventType = ?";
@@ -5678,8 +5635,8 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			TrackingActionInstanceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_R_R_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -5690,11 +5647,11 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			TrackingActionInstanceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_R_R_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName()
 			},
 			TrackingActionInstanceModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
-			TrackingActionInstanceModelImpl.REFERRERCLASSNAME_COLUMN_BITMASK |
+			TrackingActionInstanceModelImpl.REFERRERCLASSNAMEID_COLUMN_BITMASK |
 			TrackingActionInstanceModelImpl.REFERRERCLASSPK_COLUMN_BITMASK |
 			TrackingActionInstanceModelImpl.EVENTTYPE_COLUMN_BITMASK |
 			TrackingActionInstanceModelImpl.TRACKINGACTIONKEY_COLUMN_BITMASK);
@@ -5702,36 +5659,36 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R_R_E",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName()
 			});
 
 	/**
-	 * Returns all the tracking action instances where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns all the tracking action instances where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @return the matching tracking action instances
 	 */
 	@Override
 	public List<TrackingActionInstance> findByR_R_R_E(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String eventType) {
-		return findByR_R_R_E(reportInstanceId, referrerClassName,
+		long referrerClassNameId, long referrerClassPK, String eventType) {
+		return findByR_R_R_E(reportInstanceId, referrerClassNameId,
 			referrerClassPK, eventType, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
 
 	/**
-	 * Returns a range of all the tracking action instances where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns a range of all the tracking action instances where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of tracking action instances
@@ -5740,21 +5697,21 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public List<TrackingActionInstance> findByR_R_R_E(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		int start, int end) {
-		return findByR_R_R_E(reportInstanceId, referrerClassName,
+		return findByR_R_R_E(reportInstanceId, referrerClassNameId,
 			referrerClassPK, eventType, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the tracking action instances where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns an ordered range of all the tracking action instances where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of tracking action instances
@@ -5764,22 +5721,22 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public List<TrackingActionInstance> findByR_R_R_E(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		int start, int end,
 		OrderByComparator<TrackingActionInstance> orderByComparator) {
-		return findByR_R_R_E(reportInstanceId, referrerClassName,
+		return findByR_R_R_E(reportInstanceId, referrerClassNameId,
 			referrerClassPK, eventType, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the tracking action instances where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns an ordered range of all the tracking action instances where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of tracking action instances
@@ -5790,7 +5747,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public List<TrackingActionInstance> findByR_R_R_E(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		int start, int end,
 		OrderByComparator<TrackingActionInstance> orderByComparator,
 		boolean retrieveFromCache) {
@@ -5803,14 +5760,14 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R_R_E;
 			finderArgs = new Object[] {
-					reportInstanceId, referrerClassName, referrerClassPK,
+					reportInstanceId, referrerClassNameId, referrerClassPK,
 					eventType
 				};
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_R_R_R_E;
 			finderArgs = new Object[] {
-					reportInstanceId, referrerClassName, referrerClassPK,
+					reportInstanceId, referrerClassNameId, referrerClassPK,
 					eventType,
 					
 					start, end, orderByComparator
@@ -5826,8 +5783,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			if ((list != null) && !list.isEmpty()) {
 				for (TrackingActionInstance trackingActionInstance : list) {
 					if ((reportInstanceId != trackingActionInstance.getReportInstanceId()) ||
-							!Validator.equals(referrerClassName,
-								trackingActionInstance.getReferrerClassName()) ||
+							(referrerClassNameId != trackingActionInstance.getReferrerClassNameId()) ||
 							(referrerClassPK != trackingActionInstance.getReferrerClassPK()) ||
 							!Validator.equals(eventType,
 								trackingActionInstance.getEventType())) {
@@ -5854,19 +5810,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			query.append(_FINDER_COLUMN_R_R_R_E_REPORTINSTANCEID_2);
 
-			boolean bindReferrerClassName = false;
-
-			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAME_1);
-			}
-			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAME_3);
-			}
-			else {
-				bindReferrerClassName = true;
-
-				query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSPK_2);
 
@@ -5906,9 +5850,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 				qPos.add(reportInstanceId);
 
-				if (bindReferrerClassName) {
-					qPos.add(referrerClassName);
-				}
+				qPos.add(referrerClassNameId);
 
 				qPos.add(referrerClassPK);
 
@@ -5947,10 +5889,10 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -5959,11 +5901,12 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public TrackingActionInstance findByR_R_R_E_First(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		OrderByComparator<TrackingActionInstance> orderByComparator)
 		throws NoSuchTrackingActionInstanceException {
 		TrackingActionInstance trackingActionInstance = fetchByR_R_R_E_First(reportInstanceId,
-				referrerClassName, referrerClassPK, eventType, orderByComparator);
+				referrerClassNameId, referrerClassPK, eventType,
+				orderByComparator);
 
 		if (trackingActionInstance != null) {
 			return trackingActionInstance;
@@ -5976,8 +5919,8 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		msg.append("reportInstanceId=");
 		msg.append(reportInstanceId);
 
-		msg.append(", referrerClassName=");
-		msg.append(referrerClassName);
+		msg.append(", referrerClassNameId=");
+		msg.append(referrerClassNameId);
 
 		msg.append(", referrerClassPK=");
 		msg.append(referrerClassPK);
@@ -5991,10 +5934,10 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -6002,10 +5945,10 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public TrackingActionInstance fetchByR_R_R_E_First(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		OrderByComparator<TrackingActionInstance> orderByComparator) {
 		List<TrackingActionInstance> list = findByR_R_R_E(reportInstanceId,
-				referrerClassName, referrerClassPK, eventType, 0, 1,
+				referrerClassNameId, referrerClassPK, eventType, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -6016,10 +5959,10 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -6028,11 +5971,12 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public TrackingActionInstance findByR_R_R_E_Last(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		OrderByComparator<TrackingActionInstance> orderByComparator)
 		throws NoSuchTrackingActionInstanceException {
 		TrackingActionInstance trackingActionInstance = fetchByR_R_R_E_Last(reportInstanceId,
-				referrerClassName, referrerClassPK, eventType, orderByComparator);
+				referrerClassNameId, referrerClassPK, eventType,
+				orderByComparator);
 
 		if (trackingActionInstance != null) {
 			return trackingActionInstance;
@@ -6045,8 +5989,8 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		msg.append("reportInstanceId=");
 		msg.append(reportInstanceId);
 
-		msg.append(", referrerClassName=");
-		msg.append(referrerClassName);
+		msg.append(", referrerClassNameId=");
+		msg.append(referrerClassNameId);
 
 		msg.append(", referrerClassPK=");
 		msg.append(referrerClassPK);
@@ -6060,10 +6004,10 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -6071,9 +6015,9 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 */
 	@Override
 	public TrackingActionInstance fetchByR_R_R_E_Last(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		OrderByComparator<TrackingActionInstance> orderByComparator) {
-		int count = countByR_R_R_E(reportInstanceId, referrerClassName,
+		int count = countByR_R_R_E(reportInstanceId, referrerClassNameId,
 				referrerClassPK, eventType);
 
 		if (count == 0) {
@@ -6081,7 +6025,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		}
 
 		List<TrackingActionInstance> list = findByR_R_R_E(reportInstanceId,
-				referrerClassName, referrerClassPK, eventType, count - 1,
+				referrerClassNameId, referrerClassPK, eventType, count - 1,
 				count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -6092,11 +6036,11 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Returns the tracking action instances before and after the current tracking action instance in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns the tracking action instances before and after the current tracking action instance in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param trackingActionInstanceId the primary key of the current tracking action instance
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -6106,7 +6050,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	@Override
 	public TrackingActionInstance[] findByR_R_R_E_PrevAndNext(
 		long trackingActionInstanceId, long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		OrderByComparator<TrackingActionInstance> orderByComparator)
 		throws NoSuchTrackingActionInstanceException {
 		TrackingActionInstance trackingActionInstance = findByPrimaryKey(trackingActionInstanceId);
@@ -6120,14 +6064,14 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			array[0] = getByR_R_R_E_PrevAndNext(session,
 					trackingActionInstance, reportInstanceId,
-					referrerClassName, referrerClassPK, eventType,
+					referrerClassNameId, referrerClassPK, eventType,
 					orderByComparator, true);
 
 			array[1] = trackingActionInstance;
 
 			array[2] = getByR_R_R_E_PrevAndNext(session,
 					trackingActionInstance, reportInstanceId,
-					referrerClassName, referrerClassPK, eventType,
+					referrerClassNameId, referrerClassPK, eventType,
 					orderByComparator, false);
 
 			return array;
@@ -6142,7 +6086,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 	protected TrackingActionInstance getByR_R_R_E_PrevAndNext(Session session,
 		TrackingActionInstance trackingActionInstance, long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String eventType,
+		long referrerClassNameId, long referrerClassPK, String eventType,
 		OrderByComparator<TrackingActionInstance> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -6160,19 +6104,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 		query.append(_FINDER_COLUMN_R_R_R_E_REPORTINSTANCEID_2);
 
-		boolean bindReferrerClassName = false;
-
-		if (referrerClassName == null) {
-			query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAME_1);
-		}
-		else if (referrerClassName.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAME_3);
-		}
-		else {
-			bindReferrerClassName = true;
-
-			query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAME_2);
-		}
+		query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAMEID_2);
 
 		query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSPK_2);
 
@@ -6260,9 +6192,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 		qPos.add(reportInstanceId);
 
-		if (bindReferrerClassName) {
-			qPos.add(referrerClassName);
-		}
+		qPos.add(referrerClassNameId);
 
 		qPos.add(referrerClassPK);
 
@@ -6289,39 +6219,40 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Removes all the tracking action instances where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63; from the database.
+	 * Removes all the tracking action instances where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63; from the database.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 */
 	@Override
 	public void removeByR_R_R_E(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, String eventType) {
+		long referrerClassNameId, long referrerClassPK, String eventType) {
 		for (TrackingActionInstance trackingActionInstance : findByR_R_R_E(
-				reportInstanceId, referrerClassName, referrerClassPK,
+				reportInstanceId, referrerClassNameId, referrerClassPK,
 				eventType, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(trackingActionInstance);
 		}
 	}
 
 	/**
-	 * Returns the number of tracking action instances where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63;.
+	 * Returns the number of tracking action instances where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and eventType = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param eventType the event type
 	 * @return the number of matching tracking action instances
 	 */
 	@Override
-	public int countByR_R_R_E(long reportInstanceId, String referrerClassName,
+	public int countByR_R_R_E(long reportInstanceId, long referrerClassNameId,
 		long referrerClassPK, String eventType) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_R_R_E;
 
 		Object[] finderArgs = new Object[] {
-				reportInstanceId, referrerClassName, referrerClassPK, eventType
+				reportInstanceId, referrerClassNameId, referrerClassPK,
+				eventType
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -6333,19 +6264,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			query.append(_FINDER_COLUMN_R_R_R_E_REPORTINSTANCEID_2);
 
-			boolean bindReferrerClassName = false;
-
-			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAME_1);
-			}
-			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAME_3);
-			}
-			else {
-				bindReferrerClassName = true;
-
-				query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_R_R_R_E_REFERRERCLASSPK_2);
 
@@ -6376,9 +6295,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 				qPos.add(reportInstanceId);
 
-				if (bindReferrerClassName) {
-					qPos.add(referrerClassName);
-				}
+				qPos.add(referrerClassNameId);
 
 				qPos.add(referrerClassPK);
 
@@ -6404,9 +6321,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	private static final String _FINDER_COLUMN_R_R_R_E_REPORTINSTANCEID_2 = "trackingActionInstance.reportInstanceId = ? AND ";
-	private static final String _FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAME_1 = "trackingActionInstance.referrerClassName IS NULL AND ";
-	private static final String _FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAME_2 = "trackingActionInstance.referrerClassName = ? AND ";
-	private static final String _FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAME_3 = "(trackingActionInstance.referrerClassName IS NULL OR trackingActionInstance.referrerClassName = '') AND ";
+	private static final String _FINDER_COLUMN_R_R_R_E_REFERRERCLASSNAMEID_2 = "trackingActionInstance.referrerClassNameId = ? AND ";
 	private static final String _FINDER_COLUMN_R_R_R_E_REFERRERCLASSPK_2 = "trackingActionInstance.referrerClassPK = ? AND ";
 	private static final String _FINDER_COLUMN_R_R_R_E_EVENTTYPE_1 = "trackingActionInstance.eventType IS NULL";
 	private static final String _FINDER_COLUMN_R_R_R_E_EVENTTYPE_2 = "trackingActionInstance.eventType = ?";
@@ -6974,7 +6889,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						trackingActionInstanceModelImpl.getOriginalCampaignId(),
-						trackingActionInstanceModelImpl.getOriginalReferrerClassName(),
+						trackingActionInstanceModelImpl.getOriginalReferrerClassNameId(),
 						trackingActionInstanceModelImpl.getOriginalReferrerClassPK(),
 						trackingActionInstanceModelImpl.getOriginalEventType()
 					};
@@ -6985,7 +6900,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 				args = new Object[] {
 						trackingActionInstanceModelImpl.getCampaignId(),
-						trackingActionInstanceModelImpl.getReferrerClassName(),
+						trackingActionInstanceModelImpl.getReferrerClassNameId(),
 						trackingActionInstanceModelImpl.getReferrerClassPK(),
 						trackingActionInstanceModelImpl.getEventType()
 					};
@@ -6999,7 +6914,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R_R_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						trackingActionInstanceModelImpl.getOriginalReportInstanceId(),
-						trackingActionInstanceModelImpl.getOriginalReferrerClassName(),
+						trackingActionInstanceModelImpl.getOriginalReferrerClassNameId(),
 						trackingActionInstanceModelImpl.getOriginalReferrerClassPK(),
 						trackingActionInstanceModelImpl.getOriginalEventType()
 					};
@@ -7010,7 +6925,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 				args = new Object[] {
 						trackingActionInstanceModelImpl.getReportInstanceId(),
-						trackingActionInstanceModelImpl.getReferrerClassName(),
+						trackingActionInstanceModelImpl.getReferrerClassNameId(),
 						trackingActionInstanceModelImpl.getReferrerClassPK(),
 						trackingActionInstanceModelImpl.getEventType()
 					};
@@ -7057,7 +6972,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		trackingActionInstanceImpl.setCampaignId(trackingActionInstance.getCampaignId());
 		trackingActionInstanceImpl.setReportInstanceId(trackingActionInstance.getReportInstanceId());
 		trackingActionInstanceImpl.setAlias(trackingActionInstance.getAlias());
-		trackingActionInstanceImpl.setReferrerClassName(trackingActionInstance.getReferrerClassName());
+		trackingActionInstanceImpl.setReferrerClassNameId(trackingActionInstance.getReferrerClassNameId());
 		trackingActionInstanceImpl.setReferrerClassPK(trackingActionInstance.getReferrerClassPK());
 		trackingActionInstanceImpl.setElementId(trackingActionInstance.getElementId());
 		trackingActionInstanceImpl.setEventType(trackingActionInstance.getEventType());

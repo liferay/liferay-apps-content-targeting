@@ -61,7 +61,7 @@ public class CampaignContentWrapper implements CampaignContent,
 		attributes.put("campaignContentId", getCampaignContentId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("campaignId", getCampaignId());
-		attributes.put("className", getClassName());
+		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("eventType", getEventType());
 		attributes.put("count", getCount());
@@ -90,10 +90,10 @@ public class CampaignContentWrapper implements CampaignContent,
 			setCampaignId(campaignId);
 		}
 
-		String className = (String)attributes.get("className");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (className != null) {
-			setClassName(className);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
 		}
 
 		Long classPK = (Long)attributes.get("classPK");
@@ -153,13 +153,23 @@ public class CampaignContentWrapper implements CampaignContent,
 	}
 
 	/**
-	* Returns the class name of this campaign content.
+	* Returns the fully qualified class name of this campaign content.
 	*
-	* @return the class name of this campaign content
+	* @return the fully qualified class name of this campaign content
 	*/
 	@Override
 	public java.lang.String getClassName() {
 		return _campaignContent.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this campaign content.
+	*
+	* @return the class name ID of this campaign content
+	*/
+	@Override
+	public long getClassNameId() {
+		return _campaignContent.getClassNameId();
 	}
 
 	/**
@@ -292,14 +302,19 @@ public class CampaignContentWrapper implements CampaignContent,
 		_campaignContent.setCampaignId(campaignId);
 	}
 
-	/**
-	* Sets the class name of this campaign content.
-	*
-	* @param className the class name of this campaign content
-	*/
 	@Override
 	public void setClassName(java.lang.String className) {
 		_campaignContent.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this campaign content.
+	*
+	* @param classNameId the class name ID of this campaign content
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_campaignContent.setClassNameId(classNameId);
 	}
 
 	/**

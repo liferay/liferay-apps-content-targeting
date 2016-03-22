@@ -74,7 +74,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 			{ "reportInstanceId", Types.BIGINT },
 			{ "userSegmentId", Types.BIGINT },
 			{ "alias_", Types.VARCHAR },
-			{ "referrerClassName", Types.VARCHAR },
+			{ "referrerClassNameId", Types.BIGINT },
 			{ "referrerClassPK", Types.BIGINT },
 			{ "elementId", Types.VARCHAR },
 			{ "eventType", Types.VARCHAR },
@@ -90,7 +90,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		TABLE_COLUMNS_MAP.put("reportInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userSegmentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("alias_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("referrerClassName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("referrerClassNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("referrerClassPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("elementId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("eventType", Types.VARCHAR);
@@ -98,7 +98,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CT_CTA_CTAction (CTActionId LONG not null primary key,companyId LONG,campaignId LONG,reportInstanceId LONG,userSegmentId LONG,alias_ VARCHAR(75) null,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_CTA_CTAction (CTActionId LONG not null primary key,companyId LONG,campaignId LONG,reportInstanceId LONG,userSegmentId LONG,alias_ VARCHAR(75) null,referrerClassNameId LONG,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_CTA_CTAction";
 	public static final String ORDER_BY_JPQL = " ORDER BY ctAction.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_CTA_CTAction.modifiedDate DESC";
@@ -118,7 +118,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 	public static final long ELEMENTID_COLUMN_BITMASK = 2L;
 	public static final long EVENTTYPE_COLUMN_BITMASK = 4L;
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 8L;
-	public static final long REFERRERCLASSNAME_COLUMN_BITMASK = 16L;
+	public static final long REFERRERCLASSNAMEID_COLUMN_BITMASK = 16L;
 	public static final long REFERRERCLASSPK_COLUMN_BITMASK = 32L;
 	public static final long REPORTINSTANCEID_COLUMN_BITMASK = 64L;
 	public static final long USERSEGMENTID_COLUMN_BITMASK = 128L;
@@ -142,7 +142,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		model.setReportInstanceId(soapModel.getReportInstanceId());
 		model.setUserSegmentId(soapModel.getUserSegmentId());
 		model.setAlias(soapModel.getAlias());
-		model.setReferrerClassName(soapModel.getReferrerClassName());
+		model.setReferrerClassNameId(soapModel.getReferrerClassNameId());
 		model.setReferrerClassPK(soapModel.getReferrerClassPK());
 		model.setElementId(soapModel.getElementId());
 		model.setEventType(soapModel.getEventType());
@@ -218,7 +218,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("alias", getAlias());
-		attributes.put("referrerClassName", getReferrerClassName());
+		attributes.put("referrerClassNameId", getReferrerClassNameId());
 		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
@@ -269,10 +269,10 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 			setAlias(alias);
 		}
 
-		String referrerClassName = (String)attributes.get("referrerClassName");
+		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");
 
-		if (referrerClassName != null) {
-			setReferrerClassName(referrerClassName);
+		if (referrerClassNameId != null) {
+			setReferrerClassNameId(referrerClassNameId);
 		}
 
 		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
@@ -415,28 +415,25 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 	@JSON
 	@Override
-	public String getReferrerClassName() {
-		if (_referrerClassName == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _referrerClassName;
-		}
+	public long getReferrerClassNameId() {
+		return _referrerClassNameId;
 	}
 
 	@Override
-	public void setReferrerClassName(String referrerClassName) {
-		_columnBitmask |= REFERRERCLASSNAME_COLUMN_BITMASK;
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		_columnBitmask |= REFERRERCLASSNAMEID_COLUMN_BITMASK;
 
-		if (_originalReferrerClassName == null) {
-			_originalReferrerClassName = _referrerClassName;
+		if (!_setOriginalReferrerClassNameId) {
+			_setOriginalReferrerClassNameId = true;
+
+			_originalReferrerClassNameId = _referrerClassNameId;
 		}
 
-		_referrerClassName = referrerClassName;
+		_referrerClassNameId = referrerClassNameId;
 	}
 
-	public String getOriginalReferrerClassName() {
-		return GetterUtil.getString(_originalReferrerClassName);
+	public long getOriginalReferrerClassNameId() {
+		return _originalReferrerClassNameId;
 	}
 
 	@JSON
@@ -583,7 +580,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		ctActionImpl.setReportInstanceId(getReportInstanceId());
 		ctActionImpl.setUserSegmentId(getUserSegmentId());
 		ctActionImpl.setAlias(getAlias());
-		ctActionImpl.setReferrerClassName(getReferrerClassName());
+		ctActionImpl.setReferrerClassNameId(getReferrerClassNameId());
 		ctActionImpl.setReferrerClassPK(getReferrerClassPK());
 		ctActionImpl.setElementId(getElementId());
 		ctActionImpl.setEventType(getEventType());
@@ -663,7 +660,9 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 		ctActionModelImpl._setOriginalUserSegmentId = false;
 
-		ctActionModelImpl._originalReferrerClassName = ctActionModelImpl._referrerClassName;
+		ctActionModelImpl._originalReferrerClassNameId = ctActionModelImpl._referrerClassNameId;
+
+		ctActionModelImpl._setOriginalReferrerClassNameId = false;
 
 		ctActionModelImpl._originalReferrerClassPK = ctActionModelImpl._referrerClassPK;
 
@@ -700,13 +699,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 			ctActionCacheModel.alias = null;
 		}
 
-		ctActionCacheModel.referrerClassName = getReferrerClassName();
-
-		String referrerClassName = ctActionCacheModel.referrerClassName;
-
-		if ((referrerClassName != null) && (referrerClassName.length() == 0)) {
-			ctActionCacheModel.referrerClassName = null;
-		}
+		ctActionCacheModel.referrerClassNameId = getReferrerClassNameId();
 
 		ctActionCacheModel.referrerClassPK = getReferrerClassPK();
 
@@ -756,8 +749,8 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		sb.append(getUserSegmentId());
 		sb.append(", alias=");
 		sb.append(getAlias());
-		sb.append(", referrerClassName=");
-		sb.append(getReferrerClassName());
+		sb.append(", referrerClassNameId=");
+		sb.append(getReferrerClassNameId());
 		sb.append(", referrerClassPK=");
 		sb.append(getReferrerClassPK());
 		sb.append(", elementId=");
@@ -807,8 +800,8 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		sb.append(getAlias());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>referrerClassName</column-name><column-value><![CDATA[");
-		sb.append(getReferrerClassName());
+			"<column><column-name>referrerClassNameId</column-name><column-value><![CDATA[");
+		sb.append(getReferrerClassNameId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>referrerClassPK</column-name><column-value><![CDATA[");
@@ -852,8 +845,9 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 	private long _originalUserSegmentId;
 	private boolean _setOriginalUserSegmentId;
 	private String _alias;
-	private String _referrerClassName;
-	private String _originalReferrerClassName;
+	private long _referrerClassNameId;
+	private long _originalReferrerClassNameId;
+	private boolean _setOriginalReferrerClassNameId;
 	private long _referrerClassPK;
 	private long _originalReferrerClassPK;
 	private boolean _setOriginalReferrerClassPK;

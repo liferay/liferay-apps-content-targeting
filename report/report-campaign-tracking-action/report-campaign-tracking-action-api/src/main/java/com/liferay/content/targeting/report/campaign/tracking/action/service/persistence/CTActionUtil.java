@@ -805,51 +805,50 @@ public class CTActionUtil {
 	}
 
 	/**
-	* Returns all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns all the c t actions where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @return the matching c t actions
 	*/
 	public static List<CTAction> findByR_R_R(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK) {
+		long referrerClassNameId, long referrerClassPK) {
 		return getPersistence()
-				   .findByR_R_R(reportInstanceId, referrerClassName,
+				   .findByR_R_R(reportInstanceId, referrerClassNameId,
 			referrerClassPK);
 	}
 
 	/**
-	* Returns a range of all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns a range of all the c t actions where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param start the lower bound of the range of c t actions
 	* @param end the upper bound of the range of c t actions (not inclusive)
 	* @return the range of matching c t actions
 	*/
 	public static List<CTAction> findByR_R_R(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK, int start,
-		int end) {
+		long referrerClassNameId, long referrerClassPK, int start, int end) {
 		return getPersistence()
-				   .findByR_R_R(reportInstanceId, referrerClassName,
+				   .findByR_R_R(reportInstanceId, referrerClassNameId,
 			referrerClassPK, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param start the lower bound of the range of c t actions
 	* @param end the upper bound of the range of c t actions (not inclusive)
@@ -857,22 +856,22 @@ public class CTActionUtil {
 	* @return the ordered range of matching c t actions
 	*/
 	public static List<CTAction> findByR_R_R(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK, int start,
-		int end, OrderByComparator<CTAction> orderByComparator) {
+		long referrerClassNameId, long referrerClassPK, int start, int end,
+		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
-				   .findByR_R_R(reportInstanceId, referrerClassName,
+				   .findByR_R_R(reportInstanceId, referrerClassNameId,
 			referrerClassPK, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns an ordered range of all the c t actions where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param start the lower bound of the range of c t actions
 	* @param end the upper bound of the range of c t actions (not inclusive)
@@ -881,140 +880,140 @@ public class CTActionUtil {
 	* @return the ordered range of matching c t actions
 	*/
 	public static List<CTAction> findByR_R_R(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK, int start,
-		int end, OrderByComparator<CTAction> orderByComparator,
-		boolean retrieveFromCache) {
+		long referrerClassNameId, long referrerClassPK, int start, int end,
+		OrderByComparator<CTAction> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByR_R_R(reportInstanceId, referrerClassName,
+				   .findByR_R_R(reportInstanceId, referrerClassNameId,
 			referrerClassPK, start, end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the first c t action in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t action
 	* @throws NoSuchCTActionException if a matching c t action could not be found
 	*/
 	public static CTAction findByR_R_R_First(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<CTAction> orderByComparator)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
-				   .findByR_R_R_First(reportInstanceId, referrerClassName,
+				   .findByR_R_R_First(reportInstanceId, referrerClassNameId,
 			referrerClassPK, orderByComparator);
 	}
 
 	/**
-	* Returns the first c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the first c t action in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
 	*/
 	public static CTAction fetchByR_R_R_First(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
-				   .fetchByR_R_R_First(reportInstanceId, referrerClassName,
+				   .fetchByR_R_R_First(reportInstanceId, referrerClassNameId,
 			referrerClassPK, orderByComparator);
 	}
 
 	/**
-	* Returns the last c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the last c t action in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t action
 	* @throws NoSuchCTActionException if a matching c t action could not be found
 	*/
 	public static CTAction findByR_R_R_Last(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<CTAction> orderByComparator)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
-				   .findByR_R_R_Last(reportInstanceId, referrerClassName,
+				   .findByR_R_R_Last(reportInstanceId, referrerClassNameId,
 			referrerClassPK, orderByComparator);
 	}
 
 	/**
-	* Returns the last c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the last c t action in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
 	*/
 	public static CTAction fetchByR_R_R_Last(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<CTAction> orderByComparator) {
 		return getPersistence()
-				   .fetchByR_R_R_Last(reportInstanceId, referrerClassName,
+				   .fetchByR_R_R_Last(reportInstanceId, referrerClassNameId,
 			referrerClassPK, orderByComparator);
 	}
 
 	/**
-	* Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	* Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	*
 	* @param CTActionId the primary key of the current c t action
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next c t action
 	* @throws NoSuchCTActionException if a c t action with the primary key could not be found
 	*/
 	public static CTAction[] findByR_R_R_PrevAndNext(long CTActionId,
-		long reportInstanceId, java.lang.String referrerClassName,
-		long referrerClassPK, OrderByComparator<CTAction> orderByComparator)
+		long reportInstanceId, long referrerClassNameId, long referrerClassPK,
+		OrderByComparator<CTAction> orderByComparator)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
 				   .findByR_R_R_PrevAndNext(CTActionId, reportInstanceId,
-			referrerClassName, referrerClassPK, orderByComparator);
+			referrerClassNameId, referrerClassPK, orderByComparator);
 	}
 
 	/**
-	* Removes all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; from the database.
+	* Removes all the c t actions where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; from the database.
 	*
 	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	*/
 	public static void removeByR_R_R(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK) {
+		long referrerClassNameId, long referrerClassPK) {
 		getPersistence()
-			.removeByR_R_R(reportInstanceId, referrerClassName, referrerClassPK);
-	}
-
-	/**
-	* Returns the number of c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param referrerClassName the referrer class name
-	* @param referrerClassPK the referrer class p k
-	* @return the number of matching c t actions
-	*/
-	public static int countByR_R_R(long reportInstanceId,
-		java.lang.String referrerClassName, long referrerClassPK) {
-		return getPersistence()
-				   .countByR_R_R(reportInstanceId, referrerClassName,
+			.removeByR_R_R(reportInstanceId, referrerClassNameId,
 			referrerClassPK);
 	}
 
 	/**
-	* Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link NoSuchCTActionException} if it could not be found.
+	* Returns the number of c t actions where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param referrerClassNameId the referrer class name ID
+	* @param referrerClassPK the referrer class p k
+	* @return the number of matching c t actions
+	*/
+	public static int countByR_R_R(long reportInstanceId,
+		long referrerClassNameId, long referrerClassPK) {
+		return getPersistence()
+				   .countByR_R_R(reportInstanceId, referrerClassNameId,
+			referrerClassPK);
+	}
+
+	/**
+	* Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link NoSuchCTActionException} if it could not be found.
 	*
 	* @param reportInstanceId the report instance ID
 	* @param userSegmentId the user segment ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
@@ -1022,41 +1021,39 @@ public class CTActionUtil {
 	* @throws NoSuchCTActionException if a matching c t action could not be found
 	*/
 	public static CTAction findByR_U_R_R_E_E(long reportInstanceId,
-		long userSegmentId, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType)
+		long userSegmentId, long referrerClassNameId, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
 				   .findByR_U_R_R_E_E(reportInstanceId, userSegmentId,
-			referrerClassName, referrerClassPK, elementId, eventType);
+			referrerClassNameId, referrerClassPK, elementId, eventType);
 	}
 
 	/**
-	* Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param reportInstanceId the report instance ID
 	* @param userSegmentId the user segment ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the matching c t action, or <code>null</code> if a matching c t action could not be found
 	*/
 	public static CTAction fetchByR_U_R_R_E_E(long reportInstanceId,
-		long userSegmentId, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType) {
+		long userSegmentId, long referrerClassNameId, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType) {
 		return getPersistence()
 				   .fetchByR_U_R_R_E_E(reportInstanceId, userSegmentId,
-			referrerClassName, referrerClassPK, elementId, eventType);
+			referrerClassNameId, referrerClassPK, elementId, eventType);
 	}
 
 	/**
-	* Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param reportInstanceId the report instance ID
 	* @param userSegmentId the user segment ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
@@ -1064,54 +1061,52 @@ public class CTActionUtil {
 	* @return the matching c t action, or <code>null</code> if a matching c t action could not be found
 	*/
 	public static CTAction fetchByR_U_R_R_E_E(long reportInstanceId,
-		long userSegmentId, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType, boolean retrieveFromCache) {
+		long userSegmentId, long referrerClassNameId, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByR_U_R_R_E_E(reportInstanceId, userSegmentId,
-			referrerClassName, referrerClassPK, elementId, eventType,
+			referrerClassNameId, referrerClassPK, elementId, eventType,
 			retrieveFromCache);
 	}
 
 	/**
-	* Removes the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
+	* Removes the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
 	*
 	* @param reportInstanceId the report instance ID
 	* @param userSegmentId the user segment ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the c t action that was removed
 	*/
 	public static CTAction removeByR_U_R_R_E_E(long reportInstanceId,
-		long userSegmentId, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType)
+		long userSegmentId, long referrerClassNameId, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.exception.NoSuchCTActionException {
 		return getPersistence()
 				   .removeByR_U_R_R_E_E(reportInstanceId, userSegmentId,
-			referrerClassName, referrerClassPK, elementId, eventType);
+			referrerClassNameId, referrerClassPK, elementId, eventType);
 	}
 
 	/**
-	* Returns the number of c t actions where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
+	* Returns the number of c t actions where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
 	*
 	* @param reportInstanceId the report instance ID
 	* @param userSegmentId the user segment ID
-	* @param referrerClassName the referrer class name
+	* @param referrerClassNameId the referrer class name ID
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the number of matching c t actions
 	*/
 	public static int countByR_U_R_R_E_E(long reportInstanceId,
-		long userSegmentId, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType) {
+		long userSegmentId, long referrerClassNameId, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType) {
 		return getPersistence()
 				   .countByR_U_R_R_E_E(reportInstanceId, userSegmentId,
-			referrerClassName, referrerClassPK, elementId, eventType);
+			referrerClassNameId, referrerClassPK, elementId, eventType);
 	}
 
 	/**

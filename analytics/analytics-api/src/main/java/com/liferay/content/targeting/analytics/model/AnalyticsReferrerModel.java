@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -89,19 +88,18 @@ public interface AnalyticsReferrerModel extends BaseModel<AnalyticsReferrer> {
 	public void setAnalyticsEventId(long analyticsEventId);
 
 	/**
-	 * Returns the referrer class name of this analytics referrer.
+	 * Returns the referrer class name ID of this analytics referrer.
 	 *
-	 * @return the referrer class name of this analytics referrer
+	 * @return the referrer class name ID of this analytics referrer
 	 */
-	@AutoEscape
-	public String getReferrerClassName();
+	public long getReferrerClassNameId();
 
 	/**
-	 * Sets the referrer class name of this analytics referrer.
+	 * Sets the referrer class name ID of this analytics referrer.
 	 *
-	 * @param referrerClassName the referrer class name of this analytics referrer
+	 * @param referrerClassNameId the referrer class name ID of this analytics referrer
 	 */
-	public void setReferrerClassName(String referrerClassName);
+	public void setReferrerClassNameId(long referrerClassNameId);
 
 	/**
 	 * Returns the referrer class p k of this analytics referrer.

@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionFinder.findByAnalyticsWithClassName">
+	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionFinder.findByAnalyticsWithClassNameId">
 		<![CDATA[
 			SELECT
-				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.className AS className, CT_Analytics_AnalyticsEvent.classPK AS classPK, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias_, CT_TrackingActionInstance.campaignId
+				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.classNameId AS classNameId, CT_Analytics_AnalyticsEvent.classPK AS classPK, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias_, CT_TrackingActionInstance.campaignId AS campaignId
 			FROM
 				CT_Analytics_AnalyticsEvent
 			INNER JOIN
 				CT_TrackingActionInstance ON
 					((CT_TrackingActionInstance.eventType = CT_Analytics_AnalyticsEvent.eventType) OR (CT_TrackingActionInstance.eventType = 'all')) AND
-					(CT_TrackingActionInstance.referrerClassName = CT_Analytics_AnalyticsEvent.className) AND
+					(CT_TrackingActionInstance.referrerClassNameId = CT_Analytics_AnalyticsEvent.classNameId) AND
 					(CT_TrackingActionInstance.referrerClassPK = CT_Analytics_AnalyticsEvent.classPK)
 			INNER JOIN
 				CT_Analytics_AnalyticsReferrer ON
 					(CT_Analytics_AnalyticsReferrer.analyticsEventId = CT_Analytics_AnalyticsEvent.analyticsEventId)
 			WHERE
 				(CT_TrackingActionInstance.reportInstanceId = ?) AND
-				(CT_Analytics_AnalyticsEvent.className != '') AND
+				(CT_Analytics_AnalyticsEvent.classNameId > 0) AND
 				(CT_Analytics_AnalyticsEvent.classPK > 0) AND
 				(CT_Analytics_AnalyticsEvent.createDate >= ?)
 		]]>
@@ -25,7 +25,7 @@
 	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionFinder.findByAnalyticsWithElementId">
 		<![CDATA[
 			SELECT
-				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.elementId AS elementId, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias_, CT_TrackingActionInstance.campaignId
+				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.elementId AS elementId, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias_, CT_TrackingActionInstance.campaignId AS campaignId
 			FROM
 				CT_Analytics_AnalyticsEvent
 			INNER JOIN
@@ -41,17 +41,17 @@
 				(CT_Analytics_AnalyticsEvent.createDate >= ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionTotalFinder.findByAnalyticsWithClassName">
+	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionTotalFinder.findByAnalyticsWithClassNameId">
 		<![CDATA[
 			SELECT
-				CT_Analytics_AnalyticsEvent.className AS className, CT_Analytics_AnalyticsEvent.classPK AS classPK, CT_Analytics_AnalyticsEvent.eventType AS eventType, COUNT(*) as count
+				CT_Analytics_AnalyticsEvent.classNameId AS classNameId, CT_Analytics_AnalyticsEvent.classPK AS classPK, CT_Analytics_AnalyticsEvent.eventType AS eventType, COUNT(*) as count
 			FROM
 				CT_Analytics_AnalyticsEvent
 			WHERE
 				(CT_Analytics_AnalyticsEvent.createDate >= ?) AND
 				(CT_Analytics_AnalyticsEvent.classPK > 0)
 			GROUP BY
-	  			CT_Analytics_AnalyticsEvent.className, CT_Analytics_AnalyticsEvent.classPK, CT_Analytics_AnalyticsEvent.eventType
+	  			CT_Analytics_AnalyticsEvent.classNameId, CT_Analytics_AnalyticsEvent.classPK, CT_Analytics_AnalyticsEvent.eventType
 		]]>
 	</sql>
 	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionTotalFinder.findByAnalyticsWithElementId">

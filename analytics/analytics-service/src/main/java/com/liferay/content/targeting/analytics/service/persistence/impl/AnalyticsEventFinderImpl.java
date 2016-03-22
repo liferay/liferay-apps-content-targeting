@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -39,12 +40,14 @@ public class AnalyticsEventFinderImpl
 		long companyId, String referrerClassName, long referrerClassPK,
 		Date date) {
 
+		long referrerClassNameId = PortalUtil.getClassNameId(referrerClassName);
+
 		return doFindByC_GTC_R_R(
-			companyId, referrerClassName, referrerClassPK, date);
+			companyId, referrerClassNameId, referrerClassPK, date);
 	}
 
 	protected List<Object[]> doFindByC_GTC_R_R(
-		long companyId, String referrerClassName, long referrerClassPK,
+		long companyId, long referrerClassNameId, long referrerClassPK,
 		Date date) {
 
 		Session session = null;
@@ -56,7 +59,7 @@ public class AnalyticsEventFinderImpl
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar("className", Type.STRING);
+			q.addScalar("classNameId", Type.LONG);
 			q.addScalar("classPK", Type.LONG);
 			q.addScalar("count", Type.INTEGER);
 
@@ -64,7 +67,7 @@ public class AnalyticsEventFinderImpl
 
 			qPos.add(companyId);
 			qPos.add(date);
-			qPos.add(referrerClassName);
+			qPos.add(referrerClassNameId);
 			qPos.add(referrerClassPK);
 
 			return q.list();

@@ -2260,8 +2260,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_R_R",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
@@ -2270,45 +2269,43 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_R_R",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			CTActionModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
-			CTActionModelImpl.REFERRERCLASSNAME_COLUMN_BITMASK |
+			CTActionModelImpl.REFERRERCLASSNAMEID_COLUMN_BITMASK |
 			CTActionModelImpl.REFERRERCLASSPK_COLUMN_BITMASK |
 			CTActionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_R_R_R = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R_R",
 			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 
 	/**
-	 * Returns all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns all the c t actions where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @return the matching c t actions
 	 */
 	@Override
 	public List<CTAction> findByR_R_R(long reportInstanceId,
-		String referrerClassName, long referrerClassPK) {
-		return findByR_R_R(reportInstanceId, referrerClassName,
+		long referrerClassNameId, long referrerClassPK) {
+		return findByR_R_R(reportInstanceId, referrerClassNameId,
 			referrerClassPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns a range of all the c t actions where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param start the lower bound of the range of c t actions
 	 * @param end the upper bound of the range of c t actions (not inclusive)
@@ -2316,20 +2313,20 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 */
 	@Override
 	public List<CTAction> findByR_R_R(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, int start, int end) {
-		return findByR_R_R(reportInstanceId, referrerClassName,
+		long referrerClassNameId, long referrerClassPK, int start, int end) {
+		return findByR_R_R(reportInstanceId, referrerClassNameId,
 			referrerClassPK, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns an ordered range of all the c t actions where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param start the lower bound of the range of c t actions
 	 * @param end the upper bound of the range of c t actions (not inclusive)
@@ -2338,21 +2335,21 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 */
 	@Override
 	public List<CTAction> findByR_R_R(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, int start, int end,
+		long referrerClassNameId, long referrerClassPK, int start, int end,
 		OrderByComparator<CTAction> orderByComparator) {
-		return findByR_R_R(reportInstanceId, referrerClassName,
+		return findByR_R_R(reportInstanceId, referrerClassNameId,
 			referrerClassPK, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns an ordered range of all the c t actions where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param start the lower bound of the range of c t actions
 	 * @param end the upper bound of the range of c t actions (not inclusive)
@@ -2362,7 +2359,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 */
 	@Override
 	public List<CTAction> findByR_R_R(long reportInstanceId,
-		String referrerClassName, long referrerClassPK, int start, int end,
+		long referrerClassNameId, long referrerClassPK, int start, int end,
 		OrderByComparator<CTAction> orderByComparator, boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2373,13 +2370,13 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R_R;
 			finderArgs = new Object[] {
-					reportInstanceId, referrerClassName, referrerClassPK
+					reportInstanceId, referrerClassNameId, referrerClassPK
 				};
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_R_R_R;
 			finderArgs = new Object[] {
-					reportInstanceId, referrerClassName, referrerClassPK,
+					reportInstanceId, referrerClassNameId, referrerClassPK,
 					
 					start, end, orderByComparator
 				};
@@ -2394,8 +2391,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 			if ((list != null) && !list.isEmpty()) {
 				for (CTAction ctAction : list) {
 					if ((reportInstanceId != ctAction.getReportInstanceId()) ||
-							!Validator.equals(referrerClassName,
-								ctAction.getReferrerClassName()) ||
+							(referrerClassNameId != ctAction.getReferrerClassNameId()) ||
 							(referrerClassPK != ctAction.getReferrerClassPK())) {
 						list = null;
 
@@ -2420,19 +2416,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			query.append(_FINDER_COLUMN_R_R_R_REPORTINSTANCEID_2);
 
-			boolean bindReferrerClassName = false;
-
-			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_1);
-			}
-			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_3);
-			}
-			else {
-				bindReferrerClassName = true;
-
-				query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSPK_2);
 
@@ -2458,9 +2442,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				qPos.add(reportInstanceId);
 
-				if (bindReferrerClassName) {
-					qPos.add(referrerClassName);
-				}
+				qPos.add(referrerClassNameId);
 
 				qPos.add(referrerClassPK);
 
@@ -2495,10 +2477,10 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the first c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns the first c t action in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching c t action
@@ -2506,11 +2488,11 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 */
 	@Override
 	public CTAction findByR_R_R_First(long reportInstanceId,
-		String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<CTAction> orderByComparator)
 		throws NoSuchCTActionException {
 		CTAction ctAction = fetchByR_R_R_First(reportInstanceId,
-				referrerClassName, referrerClassPK, orderByComparator);
+				referrerClassNameId, referrerClassPK, orderByComparator);
 
 		if (ctAction != null) {
 			return ctAction;
@@ -2523,8 +2505,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		msg.append("reportInstanceId=");
 		msg.append(reportInstanceId);
 
-		msg.append(", referrerClassName=");
-		msg.append(referrerClassName);
+		msg.append(", referrerClassNameId=");
+		msg.append(referrerClassNameId);
 
 		msg.append(", referrerClassPK=");
 		msg.append(referrerClassPK);
@@ -2535,20 +2517,20 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the first c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns the first c t action in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
 	 */
 	@Override
 	public CTAction fetchByR_R_R_First(long reportInstanceId,
-		String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<CTAction> orderByComparator) {
-		List<CTAction> list = findByR_R_R(reportInstanceId, referrerClassName,
-				referrerClassPK, 0, 1, orderByComparator);
+		List<CTAction> list = findByR_R_R(reportInstanceId,
+				referrerClassNameId, referrerClassPK, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2558,10 +2540,10 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the last c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns the last c t action in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching c t action
@@ -2569,11 +2551,11 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 */
 	@Override
 	public CTAction findByR_R_R_Last(long reportInstanceId,
-		String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<CTAction> orderByComparator)
 		throws NoSuchCTActionException {
 		CTAction ctAction = fetchByR_R_R_Last(reportInstanceId,
-				referrerClassName, referrerClassPK, orderByComparator);
+				referrerClassNameId, referrerClassPK, orderByComparator);
 
 		if (ctAction != null) {
 			return ctAction;
@@ -2586,8 +2568,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		msg.append("reportInstanceId=");
 		msg.append(reportInstanceId);
 
-		msg.append(", referrerClassName=");
-		msg.append(referrerClassName);
+		msg.append(", referrerClassNameId=");
+		msg.append(referrerClassNameId);
 
 		msg.append(", referrerClassPK=");
 		msg.append(referrerClassPK);
@@ -2598,27 +2580,28 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the last c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns the last c t action in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
 	 */
 	@Override
 	public CTAction fetchByR_R_R_Last(long reportInstanceId,
-		String referrerClassName, long referrerClassPK,
+		long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<CTAction> orderByComparator) {
-		int count = countByR_R_R(reportInstanceId, referrerClassName,
+		int count = countByR_R_R(reportInstanceId, referrerClassNameId,
 				referrerClassPK);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTAction> list = findByR_R_R(reportInstanceId, referrerClassName,
-				referrerClassPK, count - 1, count, orderByComparator);
+		List<CTAction> list = findByR_R_R(reportInstanceId,
+				referrerClassNameId, referrerClassPK, count - 1, count,
+				orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2628,11 +2611,11 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	 *
 	 * @param CTActionId the primary key of the current c t action
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next c t action
@@ -2640,7 +2623,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 */
 	@Override
 	public CTAction[] findByR_R_R_PrevAndNext(long CTActionId,
-		long reportInstanceId, String referrerClassName, long referrerClassPK,
+		long reportInstanceId, long referrerClassNameId, long referrerClassPK,
 		OrderByComparator<CTAction> orderByComparator)
 		throws NoSuchCTActionException {
 		CTAction ctAction = findByPrimaryKey(CTActionId);
@@ -2653,13 +2636,13 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 			CTAction[] array = new CTActionImpl[3];
 
 			array[0] = getByR_R_R_PrevAndNext(session, ctAction,
-					reportInstanceId, referrerClassName, referrerClassPK,
+					reportInstanceId, referrerClassNameId, referrerClassPK,
 					orderByComparator, true);
 
 			array[1] = ctAction;
 
 			array[2] = getByR_R_R_PrevAndNext(session, ctAction,
-					reportInstanceId, referrerClassName, referrerClassPK,
+					reportInstanceId, referrerClassNameId, referrerClassPK,
 					orderByComparator, false);
 
 			return array;
@@ -2673,7 +2656,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	protected CTAction getByR_R_R_PrevAndNext(Session session,
-		CTAction ctAction, long reportInstanceId, String referrerClassName,
+		CTAction ctAction, long reportInstanceId, long referrerClassNameId,
 		long referrerClassPK, OrderByComparator<CTAction> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -2691,19 +2674,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		query.append(_FINDER_COLUMN_R_R_R_REPORTINSTANCEID_2);
 
-		boolean bindReferrerClassName = false;
-
-		if (referrerClassName == null) {
-			query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_1);
-		}
-		else if (referrerClassName.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_3);
-		}
-		else {
-			bindReferrerClassName = true;
-
-			query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_2);
-		}
+		query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAMEID_2);
 
 		query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSPK_2);
 
@@ -2777,9 +2748,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		qPos.add(reportInstanceId);
 
-		if (bindReferrerClassName) {
-			qPos.add(referrerClassName);
-		}
+		qPos.add(referrerClassNameId);
 
 		qPos.add(referrerClassPK);
 
@@ -2802,37 +2771,37 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Removes all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; from the database.
+	 * Removes all the c t actions where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; from the database.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 */
 	@Override
-	public void removeByR_R_R(long reportInstanceId, String referrerClassName,
+	public void removeByR_R_R(long reportInstanceId, long referrerClassNameId,
 		long referrerClassPK) {
 		for (CTAction ctAction : findByR_R_R(reportInstanceId,
-				referrerClassName, referrerClassPK, QueryUtil.ALL_POS,
+				referrerClassNameId, referrerClassPK, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(ctAction);
 		}
 	}
 
 	/**
-	 * Returns the number of c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns the number of c t actions where reportInstanceId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @return the number of matching c t actions
 	 */
 	@Override
-	public int countByR_R_R(long reportInstanceId, String referrerClassName,
+	public int countByR_R_R(long reportInstanceId, long referrerClassNameId,
 		long referrerClassPK) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_R_R;
 
 		Object[] finderArgs = new Object[] {
-				reportInstanceId, referrerClassName, referrerClassPK
+				reportInstanceId, referrerClassNameId, referrerClassPK
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -2844,19 +2813,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			query.append(_FINDER_COLUMN_R_R_R_REPORTINSTANCEID_2);
 
-			boolean bindReferrerClassName = false;
-
-			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_1);
-			}
-			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_3);
-			}
-			else {
-				bindReferrerClassName = true;
-
-				query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSPK_2);
 
@@ -2873,9 +2830,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				qPos.add(reportInstanceId);
 
-				if (bindReferrerClassName) {
-					qPos.add(referrerClassName);
-				}
+				qPos.add(referrerClassNameId);
 
 				qPos.add(referrerClassPK);
 
@@ -2897,21 +2852,19 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	private static final String _FINDER_COLUMN_R_R_R_REPORTINSTANCEID_2 = "ctAction.reportInstanceId = ? AND ";
-	private static final String _FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_1 = "ctAction.referrerClassName IS NULL AND ";
-	private static final String _FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_2 = "ctAction.referrerClassName = ? AND ";
-	private static final String _FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_3 = "(ctAction.referrerClassName IS NULL OR ctAction.referrerClassName = '') AND ";
+	private static final String _FINDER_COLUMN_R_R_R_REFERRERCLASSNAMEID_2 = "ctAction.referrerClassNameId = ? AND ";
 	private static final String _FINDER_COLUMN_R_R_R_REFERRERCLASSPK_2 = "ctAction.referrerClassPK = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_R_U_R_R_E_E = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_U_R_R_E_E",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
 			},
 			CTActionModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
 			CTActionModelImpl.USERSEGMENTID_COLUMN_BITMASK |
-			CTActionModelImpl.REFERRERCLASSNAME_COLUMN_BITMASK |
+			CTActionModelImpl.REFERRERCLASSNAMEID_COLUMN_BITMASK |
 			CTActionModelImpl.REFERRERCLASSPK_COLUMN_BITMASK |
 			CTActionModelImpl.ELEMENTID_COLUMN_BITMASK |
 			CTActionModelImpl.EVENTTYPE_COLUMN_BITMASK);
@@ -2919,17 +2872,17 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 			CTActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_U_R_R_E_E",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
 			});
 
 	/**
-	 * Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link NoSuchCTActionException} if it could not be found.
+	 * Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link NoSuchCTActionException} if it could not be found.
 	 *
 	 * @param reportInstanceId the report instance ID
 	 * @param userSegmentId the user segment ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
@@ -2938,10 +2891,10 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 */
 	@Override
 	public CTAction findByR_U_R_R_E_E(long reportInstanceId,
-		long userSegmentId, String referrerClassName, long referrerClassPK,
+		long userSegmentId, long referrerClassNameId, long referrerClassPK,
 		String elementId, String eventType) throws NoSuchCTActionException {
 		CTAction ctAction = fetchByR_U_R_R_E_E(reportInstanceId, userSegmentId,
-				referrerClassName, referrerClassPK, elementId, eventType);
+				referrerClassNameId, referrerClassPK, elementId, eventType);
 
 		if (ctAction == null) {
 			StringBundler msg = new StringBundler(14);
@@ -2954,8 +2907,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 			msg.append(", userSegmentId=");
 			msg.append(userSegmentId);
 
-			msg.append(", referrerClassName=");
-			msg.append(referrerClassName);
+			msg.append(", referrerClassNameId=");
+			msg.append(referrerClassNameId);
 
 			msg.append(", referrerClassPK=");
 			msg.append(referrerClassPK);
@@ -2979,11 +2932,11 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param reportInstanceId the report instance ID
 	 * @param userSegmentId the user segment ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
@@ -2991,18 +2944,18 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 */
 	@Override
 	public CTAction fetchByR_U_R_R_E_E(long reportInstanceId,
-		long userSegmentId, String referrerClassName, long referrerClassPK,
+		long userSegmentId, long referrerClassNameId, long referrerClassPK,
 		String elementId, String eventType) {
 		return fetchByR_U_R_R_E_E(reportInstanceId, userSegmentId,
-			referrerClassName, referrerClassPK, elementId, eventType, true);
+			referrerClassNameId, referrerClassPK, elementId, eventType, true);
 	}
 
 	/**
-	 * Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param reportInstanceId the report instance ID
 	 * @param userSegmentId the user segment ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
@@ -3011,10 +2964,10 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 */
 	@Override
 	public CTAction fetchByR_U_R_R_E_E(long reportInstanceId,
-		long userSegmentId, String referrerClassName, long referrerClassPK,
+		long userSegmentId, long referrerClassNameId, long referrerClassPK,
 		String elementId, String eventType, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
-				reportInstanceId, userSegmentId, referrerClassName,
+				reportInstanceId, userSegmentId, referrerClassNameId,
 				referrerClassPK, elementId, eventType
 			};
 
@@ -3030,8 +2983,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			if ((reportInstanceId != ctAction.getReportInstanceId()) ||
 					(userSegmentId != ctAction.getUserSegmentId()) ||
-					!Validator.equals(referrerClassName,
-						ctAction.getReferrerClassName()) ||
+					(referrerClassNameId != ctAction.getReferrerClassNameId()) ||
 					(referrerClassPK != ctAction.getReferrerClassPK()) ||
 					!Validator.equals(elementId, ctAction.getElementId()) ||
 					!Validator.equals(eventType, ctAction.getEventType())) {
@@ -3048,19 +3000,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			query.append(_FINDER_COLUMN_R_U_R_R_E_E_USERSEGMENTID_2);
 
-			boolean bindReferrerClassName = false;
-
-			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_1);
-			}
-			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_3);
-			}
-			else {
-				bindReferrerClassName = true;
-
-				query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSPK_2);
 
@@ -3107,9 +3047,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				qPos.add(userSegmentId);
 
-				if (bindReferrerClassName) {
-					qPos.add(referrerClassName);
-				}
+				qPos.add(referrerClassNameId);
 
 				qPos.add(referrerClassPK);
 
@@ -3136,9 +3074,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 					if ((ctAction.getReportInstanceId() != reportInstanceId) ||
 							(ctAction.getUserSegmentId() != userSegmentId) ||
-							(ctAction.getReferrerClassName() == null) ||
-							!ctAction.getReferrerClassName()
-										 .equals(referrerClassName) ||
+							(ctAction.getReferrerClassNameId() != referrerClassNameId) ||
 							(ctAction.getReferrerClassPK() != referrerClassPK) ||
 							(ctAction.getElementId() == null) ||
 							!ctAction.getElementId().equals(elementId) ||
@@ -3169,11 +3105,11 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Removes the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
+	 * Removes the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
 	 *
 	 * @param reportInstanceId the report instance ID
 	 * @param userSegmentId the user segment ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
@@ -3181,20 +3117,20 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 */
 	@Override
 	public CTAction removeByR_U_R_R_E_E(long reportInstanceId,
-		long userSegmentId, String referrerClassName, long referrerClassPK,
+		long userSegmentId, long referrerClassNameId, long referrerClassPK,
 		String elementId, String eventType) throws NoSuchCTActionException {
 		CTAction ctAction = findByR_U_R_R_E_E(reportInstanceId, userSegmentId,
-				referrerClassName, referrerClassPK, elementId, eventType);
+				referrerClassNameId, referrerClassPK, elementId, eventType);
 
 		return remove(ctAction);
 	}
 
 	/**
-	 * Returns the number of c t actions where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
+	 * Returns the number of c t actions where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassNameId = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
 	 *
 	 * @param reportInstanceId the report instance ID
 	 * @param userSegmentId the user segment ID
-	 * @param referrerClassName the referrer class name
+	 * @param referrerClassNameId the referrer class name ID
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
@@ -3202,12 +3138,12 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 */
 	@Override
 	public int countByR_U_R_R_E_E(long reportInstanceId, long userSegmentId,
-		String referrerClassName, long referrerClassPK, String elementId,
+		long referrerClassNameId, long referrerClassPK, String elementId,
 		String eventType) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_U_R_R_E_E;
 
 		Object[] finderArgs = new Object[] {
-				reportInstanceId, userSegmentId, referrerClassName,
+				reportInstanceId, userSegmentId, referrerClassNameId,
 				referrerClassPK, elementId, eventType
 			};
 
@@ -3222,19 +3158,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			query.append(_FINDER_COLUMN_R_U_R_R_E_E_USERSEGMENTID_2);
 
-			boolean bindReferrerClassName = false;
-
-			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_1);
-			}
-			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_3);
-			}
-			else {
-				bindReferrerClassName = true;
-
-				query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_2);
-			}
+			query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAMEID_2);
 
 			query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSPK_2);
 
@@ -3281,9 +3205,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				qPos.add(userSegmentId);
 
-				if (bindReferrerClassName) {
-					qPos.add(referrerClassName);
-				}
+				qPos.add(referrerClassNameId);
 
 				qPos.add(referrerClassPK);
 
@@ -3314,9 +3236,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 	private static final String _FINDER_COLUMN_R_U_R_R_E_E_REPORTINSTANCEID_2 = "ctAction.reportInstanceId = ? AND ";
 	private static final String _FINDER_COLUMN_R_U_R_R_E_E_USERSEGMENTID_2 = "ctAction.userSegmentId = ? AND ";
-	private static final String _FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_1 = "ctAction.referrerClassName IS NULL AND ";
-	private static final String _FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_2 = "ctAction.referrerClassName = ? AND ";
-	private static final String _FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_3 = "(ctAction.referrerClassName IS NULL OR ctAction.referrerClassName = '') AND ";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAMEID_2 =
+		"ctAction.referrerClassNameId = ? AND ";
 	private static final String _FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSPK_2 = "ctAction.referrerClassPK = ? AND ";
 	private static final String _FINDER_COLUMN_R_U_R_R_E_E_ELEMENTID_1 = "ctAction.elementId IS NULL AND ";
 	private static final String _FINDER_COLUMN_R_U_R_R_E_E_ELEMENTID_2 = "ctAction.elementId = ? AND ";
@@ -3342,7 +3263,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		finderCache.putResult(FINDER_PATH_FETCH_BY_R_U_R_R_E_E,
 			new Object[] {
 				ctAction.getReportInstanceId(), ctAction.getUserSegmentId(),
-				ctAction.getReferrerClassName(), ctAction.getReferrerClassPK(),
+				ctAction.getReferrerClassNameId(), ctAction.getReferrerClassPK(),
 				ctAction.getElementId(), ctAction.getEventType()
 			}, ctAction);
 
@@ -3420,7 +3341,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 			Object[] args = new Object[] {
 					ctActionModelImpl.getReportInstanceId(),
 					ctActionModelImpl.getUserSegmentId(),
-					ctActionModelImpl.getReferrerClassName(),
+					ctActionModelImpl.getReferrerClassNameId(),
 					ctActionModelImpl.getReferrerClassPK(),
 					ctActionModelImpl.getElementId(),
 					ctActionModelImpl.getEventType()
@@ -3437,7 +3358,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 				Object[] args = new Object[] {
 						ctActionModelImpl.getReportInstanceId(),
 						ctActionModelImpl.getUserSegmentId(),
-						ctActionModelImpl.getReferrerClassName(),
+						ctActionModelImpl.getReferrerClassNameId(),
 						ctActionModelImpl.getReferrerClassPK(),
 						ctActionModelImpl.getElementId(),
 						ctActionModelImpl.getEventType()
@@ -3455,7 +3376,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		Object[] args = new Object[] {
 				ctActionModelImpl.getReportInstanceId(),
 				ctActionModelImpl.getUserSegmentId(),
-				ctActionModelImpl.getReferrerClassName(),
+				ctActionModelImpl.getReferrerClassNameId(),
 				ctActionModelImpl.getReferrerClassPK(),
 				ctActionModelImpl.getElementId(),
 				ctActionModelImpl.getEventType()
@@ -3469,7 +3390,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 			args = new Object[] {
 					ctActionModelImpl.getOriginalReportInstanceId(),
 					ctActionModelImpl.getOriginalUserSegmentId(),
-					ctActionModelImpl.getOriginalReferrerClassName(),
+					ctActionModelImpl.getOriginalReferrerClassNameId(),
 					ctActionModelImpl.getOriginalReferrerClassPK(),
 					ctActionModelImpl.getOriginalElementId(),
 					ctActionModelImpl.getOriginalEventType()
@@ -3679,7 +3600,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						ctActionModelImpl.getOriginalReportInstanceId(),
-						ctActionModelImpl.getOriginalReferrerClassName(),
+						ctActionModelImpl.getOriginalReferrerClassNameId(),
 						ctActionModelImpl.getOriginalReferrerClassPK()
 					};
 
@@ -3689,7 +3610,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				args = new Object[] {
 						ctActionModelImpl.getReportInstanceId(),
-						ctActionModelImpl.getReferrerClassName(),
+						ctActionModelImpl.getReferrerClassNameId(),
 						ctActionModelImpl.getReferrerClassPK()
 					};
 
@@ -3726,7 +3647,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		ctActionImpl.setReportInstanceId(ctAction.getReportInstanceId());
 		ctActionImpl.setUserSegmentId(ctAction.getUserSegmentId());
 		ctActionImpl.setAlias(ctAction.getAlias());
-		ctActionImpl.setReferrerClassName(ctAction.getReferrerClassName());
+		ctActionImpl.setReferrerClassNameId(ctAction.getReferrerClassNameId());
 		ctActionImpl.setReferrerClassPK(ctAction.getReferrerClassPK());
 		ctActionImpl.setElementId(ctAction.getElementId());
 		ctActionImpl.setEventType(ctAction.getEventType());

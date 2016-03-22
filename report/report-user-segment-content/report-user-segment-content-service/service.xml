@@ -16,7 +16,7 @@
 		<!-- Other fields -->
 
 		<column name="userSegmentId" type="long" />
-		<column name="className" type="String" />
+		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="eventType" type="String" />
 		<column name="count" type="int" />
@@ -41,7 +41,7 @@
 
 		<finder name="C_C_C_E" return-type="UserSegmentContent" unique="true">
 			<finder-column name="userSegmentId" />
-			<finder-column name="className" />
+			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="eventType" />
 		</finder>

@@ -338,11 +338,11 @@ public class TrackingActionInstanceLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
-		long reportInstanceId, java.lang.String className, long classPK,
+		long reportInstanceId, long classNameId, long classPK,
 		java.lang.String eventType) {
 		return getService()
 				   .getTrackingActionInstancesByReportInstanceId(reportInstanceId,
-			className, classPK, eventType);
+			classNameId, classPK, eventType);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(

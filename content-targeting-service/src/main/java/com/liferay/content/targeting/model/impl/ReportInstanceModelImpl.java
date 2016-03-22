@@ -91,7 +91,7 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 			{ "reportKey", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "className", Types.VARCHAR },
+			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "typeSettings", Types.CLOB }
 		};
@@ -109,12 +109,12 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 		TABLE_COLUMNS_MAP.put("reportKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("className", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CT_ReportInstance (uuid_ VARCHAR(75) null,reportInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,reportKey VARCHAR(75) null,name STRING null,description STRING null,className VARCHAR(75) null,classPK LONG,typeSettings TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_ReportInstance (uuid_ VARCHAR(75) null,reportInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,reportKey VARCHAR(75) null,name STRING null,description STRING null,classNameId LONG,classPK LONG,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_ReportInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY reportInstance.reportKey DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_ReportInstance.reportKey DESC";
@@ -130,7 +130,7 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.content.targeting.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.content.targeting.model.ReportInstance"),
 			true);
-	public static final long CLASSNAME_COLUMN_BITMASK = 1L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
@@ -161,7 +161,7 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 		model.setReportKey(soapModel.getReportKey());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
-		model.setClassName(soapModel.getClassName());
+		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
 		model.setTypeSettings(soapModel.getTypeSettings());
 
@@ -239,7 +239,7 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 		attributes.put("reportKey", getReportKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("className", getClassName());
+		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("typeSettings", getTypeSettings());
 
@@ -317,10 +317,10 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 			setDescription(description);
 		}
 
-		String className = (String)attributes.get("className");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (className != null) {
-			setClassName(className);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
 		}
 
 		Long classPK = (Long)attributes.get("classPK");
@@ -716,30 +716,47 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@JSON
 	@Override
 	public String getClassName() {
-		if (_className == null) {
+		if (getClassNameId() <= 0) {
 			return StringPool.BLANK;
 		}
-		else {
-			return _className;
-		}
+
+		return PortalUtil.getClassName(getClassNameId());
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_columnBitmask |= CLASSNAME_COLUMN_BITMASK;
+		long classNameId = 0;
 
-		if (_originalClassName == null) {
-			_originalClassName = _className;
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
 		}
 
-		_className = className;
+		setClassNameId(classNameId);
 	}
 
-	public String getOriginalClassName() {
-		return GetterUtil.getString(_originalClassName);
+	@JSON
+	@Override
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	@Override
+	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
+		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -784,7 +801,7 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
-				ReportInstance.class.getName()));
+				ReportInstance.class.getName()), getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -911,7 +928,7 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 		reportInstanceImpl.setReportKey(getReportKey());
 		reportInstanceImpl.setName(getName());
 		reportInstanceImpl.setDescription(getDescription());
-		reportInstanceImpl.setClassName(getClassName());
+		reportInstanceImpl.setClassNameId(getClassNameId());
 		reportInstanceImpl.setClassPK(getClassPK());
 		reportInstanceImpl.setTypeSettings(getTypeSettings());
 
@@ -990,7 +1007,9 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 
 		reportInstanceModelImpl._originalReportKey = reportInstanceModelImpl._reportKey;
 
-		reportInstanceModelImpl._originalClassName = reportInstanceModelImpl._className;
+		reportInstanceModelImpl._originalClassNameId = reportInstanceModelImpl._classNameId;
+
+		reportInstanceModelImpl._setOriginalClassNameId = false;
 
 		reportInstanceModelImpl._originalClassPK = reportInstanceModelImpl._classPK;
 
@@ -1069,13 +1088,7 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 			reportInstanceCacheModel.description = null;
 		}
 
-		reportInstanceCacheModel.className = getClassName();
-
-		String className = reportInstanceCacheModel.className;
-
-		if ((className != null) && (className.length() == 0)) {
-			reportInstanceCacheModel.className = null;
-		}
+		reportInstanceCacheModel.classNameId = getClassNameId();
 
 		reportInstanceCacheModel.classPK = getClassPK();
 
@@ -1116,8 +1129,8 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
-		sb.append(", className=");
-		sb.append(getClassName());
+		sb.append(", classNameId=");
+		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
 		sb.append(", typeSettings=");
@@ -1180,8 +1193,8 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>className</column-name><column-value><![CDATA[");
-		sb.append(getClassName());
+			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
+		sb.append(getClassNameId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>classPK</column-name><column-value><![CDATA[");
@@ -1221,8 +1234,9 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
-	private String _className;
-	private String _originalClassName;
+	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;

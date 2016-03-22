@@ -59,7 +59,7 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 
 		attributes.put("analyticsReferrerId", getAnalyticsReferrerId());
 		attributes.put("analyticsEventId", getAnalyticsEventId());
-		attributes.put("referrerClassName", getReferrerClassName());
+		attributes.put("referrerClassNameId", getReferrerClassNameId());
 		attributes.put("referrerClassPK", getReferrerClassPK());
 
 		return attributes;
@@ -79,10 +79,10 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 			setAnalyticsEventId(analyticsEventId);
 		}
 
-		String referrerClassName = (String)attributes.get("referrerClassName");
+		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");
 
-		if (referrerClassName != null) {
-			setReferrerClassName(referrerClassName);
+		if (referrerClassNameId != null) {
+			setReferrerClassNameId(referrerClassNameId);
 		}
 
 		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
@@ -143,14 +143,19 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 		return _analyticsReferrer.getPrimaryKeyObj();
 	}
 
-	/**
-	* Returns the referrer class name of this analytics referrer.
-	*
-	* @return the referrer class name of this analytics referrer
-	*/
 	@Override
 	public java.lang.String getReferrerClassName() {
 		return _analyticsReferrer.getReferrerClassName();
+	}
+
+	/**
+	* Returns the referrer class name ID of this analytics referrer.
+	*
+	* @return the referrer class name ID of this analytics referrer
+	*/
+	@Override
+	public long getReferrerClassNameId() {
+		return _analyticsReferrer.getReferrerClassNameId();
 	}
 
 	/**
@@ -249,14 +254,19 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 		_analyticsReferrer.setPrimaryKeyObj(primaryKeyObj);
 	}
 
-	/**
-	* Sets the referrer class name of this analytics referrer.
-	*
-	* @param referrerClassName the referrer class name of this analytics referrer
-	*/
 	@Override
 	public void setReferrerClassName(java.lang.String referrerClassName) {
 		_analyticsReferrer.setReferrerClassName(referrerClassName);
+	}
+
+	/**
+	* Sets the referrer class name ID of this analytics referrer.
+	*
+	* @param referrerClassNameId the referrer class name ID of this analytics referrer
+	*/
+	@Override
+	public void setReferrerClassNameId(long referrerClassNameId) {
+		_analyticsReferrer.setReferrerClassNameId(referrerClassNameId);
 	}
 
 	/**

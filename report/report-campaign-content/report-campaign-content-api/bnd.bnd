@@ -1,4 +1,4 @@
-Bundle-Name: Campaign Content Report API
+Bundle-Name: Liferay Content Targeting Campaign Content Report API
 Bundle-SymbolicName: com.liferay.content.targeting.report.campaign.content.api
 Bundle-Version: 1.0.0
 Export-Package:\
@@ -12,4 +12,3 @@ Export-Package:\
 	com.liferay.content.targeting.report.campaign.content.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Campaign Content Report
--include: ../../../app.bnd

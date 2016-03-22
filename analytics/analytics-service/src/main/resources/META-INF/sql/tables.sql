@@ -3,7 +3,7 @@ create table AnalyticsEvent (
 	companyId LONG,
 	userId LONG,
 	anonymousUserId LONG,
-	className VARCHAR(75) null,
+	classNameId LONG,
 	classPK LONG,
 	elementId VARCHAR(75) null,
 	eventType VARCHAR(75) null,
@@ -18,7 +18,7 @@ create table AnalyticsEvent (
 create table AnalyticsReferrer (
 	analyticsReferrerId LONG not null primary key,
 	analyticsEventId LONG,
-	referrerClassName VARCHAR(75) null,
+	referrerClassName LONG,
 	referrerClassPK LONG
 );
 
@@ -27,7 +27,7 @@ create table CT_Analytics_AnalyticsEvent (
 	companyId LONG,
 	userId LONG,
 	anonymousUserId LONG,
-	className VARCHAR(75) null,
+	classNameId LONG,
 	classPK LONG,
 	elementId VARCHAR(75) null,
 	eventType VARCHAR(75) null,
@@ -42,6 +42,6 @@ create table CT_Analytics_AnalyticsEvent (
 create table CT_Analytics_AnalyticsReferrer (
 	analyticsReferrerId LONG not null primary key,
 	analyticsEventId LONG,
-	referrerClassName VARCHAR(75) null,
+	referrerClassNameId LONG,
 	referrerClassPK LONG
 );

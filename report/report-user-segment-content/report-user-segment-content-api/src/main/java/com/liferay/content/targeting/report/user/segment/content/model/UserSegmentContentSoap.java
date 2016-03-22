@@ -37,7 +37,7 @@ public class UserSegmentContentSoap implements Serializable {
 		soapModel.setUserSegmentContentId(model.getUserSegmentContentId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserSegmentId(model.getUserSegmentId());
-		soapModel.setClassName(model.getClassName());
+		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setEventType(model.getEventType());
 		soapModel.setCount(model.getCount());
@@ -121,12 +121,12 @@ public class UserSegmentContentSoap implements Serializable {
 		_userSegmentId = userSegmentId;
 	}
 
-	public String getClassName() {
-		return _className;
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
-	public void setClassName(String className) {
-		_className = className;
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
 	}
 
 	public long getClassPK() {
@@ -164,7 +164,7 @@ public class UserSegmentContentSoap implements Serializable {
 	private long _userSegmentContentId;
 	private long _companyId;
 	private long _userSegmentId;
-	private String _className;
+	private long _classNameId;
 	private long _classPK;
 	private String _eventType;
 	private int _count;

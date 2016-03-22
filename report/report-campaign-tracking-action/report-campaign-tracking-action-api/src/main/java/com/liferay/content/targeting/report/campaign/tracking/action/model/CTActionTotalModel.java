@@ -138,19 +138,18 @@ public interface CTActionTotalModel extends BaseModel<CTActionTotal>,
 	public void setAlias(String alias);
 
 	/**
-	 * Returns the referrer class name of this c t action total.
+	 * Returns the referrer class name ID of this c t action total.
 	 *
-	 * @return the referrer class name of this c t action total
+	 * @return the referrer class name ID of this c t action total
 	 */
-	@AutoEscape
-	public String getReferrerClassName();
+	public long getReferrerClassNameId();
 
 	/**
-	 * Sets the referrer class name of this c t action total.
+	 * Sets the referrer class name ID of this c t action total.
 	 *
-	 * @param referrerClassName the referrer class name of this c t action total
+	 * @param referrerClassNameId the referrer class name ID of this c t action total
 	 */
-	public void setReferrerClassName(String referrerClassName);
+	public void setReferrerClassNameId(long referrerClassNameId);
 
 	/**
 	 * Returns the referrer class p k of this c t action total.
