@@ -30,7 +30,18 @@ int selectedIndex = GetterUtil.getInteger(request.getAttribute("selectedIndex"))
 boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"), false);
 %>
 
-<div class="content-container <%= portletDisplay.isShowConfigurationIcon() ? "show-configuration" : StringPool.BLANK %>">
+<c:if test="<%= showPreview %>">
+
+	<%
+		request.setAttribute("queryRules", campaignQueryRules);
+	%>
+
+	<liferay-util:include page="/macros/preview_panel.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="selectedIndex" value="<%= String.valueOf(selectedIndex) %>" />
+	</liferay-util:include>
+</c:if>
+
+<div class="container-fluid-1280 content-container" id="<portlet:namespace />previewPanel">
 	<div class="full-content" id="<portlet:namespace />FullContent<%= selectedIndex %>">
 		<c:choose>
 			<c:when test="<%= isNotConfigured %>">
@@ -48,8 +59,6 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"),
 				request.setAttribute("referrerClassName", Campaign.class.getName());
 				request.setAttribute("referrerClassPK", String.valueOf(queryRule.getCampaignId()));
 				%>
-
-				<liferay-util:include page="/macros/edit_icon_link.jsp" servletContext="<%= application %>" />
 
 				<liferay-util:dynamic-include key="com.liferay.content.targeting.display.web#/campaign_content_display/view.jsp#pre" />
 
@@ -74,15 +83,4 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"),
 			</c:otherwise>
 		</c:choose>
 	</div>
-
-	<c:if test="<%= showPreview %>">
-
-		<%
-		request.setAttribute("queryRules", campaignQueryRules);
-		%>
-
-		<liferay-util:include page="/macros/render_thumbnails_preview.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="selectedIndex" value="<%= String.valueOf(selectedIndex) %>" />
-		</liferay-util:include>
-	</c:if>
 </div>
