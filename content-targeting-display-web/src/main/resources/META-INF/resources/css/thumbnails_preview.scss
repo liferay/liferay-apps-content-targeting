@@ -1,4 +1,5 @@
 @import "bourbon";
+@import "mixins";
 
 .user-segment-content-display-portlet, .campaign-content-display-portlet {
 	&.portlet-borderless {
@@ -7,104 +8,99 @@
 		}
 	}
 
-	&:hover .content-container {
-	   overflow: visible;
+	&:active, &:hover, &:focus, &.active {
+		.visible-interaction-button {
+			@include sm() {
+				display: inherit;
+			}
+		}
+	}
 
-	 	.content-preview-container {
-	 	    opacity: 1;
-
-	 		.content-preview .query-rule-summary {
-				width: 250px;
-				font-size: 0.9em;
-
-				.query-operator {
-					display: inline-block;
-				}
-	 		}
-	 	}
+	.visible-interaction-button {
+		@include sm() {
+			display: none;
+		}
 	}
 
 	.content-container {
 		overflow: hidden;
-		position: relative;
 
 		&.show-configuration {
 			min-height: 65px;
 		}
-
-		.content-preview-container {
-			color: #FFF;
-
-			opacity:0.5;
-
-			margin: 0;
-			padding: 0;
-			position: absolute;
-			right: 0;
-			top: 0;
-			z-index: 10;
-
-			.content-preview {
-				background-color: rgba(60, 60, 60, 0.9);
-				height: 50px;
-				overflow: hidden;
-				padding: 0.5em;
-
-				&.selected {
-					background-color: rgba(0, 0, 0, 0.9);
-					opacity: 1;
-
-					.query-rule-image {
-						border: 2px solid #FFF;
-						height: 46px;
-						width: 46px;
-					}
-				}
-
-				.query-rule-image {
-					background-color: #FFF ;
-					background-position: 50% 50%;
-					background-repeat: no-repeat;
-					background-size: 100%;
-					display: inline-block;
-					float: left;
-					height: 50px;
-					margin-right: 0.5em;
-					width: 50px;
-				}
-
-				.query-rule-summary {
-					width: 0px;
-					font-size: 0;
-
-					.query-operator {
-						background-color: #FFF;
-
-						@include border-top-radius(2px);
-						@include border-right-radius(2px);
-						@include border-bottom-radius(2px);
-						@include border-left-radius(2px);
-
-						color: #000;
-						display: none;
-						line-height: .9em;
-						margin: 0 4px;
-						padding: 0 2px 2px 2px;
-
-						&.first {
-							margin-left: 0px;
-						}
-					}
-				}
-			}
-		}
 	}
+
+	.content-preview-button {
+		position: absolute;
+		right: 5px;
+		top: 5px;
+	}
+
+	.portlet-content {
+		position: relative;
+	}
+
 }
 
 .controls-hidden {
 	.user-segment-content-display-portlet, .campaign-content-display-portlet {
 		.content-container.show-configuration {
 		 	min-height: 0px;
+		}
+	}
+}
+
+.btn.btn-lexicon-icon {
+	line-height: 1;
+}
+
+.dropdown-menu-content {
+	max-height: 310px;
+	min-width: 280px;
+	overflow-y: scroll;
+	padding: 0;
+
+	.list-group-item-content {
+		position: relative;
+	}
+
+	li {
+		padding: 8px 4px;
+		border-bottom: 2px solid #DCE0E3;
+
+		&:last-child {
+			border-width: 0;
+		}
+
+		.list-group-item-content a {
+			padding: 8px 12px 8px 0;
+		}
+
+		.list-group-item-field {
+			vertical-align: middle;
+		}
+
+		.visible-interaction-content {
+			display: none;
+		}
+
+		&.active, &:hover {
+			background: #F7FAFA;
+			border-bottom: 2px solid #65B3F0;
+
+			.visible-interaction-content {
+				display: inherit;
+			}
+		}
+
+		.btn-edit-asset {
+			padding: 8px;
+		}
+
+		.sticker-lg {
+			background-position: 50% 50%;
+			background-repeat: no-repeat;
+			background-size: 100%;
 		}
 	}
 }
