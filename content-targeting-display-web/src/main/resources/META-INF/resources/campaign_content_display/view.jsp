@@ -18,22 +18,19 @@
 
 <%
 boolean isNotConfigured = GetterUtil.getBoolean(request.getAttribute("isNotConfigured"), true);
+String portletDisplayTemplateHtml = GetterUtil.getString(request.getAttribute("portletDisplayTemplateHtml"));
+int selectedIndex = GetterUtil.getInteger(request.getAttribute("selectedIndex"));
+boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"), false);
 
 CampaignQueryRule queryRule = (CampaignQueryRule)request.getAttribute("queryRule");
 
 List<CampaignQueryRule> campaignQueryRules = (List<CampaignQueryRule>)request.getAttribute("campaignQueryRules");
-
-String portletDisplayTemplateHtml = GetterUtil.getString(request.getAttribute("portletDisplayTemplateHtml"));
-
-int selectedIndex = GetterUtil.getInteger(request.getAttribute("selectedIndex"));
-
-boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"), false);
 %>
 
 <c:if test="<%= showPreview %>">
 
 	<%
-		request.setAttribute("queryRules", campaignQueryRules);
+	request.setAttribute("queryRules", campaignQueryRules);
 	%>
 
 	<liferay-util:include page="/macros/preview_panel.jsp" servletContext="<%= application %>">

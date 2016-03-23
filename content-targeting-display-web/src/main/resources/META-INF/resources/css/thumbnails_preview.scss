@@ -16,12 +16,6 @@
 		}
 	}
 
-	.visible-interaction-button {
-		@include sm() {
-			display: none;
-		}
-	}
-
 	.content-container {
 		overflow: hidden;
 
@@ -34,73 +28,78 @@
 		position: absolute;
 		right: 5px;
 		top: 5px;
+
+		.btn-default {
+			line-height: 1;
+		}
+	}
+
+	.dropdown-menu-content {
+		max-height: 310px;
+		min-width: 280px;
+		overflow-y: scroll;
+		padding: 0;
+
+		.list-group-item-content {
+			position: relative;
+		}
+
+		li {
+			border-bottom: 2px solid #DCE0E3;
+			padding: 8px 4px;
+
+			&.active, &:hover {
+				background: #F7FAFA;
+				border-bottom: 2px solid #65B3F0;
+
+				.visible-interaction-content {
+					display: inherit;
+				}
+			}
+
+			&:last-child {
+				border-width: 0;
+			}
+
+			.btn-edit-asset {
+				padding: 8px;
+			}
+
+			.list-group-item-content a {
+				padding: 8px 12px 8px 0;
+			}
+
+			.list-group-item-field {
+				vertical-align: middle;
+			}
+
+			.sticker-lg {
+				background-position: 50% 50%;
+				background-repeat: no-repeat;
+				background-size: 100%;
+			}
+
+			.visible-interaction-content {
+				display: none;
+			}
+		}
 	}
 
 	.portlet-content {
 		position: relative;
 	}
 
+	.visible-interaction-button {
+		@include sm() {
+			display: none;
+		}
+	}
 }
 
 .controls-hidden {
 	.user-segment-content-display-portlet, .campaign-content-display-portlet {
 		.content-container.show-configuration {
 		 	min-height: 0px;
-		}
-	}
-}
-
-.btn.btn-lexicon-icon {
-	line-height: 1;
-}
-
-.dropdown-menu-content {
-	max-height: 310px;
-	min-width: 280px;
-	overflow-y: scroll;
-	padding: 0;
-
-	.list-group-item-content {
-		position: relative;
-	}
-
-	li {
-		padding: 8px 4px;
-		border-bottom: 2px solid #DCE0E3;
-
-		&:last-child {
-			border-width: 0;
-		}
-
-		.list-group-item-content a {
-			padding: 8px 12px 8px 0;
-		}
-
-		.list-group-item-field {
-			vertical-align: middle;
-		}
-
-		.visible-interaction-content {
-			display: none;
-		}
-
-		&.active, &:hover {
-			background: #F7FAFA;
-			border-bottom: 2px solid #65B3F0;
-
-			.visible-interaction-content {
-				display: inherit;
-			}
-		}
-
-		.btn-edit-asset {
-			padding: 8px;
-		}
-
-		.sticker-lg {
-			background-position: 50% 50%;
-			background-repeat: no-repeat;
-			background-size: 100%;
 		}
 	}
 }

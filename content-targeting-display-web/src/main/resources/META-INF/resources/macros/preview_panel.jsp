@@ -20,9 +20,7 @@
 List<QueryRule> queryRules = (List<QueryRule>)request.getAttribute("queryRules");
 
 int selectedIndex = ParamUtil.getInteger(request, "selectedIndex");
-%>
 
-<%
 for (QueryRule queryRule : queryRules) {
 	int queryRule_index = queryRules.indexOf(queryRule);
 %>
@@ -48,8 +46,7 @@ for (QueryRule queryRule : queryRules) {
 %>
 
 <div class="content-preview-button dropdown visible-interaction-button">
-
-	<button class="btn btn-default btn-lexicon-icon dropdown-toggle icon-monospaced" data-toggle="dropdown" type="button">
+	<button class="btn btn-default dropdown-toggle icon-monospaced" data-toggle="dropdown" type="button">
 		<aui:icon image="simulation-menu" markupView="lexicon" />
 	</button>
 
@@ -66,11 +63,13 @@ for (QueryRule queryRule : queryRules) {
 			<div class="content-preview-link list-group-item-field">
 				<div class=" sticker-default sticker-lg" style="background-image: url(<%= queryRule.getAssetImage(renderRequest) %>);"></div>
 			</div>
+
 			<div class="content-preview-link list-group-item-content">
 				<div class="clamp-container">
 					<a class="text-default truncate-text" href="javascript:;"><%= queryRule.getSummary(portletConfig, locale) %></a>
 				</div>
 			</div>
+
 			<c:if test="<%= queryRule.getAssetClassPK() > 0 %>">
 				<div class="list-group-item-field">
 					<liferay-util:include page="/macros/edit_icon_link.jsp" servletContext="<%= application %>" />

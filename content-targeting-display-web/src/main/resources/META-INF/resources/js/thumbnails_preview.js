@@ -35,7 +35,6 @@ AUI.add(
 								'.content-preview-link'
 							);
 						}
-
 					},
 
 					_onContentPreviewTap: function(event) {

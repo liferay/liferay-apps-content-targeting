@@ -18,22 +18,19 @@
 
 <%
 boolean isNotConfigured = GetterUtil.getBoolean(request.getAttribute("isNotConfigured"), true);
+String portletDisplayTemplateHtml = GetterUtil.getString(request.getAttribute("portletDisplayTemplateHtml"));
+int selectedIndex = GetterUtil.getInteger(request.getAttribute("selectedIndex"));
+boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"), false);
 
 QueryRule queryRule = (QueryRule)request.getAttribute("queryRule");
 
 List<QueryRule> userSegmentQueryRules = (List<QueryRule>)request.getAttribute("userSegmentQueryRules");
-
-String portletDisplayTemplateHtml = GetterUtil.getString(request.getAttribute("portletDisplayTemplateHtml"));
-
-int selectedIndex = GetterUtil.getInteger(request.getAttribute("selectedIndex"));
-
-boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"), false);
 %>
 
 <c:if test="<%= showPreview %>">
 
 	<%
-		request.setAttribute("queryRules", userSegmentQueryRules);
+	request.setAttribute("queryRules", userSegmentQueryRules);
 	%>
 
 	<liferay-util:include page="/macros/preview_panel.jsp" servletContext="<%= application %>">
@@ -41,7 +38,7 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"),
 	</liferay-util:include>
 </c:if>
 
-<div class="content-container container-fluid-1280 " id="<portlet:namespace />previewPanel">
+<div class="container-fluid-1280 content-container" id="<portlet:namespace />previewPanel">
 	<div class="<%= portletDisplay.isShowConfigurationIcon() ? "show-configuration" : StringPool.BLANK %>">
 		<div class="full-content" id="<portlet:namespace />FullContent<%= selectedIndex %>">
 			<c:choose>

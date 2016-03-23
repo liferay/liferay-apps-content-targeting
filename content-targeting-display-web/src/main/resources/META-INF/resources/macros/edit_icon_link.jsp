@@ -40,7 +40,7 @@ PortletURL editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, life
 	<liferay-ui:icon
 		cssClass="btn-edit-asset"
 		icon="pencil"
-		linkCssClass="btn btn-default btn-edit-asset btn-lexicon-icon icon-monospaced visible-interaction-content"
+		linkCssClass="btn btn-default btn-edit-asset icon-monospaced visible-interaction-content"
 		markupView="lexicon"
 		url="<%= editPortletURL.toString() %>"
 		useDialog="<%= true %>"
