@@ -179,6 +179,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 		Date now = new Date();
 
 		Tactic tactic = tacticPersistence.findByPrimaryKey(tacticId);
+
 		tactic.setModifiedDate(serviceContext.getModifiedDate(now));
 		tactic.setNameMap(nameMap);
 		tactic.setDescriptionMap(descriptionMap);

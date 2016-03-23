@@ -1,11 +1,17 @@
 AUI.add(
 	'liferay-thumbnails-preview',
 	function(A) {
-		var SELECTED_CLASSNAME = 'selected';
+		var ACTIVE_CLASSNAME = 'active';
 
 		var ThumbnailsPreview = A.Component.create(
 			{
 				ATTRS: {
+					popover: {
+					},
+					previewIndex: {
+					},
+					resourceURL: {
+					},
 					selectedIndex: {
 					}
 				},
@@ -20,32 +26,33 @@ AUI.add(
 
 						var contentPreviewContainer = instance.one('#contentPreviewContainer');
 
+						instance.set('previewIndex', instance.get('selectedIndex'));
+
 						if (contentPreviewContainer) {
 							contentPreviewContainer.delegate(
-								'hover',
-								A.bind(instance._onContentPreviewHover, instance),
-								'.content-preview'
+								'tap',
+								A.bind(instance._onContentPreviewTap, instance),
+								'.content-preview-link'
 							);
 						}
 					},
 
-					_onContentPreviewHover: function(event) {
+					_onContentPreviewTap: function(event) {
 						var instance = this;
 
-						var index = event.currentTarget.attr('data-index');
+						var index = event.currentTarget.ancestor('li').attr('data-index');
+						var previewIndex = instance.get('previewIndex');
 						var selectedIndex = instance.get('selectedIndex');
 
-						if (index == selectedIndex) {
-							return;
-						}
+						var selectedFullContent = instance.one('#FullContent' + selectedIndex);
+						var previewContent = instance.one('#FullContentHidden' + index);
 
-						instance.one('#FullContent' + selectedIndex).hide();
-						instance.one('#PreviewContent' + selectedIndex).removeClass(SELECTED_CLASSNAME);
+						instance.one('#PreviewContent' + previewIndex).removeClass(ACTIVE_CLASSNAME);
+						instance.one('#PreviewContent' + index).addClass(ACTIVE_CLASSNAME);
 
-						instance.one('#FullContent' + index).show();
-						instance.one('#PreviewContent' + index).addClass(SELECTED_CLASSNAME);
+						selectedFullContent.html(previewContent.html());
 
-						instance.set('selectedIndex', index);
+						instance.set('previewIndex', index);
 					}
 				}
 			}
@@ -55,6 +62,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'event-hover', 'liferay-portlet-base']
+		requires: ['aui-base', 'aui-popover', 'event-hover', 'liferay-portlet-base', 'widget-anim']
 	}
 );

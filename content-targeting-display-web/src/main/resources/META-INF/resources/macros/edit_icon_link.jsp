@@ -31,15 +31,18 @@ AssetRenderer assetRenderer = queryRule.getAssetEntry().getAssetRenderer();
 PortletURL editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, LiferayWindowState.POP_UP, redirectURL);
 %>
 
-<c:if test="<%= portletDisplay.isShowConfigurationIcon() && assetRenderer.hasEditPermission(permissionChecker) && Validator.isNotNull(editPortletURL) %>">
+<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) && Validator.isNotNull(editPortletURL) %>">
 
 	<%
 	String title = LanguageUtil.format(locale, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)));
 	%>
 
 	<liferay-ui:icon
+		cssClass="btn-edit-asset"
 		icon="pencil"
+		linkCssClass="btn btn-default btn-edit-asset icon-monospaced visible-interaction-content"
 		markupView="lexicon"
-		url='<%= "javascript:Liferay.Util.openWindow({id:'" + renderResponse.getNamespace() + "editAsset', title: '" + title + "', uri:'" + HtmlUtil.escapeURL(editPortletURL.toString()) + "'});" %>'
+		url="<%= editPortletURL.toString() %>"
+		useDialog="<%= true %>"
 	/>
 </c:if>

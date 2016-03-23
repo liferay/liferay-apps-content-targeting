@@ -18,69 +18,66 @@
 
 <%
 boolean isNotConfigured = GetterUtil.getBoolean(request.getAttribute("isNotConfigured"), true);
+String portletDisplayTemplateHtml = GetterUtil.getString(request.getAttribute("portletDisplayTemplateHtml"));
+int selectedIndex = GetterUtil.getInteger(request.getAttribute("selectedIndex"));
+boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"), false);
 
 QueryRule queryRule = (QueryRule)request.getAttribute("queryRule");
 
 List<QueryRule> userSegmentQueryRules = (List<QueryRule>)request.getAttribute("userSegmentQueryRules");
-
-String portletDisplayTemplateHtml = GetterUtil.getString(request.getAttribute("portletDisplayTemplateHtml"));
-
-int selectedIndex = GetterUtil.getInteger(request.getAttribute("selectedIndex"));
-
-boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"), false);
 %>
 
-<div class="content-container <%= portletDisplay.isShowConfigurationIcon() ? "show-configuration" : StringPool.BLANK %>">
-	<div class="full-content" id="<portlet:namespace />FullContent<%= selectedIndex %>">
-		<c:choose>
-			<c:when test="<%= isNotConfigured %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="configure-this-app-to-display-different-content-to-each-user-segment" />
-				</div>
-			</c:when>
-			<c:when test="<%= queryRule.hasAssetEntry() %>">
+<c:if test="<%= showPreview %>">
 
-				<%
-				request.setAttribute("queryRule", queryRule);
+	<%
+	request.setAttribute("queryRules", userSegmentQueryRules);
+	%>
 
-				request.setAttribute("assetClassName", queryRule.getAssetClassName());
-				request.setAttribute("assetClassPK", String.valueOf(queryRule.getAssetClassPK()));
-				%>
+	<liferay-util:include page="/macros/preview_panel.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="selectedIndex" value="<%= String.valueOf(selectedIndex) %>" />
+	</liferay-util:include>
+</c:if>
 
-				<liferay-util:include page="/macros/edit_icon_link.jsp" servletContext="<%= application %>" />
+<div class="container-fluid-1280 content-container" id="<portlet:namespace />previewPanel">
+	<div class="<%= portletDisplay.isShowConfigurationIcon() ? "show-configuration" : StringPool.BLANK %>">
+		<div class="full-content" id="<portlet:namespace />FullContent<%= selectedIndex %>">
+			<c:choose>
+				<c:when test="<%= isNotConfigured %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="configure-this-app-to-display-different-content-to-each-user-segment" />
+					</div>
+				</c:when>
+				<c:when test="<%= queryRule.hasAssetEntry() %>">
 
-				<liferay-util:dynamic-include key="com.liferay.content.targeting.display.web#/user_segment_content_display/view.jsp#pre" />
+					<%
+					request.setAttribute("queryRule", queryRule);
 
-				<c:choose>
-					<c:when test="<%= !Validator.isBlank(portletDisplayTemplateHtml) %>">
-						<%= portletDisplayTemplateHtml %>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:asset-display
-							assetEntry="<%= queryRule.getAssetEntry() %>"
-							template="full_content"
-						/>
-					</c:otherwise>
-				</c:choose>
+					request.setAttribute("assetClassName", queryRule.getAssetClassName());
+					request.setAttribute("assetClassPK", String.valueOf(queryRule.getAssetClassPK()));
+					%>
 
-				<liferay-util:dynamic-include key="com.liferay.content.targeting.display.web#/user_segment_content_display/view.jsp#post" />
-			</c:when>
-			<c:otherwise>
-				<div class="alert alert-info">
-					<liferay-ui:message key="there-are-no-matching-rules" />
-				</div>
-			</c:otherwise>
-		</c:choose>
+					<liferay-util:dynamic-include key="com.liferay.content.targeting.display.web#/user_segment_content_display/view.jsp#pre" />
+
+					<c:choose>
+						<c:when test="<%= !Validator.isBlank(portletDisplayTemplateHtml) %>">
+							<%= portletDisplayTemplateHtml %>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:asset-display
+								assetEntry="<%= queryRule.getAssetEntry() %>"
+								template="full_content"
+							/>
+						</c:otherwise>
+					</c:choose>
+
+					<liferay-util:dynamic-include key="com.liferay.content.targeting.display.web#/user_segment_content_display/view.jsp#post" />
+				</c:when>
+				<c:otherwise>
+					<div class="alert alert-info">
+						<liferay-ui:message key="there-are-no-matching-rules" />
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</div>
-
-	<c:if test="<%= showPreview %>">
-
-		<%
-		request.setAttribute("queryRules", userSegmentQueryRules);
-		%>
-
-		<liferay-util:include page="/macros/render_thumbnails_preview.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="selectedIndex" value="<%= String.valueOf(selectedIndex) %>" />
-		</liferay-util:include>
-	</c:if>
 </div>
