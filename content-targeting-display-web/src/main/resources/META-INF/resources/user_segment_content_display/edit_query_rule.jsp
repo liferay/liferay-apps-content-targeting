@@ -64,7 +64,7 @@ if (editQueryRule.isValid() && !isFirst) {
 				<div class="user-segment-selector">
 					<p class="text-default"><liferay-ui:message key="of-the-following-user-segments" /></p>
 
-					<div class="lfr-tags-selector-content" id='<portlet:namespace /><%= "assetCategoriesSelector" + index %>'>
+					<div class="lfr-tags-selector-content" id="<portlet:namespace /><%= "assetCategoriesSelector" + index %>">
 						<aui:input name='<%= "userSegmentAssetCategoryIds" + index %>' type="hidden" value="<%= editQueryRule.getUserSegmentAssetCategoryIdsAsString() %>" />
 					</div>
 

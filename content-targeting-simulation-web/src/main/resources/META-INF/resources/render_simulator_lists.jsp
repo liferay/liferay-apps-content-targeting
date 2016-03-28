@@ -104,7 +104,7 @@ long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("sim
 		</c:choose>
 	</div>
 
-	<div id='<portlet:namespace /><%= "paginator" + name + "MatchedContainer" %>'></div>
+	<div id="<portlet:namespace /><%= "paginator" + name + "MatchedContainer" %>"></div>
 
 	<div class="category-header">
 		<div class="category-icon">
@@ -152,7 +152,7 @@ long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("sim
 
 	</div>
 
-	<div id='<portlet:namespace /><%= "paginator" + name + "NotMatchedContainer" %>'></div>
+	<div id="<portlet:namespace /><%= "paginator" + name + "NotMatchedContainer" %>"></div>
 </div>
 
 <aui:script use="liferay-simulator">
