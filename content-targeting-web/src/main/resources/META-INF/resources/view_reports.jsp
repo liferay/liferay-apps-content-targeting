@@ -111,10 +111,14 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 					<portlet:param name="reportInstanceId" value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>" />
 				</portlet:renderURL>
 
+				<%
+				request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
+				%>
+
 				<c:choose>
 					<c:when test="<%= contentTargetingViewReportsDisplayContext.isDescriptiveView() %>">
 						<liferay-ui:search-container-column-icon
-							icon="page"
+							icon="reports"
 							toggleRowChecker="<%= true %>"
 						/>
 
@@ -148,7 +152,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 							<liferay-frontend:icon-vertical-card
 								actionJsp="/reports_action.jsp"
 								actionJspServletContext="<%= application %>"
-								icon="page"
+								icon="reports"
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
 								title="<%= reportInstance.getName(locale) %>"

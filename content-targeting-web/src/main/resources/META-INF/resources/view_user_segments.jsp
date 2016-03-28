@@ -112,10 +112,15 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 			keyProperty="userSegmentId"
 			modelVar="userSegment"
 		>
+
+			<%
+			request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
+			%>
+
 			<c:choose>
 				<c:when test="<%= contentTargetingViewUserSegmentDisplayContext.isDescriptiveView() %>">
 					<liferay-ui:search-container-column-icon
-						icon="page"
+						icon="user-segments"
 						toggleRowChecker="<%= true %>"
 					/>
 
@@ -145,7 +150,7 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 						<liferay-frontend:icon-vertical-card
 							actionJsp="/user_segments_action.jsp"
 							actionJspServletContext="<%= application %>"
-							icon="page"
+							icon="user-segments"
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= userSegment.getName(locale) %>"

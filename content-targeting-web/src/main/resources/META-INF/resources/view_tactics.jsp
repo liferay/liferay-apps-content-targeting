@@ -90,10 +90,15 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 			keyProperty="tacticId"
 			modelVar="tactic"
 		>
+
+			<%
+			request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
+			%>
+
 			<c:choose>
 				<c:when test="<%= contentTargetingViewTacticsDisplayContext.isDescriptiveView() %>">
 					<liferay-ui:search-container-column-icon
-						icon="page"
+						icon="promotions"
 						toggleRowChecker="<%= true %>"
 					/>
 
@@ -123,7 +128,7 @@ renderResponse.setTitle(contentTargetingViewTacticsDisplayContext.getCampaignTit
 						<liferay-frontend:icon-vertical-card
 						actionJsp="/tactic_action.jsp"
 						actionJspServletContext="<%= application %>"
-						icon="page"
+						icon="promotions"
 						resultRow="<%= row %>"
 						rowChecker="<%= searchContainer.getRowChecker() %>"
 						title="<%= tactic.getName(locale) %>"

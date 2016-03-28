@@ -75,10 +75,15 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 			keyProperty="campaignId"
 			modelVar="campaign"
 		>
+
+			<%
+			request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
+			%>
+
 			<c:choose>
 				<c:when test="<%= contentTargetingViewCampaignDisplayContext.isDescriptiveView() %>">
 					<liferay-ui:search-container-column-icon
-						icon="page"
+						icon="campaigns"
 						toggleRowChecker="<%= true %>"
 					/>
 
@@ -144,7 +149,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 						<liferay-frontend:icon-vertical-card
 							actionJsp="/campaign_action.jsp"
 							actionJspServletContext="<%= application %>"
-							icon="page"
+							icon="campaigns"
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= campaign.getName(locale) %>"
