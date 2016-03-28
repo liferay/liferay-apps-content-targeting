@@ -55,9 +55,13 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 	searchContainerId="reports"
 >
 	<liferay-frontend:management-bar-buttons>
+		<liferay-portlet:actionURL name="<%= ContentTargetingMVCCommand.UPDATE_DISPLAY_VIEW %>" varImpl="updateDisplayStyleURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</liferay-portlet:actionURL>
+
 		<liferay-frontend:management-bar-display-buttons
 			displayViews="<%= contentTargetingViewReportsDisplayContext.getDisplayViews() %>"
-			portletURL="<%= contentTargetingViewReportsDisplayContext.getPortletURL() %>"
+			portletURL="<%= updateDisplayStyleURL %>"
 			selectedDisplayStyle="<%= contentTargetingViewReportsDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>

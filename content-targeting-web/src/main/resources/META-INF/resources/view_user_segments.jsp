@@ -66,9 +66,13 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 	searchContainerId="userSegments"
 >
 	<liferay-frontend:management-bar-buttons>
+		<liferay-portlet:actionURL name="<%= ContentTargetingMVCCommand.UPDATE_DISPLAY_VIEW %>" varImpl="updateDisplayStyleURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</liferay-portlet:actionURL>
+
 		<liferay-frontend:management-bar-display-buttons
 			displayViews="<%= contentTargetingViewUserSegmentDisplayContext.getDisplayViews() %>"
-			portletURL="<%= contentTargetingViewUserSegmentDisplayContext.getPortletURL() %>"
+			portletURL="<%= updateDisplayStyleURL %>"
 			selectedDisplayStyle="<%= contentTargetingViewUserSegmentDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>

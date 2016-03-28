@@ -37,6 +37,8 @@ public class ContentTargetingMVCCommand {
 
 	public static final String UPDATE_CAMPAIGN = "updateCampaign";
 
+	public static final String UPDATE_DISPLAY_VIEW = "updateDisplayView";
+
 	public static final String UPDATE_REPORT = "updateReport";
 
 	public static final String UPDATE_REPORT_INSTANCE = "updateReportInstance";
