@@ -53,7 +53,7 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 			/>
 		</c:if>
 
-		<c:if test="<%= channelsCount == 0 %>">
+		<c:if test="<%= channelsCount > 0 %>">
 			<portlet:renderURL var="viewCampaignTacticsURL">
 				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_TACTICS %>" />
 				<portlet:param name="campaignId" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
