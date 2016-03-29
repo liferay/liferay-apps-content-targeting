@@ -2,7 +2,7 @@ dependencies {
 	provided project(":apps:web-experience:journal:journal-test")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
 	testIntegrationCompile project(":apps:content-targeting:analytics:analytics-api")
 	testIntegrationCompile project(":apps:content-targeting:analytics:analytics-service")
-	testIntegrationCompile project(":apps:web-experience:journal:journal-api")
 }
