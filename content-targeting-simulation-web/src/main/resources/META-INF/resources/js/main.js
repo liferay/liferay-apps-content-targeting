@@ -90,6 +90,10 @@ AUI.add(
 								instance._elementsContainer.delegate('click', instance._onElementClick, '.element', instance)
 							);
 						}
+
+						instance._eventHandles.push(
+							Liferay.on('SimulationMenu:closeSimulationPanel', A.bind('_stopSimulation', instance))
+						);
 					},
 
 					_createSimulatorSearch: function() {
@@ -201,13 +205,6 @@ AUI.add(
 											var deviceDialogWindow = Liferay.Util.getWindow(dialogId);
 
 											deviceDialogWindow.iframe.set('uri', deviceDialogWindow.iframeConfig.uri + "&t=" + Math.random());
-
-											deviceDialogWindow.iframe.on(
-												'load',
-												function() {
-													instance._resetSimulator();
-												}
-											);
 										}
 									}
 								}
@@ -252,7 +249,7 @@ AUI.add(
 						}
 					},
 
-					_resetSimulator: function() {
+					_stopSimulation: function() {
 						var instance = this;
 
 						var portletURL = instance.get('portletURL');
