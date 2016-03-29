@@ -19,7 +19,6 @@
 <%
 String refreshURL = GetterUtil.getString(request.getAttribute("refreshURL"));
 boolean showUserSegmentSearch = GetterUtil.getBoolean(request.getAttribute("showUserSegmentSearch"));
-long[] simulatedUserSegmentIds = GetterUtil.getLongValues(request.getAttribute("simulatedUserSegmentIds"));
 
 List<UserSegment> userSegments = (List<UserSegment>)request.getAttribute("userSegments");
 List<UserSegment> notMatchedUserSegments = (List<UserSegment>)request.getAttribute("notMatchedUserSegments");
@@ -37,7 +36,6 @@ String portletNamespace = PortalUtil.getPortletNamespace(PortletKeys.CT_SIMULATO
 		<%
 		request.setAttribute("elements", userSegments);
 		request.setAttribute("notMatchedElements", notMatchedUserSegments);
-		request.setAttribute("simulatedElementsPKs", simulatedUserSegmentIds);
 		%>
 
 		<liferay-util:include page="/render_simulator_lists.jsp" servletContext="<%= application %>">

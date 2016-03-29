@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
 
@@ -43,9 +42,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -82,128 +78,11 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
-
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			long[] originalUserSegmentIds = (long[])portletRequest.getAttribute(
-				WebKeys.ORIGINAL_USER_SEGMENT_IDS);
-
-			long[] groupIds =
-				ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
-					themeDisplay.getSiteGroupId());
-
-			HttpServletRequest httpServletRequest =
-				PortalUtil.getHttpServletRequest(portletRequest);
-
-			HttpServletResponse httpServletResponse =
-				PortalUtil.getHttpServletResponse(portletResponse);
-
-			long[] simulatedUserSegmentIds =
-				_userSegmentSimulator.getUserSegmentIds(
-					httpServletRequest, httpServletResponse);
-
-			if (simulatedUserSegmentIds == null) {
-				simulatedUserSegmentIds = originalUserSegmentIds;
-			}
-
-			portletRequest.setAttribute(
-				"simulatedUserSegmentIds", simulatedUserSegmentIds);
-
-			List<Campaign> campaigns = _campaignLocalService.getCampaigns(
-				groupIds, simulatedUserSegmentIds);
-
-			portletRequest.setAttribute("campaigns", campaigns);
-
-			List<Campaign> availableCampaigns =
-				_campaignLocalService.getCampaigns(groupIds);
-
-			List<Campaign> notMatchedCampaigns = new ArrayList<>();
-
-			for (Campaign campaign : availableCampaigns) {
-				if (!campaigns.contains(campaign)) {
-					notMatchedCampaigns.add(campaign);
-				}
-			}
-
-			portletRequest.setAttribute(
-				"notMatchedCampaigns", notMatchedCampaigns);
-
-			boolean showCampaignsSearch = false;
-
-			if ((notMatchedCampaigns.size() + campaigns.size()) >
-					_SHOW_SEARCH_LIMIT) {
-
-				showCampaignsSearch = true;
-			}
-
-			portletRequest.setAttribute(
-				"showCampaignsSearch", showCampaignsSearch);
-
-			portletRequest.setAttribute(
-				"originalUserSegmentIds", originalUserSegmentIds);
-
-			boolean isSimulatedUserSegments = GetterUtil.getBoolean(
-				portletRequest.getAttribute(
-					WebKeys.IS_SIMULATED_USER_SEGMENTS));
-
-			portletRequest.setAttribute(
-				"isSimulatedUserSegments", isSimulatedUserSegments);
-
-			List<UserSegment> userSegments = new ArrayList<>();
-
-			if (originalUserSegmentIds != null) {
-				for (long userSegmentId : originalUserSegmentIds) {
-					userSegments.add(
-						_userSegmentLocalService.getUserSegment(userSegmentId));
-				}
-			}
-
-			portletRequest.setAttribute("userSegments", userSegments);
-
-			List<UserSegment> availableUserSegments =
-				_userSegmentLocalService.getUserSegments(groupIds);
-
-			List<UserSegment> notMatchedUserSegments = new ArrayList<>();
-
-			for (UserSegment userSegment : availableUserSegments) {
-				if (!userSegments.contains(userSegment)) {
-					notMatchedUserSegments.add(userSegment);
-				}
-			}
-
-			portletRequest.setAttribute(
-				"notMatchedUserSegments", notMatchedUserSegments);
-
-			boolean showUserSegmentSearch = false;
-
-			if ((notMatchedUserSegments.size() + userSegments.size()) >
-					_SHOW_SEARCH_LIMIT) {
-
-				showUserSegmentSearch = true;
-			}
-
-			portletRequest.setAttribute(
-				"showUserSegmentSearch", showUserSegmentSearch);
-
-			String refreshURL = PortalUtil.getLayoutURL(
-				themeDisplay.getLayout(), themeDisplay);
-
-			portletRequest.setAttribute(
-				"refreshURL", HtmlUtil.escapeJS(refreshURL));
-
-			portletRequest.setAttribute(
-				"simulatorServletContext", _simulatorServletContext);
+			populateContext(request, response);
 		}
 		catch (Exception e) {
-			_log.error("Error rendering CT simulator panel app", e);
+			_log.error("Error obtaining simulation data", e);
 		}
 
 		return super.include(request, response);
@@ -250,6 +129,103 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 
 		return GroupPermissionUtil.contains(
 			permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE);
+	}
+
+	protected void populateContext(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		long[] originalUserSegmentIds = (long[])request.getAttribute(
+			WebKeys.ORIGINAL_USER_SEGMENT_IDS);
+
+		long[] simulatedUserSegmentIds =
+			_userSegmentSimulator.getUserSegmentIds(request, response);
+
+		if (simulatedUserSegmentIds == null) {
+			simulatedUserSegmentIds = originalUserSegmentIds;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] groupIds = ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+			themeDisplay.getSiteGroupId());
+
+		List<Campaign> campaigns = _campaignLocalService.getCampaigns(
+			groupIds, simulatedUserSegmentIds);
+
+		request.setAttribute("campaigns", campaigns);
+
+		List<Campaign> availableCampaigns = _campaignLocalService.getCampaigns(
+			groupIds);
+
+		List<Campaign> notMatchedCampaigns = new ArrayList<>();
+
+		for (Campaign campaign : availableCampaigns) {
+			if (!campaigns.contains(campaign)) {
+				notMatchedCampaigns.add(campaign);
+			}
+		}
+
+		request.setAttribute("notMatchedCampaigns", notMatchedCampaigns);
+
+		boolean showCampaignsSearch = false;
+
+		if ((notMatchedCampaigns.size() + campaigns.size()) >
+				_SHOW_SEARCH_LIMIT) {
+
+			showCampaignsSearch = true;
+		}
+
+		request.setAttribute("showCampaignsSearch", showCampaignsSearch);
+
+		boolean isSimulatedUserSegments = GetterUtil.getBoolean(
+			request.getAttribute(WebKeys.IS_SIMULATED_USER_SEGMENTS));
+
+		request.setAttribute(
+			"isSimulatedUserSegments", isSimulatedUserSegments);
+
+		List<UserSegment> userSegments = new ArrayList<>();
+
+		if (originalUserSegmentIds != null) {
+			for (long userSegmentId : originalUserSegmentIds) {
+				userSegments.add(
+					_userSegmentLocalService.getUserSegment(userSegmentId));
+			}
+		}
+
+		request.setAttribute("userSegments", userSegments);
+
+		List<UserSegment> availableUserSegments =
+			_userSegmentLocalService.getUserSegments(groupIds);
+
+		List<UserSegment> notMatchedUserSegments = new ArrayList<>();
+
+		for (UserSegment userSegment : availableUserSegments) {
+			if (!userSegments.contains(userSegment)) {
+				notMatchedUserSegments.add(userSegment);
+			}
+		}
+
+		request.setAttribute("notMatchedUserSegments", notMatchedUserSegments);
+
+		boolean showUserSegmentSearch = false;
+
+		if ((notMatchedUserSegments.size() + userSegments.size()) >
+				_SHOW_SEARCH_LIMIT) {
+
+			showUserSegmentSearch = true;
+		}
+
+		request.setAttribute("showUserSegmentSearch", showUserSegmentSearch);
+
+		String refreshURL = PortalUtil.getLayoutURL(
+			themeDisplay.getLayout(), themeDisplay);
+
+		request.setAttribute("refreshURL", HtmlUtil.escapeJS(refreshURL));
+
+		request.setAttribute(
+			"simulatorServletContext", _simulatorServletContext);
 	}
 
 	@Reference(unbind = "-")

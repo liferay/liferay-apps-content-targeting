@@ -18,19 +18,14 @@
 
 <%
 String className = ParamUtil.getString(request, "className");
-
 String containerId = HtmlUtil.escapeJS(ParamUtil.getString(request, "containerId"));
 String emptyMessage = ParamUtil.getString(request, "emptyMessage");
-boolean showSearch = ParamUtil.getBoolean(request, "showSearch");
 String name = HtmlUtil.escapeJS(ParamUtil.getString(request, "name"));
+boolean showSearch = ParamUtil.getBoolean(request, "showSearch");
 
-List<Campaign> campaigns = (List<Campaign>)request.getAttribute("campaigns");
 List<UserSegment> userSegments = (List<UserSegment>)request.getAttribute("userSegments");
-
 List<Object> elements = (List<Object>)request.getAttribute("elements");
 List<Object> notMatchedElements = (List<Object>)request.getAttribute("notMatchedElements");
-
-long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("simulatedElementsPKs"));
 %>
 
 <c:if test="<%= showSearch %>">
@@ -38,13 +33,7 @@ long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("sim
 		<i class="search-panel-icon"></i>
 
 		<div class="search-panels-bar">
-			<aui:input
-				cssClass="search-panels-input search-query span12"
-				label=""
-				name='<%= "search" + name + "Panel" %>'
-				placeholder='<%= LanguageUtil.get(request, "search") + "..." %>'
-				type="text"
-			/>
+			<aui:input cssClass="search-panels-input search-query span12" label="" name='<%= "search" + name + "Panel" %>' placeholder='<%= LanguageUtil.get(request, "search") + "..." %>' type="text" />
 		</div>
 	</div>
 </c:if>
@@ -65,7 +54,7 @@ long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("sim
 				<%
 				for (Object element : elements) {
 					long primaryKey = 0;
-					String nameWithGroup = "";
+					String nameWithGroup = StringPool.BLANK;
 
 					if (className.equals(Campaign.class.getName())) {
 						nameWithGroup = ((Campaign)element).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
@@ -111,20 +100,20 @@ long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("sim
 	<div class="category-content flex-container">
 
 		<%
-			for (Object notMatchedElement : notMatchedElements) {
-				long primaryKey = 0;
-				String nameWithGroup = "";
+		for (Object notMatchedElement : notMatchedElements) {
+			long primaryKey = 0;
+			String nameWithGroup = StringPool.BLANK;
 
-				if (className.equals(Campaign.class.getName())) {
-					nameWithGroup = ((Campaign)notMatchedElement).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
-					primaryKey = ((Campaign)notMatchedElement).getPrimaryKey();
-				}
-				else {
-					nameWithGroup = ((UserSegment)notMatchedElement).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
-					primaryKey = ((UserSegment)notMatchedElement).getPrimaryKey();
-				}
+			if (className.equals(Campaign.class.getName())) {
+				nameWithGroup = ((Campaign)notMatchedElement).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
+				primaryKey = ((Campaign)notMatchedElement).getPrimaryKey();
+			}
+			else {
+				nameWithGroup = ((UserSegment)notMatchedElement).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
+				primaryKey = ((UserSegment)notMatchedElement).getPrimaryKey();
+			}
 
-				nameWithGroup = StringUtil.shorten(nameWithGroup, 30);
+			nameWithGroup = StringUtil.shorten(nameWithGroup, 30);
 		%>
 
 			<div class="col-md-6 element flex-container not-matched text-center" data-elementId="<%= primaryKey %>">

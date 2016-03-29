@@ -66,38 +66,36 @@ import org.osgi.service.component.annotations.Reference;
 public class SimulatorPortlet extends MVCPortlet {
 
 	public void simulateUserSegment(
-			ActionRequest request, ActionResponse response)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(request);
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
 
-		HttpServletResponse httpServletResponse =
-			PortalUtil.getHttpServletResponse(response);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			actionResponse);
+
+		_userSegmentSimulator.removeAllUserSegmentIds(request, response);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 
 		boolean stopSimulation = ParamUtil.getBoolean(
 			request, "stopSimulation");
 
-		_userSegmentSimulator.removeAllUserSegmentIds(
-			httpServletRequest, httpServletResponse);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		JSONPortletResponseUtil.writeJSON(request, response, jsonObject);
-
 		if (stopSimulation) {
-			request.setAttribute(WebKeys.USER_SEGMENT_IDS, null);
+			request.removeAttribute(WebKeys.USER_SEGMENT_IDS);
 
 			return;
 		}
-		else {
-			long[] selectedUserSegmentIds = ParamUtil.getLongValues(
-				request, "selectedUserSegmentIds");
 
-			_userSegmentSimulator.setUserSegmentIds(
-				selectedUserSegmentIds, httpServletRequest,
-				httpServletResponse);
-		}
+		long[] selectedUserSegmentIds = ParamUtil.getLongValues(
+			request, "selectedUserSegmentIds");
+
+		_userSegmentSimulator.setUserSegmentIds(
+			selectedUserSegmentIds, request, response);
 	}
 
 	@Reference

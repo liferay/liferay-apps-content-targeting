@@ -19,14 +19,14 @@
 <%
 long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS);
 
-String tabs1 = ParamUtil.getString(request, "tabs1");
-
 ServletContext simulatorServletContext = (ServletContext)request.getAttribute("simulatorServletContext");
 %>
 
 <c:if test="<%= simulatorServletContext != null %>">
-	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(simulatorServletContext.getContextPath()) + "/js/main.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script>
-	<link href="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(simulatorServletContext.getContextPath()) + "/css/main.css", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" rel="stylesheet" type="text/css">
+	<liferay-util:html-top>
+		<link href="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(simulatorServletContext.getContextPath()) + "/css/main.css", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" rel="stylesheet" type="text/css">
+		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(simulatorServletContext.getContextPath()) + "/js/main.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script>
+	</liferay-util:html-top>
 </c:if>
 
 <h3 class="list-group-heading"><liferay-ui:message key="category.ct" /></h3>

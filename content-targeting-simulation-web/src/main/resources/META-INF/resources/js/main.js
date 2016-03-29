@@ -183,6 +183,7 @@ AUI.add(
 						var namespacedUserSegments = instance.get('portletNamespace') + 'selectedUserSegmentIds';
 
 						var data = {};
+
 						data[namespacedUserSegments] = selectedUserSegmentIds;
 
 						A.io.request(
@@ -259,6 +260,7 @@ AUI.add(
 						var stopSimulation = instance.get('portletNamespace') + 'stopSimulation';
 
 						var data = {};
+
 						data[stopSimulation] = true;
 
 						A.io.request(
