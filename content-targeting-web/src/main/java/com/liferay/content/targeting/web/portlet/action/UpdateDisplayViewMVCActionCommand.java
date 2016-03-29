@@ -41,15 +41,16 @@ public class UpdateDisplayViewMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest request, ActionResponse response)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		hideDefaultSuccessMessage(request);
+		hideDefaultSuccessMessage(actionRequest);
 
-		String displayStyle = ParamUtil.getString(request, "displayStyle");
+		String displayStyle = ParamUtil.getString(
+			actionRequest, "displayStyle");
 
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
 
 		portalPreferences.setValue(
 			PortletKeys.CT_ADMIN, "display-style", displayStyle);

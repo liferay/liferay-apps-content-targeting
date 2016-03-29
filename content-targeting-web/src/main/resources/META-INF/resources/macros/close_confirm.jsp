@@ -34,11 +34,7 @@ for (String cssClass : controlCssClasses) {
 controlCssClassesSelector = stringBundler.toString();
 %>
 
-<aui:input
-	name="closeConfirm"
-	type="hidden"
-	value="true"
-/>
+<aui:input name="closeConfirm" type="hidden" value="true" />
 
 <aui:script use="aui-base">
 	A.all('<%= controlCssClassesSelector %>').on(

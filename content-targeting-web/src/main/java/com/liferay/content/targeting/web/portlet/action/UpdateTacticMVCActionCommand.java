@@ -93,21 +93,21 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest request, ActionResponse response)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long campaignId = ParamUtil.getLong(request, "campaignId");
+		long campaignId = ParamUtil.getLong(actionRequest, "campaignId");
 
-		long tacticId = ParamUtil.getLong(request, "tacticId");
+		long tacticId = ParamUtil.getLong(actionRequest, "tacticId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			request, "name");
+			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(request, "description");
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		long[] userSegmentIds = null;
 		long[] userSegmentAssetCategoryIds = ParamUtil.getLongValues(
-			request, "userSegmentAssetCategoryIds");
+			actionRequest, "userSegmentAssetCategoryIds");
 
 		if (!ArrayUtil.isEmpty(userSegmentAssetCategoryIds)) {
 			userSegmentIds = new long[userSegmentAssetCategoryIds.length];
@@ -125,49 +125,50 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			Campaign.class.getName(), request);
+			Campaign.class.getName(), actionRequest);
 
 		try {
 			Callable<Tactic> tacticCallable = new TacticCallable(
-				request, response, themeDisplay.getUserId(), campaignId,
-				tacticId, nameMap, descriptionMap, userSegmentIds,
+				actionRequest, actionResponse, themeDisplay.getUserId(),
+				campaignId, tacticId, nameMap, descriptionMap, userSegmentIds,
 				_tacticService, serviceContext);
 
 			Tactic tactic = TransactionInvokerUtil.invoke(
 				transactionConfig, tacticCallable);
 
 			boolean saveAndContinue = ParamUtil.get(
-				request, "saveAndContinue", false);
+				actionRequest, "saveAndContinue", false);
 
 			if (saveAndContinue) {
-				String redirect = ParamUtil.get(request, "redirect", "");
+				String redirect = ParamUtil.get(actionRequest, "redirect", "");
 
-				response.setRenderParameter(
+				actionResponse.setRenderParameter(
 					"campaignId", String.valueOf(campaignId));
-				response.setRenderParameter("mvcPath", "/edit_tactic.jsp");
-				response.setRenderParameter("redirect", redirect);
-				response.setRenderParameter(
+				actionResponse.setRenderParameter(
+					"mvcPath", "/edit_tactic.jsp");
+				actionResponse.setRenderParameter("redirect", redirect);
+				actionResponse.setRenderParameter(
 					"p_p_mode", PortletMode.VIEW.toString());
-				response.setRenderParameter(
+				actionResponse.setRenderParameter(
 					"tacticId", String.valueOf(tactic.getTacticId()));
 
-				addSuccessMessage(request, response);
+				addSuccessMessage(actionRequest, actionResponse);
 			}
 			else {
-				sendRedirect(request, response);
+				sendRedirect(actionRequest, actionResponse);
 			}
 		}
 		catch (Exception e) {
-			PortalUtil.copyRequestParameters(request, response);
+			PortalUtil.copyRequestParameters(actionRequest, actionResponse);
 
 			LiferayPortletRequest liferayPortletRequest =
-				PortalUtil.getLiferayPortletRequest(request);
+				PortalUtil.getLiferayPortletRequest(actionRequest);
 			LiferayPortletResponse liferayPortletResponse =
-				PortalUtil.getLiferayPortletResponse(response);
+				PortalUtil.getLiferayPortletResponse(actionResponse);
 
 			ContentTargetingEditTacticsDisplayContext
 				contentTargetingEditTacticsDisplayContext =
@@ -175,11 +176,11 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 						liferayPortletRequest, liferayPortletResponse,
 						_userSegmentLocalService);
 
-			request.setAttribute(
+			actionRequest.setAttribute(
 				"contentTargetingEditTacticsDisplayContext",
 				contentTargetingEditTacticsDisplayContext);
 
-			SessionErrors.add(request, e.getClass(), e);
+			SessionErrors.add(actionRequest, e.getClass(), e);
 
 			if (e instanceof InvalidDateRangeException ||
 				e instanceof InvalidNameException ||
@@ -187,20 +188,21 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 				e instanceof PrincipalException) {
 
 				SessionMessages.add(
-					request,
-					PortalUtil.getPortletId(request) +
+					actionRequest,
+					PortalUtil.getPortletId(actionRequest) +
 						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
-				response.setRenderParameter("mvcPath", "/edit_tactic.jsp");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/edit_tactic.jsp");
 			}
 			else {
-				response.setRenderParameter("mvcPath", "/error.jsp");
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 		}
 		catch (Throwable t) {
 			_log.error(t);
 
-			response.setRenderParameter("mvcPath", "/error.jsp");
+			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 		}
 	}
 

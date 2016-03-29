@@ -66,29 +66,30 @@ public class UpdateReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest request, ActionResponse response)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long reportInstanceId = ParamUtil.getLong(request, "reportInstanceId");
-		String reportKey = ParamUtil.getString(request, "reportKey");
-		String className = ParamUtil.getString(request, "className");
-		long classPK = ParamUtil.getLong(request, "classPK");
+		long reportInstanceId = ParamUtil.getLong(
+			actionRequest, "reportInstanceId");
+		String reportKey = ParamUtil.getString(actionRequest, "reportKey");
+		String className = ParamUtil.getString(actionRequest, "className");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			request, "name");
+			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(request, "description");
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			request);
+			actionRequest);
 
 		try {
 			Callable<ReportInstance> reportInstanceCallable =
 				new ReportInstanceCallable(
-					request, response, themeDisplay.getUserId(),
+					actionRequest, actionResponse, themeDisplay.getUserId(),
 					reportInstanceId, reportKey, className, classPK, nameMap,
 					descriptionMap, serviceContext);
 
@@ -96,32 +97,34 @@ public class UpdateReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 				transactionConfig, reportInstanceCallable);
 
 			boolean saveAndContinue = ParamUtil.get(
-				request, "saveAndContinue", false);
+				actionRequest, "saveAndContinue", false);
 
 			if (saveAndContinue) {
-				String redirect = ParamUtil.get(request, "redirect", "");
+				String redirect = ParamUtil.get(actionRequest, "redirect", "");
 
-				response.setRenderParameter("className", className);
-				response.setRenderParameter("classPK", String.valueOf(classPK));
-				response.setRenderParameter("mvcPath", "/edit_report.jsp");
-				response.setRenderParameter("redirect", redirect);
-				response.setRenderParameter(
+				actionResponse.setRenderParameter("className", className);
+				actionResponse.setRenderParameter(
+					"classPK", String.valueOf(classPK));
+				actionResponse.setRenderParameter(
+					"mvcPath", "/edit_report.jsp");
+				actionResponse.setRenderParameter("redirect", redirect);
+				actionResponse.setRenderParameter(
 					"p_p_mode", PortletMode.VIEW.toString());
-				response.setRenderParameter(
+				actionResponse.setRenderParameter(
 					"reportInstanceId",
 					String.valueOf(reportInstance.getReportInstanceId()));
-				response.setRenderParameter("reportKey", reportKey);
+				actionResponse.setRenderParameter("reportKey", reportKey);
 
-				addSuccessMessage(request, response);
+				addSuccessMessage(actionRequest, actionResponse);
 			}
 			else {
-				sendRedirect(request, response);
+				sendRedirect(actionRequest, actionResponse);
 			}
 		}
 		catch (Exception e) {
-			PortalUtil.copyRequestParameters(request, response);
+			PortalUtil.copyRequestParameters(actionRequest, actionResponse);
 
-			SessionErrors.add(request, e.getClass(), e);
+			SessionErrors.add(actionRequest, e.getClass(), e);
 
 			if (e instanceof InvalidDateRangeException ||
 				e instanceof InvalidNameException ||
@@ -129,20 +132,21 @@ public class UpdateReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 				e instanceof PrincipalException) {
 
 				SessionMessages.add(
-					request,
-					PortalUtil.getPortletId(request) +
+					actionRequest,
+					PortalUtil.getPortletId(actionRequest) +
 						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
-				response.setRenderParameter("mvcPath", "/edit_report.jsp");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/edit_report.jsp");
 			}
 			else {
-				response.setRenderParameter("mvcPath", "/error.jsp");
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 		}
 		catch (Throwable t) {
 			_log.error(t);
 
-			response.setRenderParameter("mvcPath", "/error.jsp");
+			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 		}
 	}
 

@@ -32,20 +32,20 @@ import javax.portlet.PortletPreferences;
 public class UserSegmentQueryRuleUtil {
 
 	public static QueryRule getQueryRule(
-			ActionRequest request, int queryRulesIndex, Locale locale)
+			ActionRequest actionRequest, int queryRulesIndex, Locale locale)
 		throws PortalException {
 
 		boolean andOperator = ParamUtil.getBoolean(
-			request, "queryAndOperator" + queryRulesIndex);
+			actionRequest, "queryAndOperator" + queryRulesIndex);
 		boolean contains = ParamUtil.getBoolean(
-			request, "queryContains" + queryRulesIndex, true);
+			actionRequest, "queryContains" + queryRulesIndex, true);
 
 		long assetEntryId = ParamUtil.getLong(
-			request, "assetEntryId" + queryRulesIndex);
+			actionRequest, "assetEntryId" + queryRulesIndex);
 
 		long[] userSegmentAssetCategoryIds = StringUtil.split(
 			ParamUtil.getString(
-				request, "userSegmentAssetCategoryIds" + queryRulesIndex),
+				actionRequest, "userSegmentAssetCategoryIds" + queryRulesIndex),
 			0L);
 
 		return new UserSegmentQueryRule(

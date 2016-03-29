@@ -45,21 +45,21 @@ public class DeleteReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest request, ActionResponse response)
+			ActionRequest actionRequest, ActionResponse response)
 		throws Exception {
 
 		try {
 			long[] deleteReportInstanceIds = null;
 
 			long reportInstanceId = ParamUtil.getLong(
-				request, "reportInstanceId");
+				actionRequest, "reportInstanceId");
 
 			if (reportInstanceId > 0) {
 				deleteReportInstanceIds = new long[] {reportInstanceId};
 			}
 			else {
 				deleteReportInstanceIds = ParamUtil.getLongValues(
-					request, "rowIds");
+					actionRequest, "rowIds");
 			}
 
 			for (long deleteReportInstanceId : deleteReportInstanceIds) {
@@ -67,12 +67,12 @@ public class DeleteReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 					deleteReportInstanceId);
 			}
 
-			sendRedirect(request, response);
+			sendRedirect(actionRequest, response);
 		}
 		catch (Exception e) {
 			_log.error("Unable to delete report instance", e);
 
-			SessionErrors.add(request, e.getClass(), e);
+			SessionErrors.add(actionRequest, e.getClass(), e);
 
 			response.setRenderParameter("mvcPath", "/error.jsp");
 		}

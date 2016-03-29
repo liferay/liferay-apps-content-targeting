@@ -242,13 +242,13 @@ public class EditUserSegmentMVCRenderCommand extends BaseMVCRenderCommand {
 	}
 
 	protected List<RuleInstance> getRulesFromRequest(
-			PortletRequest request, PortletResponse response)
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
 		List<RuleInstance> ruleInstances = new ArrayList<>();
 
 		String userSegmentRules = ParamUtil.getString(
-			request, "userSegmentRules");
+			portletRequest, "userSegmentRules");
 
 		if (Validator.isNull(userSegmentRules)) {
 			return ruleInstances;
@@ -278,8 +278,8 @@ public class EditUserSegmentMVCRenderCommand extends BaseMVCRenderCommand {
 			String id = jSONObjectRule.getString("id");
 
 			Map<String, String> ruleValues = getJSONValues(
-				jSONObjectRule.getJSONArray("data"), response.getNamespace(),
-				id);
+				jSONObjectRule.getJSONArray("data"),
+				portletResponse.getNamespace(), id);
 
 			RuleInstance ruleInstance =
 				_ruleInstanceLocalService.createRuleInstance(ruleInstanceId);

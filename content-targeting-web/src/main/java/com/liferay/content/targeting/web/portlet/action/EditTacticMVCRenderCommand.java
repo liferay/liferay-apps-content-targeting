@@ -230,12 +230,13 @@ public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 	}
 
 	protected List<ChannelInstance> getChannelsFromRequest(
-			PortletRequest request, PortletResponse response)
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
 		List<ChannelInstance> channelInstances = new ArrayList<>();
 
-		String tacticChannels = ParamUtil.getString(request, "tacticChannels");
+		String tacticChannels = ParamUtil.getString(
+			portletRequest, "tacticChannels");
 
 		if (Validator.isNull(tacticChannels)) {
 			return channelInstances;
@@ -265,8 +266,8 @@ public class EditTacticMVCRenderCommand extends BaseMVCRenderCommand {
 			String id = jSONObjectChannel.getString("id");
 
 			Map<String, String> channelValues = getJSONValues(
-				jSONObjectChannel.getJSONArray("data"), response.getNamespace(),
-				id);
+				jSONObjectChannel.getJSONArray("data"),
+				portletResponse.getNamespace(), id);
 
 			ChannelInstance channelInstance =
 				_channelInstanceLocalService.createChannelInstance(
