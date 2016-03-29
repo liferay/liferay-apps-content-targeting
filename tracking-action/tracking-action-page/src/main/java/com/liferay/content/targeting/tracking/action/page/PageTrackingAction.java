@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.tracking.action.page;
 
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
-import com.liferay.content.targeting.api.model.BaseTrackingAction;
+import com.liferay.content.targeting.api.model.BaseJSPTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.exception.InvalidTrackingActionException;
 import com.liferay.content.targeting.model.Campaign;
@@ -49,6 +49,8 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -58,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = TrackingAction.class)
-public class PageTrackingAction extends BaseTrackingAction {
+public class PageTrackingAction extends BaseJSPTrackingAction {
 
 	@Activate
 	@Override
@@ -220,6 +222,15 @@ public class PageTrackingAction extends BaseTrackingAction {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.tracking.action.page)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override
