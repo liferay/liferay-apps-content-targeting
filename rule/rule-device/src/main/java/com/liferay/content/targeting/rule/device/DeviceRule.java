@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.rule.device;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
-import com.liferay.content.targeting.api.model.BaseRule;
+import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
@@ -56,6 +56,7 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
@@ -68,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
-public class DeviceRule extends BaseRule {
+public class DeviceRule extends BaseJSPRule {
 
 	@Activate
 	@Override
@@ -244,6 +245,15 @@ public class DeviceRule extends BaseRule {
 		jsonObj.put("mdrRuleGroupId", mdrRuleGroupId);
 
 		return jsonObj.toString();
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.rule.device)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	protected boolean evaluateRule(MDRRule rule, ThemeDisplay themeDisplay) {
