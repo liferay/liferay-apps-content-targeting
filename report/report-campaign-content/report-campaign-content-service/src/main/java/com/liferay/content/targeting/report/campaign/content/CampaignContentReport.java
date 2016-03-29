@@ -14,7 +14,7 @@
 
 package com.liferay.content.targeting.report.campaign.content;
 
-import com.liferay.content.targeting.api.model.BaseReport;
+import com.liferay.content.targeting.api.model.BaseJSPReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -39,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = Report.class)
-public class CampaignContentReport extends BaseReport {
+public class CampaignContentReport extends BaseJSPReport {
 
 	@Activate
 	@Override
@@ -68,6 +70,15 @@ public class CampaignContentReport extends BaseReport {
 		CampaignContentLocalService campaignContentLocalService) {
 
 		_campaignContentLocalService = campaignContentLocalService;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.report.campaign.content.service)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override
