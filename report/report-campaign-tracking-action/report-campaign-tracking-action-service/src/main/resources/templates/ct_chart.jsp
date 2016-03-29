@@ -1,4 +1,4 @@
-<#--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,7 +12,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
--->
+--%>
+
+<%@ include file="/templates/init.jsp" %>
+
+<%
+List<CTActionTotal> ctActionTotals = searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd());
+%>
 
 <style>
 	#ctActionChart {
@@ -22,42 +28,56 @@
 	}
 </style>
 
-<@liferay_aui["script"] use="charts">
+<aui:script use="charts">
 	var ctActionTotalArray = [
-		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as ctActionTotal>
-			<#assign userSegmentNames ="">
 
-			<#list ctActionTotal.getViewsByUserSegment() as ctAction>
-				<#if (userSegmentNames?length == 0)>
-					<#assign userSegmentNames = ctAction.getUserSegmentName(locale) + " - " + ctAction.getCount()>
-				<#else>
-					<#assign userSegmentNames = userSegmentNames + "," + ctAction.getUserSegmentName(locale) + " - " + ctAction.getCount()>
-				</#if>
-			</#list>
+		<%
+		for (int k = 0; k < ctActionTotals.size(); k++) {
+			CTActionTotal ctActionTotal = ctActionTotals.get(k);
 
-			<#assign eventType = ctActionTotal.getEventType()>
+			String eventType = ctActionTotal.getEventType();
 
-			<#if ctActionTotal.getEventType() == "sending">
-			    <#assign eventType ="sent">
-			<#elseif ctActionTotal.getEventType() == "click">
-				<#assign eventType ="link-clicks">
-			</#if>
+			if (eventType.equals("sending")) {
+				eventType = "sent";
+			}
+			else if (eventType.equals("click")) {
+				eventType = "link-clicks";
+			}
 
-			{content:'${ctActionTotal.getAlias()}', event:'${eventType}', eventName:'${languageUtil.get(locale,eventType)}', count:${ctActionTotal.getCount()}, user_segments: '${userSegmentNames}'}<#if ctActionTotal_has_next>,</#if>
-		</#list>
+			StringBundler stringBundler = new StringBundler(ctActionTotals.size() * 4 - 1);
+
+			for (CTAction ctAction : ctActionTotal.getViewsByUserSegment()) {
+				if (stringBundler.length() > 0) {
+					stringBundler.append(",");
+				}
+
+				stringBundler.append(ctAction.getUserSegmentName(locale));
+				stringBundler.append(" - ");
+				stringBundler.append(ctAction.getCount());
+			}
+		%>
+
+			<c:if test="<%= k > 0 %>">,</c:if>
+
+			{content:'<%= ctActionTotal.getAlias() %>', event:'<%= eventType %>', eventName:'<%= LanguageUtil.get(resourceBundle, eventType) %>', count:<%= ctActionTotal.getCount() %>, user_segments: '<%= stringBundler.toString() %>'}
+
+		<%
+		}
+		%>
+
 	];
 
 	var ctActionCharAxes = {
 		count:{
 			keys:[],
 			position:'left',
-			title:'<@liferay_ui["message"] key="count" />',
+			title:'<liferay-ui:message key="count" />',
 			type:'numeric'
 		},
 		content:{
 			keys:['content'],
 			position:'bottom',
-			title:'<@liferay_ui["message"] key="content" />',
+			title:'<liferay-ui:message key="content" />',
 			type:'category'
 		}
 	};
@@ -153,9 +173,9 @@
 
 			var segments = data.userSegments[valueItem.key].split(",");
 
-			countSpan.appendChild(document.createTextNode('${languageUtil.get(locale, "total-count")}: '));
-			metricSpan.appendChild(document.createTextNode('${languageUtil.get(locale, "metric")}: '));
-			eventSpan.appendChild(document.createTextNode('${languageUtil.get(locale, "event")}: '));
+			countSpan.appendChild(document.createTextNode('<%= LanguageUtil.get(resourceBundle, "total-count") %>: '));
+			metricSpan.appendChild(document.createTextNode('<%= LanguageUtil.get(resourceBundle, "metric") %>: '));
+			eventSpan.appendChild(document.createTextNode('<%= LanguageUtil.get(resourceBundle, "event") %>: '));
 
 			msg.appendChild(metricSpan);
 			msg.appendChild(metricValueSpan);
@@ -177,7 +197,7 @@
 					segmentValueDiv.appendChild(document.createTextNode(segment));
 				}
 
-				segmentSpan.appendChild(document.createTextNode('${languageUtil.get(locale, "user-segments")}: '));
+				segmentSpan.appendChild(document.createTextNode('<%= LanguageUtil.get(resourceBundle, "user-segments") %>: '));
 
 				msg.appendChild(msg.appendChild(document.createElement("br")));
 				msg.appendChild(segmentSpan);
@@ -254,6 +274,6 @@
 		type: 'column',
 		verticalGridlines: true
 	});
-</@>
+</aui:script>
 
 <div id="ctActionChart"></div>
