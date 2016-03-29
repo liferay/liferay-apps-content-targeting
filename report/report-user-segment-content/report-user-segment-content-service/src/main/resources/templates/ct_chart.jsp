@@ -1,4 +1,4 @@
-<#--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,7 +12,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
--->
+--%>
+
+<%@ include file="/templates/init.jsp" %>
+
+<%
+List<UserSegmentContent> userSegmentContents = searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd());
+%>
 
 <style>
 	#userSegmentContentChart {
@@ -22,24 +28,35 @@
 	}
 </style>
 
-<@liferay_aui["script"] use="charts">
+<aui:script use="charts">
 	var userSegmentContentChartDataValues = [
-		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as userSegmentContent>
-			{content:'${userSegmentContent.getTitle(locale)}', count:${userSegmentContent.getCount()}}<#if userSegmentContent_has_next>,</#if>
-		</#list>
+
+		<%
+		for (int k = 0; k < userSegmentContents.size(); k++) {
+			UserSegmentContent userSegmentContent = userSegmentContents.get(k);
+		%>
+
+			<c:if test="<%= k > 0 %>">,</c:if>
+
+			{content:'<%= userSegmentContent.getTitle(locale) %>', count:<%= userSegmentContent.getCount() %>}
+
+		<%
+		}
+		%>
+
 	];
 
 	var userSegmentContentCharAxes = {
 		count:{
 			keys:['count'],
 			position:'left',
-			title:'<@liferay_ui["message"] key="count" />',
+			title:'<liferay-ui:message key="count" />',
 			type:'numeric'
 		},
 		content:{
 			keys:['content'],
 			position:'bottom',
-			title:'<@liferay_ui["message"] key="content" />',
+			title:'<liferay-ui:message key="content" />',
 			type:'category'
 		}
 	};
@@ -78,6 +95,6 @@
 		type: 'column',
 		verticalGridlines: true
 	});
-</@>
+</aui:script>
 
 <div id="userSegmentContentChart"></div>
