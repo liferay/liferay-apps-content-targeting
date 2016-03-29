@@ -17,10 +17,12 @@ package com.liferay.content.targeting.simulation.web.portlet;
 import com.liferay.content.targeting.api.model.UserSegmentSimulator;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -64,32 +66,36 @@ import org.osgi.service.component.annotations.Reference;
 public class SimulatorPortlet extends MVCPortlet {
 
 	public void simulateUserSegment(
-			ActionRequest request, ActionResponse response)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(request);
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
 
-		HttpServletResponse httpServletResponse =
-			PortalUtil.getHttpServletResponse(response);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			actionResponse);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 
 		boolean stopSimulation = ParamUtil.getBoolean(
 			request, "stopSimulation");
 
 		if (stopSimulation) {
-			_userSegmentSimulator.removeAllUserSegmentIds(
-				httpServletRequest, httpServletResponse);
+			_userSegmentSimulator.removeAllUserSegmentIds(request, response);
 
-			request.setAttribute(WebKeys.USER_SEGMENT_IDS, null);
+			request.removeAttribute(WebKeys.USER_SEGMENT_IDS);
 
 			return;
 		}
 
-		long[] selectedUserSegmentIds = StringUtil.split(
-			ParamUtil.getString(request, "selectedUserSegmentIds"), 0L);
+		long[] selectedUserSegmentIds = ParamUtil.getLongValues(
+			request, "selectedUserSegmentIds");
 
 		_userSegmentSimulator.setUserSegmentIds(
-			selectedUserSegmentIds, httpServletRequest, httpServletResponse);
+			selectedUserSegmentIds, request, response);
 	}
 
 	@Reference

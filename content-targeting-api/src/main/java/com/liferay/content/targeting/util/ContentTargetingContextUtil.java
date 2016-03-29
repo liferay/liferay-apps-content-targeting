@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.taglib.util.ThemeUtil;
 
 import freemarker.cache.ClassTemplateLoader;
 
@@ -51,7 +49,9 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -133,16 +133,19 @@ public class ContentTargetingContextUtil {
 	}
 
 	public static String includeJSP(
-		ServletContext servletContext, String path,
-		Map<String, Object> context) throws Exception {
+			ServletContext servletContext, String path,
+			Map<String, Object> context)
+		throws Exception {
+
+		if (Validator.isNull(path)) {
+			_log.error("Cannot find path " + path);
+
+			return StringPool.BLANK;
+		}
 
 		HttpServletRequest request = (HttpServletRequest)context.get("request");
 		HttpServletResponse response = (HttpServletResponse)context.get(
 			"response");
-		Theme theme = (Theme)context.get(WebKeys.THEME);
-
-		BufferCacheServletResponse bufferResponse =
-			new BufferCacheServletResponse(response);
 
 		request.setAttribute("displayContext", context);
 
@@ -152,10 +155,22 @@ public class ContentTargetingContextUtil {
 		request.setAttribute(
 			WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
 
-		ThemeUtil.includeJSP(
-			servletContext, request, bufferResponse, path, theme);
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(path);
 
-		return bufferResponse.getString();
+		BufferCacheServletResponse bufferResponse =
+			new BufferCacheServletResponse(response);
+
+		try {
+			requestDispatcher.include(request, bufferResponse);
+
+			return bufferResponse.getString();
+		}
+		catch (ServletException se) {
+			_log.error("Unable to include " + path, se);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public static String parseTemplate(

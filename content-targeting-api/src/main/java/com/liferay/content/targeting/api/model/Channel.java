@@ -177,8 +177,9 @@ public interface Channel {
 	 * Returns the result of evaluating the channel form fields in the
 	 * context of the request and response.
 	 *
-	 * @param  request the request from which to get the request parameters
-	 * @param  response the response to receive the render parameters
+	 * @param  portletRequest the request from which to get the request
+	 *                        parameters
+	 * @param  portletResponse the response to receive the render parameters
 	 * @param  id the identifier that differentiates between channel
 	 *         instances of the same type of an instantiable channel
 	 * @param  values the values configured by users for the current channel
@@ -187,8 +188,8 @@ public interface Channel {
 	 * 		   context of the request and response
 	 */
 	public String processChannel(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			String id, Map<String, String> values)
 		throws InvalidChannelException;
 
 	/**

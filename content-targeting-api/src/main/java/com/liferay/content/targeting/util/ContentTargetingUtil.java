@@ -119,7 +119,9 @@ public class ContentTargetingUtil {
 			UserSegment userSegment =
 				UserSegmentLocalServiceUtil.fetchUserSegment(userSegmentIds[i]);
 
-			assetCategoryIds[i] = userSegment.getAssetCategoryId(groupId);
+			if (userSegment != null) {
+				assetCategoryIds[i] = userSegment.getAssetCategoryId(groupId);
+			}
 		}
 
 		return assetCategoryIds;

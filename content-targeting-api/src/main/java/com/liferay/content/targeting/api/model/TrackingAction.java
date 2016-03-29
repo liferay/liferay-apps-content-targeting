@@ -201,8 +201,9 @@ public interface TrackingAction {
 	 * Returns the result of evaluating the tracking action form fields in the
 	 * context of the request and response.
 	 *
-	 * @param  request the request from which to get the request parameters
-	 * @param  response the response to receive the render parameters
+	 * @param  portletRequest the request from which to get the request
+	 *                        parameters
+	 * @param  portletResponse the response to receive the render parameters
 	 * @param  id the identifier that differentiates between tracking action
 	 *         instances of the same type of an instantiable tracing action
 	 * @param  values the values configured by users for the current tracking
@@ -211,8 +212,8 @@ public interface TrackingAction {
 	 * 		   context of the request and response
 	 */
 	public String processTrackingAction(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			String id, Map<String, String> values)
 		throws InvalidTrackingActionException;
 
 }

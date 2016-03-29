@@ -139,14 +139,15 @@ public interface Report {
 	 * Returns the result of evaluating the report form fields in the
 	 * context of the request and response.
 	 *
-	 * @param  request the request from which to get the request parameters
-	 * @param  response the response to receive the render parameters
+	 * @param  portletRequest the request from which to get the request
+	 *                        parameters
+	 * @param  portletResponse the response to receive the render parameters
 	 * @param  reportInstance the report instance with stored configuration
 	 * @return the result of evaluating the tracking action form fields in the
 	 * 		   context of the request and response
 	 */
 	public String processEditReport(
-			PortletRequest request, PortletResponse response,
+			PortletRequest portletRequest, PortletResponse portletResponse,
 			ReportInstance reportInstance)
 		throws Exception;
 

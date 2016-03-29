@@ -246,8 +246,10 @@ public class DefaultRulesEngineImplTest {
 
 			@Override
 			public String processRule(
-				PortletRequest request, PortletResponse response, String id,
-				Map<String, String> values) throws InvalidRuleException {
+					PortletRequest portletRequest,
+					PortletResponse portletResponse, String id,
+					Map<String, String> values)
+				throws InvalidRuleException {
 
 				return null;
 			}

@@ -18,19 +18,14 @@
 
 <%
 String className = ParamUtil.getString(request, "className");
-
 String containerId = HtmlUtil.escapeJS(ParamUtil.getString(request, "containerId"));
 String emptyMessage = ParamUtil.getString(request, "emptyMessage");
-boolean showSearch = ParamUtil.getBoolean(request, "showSearch");
 String name = HtmlUtil.escapeJS(ParamUtil.getString(request, "name"));
+boolean showSearch = ParamUtil.getBoolean(request, "showSearch");
 
-List<Campaign> campaigns = (List<Campaign>)request.getAttribute("campaigns");
 List<UserSegment> userSegments = (List<UserSegment>)request.getAttribute("userSegments");
-
 List<Object> elements = (List<Object>)request.getAttribute("elements");
 List<Object> notMatchedElements = (List<Object>)request.getAttribute("notMatchedElements");
-
-long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("simulatedElementsPKs"));
 %>
 
 <c:if test="<%= showSearch %>">
@@ -38,39 +33,28 @@ long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("sim
 		<i class="search-panel-icon"></i>
 
 		<div class="search-panels-bar">
-			<aui:input
-				cssClass="search-panels-input search-query span12"
-				label=""
-				name="search<%= name %>Panel"
-				type="text"
-			/>
+			<aui:input cssClass="search-panels-input search-query span12" label="" name='<%= "search" + name + "Panel" %>' placeholder='<%= LanguageUtil.get(request, "search") + "..." %>' type="text" />
 		</div>
 	</div>
 </c:if>
 
 <div class="category-wrapper">
 	<div class="category-header">
-		<div class="category-icon">
-			<i class="icon-check"></i>
-		</div>
 		<div class="category-info">
-			<div class="category-title">
+			<div class="category-title label text-default">
 				<liferay-ui:message key="matched" />
-			</div>
-			<div class="category-description">
-				<liferay-ui:message key="<%= name %>" />
 			</div>
 		</div>
 	</div>
 
-	<div class="category-content">
+	<div class="category-content flex-container">
 		<c:choose>
 			<c:when test="<%= ListUtil.isNotEmpty(userSegments) %>">
 
 				<%
 				for (Object element : elements) {
 					long primaryKey = 0;
-					String nameWithGroup = "";
+					String nameWithGroup = StringPool.BLANK;
 
 					if (className.equals(Campaign.class.getName())) {
 						nameWithGroup = ((Campaign)element).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
@@ -80,16 +64,13 @@ long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("sim
 						nameWithGroup = ((UserSegment)element).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
 						primaryKey = ((UserSegment)element).getPrimaryKey();
 					}
+
+					nameWithGroup = StringUtil.shorten(nameWithGroup, 30);
 				%>
 
-					<aui:input
-						checked="<%= ArrayUtil.contains(simulatedElementsPKs, primaryKey) %>"
-						cssClass="element matched checkbox"
-						label="<%= nameWithGroup %>"
-						name='<%= "element" + String.valueOf(primaryKey) %>'
-						type="checkbox"
-						value="<%= String.valueOf(primaryKey) %>"
-					/>
+					<div class="col-md-6 element flex-container matched text-center" data-elementId="<%= primaryKey %>">
+						<div class="flex-item-center text-center"><%= nameWithGroup %></div>
+					</div>
 
 				<%
 				}
@@ -105,46 +86,39 @@ long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("sim
 	</div>
 
 	<div id="<portlet:namespace /><%= "paginator" + name + "MatchedContainer" %>"></div>
+</div>
 
+<div class="category-wrapper">
 	<div class="category-header">
-		<div class="category-icon">
-			<i class="icon-check-empty"></i>
-		</div>
 		<div class="category-info">
-			<div class="category-title">
-				<liferay-ui:message key="other" />
-			</div>
-			<div class="category-description">
-				<liferay-ui:message key="<%= name %>" />
+			<div class="category-title label text-default">
+				<liferay-ui:message key="available" />
 			</div>
 		</div>
 	</div>
 
-	<div class="category-content">
+	<div class="category-content flex-container">
 
 		<%
-			for (Object notMatchedElement : notMatchedElements) {
-				long primaryKey = 0;
-				String nameWithGroup = "";
+		for (Object notMatchedElement : notMatchedElements) {
+			long primaryKey = 0;
+			String nameWithGroup = StringPool.BLANK;
 
-				if (className.equals(Campaign.class.getName())) {
-					nameWithGroup = ((Campaign)notMatchedElement).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
-					primaryKey = ((Campaign)notMatchedElement).getPrimaryKey();
-				}
-				else {
-					nameWithGroup = ((UserSegment)notMatchedElement).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
-					primaryKey = ((UserSegment)notMatchedElement).getPrimaryKey();
-				}
+			if (className.equals(Campaign.class.getName())) {
+				nameWithGroup = ((Campaign)notMatchedElement).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
+				primaryKey = ((Campaign)notMatchedElement).getPrimaryKey();
+			}
+			else {
+				nameWithGroup = ((UserSegment)notMatchedElement).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
+				primaryKey = ((UserSegment)notMatchedElement).getPrimaryKey();
+			}
+
+			nameWithGroup = StringUtil.shorten(nameWithGroup, 30);
 		%>
 
-			<aui:input
-				checked="<%= ArrayUtil.contains(simulatedElementsPKs, primaryKey) %>"
-				cssClass="element not-matched checkbox"
-				label="<%= nameWithGroup %>"
-				name='<%= "notMatchedElement" + String.valueOf(primaryKey) %>'
-				type="checkbox"
-				value="<%= String.valueOf(primaryKey) %>"
-			/>
+			<div class="col-md-6 element flex-container not-matched text-center" data-elementId="<%= primaryKey %>">
+				<div class="flex-item-center text-center"><%= nameWithGroup %></div>
+			</div>
 
 		<%
 		}
@@ -155,12 +129,16 @@ long[] simulatedElementsPKs = GetterUtil.getLongValues(request.getAttribute("sim
 	<div id="<portlet:namespace /><%= "paginator" + name + "NotMatchedContainer" %>"></div>
 </div>
 
+<liferay-portlet:actionURL name="simulateUserSegment" portletName="<%= PortletKeys.CT_SIMULATOR %>" var="simulateUserSegmentURL" />
+
 <aui:script use="liferay-simulator">
 	new Liferay.Simulator(
 		{
 			containerId: '<%= containerId %>',
 			name: '<%= name %>',
-			namespace: '<portlet:namespace />'
+			namespace: '<portlet:namespace />',
+			portletNamespace: '<%= PortalUtil.getPortletNamespace(PortletKeys.CT_SIMULATOR) %>',
+			portletURL: '<%= simulateUserSegmentURL %>'
 		}
 	);
 </aui:script>

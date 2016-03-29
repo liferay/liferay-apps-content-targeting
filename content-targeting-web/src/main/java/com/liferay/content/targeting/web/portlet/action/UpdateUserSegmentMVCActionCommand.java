@@ -83,78 +83,78 @@ public class UpdateUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest request, ActionResponse response)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
+		long userSegmentId = ParamUtil.getLong(actionRequest, "userSegmentId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			request, "name");
+			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(request, "description");
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			request);
+			actionRequest);
 
 		try {
 			Callable<UserSegment> userSegmentCallable = new UserSegmentCallable(
-				request, response, themeDisplay.getUserId(), userSegmentId,
-				nameMap, descriptionMap, serviceContext);
+				actionRequest, actionResponse, themeDisplay.getUserId(),
+				userSegmentId, nameMap, descriptionMap, serviceContext);
 
 			UserSegment userSegment = TransactionInvokerUtil.invoke(
 				transactionConfig, userSegmentCallable);
 
 			boolean saveAndContinue = ParamUtil.get(
-				request, "saveAndContinue", false);
+				actionRequest, "saveAndContinue", false);
 
 			if (saveAndContinue) {
-				String redirect = ParamUtil.get(request, "redirect", "");
+				String redirect = ParamUtil.get(actionRequest, "redirect", "");
 
-				response.setRenderParameter(
+				actionResponse.setRenderParameter(
 					"mvcPath", "/edit_user_segment.jsp");
-				response.setRenderParameter("redirect", redirect);
-				response.setRenderParameter(
+				actionResponse.setRenderParameter("redirect", redirect);
+				actionResponse.setRenderParameter(
 					"p_p_mode", PortletMode.VIEW.toString());
-				response.setRenderParameter(
+				actionResponse.setRenderParameter(
 					"userSegmentId",
 					String.valueOf(userSegment.getUserSegmentId()));
 
-				addSuccessMessage(request, response);
+				addSuccessMessage(actionRequest, actionResponse);
 			}
 			else {
-				sendRedirect(request, response);
+				sendRedirect(actionRequest, actionResponse);
 			}
 		}
 		catch (Exception e) {
-			PortalUtil.copyRequestParameters(request, response);
+			PortalUtil.copyRequestParameters(actionRequest, actionResponse);
 
-			SessionErrors.add(request, e.getClass(), e);
+			SessionErrors.add(actionRequest, e.getClass(), e);
 
 			if (e instanceof InvalidNameException ||
 				e instanceof InvalidRulesException ||
 				e instanceof PrincipalException) {
 
 				SessionMessages.add(
-					request,
-					PortalUtil.getPortletId(request) +
+					actionRequest,
+					PortalUtil.getPortletId(actionRequest) +
 						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
-				response.setRenderParameter(
+				actionResponse.setRenderParameter(
 					"mvcPath", "/edit_user_segment.jsp");
 			}
 			else {
 				_log.error(e);
 
-				response.setRenderParameter("mvcPath", "/error.jsp");
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 		}
 		catch (Throwable t) {
 			_log.error(t);
 
-			response.setRenderParameter("mvcPath", "/error.jsp");
+			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 		}
 	}
 

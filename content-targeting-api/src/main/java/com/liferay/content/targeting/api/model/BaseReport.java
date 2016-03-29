@@ -133,7 +133,7 @@ public abstract class BaseReport implements Report {
 
 	@Override
 	public String processEditReport(
-			PortletRequest request, PortletResponse response,
+			PortletRequest portletRequest, PortletResponse portletResponse,
 			ReportInstance reportInstance)
 		throws Exception {
 

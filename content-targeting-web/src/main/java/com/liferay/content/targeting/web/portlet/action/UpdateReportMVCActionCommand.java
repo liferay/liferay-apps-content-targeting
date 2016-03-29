@@ -54,18 +54,19 @@ public class UpdateReportMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest request, ActionResponse response)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long reportInstanceId = ParamUtil.getLong(request, "reportInstanceId");
-		String reportKey = ParamUtil.getString(request, "reportKey");
+		long reportInstanceId = ParamUtil.getLong(
+			actionRequest, "reportInstanceId");
+		String reportKey = ParamUtil.getString(actionRequest, "reportKey");
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				ReportInstance.class.getName(), request);
+				ReportInstance.class.getName(), actionRequest);
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			serviceContext.setScopeGroupId(
 				themeDisplay.getSiteGroupIdOrLiveGroupId());
@@ -85,18 +86,19 @@ public class UpdateReportMVCActionCommand extends BaseMVCActionCommand {
 					reportInstance);
 			}
 
-			sendRedirect(request, response);
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			SessionErrors.add(request, e.getClass(), e);
+			SessionErrors.add(actionRequest, e.getClass(), e);
 
 			if (e instanceof PrincipalException) {
-				response.setRenderParameter("mvcPath", "/view_report.jsp");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/view_report.jsp");
 			}
 			else {
 				_log.error("Unable to update report", e);
 
-				response.setRenderParameter("mvcPath", "/error.jsp");
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 		}
 	}

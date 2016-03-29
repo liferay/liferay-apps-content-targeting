@@ -63,14 +63,14 @@ public class CampaignQueryRuleUtil {
 	}
 
 	public static QueryRule getQueryRule(
-			ActionRequest request, int queryRulesIndex, Locale locale)
+			ActionRequest actionRequest, int queryRulesIndex, Locale locale)
 		throws PortalException {
 
 		long assetEntryId = ParamUtil.getLong(
-			request, "assetEntryId" + queryRulesIndex);
+			actionRequest, "assetEntryId" + queryRulesIndex);
 
 		long campaignId = ParamUtil.getLong(
-			request, "campaignId" + queryRulesIndex);
+			actionRequest, "campaignId" + queryRulesIndex);
 
 		return new CampaignQueryRule(
 			assetEntryId, campaignId, queryRulesIndex, locale);

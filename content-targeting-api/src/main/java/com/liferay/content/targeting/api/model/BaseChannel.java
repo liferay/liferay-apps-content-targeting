@@ -141,8 +141,9 @@ public abstract class BaseChannel implements Channel {
 
 	@Override
 	public String processChannel(
-		PortletRequest request, PortletResponse response, String id,
-		Map<String, String> values) throws InvalidChannelException {
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			String id, Map<String, String> values)
+		throws InvalidChannelException {
 
 		return StringPool.BLANK;
 	}
