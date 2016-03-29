@@ -42,7 +42,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo Garcia
  */
 @Component(
-	immediate = true, property = {"servlet-context-name=/"},
+	immediate = true,
+	property = {
+		"servlet-context-name=", "servlet-filter-name=Analytics Youtube Filter",
+		"url-pattern=/*"
+	},
 	service = Filter.class
 )
 public class YoutubeVideoHtmlFilter extends BaseFilter {
