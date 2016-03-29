@@ -1,4 +1,4 @@
-<#--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,7 +12,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
--->
+--%>
+
+<%@ include file="/templates/init.jsp" %>
+
+<%
+List<CampaignContent> campaingContents = searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd());
+%>
 
 <style>
 	#campaignContentChart {
@@ -22,24 +28,35 @@
 	}
 </style>
 
-<@liferay_aui["script"] use="charts">
+<aui:script use="charts">
 	var campaignContentChartDataValues = [
-		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as campaignContent>
-			{content:'${campaignContent.getTitle(locale)}', count:${campaignContent.getCount()}}<#if campaignContent_has_next>,</#if>
-		</#list>
+
+		<%
+		for (int k = 0; k < campaingContents.size(); k++) {
+			CampaignContent campaingContent = campaingContents.get(k);
+		%>
+
+			<c:if test="<%= k > 0 %>">,</c:if>
+
+			{content:'<%= campaingContent.getTitle(locale) %>', count:<%= campaingContent.getCount() %>}
+
+		<%
+		}
+		%>
+
 	];
 
 	var campaignContentCharAxes = {
 		count:{
 			keys:['count'],
 			position:'left',
-			title:'<@liferay_ui["message"] key="count" />',
+			title:'<liferay-ui:message key="count" />',
 			type:'numeric'
 		},
 		content:{
 			keys:['content'],
 			position:'bottom',
-			title:'<@liferay_ui["message"] key="content" />',
+			title:'<liferay-ui:message key="content" />',
 			type:'category'
 		}
 	};
@@ -78,6 +95,6 @@
 		type: 'column',
 		verticalGridlines: true
 	});
-</@>
+</aui:script>
 
 <div id="campaignContentChart"></div>
