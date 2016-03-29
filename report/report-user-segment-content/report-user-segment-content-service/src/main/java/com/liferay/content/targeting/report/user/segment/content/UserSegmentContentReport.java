@@ -14,7 +14,7 @@
 
 package com.liferay.content.targeting.report.user.segment.content;
 
-import com.liferay.content.targeting.api.model.BaseReport;
+import com.liferay.content.targeting.api.model.BaseJSPReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.UserSegment;
@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -39,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = Report.class)
-public class UserSegmentContentReport extends BaseReport {
+public class UserSegmentContentReport extends BaseJSPReport {
 
 	@Activate
 	@Override
@@ -61,6 +63,15 @@ public class UserSegmentContentReport extends BaseReport {
 	@Override
 	public String getReportType() {
 		return UserSegment.class.getName();
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.report.user.segment.content.service)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Reference(unbind = "-")
