@@ -14,7 +14,7 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action;
 
-import com.liferay.content.targeting.api.model.BaseReport;
+import com.liferay.content.targeting.api.model.BaseJSPReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
@@ -68,6 +68,7 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
@@ -79,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = Report.class)
-public class CTActionReport extends BaseReport {
+public class CTActionReport extends BaseJSPReport {
 
 	@Activate
 	@Override
@@ -165,6 +166,15 @@ public class CTActionReport extends BaseReport {
 		ReportInstanceLocalService reportInstanceLocalService) {
 
 		_reportInstanceLocalService = reportInstanceLocalService;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.report.campaign.tracking.action.service)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Reference(unbind = "-")
