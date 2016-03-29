@@ -75,8 +75,6 @@ public class SimulatorPortlet extends MVCPortlet {
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
 			actionResponse);
 
-		_userSegmentSimulator.removeAllUserSegmentIds(request, response);
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		JSONPortletResponseUtil.writeJSON(
@@ -86,6 +84,8 @@ public class SimulatorPortlet extends MVCPortlet {
 			request, "stopSimulation");
 
 		if (stopSimulation) {
+			_userSegmentSimulator.removeAllUserSegmentIds(request, response);
+
 			request.removeAttribute(WebKeys.USER_SEGMENT_IDS);
 
 			return;
