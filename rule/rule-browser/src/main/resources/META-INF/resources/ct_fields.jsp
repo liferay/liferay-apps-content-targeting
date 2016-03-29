@@ -1,4 +1,4 @@
-<#--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +12,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
--->
+--%>
 
-<#setting number_format="computer">
+<%@ include file="/init.jsp" %>
 
-<@liferay_aui["select"] label="" name="browser">
-	<#list browsers as curBrowser>
-		<@liferay_aui["option"]
-			label="${curBrowser}"
-			selected=(curBrowser == browser)
-			value=curBrowser
-		/>
-	</#list>
-</@>
+<%
+String[] browsers = GetterUtil.getStringValues(displayContext.get("browsers"));
+String browser = GetterUtil.getString(displayContext.get("browser"));
+%>
+
+<aui:select label="" name="browser">
+
+	<%
+	for (String curBrowser : browsers) {
+	%>
+
+		<aui:option label="<%= curBrowser %>" selected="<%= Validator.equals(browser, curBrowser) %>" value="<%= curBrowser %>" />
+
+	<%
+	}
+	%>
+
+</aui:select>

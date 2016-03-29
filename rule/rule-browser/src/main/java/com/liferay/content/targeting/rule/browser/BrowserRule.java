@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.rule.browser;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
-import com.liferay.content.targeting.api.model.BaseRule;
+import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.SessionAttributesRuleCategory;
@@ -29,17 +29,19 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
-public class BrowserRule extends BaseRule {
+public class BrowserRule extends BaseJSPRule {
 
 	public static final String CHROME = "Chrome";
 
@@ -115,6 +117,15 @@ public class BrowserRule extends BaseRule {
 		Map<String, String> values) {
 
 		return values.get("browser");
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.rule.browser)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override
