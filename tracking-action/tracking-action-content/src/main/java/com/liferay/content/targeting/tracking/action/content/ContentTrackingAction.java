@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
-import com.liferay.content.targeting.api.model.BaseTrackingAction;
+import com.liferay.content.targeting.api.model.BaseJSPTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.exception.InvalidTrackingActionException;
 import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,6 +59,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -67,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = TrackingAction.class)
-public class ContentTrackingAction extends BaseTrackingAction {
+public class ContentTrackingAction extends BaseJSPTrackingAction {
 
 	@Activate
 	@Override
@@ -252,6 +255,15 @@ public class ContentTrackingAction extends BaseTrackingAction {
 		}
 	}
 
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.tracking.action.content)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
 	protected List<AssetRendererFactory> getSelectableAssetRendererFactories(
 		long companyId) {
 
@@ -334,14 +346,14 @@ public class ContentTrackingAction extends BaseTrackingAction {
 				assetRenderer = assetRendererFactory.getAssetRenderer(
 					assetEntry.getClassPK());
 
-				RenderRequest renderRequest = (RenderRequest)context.get(
-					"renderRequest");
+				PortletRequest portletRequest = (RenderRequest)context.get(
+					JavaConstants.JAVAX_PORTLET_REQUEST);
 
 				assetImagePreview = assetRenderer.getThumbnailPath(
-					renderRequest);
+					portletRequest);
 
 				ThemeDisplay themeDisplay =
-					(ThemeDisplay)renderRequest.getAttribute(
+					(ThemeDisplay)portletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
 				assetTitlePreview = assetRenderer.getTitle(
