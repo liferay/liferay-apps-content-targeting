@@ -1,4 +1,4 @@
-<#--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,38 +12,38 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
--->
+--%>
 
-<#setting number_format="computer">
+<%@ include file="/init.jsp" %>
 
-<@liferay_aui["select"]
-	label="country"
-	name="countryId"
-/>
+<%
+long countryId = GetterUtil.getLong(displayContext.get("countryId"));
 
-<@liferay_aui["select"]
-	label="region"
-	name="regionId"
-/>
+long regionId = GetterUtil.getLong(displayContext.get("regionId"));
+%>
 
-<@liferay_aui["script"] use="liferay-dynamic-select">
+<aui:select label="country" name="countryId" />
+
+<aui:select label="region" name="regionId" />
+
+<aui:script use="liferay-address,liferay-dynamic-select">
 	new Liferay.DynamicSelect(
 		[
 			{
-				select: '<@portlet["namespace"] />countryId',
+				select: '#<portlet:namespace />countryId',
 				selectData: Liferay.Address.getCountries,
 				selectDesc: 'nameCurrentValue',
 				selectId: 'countryId',
 				selectSort: true,
-				selectVal: '${countryId}'
+				selectVal: '<%= countryId %>'
 			},
 			{
-				select: '<@portlet["namespace"] />regionId',
+				select: '#<portlet:namespace />regionId',
 				selectData: Liferay.Address.getRegions,
 				selectDesc: 'name',
 				selectId: 'regionId',
-				selectVal: '${regionId}'
+				selectVal: '<%= regionId %>'
 			}
 		]
 	);
-</@>
+</aui:script>
