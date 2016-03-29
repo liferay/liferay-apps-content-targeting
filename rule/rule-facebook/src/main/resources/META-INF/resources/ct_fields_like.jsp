@@ -1,4 +1,4 @@
-<#--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,36 +12,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
--->
+--%>
 
-<#include "init.ftl" />
+<%@ include file="/init.jsp" %>
 
-<#assign isMale = gender?string == "male" />
+<%
+String facebookName = GetterUtil.getString(displayContext.get("facebookName"));
+%>
 
-<@liferay_aui["input"]
-	checked=isMale
-	label="male"
-	name="fbGender"
-	type="radio"
-	value="male"
-/>
-
-<#assign isFemale = gender?string == "female" />
-
-<@liferay_aui["input"]
-	checked=isFemale
-	label="female"
-	name="fbGender"
-	type="radio"
-	value="female"
-/>
-
-<#assign isCustom = gender?string == "custom" />
-
-<@liferay_aui["input"]
-	checked=isCustom
-	label="custom-or-not-specified"
-	name="fbGender"
-	type="radio"
-	value="custom"
-/>
+<aui:input label="" name="facebookName" prefix="https://www.facebook.com/" type="text" value="<%= facebookName %>">
+	<aui:validator name="required" />
+</aui:input>

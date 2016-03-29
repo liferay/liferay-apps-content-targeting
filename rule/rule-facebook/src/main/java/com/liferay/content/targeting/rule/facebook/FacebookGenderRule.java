@@ -136,6 +136,6 @@ public class FacebookGenderRule extends BaseFacebookRule {
 	}
 
 	private static final String _FORM_TEMPLATE_PATH_GENDER =
-		"templates/ct_fields_gender.ftl";
+		"/ct_fields_gender.jsp";
 
 }

@@ -156,6 +156,6 @@ public class FacebookFriendsRule extends BaseFacebookRule {
 	}
 
 	private static final String _FORM_TEMPLATE_PATH_FRIENDS =
-		"templates/ct_fields_friends.ftl";
+		"/ct_fields_friends.jsp";
 
 }

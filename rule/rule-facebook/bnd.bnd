@@ -16,3 +16,4 @@ Private-Package:\
 	com.restfb.*
 Web-ContextPath: /rule-facebook
 -baseline: *;version="1.0.0"
+-dsannotations-options: inherit

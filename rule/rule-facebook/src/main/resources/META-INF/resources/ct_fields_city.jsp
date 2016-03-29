@@ -1,4 +1,4 @@
-<#--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +12,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
--->
+--%>
 
-<#include "init.ftl" />
+<%@ include file="/init.jsp" %>
 
-<@liferay_aui["input"] label="" name="facebookName" prefix="https://www.facebook.com/" type="text" value=facebookName>
-	<@liferay_aui["validator"] name="required" />
-</@>
+<%
+String cityName = GetterUtil.getString(displayContext.get("cityName"));
+%>
+
+<aui:input label="" name="cityName" type="text" value="<%= cityName %>">
+	<aui:validator name="required" />
+</aui:input>

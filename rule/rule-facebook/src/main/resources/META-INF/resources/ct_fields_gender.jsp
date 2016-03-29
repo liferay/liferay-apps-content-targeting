@@ -1,4 +1,4 @@
-<#--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,33 +12,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
--->
+--%>
 
-<#include "init.ftl" />
+<%@ include file="/init.jsp" %>
 
-<@liferay_aui["fieldset"]>
-	<@liferay_aui["select"] name="educationLevel">
-		<@liferay_aui["option"]
-			label="any"
-			selected=(educationLevel
-			== "") value=""
-		/>
-		<@liferay_aui["option"]
-			label="high-school"
-			selected=(educationLevel
-			== "high-school")
-		/>
-		<@liferay_aui["option"]
-			label="college"
-			selected=(educationLevel
-			== "college")
-		/>
-	</@>
+<%
+String gender = GetterUtil.getString(displayContext.get("gender"));
+%>
 
-	<@liferay_aui["input"]
-		label="college-high-school-name"
-		name="schoolName"
-		type="text"
-		value=schoolName
-	/>
-</@>
+<aui:input checked='<%= Validator.equals(gender, "male") %>' label="male" name="fbGender" type="radio" value="male" />
+
+<aui:input checked='<%= Validator.equals(gender, "female") %>' label="female" name="fbGender" type="radio" value="female" />
+
+<aui:input checked='<%= Validator.equals(gender, "custom") %>' label="custom-or-not-specified" name="fbGender" type="radio" value="custom" />

@@ -116,6 +116,6 @@ public class FacebookLikeRule extends BaseFacebookRule {
 	}
 
 	private static final String _FORM_TEMPLATE_PATH_LIKE =
-		"templates/ct_fields_like.ftl";
+		"/ct_fields_like.jsp";
 
 }

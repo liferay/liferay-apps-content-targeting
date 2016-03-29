@@ -240,6 +240,6 @@ public class FacebookEducationRule extends BaseFacebookRule {
 	protected static final String EDUCATION_TYPE_HIGH_SCHOOL = "High School";
 
 	private static final String _FORM_TEMPLATE_PATH_EDUCATION =
-		"templates/ct_fields_education.ftl";
+		"/ct_fields_education.jsp";
 
 }

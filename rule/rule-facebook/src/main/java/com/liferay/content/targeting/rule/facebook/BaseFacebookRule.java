@@ -14,7 +14,7 @@
 
 package com.liferay.content.targeting.rule.facebook;
 
-import com.liferay.content.targeting.api.model.BaseRule;
+import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.PortletKeys;
@@ -25,10 +25,23 @@ import com.liferay.portal.kernel.model.Company;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Julio Camarero
  */
-public abstract class BaseFacebookRule extends BaseRule {
+public abstract class BaseFacebookRule extends BaseJSPRule {
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.rule.facebook)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
 
 	protected abstract void doPopulateContext(
 		RuleInstance ruleInstance, Map<String, Object> context,

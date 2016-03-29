@@ -201,7 +201,6 @@ public class FacebookAgeRule extends BaseFacebookRule {
 		return _FORM_TEMPLATE_PATH_AGE;
 	}
 
-	private static final String _FORM_TEMPLATE_PATH_AGE =
-		"templates/ct_fields_age.ftl";
+	private static final String _FORM_TEMPLATE_PATH_AGE = "/ct_fields_age.jsp";
 
 }
