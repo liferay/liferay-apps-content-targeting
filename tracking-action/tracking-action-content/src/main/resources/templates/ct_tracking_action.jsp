@@ -65,15 +65,12 @@
 			</liferay-ui:icon-menu>
 		</div>
 
-		<div class="asset-preview <%= cssClass %>" id="<portlet:namespace /><%= ContentTargetingUtil.GUID_REPLACEMENT %>selectedContentPreview">
-			<aui:col>
-				<img class="asset-image" src="<%= assetImagePreview %>" />
-			</aui:col>
-
-			<aui:col>
-				<div class="asset-title" id="<portlet:namespace /><%= ContentTargetingUtil.GUID_REPLACEMENT %>assetTitlePreview"><%= assetTitlePreview %></div>
-				<div class="asset-type" id="<portlet:namespace /><%= ContentTargetingUtil.GUID_REPLACEMENT %>assetTypePreview"><liferay-ui:message key="type" />: <%= assetTypePreview %></div>
-			</aui:col>
+		<div class="row">
+			<div class="col-md-4 <%= cssClass %>" id="<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT + "selectedContentPreview" %>">
+				<c:if test="<%= assetEntryId > 0 %>">
+					<liferay-util:include page="/templates/asset_entry.jsp" servletContext="<%= application %>" />
+				</c:if>
+			</div>
 		</div>
 	</div>
 </div>
@@ -137,12 +134,9 @@
 				uri: currentTarget.attr('data-href')
 			},
 			function(event) {
-				A.one('#<portlet:namespace /><%= ContentTargetingUtil.GUID_REPLACEMENT %>assetEntryId').attr('value', event.assetentryid);
+				A.one('#<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT %>assetEntryId').attr('value', event.assetentryid);
 
-				A.one('#<portlet:namespace /><%= ContentTargetingUtil.GUID_REPLACEMENT %>assetTitlePreview').html(event.assettitle);
-				A.one('#<portlet:namespace /><%= ContentTargetingUtil.GUID_REPLACEMENT %>assetTypePreview').html(event.assettype);
-
-				A.one('#<portlet:namespace /><%= ContentTargetingUtil.GUID_REPLACEMENT %>selectedContentPreview').show();
+				A.one('#<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT %>selectedContentPreview').setContent('<p>' + event.assettitle + ', ' + event.assettype + '</p>');
 			}
 		);
 	};

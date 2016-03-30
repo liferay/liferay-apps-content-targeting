@@ -16,7 +16,6 @@ package com.liferay.content.targeting.tracking.action.content;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
@@ -29,7 +28,6 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
-import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -41,10 +39,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,7 +53,6 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.RenderRequest;
 
 import javax.servlet.ServletContext;
 
@@ -293,25 +288,12 @@ public class ContentTrackingAction extends BaseJSPTrackingAction {
 		String alias = StringPool.BLANK;
 		long assetEntryId = 0;
 		AssetEntry assetEntry = null;
-		String assetImagePreview = StringPool.BLANK;
-		String assetTitlePreview = StringPool.BLANK;
-		String assetTypePreview = StringPool.BLANK;
 		String eventType = StringPool.BLANK;
 
 		if (!values.isEmpty()) {
 			alias = values.get("alias");
 			assetEntryId = GetterUtil.getLong(values.get("assetEntryId"));
 			eventType = values.get("eventType");
-
-			if (assetEntryId > 0) {
-				try {
-					assetEntry = _assetEntryLocalService.fetchEntry(
-						assetEntryId);
-				}
-				catch (SystemException se) {
-					_log.error(se);
-				}
-			}
 		}
 		else if (trackingActionInstance != null) {
 			alias = trackingActionInstance.getAlias();
@@ -334,43 +316,8 @@ public class ContentTrackingAction extends BaseJSPTrackingAction {
 			}
 		}
 
-		if (assetEntry != null) {
-			AssetRendererFactory assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						assetEntry.getClassName());
-
-			AssetRenderer assetRenderer = null;
-
-			try {
-				assetRenderer = assetRendererFactory.getAssetRenderer(
-					assetEntry.getClassPK());
-
-				PortletRequest portletRequest = (RenderRequest)context.get(
-					JavaConstants.JAVAX_PORTLET_REQUEST);
-
-				assetImagePreview = assetRenderer.getThumbnailPath(
-					portletRequest);
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)portletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				assetTitlePreview = assetRenderer.getTitle(
-					themeDisplay.getLocale());
-				assetTypePreview = assetRendererFactory.getTypeName(
-					themeDisplay.getLocale(), true);
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
-
 		context.put("alias", alias);
 		context.put("assetEntryId", assetEntryId);
-		context.put("assetImagePreview", assetImagePreview);
-		context.put("assetTitlePreview", assetTitlePreview);
-		context.put("assetTypePreview", assetTypePreview);
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
 

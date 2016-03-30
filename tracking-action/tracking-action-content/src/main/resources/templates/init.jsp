@@ -21,9 +21,14 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
+<%@ page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
+page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
+page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
+page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
+page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.content.targeting.util.ContentTargetingUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
@@ -44,9 +49,6 @@ Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("
 String alias = GetterUtil.getString(displayContext.get("alias"), "");
 long assetEntryId = GetterUtil.getLong(displayContext.get("assetEntryId"), 0L);
 List<AssetRendererFactory> assetRendererFactories = (List<AssetRendererFactory>)displayContext.get("assetRendererFactories");
-String assetImagePreview = GetterUtil.getString(displayContext.get("assetImagePreview"));
-String assetTitlePreview = GetterUtil.getString(displayContext.get("assetTitlePreview"));
-String assetTypePreview = GetterUtil.getString(displayContext.get("assetTypePreview"));
 String eventType = GetterUtil.getString(displayContext.get("eventType"), "view");
 String[] eventTypes = GetterUtil.getStringValues(displayContext.get("eventTypes"), new String[] {"view"});
 boolean trackingContentEnabled = GetterUtil.getBoolean(displayContext.get("trackingContentEnabled"), false);
