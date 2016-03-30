@@ -14,29 +14,33 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/themes/init.jsp" %>
 
-<c:if test="<%= trackAnalytics %>">
-	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/analytics.min.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script>
+<%
+Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+%>
 
-	<!-- <script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/analytics.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script> -->
+<c:if test="<%= includeAnalytics %>">
+	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/analytics.min.js", "minifierBundleId=content.targeting.files", portlet.getTimestamp())) %>" type="text/javascript"></script>
 
-	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/liferay-analytics-api.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
+	<!-- <script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/analytics.js", "minifierBundleId=content.targeting.files", portlet.getTimestamp())) %>" type="text/javascript"></script> -->
 
-	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/integrations/liferay-analytics-processor.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
+	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/liferay-analytics-api.js", "", portlet.getTimestamp())) %>" type="text/javascript"></script>
+
+	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/integrations/liferay-analytics-processor.js", "", portlet.getTimestamp())) %>" type="text/javascript"></script>
 
 	<script>
 		Liferay.Analytics.initialize(
 			{
 				'LiferayAnalyticsProcessor':
 				{
-					interval: <%= PropsUtil.get("analytics.flush.interval") %>,
+					interval: <%= AnalyticsServiceConfigurationValues.ANALYTICS_FLUSH_INTERVAL %>,
 					uri: '<%= request.getAttribute("analyticsProcessorURI") %>'
 				}
 			}
 		);
 
-		<c:if test="<%= trackAnalyticsPage %>">
+		<c:if test="<%= analyticsPageEnabled %>">
 			Liferay.Analytics.track(
 				'view',
 				{
@@ -50,14 +54,14 @@
 			);
 		</c:if>
 
-		<c:if test="<%= trackAnalyticsYoutube %>">
+		<c:if test="<%= analyticsYoutubeEnabled %>">
 			var A = AUI();
 
 			A.applyConfig(
 				{
 					modules: {
 						'youtube-iframe': {
-							fullpath: '<%= HtmlUtil.escapeJS(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/integrations/youtube_iframe.js", "", javaScriptLastModified)) %>',
+							fullpath: '<%= HtmlUtil.escapeJS(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/integrations/youtube_iframe.js", "", portlet.getTimestamp())) %>',
 							requires: [
 								'aui-base'
 							]

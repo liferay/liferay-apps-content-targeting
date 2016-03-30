@@ -14,22 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-
-<%@ page import="com.liferay.content.targeting.analytics.configuration.AnalyticsServiceConfiguration" %>
-<%@ page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %>
-
-<%
-AnalyticsServiceConfiguration analyticsServiceConfiguration = (AnalyticsServiceConfiguration)request.getAttribute(AnalyticsServiceConfiguration.class.getName());
-%>
-
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
+<%@ include file="/portlet/init.jsp" %>
 
 <h3><liferay-ui:message key="content-targeting-analytics" /></h3>
 
@@ -38,31 +23,31 @@ AnalyticsServiceConfiguration analyticsServiceConfiguration = (AnalyticsServiceC
 </div>
 
 <aui:fieldset>
-	<aui:input label="pages" name="settings--content.targeting.analytics.page.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled", analyticsServiceConfiguration.pageTrackingEnabled()) %>' />
+	<aui:input label="pages" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_PAGE_ENABLED + "--" %>' type="checkbox" value="<%= analyticsPageEnabled %>" />
 
-	<aui:input label="content" name="settings--content.targeting.analytics.content.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled", analyticsServiceConfiguration.contentTrackingEnabled()) %>' />
+	<aui:input label="content" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_CONTENT_ENABLED + "--" %>' type="checkbox" value="<%= analyticsContentEnabled %>" />
 
-	<aui:input id="contentTargetingAnalyticsFormEnabled" label="forms" name="settings--content.targeting.analytics.form.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.enabled", analyticsServiceConfiguration.formTrackingEnabled()) %>' />
+	<aui:input id="contentTargetingAnalyticsFormEnabled" label="forms" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_ENABLED + "--" %>' type="checkbox" value="<%= analyticsFormEnabled %>" />
 
 	<div class="organization-details" id="<portlet:namespace />formOptions">
-		<aui:input label="form-views" name="settings--content.targeting.analytics.form.view.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view.enabled", analyticsServiceConfiguration.formViewTrackingEnabled()) %>' />
+		<aui:input label="form-views" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_VIEW_ENABLED + "--" %>' type="checkbox" value="<%= analyticsFormViewEnabled %>" />
 
-		<aui:input label="form-interactions" name="settings--content.targeting.analytics.form.interact.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact.enabled", analyticsServiceConfiguration.formInteractionTrackingEnabled()) %>' />
+		<aui:input label="form-interactions" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_INTERACT_ENABLED + "--" %>' type="checkbox" value="<%= analyticsFormInteractEnabled %>" />
 
-		<aui:input label="form-submits" name="settings--content.targeting.analytics.form.submit.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit.enabled", analyticsServiceConfiguration.formSubmitTrackingEnabled()) %>' />
+		<aui:input label="form-submits" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_SUBMIT_ENABLED + "--" %>' type="checkbox" value="<%= analyticsFormSubmitEnabled %>" />
 
-		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name="settings--content.targeting.analytics.form.excluded.ids.regex--" type="text" value='<%= PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.form.excluded.ids.regex", analyticsServiceConfiguration.formExcludedIdsRegExp()) %>' />
+		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_EXCLUDED_IDS_REGEX + "--" %>' type="text" value="<%= analyticsFormExcludedIdsRegex %>" />
 	</div>
 
-	<aui:input id="contentTargetingAnalyticsLinkEnabled" label="links" name="settings--content.targeting.analytics.link.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.enabled", analyticsServiceConfiguration.linkTrackingEnabled()) %>' />
+	<aui:input id="contentTargetingAnalyticsLinkEnabled" label="links" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_ENABLED + "--" %>' type="checkbox" value="<%= analyticsLinkEnabled %>" />
 
 	<div class="organization-details" id="<portlet:namespace />linkOptions">
-		<aui:input label="link-clicks" name="settings--content.targeting.analytics.link.click.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.click.enabled", analyticsServiceConfiguration.linkClickTrackingEnabled()) %>' />
+		<aui:input label="link-clicks" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_CLICK_ENABLED + "--" %>' type="checkbox" value="<%= analyticsLinkClickEnabled %>" />
 
-		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name="settings--content.targeting.analytics.link.excluded.ids.regex--" type="text" value='<%= PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.link.excluded.ids.regex", analyticsServiceConfiguration.linkExcludedIdsRegExp()) %>' />
+		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_EXCLUDED_IDS_REGEX + "--" %>' type="text" value="<%= analyticsLinkExcludedIdsRegex %>" />
 	</div>
 
-	<aui:input label="youtube-videos" name="settings--content.targeting.analytics.youtube.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled", analyticsServiceConfiguration.youtubeTrackingEnabled()) %>' />
+	<aui:input label="youtube-videos" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_YOUTUBE_ENABLED + "--" %>' type="checkbox" value="<%= analyticsYoutubeEnabled %>" />
 </aui:fieldset>
 
 <aui:script>

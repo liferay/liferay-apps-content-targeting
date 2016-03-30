@@ -14,8 +14,8 @@
 
 package com.liferay.content.targeting.analytics.web.servlet.taglib;
 
+import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -54,23 +54,11 @@ public abstract class TrackingDynamicInclude extends BaseDynamicInclude {
 			String referrerClassName, long[] referrerClassPKs)
 		throws Exception {
 
-		boolean trackingEnabled = false;
-
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
-		Group analyticsGroup = layout.getGroup();
+		if (!AnalyticsUtil.isIncludeAnalytics(layout, request) ||
+			!AnalyticsUtil.isAnalyticsContentEnabled(layout.getGroupId())) {
 
-		if (!analyticsGroup.isStagingGroup() &&
-			!analyticsGroup.isLayoutSetPrototype() &&
-			!analyticsGroup.isLayoutPrototype() &&
-			!layout.isTypeControlPanel() &&
-			!GetterUtil.getBoolean(
-				request.getAttribute("isSimulatedUserSegments"))) {
-
-			trackingEnabled = true;
-		}
-
-		if (!trackingEnabled) {
 			return;
 		}
 

@@ -14,15 +14,12 @@
 
 package com.liferay.content.targeting.analytics.web.servlet.taglib;
 
-import com.liferay.content.targeting.analytics.configuration.AnalyticsServiceConfiguration;
 import com.liferay.content.targeting.analytics.processor.AnalyticsProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -46,22 +43,6 @@ public class AnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
 			HttpServletRequest request, HttpServletResponse response,
 			String key)
 		throws IOException {
-
-		try {
-			long companyId = GetterUtil.getLong(
-				request.getAttribute(WebKeys.COMPANY_ID));
-
-			AnalyticsServiceConfiguration analyticsServiceConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					AnalyticsServiceConfiguration.class, companyId);
-
-			request.setAttribute(
-				AnalyticsServiceConfiguration.class.getName(),
-				analyticsServiceConfiguration);
-		}
-		catch (Exception e) {
-			_log.error("Analytics configuration unavailable", e);
-		}
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(_JSP_PATH);

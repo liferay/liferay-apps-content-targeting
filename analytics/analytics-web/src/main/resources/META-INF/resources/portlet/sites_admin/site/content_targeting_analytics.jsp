@@ -13,54 +13,17 @@
  * details.
  */
 --%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-
-<%@ page import="com.liferay.content.targeting.analytics.configuration.AnalyticsServiceConfiguration" %>
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
-<%@ page import="com.liferay.portal.kernel.model.*" %>
-<%@ page import="com.liferay.portal.kernel.model.impl.*" %>
-<%@ page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.PortletKeys" %>
-<%@ page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.PropertiesParamUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.StringPool" %>
-<%@ page import="com.liferay.portal.kernel.util.UnicodeProperties" %>
-
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
+<%@ include file="/portlet/init.jsp" %>
 
 <%
-AnalyticsServiceConfiguration analyticsServiceConfiguration = (AnalyticsServiceConfiguration)request.getAttribute(AnalyticsServiceConfiguration.class.getName());
-
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
-UnicodeProperties groupTypeSettings = null;
+long groupId = 0;
 
 if (liveGroup != null) {
-	groupTypeSettings = liveGroup.getTypeSettingsProperties();
+	groupId = liveGroup.getGroupId();
 }
-else {
-	groupTypeSettings = new UnicodeProperties();
-}
-
-boolean trackAnalyticsContent = PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled", analyticsServiceConfiguration.contentTrackingEnabled());
-boolean trackAnalyticsLink = PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.enabled", analyticsServiceConfiguration.linkTrackingEnabled());
-boolean trackAnalyticsLinkClick = PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.click.enabled", analyticsServiceConfiguration.linkClickTrackingEnabled());
-boolean trackAnalyticsForm = PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.enabled", analyticsServiceConfiguration.formTrackingEnabled());
-boolean trackAnalyticsFormInteract = PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact.enabled", analyticsServiceConfiguration.formInteractionTrackingEnabled());
-boolean trackAnalyticsFormSubmit = PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit.enabled", analyticsServiceConfiguration.formSubmitTrackingEnabled());
-boolean trackAnalyticsFormView = PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view.enabled", analyticsServiceConfiguration.formViewTrackingEnabled());
-boolean trackAnalyticsPage = PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled", analyticsServiceConfiguration.pageTrackingEnabled());
-boolean trackAnalyticsYoutube = PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled", analyticsServiceConfiguration.youtubeTrackingEnabled());
 %>
 
 <h3><liferay-ui:message key="content-targeting-analytics" /></h3>
@@ -94,31 +57,31 @@ boolean trackAnalyticsYoutube = PrefsPropsUtil.getBoolean(company.getCompanyId()
 </c:if>
 
 <aui:fieldset>
-	<aui:input disabled="<%= !trackAnalyticsPage %>" label="pages" name="TypeSettingsProperties--content.targeting.analytics.page.enabled--" title="<%= trackAnalyticsPage ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value='<%= trackAnalyticsPage && PropertiesParamUtil.getBoolean(groupTypeSettings, request, "content.targeting.analytics.page.enabled", analyticsServiceConfiguration.pageTrackingEnabled()) %>' />
+	<aui:input disabled="<%= !analyticsPageEnabled %>" label="pages" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_PAGE_ENABLED + "--" %>' title="<%= analyticsPageEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsPageEnabled(groupId) %>" />
 
-	<aui:input disabled="<%= !trackAnalyticsContent %>" label="content" name="TypeSettingsProperties--content.targeting.analytics.content.enabled--" title="<%= trackAnalyticsContent ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value='<%= trackAnalyticsContent && PropertiesParamUtil.getBoolean(groupTypeSettings, request, "content.targeting.analytics.content.enabled", analyticsServiceConfiguration.contentTrackingEnabled()) %>' />
+	<aui:input disabled="<%= !analyticsContentEnabled %>" label="content" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_CONTENT_ENABLED + "--" %>' title="<%= analyticsContentEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsContentEnabled(groupId) %>" />
 
-	<aui:input disabled="<%= !trackAnalyticsForm %>" id="contentTargetingAnalyticsFormEnabled" label="forms" name="TypeSettingsProperties--content.targeting.analytics.form.enabled--" title="<%= trackAnalyticsForm ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value='<%= trackAnalyticsForm && PropertiesParamUtil.getBoolean(groupTypeSettings, request, "content.targeting.analytics.form.enabled", analyticsServiceConfiguration.formTrackingEnabled()) %>' />
+	<aui:input disabled="<%= !analyticsFormEnabled %>" id="contentTargetingAnalyticsFormEnabled" label="forms" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_ENABLED + "--" %>' title="<%= analyticsFormEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsFormEnabled(groupId) %>" />
 
 	<div class="staging-section" id="<portlet:namespace />formOptions">
-		<aui:input disabled="<%= !trackAnalyticsFormView %>" label="form-views" name="TypeSettingsProperties--content.targeting.analytics.form.view.enabled--" title="<%= trackAnalyticsFormView ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value='<%= trackAnalyticsFormView && PropertiesParamUtil.getBoolean(groupTypeSettings, request, "content.targeting.analytics.form.view.enabled", analyticsServiceConfiguration.formViewTrackingEnabled()) %>' />
+		<aui:input disabled="<%= !analyticsFormViewEnabled %>" label="form-views" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_VIEW_ENABLED + "--" %>' title="<%= analyticsFormViewEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsFormViewEnabled(groupId) %>" />
 
-		<aui:input disabled="<%= !trackAnalyticsFormInteract %>" label="form-interactions" name="TypeSettingsProperties--content.targeting.analytics.form.interact.enabled--" title="<%= trackAnalyticsFormInteract ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value='<%= trackAnalyticsFormInteract && PropertiesParamUtil.getBoolean(groupTypeSettings, request, "content.targeting.analytics.form.interact.enabled", analyticsServiceConfiguration.formInteractionTrackingEnabled()) %>' />
+		<aui:input disabled="<%= !analyticsFormInteractEnabled %>" label="form-interactions" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_INTERACT_ENABLED + "--" %>' title="<%= analyticsFormInteractEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsFormInteractEnabled(groupId) %>" />
 
-		<aui:input disabled="<%= !trackAnalyticsFormSubmit %>" label="form-submits" name="TypeSettingsProperties--content.targeting.analytics.form.submit.enabled--" title="<%= trackAnalyticsFormSubmit ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value='<%= trackAnalyticsFormSubmit && PropertiesParamUtil.getBoolean(groupTypeSettings, request, "content.targeting.analytics.form.submit.enabled", analyticsServiceConfiguration.formSubmitTrackingEnabled()) %>' />
+		<aui:input disabled="<%= !analyticsFormSubmitEnabled %>" label="form-submits" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_SUBMIT_ENABLED + "--" %>' title="<%= analyticsFormSubmitEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsFormSubmitEnabled(groupId) %>" />
 
-		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name="TypeSettingsProperties--content.targeting.analytics.form.excluded.ids.regex--" type="text" value='<%= PropertiesParamUtil.getString(groupTypeSettings, request, "content.targeting.analytics.form.excluded.ids.regex", PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.form.excluded.ids.regex", analyticsServiceConfiguration.formExcludedIdsRegExp())) %>' />
+		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_EXCLUDED_IDS_REGEX + "--" %>' type="text" value="<%= AnalyticsUtil.getAnalyticsFormExcludedIdsRegex(groupId) %>" />
 	</div>
 
-	<aui:input disabled="<%= !trackAnalyticsLink %>" id="contentTargetingAnalyticsLinkEnabled" label="links" name="TypeSettingsProperties--content.targeting.analytics.link.enabled--" title="<%= trackAnalyticsLink ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value='<%= trackAnalyticsLink && PropertiesParamUtil.getBoolean(groupTypeSettings, request, "content.targeting.analytics.link.enabled", analyticsServiceConfiguration.linkTrackingEnabled()) %>' />
+	<aui:input disabled="<%= !analyticsLinkEnabled %>" id="contentTargetingAnalyticsLinkEnabled" label="links" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_ENABLED + "--" %>' title="<%= analyticsLinkEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsLinkEnabled(groupId) %>" />
 
 	<div class="staging-section" id="<portlet:namespace />linkOptions">
-		<aui:input disabled="<%= !trackAnalyticsLinkClick %>" label="link-clicks" name="TypeSettingsProperties--content.targeting.analytics.link.click.enabled--" title="<%= trackAnalyticsLinkClick ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value='<%= trackAnalyticsLinkClick && PropertiesParamUtil.getBoolean(groupTypeSettings, request, "content.targeting.analytics.link.click.enabled", analyticsServiceConfiguration.linkClickTrackingEnabled()) %>' />
+		<aui:input disabled="<%= !analyticsLinkClickEnabled %>" label="link-clicks" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_CLICK_ENABLED + "--" %>' title="<%= analyticsLinkClickEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsLinkClickEnabled(groupId) %>" />
 
-		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name="TypeSettingsProperties--content.targeting.analytics.link.excluded.ids.regex--" type="text" value='<%= PropertiesParamUtil.getString(groupTypeSettings, request, "content.targeting.analytics.link.excluded.ids.regex", PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.link.excluded.ids.regex", analyticsServiceConfiguration.linkExcludedIdsRegExp())) %>' />
+		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_EXCLUDED_IDS_REGEX + "--" %>' type="text" value="<%= AnalyticsUtil.getAnalyticsLinkExcludedIdsRegex(groupId) %>" />
 	</div>
 
-	<aui:input disabled="<%= !trackAnalyticsYoutube %>" label="youtube-videos" name="TypeSettingsProperties--content.targeting.analytics.youtube.enabled--" title="<%= trackAnalyticsYoutube ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value='<%= trackAnalyticsYoutube && PropertiesParamUtil.getBoolean(groupTypeSettings, request, "content.targeting.analytics.youtube.enabled", analyticsServiceConfiguration.youtubeTrackingEnabled()) %>' />
+	<aui:input disabled="<%= !analyticsYoutubeEnabled %>" label="youtube-videos" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_YOUTUBE_ENABLED + "--" %>' title="<%= analyticsYoutubeEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsYoutubeEnabled(groupId) %>" />
 </aui:fieldset>
 
 <aui:script>
