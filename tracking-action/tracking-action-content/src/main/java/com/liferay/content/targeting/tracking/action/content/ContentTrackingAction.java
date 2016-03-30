@@ -27,7 +27,6 @@ import com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -326,8 +325,6 @@ public class ContentTrackingAction extends BaseJSPTrackingAction {
 		context.put(
 			"assetRendererFactories",
 			getSelectableAssetRendererFactories(company.getCompanyId()));
-
-		context.put("contentTargetingUtilClass", new ContentTargetingUtil());
 
 		long groupId = (Long)context.get("scopeGroupId");
 

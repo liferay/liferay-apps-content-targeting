@@ -17,14 +17,10 @@
 <%@ include file="/templates/init.jsp" %>
 
 <c:if test="<%= !trackingContentEnabled %>">
-	<div class="alert alert-error">
+	<div class="alert alert-info">
 		<strong><liferay-ui:message key="this-metric-will-not-work-properly-because-content-tracking-is-not-enabled" /></strong>
 
-		<liferay-ui:message
-			arguments="<%= enableLocationLabels %>"
-			key="it-can-be-enabled-in-x-or-in-x"
-			translateArguments="<%= false %>"
-		/>
+		<liferay-ui:message arguments="<%= enableLocationLabels %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
 	</div>
 </c:if>
 
@@ -32,89 +28,59 @@
 	<aui:validator name="required" />
 </aui:input>
 
-<div style="background-color:transparent; margin:0px;">
-	<div class="control-group select-asset-selector">
-		<div class="edit-controls lfr-meta-actions">
-			<aui:input
-				name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetEntryId" %>'
-				type="hidden"
-				value="<%= assetEntryId %>"
-			/>
+<div class="select-asset-selector">
+	<div class="edit-controls">
+		<aui:input name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetEntryId" %>' type="hidden" value="<%= assetEntryId %>" />
 
-			<label class="control-label"><liferay-ui:message key="select-the-content-to-be-tracked" /></label>
+		<h4 class="text-default">
+			<liferay-ui:message key="select-the-content-to-be-tracked" />
+		</h4>
 
-			<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' id='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetSelector" %>' message='<%= LanguageUtil.get(request, "select-content") %>' showWhenSingleIcon="<%= true %>">
-
-				<%
-				for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
-				%>
-
-					<liferay-ui:icon
-						cssClass="asset-selector"
-						data='<%= ContentTargetingUtil.getAssetSelectorIconData(request, assetRendererFactory, "", true) %>'
-						id='<%= ContentTargetingUtil.GUID_REPLACEMENT + "groupId_" + assetRendererFactory.getTypeName(locale, false) %>'
-						message="<%= assetRendererFactory.getTypeName(locale, false) %>"
-						src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
-						url="javascript:;"
-					/>
-
-				<%
-				}
-				%>
-
-			</liferay-ui:icon-menu>
-		</div>
-
-		<div class="row">
-			<div class="col-md-4 <%= cssClass %>" id="<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT + "selectedContentPreview" %>">
-				<c:if test="<%= assetEntryId > 0 %>">
-					<liferay-util:include page="/templates/asset_entry.jsp" servletContext="<%= application %>" />
-				</c:if>
-			</div>
-		</div>
-	</div>
-</div>
-
-<c:choose>
-	<c:when test="<%= eventTypes.length > 0 %>">
-		<aui:select label="event-type" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'>
+		<liferay-ui:icon-menu direction="right" id='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetSelector" %>' message="select-content" showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 			<%
-			for (String curEventType : eventTypes) {
+			for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
 			%>
 
-				<aui:option
-					label="<%= curEventType %>"
-					selected="<%= (eventType == curEventType) %>"
-					value="<%= curEventType %>"
+				<liferay-ui:icon
+					cssClass="asset-selector"
+					data="<%= ContentTargetingUtil.getAssetSelectorIconData(request, assetRendererFactory, StringPool.BLANK, true) %>"
+					id='<%= ContentTargetingUtil.GUID_REPLACEMENT + "groupId_" + assetRendererFactory.getTypeName(locale, false) %>'
+					message="<%= assetRendererFactory.getTypeName(locale, false) %>"
+					url="javascript:;"
 				/>
 
 			<%
 			}
 			%>
 
-		</aui:select>
-	</c:when>
-	<c:otherwise>
+		</liferay-ui:icon-menu>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4 <%= cssClass %>" id="<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT + "selectedContentPreview" %>">
+			<c:if test="<%= assetEntryId > 0 %>">
+				<liferay-util:include page="/templates/asset_entry.jsp" servletContext="<%= application %>" />
+			</c:if>
+		</div>
+	</div>
+</div>
+
+<c:if test="<%= eventTypes.length > 0 %>">
+	<aui:select label="event-type" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'>
 
 		<%
 		for (String curEventType : eventTypes) {
 		%>
 
-			<aui:input
-				disabled="<%= true %>"
-				label="event-type"
-				name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'
-				type="text"
-				value="<%= curEventType %>"
-			/>
+			<aui:option label="<%= curEventType %>" selected="<%= eventType.equals(curEventType) %>" value="<%= curEventType %>" />
 
 		<%
 		}
 		%>
 
-	</c:otherwise>
-</c:choose>
+	</aui:select>
+</c:if>
 
 <aui:script use="aui-base">
 	var onAssetSelectorClick = function(event) {

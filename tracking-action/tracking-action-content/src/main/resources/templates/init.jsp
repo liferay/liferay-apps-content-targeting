@@ -32,6 +32,7 @@ page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.content.targeting.util.ContentTargetingUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.List" %><%@
@@ -46,22 +47,23 @@ page import="java.util.Map" %>
 <%
 Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
 
-String alias = GetterUtil.getString(displayContext.get("alias"), "");
+String alias = GetterUtil.getString(displayContext.get("alias"), StringPool.BLANK);
 long assetEntryId = GetterUtil.getLong(displayContext.get("assetEntryId"), 0L);
 List<AssetRendererFactory> assetRendererFactories = (List<AssetRendererFactory>)displayContext.get("assetRendererFactories");
 String eventType = GetterUtil.getString(displayContext.get("eventType"), "view");
 String[] eventTypes = GetterUtil.getStringValues(displayContext.get("eventTypes"), new String[] {"view"});
-boolean trackingContentEnabled = GetterUtil.getBoolean(displayContext.get("trackingContentEnabled"), false);
 
 String enableLocationPortalLabel = LanguageUtil.get(request, "portal-settings-content-targeting-analytics");
-String enableLocationSiteLabel = LanguageUtil.get(request, "site-settings-content-targeting-analytics");
 
 String portalSettingsURL = GetterUtil.getString(displayContext.get("portalSettingsURL"));
-String siteSettingsURL = GetterUtil.getString(displayContext.get("siteSettingsURL"));
 
 if (Validator.isNotNull(portalSettingsURL)) {
 	enableLocationPortalLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationPortalLabel + "</a>";
 }
+
+String enableLocationSiteLabel = LanguageUtil.get(request, "site-settings-content-targeting-analytics");
+
+String siteSettingsURL = GetterUtil.getString(displayContext.get("siteSettingsURL"));
 
 if (Validator.isNotNull(siteSettingsURL)) {
 	enableLocationSiteLabel = "<a href=\"" + siteSettingsURL + "\">" + enableLocationSiteLabel + "</a>";
@@ -71,9 +73,9 @@ String[] enableLocationLabels = new String[] {
 	enableLocationPortalLabel, enableLocationSiteLabel
 };
 
-String cssClass = "";
+String cssClass = StringPool.BLANK;
 
 if (assetEntryId <= 0) {
-	cssClass ="hide";
+	cssClass = "hide";
 }
 %>
