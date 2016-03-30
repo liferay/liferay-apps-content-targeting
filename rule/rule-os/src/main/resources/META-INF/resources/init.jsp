@@ -1,4 +1,4 @@
-<#--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +12,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
--->
+--%>
 
-<#setting number_format="computer">
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<@liferay_aui["select"] label="" name="os">
-	<#list operatingSystems as operatingSystem>
-		<@liferay_aui["option"]
-			label="${operatingSystem}"
-			selected=(operatingSystem
-			== os) value=operatingSystem
-		/>
-	</#list>
-</@>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+
+<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
+
+<%@ page import="java.util.Map" %>
+
+<liferay-theme:defineObjects />
+
+<portlet:defineObjects />
+
+<%
+Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
+%>
