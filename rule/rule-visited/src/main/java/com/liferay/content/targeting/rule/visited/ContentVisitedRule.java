@@ -22,7 +22,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
-import com.liferay.content.targeting.api.model.BaseRule;
+import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.exception.InvalidRuleException;
 import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
@@ -56,6 +56,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
@@ -67,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
-public class ContentVisitedRule extends BaseRule {
+public class ContentVisitedRule extends BaseJSPRule {
 
 	@Activate
 	@Override
@@ -269,6 +270,15 @@ public class ContentVisitedRule extends BaseRule {
 		_analyticsEventLocalService = analyticsEventLocalService;
 	}
 
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.rule.visited)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
 	protected String getFormTemplatePath() {
 		return _FORM_TEMPLATE_PATH_CONTENT;
 	}
@@ -382,7 +392,7 @@ public class ContentVisitedRule extends BaseRule {
 	}
 
 	private static final String _FORM_TEMPLATE_PATH_CONTENT =
-		"templates/ct_fields_content.ftl";
+		"/ct_fields_content.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentVisitedRule.class);
