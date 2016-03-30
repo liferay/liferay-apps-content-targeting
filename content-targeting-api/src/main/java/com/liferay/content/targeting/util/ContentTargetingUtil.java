@@ -291,7 +291,9 @@ public class ContentTargetingUtil {
 		String eventName = "selectContent";
 
 		if (instantiable) {
-			eventName = GUID_REPLACEMENT + eventName;
+			eventName =
+				StringPool.UNDERLINE + GUID_REPLACEMENT + StringPool.UNDERLINE +
+					eventName;
 		}
 
 		assetBrowserURL.setParameter("eventName", eventName);

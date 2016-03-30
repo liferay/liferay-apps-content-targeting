@@ -131,7 +131,7 @@
 					constrain: true,
 					modal: true
 				},
-				eventName: '<%= ContentTargetingUtil.GUID_REPLACEMENT %>selectContent',
+				eventName: '_<%= ContentTargetingUtil.GUID_REPLACEMENT %>_selectContent',
 				id: 'selectContent' + currentTarget.attr('id'),
 				title: currentTarget.attr('data-title'),
 				uri: currentTarget.attr('data-href')
