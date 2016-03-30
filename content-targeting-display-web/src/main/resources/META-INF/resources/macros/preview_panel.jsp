@@ -95,5 +95,4 @@ for (QueryRule queryRule : queryRules) {
 			}
 		);
 	</aui:script>
-
 </c:if>
