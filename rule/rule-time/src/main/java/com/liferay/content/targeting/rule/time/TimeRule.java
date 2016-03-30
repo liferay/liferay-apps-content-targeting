@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.rule.time;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
-import com.liferay.content.targeting.api.model.BaseRule;
+import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.SessionAttributesRuleCategory;
@@ -36,17 +36,19 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
  */
 @Component(immediate = true, service = Rule.class)
-public class TimeRule extends BaseRule {
+public class TimeRule extends BaseJSPRule {
 
 	@Activate
 	@Override
@@ -134,6 +136,15 @@ public class TimeRule extends BaseRule {
 		jsonObj.put("startTimeAmPm", startTimeAmPm);
 
 		return jsonObj.toString();
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.rule.time)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override
