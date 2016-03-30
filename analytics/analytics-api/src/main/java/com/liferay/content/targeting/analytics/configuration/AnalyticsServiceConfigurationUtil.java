@@ -23,12 +23,16 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class AnalyticsServiceConfigurationUtil {
 
-	public static int getInteger(String key) {
-		return GetterUtil.getInteger(_configuration.get(key));
+	public static String get(String key) {
+		return _configuration.get(key);
 	}
 
-	public static String getString(String key) {
-		return _configuration.get(key);
+	public static boolean getBoolean(String key) {
+		return GetterUtil.getBoolean(_configuration.get(key));
+	}
+
+	public static int getInteger(String key) {
+		return GetterUtil.getInteger(_configuration.get(key));
 	}
 
 	private static final Configuration _configuration =
