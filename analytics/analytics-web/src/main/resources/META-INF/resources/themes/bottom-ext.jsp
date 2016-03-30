@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/common/analytics/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <c:if test="<%= trackAnalytics %>">
 

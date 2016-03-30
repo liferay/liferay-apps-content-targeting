@@ -68,8 +68,7 @@ public class AnalyticsBottomDynamicInclude extends BaseDynamicInclude {
 		_servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH =
-		"/html/common/themes/bottom-ext.jsp";
+	private static final String _JSP_PATH = "/themes/bottom-ext.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsBottomDynamicInclude.class);

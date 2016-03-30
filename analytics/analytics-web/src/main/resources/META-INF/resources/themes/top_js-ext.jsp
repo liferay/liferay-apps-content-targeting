@@ -14,16 +14,16 @@
  */
 --%>
 
-<%@ include file="/html/common/analytics/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <c:if test="<%= trackAnalytics %>">
-	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/html/js/analytics/analytics.min.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script>
+	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/analytics.min.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script>
 
-	<!-- <script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/html/js/analytics/analytics.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script> -->
+	<!-- <script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/analytics.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script> -->
 
-	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/html/js/analytics/liferay-analytics-api.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
+	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/liferay-analytics-api.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
 
-	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/html/js/analytics/integrations/liferay-analytics-processor.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
+	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/integrations/liferay-analytics-processor.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
 
 	<script>
 		Liferay.Analytics.initialize(
@@ -57,7 +57,7 @@
 				{
 					modules: {
 						'youtube-iframe': {
-							fullpath: '<%= HtmlUtil.escapeJS(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/html/js/analytics/integrations/youtube_iframe.js", "", javaScriptLastModified)) %>',
+							fullpath: '<%= HtmlUtil.escapeJS(PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/js/integrations/youtube_iframe.js", "", javaScriptLastModified)) %>',
 							requires: [
 								'aui-base'
 							]

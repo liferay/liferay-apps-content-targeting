@@ -103,7 +103,7 @@ public class CompanySettingsAnalyticsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/portal_settings/content_targeting_analytics.jsp";
+		return "/portlet/portal_settings/content_targeting_analytics.jsp";
 	}
 
 	@Reference(unbind = "-")

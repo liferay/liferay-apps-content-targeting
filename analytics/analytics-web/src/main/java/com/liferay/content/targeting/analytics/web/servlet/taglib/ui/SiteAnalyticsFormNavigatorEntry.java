@@ -123,7 +123,7 @@ public class SiteAnalyticsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/sites_admin/site/content_targeting_analytics.jsp";
+		return "/portlet/sites_admin/site/content_targeting_analytics.jsp";
 	}
 
 	@Reference(unbind = "-")

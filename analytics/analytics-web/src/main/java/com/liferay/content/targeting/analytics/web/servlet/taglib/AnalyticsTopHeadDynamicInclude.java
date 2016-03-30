@@ -107,8 +107,7 @@ public class AnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
 		_servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH =
-		"/html/common/themes/top_js-ext.jsp";
+	private static final String _JSP_PATH = "/themes/top_js-ext.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsTopHeadDynamicInclude.class);
