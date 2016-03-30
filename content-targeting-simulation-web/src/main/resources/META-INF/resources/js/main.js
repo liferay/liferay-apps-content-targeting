@@ -92,7 +92,13 @@ AUI.add(
 						}
 
 						instance._eventHandles.push(
-							Liferay.on('SimulationMenu:closeSimulationPanel', A.bind('_stopSimulation', instance))
+							Liferay.on('SimulationMenu:closeSimulationPanel', A.bind('_stopSimulation', instance)),
+							A.on(
+								'beforeunload',
+								function() {
+									instance._stopSimulation();
+								}
+							)
 						);
 					},
 
