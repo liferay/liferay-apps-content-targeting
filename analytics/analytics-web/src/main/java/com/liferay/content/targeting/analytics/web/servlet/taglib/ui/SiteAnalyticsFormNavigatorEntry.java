@@ -14,7 +14,6 @@
 
 package com.liferay.content.targeting.analytics.web.servlet.taglib.ui;
 
-import com.liferay.content.targeting.analytics.configuration.AnalyticsServiceConfiguration;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,19 +23,13 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
 
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,30 +65,6 @@ public class SiteAnalyticsFormNavigatorEntry
 	}
 
 	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		try {
-			long companyId = GetterUtil.getLong(
-				request.getAttribute(WebKeys.COMPANY_ID));
-
-			AnalyticsServiceConfiguration analyticsServiceConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					AnalyticsServiceConfiguration.class, companyId);
-
-			request.setAttribute(
-				AnalyticsServiceConfiguration.class.getName(),
-				analyticsServiceConfiguration);
-		}
-		catch (Exception e) {
-			_log.error("Analytics configuration unavailable", e);
-		}
-
-		super.include(request, response);
-	}
-
-	@Override
 	public boolean isVisible(User user, Group group) {
 		if ((group == null) || group.isCompany()) {
 			return false;
@@ -123,7 +92,7 @@ public class SiteAnalyticsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/sites_admin/site/content_targeting_analytics.jsp";
+		return "/portlet/sites_admin/site/content_targeting_analytics.jsp";
 	}
 
 	@Reference(unbind = "-")

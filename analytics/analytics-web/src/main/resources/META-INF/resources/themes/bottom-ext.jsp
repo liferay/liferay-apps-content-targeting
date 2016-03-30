@@ -14,14 +14,14 @@
  */
 --%>
 
-<%@ include file="/html/common/analytics/init.jsp" %>
+<%@ include file="/themes/init.jsp" %>
 
-<c:if test="<%= trackAnalytics %>">
+<c:if test="<%= includeAnalytics %>">
 
 	<%
 	String modules = "aui-base";
 
-	if (trackAnalyticsYoutube) {
+	if (analyticsYoutubeEnabled) {
 		modules += ",youtube-iframe";
 	}
 	%>
@@ -42,12 +42,12 @@
 
 		var DOC = A.getDoc();
 
-		<c:if test="<%= trackAnalyticsForm %>">
+		<c:if test="<%= analyticsFormEnabled %>">
 			var formExcludedIdsRegexStr = '<%= analyticsFormExcludedIdsRegex %>';
 
 			var defaultFormExcludedIdsRegex = /^hrefFm.*/;
 
-			<c:if test="<%= trackAnalyticsFormView %>">
+			<c:if test="<%= analyticsFormViewEnabled %>">
 				var trackingForms = [];
 
 				A.all('form').each(
@@ -66,7 +66,7 @@
 				);
 			</c:if>
 
-			<c:if test="<%= trackAnalyticsFormSubmit %>">
+			<c:if test="<%= analyticsFormSubmitEnabled %>">
 				Liferay.on(
 					'submitForm',
 					function(event) {
@@ -79,7 +79,7 @@
 				);
 			</c:if>
 
-			<c:if test="<%= trackAnalyticsFormInteract %>">
+			<c:if test="<%= analyticsFormInteractEnabled %>">
 				var interactedForms = [];
 
 				DOC.delegate(
@@ -100,7 +100,7 @@
 			</c:if>
 		</c:if>
 
-		<c:if test="<%= trackAnalyticsLinkClick %>">
+		<c:if test="<%= analyticsLinkClickEnabled %>">
 			DOC.delegate(
 				'click',
 				function(event) {
@@ -130,7 +130,7 @@
 			);
 		</c:if>
 
-		<c:if test="<%= trackAnalyticsYoutube %>">
+		<c:if test="<%= analyticsYoutubeEnabled %>">
 			var yt = new Liferay.YoutubeIframe(
 				{
 					on: {

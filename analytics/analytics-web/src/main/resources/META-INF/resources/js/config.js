@@ -5,7 +5,7 @@
 		{
 			groups: {
 				analytics: {
-					base: PATH_ANALYTICS_WEB + '/html/js/analytics/',
+					base: PATH_ANALYTICS_WEB + '/js/',
 					modules: {
 						'analytics': {
 							path: 'analytics.min.js',
@@ -24,7 +24,7 @@
 							requires: []
 						}
 					},
-					root: PATH_ANALYTICS_WEB + '/html/js/analytics/'
+					root: PATH_ANALYTICS_WEB + '/js/'
 				}
 			}
 		}

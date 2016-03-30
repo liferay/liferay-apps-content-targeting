@@ -14,12 +14,15 @@
 
 package com.liferay.content.targeting.analytics.web.servlet.taglib;
 
+import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.model.UserSegment;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.PrintWriter;
 
@@ -50,6 +53,14 @@ public abstract class TrackingDynamicInclude extends BaseDynamicInclude {
 			String eventName, String className, long classPK,
 			String referrerClassName, long[] referrerClassPKs)
 		throws Exception {
+
+		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+		if (!AnalyticsUtil.isIncludeAnalytics(layout, request) ||
+			!AnalyticsUtil.isAnalyticsContentEnabled(layout.getGroupId())) {
+
+			return;
+		}
 
 		referrerClassName = ParamUtil.getString(
 			request, "analyticsReferrerClassName", referrerClassName);
