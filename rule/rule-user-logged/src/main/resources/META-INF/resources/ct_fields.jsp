@@ -1,4 +1,4 @@
-<#--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +12,10 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
--->
+--%>
 
-<#setting number_format="computer">
+<%@ include file="/init.jsp" %>
 
 <div class="alert alert-info">
-	<@liferay_ui["message"] key="this-rule-will-be-matched-if-the-user-is-signed-in" />
+	<liferay-ui:message key="this-rule-will-be-matched-if-the-user-is-signed-in" />
 </div>
