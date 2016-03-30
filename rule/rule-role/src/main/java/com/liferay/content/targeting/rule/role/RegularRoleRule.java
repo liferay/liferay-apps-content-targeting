@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.rule.role;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
-import com.liferay.content.targeting.api.model.BaseRule;
+import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
@@ -40,6 +40,7 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
@@ -51,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
-public class RegularRoleRule extends BaseRule {
+public class RegularRoleRule extends BaseJSPRule {
 
 	@Activate
 	@Override
@@ -177,6 +178,15 @@ public class RegularRoleRule extends BaseRule {
 	}
 
 	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.rule.role)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	@Override
 	protected String getFormTemplatePath() {
 		return _FORM_TEMPLATE_PATH;
 	}
@@ -219,8 +229,7 @@ public class RegularRoleRule extends BaseRule {
 		_roleLocalService = roleLocalService;
 	}
 
-	private static final String _FORM_TEMPLATE_PATH =
-		"templates/ct_fields_regular.ftl";
+	private static final String _FORM_TEMPLATE_PATH = "/ct_fields_regular.jsp";
 
 	private RoleLocalService _roleLocalService;
 

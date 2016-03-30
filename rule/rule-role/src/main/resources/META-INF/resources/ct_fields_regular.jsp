@@ -1,4 +1,4 @@
-<#--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +12,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
--->
+--%>
 
+<%@ include file="/init.jsp" %>
 
-<#setting number_format="computer">
+<aui:select label="" name="roleId">
 
-<@liferay_aui["select"] label="" name="roleId">
-	<#list roles as role>
-		<@liferay_aui["option"]
-			label="${role.getTitle(locale)}"
-			selected=(role.getRoleId()
-			== roleId) value=role.getRoleId()
-		/>
-	</#list>
-</@>
+	<%
+	for (Role role : roles) {
+	%>
+
+		<aui:option label="<%= role.getTitle(locale) %>" selected="<%= role.getRoleId() == roleId %>" value="<%= role.getRoleId() %>" />
+
+	<%
+	}
+	%>
+
+</aui:select>
