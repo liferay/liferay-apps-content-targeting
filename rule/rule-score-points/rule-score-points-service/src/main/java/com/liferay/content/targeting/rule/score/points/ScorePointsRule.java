@@ -16,7 +16,7 @@ package com.liferay.content.targeting.rule.score.points;
 
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
-import com.liferay.content.targeting.api.model.BaseRule;
+import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
@@ -38,6 +38,7 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
@@ -49,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
-public class ScorePointsRule extends BaseRule {
+public class ScorePointsRule extends BaseJSPRule {
 
 	@Activate
 	@Override
@@ -141,6 +142,15 @@ public class ScorePointsRule extends BaseRule {
 		jsonObj.put("scorePoints", scorePoints);
 
 		return jsonObj.toString();
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.rule.score.points.service)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override
