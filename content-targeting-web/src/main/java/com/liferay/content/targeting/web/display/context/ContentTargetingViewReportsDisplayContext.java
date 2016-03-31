@@ -244,6 +244,7 @@ public class ContentTargetingViewReportsDisplayContext
 		reportsSearchContainer.setOrderByType(orderByType);
 
 		if (Validator.isNotNull(getKeywords())) {
+
 			Sort sort = new Sort(
 				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
 
@@ -257,6 +258,11 @@ public class ContentTargetingViewReportsDisplayContext
 			reportsSearchContainer.setResults(searchResults.getBaseModels());
 		}
 		else {
+			if (showAddButton()) {
+				reportsSearchContainer.setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+			}
+
 			int total = ReportInstanceLocalServiceUtil.getReportInstancesCount(
 				getClassName(), getClassPK());
 
