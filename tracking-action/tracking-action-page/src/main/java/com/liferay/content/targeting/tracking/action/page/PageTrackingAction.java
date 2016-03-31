@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.tracking.action.page;
 
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
-import com.liferay.content.targeting.api.model.BaseTrackingAction;
+import com.liferay.content.targeting.api.model.BaseJSPTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.exception.InvalidTrackingActionException;
 import com.liferay.content.targeting.model.Campaign;
@@ -23,7 +23,6 @@ import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -49,6 +48,8 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -58,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = TrackingAction.class)
-public class PageTrackingAction extends BaseTrackingAction {
+public class PageTrackingAction extends BaseJSPTrackingAction {
 
 	@Activate
 	@Override
@@ -223,6 +224,15 @@ public class PageTrackingAction extends BaseTrackingAction {
 	}
 
 	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.tracking.action.page)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	@Override
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
 		Map<String, Object> context, Map<String, String> values) {
@@ -230,10 +240,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 		String alias = StringPool.BLANK;
 		String eventType = StringPool.BLANK;
 		String friendlyURL = StringPool.BLANK;
-		Layout layout = null;
 		boolean privateLayout = false;
-
-		long scopeGroupId = GetterUtil.getLong(context.get("scopeGroupId"));
 
 		if (!values.isEmpty()) {
 			alias = values.get("alias");
@@ -241,80 +248,29 @@ public class PageTrackingAction extends BaseTrackingAction {
 			friendlyURL = values.get("friendlyURL");
 			privateLayout = GetterUtil.getBoolean(
 				values.get("privateLayout"), false);
-
-			try {
-				layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-					scopeGroupId, privateLayout, friendlyURL);
-			}
-			catch (SystemException se) {
-				_log.error(se);
-			}
 		}
 		else if (trackingActionInstance != null) {
 			alias = trackingActionInstance.getAlias();
 			eventType = trackingActionInstance.getEventType();
 			long referrerClassPK = trackingActionInstance.getReferrerClassPK();
 
-			try {
-				layout = _layoutLocalService.fetchLayout(referrerClassPK);
-			}
-			catch (SystemException se) {
-				_log.error(se);
+			Layout layout = _layoutLocalService.fetchLayout(referrerClassPK);
+
+			if (layout != null) {
+				friendlyURL = layout.getFriendlyURL();
+				privateLayout = layout.isPrivateLayout();
 			}
 		}
 
 		context.put("alias", alias);
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)context.get("themeDisplay");
-
-		String friendlyURLPrivateBase = StringPool.BLANK;
-		String friendlyURLPublicBase = StringPool.BLANK;
-
-		try {
-			LayoutSet layoutSet = themeDisplay.getLayoutSet();
-
-			boolean privateLayoutSet = layoutSet.isPrivateLayout();
-
-			layoutSet.setPrivateLayout(false);
-			friendlyURLPublicBase = PortalUtil.getGroupFriendlyURL(
-				layoutSet, themeDisplay);
-
-			layoutSet.setPrivateLayout(true);
-			friendlyURLPrivateBase = PortalUtil.getGroupFriendlyURL(
-				layoutSet, themeDisplay);
-
-			layoutSet.setPrivateLayout(privateLayoutSet);
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
-
-		if (layout != null) {
-			friendlyURL = layout.getFriendlyURL();
-			privateLayout = layout.isPrivateLayout();
-		}
-
 		context.put("friendlyURL", friendlyURL);
 		context.put("privateLayout", privateLayout);
 
-		if (privateLayout) {
-			context.put("friendlyURLBase", friendlyURLPrivateBase);
-		}
-		else {
-			context.put("friendlyURLBase", friendlyURLPublicBase);
-		}
+		long scopeGroupId = GetterUtil.getLong(context.get("scopeGroupId"));
 
-		context.put("friendlyURLPrivateBase", friendlyURLPrivateBase);
-		context.put("friendlyURLPublicBase", friendlyURLPublicBase);
-
-		boolean trackingPageEnabled = AnalyticsUtil.isAnalyticsPageEnabled(
-			scopeGroupId);
-
-		context.put("trackingPageEnabled", trackingPageEnabled);
-
-		if (!trackingPageEnabled) {
+		if (!AnalyticsUtil.isAnalyticsPageEnabled(scopeGroupId)) {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);
 		}

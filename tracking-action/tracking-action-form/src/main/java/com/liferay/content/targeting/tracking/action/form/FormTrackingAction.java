@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.tracking.action.form;
 
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
-import com.liferay.content.targeting.api.model.BaseTrackingAction;
+import com.liferay.content.targeting.api.model.BaseJSPTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
@@ -27,15 +27,18 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = TrackingAction.class)
-public class FormTrackingAction extends BaseTrackingAction {
+public class FormTrackingAction extends BaseJSPTrackingAction {
 
 	@Activate
 	@Override
@@ -74,6 +77,15 @@ public class FormTrackingAction extends BaseTrackingAction {
 	}
 
 	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.tracking.action.form)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	@Override
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
 		Map<String, Object> context, Map<String, String> values) {
@@ -100,12 +112,7 @@ public class FormTrackingAction extends BaseTrackingAction {
 
 		long groupId = (Long)context.get("scopeGroupId");
 
-		boolean trackingFormEnabled = AnalyticsUtil.isAnalyticsFormEnabled(
-			groupId);
-
-		context.put("trackingFormEnabled", trackingFormEnabled);
-
-		if (!trackingFormEnabled) {
+		if (!AnalyticsUtil.isAnalyticsFormEnabled(groupId)) {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);
 		}
