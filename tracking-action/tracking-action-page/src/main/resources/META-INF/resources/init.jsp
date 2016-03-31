@@ -23,15 +23,12 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.content.targeting.util.ContentTargetingUtil" %><%@
+<%@ page import="com.liferay.content.targeting.tracking.action.page.display.context.PageTrackingActionDisplayContext" %><%@
+page import="com.liferay.content.targeting.util.ContentTargetingUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
-
-<%@ page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 
@@ -40,36 +37,5 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
-
-String alias = GetterUtil.getString(displayContext.get("alias"), StringPool.BLANK);
-String eventType = GetterUtil.getString(displayContext.get("eventType"), "view");
-String[] eventTypes = GetterUtil.getStringValues(displayContext.get("eventTypes"), new String[] {"view"});
-String friendlyURL = GetterUtil.getString(displayContext.get("friendlyURL"));
-String friendlyURLBase = GetterUtil.getString(displayContext.get("friendlyURLBase"));
-String friendlyURLPrivateBase = GetterUtil.getString(displayContext.get("friendlyURLPrivateBase"));
-String friendlyURLPublicBase = GetterUtil.getString(displayContext.get("friendlyURLPublicBase"));
-boolean privateLayout = GetterUtil.getBoolean(displayContext.get("privateLayout"), false);
-boolean trackingPageEnabled = GetterUtil.getBoolean(displayContext.get("trackingPageEnabled"), false);
-
-String enableLocationPortalLabel = LanguageUtil.get(request, "portal-settings-content-targeting-analytics");
-String enableLocationSiteLabel = LanguageUtil.get(request, "site-settings-content-targeting-analytics");
-
-String portalSettingsURL = GetterUtil.getString(displayContext.get("portalSettingsURL"));
-String siteSettingsURL = GetterUtil.getString(displayContext.get("siteSettingsURL"));
-
-if (Validator.isNotNull(portalSettingsURL)) {
-	enableLocationPortalLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationPortalLabel + "</a>";
-}
-
-if (Validator.isNotNull(siteSettingsURL)) {
-	enableLocationSiteLabel = "<a href=\"" + siteSettingsURL + "\">" + enableLocationSiteLabel + "</a>";
-}
-
-String[] enableLocationLabels = new String[] {
-	enableLocationPortalLabel, enableLocationSiteLabel
-};
-
-String onClickPrivateInput = "if (this.checked) {" + renderResponse.getNamespace() + "updateFriendlyURL('" + HtmlUtil.escape(friendlyURLPrivateBase) + "');}";
-String onClickPublicInput = "if (this.checked) {" + renderResponse.getNamespace() + "updateFriendlyURL('" + HtmlUtil.escape(friendlyURLPublicBase) + "');}";
+PageTrackingActionDisplayContext pageTrackingActionDisplayContext = new PageTrackingActionDisplayContext(request);
 %>
