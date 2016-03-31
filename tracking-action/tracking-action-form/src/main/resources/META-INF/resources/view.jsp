@@ -17,14 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <c:if test="<%= !trackingFormEnabled %>">
-	<div class="alert alert-error">
+	<div class="alert alert-info">
 		<strong><liferay-ui:message key="this-metric-will-not-work-properly-because-form-tracking-is-not-enabled" /></strong>
 
-		<liferay-ui:message
-			arguments="<%= enableLocationLabels %>"
-			key="it-can-be-enabled-in-x-or-in-x"
-			translateArguments="<%= false %>"
-		/>
+		<liferay-ui:message arguments="<%= enableLocationLabels %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
 	</div>
 </c:if>
 
@@ -36,43 +32,18 @@
 	<aui:validator name="required" />
 </aui:input>
 
-<c:choose>
-	<c:when test="<%= eventTypes.length > 0 %>">
-		<aui:select label="event-type" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'>
-
-			<%
-			for (String curEventType : eventTypes) {
-			%>
-
-				<aui:option
-					label="<%= curEventType %>"
-					selected="<%= (eventType == curEventType) %>"
-					value="<%= curEventType %>"
-				/>
-
-			<%
-			}
-			%>
-
-		</aui:select>
-	</c:when>
-	<c:otherwise>
+<c:if test="<%= eventTypes.length > 0 %>">
+	<aui:select label="event-type" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'>
 
 		<%
 		for (String curEventType : eventTypes) {
 		%>
 
-			<aui:input
-				disabled="<%= true %>"
-				label="event-type"
-				name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'
-				type="text"
-				value="<%= curEventType %>"
-			/>
+			<aui:option label="<%= curEventType %>" selected="<%= eventType.equals(curEventType) %>" value="<%= curEventType %>" />
 
 		<%
 		}
 		%>
 
-	</c:otherwise>
-</c:choose>
+	</aui:select>
+</c:if>
