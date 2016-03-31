@@ -1,4 +1,5 @@
 dependencies {
+	provided group: "com.liferay", name: "com.liferay.ip.geocoder", version: "2.0.3"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
@@ -7,7 +8,6 @@ dependencies {
 	provided project(":apps:content-targeting:analytics:analytics-api")
 	provided project(":apps:content-targeting:anonymous-users:anonymous-users-api")
 	provided project(":apps:content-targeting:content-targeting-api")
-	provided project(":apps:foundation:ip-geocoder:ip-geocoder")
 }
 
 liferay {
