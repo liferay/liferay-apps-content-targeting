@@ -28,17 +28,17 @@
 	</div>
 </c:if>
 
-<aui:input helpMessage="name-help" label="name" name="{ct_field_guid}alias" type="text" value="<%= alias %>">
+<aui:input helpMessage="name-help" label="name" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "alias" %>' type="text" value="<%= alias %>">
 	<aui:validator name="required" />
 </aui:input>
 
-<aui:input helpMessage="enter-the-id-of-the-link-to-be-tracked" label="link-id" name="{ct_field_guid}elementId" type="text" value="<%= elementId %>">
+<aui:input helpMessage="enter-the-id-of-the-link-to-be-tracked" label="link-id" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "elementId" %>' type="text" value="<%= elementId %>">
 	<aui:validator name="required" />
 </aui:input>
 
 <c:choose>
 	<c:when test="<%= eventTypes.length > 0 %>">
-		<aui:select label="event-type" name="{ct_field_guid}eventType">
+		<aui:select label="event-type" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'>
 
 			<%
 			for (String curEventType : eventTypes) {
@@ -65,7 +65,7 @@
 			<aui:input
 				disabled="<%= true %>"
 				label="event-type"
-				name="{ct_field_guid}eventType"
+				name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'
 				type="text"
 				value="<%= curEventType %>"
 			/>
