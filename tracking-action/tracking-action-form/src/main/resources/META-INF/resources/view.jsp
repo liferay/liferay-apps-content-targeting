@@ -16,30 +16,45 @@
 
 <%@ include file="/init.jsp" %>
 
-<c:if test="<%= !trackingFormEnabled %>">
+<c:if test="<%= !formTrackingActionDisplayContext.isTrackingFormEnabled() %>">
+
+	<%
+	String enableLocationPortalLabel = LanguageUtil.get(request, "portal-settings-content-targeting-analytics");
+
+	if (Validator.isNotNull(formTrackingActionDisplayContext.getPortalSettingsURL())) {
+		enableLocationPortalLabel = "<a href=\"" + formTrackingActionDisplayContext.getPortalSettingsURL() + "\">" + enableLocationPortalLabel + "</a>";
+	}
+
+	String enableLocationSiteLabel = LanguageUtil.get(request, "site-settings-content-targeting-analytics");
+
+	if (Validator.isNotNull(formTrackingActionDisplayContext.getSiteSettingsURL())) {
+		enableLocationSiteLabel = "<a href=\"" + formTrackingActionDisplayContext.getSiteSettingsURL() + "\">" + enableLocationSiteLabel + "</a>";
+	}
+	%>
+
 	<div class="alert alert-info">
 		<strong><liferay-ui:message key="this-metric-will-not-work-properly-because-form-tracking-is-not-enabled" /></strong>
 
-		<liferay-ui:message arguments="<%= enableLocationLabels %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= new String[] {enableLocationPortalLabel, enableLocationSiteLabel} %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
 	</div>
 </c:if>
 
-<aui:input helpMessage="name-help" label="name" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "alias" %>' type="text" value="<%= alias %>">
+<aui:input helpMessage="name-help" label="name" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "alias" %>' type="text" value="<%= formTrackingActionDisplayContext.getAlias() %>">
 	<aui:validator name="required" />
 </aui:input>
 
-<aui:input helpMessage="enter-the-id-of-the-form-to-be-tracked" label="form-id" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "elementId" %>' type="text" value="<%= elementId %>">
+<aui:input helpMessage="enter-the-id-of-the-form-to-be-tracked" label="form-id" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "elementId" %>' type="text" value="<%= formTrackingActionDisplayContext.getElementId() %>">
 	<aui:validator name="required" />
 </aui:input>
 
-<c:if test="<%= eventTypes.length > 0 %>">
+<c:if test="<%= ArrayUtil.isNotEmpty(formTrackingActionDisplayContext.getEventTypes()) %>">
 	<aui:select label="event-type" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'>
 
 		<%
-		for (String curEventType : eventTypes) {
+		for (String curEventType : formTrackingActionDisplayContext.getEventTypes()) {
 		%>
 
-			<aui:option label="<%= curEventType %>" selected="<%= eventType.equals(curEventType) %>" value="<%= curEventType %>" />
+			<aui:option label="<%= curEventType %>" selected="<%= Validator.equals(formTrackingActionDisplayContext.getEventType(), curEventType) %>" value="<%= curEventType %>" />
 
 		<%
 		}

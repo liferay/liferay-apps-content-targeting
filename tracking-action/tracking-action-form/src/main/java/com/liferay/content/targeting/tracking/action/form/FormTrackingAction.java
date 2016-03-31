@@ -112,12 +112,7 @@ public class FormTrackingAction extends BaseJSPTrackingAction {
 
 		long groupId = (Long)context.get("scopeGroupId");
 
-		boolean trackingFormEnabled = AnalyticsUtil.isAnalyticsFormEnabled(
-			groupId);
-
-		context.put("trackingFormEnabled", trackingFormEnabled);
-
-		if (!trackingFormEnabled) {
+		if (!AnalyticsUtil.isAnalyticsFormEnabled(groupId)) {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);
 		}
