@@ -117,7 +117,11 @@
 			function(event) {
 				A.one('#<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT %>assetEntryId').attr('value', event.assetentryid);
 
-				A.one('#<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT %>selectedContentPreview').setContent('<p>' + event.assettitle + ', ' + event.assettype + '</p>');
+				var selectedContentPreview = A.one('#<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT %>selectedContentPreview');
+
+				selectedContentPreview.setContent('<p>' + event.assettitle + ', ' + event.assettype + '</p>');
+
+				selectedContentPreview.show();
 			}
 		);
 	};
