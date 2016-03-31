@@ -112,12 +112,7 @@ public class YoutubeTrackingAction extends BaseJSPTrackingAction {
 
 		long groupId = (Long)context.get("scopeGroupId");
 
-		boolean trackingYoutubeEnabled =
-			AnalyticsUtil.isAnalyticsYoutubeEnabled(groupId);
-
-		context.put("trackingYoutubeEnabled", trackingYoutubeEnabled);
-
-		if (!trackingYoutubeEnabled) {
+		if (!AnalyticsUtil.isAnalyticsYoutubeEnabled(groupId)) {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);
 		}
