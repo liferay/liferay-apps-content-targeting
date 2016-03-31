@@ -17,38 +17,24 @@ package com.liferay.content.targeting.tracking.action.content.display.context;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
+import com.liferay.content.targeting.display.context.BaseTrackingActionDisplayContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-public class ContentTrackingActionDisplayContext {
+public class ContentTrackingActionDisplayContext
+	extends BaseTrackingActionDisplayContext {
 
 	public ContentTrackingActionDisplayContext(HttpServletRequest request) {
-		_request = request;
-
-		_displayContext = (Map<String, Object>)_request.getAttribute(
-			"displayContext");
-	}
-
-	public String getAlias() {
-		if (_alias != null) {
-			return _alias;
-		}
-
-		_alias = GetterUtil.getString(
-			_displayContext.get("alias"), StringPool.BLANK);
-
-		return _alias;
+		super(request);
 	}
 
 	public long getAssetEntryId() {
@@ -57,40 +43,13 @@ public class ContentTrackingActionDisplayContext {
 		}
 
 		_assetEntryId = GetterUtil.getLong(
-			_displayContext.get("assetEntryId"), 0L);
+			displayContext.get("assetEntryId"), 0L);
 
 		return _assetEntryId;
 	}
 
-	public String getEventType() {
-		if (_eventType != null) {
-			return _eventType;
-		}
-
-		_eventType = GetterUtil.getString(
-			_displayContext.get("eventType"), "view");
-
-		return _eventType;
-	}
-
-	public String[] getEventTypes() {
-		return GetterUtil.getStringValues(
-			_displayContext.get("eventTypes"), new String[] {"view"});
-	}
-
-	public String getPortalSettingsURL() {
-		if (_portalSettingsURL != null) {
-			return _portalSettingsURL;
-		}
-
-		_portalSettingsURL = GetterUtil.getString(
-			_displayContext.get("portalSettingsURL"));
-
-		return _portalSettingsURL;
-	}
-
 	public List<AssetRendererFactory> getSelectableAssetRendererFactories() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		List<AssetRendererFactory> selectableAssetRendererFactories =
@@ -111,31 +70,14 @@ public class ContentTrackingActionDisplayContext {
 		return selectableAssetRendererFactories;
 	}
 
-	public String getSiteSettingsURL() {
-		if (_siteSettingsURL != null) {
-			return _siteSettingsURL;
-		}
-
-		_siteSettingsURL = GetterUtil.getString(
-			_displayContext.get("siteSettingsURL"));
-
-		return _siteSettingsURL;
-	}
-
 	public boolean isTrackingContentEnabled() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return AnalyticsUtil.isAnalyticsContentEnabled(
 			themeDisplay.getScopeGroupId());
 	}
 
-	private String _alias;
 	private Long _assetEntryId;
-	private final Map<String, Object> _displayContext;
-	private String _eventType;
-	private String _portalSettingsURL;
-	private final HttpServletRequest _request;
-	private String _siteSettingsURL;
 
 }

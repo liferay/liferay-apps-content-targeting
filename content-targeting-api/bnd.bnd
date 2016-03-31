@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.content.targeting,\
 	com.liferay.content.targeting.api.model,\
 	com.liferay.content.targeting.configuration,\
+	com.liferay.content.targeting.display.context,\
 	com.liferay.content.targeting.exception,\
 	com.liferay.content.targeting.model,\
 	com.liferay.content.targeting.rule.categories,\

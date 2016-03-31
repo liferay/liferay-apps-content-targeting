@@ -15,36 +15,22 @@
 package com.liferay.content.targeting.tracking.action.link.display.context;
 
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
+import com.liferay.content.targeting.display.context.BaseTrackingActionDisplayContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-public class LinkTrackingActionDisplayContext {
+public class LinkTrackingActionDisplayContext
+	extends BaseTrackingActionDisplayContext {
 
 	public LinkTrackingActionDisplayContext(HttpServletRequest request) {
-		_request = request;
-
-		_displayContext = (Map<String, Object>)_request.getAttribute(
-			"displayContext");
-	}
-
-	public String getAlias() {
-		if (_alias != null) {
-			return _alias;
-		}
-
-		_alias = GetterUtil.getString(
-			_displayContext.get("alias"), StringPool.BLANK);
-
-		return _alias;
+		super(request);
 	}
 
 	public String getElementId() {
@@ -53,63 +39,19 @@ public class LinkTrackingActionDisplayContext {
 		}
 
 		_elementId = GetterUtil.getString(
-			_displayContext.get("elementId"), StringPool.BLANK);
+			displayContext.get("elementId"), StringPool.BLANK);
 
 		return _elementId;
 	}
 
-	public String getEventType() {
-		if (_eventType != null) {
-			return _eventType;
-		}
-
-		_eventType = GetterUtil.getString(
-			_displayContext.get("eventType"), "view");
-
-		return _eventType;
-	}
-
-	public String[] getEventTypes() {
-		return GetterUtil.getStringValues(
-			_displayContext.get("eventTypes"), new String[] {"view"});
-	}
-
-	public String getPortalSettingsURL() {
-		if (_portalSettingsURL != null) {
-			return _portalSettingsURL;
-		}
-
-		_portalSettingsURL = GetterUtil.getString(
-			_displayContext.get("portalSettingsURL"));
-
-		return _portalSettingsURL;
-	}
-
-	public String getSiteSettingsURL() {
-		if (_siteSettingsURL != null) {
-			return _siteSettingsURL;
-		}
-
-		_siteSettingsURL = GetterUtil.getString(
-			_displayContext.get("siteSettingsURL"));
-
-		return _siteSettingsURL;
-	}
-
 	public boolean isTrackingLinkEnabled() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return AnalyticsUtil.isAnalyticsLinkEnabled(
 			themeDisplay.getScopeGroupId());
 	}
 
-	private String _alias;
-	private final Map<String, Object> _displayContext;
 	private String _elementId;
-	private String _eventType;
-	private String _portalSettingsURL;
-	private final HttpServletRequest _request;
-	private String _siteSettingsURL;
 
 }

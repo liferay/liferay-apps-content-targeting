@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.tracking.action.page.display.context;
 
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
+import com.liferay.content.targeting.display.context.BaseTrackingActionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -23,47 +24,16 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-public class PageTrackingActionDisplayContext {
+public class PageTrackingActionDisplayContext
+	extends BaseTrackingActionDisplayContext {
 
 	public PageTrackingActionDisplayContext(HttpServletRequest request) {
-		_request = request;
-
-		_displayContext = (Map<String, Object>)_request.getAttribute(
-			"displayContext");
-	}
-
-	public String getAlias() {
-		if (_alias != null) {
-			return _alias;
-		}
-
-		_alias = GetterUtil.getString(
-			_displayContext.get("alias"), StringPool.BLANK);
-
-		return _alias;
-	}
-
-	public String getEventType() {
-		if (_eventType != null) {
-			return _eventType;
-		}
-
-		_eventType = GetterUtil.getString(
-			_displayContext.get("eventType"), "view");
-
-		return _eventType;
-	}
-
-	public String[] getEventTypes() {
-		return GetterUtil.getStringValues(
-			_displayContext.get("eventTypes"), new String[] {"view"});
+		super(request);
 	}
 
 	public String getFriendlyURL() {
@@ -71,7 +41,7 @@ public class PageTrackingActionDisplayContext {
 			return _friendlyURL;
 		}
 
-		_friendlyURL = GetterUtil.getString(_displayContext.get("friendlyURL"));
+		_friendlyURL = GetterUtil.getString(displayContext.get("friendlyURL"));
 
 		return _friendlyURL;
 	}
@@ -104,41 +74,19 @@ public class PageTrackingActionDisplayContext {
 		return _friendlyURLPublicBase;
 	}
 
-	public String getPortalSettingsURL() {
-		if (_portalSettingsURL != null) {
-			return _portalSettingsURL;
-		}
-
-		_portalSettingsURL = GetterUtil.getString(
-			_displayContext.get("portalSettingsURL"));
-
-		return _portalSettingsURL;
-	}
-
-	public String getSiteSettingsURL() {
-		if (_siteSettingsURL != null) {
-			return _siteSettingsURL;
-		}
-
-		_siteSettingsURL = GetterUtil.getString(
-			_displayContext.get("siteSettingsURL"));
-
-		return _siteSettingsURL;
-	}
-
 	public boolean isPrivateLayout() {
 		if (_privateLayout != null) {
 			return _privateLayout;
 		}
 
 		_privateLayout = GetterUtil.getBoolean(
-			_displayContext.get("privateLayout"), false);
+			displayContext.get("privateLayout"), false);
 
 		return _privateLayout;
 	}
 
 	public boolean isTrackingPageEnabled() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return AnalyticsUtil.isAnalyticsPageEnabled(
@@ -148,7 +96,7 @@ public class PageTrackingActionDisplayContext {
 	protected String getFriendlyURL(boolean privateLayout)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		String friendlyURL = StringPool.BLANK;
@@ -170,15 +118,9 @@ public class PageTrackingActionDisplayContext {
 		return friendlyURL;
 	}
 
-	private String _alias;
-	private final Map<String, Object> _displayContext;
-	private String _eventType;
 	private String _friendlyURL;
 	private String _friendlyURLPrivateBase;
 	private String _friendlyURLPublicBase;
-	private String _portalSettingsURL;
 	private Boolean _privateLayout;
-	private final HttpServletRequest _request;
-	private String _siteSettingsURL;
 
 }
