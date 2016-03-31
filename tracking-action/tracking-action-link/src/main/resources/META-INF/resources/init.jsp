@@ -26,7 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.content.targeting.tracking.action.link.display.context.LinkTrackingActionDisplayContext" %><%@
 page import="com.liferay.content.targeting.util.ContentTargetingUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
 <liferay-frontend:defineObjects />

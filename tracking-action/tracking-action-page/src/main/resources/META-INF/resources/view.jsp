@@ -59,7 +59,7 @@ String onClickPrivateInput = "if (this.checked) {" + renderResponse.getNamespace
 	<aui:validator name="required" />
 </aui:input>
 
-<c:if test="<%= ArrayUtil.isNotEmpty(pageTrackingActionDisplayContext.getEventTypes()) %>">
+<c:if test="<%= ListUtil.isNotEmpty(pageTrackingActionDisplayContext.getEventTypes()) %>">
 	<aui:select label="event-type" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'>
 
 		<%

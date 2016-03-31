@@ -15,8 +15,10 @@
 package com.liferay.content.targeting.display.context;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,9 +57,18 @@ public class BaseTrackingActionDisplayContext {
 		return _eventType;
 	}
 
-	public String[] getEventTypes() {
-		return GetterUtil.getStringValues(
-			displayContext.get("eventTypes"), new String[] {"view"});
+	public List<String> getEventTypes() {
+		if (_eventTypes != null) {
+			return _eventTypes;
+		}
+
+		_eventTypes = (List<String>)displayContext.get("eventTypes");
+
+		if (ListUtil.isEmpty(_eventTypes)) {
+			_eventTypes.add("view");
+		}
+
+		return _eventTypes;
 	}
 
 	public String getPortalSettingsURL() {
@@ -87,6 +98,7 @@ public class BaseTrackingActionDisplayContext {
 
 	private String _alias;
 	private String _eventType;
+	private List<String> _eventTypes;
 	private String _portalSettingsURL;
 	private String _siteSettingsURL;
 

@@ -47,7 +47,7 @@
 	<aui:validator name="required" />
 </aui:input>
 
-<c:if test="<%= ArrayUtil.isNotEmpty(formTrackingActionDisplayContext.getEventTypes()) %>">
+<c:if test="<%= ListUtil.isNotEmpty(formTrackingActionDisplayContext.getEventTypes()) %>">
 	<aui:select label="event-type" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'>
 
 		<%
