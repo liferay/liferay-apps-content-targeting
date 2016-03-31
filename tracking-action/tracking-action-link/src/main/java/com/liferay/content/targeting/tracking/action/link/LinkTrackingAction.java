@@ -112,12 +112,7 @@ public class LinkTrackingAction extends BaseJSPTrackingAction {
 
 		long groupId = (Long)context.get("scopeGroupId");
 
-		boolean trackingLinkEnabled = AnalyticsUtil.isAnalyticsLinkEnabled(
-			groupId);
-
-		context.put("trackingLinkEnabled", trackingLinkEnabled);
-
-		if (!trackingLinkEnabled) {
+		if (!AnalyticsUtil.isAnalyticsLinkEnabled(groupId)) {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);
 		}
