@@ -59,7 +59,7 @@ public class ViewReportsCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long campaignId = ParamUtil.getLong(renderRequest, "campaignId");
+		long campaignId = ParamUtil.getLong(renderRequest, "classPK");
 
 		if (campaignId <= 0) {
 			return "/error.jsp";

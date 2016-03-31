@@ -58,7 +58,7 @@ public class ViewReportsUserSegmentMVCRenderCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long userSegmentId = ParamUtil.getLong(renderRequest, "userSegmentId");
+		long userSegmentId = ParamUtil.getLong(renderRequest, "classPK");
 
 		ServiceContext serviceContext = new ServiceContext();
 
