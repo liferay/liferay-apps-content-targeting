@@ -14,54 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.Validator" %>
-
-<%@ page import="java.util.Map" %>
-
-<liferay-frontend:defineObjects />
-
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
-
-<%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
-
-String alias = GetterUtil.getString(displayContext.get("alias"), "");
-String elementId = GetterUtil.getString(displayContext.get("elementId"), "");
-String eventType = GetterUtil.getString(displayContext.get("eventType"), "view");
-String[] eventTypes = GetterUtil.getStringValues(displayContext.get("eventTypes"), new String[] {"view"});
-boolean trackingLinkEnabled = GetterUtil.getBoolean(displayContext.get("trackingLinkEnabled"), false);
-
-String enableLocationPortalLabel = LanguageUtil.get(request, "portal-settings-content-targeting-analytics");
-String enableLocationSiteLabel = LanguageUtil.get(request, "site-settings-content-targeting-analytics");
-
-String portalSettingsURL = GetterUtil.getString(displayContext.get("portalSettingsURL"));
-String siteSettingsURL = GetterUtil.getString(displayContext.get("siteSettingsURL"));
-
-if (Validator.isNotNull(portalSettingsURL)) {
-	enableLocationPortalLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationPortalLabel + "</a>";
-}
-
-if (Validator.isNotNull(siteSettingsURL)) {
-	enableLocationSiteLabel = "<a href=\"" + siteSettingsURL + "\">" + enableLocationSiteLabel + "</a>";
-}
-
-String[] enableLocationLabels = new String[] {
-	enableLocationPortalLabel, enableLocationSiteLabel
-};
-%>
+<%@ include file="/init.jsp" %>
 
 <c:if test="<%= !trackingLinkEnabled %>">
 	<div class="alert alert-error">
