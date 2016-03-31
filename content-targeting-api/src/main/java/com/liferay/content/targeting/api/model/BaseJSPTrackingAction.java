@@ -66,8 +66,7 @@ public abstract class BaseJSPTrackingAction extends BaseTrackingAction {
 		Map<String, Object> context, Map<String, String> values) {
 	}
 
-	private static final String _FORM_TEMPLATE_PATH =
-		"/templates/ct_tracking_action.jsp";
+	private static final String _FORM_TEMPLATE_PATH = "/view.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseJSPTrackingAction.class);

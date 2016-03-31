@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/templates/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(contentTrackingActionDisplayContext.getAssetEntryId());
