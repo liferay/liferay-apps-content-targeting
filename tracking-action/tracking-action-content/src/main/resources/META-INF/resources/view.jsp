@@ -81,7 +81,7 @@
 	</div>
 </div>
 
-<c:if test="<%= contentTrackingActionDisplayContext.getEventTypes().length > 0 %>">
+<c:if test="<%= ArrayUtil.isNotEmpty(contentTrackingActionDisplayContext.getEventTypes()) %>">
 	<aui:select label="event-type" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'>
 
 		<%
