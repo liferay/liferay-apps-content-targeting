@@ -25,8 +25,10 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.content.targeting.util.ContentTargetingUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.Map" %>
@@ -40,7 +42,7 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%
 Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
 
-String alias = GetterUtil.getString(displayContext.get("alias"), "");
+String alias = GetterUtil.getString(displayContext.get("alias"), StringPool.BLANK);
 String eventType = GetterUtil.getString(displayContext.get("eventType"), "view");
 String[] eventTypes = GetterUtil.getStringValues(displayContext.get("eventTypes"), new String[] {"view"});
 String friendlyURL = GetterUtil.getString(displayContext.get("friendlyURL"));

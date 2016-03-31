@@ -17,14 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <c:if test="<%= !trackingPageEnabled %>">
-	<div class="alert alert-error">
+	<div class="alert alert-info">
 		<strong><liferay-ui:message key="this-metric-will-not-work-properly-because-page-tracking-is-not-enabled" /></strong>
 
-		<liferay-ui:message
-			arguments="<%= enableLocationLabels %>"
-			key="it-can-be-enabled-in-x-or-in-x"
-			translateArguments="<%= false %>"
-		/>
+		<liferay-ui:message arguments="<%= enableLocationLabels %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
 	</div>
 </c:if>
 
@@ -32,70 +28,29 @@
 	<aui:validator name="required" />
 </aui:input>
 
-<aui:input
-	checked="<%= !privateLayout %>"
-	inlineField="<%= true %>"
-	label="public-pages"
-	name="privateLayout"
-	onChange="<%= onClickPublicInput %>"
-	type="radio"
-	value="<%= false %>"
-/>
+<aui:input checked="<%= !privateLayout %>" inlineField="<%= true %>" label="public-pages" name="privateLayout" onChange="<%= onClickPublicInput %>" type="radio" value="<%= false %>" />
 
-<aui:input
-	checked="<%= privateLayout %>"
-	inlineField="<%= true %>"
-	label="private-pages"
-	name="privateLayout"
-	onChange="<%= onClickPrivateInput %>"
-	type="radio"
-	value="<%= true %>"
-/>
+<aui:input checked="<%= privateLayout %>" inlineField="<%= true %>" label="private-pages" name="privateLayout" onChange="<%= onClickPrivateInput %>" type="radio" value="<%= true %>" />
 
 <aui:input helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" prefix="<%= friendlyURLBase %>" style="width: auto;" type="text" value="<%= friendlyURL %>">
 	<aui:validator name="required" />
 </aui:input>
 
-<c:choose>
-	<c:when test="<%= eventTypes.length > 0 %>">
-		<aui:select label="event-type" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'>
-
-			<%
-			for (String curEventType : eventTypes) {
-			%>
-
-				<aui:option
-					label="<%= curEventType %>"
-					selected="<%= (eventType == curEventType) %>"
-					value="<%= curEventType %>"
-				/>
-
-			<%
-			}
-			%>
-
-		</aui:select>
-	</c:when>
-	<c:otherwise>
+<c:if test="<%= ArrayUtil.isNotEmpty(eventTypes) %>">
+	<aui:select label="event-type" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'>
 
 		<%
 		for (String curEventType : eventTypes) {
 		%>
 
-			<aui:input
-				disabled="<%= true %>"
-				label="event-type"
-				name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'
-				type="text"
-				value="<%= curEventType %>"
-			/>
+			<aui:option label="<%= curEventType %>" selected="<%= eventType.equals(curEventType) %>" value="<%= curEventType %>" />
 
 		<%
 		}
 		%>
 
-	</c:otherwise>
-</c:choose>
+	</aui:select>
+</c:if>
 
 <aui:script>
 	function <portlet:namespace />updateFriendlyURL(value) {
