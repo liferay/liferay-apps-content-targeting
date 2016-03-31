@@ -16,21 +16,36 @@
 
 <%@ include file="/templates/init.jsp" %>
 
-<c:if test="<%= !trackingContentEnabled %>">
+<c:if test="<%= contentTrackingActionDisplayContext.isTrackingContentEnabled() %>">
+
+	<%
+	String enableLocationPortalLabel = LanguageUtil.get(request, "portal-settings-content-targeting-analytics");
+
+	if (Validator.isNotNull(contentTrackingActionDisplayContext.getPortalSettingsURL())) {
+		enableLocationPortalLabel = "<a href=\"" + contentTrackingActionDisplayContext.getPortalSettingsURL() + "\">" + enableLocationPortalLabel + "</a>";
+	}
+
+	String enableLocationSiteLabel = LanguageUtil.get(request, "site-settings-content-targeting-analytics");
+
+	if (Validator.isNotNull(contentTrackingActionDisplayContext.getSiteSettingsURL())) {
+		enableLocationSiteLabel = "<a href=\"" + contentTrackingActionDisplayContext.getSiteSettingsURL() + "\">" + enableLocationSiteLabel + "</a>";
+	}
+	%>
+
 	<div class="alert alert-info">
 		<strong><liferay-ui:message key="this-metric-will-not-work-properly-because-content-tracking-is-not-enabled" /></strong>
 
-		<liferay-ui:message arguments="<%= enableLocationLabels %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= new String[] {enableLocationPortalLabel, enableLocationSiteLabel} %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
 	</div>
 </c:if>
 
-<aui:input helpMessage="name-help" label="name" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "alias" %>' type="text" value="<%= alias %>">
+<aui:input helpMessage="name-help" label="name" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "alias" %>' type="text" value="<%= contentTrackingActionDisplayContext.getAlias() %>">
 	<aui:validator name="required" />
 </aui:input>
 
 <div class="select-asset-selector">
 	<div class="edit-controls">
-		<aui:input name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetEntryId" %>' type="hidden" value="<%= assetEntryId %>" />
+		<aui:input name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetEntryId" %>' type="hidden" value="<%= contentTrackingActionDisplayContext.getAssetEntryId() %>" />
 
 		<h4 class="text-default">
 			<liferay-ui:message key="select-the-content-to-be-tracked" />
@@ -39,7 +54,7 @@
 		<liferay-ui:icon-menu direction="right" id='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetSelector" %>' message="select-content" showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 			<%
-			for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
+			for (AssetRendererFactory assetRendererFactory : contentTrackingActionDisplayContext.getSelectableAssetRendererFactories()) {
 			%>
 
 				<liferay-ui:icon
@@ -58,22 +73,22 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-4 <%= cssClass %>" id="<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT + "selectedContentPreview" %>">
-			<c:if test="<%= assetEntryId > 0 %>">
+		<div class="col-md-4 <%= (contentTrackingActionDisplayContext.getAssetEntryId() <= 0) ? "hide" : StringPool.BLANK %>" id="<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT + "selectedContentPreview" %>">
+			<c:if test="<%= contentTrackingActionDisplayContext.getAssetEntryId() > 0 %>">
 				<liferay-util:include page="/templates/asset_entry.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</div>
 	</div>
 </div>
 
-<c:if test="<%= eventTypes.length > 0 %>">
+<c:if test="<%= contentTrackingActionDisplayContext.getEventTypes().length > 0 %>">
 	<aui:select label="event-type" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "eventType" %>'>
 
 		<%
-		for (String curEventType : eventTypes) {
+		for (String curEventType : contentTrackingActionDisplayContext.getEventTypes()) {
 		%>
 
-			<aui:option label="<%= curEventType %>" selected="<%= eventType.equals(curEventType) %>" value="<%= curEventType %>" />
+			<aui:option label="<%= curEventType %>" selected="<%= Validator.equals(contentTrackingActionDisplayContext.getEventType(), curEventType) %>" value="<%= curEventType %>" />
 
 		<%
 		}

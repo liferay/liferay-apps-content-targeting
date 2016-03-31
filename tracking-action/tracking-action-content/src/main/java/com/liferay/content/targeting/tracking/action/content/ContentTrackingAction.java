@@ -14,9 +14,7 @@
 
 package com.liferay.content.targeting.tracking.action.content;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseJSPTrackingAction;
@@ -37,7 +35,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -45,7 +42,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -258,27 +254,6 @@ public class ContentTrackingAction extends BaseJSPTrackingAction {
 		super.setServletContext(servletContext);
 	}
 
-	protected List<AssetRendererFactory> getSelectableAssetRendererFactories(
-		long companyId) {
-
-		List<AssetRendererFactory> selectableAssetRendererFactories =
-			new ArrayList<>();
-
-		List<AssetRendererFactory<?>> assetRendererFactories =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				companyId);
-
-		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
-			if (!rendererFactory.isSelectable()) {
-				continue;
-			}
-
-			selectableAssetRendererFactories.add(rendererFactory);
-		}
-
-		return selectableAssetRendererFactories;
-	}
-
 	@Override
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
@@ -320,20 +295,9 @@ public class ContentTrackingAction extends BaseJSPTrackingAction {
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
 
-		Company company = (Company)context.get("company");
-
-		context.put(
-			"assetRendererFactories",
-			getSelectableAssetRendererFactories(company.getCompanyId()));
-
 		long groupId = (Long)context.get("scopeGroupId");
 
-		boolean trackingContentEnabled =
-			AnalyticsUtil.isAnalyticsContentEnabled(groupId);
-
-		context.put("trackingContentEnabled", trackingContentEnabled);
-
-		if (!trackingContentEnabled) {
+		if (!AnalyticsUtil.isAnalyticsContentEnabled(groupId)) {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);
 		}

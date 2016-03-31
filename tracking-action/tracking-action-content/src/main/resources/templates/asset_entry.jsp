@@ -17,7 +17,7 @@
 <%@ include file="/templates/init.jsp" %>
 
 <%
-AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(assetEntryId);
+AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(contentTrackingActionDisplayContext.getAssetEntryId());
 
 AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 
