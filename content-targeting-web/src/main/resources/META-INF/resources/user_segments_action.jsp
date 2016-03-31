@@ -44,10 +44,9 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 
 			<portlet:renderURL var="viewUserSegmentReportsURL">
 				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 				<portlet:param name="classPK" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
-				<portlet:param name="userSegmentId" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
+				<portlet:param name="viewType" value="<%= UserSegmentConstants.VIEW_TYPE %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:icon
