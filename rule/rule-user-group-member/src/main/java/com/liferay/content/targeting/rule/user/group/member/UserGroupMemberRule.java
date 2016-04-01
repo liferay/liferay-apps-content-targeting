@@ -20,12 +20,8 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.util.Constants;
@@ -33,8 +29,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -195,36 +189,6 @@ public class UserGroupMemberRule extends BaseJSPRule {
 		}
 
 		context.put("userGroupId", userGroupId);
-
-		Company company = (Company)context.get("company");
-
-		List<UserGroup> userGroups = new ArrayList<>();
-
-		try {
-
-			// See LPS-55480
-
-			userGroups = _userGroupLocalService.getUserGroups(
-				company.getCompanyId());
-		}
-		catch (SystemException se) {
-		}
-
-		context.put("userGroups", userGroups);
-
-		if ((userGroups == null) || userGroups.isEmpty()) {
-			boolean hasUserGroupsAdminViewPermission =
-				ContentTargetingContextUtil.
-					hasControlPanelPortletViewPermission(
-						context, PortletKeys.USER_GROUPS_ADMIN);
-
-			if (hasUserGroupsAdminViewPermission) {
-				context.put(
-					"userGroupsAdminURL",
-					ContentTargetingContextUtil.getControlPanelPortletURL(
-						context, PortletKeys.USER_GROUPS_ADMIN, null));
-			}
-		}
 	}
 
 	@Reference(unbind = "-")
