@@ -14,9 +14,21 @@
 
 package com.liferay.content.targeting.rule.facebook.display.context;
 
+import com.liferay.content.targeting.util.PortletKeys;
+import com.liferay.portal.facebook.FacebookConnectUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,7 +37,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class RuleFacebookDisplayContext {
 
-	public RuleFacebookDisplayContext(HttpServletRequest request) {
+	public RuleFacebookDisplayContext(
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request) {
+
+		_liferayPortletResponse = liferayPortletResponse;
+		_request = request;
+
 		_displayContext = (Map<String, Object>)request.getAttribute(
 			"displayContext");
 	}
@@ -110,8 +128,36 @@ public class RuleFacebookDisplayContext {
 			return _portalSettingsURL;
 		}
 
-		_portalSettingsURL = GetterUtil.getString(
-			_displayContext.get("portalSettingsURL"));
+		_portalSettingsURL = StringPool.BLANK;
+
+		if (isFbLoginEnabled()) {
+			return _portalSettingsURL;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroupId(),
+					PortletKeys.PORTAL_SETTINGS)) {
+
+				return _portalSettingsURL;
+			}
+
+			PortletURL portletURL =
+				_liferayPortletResponse.createLiferayPortletURL(
+					PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
+					PortletKeys.PORTAL_SETTINGS, PortletRequest.RENDER_PHASE,
+					false);
+
+			portletURL.setParameter("historyKey", "_130_authentication");
+
+			_portalSettingsURL = portletURL.toString();
+		}
+		catch (PortalException pe) {
+		}
 
 		return _portalSettingsURL;
 	}
@@ -141,8 +187,11 @@ public class RuleFacebookDisplayContext {
 			return _isFbLoginEnabled;
 		}
 
-		_isFbLoginEnabled = GetterUtil.getBoolean(
-			_displayContext.get("isFbLoginEnabled"));
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_isFbLoginEnabled = FacebookConnectUtil.isEnabled(
+			themeDisplay.getCompanyId());
 
 		return _isFbLoginEnabled;
 	}
@@ -155,8 +204,10 @@ public class RuleFacebookDisplayContext {
 	private Integer _fbYoungerThan;
 	private String _gender;
 	private Boolean _isFbLoginEnabled;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private Integer _numberOfFriends;
 	private String _portalSettingsURL;
+	private final HttpServletRequest _request;
 	private String _schoolName;
 	private String _selector;
 

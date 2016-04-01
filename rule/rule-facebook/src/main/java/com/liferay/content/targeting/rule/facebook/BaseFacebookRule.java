@@ -16,13 +16,7 @@ package com.liferay.content.targeting.rule.facebook;
 
 import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.model.RuleInstance;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.PortletKeys;
-import com.liferay.portal.facebook.FacebookConnectUtil;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.Company;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -51,37 +45,6 @@ public abstract class BaseFacebookRule extends BaseJSPRule {
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values) {
-
-		Company company = (Company)context.get("company");
-
-		boolean isFbLoginEnabled = false;
-
-		try {
-			isFbLoginEnabled = FacebookConnectUtil.isEnabled(
-				company.getCompanyId());
-		}
-		catch (SystemException se) {
-		}
-
-		context.put("isFbLoginEnabled", isFbLoginEnabled);
-
-		if (!isFbLoginEnabled) {
-			boolean hasPortalSettingsViewPermission =
-				ContentTargetingContextUtil.
-					hasControlPanelPortletViewPermission(
-						context, PortletKeys.PORTAL_SETTINGS);
-
-			if (hasPortalSettingsViewPermission) {
-				Map<String, String> params = new HashMap<>();
-
-				params.put("historyKey", "_130_authentication");
-
-				context.put(
-					"portalSettingsURL",
-					ContentTargetingContextUtil.getControlPanelPortletURL(
-						context, PortletKeys.PORTAL_SETTINGS, params));
-			}
-		}
 
 		doPopulateContext(ruleInstance, context, values);
 	}
