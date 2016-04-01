@@ -16,16 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String friendlyURL = GetterUtil.getString(displayContext.get("friendlyURL"));
-String friendlyURLBase = GetterUtil.getString(displayContext.get("friendlyURLBase"));
-String friendlyURLPrivateBase = GetterUtil.getString(displayContext.get("friendlyURLPrivateBase"));
-String friendlyURLPublicBase = GetterUtil.getString(displayContext.get("friendlyURLPublicBase"));
-
-boolean privateLayout = GetterUtil.getBoolean(displayContext.get("privateLayout"));
-%>
-
-<c:if test="<%= !trackingPageEnabled %>">
+<c:if test="<%= !ruleVisitedDisplayContext.isTrackingPageEnabled() %>">
 	<div class="alert alert-error">
 		<strong>
 			<liferay-ui:message key="this-rule-will-not-work-properly-because-page-tracking-is-not-enabled" />
@@ -34,18 +25,14 @@ boolean privateLayout = GetterUtil.getBoolean(displayContext.get("privateLayout"
 		<%
 		String enableLocationPortalLabel = LanguageUtil.get(resourceBundle, "portal-settings-content-targeting-analytics");
 
-		String portalSettingsURL = GetterUtil.getString(displayContext.get("portalSettingsURL"));
-
-		if (Validator.isNotNull(portalSettingsURL)) {
-			enableLocationPortalLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationPortalLabel + "</a>";
+		if (Validator.isNotNull(ruleVisitedDisplayContext.getPortalSettingsURL())) {
+			enableLocationPortalLabel = "<a href=\"" + ruleVisitedDisplayContext.getPortalSettingsURL() + "\">" + enableLocationPortalLabel + "</a>";
 		}
 
 		String enableLocationSiteLabel = LanguageUtil.get(resourceBundle, "site-settings-content-targeting-analytics");
 
-		String siteSettingsURL = GetterUtil.getString(displayContext.get("siteSettingsURL"));
-
-		if (Validator.isNotNull(siteSettingsURL)) {
-			enableLocationSiteLabel = "<a href=\"" + siteSettingsURL + "\">" + enableLocationSiteLabel + "</a>";
+		if (Validator.isNotNull(ruleVisitedDisplayContext.getSiteSettingsURL())) {
+			enableLocationSiteLabel = "<a href=\"" + ruleVisitedDisplayContext.getSiteSettingsURL() + "\">" + enableLocationSiteLabel + "</a>";
 		}
 		%>
 
@@ -54,26 +41,26 @@ boolean privateLayout = GetterUtil.getBoolean(displayContext.get("privateLayout"
 </c:if>
 
 <aui:input
-	checked="<%= !privateLayout %>"
+	checked="<%= !ruleVisitedDisplayContext.isPrivateLayout() %>"
 	inlineField="<%= true %>"
 	label="public-pages"
 	name="privateLayout"
-	onChange="if (this.checked) {<%= renderResponse.getNamespace() %>updateFriendlyURL('<%= HtmlUtil.escape(friendlyURLPublicBase) %>');}"
+	onChange="if (this.checked) {<%= renderResponse.getNamespace() %>updateFriendlyURL('<%= HtmlUtil.escape(ruleVisitedDisplayContext.getFriendlyURLPublicBase()) %>');}"
 	type="radio"
 	value="<%= false %>"
 />
 
 <aui:input
-	checked="<%= privateLayout %>"
+	checked="<%= ruleVisitedDisplayContext.isPrivateLayout() %>"
 	inlineField="<%= true %>"
 	label="private-pages"
 	name="privateLayout"
-	onChange="if (this.checked) {<%= renderResponse.getNamespace() %>updateFriendlyURL('<%= HtmlUtil.escape(friendlyURLPrivateBase) %>');}"
+	onChange="if (this.checked) {<%= renderResponse.getNamespace() %>updateFriendlyURL('<%= HtmlUtil.escape(ruleVisitedDisplayContext.getFriendlyURLPrivateBase()) %>');}"
 	type="radio"
 	value="<%= true %>"
 />
 
-<aui:input helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" prefix="<%= friendlyURLBase %>" style="width: auto;" type="text" value="<%= friendlyURL %>">
+<aui:input helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" prefix="<%= ruleVisitedDisplayContext.getFriendlyURLBase() %>" style="width: auto;" type="text" value="<%= ruleVisitedDisplayContext.getFriendlyURL() %>">
 	<aui:validator name="required" />
 </aui:input>
 

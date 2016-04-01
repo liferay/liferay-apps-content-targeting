@@ -25,16 +25,13 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
+page import="com.liferay.content.targeting.rule.visited.display.context.RuleVisitedDisplayContext" %><%@
 page import="com.liferay.content.targeting.util.ContentTargetingUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
-
-<%@ page import="java.util.List" %><%@
-page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 
@@ -43,7 +40,5 @@ page import="java.util.Map" %>
 <portlet:defineObjects />
 
 <%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
-
-boolean trackingPageEnabled = GetterUtil.getBoolean(displayContext.get("trackingPageEnabled"));
+RuleVisitedDisplayContext ruleVisitedDisplayContext = new RuleVisitedDisplayContext(request);
 %>

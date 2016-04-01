@@ -16,15 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-long assetEntryId = GetterUtil.getLong(displayContext.get("assetEntryId"));
-
-String assetImage = GetterUtil.getString(displayContext.get("assetImage"));
-String assetTitle = GetterUtil.getString(displayContext.get("assetTitle"));
-String assetType = GetterUtil.getString(displayContext.get("assetType"));
-%>
-
-<c:if test="<%= !trackingPageEnabled %>">
+<c:if test="<%= !ruleVisitedDisplayContext.isTrackingContentEnabled() %>">
 	<div class="alert alert-error">
 		<strong>
 			<liferay-ui:message key="this-rule-will-not-work-properly-because-page-tracking-is-not-enabled" />
@@ -33,18 +25,14 @@ String assetType = GetterUtil.getString(displayContext.get("assetType"));
 		<%
 		String enableLocationPortalLabel = LanguageUtil.get(resourceBundle, "portal-settings-content-targeting-analytics");
 
-		String portalSettingsURL = GetterUtil.getString(displayContext.get("portalSettingsURL"));
-
-		if (Validator.isNotNull(portalSettingsURL)) {
-			enableLocationPortalLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationPortalLabel + "</a>";
+		if (Validator.isNotNull(ruleVisitedDisplayContext.getPortalSettingsURL())) {
+			enableLocationPortalLabel = "<a href=\"" + ruleVisitedDisplayContext.getPortalSettingsURL() + "\">" + enableLocationPortalLabel + "</a>";
 		}
 
 		String enableLocationSiteLabel = LanguageUtil.get(resourceBundle, "site-settings-content-targeting-analytics");
 
-		String siteSettingsURL = GetterUtil.getString(displayContext.get("siteSettingsURL"));
-
-		if (Validator.isNotNull(siteSettingsURL)) {
-			enableLocationSiteLabel = "<a href=\"" + siteSettingsURL + "\">" + enableLocationSiteLabel + "</a>";
+		if (Validator.isNotNull(ruleVisitedDisplayContext.getSiteSettingsURL())) {
+			enableLocationSiteLabel = "<a href=\"" + ruleVisitedDisplayContext.getSiteSettingsURL() + "\">" + enableLocationSiteLabel + "</a>";
 		}
 		%>
 
@@ -57,22 +45,22 @@ String assetType = GetterUtil.getString(displayContext.get("assetType"));
 	<%
 	String cssClass = StringPool.BLANK;
 
-	if (assetEntryId <= 0) {
+	if (ruleVisitedDisplayContext.getAssetEntryId() <= 0) {
 		cssClass = "hide";
 	}
 	%>
 
-	<aui:input name="assetEntryId" type="hidden" value="<%= assetEntryId %>" />
+	<aui:input name="assetEntryId" type="hidden" value="<%= ruleVisitedDisplayContext.getAssetEntryId() %>" />
 
 	<div class="asset-preview <%= cssClass %>" id="<portlet:namespace /> />assetPreview">
 		<aui:col>
-			<img class="asset-image" id="<portlet:namespace /> />assetImage" src="<%= assetImage %>" />
+			<img class="asset-image" id="<portlet:namespace /> />assetImage" src="<%= ruleVisitedDisplayContext.getAssetImage() %>" />
 		</aui:col>
 
 		<aui:col>
-			<div class="asset-title" id="<portlet:namespace /> />assetTitleInfo"><%= assetTitle %></div>
+			<div class="asset-title" id="<portlet:namespace /> />assetTitleInfo"><%= ruleVisitedDisplayContext.getAssetTitle() %></div>
 			<div class="asset-type" id="<portlet:namespace /> />assetTypeInfo">
-				<liferay-ui:message key="type" />: <%= assetType %>
+				<liferay-ui:message key="type" />: <%= ruleVisitedDisplayContext.getAssetType() %>
 			</div>
 		</aui:col>
 	</div>
@@ -86,9 +74,7 @@ String assetType = GetterUtil.getString(displayContext.get("assetType"));
 		<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" icon="<%= pathThemeImagesAddIcon %>" message='<%= LanguageUtil.get(request, "select-content") %>' showWhenSingleIcon="<%= true %>">
 
 			<%
-			List<AssetRendererFactory> assetRendererFactories = (List<AssetRendererFactory>)displayContext.get("assetRendererFactories");
-
-			for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
+			for (AssetRendererFactory assetRendererFactory : ruleVisitedDisplayContext.getAssetRendererFactories()) {
 			%>
 
 				<liferay-ui:icon
