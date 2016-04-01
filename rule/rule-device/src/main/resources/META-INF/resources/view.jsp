@@ -22,7 +22,10 @@ long mdrGroupId = GetterUtil.getLong("mdrGroupId");
 List<MDRRuleGroup> mdrRuleGroups = (List<MDRRuleGroup>)displayContext.get("mdrRuleGroups");
 %>
 
-<liferay-util:buffer var="infoMessage">
+<div class="alert alert-info">
+	<c:if test="<%= ListUtil.isEmpty(mdrRuleGroups) %>">
+		<strong><liferay-ui:message key="there-are-no-device-families-available" /></strong>
+	</c:if>
 
 	<%
 	String enableLocationLabel = LanguageUtil.get(request, "site-administration-mdr");
@@ -35,36 +38,20 @@ List<MDRRuleGroup> mdrRuleGroups = (List<MDRRuleGroup>)displayContext.get("mdrRu
 	%>
 
 	<liferay-ui:message arguments="<%= enableLocationLabel %>" key="device-families-can-be-managed-in-x" />
+</div>
 
-</liferay-util:buffer>
+<c:if test="<%= ListUtil.isNotEmpty(mdrRuleGroups) %>">
+	<aui:select label="device-family" name="mdrRuleGroupId">
 
-<c:choose>
-	<c:when test="<%= ListUtil.isEmpty(mdrRuleGroups) %>">
-		<div class="alert alert-warning">
-			<strong>
-				<liferay-ui:message key="there-are-no-device-families-available" />
-			</strong>
+		<%
+		for (MDRRuleGroup mdrRuleGroup : mdrRuleGroups) {
+		%>
 
-			<%= infoMessage %>
-		</div>
-	</c:when>
-	<c:otherwise>
-		<div class="alert alert-info">
-			<%= infoMessage %>
-		</div>
+			<aui:option label="<%= mdrRuleGroup.getName(locale) %>" selected="<%= mdrGroupId == mdrRuleGroup.getRuleGroupId() %>" value="<%= mdrRuleGroup.getRuleGroupId() %>" />
 
-		<aui:select label="device-family" name="mdrRuleGroupId">
+		<%
+		}
+		%>
 
-			<%
-			for (MDRRuleGroup mdrRuleGroup : mdrRuleGroups) {
-			%>
-
-				<aui:option label="<%= mdrRuleGroup.getName(locale) %>" selected="<%= mdrGroupId == mdrRuleGroup.getRuleGroupId() %>" value="<%= mdrRuleGroup.getRuleGroupId() %>" />
-
-			<%
-			}
-			%>
-
-		</aui:select>
-	</c:otherwise>
-</c:choose>
+	</aui:select>
+</c:if>
