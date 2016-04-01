@@ -20,32 +20,22 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -310,67 +300,11 @@ public class SiteRoleRule extends BaseJSPRule {
 
 		context.put("roleId", roleId);
 		context.put("siteId", siteId);
-
-		Company company = (Company)context.get("company");
-
-		List<Role> roles = new ArrayList<>();
-
-		try {
-
-			// See LPS-55480
-
-			roles = _roleLocalService.getRoles(
-				company.getCompanyId(), new int[] {RoleConstants.TYPE_SITE});
-
-			Role role = _roleLocalService.fetchRole(
-				company.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-			List<Role> removeRoles = new ArrayList<>();
-
-			removeRoles.add(role);
-
-			roles = ListUtil.remove(roles, removeRoles);
-		}
-		catch (SystemException se) {
-		}
-
-		context.put("roles", roles);
-
-		List<Group> sites = new ArrayList<>();
-
-		try {
-			sites = _groupService.getGroups(
-				company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
-				true);
-		}
-		catch (Exception e) {
-		}
-
-		context.put("sites", sites);
-
-		if ((sites == null) || sites.isEmpty()) {
-			boolean hasSitesAdminViewPermission =
-				ContentTargetingContextUtil.
-					hasControlPanelPortletViewPermission(
-						context, PortletKeys.SITE_ADMIN);
-
-			if (hasSitesAdminViewPermission) {
-				context.put(
-					"sitesAdminURL",
-					ContentTargetingContextUtil.getControlPanelPortletURL(
-						context, PortletKeys.SITE_ADMIN, null));
-			}
-		}
 	}
 
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupService(GroupService groupService) {
-		_groupService = groupService;
 	}
 
 	@Reference(unbind = "-")
@@ -388,7 +322,6 @@ public class SiteRoleRule extends BaseJSPRule {
 	private static final String _FORM_TEMPLATE_PATH = "/view_site.jsp";
 
 	private GroupLocalService _groupLocalService;
-	private GroupService _groupService;
 	private RoleLocalService _roleLocalService;
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
 

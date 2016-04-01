@@ -23,7 +23,6 @@ import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -32,8 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -206,22 +203,6 @@ public class RegularRoleRule extends BaseJSPRule {
 		}
 
 		context.put("roleId", roleId);
-
-		Company company = (Company)context.get("company");
-
-		List<Role> roles = new ArrayList<>();
-
-		try {
-
-			// See LPS-55480
-
-			roles = _roleLocalService.getRoles(
-				company.getCompanyId(), new int[] {RoleConstants.TYPE_REGULAR});
-		}
-		catch (SystemException se) {
-		}
-
-		context.put("roles", roles);
 	}
 
 	@Reference(unbind = "-")

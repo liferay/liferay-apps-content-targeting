@@ -36,5 +36,5 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
-RuleRoleDisplayContext ruleRoleDisplayContext = new RuleRoleDisplayContext(request);
+RuleRoleDisplayContext ruleRoleDisplayContext = new RuleRoleDisplayContext(liferayPortletResponse, request);
 %>
