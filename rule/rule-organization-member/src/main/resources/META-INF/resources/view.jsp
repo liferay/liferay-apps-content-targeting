@@ -16,26 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-List<Organization> organizations = (List<Organization>)displayContext.get("organizations");
-
-long organizationId = GetterUtil.getLong(displayContext.get("organizationId"));
-%>
-
 <c:choose>
-	<c:when test="<%= ListUtil.isNull(organizations) %>">
-		<div class="alert alert-warning">
-			<strong>
-				<liferay-ui:message key="there-are-no-organizations-available" />
-			</strong>
+	<c:when test="<%= ListUtil.isNull(ruleOrganizationMemberDisplayContext.getOrganizations()) %>">
+		<div class="alert alert-info">
+			<strong><liferay-ui:message key="there-are-no-organizations-available" /></strong>
 
 			<%
 			String enableLocationLabel = LanguageUtil.get(locale, "control-panel-users-and-organizations");
 
-			String usersAdminURL = GetterUtil.getString(displayContext.get("usersAdminURL"));
-
-			if (Validator.isNotNull(usersAdminURL)) {
-				enableLocationLabel = "<a href=\"" + usersAdminURL + "\">" + enableLocationLabel + "</a>";
+			if (Validator.isNotNull(ruleOrganizationMemberDisplayContext.getUsersAdminURL())) {
+				enableLocationLabel = "<a href=\"" + ruleOrganizationMemberDisplayContext.getUsersAdminURL() + "\">" + enableLocationLabel + "</a>";
 			}
 			%>
 
@@ -46,10 +36,10 @@ long organizationId = GetterUtil.getLong(displayContext.get("organizationId"));
 		<aui:select label="" name="organizationId">
 
 			<%
-			for (Organization organization : organizations) {
+			for (Organization organization : ruleOrganizationMemberDisplayContext.getOrganizations()) {
 			%>
 
-				<aui:option label="<%= organization.getName() %>" selected="<%= organization.getOrganizationId() == organizationId %>" value="<%= organization.getOrganizationId() %>" />
+				<aui:option label="<%= organization.getName() %>" selected="<%= organization.getOrganizationId() == ruleOrganizationMemberDisplayContext.getOrganizationId() %>" value="<%= organization.getOrganizationId() %>" />
 
 			<%
 			}
