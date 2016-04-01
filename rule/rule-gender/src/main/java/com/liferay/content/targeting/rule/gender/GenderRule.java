@@ -19,16 +19,9 @@ import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.PortletKeys;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -131,38 +124,6 @@ public class GenderRule extends BaseJSPRule {
 		}
 
 		context.put("gender", gender);
-
-		boolean genderEnabled = false;
-
-		Company company = (Company)context.get("company");
-
-		try {
-			genderEnabled = PrefsPropsUtil.getBoolean(
-				company.getCompanyId(),
-				PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_MALE);
-		}
-		catch (SystemException se) {
-		}
-
-		context.put("genderEnabled", genderEnabled);
-
-		if (!genderEnabled) {
-			boolean hasPortalSettingsViewPermission =
-				ContentTargetingContextUtil.
-					hasControlPanelPortletViewPermission(
-						context, PortletKeys.PORTAL_SETTINGS);
-
-			if (hasPortalSettingsViewPermission) {
-				Map<String, String> params = new HashMap<>();
-
-				params.put("historyKey", "_130_users");
-
-				context.put(
-					"portalSettingsURL",
-					ContentTargetingContextUtil.getControlPanelPortletURL(
-						context, PortletKeys.PORTAL_SETTINGS, params));
-			}
-		}
 	}
 
 }
