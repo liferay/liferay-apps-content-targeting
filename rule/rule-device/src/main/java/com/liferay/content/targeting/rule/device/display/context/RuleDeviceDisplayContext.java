@@ -14,11 +14,25 @@
 
 package com.liferay.content.targeting.rule.device.display.context;
 
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,7 +41,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class RuleDeviceDisplayContext {
 
-	public RuleDeviceDisplayContext(HttpServletRequest request) {
+	public RuleDeviceDisplayContext(
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request) {
+
+		_liferayPortletResponse = liferayPortletResponse;
+		_request = request;
+
 		_displayContext = (Map<String, Object>)request.getAttribute(
 			"displayContext");
 	}
@@ -47,8 +67,18 @@ public class RuleDeviceDisplayContext {
 			return _mdrRuleGroups;
 		}
 
-		_mdrRuleGroups = (List<MDRRuleGroup>)_displayContext.get(
-			"mdrRuleGroups");
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("includeGlobalScope", Boolean.TRUE);
+
+		// See LPS-55480
+
+		_mdrRuleGroups = MDRRuleGroupLocalServiceUtil.searchByKeywords(
+			themeDisplay.getScopeGroupId(), null, params, false,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return _mdrRuleGroups;
 	}
@@ -58,14 +88,39 @@ public class RuleDeviceDisplayContext {
 			return _mDRURL;
 		}
 
-		_mDRURL = GetterUtil.getString(_displayContext.get("mDRURL"));
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_mDRURL = StringPool.BLANK;
+
+		try {
+			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroupId(),
+					MDRPortletKeys.MOBILE_DEVICE_RULES)) {
+
+				return _mDRURL;
+			}
+
+			PortletURL portletURL =
+				_liferayPortletResponse.createLiferayPortletURL(
+					PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
+					MDRPortletKeys.MOBILE_DEVICE_RULES,
+					PortletRequest.RENDER_PHASE, false);
+
+			_mDRURL = portletURL.toString();
+		}
+		catch (PortalException pe) {
+		}
 
 		return _mDRURL;
 	}
 
 	private final Map<String, Object> _displayContext;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private Long _mdrGroupId;
 	private List<MDRRuleGroup> _mdrRuleGroups;
 	private String _mDRURL;
+	private final HttpServletRequest _request;
 
 }

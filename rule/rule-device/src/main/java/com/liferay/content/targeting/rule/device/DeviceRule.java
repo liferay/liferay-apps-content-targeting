@@ -20,17 +20,14 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.SessionAttributesRuleCategory;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
-import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
 import com.liferay.mobile.device.rules.rule.RuleHandler;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -38,7 +35,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,10 +42,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -326,41 +319,6 @@ public class DeviceRule extends BaseJSPRule {
 		}
 
 		context.put("mdrRuleGroupId", mdrRuleGroupId);
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("includeGlobalScope", Boolean.TRUE);
-
-		Group scopeGroup = (Group)context.get("scopeGroup");
-
-		long groupId = (scopeGroup != null) ? scopeGroup.getGroupId() : 0;
-
-		List<MDRRuleGroup> mdrRuleGroups = new ArrayList<>();
-
-		try {
-
-			// See LPS-55480
-
-			mdrRuleGroups = _mdrRuleGroupLocalService.searchByKeywords(
-				groupId, null, params, false, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-		}
-		catch (SystemException se) {
-			_log.error(se);
-		}
-
-		context.put("mdrRuleGroups", mdrRuleGroups);
-
-		boolean hasMDRViewPermission =
-			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-				context, MDRPortletKeys.MOBILE_DEVICE_RULES);
-
-		if (hasMDRViewPermission) {
-			context.put(
-				"mDRURL",
-				ContentTargetingContextUtil.getSiteAdministrationPortletURL(
-					context, MDRPortletKeys.MOBILE_DEVICE_RULES, null));
-		}
 	}
 
 	@Reference(unbind = "-")

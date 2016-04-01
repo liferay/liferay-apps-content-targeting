@@ -34,5 +34,5 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
-RuleDeviceDisplayContext ruleDeviceDisplayContext = new RuleDeviceDisplayContext(request);
+RuleDeviceDisplayContext ruleDeviceDisplayContext = new RuleDeviceDisplayContext(liferayPortletResponse, request);
 %>
