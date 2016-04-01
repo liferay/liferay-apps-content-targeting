@@ -15,12 +15,14 @@
 package com.liferay.content.targeting.rule.time.display.context;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.text.Format;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -78,7 +80,9 @@ public class RuleTimeDisplayContext {
 		Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"HH:mm", themeDisplay.getLocale());
 
-		Date now = (Date)_displayContext.get("now");
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		Date now = calendar.getTime();
 
 		return timeFormat.format(now.getTime());
 	}

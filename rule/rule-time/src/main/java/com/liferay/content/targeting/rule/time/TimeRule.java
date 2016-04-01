@@ -193,10 +193,6 @@ public class TimeRule extends BaseJSPRule {
 		context.put("startTimeHour", startTimeHour);
 		context.put("startTimeMinute", startTimeMinute);
 		context.put("startTimeAmPm", startTimeAmPm);
-
-		Calendar now = CalendarFactoryUtil.getCalendar();
-
-		context.put("now", now.getTime());
 	}
 
 	private Calendar _getEndCalendar(String typeSettings) {
