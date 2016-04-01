@@ -16,38 +16,30 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-long mdrGroupId = GetterUtil.getLong("mdrGroupId");
-
-List<MDRRuleGroup> mdrRuleGroups = (List<MDRRuleGroup>)displayContext.get("mdrRuleGroups");
-%>
-
 <div class="alert alert-info">
-	<c:if test="<%= ListUtil.isEmpty(mdrRuleGroups) %>">
+	<c:if test="<%= ListUtil.isEmpty(ruleDeviceDisplayContext.getMDRRuleGroups()) %>">
 		<strong><liferay-ui:message key="there-are-no-device-families-available" /></strong>
 	</c:if>
 
 	<%
 	String enableLocationLabel = LanguageUtil.get(request, "site-administration-mdr");
 
-	String mDRURL = GetterUtil.getString(displayContext.get("mDRURL"));
-
-	if (Validator.isNotNull(mDRURL)) {
-		enableLocationLabel = "<a href=\"" + mDRURL + "\">" + enableLocationLabel + "</a>";
+	if (Validator.isNotNull(ruleDeviceDisplayContext.getMDRURL())) {
+		enableLocationLabel = "<a href=\"" + ruleDeviceDisplayContext.getMDRURL() + "\">" + enableLocationLabel + "</a>";
 	}
 	%>
 
 	<liferay-ui:message arguments="<%= enableLocationLabel %>" key="device-families-can-be-managed-in-x" />
 </div>
 
-<c:if test="<%= ListUtil.isNotEmpty(mdrRuleGroups) %>">
+<c:if test="<%= ListUtil.isNotEmpty(ruleDeviceDisplayContext.getMDRRuleGroups()) %>">
 	<aui:select label="device-family" name="mdrRuleGroupId">
 
 		<%
-		for (MDRRuleGroup mdrRuleGroup : mdrRuleGroups) {
+		for (MDRRuleGroup mdrRuleGroup : ruleDeviceDisplayContext.getMDRRuleGroups()) {
 		%>
 
-			<aui:option label="<%= mdrRuleGroup.getName(locale) %>" selected="<%= mdrGroupId == mdrRuleGroup.getRuleGroupId() %>" value="<%= mdrRuleGroup.getRuleGroupId() %>" />
+			<aui:option label="<%= mdrRuleGroup.getName(locale) %>" selected="<%= ruleDeviceDisplayContext.getMDRGroupId() == mdrRuleGroup.getRuleGroupId() %>" value="<%= mdrRuleGroup.getRuleGroupId() %>" />
 
 		<%
 		}
