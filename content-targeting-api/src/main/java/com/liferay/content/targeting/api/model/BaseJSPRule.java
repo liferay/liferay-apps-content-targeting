@@ -61,7 +61,7 @@ public abstract class BaseJSPRule extends BaseRule {
 		return _FORM_TEMPLATE_PATH;
 	}
 
-	private static final String _FORM_TEMPLATE_PATH = "/ct_fields.jsp";
+	private static final String _FORM_TEMPLATE_PATH = "/view.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseJSPRule.class);
 

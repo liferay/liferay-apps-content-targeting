@@ -390,8 +390,7 @@ public class OrganizationRoleRule extends BaseJSPRule {
 		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}
 
-	private static final String _FORM_TEMPLATE_PATH =
-		"/ct_fields_organization.jsp";
+	private static final String _FORM_TEMPLATE_PATH = "/view_organization.jsp";
 
 	private OrganizationLocalService _organizationLocalService;
 	private RoleLocalService _roleLocalService;

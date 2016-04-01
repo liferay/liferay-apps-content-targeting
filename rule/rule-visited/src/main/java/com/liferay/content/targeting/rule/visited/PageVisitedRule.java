@@ -317,8 +317,7 @@ public class PageVisitedRule extends BaseJSPRule {
 		_layoutLocalService = layoutLocalService;
 	}
 
-	private static final String _FORM_TEMPLATE_PATH_PAGE =
-		"/ct_fields_page.jsp";
+	private static final String _FORM_TEMPLATE_PATH_PAGE = "/view_page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageVisitedRule.class);

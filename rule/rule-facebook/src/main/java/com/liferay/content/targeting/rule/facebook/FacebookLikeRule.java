@@ -115,7 +115,6 @@ public class FacebookLikeRule extends BaseFacebookRule {
 		return _FORM_TEMPLATE_PATH_LIKE;
 	}
 
-	private static final String _FORM_TEMPLATE_PATH_LIKE =
-		"/ct_fields_like.jsp";
+	private static final String _FORM_TEMPLATE_PATH_LIKE = "/view_like.jsp";
 
 }

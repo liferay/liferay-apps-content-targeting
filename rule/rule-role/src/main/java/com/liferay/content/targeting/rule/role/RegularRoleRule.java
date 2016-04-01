@@ -229,7 +229,7 @@ public class RegularRoleRule extends BaseJSPRule {
 		_roleLocalService = roleLocalService;
 	}
 
-	private static final String _FORM_TEMPLATE_PATH = "/ct_fields_regular.jsp";
+	private static final String _FORM_TEMPLATE_PATH = "/view_regular.jsp";
 
 	private RoleLocalService _roleLocalService;
 

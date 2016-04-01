@@ -134,7 +134,6 @@ public class FacebookCityRule extends BaseFacebookRule {
 		return _FORM_TEMPLATE_PATH_CITY;
 	}
 
-	private static final String _FORM_TEMPLATE_PATH_CITY =
-		"/ct_fields_city.jsp";
+	private static final String _FORM_TEMPLATE_PATH_CITY = "/view_city.jsp";
 
 }

@@ -392,7 +392,7 @@ public class ContentVisitedRule extends BaseJSPRule {
 	}
 
 	private static final String _FORM_TEMPLATE_PATH_CONTENT =
-		"/ct_fields_content.jsp";
+		"/view_content.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentVisitedRule.class);

@@ -385,7 +385,7 @@ public class SiteRoleRule extends BaseJSPRule {
 		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}
 
-	private static final String _FORM_TEMPLATE_PATH = "/ct_fields_site.jsp";
+	private static final String _FORM_TEMPLATE_PATH = "/view_site.jsp";
 
 	private GroupLocalService _groupLocalService;
 	private GroupService _groupService;
