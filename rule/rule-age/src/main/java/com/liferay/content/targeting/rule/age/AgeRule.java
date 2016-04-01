@@ -19,23 +19,16 @@ import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.PortletKeys;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -209,39 +202,6 @@ public class AgeRule extends BaseJSPRule {
 
 		context.put("youngerThan", youngerThan);
 		context.put("olderThan", olderThan);
-
-		boolean birthdayEnabled = false;
-
-		Company company = (Company)context.get("company");
-
-		try {
-			birthdayEnabled = PrefsPropsUtil.getBoolean(
-				company.getCompanyId(),
-				PropsKeys.
-					FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY);
-		}
-		catch (SystemException se) {
-		}
-
-		context.put("birthdayEnabled", birthdayEnabled);
-
-		if (!birthdayEnabled) {
-			boolean hasPortalSettingsViewPermission =
-				ContentTargetingContextUtil.
-					hasControlPanelPortletViewPermission(
-						context, PortletKeys.PORTAL_SETTINGS);
-
-			if (hasPortalSettingsViewPermission) {
-				Map<String, String> params = new HashMap<>();
-
-				params.put("historyKey", "_130_users");
-
-				context.put(
-					"portalSettingsURL",
-					ContentTargetingContextUtil.getControlPanelPortletURL(
-						context, PortletKeys.PORTAL_SETTINGS, params));
-			}
-		}
 	}
 
 }
