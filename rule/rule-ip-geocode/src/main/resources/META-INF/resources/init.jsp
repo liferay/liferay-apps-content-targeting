@@ -19,14 +19,12 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
-
-<%@ page import="java.util.Map" %>
+<%@ page import="com.liferay.content.targeting.rule.ip.geocode.display.context.RuleIpGeocodeDisplayContext" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
+RuleIpGeocodeDisplayContext ruleIpGeocodeDisplayContext = new RuleIpGeocodeDisplayContext(request);
 %>

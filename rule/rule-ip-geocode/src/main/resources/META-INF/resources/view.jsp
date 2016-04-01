@@ -16,12 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-long countryId = GetterUtil.getLong(displayContext.get("countryId"));
-
-long regionId = GetterUtil.getLong(displayContext.get("regionId"));
-%>
-
 <aui:select label="country" name="countryId" />
 
 <aui:select label="region" name="regionId" />
@@ -35,14 +29,14 @@ long regionId = GetterUtil.getLong(displayContext.get("regionId"));
 				selectDesc: 'nameCurrentValue',
 				selectId: 'countryId',
 				selectSort: true,
-				selectVal: '<%= countryId %>'
+				selectVal: '<%= ruleIpGeocodeDisplayContext.getCountryId() %>'
 			},
 			{
 				select: '#<portlet:namespace />regionId',
 				selectData: Liferay.Address.getRegions,
 				selectDesc: 'name',
 				selectId: 'regionId',
-				selectVal: '<%= regionId %>'
+				selectVal: '<%= ruleIpGeocodeDisplayContext.getRegionId() %>'
 			}
 		]
 	);
