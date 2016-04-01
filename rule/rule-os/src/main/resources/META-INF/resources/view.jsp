@@ -16,19 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String[] operatingSystems = GetterUtil.getStringValues(displayContext.get("operatingSystems"));
-
-String os = GetterUtil.getString(displayContext.get("os"));
-%>
-
 <aui:select label="" name="os">
 
 	<%
-	for (String operatingSystem : operatingSystems) {
+	for (String operatingSystem : ruleOSDisplayContext.getOperatingSystems()) {
 	%>
 
-		<aui:option label="<%= operatingSystem %>" selected="<%= Validator.equals(operatingSystem, os) %>" value="<%= operatingSystem %>" />
+		<aui:option label="<%= operatingSystem %>" selected="<%= Validator.equals(operatingSystem, ruleOSDisplayContext.getOs()) %>" value="<%= operatingSystem %>" />
 
 	<%
 	}
