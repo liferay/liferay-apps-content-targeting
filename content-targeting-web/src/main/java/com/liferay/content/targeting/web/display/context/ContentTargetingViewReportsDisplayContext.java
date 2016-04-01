@@ -244,7 +244,6 @@ public class ContentTargetingViewReportsDisplayContext
 		reportsSearchContainer.setOrderByType(orderByType);
 
 		if (Validator.isNotNull(getKeywords())) {
-
 			Sort sort = new Sort(
 				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
 

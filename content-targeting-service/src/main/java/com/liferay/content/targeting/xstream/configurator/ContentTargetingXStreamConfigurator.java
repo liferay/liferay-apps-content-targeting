@@ -67,9 +67,8 @@ public class ContentTargetingXStreamConfigurator
 			new XStreamAlias(UserSegmentImpl.class, "UserSegment")
 		};
 
-		_xStreamTypes = new XStreamType[] {
-			new XStreamType(AssetEntryImpl.class)
-		};
+		_xStreamTypes =
+			new XStreamType[] {new XStreamType(AssetEntryImpl.class)};
 	}
 
 	private XStreamAlias[] _xStreamAliases;
