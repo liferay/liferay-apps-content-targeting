@@ -17,10 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <c:if test="<%= !ruleVisitedDisplayContext.isTrackingPageEnabled() %>">
-	<div class="alert alert-error">
-		<strong>
-			<liferay-ui:message key="this-rule-will-not-work-properly-because-page-tracking-is-not-enabled" />
-		</strong>
+	<div class="alert alert-info">
+		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-page-tracking-is-not-enabled" /></strong>
 
 		<%
 		String enableLocationPortalLabel = LanguageUtil.get(resourceBundle, "portal-settings-content-targeting-analytics");
@@ -36,31 +34,15 @@
 		}
 		%>
 
-		<liferay-ui:message arguments='<%= StringUtil.split(enableLocationPortalLabel + "," + enableLocationSiteLabel) %>' key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= new String[] {enableLocationPortalLabel, enableLocationSiteLabel} %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
 	</div>
 </c:if>
 
-<aui:input
-	checked="<%= !ruleVisitedDisplayContext.isPrivateLayout() %>"
-	inlineField="<%= true %>"
-	label="public-pages"
-	name="privateLayout"
-	onChange="if (this.checked) {<%= renderResponse.getNamespace() %>updateFriendlyURL('<%= HtmlUtil.escape(ruleVisitedDisplayContext.getFriendlyURLPublicBase()) %>');}"
-	type="radio"
-	value="<%= false %>"
-/>
+<aui:input checked="<%= !ruleVisitedDisplayContext.isPrivateLayout() %>" inlineField="<%= true %>" label="public-pages" name="privateLayout" onChange="if (this.checked) {<%= renderResponse.getNamespace() %>updateFriendlyURL('<%= HtmlUtil.escape(ruleVisitedDisplayContext.getFriendlyURLPublicBase()) %>');}" type="radio" value="<%= false %>" />
 
-<aui:input
-	checked="<%= ruleVisitedDisplayContext.isPrivateLayout() %>"
-	inlineField="<%= true %>"
-	label="private-pages"
-	name="privateLayout"
-	onChange="if (this.checked) {<%= renderResponse.getNamespace() %>updateFriendlyURL('<%= HtmlUtil.escape(ruleVisitedDisplayContext.getFriendlyURLPrivateBase()) %>');}"
-	type="radio"
-	value="<%= true %>"
-/>
+<aui:input checked="<%= ruleVisitedDisplayContext.isPrivateLayout() %>" inlineField="<%= true %>" label="private-pages" name="privateLayout" onChange="if (this.checked) {<%= renderResponse.getNamespace() %>updateFriendlyURL('<%= HtmlUtil.escape(ruleVisitedDisplayContext.getFriendlyURLPrivateBase()) %>');}" type="radio" value="<%= true %>" />
 
-<aui:input helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" prefix="<%= ruleVisitedDisplayContext.getFriendlyURLBase() %>" style="width: auto;" type="text" value="<%= ruleVisitedDisplayContext.getFriendlyURL() %>">
+<aui:input helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" prefix="<%= ruleVisitedDisplayContext.getFriendlyURLBase() %>" type="text" value="<%= ruleVisitedDisplayContext.getFriendlyURL() %>">
 	<aui:validator name="required" />
 </aui:input>
 
