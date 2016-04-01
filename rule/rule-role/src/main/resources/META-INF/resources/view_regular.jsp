@@ -19,10 +19,10 @@
 <aui:select label="" name="roleId">
 
 	<%
-	for (Role role : roles) {
+	for (Role role : ruleRoleDisplayContext.getRoles()) {
 	%>
 
-		<aui:option label="<%= role.getTitle(locale) %>" selected="<%= role.getRoleId() == roleId %>" value="<%= role.getRoleId() %>" />
+		<aui:option label="<%= role.getTitle(locale) %>" selected="<%= role.getRoleId() == ruleRoleDisplayContext.getRoleId() %>" value="<%= role.getRoleId() %>" />
 
 	<%
 	}

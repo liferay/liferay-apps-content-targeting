@@ -16,26 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-int organizationId = GetterUtil.getInteger(displayContext.get("organizationId"));
-
-List<Organization> organizations = (List<Organization>)displayContext.get("organizations");
-%>
-
 <c:choose>
-	<c:when test="<%= ListUtil.isEmpty(organizations) %>">
+	<c:when test="<%= ListUtil.isEmpty(ruleRoleDisplayContext.getOrganizations()) %>">
 		<div class="alert alert-warning">
-			<strong>
-				<liferay-ui:message key="there-are-no-organizations-available" />
-			</strong>
+			<strong><liferay-ui:message key="there-are-no-organizations-available" /></strong>
 
 			<%
 			String enableLocationLabel = LanguageUtil.get(request, "control-panel-users-and-organizations");
 
-			String usersAdminURL = GetterUtil.getString(displayContext.get("usersAdminURL"));
-
-			if (Validator.isNotNull(usersAdminURL)) {
-				enableLocationLabel = "<a href=\"" + usersAdminURL + "\">" + enableLocationLabel + "</a>";
+			if (Validator.isNotNull(ruleRoleDisplayContext.getUsersAdminURL())) {
+				enableLocationLabel = "<a href=\"" + ruleRoleDisplayContext.getUsersAdminURL() + "\">" + enableLocationLabel + "</a>";
 			}
 			%>
 
@@ -46,13 +36,13 @@ List<Organization> organizations = (List<Organization>)displayContext.get("organ
 		<aui:select label="organization" name="organizationId">
 
 			<%
-			for (Organization organization : organizations) {
+			for (Organization organization : ruleRoleDisplayContext.getOrganizations()) {
 			%>
 
-				<aui:option label="<%= organization.getName() %>" selected="<%= organization.getOrganizationId() == organizationId %>" value="<%= organization.getOrganizationId() %>" />
+				<aui:option label="<%= organization.getName() %>" selected="<%= organization.getOrganizationId() == ruleRoleDisplayContext.getOrganizationId() %>" value="<%= organization.getOrganizationId() %>" />
 
 			<%
-				}
+			}
 			%>
 
 		</aui:select>
@@ -60,10 +50,10 @@ List<Organization> organizations = (List<Organization>)displayContext.get("organ
 		<aui:select label="role" name="roleId">
 
 			<%
-			for (Role role : roles) {
+			for (Role role : ruleRoleDisplayContext.getRoles()) {
 			%>
 
-				<aui:option label="<%= role.getTitle(locale) %>" selected="<%= role.getRoleId() == roleId %>" value="<%= role.getRoleId() %>" />
+				<aui:option label="<%= role.getTitle(locale) %>" selected="<%= role.getRoleId() == ruleRoleDisplayContext.getRoleId() %>" value="<%= role.getRoleId() %>" />
 
 			<%
 			}
