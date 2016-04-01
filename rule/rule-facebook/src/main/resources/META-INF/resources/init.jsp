@@ -33,30 +33,5 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
-RuleFacebookDisplayContext ruleFacebookDisplayContext = new RuleFacebookDisplayContext(_liferayPortletResponse, request);
+RuleFacebookDisplayContext ruleFacebookDisplayContext = new RuleFacebookDisplayContext(liferayPortletResponse, request);
 %>
-
-<c:choose>
-	<c:when test="<%= !ruleFacebookDisplayContext.isFbLoginEnabled() %>">
-		<div class="alert alert-error">
-			<strong>
-				<liferay-ui:message key="this-rule-will-not-work-properly-because-login-through-facebook-is-not-enabled" />
-			</strong>
-
-			<%
-			String enableLocationLabel = LanguageUtil.get(request, "portal-settings-authentication");
-
-			if (Validator.isNotNull(ruleFacebookDisplayContext.getPortalSettingsURL())) {
-				enableLocationLabel = "<a href=\"" + ruleFacebookDisplayContext.getPortalSettingsURL() + "\">" + enableLocationLabel + "</a>";
-			}
-			%>
-
-			<liferay-ui:message arguments="<%= enableLocationLabel %>" key="this-rule-will-not-work-properly-because-login-through-facebook-is-not-enabled" />
-		</div>
-	</c:when>
-	<c:otherwise>
-		<div class="alert alert-info">
-			<liferay-ui:message key="this-information-can-only-be-obtained-from-users-who-log-in-through-facebook" />
-		</div>
-	</c:otherwise>
-</c:choose>

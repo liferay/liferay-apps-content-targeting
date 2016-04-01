@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
+
 <aui:input checked='<%= Validator.equals(ruleFacebookDisplayContext.getGender(), "male") %>' label="male" name="fbGender" type="radio" value="male" />
 
 <aui:input checked='<%= Validator.equals(ruleFacebookDisplayContext.getGender(), "female") %>' label="female" name="fbGender" type="radio" value="female" />

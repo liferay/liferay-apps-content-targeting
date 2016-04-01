@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
+
 <aui:input label="" name="facebookName" prefix="https://www.facebook.com/" type="text" value="<%= ruleFacebookDisplayContext.getFacebookName() %>">
 	<aui:validator name="required" />
 </aui:input>

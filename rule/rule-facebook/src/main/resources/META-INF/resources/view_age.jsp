@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
+
 <aui:input cssClass="slider-input" inlineField="<%= true %>" label="older-than" maxlength="3" name="fbOlderThan" size="2" value="<%= ruleFacebookDisplayContext.getFbOlderThan() %>" />
 
 <span class="older slider-holder"></span>

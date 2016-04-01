@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
+
 <aui:fieldset>
 	<aui:select name="education">
 		<aui:option label="any" selected="<%= Validator.equals(ruleFacebookDisplayContext.getEducationLevel(), StringPool.BLANK) %>" value="<%= StringPool.BLANK %>" />

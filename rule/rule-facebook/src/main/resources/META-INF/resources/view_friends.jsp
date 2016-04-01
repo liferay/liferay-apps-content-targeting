@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
+
 <aui:select inlineField="<%= true %>" inlineLabel="left" label="users-that-have" name="selector">
 	<aui:option label="more" selected='<%= Validator.equals(ruleFacebookDisplayContext.getSelector(), "more") %>' />
 
