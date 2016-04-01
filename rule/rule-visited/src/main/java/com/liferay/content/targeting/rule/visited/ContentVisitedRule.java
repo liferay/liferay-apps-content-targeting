@@ -14,10 +14,7 @@
 
 package com.liferay.content.targeting.rule.visited;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
@@ -31,8 +28,6 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.ContentTargetingUtil;
-import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -40,21 +35,16 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.RenderRequest;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -283,27 +273,6 @@ public class ContentVisitedRule extends BaseJSPRule {
 		return _FORM_TEMPLATE_PATH_CONTENT;
 	}
 
-	protected List<AssetRendererFactory> getSelectableAssetRendererFactories(
-		long companyId) {
-
-		List<AssetRendererFactory> selectableAssetRendererFactories =
-			new ArrayList<>();
-
-		List<AssetRendererFactory<?>> assetRendererFactories =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				companyId);
-
-		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
-			if (!rendererFactory.isSelectable()) {
-				continue;
-			}
-
-			selectableAssetRendererFactories.add(rendererFactory);
-		}
-
-		return selectableAssetRendererFactories;
-	}
-
 	@Override
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context,
@@ -320,68 +289,12 @@ public class ContentVisitedRule extends BaseJSPRule {
 
 		context.put("assetEntryId", assetEntryId);
 
-		String assetImage = StringPool.BLANK;
-		String assetTitle = StringPool.BLANK;
-		String assetType = StringPool.BLANK;
-
-		if (assetEntryId > 0) {
-			try {
-				RenderRequest renderRequest = (RenderRequest)context.get(
-					"renderRequest");
-
-				AssetEntry assetEntry = _assetEntryLocalService.fetchAssetEntry(
-					assetEntryId);
-
-				if (assetEntry != null) {
-					AssetRendererFactory assetRendererFactory =
-						AssetRendererFactoryRegistryUtil.
-							getAssetRendererFactoryByClassName(
-								assetEntry.getClassName());
-
-					AssetRenderer assetRenderer =
-						assetRendererFactory.getAssetRenderer(
-							assetEntry.getClassPK());
-
-					assetImage = assetRenderer.getThumbnailPath(renderRequest);
-
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)renderRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					assetTitle = assetRenderer.getTitle(
-						themeDisplay.getLocale());
-					assetType = assetRendererFactory.getTypeName(
-						themeDisplay.getLocale(), true);
-				}
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
-
-		context.put("assetImage", assetImage);
-		context.put("assetTitle", assetTitle);
-		context.put("assetType", assetType);
-
-		Company company = (Company)context.get("company");
-
-		context.put(
-			"assetRendererFactories",
-			getSelectableAssetRendererFactories(company.getCompanyId()));
-
 		long groupId = (Long)context.get("scopeGroupId");
 
-		boolean trackingContentEnabled =
-			AnalyticsUtil.isAnalyticsContentEnabled(groupId);
-
-		context.put("trackingContentEnabled", trackingContentEnabled);
-
-		if (!trackingContentEnabled) {
+		if (!AnalyticsUtil.isAnalyticsContentEnabled(groupId)) {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);
 		}
-
-		context.put("contentTargetingUtilClass", new ContentTargetingUtil());
 	}
 
 	@Reference(unbind = "-")

@@ -14,12 +14,18 @@
 
 package com.liferay.content.targeting.rule.visited.display.context;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,9 +59,7 @@ public class RuleVisitedDisplayContext {
 			return _assetRendererFactories;
 		}
 
-		_assetRendererFactories =
-			(List<AssetRendererFactory>)_displayContext.get(
-				"assetRendererFactories");
+		_assetRendererFactories = getSelectableAssetRendererFactories();
 
 		return _assetRendererFactories;
 	}
@@ -70,35 +74,30 @@ public class RuleVisitedDisplayContext {
 		return _friendlyURL;
 	}
 
-	public String getFriendlyURLBase() {
-		if (_friendlyURLBase != null) {
-			return _friendlyURLBase;
+	public String getFriendlyURLBase() throws PortalException {
+		if (isPrivateLayout()) {
+			return getFriendlyURLPrivateBase();
 		}
 
-		_friendlyURLBase = GetterUtil.getString(
-			_displayContext.get("friendlyURLBase"));
-
-		return _friendlyURLBase;
+		return getFriendlyURLPublicBase();
 	}
 
-	public String getFriendlyURLPrivateBase() {
+	public String getFriendlyURLPrivateBase() throws PortalException {
 		if (_friendlyURLPrivateBase != null) {
 			return _friendlyURLPrivateBase;
 		}
 
-		_friendlyURLPrivateBase = GetterUtil.getString(
-			_displayContext.get("friendlyURLPrivateBase"));
+		_friendlyURLPrivateBase = getFriendlyURL(true);
 
 		return _friendlyURLPrivateBase;
 	}
 
-	public String getFriendlyURLPublicBase() {
+	public String getFriendlyURLPublicBase() throws PortalException {
 		if (_friendlyURLPublicBase != null) {
 			return _friendlyURLPublicBase;
 		}
 
-		_friendlyURLPublicBase = GetterUtil.getString(
-			_displayContext.get("friendlyURLPublicBase"));
+		_friendlyURLPublicBase = getFriendlyURL(false);
 
 		return _friendlyURLPublicBase;
 	}
@@ -152,11 +151,57 @@ public class RuleVisitedDisplayContext {
 			themeDisplay.getScopeGroupId());
 	}
 
+	protected String getFriendlyURL(boolean privateLayout)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String friendlyURL = StringPool.BLANK;
+
+		LayoutSet layoutSet = themeDisplay.getLayoutSet();
+
+		boolean privateLayoutSet = layoutSet.isPrivateLayout();
+
+		try {
+			layoutSet.setPrivateLayout(privateLayout);
+
+			friendlyURL = PortalUtil.getGroupFriendlyURL(
+				layoutSet, themeDisplay);
+		}
+		finally {
+			layoutSet.setPrivateLayout(privateLayoutSet);
+		}
+
+		return friendlyURL;
+	}
+
+	protected List<AssetRendererFactory> getSelectableAssetRendererFactories() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<AssetRendererFactory> selectableAssetRendererFactories =
+			new ArrayList<>();
+
+		List<AssetRendererFactory<?>> assetRendererFactories =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				themeDisplay.getCompanyId());
+
+		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
+			if (!rendererFactory.isSelectable()) {
+				continue;
+			}
+
+			selectableAssetRendererFactories.add(rendererFactory);
+		}
+
+		return selectableAssetRendererFactories;
+	}
+
 	private Long _assetEntryId;
 	private List<AssetRendererFactory> _assetRendererFactories;
 	private final Map<String, Object> _displayContext;
 	private String _friendlyURL;
-	private String _friendlyURLBase;
 	private String _friendlyURLPrivateBase;
 	private String _friendlyURLPublicBase;
 	private String _portalSettingsURL;

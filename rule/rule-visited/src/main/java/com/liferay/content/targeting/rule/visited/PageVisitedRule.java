@@ -29,14 +29,11 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
@@ -235,30 +232,6 @@ public class PageVisitedRule extends BaseJSPRule {
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)context.get("themeDisplay");
-
-		String friendlyURLPrivateBase = StringPool.BLANK;
-		String friendlyURLPublicBase = StringPool.BLANK;
-
-		try {
-			LayoutSet layoutSet = themeDisplay.getLayoutSet();
-
-			boolean privateLayoutSet = layoutSet.isPrivateLayout();
-
-			layoutSet.setPrivateLayout(false);
-			friendlyURLPublicBase = PortalUtil.getGroupFriendlyURL(
-				layoutSet, themeDisplay);
-
-			layoutSet.setPrivateLayout(true);
-			friendlyURLPrivateBase = PortalUtil.getGroupFriendlyURL(
-				layoutSet, themeDisplay);
-
-			layoutSet.setPrivateLayout(privateLayoutSet);
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
-
 		String friendlyURL = StringPool.BLANK;
 		boolean privateLayout = false;
 
@@ -270,41 +243,20 @@ public class PageVisitedRule extends BaseJSPRule {
 		else if (ruleInstance != null) {
 			long plid = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-			try {
-				Layout layout = _layoutLocalService.fetchLayout(plid);
+			Layout layout = _layoutLocalService.fetchLayout(plid);
 
-				if (layout != null) {
-					friendlyURL = layout.getFriendlyURL();
-					privateLayout = layout.isPrivateLayout();
-				}
-			}
-			catch (SystemException se) {
+			if (layout != null) {
+				friendlyURL = layout.getFriendlyURL();
+				privateLayout = layout.isPrivateLayout();
 			}
 		}
 
 		context.put("friendlyURL", friendlyURL);
 		context.put("privateLayout", privateLayout);
 
-		if (privateLayout) {
-			context.put("friendlyURLBase", friendlyURLPrivateBase);
-		}
-		else {
-			context.put("friendlyURLBase", friendlyURLPublicBase);
-		}
+		long groupId = (Long)context.get("scopeGroupId");
 
-		context.put("friendlyURLPublicBase", friendlyURLPublicBase);
-		context.put("friendlyURLPrivateBase", friendlyURLPrivateBase);
-
-		Group scopeGroup = (Group)context.get("scopeGroup");
-
-		long groupId = (scopeGroup != null) ? scopeGroup.getGroupId() : 0;
-
-		boolean trackingPageEnabled = AnalyticsUtil.isAnalyticsPageEnabled(
-			groupId);
-
-		context.put("trackingPageEnabled", trackingPageEnabled);
-
-		if (!trackingPageEnabled) {
+		if (!AnalyticsUtil.isAnalyticsPageEnabled(groupId)) {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);
 		}
