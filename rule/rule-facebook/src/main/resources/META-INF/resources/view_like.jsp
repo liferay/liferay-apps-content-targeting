@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String facebookName = GetterUtil.getString(displayContext.get("facebookName"));
-%>
-
-<aui:input label="" name="facebookName" prefix="https://www.facebook.com/" type="text" value="<%= facebookName %>">
+<aui:input label="" name="facebookName" prefix="https://www.facebook.com/" type="text" value="<%= ruleFacebookDisplayContext.getFacebookName() %>">
 	<aui:validator name="required" />
 </aui:input>

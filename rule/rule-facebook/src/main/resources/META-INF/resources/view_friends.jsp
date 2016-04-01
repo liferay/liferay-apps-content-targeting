@@ -16,21 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-int numberOfFriends = GetterUtil.getInteger(displayContext.get("numberOfFriends"));
-
-String selector = GetterUtil.getString(displayContext.get("selector"));
-%>
-
 <liferay-util:buffer var="selectorField">
-	<aui:select inlineField="<%= true %>" label="" name="selector" style="width: auto;">
-		<aui:option label="more" selected='<%= Validator.equals(selector, "more") %>' />
-		<aui:option label="less" selected='<%= Validator.equals(selector, "less") %>' />
+	<aui:select inlineField="<%= true %>" label="" name="selector">
+		<aui:option label="more" selected='<%= Validator.equals(ruleFacebookDisplayContext.getSelector(), "more") %>' />
+
+		<aui:option label="less" selected='<%= Validator.equals(ruleFacebookDisplayContext.getSelector(), "less") %>' />
 	</aui:select>
 </liferay-util:buffer>
 
 <liferay-ui:message arguments="<%= selectorField %>" key="users-that-have-x-than" />
 
-<aui:input inlineField="<%= true %>" label="" name="numberOfFriends" style="margin-bottom: 0; width: auto;" suffix="friends" title="number-of-friends" type="text" value="<%= numberOfFriends %>">
+<aui:input inlineField="<%= true %>" label="" name="numberOfFriends" style="margin-bottom: 0; width: auto;" suffix="friends" title="number-of-friends" type="text" value="<%= ruleFacebookDisplayContext.getNumberOfFriends() %>">
 	<aui:validator name="number" />
 </aui:input>

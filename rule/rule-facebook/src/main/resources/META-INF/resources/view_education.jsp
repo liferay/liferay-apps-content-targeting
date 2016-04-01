@@ -16,18 +16,14 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String educationLevel = GetterUtil.getString(displayContext.get("educationLevel"));
-
-String schoolName = GetterUtil.getString(displayContext.get("schoolName"));
-%>
-
 <aui:fieldset>
 	<aui:select name="education">
-		<aui:option label="any" selected="<%= Validator.equals(educationLevel, StringPool.BLANK) %>" value="<%= StringPool.BLANK %>" />
-		<aui:option label="high-school" selected='<%= Validator.equals(educationLevel, "high-school") %>' value="high-school" />
-		<aui:option label="college" selected='<%= Validator.equals(educationLevel, "college") %>' value="college" />
+		<aui:option label="any" selected="<%= Validator.equals(ruleFacebookDisplayContext.getEducationLevel(), StringPool.BLANK) %>" value="<%= StringPool.BLANK %>" />
+
+		<aui:option label="high-school" selected='<%= Validator.equals(ruleFacebookDisplayContext.getEducationLevel(), "high-school") %>' value="high-school" />
+
+		<aui:option label="college" selected='<%= Validator.equals(ruleFacebookDisplayContext.getEducationLevel(), "college") %>' value="college" />
 	</aui:select>
 
-	<aui:input label="college-high-school-name" name="schoolName" type="text" value="<%= schoolName %>" />
+	<aui:input label="college-high-school-name" name="schoolName" type="text" value="<%= ruleFacebookDisplayContext.getSchoolName() %>" />
 </aui:fieldset>

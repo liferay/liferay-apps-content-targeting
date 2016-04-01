@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String cityName = GetterUtil.getString(displayContext.get("cityName"));
-%>
-
-<aui:input label="" name="cityName" type="text" value="<%= cityName %>">
+<aui:input label="" name="cityName" type="text" value="<%= ruleFacebookDisplayContext.getCityName() %>">
 	<aui:validator name="required" />
 </aui:input>

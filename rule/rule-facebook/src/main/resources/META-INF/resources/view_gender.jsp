@@ -16,12 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String gender = GetterUtil.getString(displayContext.get("gender"));
-%>
+<aui:input checked='<%= Validator.equals(ruleFacebookDisplayContext.getGender(), "male") %>' label="male" name="fbGender" type="radio" value="male" />
 
-<aui:input checked='<%= Validator.equals(gender, "male") %>' label="male" name="fbGender" type="radio" value="male" />
+<aui:input checked='<%= Validator.equals(ruleFacebookDisplayContext.getGender(), "female") %>' label="female" name="fbGender" type="radio" value="female" />
 
-<aui:input checked='<%= Validator.equals(gender, "female") %>' label="female" name="fbGender" type="radio" value="female" />
-
-<aui:input checked='<%= Validator.equals(gender, "custom") %>' label="custom-or-not-specified" name="fbGender" type="radio" value="custom" />
+<aui:input checked='<%= Validator.equals(ruleFacebookDisplayContext.getGender(), "custom") %>' label="custom-or-not-specified" name="fbGender" type="radio" value="custom" />

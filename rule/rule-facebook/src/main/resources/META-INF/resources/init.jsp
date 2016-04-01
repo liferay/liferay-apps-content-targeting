@@ -23,25 +23,21 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+<%@ page import="com.liferay.content.targeting.rule.facebook.display.context.RuleFacebookDisplayContext" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
-
-<%@ page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
-
-boolean isFbLoginEnabled = GetterUtil.getBoolean(displayContext.get("isFbLoginEnabled"), false);
+RuleFacebookDisplayContext ruleFacebookDisplayContext = new RuleFacebookDisplayContext(request);
 %>
 
 <c:choose>
-	<c:when test="<%= !isFbLoginEnabled %>">
+	<c:when test="<%= !ruleFacebookDisplayContext.isFbLoginEnabled() %>">
 		<div class="alert alert-error">
 			<strong>
 				<liferay-ui:message key="this-rule-will-not-work-properly-because-login-through-facebook-is-not-enabled" />
@@ -50,10 +46,8 @@ boolean isFbLoginEnabled = GetterUtil.getBoolean(displayContext.get("isFbLoginEn
 			<%
 			String enableLocationLabel = LanguageUtil.get(request, "portal-settings-authentication");
 
-			String portalSettingsURL = GetterUtil.getString(displayContext.get("portalSettingsURL"));
-
-			if (Validator.isNotNull(portalSettingsURL)) {
-				enableLocationLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationLabel + "</a>";
+			if (Validator.isNotNull(ruleFacebookDisplayContext.getPortalSettingsURL())) {
+				enableLocationLabel = "<a href=\"" + ruleFacebookDisplayContext.getPortalSettingsURL() + "\">" + enableLocationLabel + "</a>";
 			}
 			%>
 
