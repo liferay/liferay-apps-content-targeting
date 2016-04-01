@@ -16,26 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-long userGroupId = GetterUtil.getLong(displayContext.get("userGroupId"));
-
-List<UserGroup> userGroups = (List<UserGroup>)displayContext.get("userGroups");
-%>
-
 <c:choose>
-	<c:when test="<%= ListUtil.isNull(userGroups) %>">
+	<c:when test="<%= ListUtil.isNull(ruleUserGroupMemberDisplayContext.getUserGroups()) %>">
 		<div class="alert alert-warning">
-			<strong>
-				<liferay-ui:message key="there-are-no-user-groups-available" />
-			</strong>
+			<strong><liferay-ui:message key="there-are-no-user-groups-available" /></strong>
 
 			<%
 			String enableLocationLabel = LanguageUtil.get(locale, "control-panel-user-groups");
 
-			String userGroupsAdminURL = GetterUtil.getString(displayContext.get("userGroupsAdminURL"));
-
-			if (Validator.isNotNull(userGroupsAdminURL)) {
-				enableLocationLabel = "<a href=\"" + userGroupsAdminURL + "\">" + enableLocationLabel + "</a>";
+			if (Validator.isNotNull(ruleUserGroupMemberDisplayContext.getUserGroupsAdminURL())) {
+				enableLocationLabel = "<a href=\"" + ruleUserGroupMemberDisplayContext.getUserGroupsAdminURL() + "\">" + enableLocationLabel + "</a>";
 			}
 			%>
 
@@ -46,10 +36,10 @@ List<UserGroup> userGroups = (List<UserGroup>)displayContext.get("userGroups");
 		<aui:select label="" name="userGroupId">
 
 			<%
-			for (UserGroup userGroup : userGroups) {
+			for (UserGroup userGroup : ruleUserGroupMemberDisplayContext.getUserGroups()) {
 			%>
 
-				<aui:option label="<%= userGroup.getName() %>" selected="<%= userGroup.getUserGroupId() == userGroupId %>" value="<%= userGroup.getUserGroupId() %>" />
+				<aui:option label="<%= userGroup.getName() %>" selected="<%= userGroup.getUserGroupId() == ruleUserGroupMemberDisplayContext.getUserGroupId() %>" value="<%= userGroup.getUserGroupId() %>" />
 
 			<%
 			}

@@ -22,19 +22,16 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+<%@ page import="com.liferay.content.targeting.rule.user.group.member.display.context.RuleUserGroupMemberDisplayContext" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.UserGroup" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
-
-<%@ page import="java.util.List" %><%@
-page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
+RuleUserGroupMemberDisplayContext ruleUserGroupMemberDisplayContext = new RuleUserGroupMemberDisplayContext(request);
 %>
