@@ -41,21 +41,15 @@
 <div class="select-asset-selector">
 	<aui:input name="assetEntryId" type="hidden" value="<%= ruleVisitedDisplayContext.getAssetEntryId() %>" />
 
-	<div class="asset-preview <%= (ruleVisitedDisplayContext.getAssetEntryId() <= 0) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace /> />assetPreview">
-		<aui:col>
-			<img class="asset-image" id="<portlet:namespace /> />assetImage" src="<%= ruleVisitedDisplayContext.getAssetImage() %>" />
-		</aui:col>
-
-		<aui:col>
-			<div class="asset-title" id="<portlet:namespace /> />assetTitleInfo"><%= ruleVisitedDisplayContext.getAssetTitle() %></div>
-
-			<div class="asset-type" id="<portlet:namespace /> />assetTypeInfo">
-				<liferay-ui:message key="type" />: <%= ruleVisitedDisplayContext.getAssetType() %>
-			</div>
-		</aui:col>
+	<div class="row">
+		<div class="col-md-4 <%= (ruleVisitedDisplayContext.getAssetEntryId() <= 0) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />assetPreview">
+			<c:if test="<%= ruleVisitedDisplayContext.getAssetEntryId() > 0 %>">
+				<liferay-util:include page="/asset_entry.jsp" servletContext="<%= application %>" />
+			</c:if>
+		</div>
 	</div>
 
-	<div class="edit-controls lfr-meta-actions">
+	<div class="edit-controls">
 		<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" message="select-content" showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 			<%
@@ -99,31 +93,15 @@
 				},
 				function(event) {
 					A.one('#<portlet:namespace />assetEntryId').attr('value', event.assetentryid);
-					A.one('#<portlet:namespace />assetImage').attr('src', '');
 
-					A.one('#<portlet:namespace />assetTitleInfo').html(event.assettitle);
-					A.one('#<portlet:namespace />assetTypeInfo').html('<liferay-ui:message key="type" />: ' + event.assettype);
+					var assetPreview = A.one('#<portlet:namespace />assetPreview');
 
-					A.one('#<portlet:namespace />assetPreview').show();
+					assetPreview.setContent('<p>' + event.assettitle + ', ' + event.assettype + '</p>');
+
+					assetPreview.show();
 				}
 			);
 		},
 		'.asset-selector a'
 	);
 </aui:script>
-
-<style>
-	.asset-preview {
-		overflow: hidden;
-	}
-
-	.asset-title {
-		font-weight: 400;
-		margin-top: 6px;
-	}
-
-	.asset-type {
-		color: #8D8D8D;
-		font-weight: 400;
-	}
-</style>

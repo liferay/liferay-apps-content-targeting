@@ -48,16 +48,6 @@ public class RuleVisitedDisplayContext {
 		return _assetEntryId;
 	}
 
-	public String getAssetImage() {
-		if (_assetImage != null) {
-			return _assetImage;
-		}
-
-		_assetImage = GetterUtil.getString(_displayContext.get("assetImage"));
-
-		return _assetImage;
-	}
-
 	public List<AssetRendererFactory> getAssetRendererFactories() {
 		if (_assetRendererFactories != null) {
 			return _assetRendererFactories;
@@ -68,26 +58,6 @@ public class RuleVisitedDisplayContext {
 				"assetRendererFactories");
 
 		return _assetRendererFactories;
-	}
-
-	public String getAssetTitle() {
-		if (_assetTitle != null) {
-			return _assetTitle;
-		}
-
-		_assetTitle = GetterUtil.getString(_displayContext.get("assetTitle"));
-
-		return _assetTitle;
-	}
-
-	public String getAssetType() {
-		if (_assetType != null) {
-			return _assetType;
-		}
-
-		_assetType = GetterUtil.getString(_displayContext.get("assetType"));
-
-		return _assetType;
 	}
 
 	public String getFriendlyURL() {
@@ -183,10 +153,7 @@ public class RuleVisitedDisplayContext {
 	}
 
 	private Long _assetEntryId;
-	private String _assetImage;
 	private List<AssetRendererFactory> _assetRendererFactories;
-	private String _assetTitle;
-	private String _assetType;
 	private final Map<String, Object> _displayContext;
 	private String _friendlyURL;
 	private String _friendlyURLBase;
