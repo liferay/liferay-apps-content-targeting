@@ -19,15 +19,13 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+<%@ page import="com.liferay.content.targeting.rule.browser.display.context.RuleBrowserDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
-
-<%@ page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
+RuleBrowserDisplayContext ruleBrowserDisplayContext = new RuleBrowserDisplayContext(request);
 %>

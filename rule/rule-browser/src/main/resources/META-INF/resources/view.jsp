@@ -16,18 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String[] browsers = GetterUtil.getStringValues(displayContext.get("browsers"));
-String browser = GetterUtil.getString(displayContext.get("browser"));
-%>
-
 <aui:select label="" name="browser">
 
 	<%
-	for (String curBrowser : browsers) {
+	for (String curBrowser : ruleBrowserDisplayContext.getBrowsers()) {
 	%>
 
-		<aui:option label="<%= curBrowser %>" selected="<%= Validator.equals(browser, curBrowser) %>" value="<%= curBrowser %>" />
+		<aui:option label="<%= curBrowser %>" selected="<%= Validator.equals(ruleBrowserDisplayContext.getBrowser(), curBrowser) %>" value="<%= curBrowser %>" />
 
 	<%
 	}
