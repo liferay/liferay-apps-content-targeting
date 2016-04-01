@@ -20,20 +20,12 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %>
-
-<%@ page import="java.text.Format" %>
-
-<%@ page import="java.util.Date" %><%@
-page import="java.util.Map" %>
+<%@ page import="com.liferay.content.targeting.rule.time.display.context.RuleTimeDisplayContext" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
-
-Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", locale);
+RuleTimeDisplayContext ruleTimeDisplayContext = new RuleTimeDisplayContext(request);
 %>

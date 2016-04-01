@@ -16,30 +16,18 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Date now = (Date)displayContext.get("now");
-
-int startTimeAmPm = GetterUtil.getInteger(displayContext.get("startTimeAmPm"));
-int startTimeHour = GetterUtil.getInteger(displayContext.get("startTimeHour"));
-int startTimeMinute = GetterUtil.getInteger(displayContext.get("startTimeMinute"));
-
-int endTimeAmPm = GetterUtil.getInteger(displayContext.get("endTimeAmPm"));
-int endTimeHour = GetterUtil.getInteger(displayContext.get("endTimeHour"));
-int endTimeMinute = GetterUtil.getInteger(displayContext.get("endTimeMinute"));
-%>
-
 <div class="alert alert-info">
-	<liferay-ui:message arguments="<%= timeFormat.format(now.getTime()) %>" key="this-rule-checks-the-server-time-which-currently-is-x" />
+	<liferay-ui:message arguments="<%= ruleTimeDisplayContext.getInfoMessage() %>" key="this-rule-checks-the-server-time-which-currently-is-x" />
 </div>
 
 <aui:fieldset cssClass="time-selector" label="start-time">
 	<liferay-ui:input-time
 		amPmParam="startTimeAmPm"
-		amPmValue="<%= startTimeAmPm %>"
+		amPmValue="<%= ruleTimeDisplayContext.getStartTimeAmPm() %>"
 		hourParam="startTimeHour"
-		hourValue="<%= startTimeHour %>"
+		hourValue="<%= ruleTimeDisplayContext.getStartTimeHour() %>"
 		minuteParam="startTimeMinute"
-		minuteValue="<%= startTimeMinute %>"
+		minuteValue="<%= ruleTimeDisplayContext.getStartTimeMinute() %>"
 		name="startTime"
 	/>
 </aui:fieldset>
@@ -47,11 +35,11 @@ int endTimeMinute = GetterUtil.getInteger(displayContext.get("endTimeMinute"));
 <aui:fieldset cssClass="time-selector" label="end-time">
 	<liferay-ui:input-time
 		amPmParam="endTimeAmPm"
-		amPmValue="<%= endTimeAmPm %>"
+		amPmValue="<%= ruleTimeDisplayContext.getEndTimeAmPm() %>"
 		hourParam="endTimeHour"
-		hourValue="<%= endTimeHour %>"
+		hourValue="<%= ruleTimeDisplayContext.getEndTimeHour() %>"
 		minuteParam="endTimeMinute"
-		minuteValue="<%= endTimeMinute %>"
+		minuteValue="<%= ruleTimeDisplayContext.getEndTimeMinute() %>"
 		name="endTime"
 	/>
 </aui:fieldset>
