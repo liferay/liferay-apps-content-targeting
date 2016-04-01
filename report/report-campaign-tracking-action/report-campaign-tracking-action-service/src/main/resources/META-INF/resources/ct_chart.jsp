@@ -14,10 +14,15 @@
  */
 --%>
 
-<%@ include file="/templates/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-List<CTActionTotal> ctActionTotals = searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd());
+int start = ParamUtil.getInteger(request, "start");
+int end = ParamUtil.getInteger(request, "end");
+
+SearchContainerIterator<CTActionTotal> searchContainerIterator = campaignTrackingActionReportDisplayContext.getSearchContainerIterator();
+
+List<CTActionTotal> ctActionTotals = searchContainerIterator.getResults(start, end);
 %>
 
 <style>

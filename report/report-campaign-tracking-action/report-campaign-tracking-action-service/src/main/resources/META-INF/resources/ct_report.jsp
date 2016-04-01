@@ -14,18 +14,16 @@
  */
 --%>
 
-<%@ include file="/templates/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
+String redirect = campaignTrackingActionReportDisplayContext.getRedirect();
+Report report = campaignTrackingActionReportDisplayContext.getReport();
+String className = campaignTrackingActionReportDisplayContext.getClassName();
+long classPK = campaignTrackingActionReportDisplayContext.getClassPK();
+String name = campaignTrackingActionReportDisplayContext.getName();
 
-String redirect = GetterUtil.getString(displayContext.get("redirect"));
-Report report = (Report)displayContext.get("report");
-String className = GetterUtil.getString(displayContext.get("className"));
-long classPK = GetterUtil.getLong(displayContext.get("classPK"));
-String name = GetterUtil.getString(displayContext.get("name"));
-
-SearchContainerIterator<CTActionTotal> searchContainerIterator = (SearchContainerIterator<CTActionTotal>)displayContext.get("searchContainerIterator");
+SearchContainerIterator<CTActionTotal> searchContainerIterator = campaignTrackingActionReportDisplayContext.getSearchContainerIterator();
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
@@ -125,7 +123,10 @@ SearchContainerIterator<CTActionTotal> searchContainerIterator = (SearchContaine
 		<liferay-ui:search-iterator markupView="lexicon" />
 
 		<c:if test="<%= searchContainer.getResults().size() > 0 %>">
-			<%@ include file="/templates/ct_chart.jsp" %>
+			<liferay-util:include page="/ct_chart.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="start" value="<%= String.valueOf(searchContainer.getStart()) %>" />
+				<liferay-util:param name="end" value="<%= String.valueOf(searchContainer.getEnd()) %>" />
+			</liferay-util:include>
 		</c:if>
 	</liferay-ui:search-container>
 

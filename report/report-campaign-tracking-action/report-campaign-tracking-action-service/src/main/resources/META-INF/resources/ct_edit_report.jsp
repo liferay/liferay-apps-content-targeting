@@ -14,22 +14,16 @@
  */
 --%>
 
-<%@ include file="/templates/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
+String className = campaignTrackingActionReportDisplayContext.getClassName();
+long classPK = campaignTrackingActionReportDisplayContext.getClassPK();
 
-String className = GetterUtil.getString(displayContext.get("className"));
-long classPK = GetterUtil.getLong(displayContext.get("classPK"));
+List<TrackingActionTemplate> addedTrackingActionTemplates = campaignTrackingActionReportDisplayContext.getAddedTrackingActionTemplates();
+List<TrackingActionTemplate> trackingActionTemplates = campaignTrackingActionReportDisplayContext.getTrackingActionTemplates();
 
-List<TrackingActionTemplate> addedTrackingActionTemplates = (List<TrackingActionTemplate>)displayContext.get("addedTrackingActionTemplates");
-List<TrackingActionTemplate> trackingActionTemplates = (List<TrackingActionTemplate>)displayContext.get("trackingActionTemplates");
-
-String cssHasItemsClass = "";
-
-if (addedTrackingActionTemplates.size() > 0) {
-	cssHasItemsClass = "has-items";
-}
+String cssHasItemsClass = campaignTrackingActionReportDisplayContext.getCssHasItemsClass();
 %>
 
 <aui:input

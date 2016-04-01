@@ -22,23 +22,28 @@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.content.targeting.api.model.Report" %><%@
 page import="com.liferay.content.targeting.api.model.TrackingAction" %><%@
+page import="com.liferay.content.targeting.report.campaign.tracking.action.display.context.CampaignTrackingActionReportDisplayContext" %><%@
 page import="com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction" %><%@
 page import="com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal" %><%@
 page import="com.liferay.content.targeting.report.campaign.tracking.action.util.TrackingActionTemplate" %><%@
 page import="com.liferay.content.targeting.util.SearchContainerIterator" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %>
 
-<%@ page import="java.util.List" %><%@
-page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+CampaignTrackingActionReportDisplayContext campaignTrackingActionReportDisplayContext = new CampaignTrackingActionReportDisplayContext(request);
+%>
