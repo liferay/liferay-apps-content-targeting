@@ -114,7 +114,12 @@ public class FacebookGenderRule extends BaseFacebookRule {
 	}
 
 	@Override
-	protected void doPopulateContext(
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH_GENDER;
+	}
+
+	@Override
+	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values) {
 
@@ -128,11 +133,6 @@ public class FacebookGenderRule extends BaseFacebookRule {
 		}
 
 		context.put("gender", gender);
-	}
-
-	@Override
-	protected String getFormTemplatePath() {
-		return _FORM_TEMPLATE_PATH_GENDER;
 	}
 
 	private static final String _FORM_TEMPLATE_PATH_GENDER = "/view_gender.jsp";

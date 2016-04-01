@@ -113,7 +113,12 @@ public class FacebookCityRule extends BaseFacebookRule {
 	}
 
 	@Override
-	protected void doPopulateContext(
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH_CITY;
+	}
+
+	@Override
+	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values) {
 
@@ -127,11 +132,6 @@ public class FacebookCityRule extends BaseFacebookRule {
 		}
 
 		context.put("cityName", cityName);
-	}
-
-	@Override
-	protected String getFormTemplatePath() {
-		return _FORM_TEMPLATE_PATH_CITY;
 	}
 
 	private static final String _FORM_TEMPLATE_PATH_CITY = "/view_city.jsp";

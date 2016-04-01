@@ -153,36 +153,6 @@ public class FacebookEducationRule extends BaseFacebookRule {
 	}
 
 	@Override
-	protected void doPopulateContext(
-		RuleInstance ruleInstance, Map<String, Object> context,
-		Map<String, String> values) {
-
-		String educationLevel = StringPool.BLANK;
-		String schoolName = StringPool.BLANK;
-
-		if (!values.isEmpty()) {
-			educationLevel = GetterUtil.getString(values.get("educationLevel"));
-			schoolName = GetterUtil.getString(values.get("schoolName"));
-		}
-		else if (ruleInstance != null) {
-			String typeSettings = ruleInstance.getTypeSettings();
-
-			try {
-				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
-					typeSettings);
-
-				educationLevel = jsonObj.getString("educationLevel");
-				schoolName = jsonObj.getString("schoolName");
-			}
-			catch (JSONException jsone) {
-			}
-		}
-
-		context.put("educationLevel", educationLevel);
-		context.put("schoolName", schoolName);
-	}
-
-	@Override
 	protected String getFormTemplatePath() {
 		return _FORM_TEMPLATE_PATH_EDUCATION;
 	}
@@ -233,6 +203,36 @@ public class FacebookEducationRule extends BaseFacebookRule {
 		}
 
 		return false;
+	}
+
+	@Override
+	protected void populateContext(
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
+
+		String educationLevel = StringPool.BLANK;
+		String schoolName = StringPool.BLANK;
+
+		if (!values.isEmpty()) {
+			educationLevel = GetterUtil.getString(values.get("educationLevel"));
+			schoolName = GetterUtil.getString(values.get("schoolName"));
+		}
+		else if (ruleInstance != null) {
+			String typeSettings = ruleInstance.getTypeSettings();
+
+			try {
+				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+					typeSettings);
+
+				educationLevel = jsonObj.getString("educationLevel");
+				schoolName = jsonObj.getString("schoolName");
+			}
+			catch (JSONException jsone) {
+			}
+		}
+
+		context.put("educationLevel", educationLevel);
+		context.put("schoolName", schoolName);
 	}
 
 	protected static final String EDUCATION_TYPE_COLLEGE = "College";

@@ -15,9 +15,6 @@
 package com.liferay.content.targeting.rule.facebook;
 
 import com.liferay.content.targeting.api.model.BaseJSPRule;
-import com.liferay.content.targeting.model.RuleInstance;
-
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -35,18 +32,6 @@ public abstract class BaseFacebookRule extends BaseJSPRule {
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
-	}
-
-	protected abstract void doPopulateContext(
-		RuleInstance ruleInstance, Map<String, Object> context,
-		Map<String, String> values);
-
-	@Override
-	protected void populateContext(
-		RuleInstance ruleInstance, Map<String, Object> context,
-		Map<String, String> values) {
-
-		doPopulateContext(ruleInstance, context, values);
 	}
 
 }

@@ -147,8 +147,32 @@ public class FacebookAgeRule extends BaseFacebookRule {
 		return jsonObj.toString();
 	}
 
+	protected int getAge(Date birthday) {
+		Calendar birthdayCalendar = Calendar.getInstance();
+
+		birthdayCalendar.setTime(birthday);
+
+		Calendar today = Calendar.getInstance();
+
+		int age = today.get(Calendar.YEAR) - birthdayCalendar.get(
+			Calendar.YEAR);
+
+		if (today.get(Calendar.DAY_OF_YEAR) <=
+				birthdayCalendar.get(Calendar.DAY_OF_YEAR)) {
+
+			age--;
+		}
+
+		return age;
+	}
+
 	@Override
-	protected void doPopulateContext(
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH_AGE;
+	}
+
+	@Override
+	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values) {
 
@@ -175,30 +199,6 @@ public class FacebookAgeRule extends BaseFacebookRule {
 
 		context.put("fbYoungerThan", youngerThan);
 		context.put("fbOlderThan", olderThan);
-	}
-
-	protected int getAge(Date birthday) {
-		Calendar birthdayCalendar = Calendar.getInstance();
-
-		birthdayCalendar.setTime(birthday);
-
-		Calendar today = Calendar.getInstance();
-
-		int age = today.get(Calendar.YEAR) - birthdayCalendar.get(
-			Calendar.YEAR);
-
-		if (today.get(Calendar.DAY_OF_YEAR) <=
-				birthdayCalendar.get(Calendar.DAY_OF_YEAR)) {
-
-			age--;
-		}
-
-		return age;
-	}
-
-	@Override
-	protected String getFormTemplatePath() {
-		return _FORM_TEMPLATE_PATH_AGE;
 	}
 
 	private static final String _FORM_TEMPLATE_PATH_AGE = "/view_age.jsp";

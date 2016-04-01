@@ -118,7 +118,12 @@ public class FacebookFriendsRule extends BaseFacebookRule {
 	}
 
 	@Override
-	protected void doPopulateContext(
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH_FRIENDS;
+	}
+
+	@Override
+	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values) {
 
@@ -148,11 +153,6 @@ public class FacebookFriendsRule extends BaseFacebookRule {
 
 		context.put("numberOfFriends", numberOfFriends);
 		context.put("selector", selector);
-	}
-
-	@Override
-	protected String getFormTemplatePath() {
-		return _FORM_TEMPLATE_PATH_FRIENDS;
 	}
 
 	private static final String _FORM_TEMPLATE_PATH_FRIENDS =
