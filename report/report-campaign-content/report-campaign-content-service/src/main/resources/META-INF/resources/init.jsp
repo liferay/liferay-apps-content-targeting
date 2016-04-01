@@ -22,21 +22,24 @@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.content.targeting.api.model.Report" %>
-
-<%@ page
-import="com.liferay.content.targeting.report.campaign.content.model.CampaignContent" %><%@
+<%@ page import="com.liferay.content.targeting.api.model.Report" %><%@
+page import="com.liferay.content.targeting.report.campaign.content.display.context.CampaignContentReportDisplayContext" %><%@
+page import="com.liferay.content.targeting.report.campaign.content.model.CampaignContent" %><%@
 page import="com.liferay.content.targeting.util.SearchContainerIterator" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %>
+page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
-<%@ page import="java.util.List" %><%@
-page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+CampaignContentReportDisplayContext campaignContentReportDisplayContext = new CampaignContentReportDisplayContext(request);
+%>
