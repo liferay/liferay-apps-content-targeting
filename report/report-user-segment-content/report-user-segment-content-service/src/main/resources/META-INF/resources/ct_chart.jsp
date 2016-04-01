@@ -14,10 +14,15 @@
  */
 --%>
 
-<%@ include file="/templates/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-List<UserSegmentContent> userSegmentContents = searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd());
+int start = ParamUtil.getInteger(request, "start");
+int end = ParamUtil.getInteger(request, "end");
+
+SearchContainerIterator<UserSegmentContent> searchContainerIterator = userSegmentContentReportDisplayContext.getSearchContainerIterator();
+
+List<UserSegmentContent> userSegmentContents = searchContainerIterator.getResults(start, end);
 %>
 
 <style>
