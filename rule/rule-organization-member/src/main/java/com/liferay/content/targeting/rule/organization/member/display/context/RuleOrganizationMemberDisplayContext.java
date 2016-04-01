@@ -14,11 +14,25 @@
 
 package com.liferay.content.targeting.rule.organization.member.display.context;
 
+import com.liferay.content.targeting.util.PortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,7 +41,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class RuleOrganizationMemberDisplayContext {
 
-	public RuleOrganizationMemberDisplayContext(HttpServletRequest request) {
+	public RuleOrganizationMemberDisplayContext(
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request) {
+
+		_liferayPortletResponse = liferayPortletResponse;
+		_request = request;
+
 		_displayContext = (Map<String, Object>)request.getAttribute(
 			"displayContext");
 	}
@@ -48,8 +68,14 @@ public class RuleOrganizationMemberDisplayContext {
 			return _organizations;
 		}
 
-		_organizations = (List<Organization>)_displayContext.get(
-			"organizations");
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		// See LPS-50218
+
+		_organizations = OrganizationLocalServiceUtil.getOrganizations(
+			themeDisplay.getCompanyId(),
+			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
 
 		return _organizations;
 	}
@@ -59,15 +85,42 @@ public class RuleOrganizationMemberDisplayContext {
 			return _usersAdminURL;
 		}
 
-		_usersAdminURL = GetterUtil.getString(
-			_displayContext.get("usersAdminURL"));
+		_usersAdminURL = StringPool.BLANK;
+
+		if (ListUtil.isNotEmpty(getOrganizations())) {
+			return _usersAdminURL;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroupId(), PortletKeys.USERS_ADMIN)) {
+
+				return _usersAdminURL;
+			}
+
+			PortletURL portletURL =
+				_liferayPortletResponse.createLiferayPortletURL(
+					PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
+					PortletKeys.USERS_ADMIN, PortletRequest.RENDER_PHASE,
+					false);
+
+			_usersAdminURL = portletURL.toString();
+		}
+		catch (PortalException pe) {
+		}
 
 		return _usersAdminURL;
 	}
 
 	private final Map<String, Object> _displayContext;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private Long _organizationId;
 	private List<Organization> _organizations;
+	private final HttpServletRequest _request;
 	private String _usersAdminURL;
 
 }

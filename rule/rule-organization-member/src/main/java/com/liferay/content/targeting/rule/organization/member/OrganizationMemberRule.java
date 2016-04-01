@@ -20,14 +20,10 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Constants;
@@ -35,8 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -199,37 +193,6 @@ public class OrganizationMemberRule extends BaseJSPRule {
 		}
 
 		context.put("organizationId", organizationId);
-
-		Company company = (Company)context.get("company");
-
-		List<Organization> organizations = new ArrayList<>();
-
-		try {
-
-			// See LPS-50218
-
-			organizations = _organizationLocalService.getOrganizations(
-				company.getCompanyId(),
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
-		}
-		catch (SystemException se) {
-		}
-
-		context.put("organizations", organizations);
-
-		if ((organizations == null) || organizations.isEmpty()) {
-			boolean hasUsersAdminViewPermission =
-				ContentTargetingContextUtil.
-					hasControlPanelPortletViewPermission(
-						context, PortletKeys.USERS_ADMIN);
-
-			if (hasUsersAdminViewPermission) {
-				context.put(
-					"usersAdminURL",
-					ContentTargetingContextUtil.getControlPanelPortletURL(
-						context, PortletKeys.USERS_ADMIN, null));
-			}
-		}
 	}
 
 	@Reference(unbind = "-")
