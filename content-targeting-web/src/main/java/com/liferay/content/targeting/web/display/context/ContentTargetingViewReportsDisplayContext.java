@@ -23,6 +23,8 @@ import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.content.targeting.service.permission.UserSegmentPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
+import com.liferay.content.targeting.util.CampaignConstants;
+import com.liferay.content.targeting.util.UserSegmentConstants;
 import com.liferay.content.targeting.web.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.web.util.ReportInstanceRowChecker;
 import com.liferay.content.targeting.web.util.comparator.ReportInstanceModifiedDateComparator;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -73,18 +76,17 @@ public class ContentTargetingViewReportsDisplayContext
 
 		addReportURL.setParameter(
 			"mvcRenderCommandName", ContentTargetingMVCCommand.EDIT_REPORT);
-		addReportURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		if (getClassName().equals(Campaign.class.getName())) {
-			addReportURL.setParameter(
-				"campaignId", String.valueOf(getClassPK()));
+			addReportURL.setParameter("viewType", CampaignConstants.VIEW_TYPE);
 		}
 		else {
 			addReportURL.setParameter(
-				"userSegmentId", String.valueOf(getClassPK()));
+				"viewType", UserSegmentConstants.VIEW_TYPE);
 		}
 
-		addReportURL.setParameter("className", getClassName());
+		addReportURL.setParameter(
+			"classNameId", String.valueOf(getClassNameId()));
 		addReportURL.setParameter("classPK", String.valueOf(getClassPK()));
 
 		return addReportURL;
@@ -116,9 +118,19 @@ public class ContentTargetingViewReportsDisplayContext
 			return _className;
 		}
 
-		_className = ParamUtil.getString(request, "className");
+		_className = PortalUtil.getClassName(getClassNameId());
 
 		return _className;
+	}
+
+	public long getClassNameId() {
+		if (Validator.isNotNull(_classNameId)) {
+			return _classNameId;
+		}
+
+		_classNameId = ParamUtil.getLong(request, "classNameId");
+
+		return _classNameId;
 	}
 
 	public Long getClassPK() {
@@ -148,20 +160,20 @@ public class ContentTargetingViewReportsDisplayContext
 			portletURL.setParameter(
 				"mvcRenderCommandName",
 				ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
-			portletURL.setParameter("campaignId", String.valueOf(getClassPK()));
+			portletURL.setParameter("viewType", CampaignConstants.VIEW_TYPE);
 		}
 		else if (className.equals(UserSegment.class.getName())) {
 			portletURL.setParameter(
 				"mvcRenderCommandName",
 				ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT);
-			portletURL.setParameter(
-				"userSegmentId", String.valueOf(getClassPK()));
+			portletURL.setParameter("viewType", UserSegmentConstants.VIEW_TYPE);
 		}
 		else {
 			portletURL.setParameter("mvcPath", "/view_reports.jsp");
 		}
 
-		portletURL.setParameter("className", className);
+		portletURL.setParameter(
+			"classNameId", String.valueOf(getClassNameId()));
 		portletURL.setParameter("classPK", String.valueOf(getClassPK()));
 
 		if (Validator.isNotNull(getKeywords())) {
@@ -203,6 +215,10 @@ public class ContentTargetingViewReportsDisplayContext
 	}
 
 	public SearchContainer getReportsSearchContainer() throws PortalException {
+		if (_reportsSearchContainer != null) {
+			return _reportsSearchContainer;
+		}
+
 		SearchContainer reportsSearchContainer = new SearchContainer(
 			liferayPortletRequest, getPortletURL(), null,
 			"no-reports-were-found");
@@ -241,6 +257,11 @@ public class ContentTargetingViewReportsDisplayContext
 			reportsSearchContainer.setResults(searchResults.getBaseModels());
 		}
 		else {
+			if (showAddButton()) {
+				reportsSearchContainer.setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+			}
+
 			int total = ReportInstanceLocalServiceUtil.getReportInstancesCount(
 				getClassName(), getClassPK());
 
@@ -385,6 +406,7 @@ public class ContentTargetingViewReportsDisplayContext
 		new String[] {"descriptive", "icon", "list"};
 
 	private String _className;
+	private Long _classNameId;
 	private Long _classPK;
 	private Boolean _hasUpdatePermission;
 	private Boolean _isDisabledManagementBar;

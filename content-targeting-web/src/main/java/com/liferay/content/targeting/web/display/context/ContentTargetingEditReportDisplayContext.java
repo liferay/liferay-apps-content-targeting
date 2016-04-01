@@ -19,6 +19,8 @@ import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
+import com.liferay.content.targeting.util.CampaignConstants;
+import com.liferay.content.targeting.util.UserSegmentConstants;
 import com.liferay.content.targeting.web.portlet.ContentTargetingMVCCommand;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -66,18 +68,18 @@ public class ContentTargetingEditReportDisplayContext {
 			backURLObject.setParameter(
 				"mvcRenderCommandName",
 				ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
-			backURLObject.setParameter(
-				"campaignId", String.valueOf(getClassPK()));
+			backURLObject.setParameter("viewType", CampaignConstants.VIEW_TYPE);
 		}
 		else {
 			backURLObject.setParameter(
 				"mvcRenderCommandName",
 				ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT);
 			backURLObject.setParameter(
-				"userSegmentId", String.valueOf(getClassPK()));
+				"viewType", UserSegmentConstants.VIEW_TYPE);
 		}
 
-		backURLObject.setParameter("className", className);
+		backURLObject.setParameter(
+			"classNameId", String.valueOf(getClassNameId()));
 		backURLObject.setParameter("classPK", String.valueOf(getClassPK()));
 
 		return backURLObject.toString();
@@ -88,9 +90,19 @@ public class ContentTargetingEditReportDisplayContext {
 			return _className;
 		}
 
-		_className = ParamUtil.getString(_request, "className");
+		_className = PortalUtil.getClassName(getClassNameId());
 
 		return _className;
+	}
+
+	public long getClassNameId() {
+		if (_classNameId != null) {
+			return _classNameId;
+		}
+
+		_classNameId = ParamUtil.getLong(_request, "classNameId");
+
+		return _classNameId;
 	}
 
 	public long getClassPK() {
@@ -108,7 +120,37 @@ public class ContentTargetingEditReportDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_request, "redirect");
+		String redirectURL = ParamUtil.getString(_request, "redirect");
+
+		if (Validator.isNull(redirectURL)) {
+			PortletURL redirectURLObject = _renderResponse.createRenderURL();
+
+			String className = getClassName();
+
+			if (className.equals(Campaign.class.getName())) {
+				redirectURLObject.setParameter(
+					"mvcRenderCommandName",
+					ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
+				redirectURLObject.setParameter(
+					"viewType", CampaignConstants.VIEW_TYPE);
+			}
+			else {
+				redirectURLObject.setParameter(
+					"mvcRenderCommandName",
+					ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT);
+				redirectURLObject.setParameter(
+					"viewType", UserSegmentConstants.VIEW_TYPE);
+			}
+
+			redirectURLObject.setParameter(
+				"classNameId", String.valueOf(getClassNameId()));
+			redirectURLObject.setParameter(
+				"classPK", String.valueOf(getClassPK()));
+
+			redirectURL = redirectURLObject.toString();
+		}
+
+		_redirect = redirectURL;
 
 		return _redirect;
 	}
@@ -208,6 +250,7 @@ public class ContentTargetingEditReportDisplayContext {
 	}
 
 	private String _className;
+	private Long _classNameId;
 	private Long _classPK;
 	private String _redirect;
 	private final RenderRequest _renderRequest;

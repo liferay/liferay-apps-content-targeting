@@ -118,6 +118,11 @@ public class ContentTargetingViewUserSegmentDisplayContext
 				searchResults.getBaseModels());
 		}
 		else {
+			if (showAddButton()) {
+				userSegmentSearchContainer.setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+			}
+
 			int total = UserSegmentLocalServiceUtil.getUserSegmentsCount(
 				themeDisplay.getScopeGroupId());
 

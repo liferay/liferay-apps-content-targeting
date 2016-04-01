@@ -29,6 +29,8 @@ public class CampaignConstants {
 
 	public static final String STATUS_UPCOMING = "upcoming";
 
+	public static final String VIEW_TYPE = "campaign";
+
 	public static String getStatusCssClass(String status) {
 		if (status.equals(STATUS_FINISHED)) {
 			return "label-important";

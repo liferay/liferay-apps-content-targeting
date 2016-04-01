@@ -41,10 +41,9 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 		<c:if test="<%= reportsCount > 0 %>">
 			<portlet:renderURL var="viewCampaignReportsURL">
 				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="campaignId" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
-				<portlet:param name="className" value="<%= Campaign.class.getName() %>" />
+				<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(Campaign.class.getName())) %>" />
 				<portlet:param name="classPK" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
+				<portlet:param name="viewType" value="<%= CampaignConstants.VIEW_TYPE %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:icon

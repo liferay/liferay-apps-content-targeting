@@ -173,6 +173,11 @@ public class ContentTargetingViewTacticsDisplayContext
 			tacticsSearchContainer.setResults(searchResults.getBaseModels());
 		}
 		else {
+			if (showAddButton()) {
+				tacticsSearchContainer.setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+			}
+
 			int total = TacticLocalServiceUtil.getTacticsCount(getCampaignId());
 
 			tacticsSearchContainer.setTotal(total);

@@ -96,7 +96,7 @@ public class YoutubeVideoHtmlFilter extends BaseFilter {
 
 			// Prevent Youtube security errors
 
-			youtubeEmbededVideoUrl = sanitizeURL(youtubeEmbededVideoUrl, true);
+			youtubeEmbededVideoUrl = _sanitizeURL(youtubeEmbededVideoUrl, true);
 
 			youtubeEmbededVideoUrl = HttpUtil.addParameter(
 				youtubeEmbededVideoUrl, "enablejsapi", 1);
@@ -177,7 +177,7 @@ public class YoutubeVideoHtmlFilter extends BaseFilter {
 		}
 	}
 
-	private String sanitizeURL(String url, boolean secure) {
+	private String _sanitizeURL(String url, boolean secure) {
 		if (url.startsWith(StringPool.DOUBLE_SLASH)) {
 			url = url.replace(StringPool.DOUBLE_SLASH, StringPool.BLANK);
 		}

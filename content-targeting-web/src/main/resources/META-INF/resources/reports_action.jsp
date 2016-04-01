@@ -17,8 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = ParamUtil.getString(request, "className");
+long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
+
+String viewType = ParamUtil.getString(request, "viewType");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
@@ -29,11 +31,11 @@ ReportInstance reportInstance = (ReportInstance)row.getObject();
 	<c:if test="<%= reportInstance.isInstantiable() %>">
 		<liferay-portlet:renderURL var="editReportURL">
 			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_REPORT %>" />
-			<portlet:param name="className" value="<%= className %>" />
+			<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="reportInstanceId" value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>" />
 			<portlet:param name="reportKey" value="<%= reportInstance.getReportKey() %>" />
+			<portlet:param name="viewType" value="<%= viewType %>" />
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon

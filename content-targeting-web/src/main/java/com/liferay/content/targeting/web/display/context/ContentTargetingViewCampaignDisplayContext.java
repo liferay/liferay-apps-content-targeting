@@ -100,6 +100,11 @@ public class ContentTargetingViewCampaignDisplayContext
 			campaignSearchContainer.setResults(searchResults.getBaseModels());
 		}
 		else {
+			if (showAddButton()) {
+				campaignSearchContainer.setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+			}
+
 			int total = CampaignLocalServiceUtil.getCampaignsCount(
 				themeDisplay.getScopeGroupId());
 

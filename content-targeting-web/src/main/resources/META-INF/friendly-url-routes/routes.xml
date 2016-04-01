@@ -18,6 +18,24 @@
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
+		<pattern>/admin/user-segment/{classPK:\d+}/report/{classNameId:\d+}/{reportKey}/{reportInstanceId:\d+}/edit</pattern>
+		<implicit-parameter name="mvcRenderCommandName">editReport</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="viewType">user-segment</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin/user-segment/{classPK:\d+}/report/{classNameId:\d+}/{reportKey}/new</pattern>
+		<implicit-parameter name="mvcRenderCommandName">editReport</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="viewType">user-segment</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin/user-segment/{classPK:\d+}/reports/{classNameId:\d+}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">viewReportsUserSegment</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="viewType">user-segment</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/admin/user-segment/{userSegmentId:\d+}/edit</pattern>
 		<implicit-parameter name="mvcRenderCommandName">editUserSegment</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
@@ -26,6 +44,24 @@
 		<pattern>/admin/user-segment/new</pattern>
 		<implicit-parameter name="mvcRenderCommandName">editUserSegment</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin/campaign/{classPK:\d+}/report/{classNameId:\d+}/{reportKey}/{reportInstanceId:\d+}/edit</pattern>
+		<implicit-parameter name="mvcRenderCommandName">editReport</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="viewType">campaign</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin/campaign/{classPK:\d+}/report/{classNameId:\d+}/{reportKey}/new</pattern>
+		<implicit-parameter name="mvcRenderCommandName">editReport</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="viewType">campaign</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/admin/campaign/{classPK:\d+}/reports/{classNameId:\d+}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">viewReportsCampaign</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="viewType">campaign</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/admin/campaign/{campaignId:\d+}/edit</pattern>
