@@ -23,11 +23,9 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+<%@ page import="com.liferay.content.targeting.rule.age.display.context.RuleAgeDisplayContext" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
-
-<%@ page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 
@@ -36,18 +34,5 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
-
-boolean birthdayEnabled = GetterUtil.getBoolean(displayContext.get("birthdayEnabled"), true);
-
-String enableLocationLabel = LanguageUtil.get(locale, "portal-settings-users");
-
-String portalSettingsURL = GetterUtil.getString(displayContext.get("portalSettingsURL"), null);
-
-if (Validator.isNotNull(portalSettingsURL)) {
-	enableLocationLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationLabel + "</a>";
-}
-
-int olderThan = GetterUtil.getInteger(displayContext.get("olderThan"), 0);
-int youngerThan = GetterUtil.getInteger(displayContext.get("youngerThan"), 100);
+RuleAgeDisplayContext ruleAgeDisplayContext = new RuleAgeDisplayContext(request);
 %>

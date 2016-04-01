@@ -16,17 +16,26 @@
 
 <%@ include file="/init.jsp" %>
 
-<c:if test="<%= !birthdayEnabled %>">
-	<div class="alert alert-error">
+<c:if test="<%= !ruleAgeDisplayContext.isBirthDayEnabled() %>">
+
+	<%
+	String enableLocationLabel = LanguageUtil.get(locale, "portal-settings-users");
+
+	if (Validator.isNotNull(ruleAgeDisplayContext.getPortalSettingsURL())) {
+		enableLocationLabel = "<a href=\"" + ruleAgeDisplayContext.getPortalSettingsURL() + "\">" + enableLocationLabel + "</a>";
+	}
+	%>
+
+	<div class="alert alert-info">
 		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-the-age-field-has-been-removed" /></strong>
 
 		<liferay-ui:message arguments="<%= enableLocationLabel %>" key="it-can-be-enabled-in-x" />
 	</div>
 </c:if>
 
-<aui:input cssClass="slider-input" inlineField="<%= true %>" maxlength="3" name="olderThan" size="2" value="<%= olderThan %>" />
+<aui:input cssClass="slider-input" inlineField="<%= true %>" maxlength="3" name="olderThan" size="2" value="<%= ruleAgeDisplayContext.getOlderThan() %>" />
 
-<aui:input cssClass="slider-input" inlineField="<%= true %>" maxlength="3" name="youngerThan" size="2" value="<%= youngerThan %>">
+<aui:input cssClass="slider-input" inlineField="<%= true %>" maxlength="3" name="youngerThan" size="2" value="<%= ruleAgeDisplayContext.getYoungerThan() %>">
 	<aui:validator errorMessage="the-age-range-is-invalid" name="custom">
 		function(val, fieldNode, ruleValue) {
 			if (!val) {
