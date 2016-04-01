@@ -16,26 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-long siteId = GetterUtil.getLong(displayContext.get("siteId"));
-
-List<Group> sites = (List<Group>)displayContext.get("sites");
-%>
-
 <c:choose>
-	<c:when test="<%= ListUtil.isNull(sites) %>">
-		<div class="alert alert-warning">
-			<strong>
-				<liferay-ui:message key="there-are-no-sites-available" />
-			</strong>
+	<c:when test="<%= ListUtil.isNull(ruleSiteMemberDisplayContext.getSites()) %>">
+		<div class="alert alert-info">
+			<strong><liferay-ui:message key="there-are-no-sites-available" /></strong>
 
 			<%
 			String enableLocationLabel = LanguageUtil.get(locale, "control-panel-sites");
 
-			String sitesAdminURL = GetterUtil.getString(displayContext.get("sitesAdminURL"));
-
-			if (Validator.isNotNull(sitesAdminURL)) {
-				enableLocationLabel = "<a href=\"" + sitesAdminURL + "\">" + enableLocationLabel + "</a>";
+			if (Validator.isNotNull(ruleSiteMemberDisplayContext.getSitesAdminURL())) {
+				enableLocationLabel = "<a href=\"" + ruleSiteMemberDisplayContext.getSitesAdminURL() + "\">" + enableLocationLabel + "</a>";
 			}
 			%>
 
@@ -46,13 +36,13 @@ List<Group> sites = (List<Group>)displayContext.get("sites");
 		<aui:select label="" name="siteId">
 
 			<%
-			for (Group site : sites) {
+			for (Group site : ruleSiteMemberDisplayContext.getSites()) {
 			%>
 
-				<aui:option label="<%= site.getDescriptiveName(locale) %>" selected="<%= site.getGroupId() == siteId %>" value="<%= site.getGroupId() %>" />
+				<aui:option label="<%= site.getDescriptiveName(locale) %>" selected="<%= site.getGroupId() == ruleSiteMemberDisplayContext.getSiteId() %>" value="<%= site.getGroupId() %>" />
 
 			<%
-				}
+			}
 			%>
 
 		</aui:select>
