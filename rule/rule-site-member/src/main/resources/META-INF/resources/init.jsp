@@ -33,5 +33,5 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
-RuleSiteMemberDisplayContext ruleSiteMemberDisplayContext = new RuleSiteMemberDisplayContext(request);
+RuleSiteMemberDisplayContext ruleSiteMemberDisplayContext = new RuleSiteMemberDisplayContext(liferayPortletResponse, request);
 %>
