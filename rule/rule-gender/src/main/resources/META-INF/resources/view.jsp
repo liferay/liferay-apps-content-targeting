@@ -16,23 +16,15 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String gender = GetterUtil.getString(displayContext.get("gender"));
-
-boolean genderEnabled = GetterUtil.getBoolean(displayContext.get("genderEnabled"), false);
-%>
-
-<c:if test="<%= genderEnabled %>">
-	<div class="alert alert-error">
+<c:if test="<%= ruleGenderDisplayContext.isGenderEnabled() %>">
+	<div class="alert alert-info">
 		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-the-gender-field-has-been-removed" /></strong>
 
 		<%
 		String enableLocationLabel = LanguageUtil.get(locale, "portal-settings-users");
 
-		String portalSettingsURL = GetterUtil.getString(displayContext.get("portalSettingsURL"));
-
-		if (Validator.isNotNull(portalSettingsURL)) {
-			enableLocationLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationLabel + "</a>";
+		if (Validator.isNotNull(ruleGenderDisplayContext.getPortalSettingsURL())) {
+			enableLocationLabel = "<a href=\"" + ruleGenderDisplayContext.getPortalSettingsURL() + "\">" + enableLocationLabel + "</a>";
 		}
 		%>
 
@@ -40,6 +32,6 @@ boolean genderEnabled = GetterUtil.getBoolean(displayContext.get("genderEnabled"
 	</div>
 </c:if>
 
-<aui:input checked='<%= Validator.equals(gender, "male") %>' label="male" name="gender" type="radio" value="male" />
+<aui:input checked='<%= Validator.equals(ruleGenderDisplayContext.getGender(), "male") %>' label="male" name="gender" type="radio" value="male" />
 
-<aui:input checked='<%= Validator.equals(gender, "female") %>' label="female" name="gender" type="radio" value="female" />
+<aui:input checked='<%= Validator.equals(ruleGenderDisplayContext.getGender(), "female") %>' label="female" name="gender" type="radio" value="female" />

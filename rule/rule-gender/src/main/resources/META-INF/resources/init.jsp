@@ -22,16 +22,14 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+<%@ page import="com.liferay.content.targeting.rule.gender.display.context.RuleGenderDisplayContext" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
-
-<%@ page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
+RuleGenderDisplayContext ruleGenderDisplayContext = new RuleGenderDisplayContext(request);
 %>
