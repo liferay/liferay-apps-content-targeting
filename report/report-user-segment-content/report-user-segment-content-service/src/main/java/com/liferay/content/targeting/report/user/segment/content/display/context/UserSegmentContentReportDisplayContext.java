@@ -14,7 +14,6 @@
 
 package com.liferay.content.targeting.report.user.segment.content.display.context;
 
-import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.display.context.BaseReportDisplayContext;
 import com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentLocalServiceUtil;
 import com.liferay.content.targeting.report.user.segment.content.util.comparator.UserSegmentContentCountComparator;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,10 +43,9 @@ public class UserSegmentContentReportDisplayContext
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest request) {
 
-		super(request);
+		super(liferayPortletResponse, request);
 
 		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 	}
 
 	public SearchContainer getSearchContainer() throws PortalException {
@@ -92,22 +89,7 @@ public class UserSegmentContentReportDisplayContext
 		return _searchContainer;
 	}
 
-	protected PortletURL getPortletURL() {
-		Report report = getReport();
-
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "viewReport");
-		portletURL.setParameter("redirect", getRedirect());
-		portletURL.setParameter("reportKey", report.getReportKey());
-		portletURL.setParameter("className", getClassName());
-		portletURL.setParameter("classPK", String.valueOf(getClassPK()));
-
-		return portletURL;
-	}
-
 	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private SearchContainer _searchContainer;
 
 }

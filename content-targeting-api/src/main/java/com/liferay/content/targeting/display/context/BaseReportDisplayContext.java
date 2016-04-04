@@ -17,11 +17,13 @@ package com.liferay.content.targeting.display.context;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.ReportInstance;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
+import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -29,7 +31,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class BaseReportDisplayContext {
 
-	public BaseReportDisplayContext(HttpServletRequest request) {
+	public BaseReportDisplayContext(
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request) {
+
+		this.liferayPortletResponse = liferayPortletResponse;
 		this.request = request;
 
 		displayContext = (Map<String, Object>)request.getAttribute(
@@ -103,7 +109,22 @@ public class BaseReportDisplayContext {
 		return _reportsRegistry;
 	}
 
+	protected PortletURL getPortletURL() {
+		Report report = getReport();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "viewReport");
+		portletURL.setParameter("redirect", getRedirect());
+		portletURL.setParameter("reportKey", report.getReportKey());
+		portletURL.setParameter("className", getClassName());
+		portletURL.setParameter("classPK", String.valueOf(getClassPK()));
+
+		return portletURL;
+	}
+
 	protected final Map<String, Object> displayContext;
+	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final HttpServletRequest request;
 
 	private String _className;

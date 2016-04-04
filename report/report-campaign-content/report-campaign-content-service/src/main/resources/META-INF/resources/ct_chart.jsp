@@ -16,15 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-int start = ParamUtil.getInteger(request, "start");
-int end = ParamUtil.getInteger(request, "end");
-
-SearchContainerIterator<CampaignContent> searchContainerIterator = campaignContentReportDisplayContext.getSearchContainerIterator();
-
-List<CampaignContent> campaingContents = searchContainerIterator.getResults(start, end);
-%>
-
 <style>
 	#campaignContentChart {
 		height: 400px;
@@ -33,17 +24,26 @@ List<CampaignContent> campaingContents = searchContainerIterator.getResults(star
 	}
 </style>
 
+<div id="campaignContentChart"></div>
+
 <aui:script use="charts">
 	var campaignContentChartDataValues = [
 
 		<%
+		SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
+
+		List<CampaignContent> campaingContents = searchContainer.getResults();
+
 		for (int k = 0; k < campaingContents.size(); k++) {
 			CampaignContent campaingContent = campaingContents.get(k);
 		%>
 
 			<c:if test="<%= k > 0 %>">,</c:if>
 
-			{content:'<%= campaingContent.getTitle(locale) %>', count:<%= campaingContent.getCount() %>}
+			{
+				content:'<%= campaingContent.getTitle(locale) %>',
+				count:<%= campaingContent.getCount() %>
+			}
 
 		<%
 		}
@@ -101,5 +101,3 @@ List<CampaignContent> campaingContents = searchContainerIterator.getResults(star
 		verticalGridlines: true
 	});
 </aui:script>
-
-<div id="campaignContentChart"></div>

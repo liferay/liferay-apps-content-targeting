@@ -15,8 +15,20 @@
 package com.liferay.content.targeting.report.campaign.content.display.context;
 
 import com.liferay.content.targeting.display.context.BaseReportDisplayContext;
-import com.liferay.content.targeting.report.campaign.content.model.CampaignContent;
-import com.liferay.content.targeting.util.SearchContainerIterator;
+import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalServiceUtil;
+import com.liferay.content.targeting.report.campaign.content.util.comparator.CampaignContentCountComparator;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
+
+import javax.portlet.PortletConfig;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,22 +38,55 @@ import javax.servlet.http.HttpServletRequest;
 public class CampaignContentReportDisplayContext
 	extends BaseReportDisplayContext {
 
-	public CampaignContentReportDisplayContext(HttpServletRequest request) {
-		super(request);
+	public CampaignContentReportDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request) {
+
+		super(liferayPortletResponse, request);
+
+		_liferayPortletRequest = liferayPortletRequest;
 	}
 
-	public SearchContainerIterator<CampaignContent>
-		getSearchContainerIterator() {
-
-		if (_searchContainerIterator == null) {
-			_searchContainerIterator =
-				(SearchContainerIterator<CampaignContent>)displayContext.get(
-					"searchContainerIterator");
+	public SearchContainer getSearchContainer() throws PortalException {
+		if (_searchContainer != null) {
+			return _searchContainer;
 		}
 
-		return _searchContainerIterator;
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletConfig portletConfig =
+			(PortletConfig) _liferayPortletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		String emptyResultsMessage = LanguageUtil.format(
+			portletConfig.getResourceBundle(themeDisplay.getLocale()),
+			"there-is-not-enough-data-to-generate-a-content-views-report-for-" +
+				"the-campaign-x",
+			getName());
+
+		SearchContainer searchContainer = new SearchContainer(
+			_liferayPortletRequest, getPortletURL(), null, emptyResultsMessage);
+
+		int total = CampaignContentLocalServiceUtil.getCampaignContentsCount(
+			getClassPK());
+
+		searchContainer.setTotal(total);
+
+		List results = CampaignContentLocalServiceUtil.getCampaignContents(
+			getClassPK(), searchContainer.getStart(), searchContainer.getEnd(),
+			new CampaignContentCountComparator());
+
+		searchContainer.setResults(results);
+
+		_searchContainer = searchContainer;
+
+		return _searchContainer;
 	}
 
-	private SearchContainerIterator<CampaignContent> _searchContainerIterator;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private SearchContainer _searchContainer;
 
 }

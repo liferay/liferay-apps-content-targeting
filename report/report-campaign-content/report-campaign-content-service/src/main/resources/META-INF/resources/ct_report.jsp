@@ -16,50 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String redirect = campaignContentReportDisplayContext.getRedirect();
-Report report = campaignContentReportDisplayContext.getReport();
-String className = campaignContentReportDisplayContext.getClassName();
-long classPK = campaignContentReportDisplayContext.getClassPK();
-String name = campaignContentReportDisplayContext.getName();
-
-SearchContainerIterator<CampaignContent> searchContainerIterator = campaignContentReportDisplayContext.getSearchContainerIterator();
-%>
-
-<liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param
-		name="mvcRenderCommandName"
-		value="viewReport"
-	/>
-	<portlet:param
-		name="redirect"
-		value="<%= redirect %>"
-	/>
-	<portlet:param
-		name="reportKey"
-		value="<%= report.getReportKey() %>"
-	/>
-	<portlet:param
-		name="className"
-		value="<%= className %>"
-	/>
-	<portlet:param
-		name="classPK"
-		value="<%= String.valueOf(classPK) %>"
-	/>
-</liferay-portlet:renderURL>
-
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		emptyResultsMessage='<%= LanguageUtil.format(resourceBundle, "there-is-not-enough-data-to-generate-a-content-views-report-for-the-campaign-x", name) %>'
-		iteratorURL="<%= portletURL %>"
-		total="<%= searchContainerIterator.getTotal() %>"
+		searchContainer="<%= campaignContentReportDisplayContext.getSearchContainer() %>"
 	>
-
-		<liferay-ui:search-container-results
-			results="<%= searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.report.campaign.content.model.CampaignContent"
 			modelVar="campaignContent"
@@ -93,11 +53,8 @@ SearchContainerIterator<CampaignContent> searchContainerIterator = campaignConte
 
 		<liferay-ui:search-iterator markupView="lexicon" />
 
-		<c:if test="<%= searchContainer.getResults().size() > 0 %>">
-			<liferay-util:include page="/ct_chart.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="start" value="<%= String.valueOf(searchContainer.getStart()) %>" />
-				<liferay-util:param name="end" value="<%= String.valueOf(searchContainer.getEnd()) %>" />
-			</liferay-util:include>
+		<c:if test="<%= searchContainer.getTotal() > 0 %>">
+			<liferay-util:include page="/ct_chart.jsp" servletContext="<%= application %>" />
 		</c:if>
 	</liferay-ui:search-container>
 </div>
