@@ -54,7 +54,7 @@
 		<liferay-ui:search-iterator markupView="lexicon" />
 
 		<c:if test="<%= searchContainer.getTotal() > 0 %>">
-			<liferay-util:include page="/ct_chart.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/chart.jsp" servletContext="<%= application %>" />
 		</c:if>
 	</liferay-ui:search-container>
 </div>
