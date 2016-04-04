@@ -14,7 +14,7 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action;
 
-import com.liferay.content.targeting.api.model.BaseReport;
+import com.liferay.content.targeting.api.model.BaseJSPReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
@@ -25,16 +25,13 @@ import com.liferay.content.targeting.exception.InvalidTrackingActionsException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.TrackingActionInstance;
-import com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.util.TrackingActionTemplate;
-import com.liferay.content.targeting.report.campaign.tracking.action.util.comparator.CTActionTotalCountComparator;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceService;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.SearchContainerIterator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -68,6 +65,7 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
@@ -79,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = Report.class)
-public class CTActionReport extends BaseReport {
+public class CTActionReport extends BaseJSPReport {
 
 	@Activate
 	@Override
@@ -165,6 +163,15 @@ public class CTActionReport extends BaseReport {
 		ReportInstanceLocalService reportInstanceLocalService) {
 
 		_reportInstanceLocalService = reportInstanceLocalService;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.report.campaign.tracking.action.service)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Reference(unbind = "-")
@@ -380,35 +387,6 @@ public class CTActionReport extends BaseReport {
 	}
 
 	@Override
-	protected void populateContext(
-		ReportInstance reportInstance, Map<String, Object> context) {
-
-		final long reportInstanceId = MapUtil.getLong(
-			context, "reportInstanceId", 0);
-
-		context.put(
-			"searchContainerIterator",
-			new SearchContainerIterator<CTActionTotal>() {
-
-				@Override
-				public List<CTActionTotal> getResults(int start, int end)
-					throws PortalException {
-
-					return _ctActionTotalLocalService.getCTActionsTotal(
-						reportInstanceId, start, end,
-						new CTActionTotalCountComparator());
-				}
-
-				@Override
-				public int getTotal() throws PortalException {
-					return _ctActionTotalLocalService.getCTActionsTotalCount(
-						reportInstanceId);
-				}
-
-			});
-	}
-
-	@Override
 	protected void populateEditContext(
 		ReportInstance reportInstance, Map<String, Object> context) {
 
@@ -498,9 +476,7 @@ public class CTActionReport extends BaseReport {
 			List<TrackingActionTemplate> trackingActionTemplates =
 				new ArrayList<>();
 
-			for (TrackingAction trackingAction
-					: trackingActions.values()) {
-
+			for (TrackingAction trackingAction : trackingActions.values()) {
 				if (!trackingAction.isVisible()) {
 					continue;
 				}

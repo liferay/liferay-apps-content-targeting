@@ -87,11 +87,9 @@ public abstract class BaseJSPReport extends BaseReport {
 		return _FORM_TEMPLATE_PATH;
 	}
 
-	private static final String _EDIT_FORM_TEMPLATE_PATH =
-		"/templates/ct_edit_report.jsp";
+	private static final String _EDIT_FORM_TEMPLATE_PATH = "/edit.jsp";
 
-	private static final String _FORM_TEMPLATE_PATH =
-		"/templates/ct_report.jsp";
+	private static final String _FORM_TEMPLATE_PATH = "/view.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseJSPReport.class);
 

@@ -14,21 +14,15 @@
 
 package com.liferay.content.targeting.report.campaign.content;
 
-import com.liferay.content.targeting.api.model.BaseReport;
+import com.liferay.content.targeting.api.model.BaseJSPReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
-import com.liferay.content.targeting.report.campaign.content.model.CampaignContent;
 import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalService;
-import com.liferay.content.targeting.report.campaign.content.util.comparator.CampaignContentCountComparator;
-import com.liferay.content.targeting.util.SearchContainerIterator;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.List;
-import java.util.Map;
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -39,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = Report.class)
-public class CampaignContentReport extends BaseReport {
+public class CampaignContentReport extends BaseJSPReport {
 
 	@Activate
 	@Override
@@ -71,6 +65,15 @@ public class CampaignContentReport extends BaseReport {
 	}
 
 	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.report.campaign.content.service)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	@Override
 	public void updateReport(ReportInstance reportInstance) {
 		try {
 			_campaignContentLocalService.checkCampaignContentEvents(
@@ -79,35 +82,6 @@ public class CampaignContentReport extends BaseReport {
 		catch (Exception e) {
 			_log.error("Cannot update report", e);
 		}
-	}
-
-	@Override
-	protected void populateContext(
-		ReportInstance reportInstance, Map<String, Object> context) {
-
-		final long classPK = MapUtil.getLong(context, "classPK", 0);
-
-		context.put(
-			"searchContainerIterator",
-			new SearchContainerIterator<CampaignContent>() {
-
-				@Override
-				public List<CampaignContent> getResults(int start, int end)
-					throws PortalException {
-
-					return _campaignContentLocalService.getCampaignContents(
-						classPK, start, end,
-						new CampaignContentCountComparator());
-				}
-
-				@Override
-				public int getTotal() throws PortalException {
-					return
-						_campaignContentLocalService.getCampaignContentsCount(
-							classPK);
-				}
-
-			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

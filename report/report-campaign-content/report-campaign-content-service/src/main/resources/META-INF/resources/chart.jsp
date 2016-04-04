@@ -1,4 +1,4 @@
-<#--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,39 +12,61 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
--->
+--%>
+
+<%@ include file="/init.jsp" %>
 
 <style>
-	#userSegmentContentChart {
+	#campaignContentChart {
 		height: 400px;
 		min-width: 600px;
 		width: 100%;
 	}
 </style>
 
-<@liferay_aui["script"] use="charts">
-	var userSegmentContentChartDataValues = [
-		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as userSegmentContent>
-			{content:'${userSegmentContent.getTitle(locale)}', count:${userSegmentContent.getCount()}}<#if userSegmentContent_has_next>,</#if>
-		</#list>
+<div id="campaignContentChart"></div>
+
+<aui:script use="charts">
+	var campaignContentChartDataValues = [
+
+		<%
+		SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
+
+		List<CampaignContent> campaingContents = searchContainer.getResults();
+
+		for (int k = 0; k < campaingContents.size(); k++) {
+			CampaignContent campaingContent = campaingContents.get(k);
+		%>
+
+			<c:if test="<%= k > 0 %>">,</c:if>
+
+			{
+				content:'<%= campaingContent.getTitle(locale) %>',
+				count:<%= campaingContent.getCount() %>
+			}
+
+		<%
+		}
+		%>
+
 	];
 
-	var userSegmentContentCharAxes = {
+	var campaignContentCharAxes = {
 		count:{
 			keys:['count'],
 			position:'left',
-			title:'<@liferay_ui["message"] key="count" />',
+			title:'<liferay-ui:message key="count" />',
 			type:'numeric'
 		},
 		content:{
 			keys:['content'],
 			position:'bottom',
-			title:'<@liferay_ui["message"] key="content" />',
+			title:'<liferay-ui:message key="content" />',
 			type:'category'
 		}
 	};
 
-	var userSegmentContentCharStyles = {
+	var campaignContentCharStyles = {
 		axes:{
 			content:{
 				label:{
@@ -69,15 +91,13 @@
 		}
 	};
 
-	var userSegmentContentChart = new A.Chart({
-		axes: userSegmentContentCharAxes,
-		dataProvider: userSegmentContentChartDataValues,
+	var campaignContentChart = new A.Chart({
+		axes: campaignContentCharAxes,
+		dataProvider: campaignContentChartDataValues,
 		horizontalGridlines: true,
-		render: '#userSegmentContentChart',
-		styles: userSegmentContentCharStyles,
+		render: '#campaignContentChart',
+		styles: campaignContentCharStyles,
 		type: 'column',
 		verticalGridlines: true
 	});
-</@>
-
-<div id="userSegmentContentChart"></div>
+</aui:script>
