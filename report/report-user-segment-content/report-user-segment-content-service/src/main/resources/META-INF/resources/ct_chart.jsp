@@ -16,15 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-int start = ParamUtil.getInteger(request, "start");
-int end = ParamUtil.getInteger(request, "end");
-
-SearchContainerIterator<UserSegmentContent> searchContainerIterator = userSegmentContentReportDisplayContext.getSearchContainerIterator();
-
-List<UserSegmentContent> userSegmentContents = searchContainerIterator.getResults(start, end);
-%>
-
 <style>
 	#userSegmentContentChart {
 		height: 400px;
@@ -33,17 +24,26 @@ List<UserSegmentContent> userSegmentContents = searchContainerIterator.getResult
 	}
 </style>
 
+<div id="userSegmentContentChart"></div>
+
 <aui:script use="charts">
 	var userSegmentContentChartDataValues = [
 
 		<%
+		SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
+
+		List<UserSegmentContent> userSegmentContents = searchContainer.getResults();
+
 		for (int k = 0; k < userSegmentContents.size(); k++) {
 			UserSegmentContent userSegmentContent = userSegmentContents.get(k);
 		%>
 
 			<c:if test="<%= k > 0 %>">,</c:if>
 
-			{content:'<%= userSegmentContent.getTitle(locale) %>', count:<%= userSegmentContent.getCount() %>}
+			{
+				content:'<%= userSegmentContent.getTitle(locale) %>',
+				count:<%= userSegmentContent.getCount() %>
+			}
 
 		<%
 		}
@@ -101,5 +101,3 @@ List<UserSegmentContent> userSegmentContents = searchContainerIterator.getResult
 		verticalGridlines: true
 	});
 </aui:script>
-
-<div id="userSegmentContentChart"></div>

@@ -18,17 +18,9 @@ import com.liferay.content.targeting.api.model.BaseJSPReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent;
 import com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentLocalService;
-import com.liferay.content.targeting.report.user.segment.content.util.comparator.UserSegmentContentCountComparator;
-import com.liferay.content.targeting.util.SearchContainerIterator;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.MapUtil;
-
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -90,35 +82,6 @@ public class UserSegmentContentReport extends BaseJSPReport {
 		catch (Exception e) {
 			_log.error("Cannot update report", e);
 		}
-	}
-
-	@Override
-	protected void populateContext(
-		ReportInstance reportInstance, Map<String, Object> context) {
-
-		final long classPK = MapUtil.getLong(context, "classPK", 0);
-
-		context.put(
-			"searchContainerIterator",
-			new SearchContainerIterator<UserSegmentContent>() {
-
-				@Override
-				public List<UserSegmentContent> getResults(int start, int end)
-					throws PortalException {
-
-					return _userSegmentContentLocalService.
-						getUserSegmentContents(
-							classPK, start, end,
-							new UserSegmentContentCountComparator());
-				}
-
-				@Override
-				public int getTotal() throws PortalException {
-					return _userSegmentContentLocalService.
-						getUserSegmentContentsCount(classPK);
-				}
-
-			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
