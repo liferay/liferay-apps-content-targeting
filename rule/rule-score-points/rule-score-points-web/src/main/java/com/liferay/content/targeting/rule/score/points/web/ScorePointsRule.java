@@ -185,9 +185,6 @@ public class ScorePointsRule extends BaseJSPRule {
 		boolean trackingPageEnabled = AnalyticsUtil.isAnalyticsPageEnabled(
 			groupId);
 
-		context.put("trackingContentEnabled", trackingContentEnabled);
-		context.put("trackingPageEnabled", trackingPageEnabled);
-
 		if (!trackingContentEnabled || !trackingPageEnabled) {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);

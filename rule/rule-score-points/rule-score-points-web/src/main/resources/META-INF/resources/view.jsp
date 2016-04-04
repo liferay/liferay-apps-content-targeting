@@ -16,43 +16,32 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-int scorePoints = GetterUtil.getInteger(displayContext.get("scorePoints"));
+<c:if test="<%= !ruleScorePointsDisplayContext.isTrackingContentEnabled() || !ruleScorePointsDisplayContext.isTrackingContentEnabled() %>">
 
-boolean trackingContentEnabled = GetterUtil.getBoolean(displayContext.get("trackingContentEnabled"));
+	<%
+	String enableLocationPortalLabel = LanguageUtil.get(resourceBundle, "portal-settings-content-targeting-analytics");
 
-boolean trackingPageEnabled = GetterUtil.getBoolean(displayContext.get("trackingPageEnabled"));
+	if (Validator.isNotNull(ruleScorePointsDisplayContext.getPortalSettingsURL())) {
+		enableLocationPortalLabel = "<a href=\"" + ruleScorePointsDisplayContext.getPortalSettingsURL() + "\">" + enableLocationPortalLabel + "</a>";
+	}
 
-UserSegment userSegment = (UserSegment)displayContext.get("userSegment");
-%>
+	String enableLocationSiteLabel = LanguageUtil.get(resourceBundle, "site-settings-content-targeting-analytics");
 
-<c:if test="<%= !trackingContentEnabled || !trackingPageEnabled %>">
-	<div class="alert alert-error">
-		<strong>
-			<liferay-ui:message key="this-rule-will-not-work-properly-because-content-tracking-or-page-tracking-are-not-enabled" />
-		</strong>
+	if (Validator.isNotNull(ruleScorePointsDisplayContext.getSiteSettingsURL())) {
+		enableLocationSiteLabel = "<a href=\"" + ruleScorePointsDisplayContext.getSiteSettingsURL() + "\">" + enableLocationSiteLabel + "</a>";
+	}
+	%>
 
-		<%
-		String enableLocationPortalLabel = LanguageUtil.get(resourceBundle, "portal-settings-content-targeting-analytics");
+	<div class="alert alert-info">
+		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-content-tracking-or-page-tracking-are-not-enabled" /></strong>
 
-		String portalSettingsURL = GetterUtil.getString(displayContext.get("portalSettingsURL"));
-
-		if (Validator.isNotNull(portalSettingsURL)) {
-			enableLocationPortalLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationPortalLabel + "</a>";
-		}
-
-		String enableLocationSiteLabel = LanguageUtil.get(resourceBundle, "site-settings-content-targeting-analytics");
-
-		String siteSettingsURL = GetterUtil.getString(displayContext.get("siteSettingsURL"));
-
-		if (Validator.isNotNull(siteSettingsURL)) {
-			enableLocationSiteLabel = "<a href=\"" + siteSettingsURL + "\">" + enableLocationSiteLabel + "</a>";
-		}
-		%>
-
-		<liferay-ui:message arguments='<%= StringUtil.split(enableLocationPortalLabel + "," + enableLocationSiteLabel) %>' key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= new String[] {enableLocationPortalLabel, enableLocationSiteLabel} %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
 	</div>
 </c:if>
+
+<%
+UserSegment userSegment = ruleScorePointsDisplayContext.getUserSegment();
+%>
 
 <div class="alert alert-info">
 	<c:choose>
@@ -65,6 +54,6 @@ UserSegment userSegment = (UserSegment)displayContext.get("userSegment");
 	</c:choose>
 </div>
 
-<aui:input helpMessage="set-a-threshold-of-points-that-users-should-meet-in-order-to-be-assigned-to-this-user-segment" label="score-points-threshold" name="scorePoints" type="text" value="<%= scorePoints %>">
+<aui:input helpMessage="set-a-threshold-of-points-that-users-should-meet-in-order-to-be-assigned-to-this-user-segment" label="score-points-threshold" name="scorePoints" type="text" value="<%= ruleScorePointsDisplayContext.getScorePoints() %>">
 	<aui:validator name="number" />
 </aui:input>
