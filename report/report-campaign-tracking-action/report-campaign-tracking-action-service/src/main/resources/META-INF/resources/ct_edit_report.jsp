@@ -100,9 +100,9 @@ String cssHasItemsClass = campaignTrackingActionReportDisplayContext.getCssHasIt
 					<div class="form-builder-drop-container property-builder-drop-container">
 
 						<%
-							for (TrackingActionTemplate template : addedTrackingActionTemplates) {
-								TrackingAction trackingAction = template.getTrackingAction();
-								String templateKey = template.getTemplateKey();
+						for (TrackingActionTemplate template : addedTrackingActionTemplates) {
+							TrackingAction trackingAction = template.getTrackingAction();
+							String templateKey = template.getTemplateKey();
 						%>
 
 							<c:if test="<%= trackingAction.isVisible(className, classPK) %>">
