@@ -19,7 +19,6 @@ import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -43,68 +42,84 @@ public class BaseReportDisplayContext {
 	}
 
 	public String getClassName() {
-		if (Validator.isBlank(_className)) {
-			_className = GetterUtil.getString(displayContext.get("className"));
+		if (_className != null) {
+			return _className;
 		}
+
+		_className = GetterUtil.getString(displayContext.get("className"));
 
 		return _className;
 	}
 
 	public long getClassPK() {
-		if (_classPK <= 0) {
-			_classPK = GetterUtil.getLong(displayContext.get("classPK"));
+		if (_classPK != null) {
+			return _classPK;
 		}
+
+		_classPK = GetterUtil.getLong(displayContext.get("classPK"));
 
 		return _classPK;
 	}
 
 	public String getName() {
-		if (Validator.isBlank(_name)) {
-			_name = GetterUtil.getString(displayContext.get("name"));
+		if (_name != null) {
+			return _name;
 		}
+
+		_name = GetterUtil.getString(displayContext.get("name"));
 
 		return _name;
 	}
 
 	public String getRedirect() {
-		if (Validator.isBlank(_redirect)) {
-			_redirect = GetterUtil.getString(displayContext.get("redirect"));
+		if (_redirect != null) {
+			return _redirect;
 		}
+
+		_redirect = GetterUtil.getString(displayContext.get("redirect"));
 
 		return _redirect;
 	}
 
 	public Report getReport() {
-		if (_report == null) {
-			_report = (Report)displayContext.get("report");
+		if (_report != null) {
+			return _report;
 		}
+
+		_report = (Report)displayContext.get("report");
 
 		return _report;
 	}
 
 	public ReportInstance getReportInstance() {
-		if (_reportInstance == null) {
-			_reportInstance = (ReportInstance)displayContext.get(
-				"reportInstance");
+		if (_reportInstance != null) {
+			return _reportInstance;
 		}
+
+		_reportInstance = (ReportInstance)displayContext.get(
+			"reportInstance");
 
 		return _reportInstance;
 	}
 
 	public long getReportInstanceId() {
-		if (_reportInstanceId <= 0) {
-			_reportInstanceId = GetterUtil.getLong(
-				displayContext.get("reportInstanceId"));
+		if (_reportInstanceId != null) {
+			return _reportInstanceId;
 		}
+
+		_reportInstanceId = GetterUtil.getLong(
+			displayContext.get("reportInstanceId"));
 
 		return _reportInstanceId;
 	}
 
 	public ReportsRegistry getReportsRegistry() {
-		if (_reportsRegistry == null) {
-			_reportsRegistry = (ReportsRegistry)displayContext.get(
-				"reportsRegistry");
+		if (_reportsRegistry != null) {
+			return _reportsRegistry;
 		}
+
+		_reportsRegistry = (ReportsRegistry)displayContext.get(
+			"reportsRegistry");
 
 		return _reportsRegistry;
 	}
@@ -128,12 +143,12 @@ public class BaseReportDisplayContext {
 	protected final HttpServletRequest request;
 
 	private String _className;
-	private long _classPK;
+	private Long _classPK;
 	private String _name;
 	private String _redirect;
 	private Report _report;
 	private ReportInstance _reportInstance;
-	private long _reportInstanceId;
+	private Long _reportInstanceId;
 	private ReportsRegistry _reportsRegistry;
 
 }
