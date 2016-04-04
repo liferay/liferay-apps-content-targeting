@@ -18,11 +18,11 @@
 
 <liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
 
-<aui:input cssClass="slider-input" inlineField="<%= true %>" label="older-than" maxlength="3" name="fbOlderThan" size="2" value="<%= ruleFacebookDisplayContext.getFbOlderThan() %>" />
+<aui:input cssClass="slider-input" inlineField="<%= true %>" label="older-than" maxlength="3" name="fbOlderThan" size="3" value="<%= ruleFacebookDisplayContext.getFbOlderThan() %>" />
 
 <span class="older slider-holder"></span>
 
-<aui:input cssClass="slider-input" inlineField="<%= true %>" label="younger-than" maxlength="3" name="fbYoungerThan" size="2" value="<%= ruleFacebookDisplayContext.getFbYoungerThan() %>" />
+<aui:input cssClass="slider-input" inlineField="<%= true %>" label="younger-than" maxlength="3" name="fbYoungerThan" size="3" value="<%= ruleFacebookDisplayContext.getFbYoungerThan() %>" />
 
 <span class="slider-holder younger"></span>
 

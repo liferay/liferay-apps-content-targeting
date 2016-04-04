@@ -33,9 +33,9 @@
 	</div>
 </c:if>
 
-<aui:input cssClass="slider-input" inlineField="<%= true %>" maxlength="3" name="olderThan" size="2" value="<%= ruleAgeDisplayContext.getOlderThan() %>" />
+<aui:input cssClass="slider-input" inlineField="<%= true %>" maxlength="3" name="olderThan" size="3" value="<%= ruleAgeDisplayContext.getOlderThan() %>" />
 
-<aui:input cssClass="slider-input" inlineField="<%= true %>" maxlength="3" name="youngerThan" size="2" value="<%= ruleAgeDisplayContext.getYoungerThan() %>">
+<aui:input cssClass="slider-input" inlineField="<%= true %>" maxlength="3" name="youngerThan" size="3" value="<%= ruleAgeDisplayContext.getYoungerThan() %>">
 	<aui:validator errorMessage="the-age-range-is-invalid" name="custom">
 		function(val, fieldNode, ruleValue) {
 			if (!val) {
