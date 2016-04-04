@@ -25,16 +25,13 @@ import com.liferay.content.targeting.exception.InvalidTrackingActionsException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.TrackingActionInstance;
-import com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.util.TrackingActionTemplate;
-import com.liferay.content.targeting.report.campaign.tracking.action.util.comparator.CTActionTotalCountComparator;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceService;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.content.targeting.util.SearchContainerIterator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -390,35 +387,6 @@ public class CTActionReport extends BaseJSPReport {
 	}
 
 	@Override
-	protected void populateContext(
-		ReportInstance reportInstance, Map<String, Object> context) {
-
-		final long reportInstanceId = MapUtil.getLong(
-			context, "reportInstanceId", 0);
-
-		context.put(
-			"searchContainerIterator",
-			new SearchContainerIterator<CTActionTotal>() {
-
-				@Override
-				public List<CTActionTotal> getResults(int start, int end)
-					throws PortalException {
-
-					return _ctActionTotalLocalService.getCTActionsTotal(
-						reportInstanceId, start, end,
-						new CTActionTotalCountComparator());
-				}
-
-				@Override
-				public int getTotal() throws PortalException {
-					return _ctActionTotalLocalService.getCTActionsTotalCount(
-						reportInstanceId);
-				}
-
-			});
-	}
-
-	@Override
 	protected void populateEditContext(
 		ReportInstance reportInstance, Map<String, Object> context) {
 
@@ -508,9 +476,7 @@ public class CTActionReport extends BaseJSPReport {
 			List<TrackingActionTemplate> trackingActionTemplates =
 				new ArrayList<>();
 
-			for (TrackingAction trackingAction
-					: trackingActions.values()) {
-
+			for (TrackingAction trackingAction : trackingActions.values()) {
 				if (!trackingAction.isVisible()) {
 					continue;
 				}

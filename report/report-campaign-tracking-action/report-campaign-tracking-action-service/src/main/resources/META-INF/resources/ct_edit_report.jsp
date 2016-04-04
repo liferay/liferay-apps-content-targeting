@@ -16,20 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String className = campaignTrackingActionReportDisplayContext.getClassName();
-long classPK = campaignTrackingActionReportDisplayContext.getClassPK();
-
-List<TrackingActionTemplate> addedTrackingActionTemplates = campaignTrackingActionReportDisplayContext.getAddedTrackingActionTemplates();
-List<TrackingActionTemplate> trackingActionTemplates = campaignTrackingActionReportDisplayContext.getTrackingActionTemplates();
-
-String cssHasItemsClass = campaignTrackingActionReportDisplayContext.getCssHasItemsClass();
-%>
-
-<aui:input
-	name="reportTrackingActions"
-	type="hidden"
-/>
+<aui:input name="reportTrackingActions" type="hidden" />
 
 <div class="tracking-actions-panel">
 	<div class="component form-builder liferayctformbuilder property-builder yui3-widget" id="formBuilderBB">
@@ -37,8 +24,13 @@ String cssHasItemsClass = campaignTrackingActionReportDisplayContext.getCssHasIt
 			<div class="tabbable">
 				<div class="tabbable-content">
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="javascript:;">Add node</a></li>
-						<li><a href="javascript:;">Settings</a></li>
+						<li class="active">
+							<a href="javascript:;"><liferay-ui:message key="add-node" /></a>
+						</li>
+
+						<li>
+							<a href="javascript:;"><liferay-ui:message key="settings" /></a>
+						</li>
 					</ul>
 
 					<div class="tab-content">
@@ -48,12 +40,7 @@ String cssHasItemsClass = campaignTrackingActionReportDisplayContext.getCssHasIt
 									<i class="icon-search"></i>
 
 									<div class="search-panels-bar">
-										<aui:input
-											cssClass="search-panels-input search-query"
-											label=""
-											name="searchPanel"
-											type="text"
-										/>
+										<aui:input cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
 									</div>
 								</div>
 							</div>
@@ -61,19 +48,29 @@ String cssHasItemsClass = campaignTrackingActionReportDisplayContext.getCssHasIt
 							<ul class="clearfix form-builder-fields-container property-builder-fields-container">
 
 								<%
-								for (TrackingActionTemplate template : trackingActionTemplates) {
+								for (TrackingActionTemplate template : campaignTrackingActionReportDisplayContext.getTrackingActionTemplates()) {
 									TrackingAction trackingAction = template.getTrackingAction();
+
 									String templateKey = template.getTemplateKey();
 								%>
 
-									<c:if test="<%= trackingAction.isVisible(className, classPK) %>">
+									<c:if test="<%= trackingAction.isVisible(campaignTrackingActionReportDisplayContext.getClassName(), campaignTrackingActionReportDisplayContext.getClassPK()) %>">
 										<li class="form-builder-field hide property-builder-field" data-icon="<%= trackingAction.getIcon() %>" data-key="<%= templateKey %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !trackingAction.isInstantiable() %>">
 											<span class="property-builder-field-icon icon <%= trackingAction.getIcon() %>"></span>
+
 											<div class="property-builder-field-label">
 												<div class="row">
-													<div class="field-title"><%= trackingAction.getName(locale) %></div>
-													<div class="field-description"><%= trackingAction.getDescription(locale) %></div>
-													<div class="field-short-description"><%= trackingAction.getShortDescription(locale) %></div>
+													<div class="field-title">
+														<%= trackingAction.getName(locale) %>
+													</div>
+
+													<div class="field-description">
+														<%= trackingAction.getDescription(locale) %>
+													</div>
+
+													<div class="field-short-description">
+														<%= trackingAction.getShortDescription(locale) %>
+													</div>
 												</div>
 											</div>
 										</li>
@@ -92,7 +89,7 @@ String cssHasItemsClass = campaignTrackingActionReportDisplayContext.getCssHasIt
 			</div>
 
 			<div class="form-builder-content-container property-builder-content-container">
-				<div class="property-builder-canvas form-builder-canvas <%= cssHasItemsClass %>">
+				<div class="property-builder-canvas form-builder-canvas <%= ListUtil.isNotEmpty(campaignTrackingActionReportDisplayContext.getAddedTrackingActionTemplates()) ? "has-items" : StringPool.BLANK %>">
 					<div class="alert alert-info alert-no-items">
 						<liferay-ui:message key="drag-actions-to-track-in-this-report" />
 					</div>
@@ -100,25 +97,37 @@ String cssHasItemsClass = campaignTrackingActionReportDisplayContext.getCssHasIt
 					<div class="form-builder-drop-container property-builder-drop-container">
 
 						<%
-						for (TrackingActionTemplate template : addedTrackingActionTemplates) {
+						for (TrackingActionTemplate template : campaignTrackingActionReportDisplayContext.getAddedTrackingActionTemplates()) {
 							TrackingAction trackingAction = template.getTrackingAction();
+
 							String templateKey = template.getTemplateKey();
 						%>
 
-							<c:if test="<%= trackingAction.isVisible(className, classPK) %>">
+							<c:if test="<%= trackingAction.isVisible(campaignTrackingActionReportDisplayContext.getClassName(), campaignTrackingActionReportDisplayContext.getClassPK()) %>">
 								<div class="component form-builder-field hide widget yui3-widget" data-icon="<%= trackingAction.getIcon() %>" data-key="<%= templateKey %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !trackingAction.isInstantiable() %>">
 									<div>
 										<div>
 											<div class="field-header">
-												<div class="field-icon"><i class="<%= trackingAction.getIcon() %>"></i></div>
+												<div class="field-icon">
+													<i class="<%= trackingAction.getIcon() %>"></i>
+												</div>
+
 												<div class="field-info row">
-													<div class="field-title"><%= trackingAction.getName(locale) %></div>
-													<div class="field-description"><%= trackingAction.getDescription(locale) %></div>
-													<div class="field-short-description"><%= trackingAction.getShortDescription(locale) %></div>
+													<div class="field-title">
+														<%= trackingAction.getName(locale) %>
+													</div>
+
+													<div class="field-description">
+														<%= trackingAction.getDescription(locale) %>
+													</div>
+
+													<div class="field-short-description">
+														<%= trackingAction.getShortDescription(locale) %>
+													</div>
 												</div>4
 											</div>
-											<div class="field-editor">
-											</div>
+
+											<div class="field-editor"></div>
 										</div>
 									</div>
 								</div>
@@ -131,7 +140,6 @@ String cssHasItemsClass = campaignTrackingActionReportDisplayContext.getCssHasIt
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>

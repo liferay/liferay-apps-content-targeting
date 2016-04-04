@@ -16,15 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-int start = ParamUtil.getInteger(request, "start");
-int end = ParamUtil.getInteger(request, "end");
-
-SearchContainerIterator<CTActionTotal> searchContainerIterator = campaignTrackingActionReportDisplayContext.getSearchContainerIterator();
-
-List<CTActionTotal> ctActionTotals = searchContainerIterator.getResults(start, end);
-%>
-
 <style>
 	#ctActionChart {
 		height: 400px;
@@ -33,10 +24,16 @@ List<CTActionTotal> ctActionTotals = searchContainerIterator.getResults(start, e
 	}
 </style>
 
+<div id="ctActionChart"></div>
+
 <aui:script use="charts">
 	var ctActionTotalArray = [
 
 		<%
+		SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
+
+		List<CTActionTotal> ctActionTotals = searchContainer.getResults();
+
 		for (int k = 0; k < ctActionTotals.size(); k++) {
 			CTActionTotal ctActionTotal = ctActionTotals.get(k);
 
@@ -64,7 +61,13 @@ List<CTActionTotal> ctActionTotals = searchContainerIterator.getResults(start, e
 
 			<c:if test="<%= k > 0 %>">,</c:if>
 
-			{content:'<%= ctActionTotal.getAlias() %>', event:'<%= eventType %>', eventName:'<%= LanguageUtil.get(resourceBundle, eventType) %>', count:<%= ctActionTotal.getCount() %>, user_segments: '<%= stringBundler.toString() %>'}
+			{
+				content:'<%= ctActionTotal.getAlias() %>',
+				event:'<%= eventType %>',
+				eventName:'<%= LanguageUtil.get(resourceBundle, eventType) %>',
+				count:<%= ctActionTotal.getCount() %>,
+				user_segments: '<%= stringBundler.toString() %>'
+			}
 
 		<%
 		}
@@ -280,5 +283,3 @@ List<CTActionTotal> ctActionTotals = searchContainerIterator.getResults(start, e
 		verticalGridlines: true
 	});
 </aui:script>
-
-<div id="ctActionChart"></div>

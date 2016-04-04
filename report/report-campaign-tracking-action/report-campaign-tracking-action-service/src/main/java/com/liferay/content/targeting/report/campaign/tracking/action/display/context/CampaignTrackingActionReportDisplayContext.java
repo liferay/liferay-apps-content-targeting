@@ -15,9 +15,13 @@
 package com.liferay.content.targeting.report.campaign.tracking.action.display.context;
 
 import com.liferay.content.targeting.display.context.BaseReportDisplayContext;
-import com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalServiceUtil;
 import com.liferay.content.targeting.report.campaign.tracking.action.util.TrackingActionTemplate;
-import com.liferay.content.targeting.util.SearchContainerIterator;
+import com.liferay.content.targeting.report.campaign.tracking.action.util.comparator.CTActionTotalCountComparator;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
 import java.util.List;
 
@@ -30,9 +34,13 @@ public class CampaignTrackingActionReportDisplayContext
 	extends BaseReportDisplayContext {
 
 	public CampaignTrackingActionReportDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest request) {
 
-		super(request);
+		super(liferayPortletResponse, request);
+
+		_liferayPortletRequest = liferayPortletRequest;
 	}
 
 	public List<TrackingActionTemplate> getAddedTrackingActionTemplates() {
@@ -45,24 +53,29 @@ public class CampaignTrackingActionReportDisplayContext
 		return _addedTrackingActionTemplates;
 	}
 
-	public String getCssHasItemsClass() {
-		if (getAddedTrackingActionTemplates().size() > 0) {
-			return "has-items";
+	public SearchContainer getSearchContainer() throws PortalException {
+		if (_searchContainer != null) {
+			return _searchContainer;
 		}
 
-		return "";
-	}
+		SearchContainer searchContainer = new SearchContainer(
+			_liferayPortletRequest, getPortletURL(), null,
+			"there-is-not-enough-data-to-generate-this-report");
 
-	public SearchContainerIterator<CTActionTotal>
-		getSearchContainerIterator() {
+		int total = CTActionTotalLocalServiceUtil.getCTActionsTotalCount(
+			getReportInstanceId());
 
-		if (_searchContainerIterator == null) {
-			_searchContainerIterator =
-				(SearchContainerIterator<CTActionTotal>)displayContext.get(
-					"searchContainerIterator");
-		}
+		searchContainer.setTotal(total);
 
-		return _searchContainerIterator;
+		List results = CTActionTotalLocalServiceUtil.getCTActionsTotal(
+			getReportInstanceId(), searchContainer.getStart(),
+			searchContainer.getEnd(), new CTActionTotalCountComparator());
+
+		searchContainer.setResults(results);
+
+		_searchContainer = searchContainer;
+
+		return _searchContainer;
 	}
 
 	public List<TrackingActionTemplate> getTrackingActionTemplates() {
@@ -76,7 +89,8 @@ public class CampaignTrackingActionReportDisplayContext
 	}
 
 	private List<TrackingActionTemplate> _addedTrackingActionTemplates;
-	private SearchContainerIterator<CTActionTotal> _searchContainerIterator;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private SearchContainer _searchContainer;
 	private List<TrackingActionTemplate> _trackingActionTemplates;
 
 }

@@ -16,49 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String redirect = campaignTrackingActionReportDisplayContext.getRedirect();
-Report report = campaignTrackingActionReportDisplayContext.getReport();
-String className = campaignTrackingActionReportDisplayContext.getClassName();
-long classPK = campaignTrackingActionReportDisplayContext.getClassPK();
-String name = campaignTrackingActionReportDisplayContext.getName();
-
-SearchContainerIterator<CTActionTotal> searchContainerIterator = campaignTrackingActionReportDisplayContext.getSearchContainerIterator();
-%>
-
-<liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param
-		name="mvcRenderCommandName"
-		value="viewReport"
-	/>
-	<portlet:param
-		name="redirect"
-		value="<%= redirect %>"
-	/>
-	<portlet:param
-		name="reportKey"
-		value="<%= report.getReportKey() %>"
-	/>
-	<portlet:param
-		name="className"
-		value="<%= className %>"
-	/>
-	<portlet:param
-		name="classPK"
-		value="<%= String.valueOf(classPK) %>"
-	/>
-</liferay-portlet:renderURL>
-
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		emptyResultsMessage="there-is-not-enough-data-to-generate-this-report"
-		iteratorURL="<%= portletURL %>"
-		total="<%= searchContainerIterator.getTotal() %>"
+		searchContainer="<%= campaignTrackingActionReportDisplayContext.getSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal"
 			modelVar="ctActionTotal"
@@ -73,8 +34,6 @@ SearchContainerIterator<CTActionTotal> searchContainerIterator = campaignTrackin
 			else if (eventType.equals("click")) {
 				eventType = "link-clicks";
 			}
-
-			List<CTAction> viewsByUserSegment = ctActionTotal.getViewsByUserSegment();
 			%>
 
 			<liferay-ui:search-container-column-text
@@ -93,14 +52,14 @@ SearchContainerIterator<CTActionTotal> searchContainerIterator = campaignTrackin
 
 				<%= ctActionTotal.getCount() %>
 
-				<c:if test="<%= viewsByUserSegment.size() > 0 %>">
+				<c:if test="<%= ListUtil.isNotEmpty(ctActionTotal.getViewsByUserSegment()) %>">
 					<div class="pull-right">
 						<i class="icon-info" data-id="<%= ctActionTotal.getCTActionTotalId() %>" style="display: block;padding: 0 1em;"></i>
 
 						<div class="hide" id="<portlet:namespace /><%= "userSegmentViews" + ctActionTotal.getCTActionTotalId() %>">
 
 							<%
-							for (CTAction ctAction : viewsByUserSegment) {
+							for (CTAction ctAction : ctActionTotal.getViewsByUserSegment()) {
 							%>
 
 								<p><%= ctAction.getUserSegmentName(locale) %> - <%= ctAction.getCount() %></p>
@@ -122,11 +81,8 @@ SearchContainerIterator<CTActionTotal> searchContainerIterator = campaignTrackin
 
 		<liferay-ui:search-iterator markupView="lexicon" />
 
-		<c:if test="<%= searchContainer.getResults().size() > 0 %>">
-			<liferay-util:include page="/ct_chart.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="start" value="<%= String.valueOf(searchContainer.getStart()) %>" />
-				<liferay-util:param name="end" value="<%= String.valueOf(searchContainer.getEnd()) %>" />
-			</liferay-util:include>
+		<c:if test="<%= searchContainer.getTotal() > 0 %>">
+			<liferay-util:include page="/ct_chart.jsp" servletContext="<%= application %>" />
 		</c:if>
 	</liferay-ui:search-container>
 
