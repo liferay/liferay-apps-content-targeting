@@ -41,11 +41,19 @@ public class InvalidNameException extends PortalException {
 	}
 
 	public boolean isDuplicated() {
-		return _type == DUPLICATED;
+		if (_type == DUPLICATED) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isEmpty() {
-		return _type == EMPTY;
+		if (_type == EMPTY) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private int _type;

@@ -313,7 +313,11 @@ public class ContentTargetingViewReportsDisplayContext
 	}
 
 	public boolean hasReports() {
-		return getClassPK() > 0;
+		if (getClassPK() > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public Boolean hasUpdatePermission() throws PortalException {

@@ -101,7 +101,6 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 						</c:if>
 
 						<div class="text-default">
-
 							<span class="label text-default">
 								<strong>
 									<liferay-ui:message key="<%= campaign.getStatus() %>" />

@@ -60,8 +60,8 @@ String portletDisplayTemplateHtml = GetterUtil.getString(request.getAttribute("p
 		</c:choose>
 	</c:when>
 	<c:otherwise>
-	<div class="alert alert-info">
-		<liferay-ui:message key="there-is-no-content-categorized-for-your-user-segments" />
-	</div>
+		<div class="alert alert-info">
+			<liferay-ui:message key="there-is-no-content-categorized-for-your-user-segments" />
+		</div>
 	</c:otherwise>
 </c:choose>

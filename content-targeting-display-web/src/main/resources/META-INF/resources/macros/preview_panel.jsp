@@ -62,23 +62,23 @@ for (QueryRule queryRule : queryRules) {
 				request.setAttribute("queryRule", queryRule);
 			%>
 
-			<li class="<%= (selectedIndex == queryRule_index) ? "active" : StringPool.BLANK %>" data-index="<%= queryRule_index %>" id="<portlet:namespace />PreviewContent<%= queryRule_index %>">
-				<div class="content-preview-link list-group-item-field">
-					<div class=" sticker-default sticker-lg" style="background-image: url(<%= queryRule.getAssetImage(renderRequest) %>);"></div>
-				</div>
-
-				<div class="content-preview-link list-group-item-content">
-					<div class="clamp-container">
-						<a class="text-default truncate-text" href="javascript:;"><%= queryRule.getSummary(portletConfig, locale) %></a>
+				<li class="<%= (selectedIndex == queryRule_index) ? "active" : StringPool.BLANK %>" data-index="<%= queryRule_index %>" id="<portlet:namespace />PreviewContent<%= queryRule_index %>">
+					<div class="content-preview-link list-group-item-field">
+						<div class=" sticker-default sticker-lg" style="background-image: url(<%= queryRule.getAssetImage(renderRequest) %>);"></div>
 					</div>
-				</div>
 
-				<c:if test="<%= queryRule.getAssetClassPK() > 0 %>">
-					<div class="list-group-item-field">
-						<liferay-util:include page="/macros/edit_icon_link.jsp" servletContext="<%= application %>" />
+					<div class="content-preview-link list-group-item-content">
+						<div class="clamp-container">
+							<a class="text-default truncate-text" href="javascript:;"><%= queryRule.getSummary(portletConfig, locale) %></a>
+						</div>
 					</div>
-				</c:if>
-			</li>
+
+					<c:if test="<%= queryRule.getAssetClassPK() > 0 %>">
+						<div class="list-group-item-field">
+							<liferay-util:include page="/macros/edit_icon_link.jsp" servletContext="<%= application %>" />
+						</div>
+					</c:if>
+				</li>
 
 			<%
 			}
