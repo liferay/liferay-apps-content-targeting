@@ -21,19 +21,19 @@
 	<%
 	String enableLocationPortalLabel = LanguageUtil.get(request, "portal-settings-content-targeting-analytics");
 
-	if (Validator.isNotNull(youtubeTrackingActionDisplayContext.getPortalSettingsURL())) {
-		enableLocationPortalLabel = "<a href=\"" + youtubeTrackingActionDisplayContext.getPortalSettingsURL() + "\">" + enableLocationPortalLabel + "</a>";
+	if (Validator.isNotNull(youtubeTrackingActionDisplayContext.getPortalSettingsAnalyticsURL())) {
+		enableLocationPortalLabel = "<a href=\"" + youtubeTrackingActionDisplayContext.getPortalSettingsAnalyticsURL() + "\">" + enableLocationPortalLabel + "</a>";
 	}
 
 	String enableLocationSiteLabel = LanguageUtil.get(request, "site-settings-content-targeting-analytics");
 
-	if (Validator.isNotNull(youtubeTrackingActionDisplayContext.getSiteSettingsURL())) {
-		enableLocationSiteLabel = "<a href=\"" + youtubeTrackingActionDisplayContext.getSiteSettingsURL() + "\">" + enableLocationSiteLabel + "</a>";
+	if (Validator.isNotNull(youtubeTrackingActionDisplayContext.getSiteSettingsAnalyticsURL())) {
+		enableLocationSiteLabel = "<a href=\"" + youtubeTrackingActionDisplayContext.getSiteSettingsAnalyticsURL() + "\">" + enableLocationSiteLabel + "</a>";
 	}
 	%>
 
 	<div class="alert alert-info">
-		<strong><liferay-ui:message key="this-metric-will-not-work-properly-because-youtube-tracking-is-not-enabled" /></strong>
+		<strong><liferay-ui:message key="this-metric-will-not-work-properly-because-youtube-videos-tracking-is-not-enabled" /></strong>
 
 		<liferay-ui:message arguments="<%= new String[] {enableLocationPortalLabel, enableLocationSiteLabel} %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
 	</div>

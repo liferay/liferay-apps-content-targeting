@@ -260,7 +260,7 @@
 
 						.field-editor {
 							margin: 30px 50px;
-							border: 0px !important;
+							border: 0 !important;
 						}
 					}
 				}
@@ -291,11 +291,14 @@
 
 	.form-builder-search-panels {
 		.icon-search {
-			display: none;
+			position: absolute;
+			right: 14px;
+			top: 14px;
 		}
 	}
 
 	input.slider-input {
+		border-width: 0;
 		width: auto;
 	}
 

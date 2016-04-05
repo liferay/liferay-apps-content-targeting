@@ -14,11 +14,9 @@
 
 package com.liferay.content.targeting.tracking.action.youtube;
 
-import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseJSPTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.model.TrackingActionInstance;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -109,13 +107,6 @@ public class YoutubeTrackingAction extends BaseJSPTrackingAction {
 		context.put("elementId", elementId);
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
-
-		long groupId = (Long)context.get("scopeGroupId");
-
-		if (!AnalyticsUtil.isAnalyticsYoutubeEnabled(groupId)) {
-			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
-				context);
-		}
 	}
 
 	// See html/js/analytics/integrations/youtube_iframe.js in Analytics Hook

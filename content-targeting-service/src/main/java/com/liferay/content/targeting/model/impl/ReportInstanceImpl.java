@@ -21,10 +21,12 @@ import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * The extended model implementation for the ReportInstance service. Represents a row in the &quot;CT_ReportInstance&quot; database table, with each column mapped to a property of this class.
@@ -83,7 +85,10 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 		}
 
 		if (!report.isInstantiable()) {
-			return LanguageUtil.get(locale, "system-report");
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass());
+
+			return LanguageUtil.get(resourceBundle, "system-report");
 		}
 
 		return report.getName(locale);

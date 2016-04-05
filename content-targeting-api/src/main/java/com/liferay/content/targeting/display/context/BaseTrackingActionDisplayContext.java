@@ -19,20 +19,16 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-public class BaseTrackingActionDisplayContext {
+public class BaseTrackingActionDisplayContext extends BaseDisplayContext {
 
 	public BaseTrackingActionDisplayContext(HttpServletRequest request) {
-		this.request = request;
-
-		displayContext = (Map<String, Object>)request.getAttribute(
-			"displayContext");
+		super(request);
 	}
 
 	public String getAlias() {
@@ -71,35 +67,8 @@ public class BaseTrackingActionDisplayContext {
 		return _eventTypes;
 	}
 
-	public String getPortalSettingsURL() {
-		if (_portalSettingsURL != null) {
-			return _portalSettingsURL;
-		}
-
-		_portalSettingsURL = GetterUtil.getString(
-			displayContext.get("portalSettingsURL"));
-
-		return _portalSettingsURL;
-	}
-
-	public String getSiteSettingsURL() {
-		if (_siteSettingsURL != null) {
-			return _siteSettingsURL;
-		}
-
-		_siteSettingsURL = GetterUtil.getString(
-			displayContext.get("siteSettingsURL"));
-
-		return _siteSettingsURL;
-	}
-
-	protected final Map<String, Object> displayContext;
-	protected final HttpServletRequest request;
-
 	private String _alias;
 	private String _eventType;
 	private List<String> _eventTypes;
-	private String _portalSettingsURL;
-	private String _siteSettingsURL;
 
 }

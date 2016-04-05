@@ -22,7 +22,7 @@
 			<strong><liferay-ui:message key="there-are-no-user-groups-available" /></strong>
 
 			<%
-			String enableLocationLabel = LanguageUtil.get(locale, "control-panel-user-groups");
+			String enableLocationLabel = LanguageUtil.get(resourceBundle, "control-panel-user-groups");
 
 			if (Validator.isNotNull(ruleUserGroupMemberDisplayContext.getUserGroupsAdminURL())) {
 				enableLocationLabel = "<a href=\"" + ruleUserGroupMemberDisplayContext.getUserGroupsAdminURL() + "\">" + enableLocationLabel + "</a>";

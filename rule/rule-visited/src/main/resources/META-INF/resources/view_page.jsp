@@ -23,14 +23,14 @@
 		<%
 		String enableLocationPortalLabel = LanguageUtil.get(resourceBundle, "portal-settings-content-targeting-analytics");
 
-		if (Validator.isNotNull(ruleVisitedDisplayContext.getPortalSettingsURL())) {
-			enableLocationPortalLabel = "<a href=\"" + ruleVisitedDisplayContext.getPortalSettingsURL() + "\">" + enableLocationPortalLabel + "</a>";
+		if (Validator.isNotNull(ruleVisitedDisplayContext.getPortalSettingsAnalyticsURL())) {
+			enableLocationPortalLabel = "<a href=\"" + ruleVisitedDisplayContext.getPortalSettingsAnalyticsURL() + "\">" + enableLocationPortalLabel + "</a>";
 		}
 
 		String enableLocationSiteLabel = LanguageUtil.get(resourceBundle, "site-settings-content-targeting-analytics");
 
-		if (Validator.isNotNull(ruleVisitedDisplayContext.getSiteSettingsURL())) {
-			enableLocationSiteLabel = "<a href=\"" + ruleVisitedDisplayContext.getSiteSettingsURL() + "\">" + enableLocationSiteLabel + "</a>";
+		if (Validator.isNotNull(ruleVisitedDisplayContext.getSiteSettingsAnalyticsURL())) {
+			enableLocationSiteLabel = "<a href=\"" + ruleVisitedDisplayContext.getSiteSettingsAnalyticsURL() + "\">" + enableLocationSiteLabel + "</a>";
 		}
 		%>
 

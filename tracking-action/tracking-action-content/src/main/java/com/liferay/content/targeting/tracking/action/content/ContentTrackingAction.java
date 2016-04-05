@@ -16,7 +16,6 @@ package com.liferay.content.targeting.tracking.action.content;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseJSPTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.exception.InvalidTrackingActionException;
@@ -24,7 +23,6 @@ import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
 import com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -294,13 +292,6 @@ public class ContentTrackingAction extends BaseJSPTrackingAction {
 		context.put("assetEntryId", assetEntryId);
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
-
-		long groupId = (Long)context.get("scopeGroupId");
-
-		if (!AnalyticsUtil.isAnalyticsContentEnabled(groupId)) {
-			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
-				context);
-		}
 	}
 
 	@Reference(unbind = "-")

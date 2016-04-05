@@ -14,20 +14,13 @@
 
 package com.liferay.content.targeting.rule.facebook.display.context;
 
-import com.liferay.content.targeting.util.PortletKeys;
+import com.liferay.content.targeting.display.context.BaseRuleDisplayContext;
 import com.liferay.portal.facebook.FacebookConnectUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
-
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,17 +28,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class RuleFacebookDisplayContext {
+public class RuleFacebookDisplayContext extends BaseRuleDisplayContext {
 
-	public RuleFacebookDisplayContext(
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request) {
-
-		_liferayPortletResponse = liferayPortletResponse;
-		_request = request;
-
-		_displayContext = (Map<String, Object>)request.getAttribute(
-			"displayContext");
+	public RuleFacebookDisplayContext(HttpServletRequest request) {
+		super(request);
 	}
 
 	public String getCityName() {
@@ -53,7 +39,7 @@ public class RuleFacebookDisplayContext {
 			return _cityName;
 		}
 
-		_cityName = GetterUtil.getString(_displayContext.get("cityName"));
+		_cityName = GetterUtil.getString(displayContext.get("cityName"));
 
 		return _cityName;
 	}
@@ -64,7 +50,7 @@ public class RuleFacebookDisplayContext {
 		}
 
 		_educationLevel = GetterUtil.getString(
-			_displayContext.get("educationLevel"));
+			displayContext.get("educationLevel"));
 
 		return _educationLevel;
 	}
@@ -75,7 +61,7 @@ public class RuleFacebookDisplayContext {
 		}
 
 		_facebookName = GetterUtil.getString(
-			_displayContext.get("facebookName"));
+			displayContext.get("facebookName"));
 
 		return _facebookName;
 	}
@@ -85,8 +71,7 @@ public class RuleFacebookDisplayContext {
 			return _fbOlderThan;
 		}
 
-		_fbOlderThan = GetterUtil.getInteger(
-			_displayContext.get("fbOlderThan"));
+		_fbOlderThan = GetterUtil.getInteger(displayContext.get("fbOlderThan"));
 
 		return _fbOlderThan;
 	}
@@ -97,7 +82,7 @@ public class RuleFacebookDisplayContext {
 		}
 
 		_fbYoungerThan = GetterUtil.getInteger(
-			_displayContext.get("fbYoungerThan"));
+			displayContext.get("fbYoungerThan"));
 
 		return _fbYoungerThan;
 	}
@@ -107,7 +92,7 @@ public class RuleFacebookDisplayContext {
 			return _gender;
 		}
 
-		_gender = GetterUtil.getString(_displayContext.get("gender"));
+		_gender = GetterUtil.getString(displayContext.get("gender"));
 
 		return _gender;
 	}
@@ -118,48 +103,33 @@ public class RuleFacebookDisplayContext {
 		}
 
 		_numberOfFriends = GetterUtil.getInteger(
-			_displayContext.get("numberOfFriends"), 0);
+			displayContext.get("numberOfFriends"), 0);
 
 		return _numberOfFriends;
 	}
 
-	public String getPortalSettingsURL() {
-		if (_portalSettingsURL != null) {
-			return _portalSettingsURL;
+	public String getPortalSettingsAuthenticationURL() {
+		if (_portalSettingsAuthenticationURL != null) {
+			return _portalSettingsAuthenticationURL;
 		}
 
-		_portalSettingsURL = StringPool.BLANK;
+		_portalSettingsAuthenticationURL = StringPool.BLANK;
 
 		if (isFbLoginEnabled()) {
-			return _portalSettingsURL;
+			return _portalSettingsAuthenticationURL;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		PortletURL portletURL = getPortalSettingsURL();
 
-		try {
-			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(),
-					PortletKeys.PORTAL_SETTINGS)) {
-
-				return _portalSettingsURL;
-			}
-
-			PortletURL portletURL =
-				_liferayPortletResponse.createLiferayPortletURL(
-					PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
-					PortletKeys.PORTAL_SETTINGS, PortletRequest.RENDER_PHASE,
-					false);
-
-			portletURL.setParameter("historyKey", "_130_authentication");
-
-			_portalSettingsURL = portletURL.toString();
-		}
-		catch (PortalException pe) {
+		if (portletURL == null) {
+			return _portalSettingsAuthenticationURL;
 		}
 
-		return _portalSettingsURL;
+		portletURL.setParameter("historyKey", "_130_authentication");
+
+		_portalSettingsAuthenticationURL = portletURL.toString();
+
+		return _portalSettingsAuthenticationURL;
 	}
 
 	public String getSchoolName() {
@@ -167,7 +137,7 @@ public class RuleFacebookDisplayContext {
 			return _schoolName;
 		}
 
-		_schoolName = GetterUtil.getString(_displayContext.get("schoolName"));
+		_schoolName = GetterUtil.getString(displayContext.get("schoolName"));
 
 		return _schoolName;
 	}
@@ -177,7 +147,7 @@ public class RuleFacebookDisplayContext {
 			return _selector;
 		}
 
-		_selector = GetterUtil.getString(_displayContext.get("selector"));
+		_selector = GetterUtil.getString(displayContext.get("selector"));
 
 		return _selector;
 	}
@@ -187,7 +157,7 @@ public class RuleFacebookDisplayContext {
 			return _isFbLoginEnabled;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_isFbLoginEnabled = FacebookConnectUtil.isEnabled(
@@ -197,17 +167,14 @@ public class RuleFacebookDisplayContext {
 	}
 
 	private String _cityName;
-	private final Map<String, Object> _displayContext;
 	private String _educationLevel;
 	private String _facebookName;
 	private Integer _fbOlderThan;
 	private Integer _fbYoungerThan;
 	private String _gender;
 	private Boolean _isFbLoginEnabled;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private Integer _numberOfFriends;
-	private String _portalSettingsURL;
-	private final HttpServletRequest _request;
+	private String _portalSettingsAuthenticationURL;
 	private String _schoolName;
 	private String _selector;
 

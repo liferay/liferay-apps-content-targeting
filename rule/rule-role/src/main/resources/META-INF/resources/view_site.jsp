@@ -22,7 +22,7 @@
 			<strong><liferay-ui:message key="there-are-no-sites-available" /></strong>
 
 			<%
-			String enableLocationLabel = LanguageUtil.get(request, "control-panel-sites");
+			String enableLocationLabel = LanguageUtil.get(resourceBundle, "control-panel-sites");
 
 			if (Validator.isNotNull(ruleRoleDisplayContext.getSitesAdminURL())) {
 				enableLocationLabel = "<a href=\"" + ruleRoleDisplayContext.getSitesAdminURL() + "\">" + enableLocationLabel + "</a>";

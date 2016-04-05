@@ -19,10 +19,10 @@
 <c:if test="<%= !ruleAgeDisplayContext.isBirthDayEnabled() %>">
 
 	<%
-	String enableLocationLabel = LanguageUtil.get(locale, "portal-settings-users");
+	String enableLocationLabel = LanguageUtil.get(resourceBundle, "portal-settings-users");
 
-	if (Validator.isNotNull(ruleAgeDisplayContext.getPortalSettingsURL())) {
-		enableLocationLabel = "<a href=\"" + ruleAgeDisplayContext.getPortalSettingsURL() + "\">" + enableLocationLabel + "</a>";
+	if (Validator.isNotNull(ruleAgeDisplayContext.getPortalSettingsUsersURL())) {
+		enableLocationLabel = "<a href=\"" + ruleAgeDisplayContext.getPortalSettingsUsersURL() + "\">" + enableLocationLabel + "</a>";
 	}
 	%>
 

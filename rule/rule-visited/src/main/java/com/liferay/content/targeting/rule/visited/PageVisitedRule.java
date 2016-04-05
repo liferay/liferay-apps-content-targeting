@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.rule.visited;
 
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
-import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.api.model.Rule;
@@ -23,7 +22,6 @@ import com.liferay.content.targeting.exception.InvalidRuleException;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -253,13 +251,6 @@ public class PageVisitedRule extends BaseJSPRule {
 
 		context.put("friendlyURL", friendlyURL);
 		context.put("privateLayout", privateLayout);
-
-		long groupId = (Long)context.get("scopeGroupId");
-
-		if (!AnalyticsUtil.isAnalyticsPageEnabled(groupId)) {
-			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
-				context);
-		}
 	}
 
 	@Reference(unbind = "-")
