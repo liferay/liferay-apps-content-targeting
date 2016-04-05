@@ -80,8 +80,13 @@ renderResponse.setTitle(contentTargetingEditTacticsDisplayContext.getTacticName(
 					<div class="tabbable">
 						<div class="tabbable-content">
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="javascript:;">Add node</a></li>
-								<li><a href="javascript:;">Settings</a></li>
+								<li class="active">
+									<a href="javascript:;"><liferay-ui:message key="add-node" /></a>
+								</li>
+
+								<li>
+									<a href="javascript:;"><liferay-ui:message key="settings" /></a>
+								</li>
 							</ul>
 
 							<div class="tab-content">
@@ -103,14 +108,20 @@ renderResponse.setTitle(contentTargetingEditTacticsDisplayContext.getTacticName(
 											Channel channel = template.getChannel();
 										%>
 
-											<li class="form-builder-field hide property-builder-field" data-icon="<%= channel.getIcon() %>" data-key="<%= template.getTemplateKey() %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !channel.isInstantiable() %>">
-												<span class="property-builder-field-icon icon <%= channel.getIcon() %>"></span>
-
+											<li class="form-builder-field hide property-builder-field" data-key="<%= template.getTemplateKey() %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !channel.isInstantiable() %>">
 												<div class="property-builder-field-label">
 													<div class="row">
-														<div class="field-title"><%= channel.getName(locale) %></div>
-														<div class="field-description"><%= channel.getDescription(locale) %></div>
-														<div class="field-short-description"><%= channel.getShortDescription(locale) %></div>
+														<div class="field-title">
+															<%= channel.getName(locale) %>
+														</div>
+
+														<div class="field-description">
+															<%= channel.getDescription(locale) %>
+														</div>
+
+														<div class="field-short-description">
+															<%= channel.getShortDescription(locale) %>
+														</div>
 													</div>
 												</div>
 											</li>
@@ -140,21 +151,26 @@ renderResponse.setTitle(contentTargetingEditTacticsDisplayContext.getTacticName(
 									Channel channel = template.getChannel();
 								%>
 
-									<div class="component form-builder-field hide widget yui3-widget" data-icon="<%= channel.getIcon() %>" data-key="<%= template.getTemplateKey() %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !channel.isInstantiable() %>">
+									<div class="component form-builder-field hide widget yui3-widget" data-key="<%= template.getTemplateKey() %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !channel.isInstantiable() %>">
 										<div>
 											<div>
 												<div class="field-header">
-													<div class="field-icon"><i
-															class="<%= channel.getIcon() %>"></i>
-													</div>
 													<div class="field-info row">
-														<div class="field-title"><%= channel.getName(locale) %></div>
-														<div class="field-description"><%= channel.getDescription(locale) %></div>
-														<div class="field-short-description"><%= channel.getShortDescription(locale) %></div>
+														<div class="field-title">
+															<%= channel.getName(locale) %>
+														</div>
+
+														<div class="field-description">
+															<%= channel.getDescription(locale) %>
+														</div>
+
+														<div class="field-short-description">
+															<%= channel.getShortDescription(locale) %>
+														</div>
 													</div>
 												</div>
-												<div class="field-editor">
-												</div>
+
+												<div class="field-editor"></div>
 											</div>
 										</div>
 									</div>

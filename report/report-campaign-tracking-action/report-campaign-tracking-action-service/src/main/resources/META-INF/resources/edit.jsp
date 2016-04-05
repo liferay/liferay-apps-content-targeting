@@ -56,8 +56,6 @@
 
 									<c:if test="<%= trackingAction.isVisible(campaignTrackingActionReportDisplayContext.getClassName(), campaignTrackingActionReportDisplayContext.getClassPK()) %>">
 										<li class="form-builder-field hide property-builder-field" data-icon="<%= trackingAction.getIcon() %>" data-key="<%= templateKey %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !trackingAction.isInstantiable() %>">
-											<span class="property-builder-field-icon icon <%= trackingAction.getIcon() %>"></span>
-
 											<div class="property-builder-field-label">
 												<div class="row">
 													<div class="field-title">
@@ -108,10 +106,6 @@
 									<div>
 										<div>
 											<div class="field-header">
-												<div class="field-icon">
-													<i class="<%= trackingAction.getIcon() %>"></i>
-												</div>
-
 												<div class="field-info row">
 													<div class="field-title">
 														<%= trackingAction.getName(locale) %>

@@ -7,9 +7,6 @@ AUI.add(
 
 			ITEM_FIELD_TPL = '<div>' +
 				'<div class="field-header toggler-header-collapsed">' +
-					'<div class="field-icon">' +
-						'<i class="{icon}"></i>' +
-					'</div>' +
 					'<div class="row field-info">' +
 						'<div class="field-title">{name}</div>' +
 						'<div class="field-description">' +
@@ -22,7 +19,6 @@ AUI.add(
 			'</div>',
 
 			ITEM_CATEGORY_HEADER_TPL = '<div class="category-header toggler-header toggler-header-collapsed">' +
-				'<span class="category-icon icon {icon}"></span>' +
 				'<div class="category-info"> ' +
 					'<div class="category-title">{name}</div>' +
 					'<div class="category-description">{description}</div>' +
@@ -306,7 +302,6 @@ AUI.add(
 											ITEM_CATEGORY_HEADER_TPL,
 											{
 												description: item.category.description,
-												icon: item.category.icon,
 												name: item.category.name
 											}
 										)
@@ -510,12 +505,10 @@ AUI.add(
 							fieldsContainer.all('.form-builder-field').each(
 								function(field) {
 									var categoryDescription = field.attr('data-categorydescription'),
-										categoryIcon = field.attr('data-categoryicon'),
 										categoryKey = field.attr('data-categorykey'),
 										categoryName = field.attr('data-categoryname'),
 										description = field.one('.field-description').text(),
 										editor = field.attr('data-template'),
-										icon = field.attr('data-icon'),
 										key = field.attr('data-key'),
 										fieldData = /^([^_]*)(?:_(.*))?$/.exec(key),
 										name = field.one('.field-title').text(),
@@ -532,7 +525,6 @@ AUI.add(
 											cssCollapseClass: cssCollapseClass,
 											description: description,
 											editor: editor,
-											icon: icon,
 											id: fieldData[2] ? key : '',
 											key: key,
 											name: name,
@@ -543,7 +535,6 @@ AUI.add(
 
 									fields.push(
 										{
-											iconClass: icon,
 											id: fieldData[1],
 											label: A.Lang.sub(
 												labelTpl,
@@ -556,7 +547,6 @@ AUI.add(
 											options: {
 												category: {
 													description: categoryDescription,
-													icon: categoryIcon,
 													key: categoryKey,
 													name: categoryName
 												}
@@ -719,7 +709,6 @@ AUI.add(
 									cssCollapseClass: field.cssCollapseClass,
 									description: field.description,
 									editor: field.editor.replace(/(\-|_7b_|[\{%7B&#x25;]+)ct_+field_+guid(\-|_7d_|[\}%7D&#x25;]+)/ig, fieldId),
-									icon: field.icon,
 									name: field.name,
 									shortDescription: field.shortDescription
 								}
