@@ -129,6 +129,15 @@ public abstract class AssetQueryRule implements QueryRule {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		if (Validator.isNull(_assetClassName) || (_assetClassPK <= 0)) {
+			return StringPool.BLANK;
+		}
+
+		return _assetRendererFactory.getIconCssClass();
+	}
+
+	@Override
 	public int getIndex() {
 		return _index;
 	}

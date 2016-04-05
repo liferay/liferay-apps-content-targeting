@@ -46,6 +46,8 @@ public interface QueryRule extends Comparable<QueryRule> {
 
 	public long getGroupId(long scopeGroupId);
 
+	public String getIconCssClass();
+
 	public int getIndex();
 
 	public String getSummary(PortletConfig portletConfig, Locale locale);
