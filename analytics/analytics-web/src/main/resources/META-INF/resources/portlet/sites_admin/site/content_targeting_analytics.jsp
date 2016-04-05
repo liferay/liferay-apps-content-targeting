@@ -26,10 +26,9 @@ if (liveGroup != null) {
 }
 %>
 
-<h3><liferay-ui:message key="content-targeting-analytics" /></h3>
-
-<div class="alert alert-info">
+<p class="text-muted">
 	<liferay-ui:message arguments="<%= liveGroup.getDescriptiveName(themeDisplay.getLocale()) %>" key="select-the-elements-and-actions-that-will-be-tracked-by-content-targeting-analytics-in-the-site-x" />
+</p>
 
 <%
 String checkPortalAnalyticsLabel = LanguageUtil.get(locale, "content-targeting-analytics");
@@ -45,8 +44,9 @@ if (PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, liv
 }
 %>
 
+<p class="text-muted">
 	<liferay-ui:message arguments="<%= checkPortalAnalyticsLabel %>" key="check-general-content-targeting-analytics-settings-in-x" />
-</div>
+</p>
 
 <c:if test="<%= liveGroup.isStaged() %>">
 	<div class="alert alert-block">
@@ -55,31 +55,31 @@ if (PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, liv
 </c:if>
 
 <aui:fieldset>
-	<aui:input disabled="<%= !analyticsPageEnabled %>" label="pages" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_PAGE_ENABLED + "--" %>' title="<%= analyticsPageEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsPageEnabled(groupId) %>" />
+	<aui:input disabled="<%= !analyticsPageEnabled %>" label="pages" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_PAGE_ENABLED + "--" %>' title="<%= analyticsPageEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="toggle-switch" value="<%= AnalyticsUtil.isAnalyticsPageEnabled(groupId) %>" />
 
-	<aui:input disabled="<%= !analyticsContentEnabled %>" label="content" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_CONTENT_ENABLED + "--" %>' title="<%= analyticsContentEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsContentEnabled(groupId) %>" />
+	<aui:input disabled="<%= !analyticsContentEnabled %>" label="content" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_CONTENT_ENABLED + "--" %>' title="<%= analyticsContentEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="toggle-switch" value="<%= AnalyticsUtil.isAnalyticsContentEnabled(groupId) %>" />
 
-	<aui:input disabled="<%= !analyticsFormEnabled %>" id="contentTargetingAnalyticsFormEnabled" label="forms" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_ENABLED + "--" %>' title="<%= analyticsFormEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsFormEnabled(groupId) %>" />
+	<aui:input disabled="<%= !analyticsFormEnabled %>" id="contentTargetingAnalyticsFormEnabled" label="forms" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_ENABLED + "--" %>' title="<%= analyticsFormEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="toggle-switch" value="<%= AnalyticsUtil.isAnalyticsFormEnabled(groupId) %>" />
 
-	<div class="staging-section" id="<portlet:namespace />formOptions">
-		<aui:input disabled="<%= !analyticsFormViewEnabled %>" label="form-views" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_VIEW_ENABLED + "--" %>' title="<%= analyticsFormViewEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsFormViewEnabled(groupId) %>" />
+	<div id="<portlet:namespace />formOptions">
+		<aui:input disabled="<%= !analyticsFormViewEnabled %>" label="form-views" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_VIEW_ENABLED + "--" %>' title="<%= analyticsFormViewEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="toggle-switch" value="<%= AnalyticsUtil.isAnalyticsFormViewEnabled(groupId) %>" />
 
-		<aui:input disabled="<%= !analyticsFormInteractEnabled %>" label="form-interactions" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_INTERACT_ENABLED + "--" %>' title="<%= analyticsFormInteractEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsFormInteractEnabled(groupId) %>" />
+		<aui:input disabled="<%= !analyticsFormInteractEnabled %>" label="form-interactions" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_INTERACT_ENABLED + "--" %>' title="<%= analyticsFormInteractEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="toggle-switch" value="<%= AnalyticsUtil.isAnalyticsFormInteractEnabled(groupId) %>" />
 
-		<aui:input disabled="<%= !analyticsFormSubmitEnabled %>" label="form-submits" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_SUBMIT_ENABLED + "--" %>' title="<%= analyticsFormSubmitEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsFormSubmitEnabled(groupId) %>" />
+		<aui:input disabled="<%= !analyticsFormSubmitEnabled %>" label="form-submits" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_SUBMIT_ENABLED + "--" %>' title="<%= analyticsFormSubmitEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="toggle-switch" value="<%= AnalyticsUtil.isAnalyticsFormSubmitEnabled(groupId) %>" />
 
 		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_EXCLUDED_IDS_REGEX + "--" %>' type="text" value="<%= AnalyticsUtil.getAnalyticsFormExcludedIdsRegex(groupId) %>" />
 	</div>
 
-	<aui:input disabled="<%= !analyticsLinkEnabled %>" id="contentTargetingAnalyticsLinkEnabled" label="links" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_ENABLED + "--" %>' title="<%= analyticsLinkEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsLinkEnabled(groupId) %>" />
+	<aui:input disabled="<%= !analyticsLinkEnabled %>" id="contentTargetingAnalyticsLinkEnabled" label="links" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_ENABLED + "--" %>' title="<%= analyticsLinkEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="toggle-switch" value="<%= AnalyticsUtil.isAnalyticsLinkEnabled(groupId) %>" />
 
-	<div class="staging-section" id="<portlet:namespace />linkOptions">
-		<aui:input disabled="<%= !analyticsLinkClickEnabled %>" label="link-clicks" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_CLICK_ENABLED + "--" %>' title="<%= analyticsLinkClickEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsLinkClickEnabled(groupId) %>" />
+	<div id="<portlet:namespace />linkOptions">
+		<aui:input disabled="<%= !analyticsLinkClickEnabled %>" label="link-clicks" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_CLICK_ENABLED + "--" %>' title="<%= analyticsLinkClickEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="toggle-switch" value="<%= AnalyticsUtil.isAnalyticsLinkClickEnabled(groupId) %>" />
 
 		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_EXCLUDED_IDS_REGEX + "--" %>' type="text" value="<%= AnalyticsUtil.getAnalyticsLinkExcludedIdsRegex(groupId) %>" />
 	</div>
 
-	<aui:input disabled="<%= !analyticsYoutubeEnabled %>" label="youtube-videos" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_YOUTUBE_ENABLED + "--" %>' title="<%= analyticsYoutubeEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="checkbox" value="<%= AnalyticsUtil.isAnalyticsYoutubeEnabled(groupId) %>" />
+	<aui:input disabled="<%= !analyticsYoutubeEnabled %>" label="youtube-videos" name='<%= "TypeSettingsProperties--" + AnalyticsServiceConfigurationKeys.ANALYTICS_YOUTUBE_ENABLED + "--" %>' title="<%= analyticsYoutubeEnabled ? StringPool.BLANK : checkPortalAnalyticsOptionLabel %>" type="toggle-switch" value="<%= AnalyticsUtil.isAnalyticsYoutubeEnabled(groupId) %>" />
 </aui:fieldset>
 
 <aui:script>

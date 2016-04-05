@@ -16,38 +16,36 @@
 
 <%@ include file="/portlet/init.jsp" %>
 
-<h3><liferay-ui:message key="content-targeting-analytics" /></h3>
-
-<div class="alert alert-info">
+<p class="text-muted">
 	<liferay-ui:message key="select-the-elements-and-actions-that-will-be-tracked-by-content-targeting-analytics" />
-</div>
+</p>
 
 <aui:fieldset>
-	<aui:input label="pages" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_PAGE_ENABLED + "--" %>' type="checkbox" value="<%= analyticsPageEnabled %>" />
+	<aui:input label="pages" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_PAGE_ENABLED + "--" %>' type="toggle-switch" value="<%= analyticsPageEnabled %>" />
 
-	<aui:input label="content" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_CONTENT_ENABLED + "--" %>' type="checkbox" value="<%= analyticsContentEnabled %>" />
+	<aui:input label="content" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_CONTENT_ENABLED + "--" %>' type="toggle-switch" value="<%= analyticsContentEnabled %>" />
 
-	<aui:input id="contentTargetingAnalyticsFormEnabled" label="forms" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_ENABLED + "--" %>' type="checkbox" value="<%= analyticsFormEnabled %>" />
+	<aui:input id="contentTargetingAnalyticsFormEnabled" label="forms" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_ENABLED + "--" %>' type="toggle-switch" value="<%= analyticsFormEnabled %>" />
 
-	<div class="organization-details" id="<portlet:namespace />formOptions">
-		<aui:input label="form-views" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_VIEW_ENABLED + "--" %>' type="checkbox" value="<%= analyticsFormViewEnabled %>" />
+	<div id="<portlet:namespace />formOptions">
+		<aui:input label="form-views" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_VIEW_ENABLED + "--" %>' type="toggle-switch" value="<%= analyticsFormViewEnabled %>" />
 
-		<aui:input label="form-interactions" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_INTERACT_ENABLED + "--" %>' type="checkbox" value="<%= analyticsFormInteractEnabled %>" />
+		<aui:input label="form-interactions" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_INTERACT_ENABLED + "--" %>' type="toggle-switch" value="<%= analyticsFormInteractEnabled %>" />
 
-		<aui:input label="form-submits" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_SUBMIT_ENABLED + "--" %>' type="checkbox" value="<%= analyticsFormSubmitEnabled %>" />
+		<aui:input label="form-submits" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_SUBMIT_ENABLED + "--" %>' type="toggle-switch" value="<%= analyticsFormSubmitEnabled %>" />
 
 		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_FORM_EXCLUDED_IDS_REGEX + "--" %>' type="text" value="<%= analyticsFormExcludedIdsRegex %>" />
 	</div>
 
-	<aui:input id="contentTargetingAnalyticsLinkEnabled" label="links" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_ENABLED + "--" %>' type="checkbox" value="<%= analyticsLinkEnabled %>" />
+	<aui:input id="contentTargetingAnalyticsLinkEnabled" label="links" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_ENABLED + "--" %>' type="toggle-switch" value="<%= analyticsLinkEnabled %>" />
 
-	<div class="organization-details" id="<portlet:namespace />linkOptions">
-		<aui:input label="link-clicks" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_CLICK_ENABLED + "--" %>' type="checkbox" value="<%= analyticsLinkClickEnabled %>" />
+	<div id="<portlet:namespace />linkOptions">
+		<aui:input label="link-clicks" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_CLICK_ENABLED + "--" %>' type="toggle-switch" value="<%= analyticsLinkClickEnabled %>" />
 
 		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_LINK_EXCLUDED_IDS_REGEX + "--" %>' type="text" value="<%= analyticsLinkExcludedIdsRegex %>" />
 	</div>
 
-	<aui:input label="youtube-videos" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_YOUTUBE_ENABLED + "--" %>' type="checkbox" value="<%= analyticsYoutubeEnabled %>" />
+	<aui:input label="youtube-videos" name='<%= "settings--" + AnalyticsServiceConfigurationKeys.ANALYTICS_YOUTUBE_ENABLED + "--" %>' type="toggle-switch" value="<%= analyticsYoutubeEnabled %>" />
 </aui:fieldset>
 
 <aui:script>
