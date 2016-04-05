@@ -291,7 +291,9 @@
 
 	.form-builder-search-panels {
 		.icon-search {
-			display: none;
+			position: absolute;
+			right: 14px;
+			top: 14px;
 		}
 	}
 
