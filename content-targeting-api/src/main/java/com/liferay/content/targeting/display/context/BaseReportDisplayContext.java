@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -96,8 +97,7 @@ public class BaseReportDisplayContext {
 			return _reportInstance;
 		}
 
-		_reportInstance = (ReportInstance)displayContext.get(
-			"reportInstance");
+		_reportInstance = (ReportInstance)displayContext.get("reportInstance");
 
 		return _reportInstance;
 	}
