@@ -49,6 +49,6 @@
 </aui:fieldset>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />contentTargetingAnalyticsFormEnabledCheckbox','<portlet:namespace />formOptions');
-	Liferay.Util.toggleBoxes('<portlet:namespace />contentTargetingAnalyticsLinkEnabledCheckbox','<portlet:namespace />linkOptions');
+	Liferay.Util.toggleBoxes('<portlet:namespace />contentTargetingAnalyticsFormEnabled', '<portlet:namespace />formOptions');
+	Liferay.Util.toggleBoxes('<portlet:namespace />contentTargetingAnalyticsLinkEnabled', '<portlet:namespace />linkOptions');
 </aui:script>
