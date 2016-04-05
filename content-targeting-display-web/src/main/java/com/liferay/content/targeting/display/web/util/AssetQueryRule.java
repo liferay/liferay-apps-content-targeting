@@ -92,6 +92,7 @@ public abstract class AssetQueryRule implements QueryRule {
 		return _assetRenderer.getThumbnailPath(portletRequest);
 	}
 
+	@Override
 	public Map<String, Object> getAssetSelectorIconData(
 			HttpServletRequest request,
 			AssetRendererFactory assetRendererFactory, String index)
@@ -126,6 +127,15 @@ public abstract class AssetQueryRule implements QueryRule {
 	@Override
 	public long getGroupId(long scopeGroupId) {
 		return scopeGroupId;
+	}
+
+	@Override
+	public String getIconCssClass() {
+		if (Validator.isNull(_assetClassName) || (_assetClassPK <= 0)) {
+			return StringPool.BLANK;
+		}
+
+		return _assetRendererFactory.getIconCssClass();
 	}
 
 	@Override

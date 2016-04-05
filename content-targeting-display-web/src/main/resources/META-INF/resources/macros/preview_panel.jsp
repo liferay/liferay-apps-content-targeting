@@ -64,7 +64,16 @@ for (QueryRule queryRule : queryRules) {
 
 				<li class="<%= (selectedIndex == queryRule_index) ? "active" : StringPool.BLANK %>" data-index="<%= queryRule_index %>" id="<portlet:namespace />PreviewContent<%= queryRule_index %>">
 					<div class="content-preview-link list-group-item-field">
-						<div class=" sticker-default sticker-lg" style="background-image: url(<%= queryRule.getAssetImage(renderRequest) %>);"></div>
+						<c:choose>
+							<c:when test="<%= Validator.isNotNull(queryRule.getAssetImage(renderRequest)) %>">
+								<div class="sticker-default sticker-lg" style="background-image: url(<%= queryRule.getAssetImage(renderRequest) %>);"></div>
+							</c:when>
+							<c:otherwise>
+								<div class="sticker-default sticker-lg text-center">
+									<aui:icon cssClass="icon-vertical-card-image text-default" image="<%= queryRule.getIconCssClass() %>" markupView="lexicon" />
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 
 					<div class="content-preview-link list-group-item-content">
