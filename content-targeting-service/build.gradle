@@ -1,3 +1,5 @@
+apply plugin: "com.liferay.lang.merger"
+
 buildService {
 	apiDir = "../content-targeting-api/src/main/java"
 	testDir = "../content-targeting-test/src/testIntegration/java"
