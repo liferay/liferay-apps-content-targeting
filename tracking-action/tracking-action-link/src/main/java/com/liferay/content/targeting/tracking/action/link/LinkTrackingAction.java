@@ -14,11 +14,9 @@
 
 package com.liferay.content.targeting.tracking.action.link;
 
-import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseJSPTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.model.TrackingActionInstance;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -109,13 +107,6 @@ public class LinkTrackingAction extends BaseJSPTrackingAction {
 		context.put("elementId", elementId);
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
-
-		long groupId = (Long)context.get("scopeGroupId");
-
-		if (!AnalyticsUtil.isAnalyticsLinkEnabled(groupId)) {
-			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
-				context);
-		}
 	}
 
 	private static final String[] _EVENT_TYPES = {"click"};

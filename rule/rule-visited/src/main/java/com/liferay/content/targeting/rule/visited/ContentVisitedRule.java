@@ -17,7 +17,6 @@ package com.liferay.content.targeting.rule.visited;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
-import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.api.model.Rule;
@@ -27,7 +26,6 @@ import com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -288,13 +286,6 @@ public class ContentVisitedRule extends BaseJSPRule {
 		}
 
 		context.put("assetEntryId", assetEntryId);
-
-		long groupId = (Long)context.get("scopeGroupId");
-
-		if (!AnalyticsUtil.isAnalyticsContentEnabled(groupId)) {
-			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
-				context);
-		}
 	}
 
 	@Reference(unbind = "-")

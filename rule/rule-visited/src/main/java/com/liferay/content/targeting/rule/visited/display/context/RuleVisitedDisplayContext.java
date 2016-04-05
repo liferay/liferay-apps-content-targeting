@@ -17,6 +17,7 @@ package com.liferay.content.targeting.rule.visited.display.context;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
+import com.liferay.content.targeting.display.context.BaseRuleDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -27,20 +28,18 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-public class RuleVisitedDisplayContext {
+public class RuleVisitedDisplayContext extends BaseRuleDisplayContext {
 
 	public RuleVisitedDisplayContext(HttpServletRequest request) {
-		_request = request;
-
-		_displayContext = (Map<String, Object>)request.getAttribute(
-			"displayContext");
+		super(request);
 	}
 
 	public long getAssetEntryId() {
@@ -49,7 +48,7 @@ public class RuleVisitedDisplayContext {
 		}
 
 		_assetEntryId = GetterUtil.getLong(
-			_displayContext.get("assetEntryId"), 0L);
+			displayContext.get("assetEntryId"), 0L);
 
 		return _assetEntryId;
 	}
@@ -69,7 +68,7 @@ public class RuleVisitedDisplayContext {
 			return _friendlyURL;
 		}
 
-		_friendlyURL = GetterUtil.getString(_displayContext.get("friendlyURL"));
+		_friendlyURL = GetterUtil.getString(displayContext.get("friendlyURL"));
 
 		return _friendlyURL;
 	}
@@ -102,26 +101,44 @@ public class RuleVisitedDisplayContext {
 		return _friendlyURLPublicBase;
 	}
 
-	public String getPortalSettingsURL() {
-		if (_portalSettingsURL != null) {
-			return _portalSettingsURL;
+	public String getPortalSettingsAnalyticsURL() {
+		if (_portalSettingsAnalyticsURL != null) {
+			return _portalSettingsAnalyticsURL;
 		}
 
-		_portalSettingsURL = GetterUtil.getString(
-			_displayContext.get("portalSettingsURL"));
+		_portalSettingsAnalyticsURL = StringPool.BLANK;
 
-		return _portalSettingsURL;
+		PortletURL portletURL = getPortalSettingsURL();
+
+		if (portletURL == null) {
+			return _portalSettingsAnalyticsURL;
+		}
+
+		portletURL.setParameter("historyKey", "_130_contentTargetingAnalytics");
+
+		_portalSettingsAnalyticsURL = portletURL.toString();
+
+		return _portalSettingsAnalyticsURL;
 	}
 
-	public String getSiteSettingsURL() {
-		if (_siteSettingsURL != null) {
-			return _siteSettingsURL;
+	public String getSiteSettingsAnalyticsURL() {
+		if (_siteSettingsAnalyticsURL != null) {
+			return _siteSettingsAnalyticsURL;
 		}
 
-		_siteSettingsURL = GetterUtil.getString(
-			_displayContext.get("siteSettingsURL"));
+		_siteSettingsAnalyticsURL = StringPool.BLANK;
 
-		return _siteSettingsURL;
+		PortletURL portletURL = getPortalSettingsURL();
+
+		if (portletURL == null) {
+			return _siteSettingsAnalyticsURL;
+		}
+
+		portletURL.setParameter("historyKey", "_165_contentTargetingAnalytics");
+
+		_siteSettingsAnalyticsURL = portletURL.toString();
+
+		return _siteSettingsAnalyticsURL;
 	}
 
 	public boolean isPrivateLayout() {
@@ -130,13 +147,13 @@ public class RuleVisitedDisplayContext {
 		}
 
 		_privateLayout = GetterUtil.getBoolean(
-			_displayContext.get("privateLayout"), false);
+			displayContext.get("privateLayout"), false);
 
 		return _privateLayout;
 	}
 
 	public boolean isTrackingContentEnabled() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return AnalyticsUtil.isAnalyticsContentEnabled(
@@ -144,7 +161,7 @@ public class RuleVisitedDisplayContext {
 	}
 
 	public boolean isTrackingPageEnabled() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return AnalyticsUtil.isAnalyticsPageEnabled(
@@ -154,7 +171,7 @@ public class RuleVisitedDisplayContext {
 	protected String getFriendlyURL(boolean privateLayout)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		String friendlyURL = StringPool.BLANK;
@@ -177,7 +194,7 @@ public class RuleVisitedDisplayContext {
 	}
 
 	protected List<AssetRendererFactory> getSelectableAssetRendererFactories() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		List<AssetRendererFactory> selectableAssetRendererFactories =
@@ -200,13 +217,11 @@ public class RuleVisitedDisplayContext {
 
 	private Long _assetEntryId;
 	private List<AssetRendererFactory> _assetRendererFactories;
-	private final Map<String, Object> _displayContext;
 	private String _friendlyURL;
 	private String _friendlyURLPrivateBase;
 	private String _friendlyURLPublicBase;
-	private String _portalSettingsURL;
+	private String _portalSettingsAnalyticsURL;
 	private Boolean _privateLayout;
-	private final HttpServletRequest _request;
-	private String _siteSettingsURL;
+	private String _siteSettingsAnalyticsURL;
 
 }

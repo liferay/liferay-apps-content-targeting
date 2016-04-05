@@ -14,13 +14,11 @@
 
 package com.liferay.content.targeting.tracking.action.page;
 
-import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseJSPTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.exception.InvalidTrackingActionException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
-import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -267,13 +265,6 @@ public class PageTrackingAction extends BaseJSPTrackingAction {
 		context.put("eventTypes", getEventTypes());
 		context.put("friendlyURL", friendlyURL);
 		context.put("privateLayout", privateLayout);
-
-		long scopeGroupId = GetterUtil.getLong(context.get("scopeGroupId"));
-
-		if (!AnalyticsUtil.isAnalyticsPageEnabled(scopeGroupId)) {
-			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
-				context);
-		}
 	}
 
 	@Reference(unbind = "-")
