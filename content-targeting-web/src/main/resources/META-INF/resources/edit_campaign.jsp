@@ -64,7 +64,7 @@ renderResponse.setTitle(contentTargetingEditCampaignDisplayContext.getCampaignTi
 				<liferay-util:param name="warningMessage" value="editing-user-segments-deletes-all-unsaved-campaign-data" />
 			</liferay-util:include>
 
-			<aui:input cssClass="slider-input" helpMessage="priority-help" inlineField="<%= true %>" maxlength="3" name="priority" size="2" type="text" value="<%= contentTargetingEditCampaignDisplayContext.getPriority() %>" />
+			<aui:input cssClass="slider-input" helpMessage="priority-help" inlineField="<%= true %>" maxlength="3" name="priority" size="3" type="text" value="<%= contentTargetingEditCampaignDisplayContext.getPriority() %>" />
 
 			<span class="slider-holder"></span>
 
