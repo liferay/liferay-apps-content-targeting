@@ -33,7 +33,7 @@
 	%>
 
 	<div class="alert alert-info">
-		<strong><liferay-ui:message key="this-metric-will-not-work-properly-because-youtube-tracking-is-not-enabled" /></strong>
+		<strong><liferay-ui:message key="this-metric-will-not-work-properly-because-youtube-videos-tracking-is-not-enabled" /></strong>
 
 		<liferay-ui:message arguments="<%= new String[] {enableLocationPortalLabel, enableLocationSiteLabel} %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
 	</div>
