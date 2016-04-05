@@ -31,21 +31,19 @@ if (liveGroup != null) {
 <div class="alert alert-info">
 	<liferay-ui:message arguments="<%= liveGroup.getDescriptiveName(themeDisplay.getLocale()) %>" key="select-the-elements-and-actions-that-will-be-tracked-by-content-targeting-analytics-in-the-site-x" />
 
-	<%
-	String checkPortalAnalyticsLabel = LanguageUtil.get(locale, "content-targeting-analytics");
-	String checkPortalAnalyticsOptionLabel = LanguageUtil.get(locale, "this-option-has-been-disabled-by-the-portal-administrator");
-	%>
+<%
+String checkPortalAnalyticsLabel = LanguageUtil.get(locale, "content-targeting-analytics");
 
-	<c:if test="<%= PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, liveGroup.getGroupId(), PortletKeys.PORTAL_SETTINGS) %>">
-		<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.PORTAL_SETTINGS %>" var="portalSettingsURL">
-			<liferay-portlet:param name="historyKey" value="_130_contentTargetingAnalytics" />
-		</liferay-portlet:renderURL>
+String checkPortalAnalyticsOptionLabel = LanguageUtil.get(locale, "this-option-has-been-disabled-by-the-portal-administrator");
 
-		<%
-		checkPortalAnalyticsLabel = "<a href=\"" + portalSettingsURL + "\">" + checkPortalAnalyticsLabel + "</a>";
-		%>
+if (PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, liveGroup.getGroupId(), PortletKeys.PORTAL_SETTINGS)) {
+	PortletURL portalSettingsURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.PORTAL_SETTINGS, PortletRequest.RENDER_PHASE);
 
-	</c:if>
+	portalSettingsURL.setParameter("historyKey", "_130_contentTargetingAnalytics");
+
+	checkPortalAnalyticsLabel = "<a href=\"" + portalSettingsURL.toString() + "\">" + checkPortalAnalyticsLabel + "</a>";
+}
+%>
 
 	<liferay-ui:message arguments="<%= checkPortalAnalyticsLabel %>" key="check-general-content-targeting-analytics-settings-in-x" />
 </div>
