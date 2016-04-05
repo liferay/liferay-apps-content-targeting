@@ -31,5 +31,5 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
-RuleGenderDisplayContext ruleGenderDisplayContext = new RuleGenderDisplayContext(liferayPortletResponse, request);
+RuleGenderDisplayContext ruleGenderDisplayContext = new RuleGenderDisplayContext(request);
 %>

@@ -15,36 +15,44 @@
 package com.liferay.content.targeting.rule.score.points.web.display.context;
 
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
+import com.liferay.content.targeting.display.context.BaseRuleDisplayContext;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-public class RuleScorePointsDisplayContext {
+public class RuleScorePointsDisplayContext extends BaseRuleDisplayContext {
 
 	public RuleScorePointsDisplayContext(HttpServletRequest request) {
-		_request = request;
-
-		_displayContext = (Map<String, Object>)request.getAttribute(
-			"displayContext");
+		super(request);
 	}
 
-	public String getPortalSettingsURL() {
-		if (_portalSettingsURL != null) {
-			return _portalSettingsURL;
+	public String getPortalSettingsAnalyticsURL() {
+		if (_portalSettingsAnalyticsURL != null) {
+			return _portalSettingsAnalyticsURL;
 		}
 
-		_portalSettingsURL = GetterUtil.getString(
-			_displayContext.get("portalSettingsURL"));
+		_portalSettingsAnalyticsURL = StringPool.BLANK;
 
-		return _portalSettingsURL;
+		PortletURL portletURL = getPortalSettingsURL();
+
+		if (portletURL == null) {
+			return _portalSettingsAnalyticsURL;
+		}
+
+		portletURL.setParameter("historyKey", "_130_contentTargetingAnalytics");
+
+		_portalSettingsAnalyticsURL = portletURL.toString();
+
+		return _portalSettingsAnalyticsURL;
 	}
 
 	public int getScorePoints() {
@@ -52,21 +60,29 @@ public class RuleScorePointsDisplayContext {
 			return _scorePoints;
 		}
 
-		_scorePoints = GetterUtil.getInteger(
-			_displayContext.get("scorePoints"));
+		_scorePoints = GetterUtil.getInteger(displayContext.get("scorePoints"));
 
 		return _scorePoints;
 	}
 
-	public String getSiteSettingsURL() {
-		if (_siteSettingsURL != null) {
-			return _siteSettingsURL;
+	public String getSiteSettingsAnalyticsURL() {
+		if (_siteSettingsAnalyticsURL != null) {
+			return _siteSettingsAnalyticsURL;
 		}
 
-		_siteSettingsURL = GetterUtil.getString(
-			_displayContext.get("siteSettingsURL"));
+		_siteSettingsAnalyticsURL = StringPool.BLANK;
 
-		return _siteSettingsURL;
+		PortletURL portletURL = getPortalSettingsURL();
+
+		if (portletURL == null) {
+			return _siteSettingsAnalyticsURL;
+		}
+
+		portletURL.setParameter("historyKey", "_165_contentTargetingAnalytics");
+
+		_siteSettingsAnalyticsURL = portletURL.toString();
+
+		return _siteSettingsAnalyticsURL;
 	}
 
 	public UserSegment getUserSegment() {
@@ -74,13 +90,13 @@ public class RuleScorePointsDisplayContext {
 			return _userSegment;
 		}
 
-		_userSegment = (UserSegment)_displayContext.get("userSegment");
+		_userSegment = (UserSegment)displayContext.get("userSegment");
 
 		return _userSegment;
 	}
 
 	public boolean isTrackingContentEnabled() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return AnalyticsUtil.isAnalyticsContentEnabled(
@@ -88,18 +104,16 @@ public class RuleScorePointsDisplayContext {
 	}
 
 	public boolean isTrackingPageEnabled() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return AnalyticsUtil.isAnalyticsPageEnabled(
 			themeDisplay.getScopeGroupId());
 	}
 
-	private final Map<String, Object> _displayContext;
-	private String _portalSettingsURL;
-	private final HttpServletRequest _request;
+	private String _portalSettingsAnalyticsURL;
 	private Integer _scorePoints;
-	private String _siteSettingsURL;
+	private String _siteSettingsAnalyticsURL;
 	private UserSegment _userSegment;
 
 }

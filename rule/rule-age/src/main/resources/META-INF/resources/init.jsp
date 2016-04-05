@@ -34,5 +34,5 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
-RuleAgeDisplayContext ruleAgeDisplayContext = new RuleAgeDisplayContext(liferayPortletResponse, request);
+RuleAgeDisplayContext ruleAgeDisplayContext = new RuleAgeDisplayContext(request);
 %>

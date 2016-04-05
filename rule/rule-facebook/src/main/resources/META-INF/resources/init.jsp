@@ -33,5 +33,5 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
-RuleFacebookDisplayContext ruleFacebookDisplayContext = new RuleFacebookDisplayContext(liferayPortletResponse, request);
+RuleFacebookDisplayContext ruleFacebookDisplayContext = new RuleFacebookDisplayContext(request);
 %>

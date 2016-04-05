@@ -35,5 +35,5 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
-RuleScorePointsDisplayContext ruleScorePointsDisplayContext = new RuleScorePointsDisplayContext();
+RuleScorePointsDisplayContext ruleScorePointsDisplayContext = new RuleScorePointsDisplayContext(request);
 %>

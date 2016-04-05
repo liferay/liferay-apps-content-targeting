@@ -14,21 +14,14 @@
 
 package com.liferay.content.targeting.rule.age.display.context;
 
-import com.liferay.content.targeting.util.PortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.content.targeting.display.context.BaseRuleDisplayContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
-
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,17 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class RuleAgeDisplayContext {
+public class RuleAgeDisplayContext extends BaseRuleDisplayContext {
 
-	public RuleAgeDisplayContext(
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request) {
-
-		_liferayPortletResponse = liferayPortletResponse;
-		_request = request;
-
-		_displayContext = (Map<String, Object>)request.getAttribute(
-			"displayContext");
+	public RuleAgeDisplayContext(HttpServletRequest request) {
+		super(request);
 	}
 
 	public int getOlderThan() {
@@ -55,48 +41,33 @@ public class RuleAgeDisplayContext {
 		}
 
 		_olderThan = GetterUtil.getInteger(
-			_displayContext.get("olderThan"), 100);
+			displayContext.get("olderThan"), 100);
 
 		return _olderThan;
 	}
 
-	public String getPortalSettingsURL() {
-		if (_portalSettingsURL != null) {
-			return _portalSettingsURL;
+	public String getPortalSettingsUsersURL() {
+		if (_portalSettingsUsersURL != null) {
+			return _portalSettingsUsersURL;
 		}
 
-		_portalSettingsURL = StringPool.BLANK;
+		_portalSettingsUsersURL = StringPool.BLANK;
 
 		if (isBirthDayEnabled()) {
-			return _portalSettingsURL;
+			return _portalSettingsUsersURL;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		PortletURL portletURL = getPortalSettingsURL();
 
-		try {
-			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(),
-					PortletKeys.PORTAL_SETTINGS)) {
-
-				return _portalSettingsURL;
-			}
-
-			PortletURL portletURL =
-				_liferayPortletResponse.createLiferayPortletURL(
-					PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
-					PortletKeys.PORTAL_SETTINGS, PortletRequest.RENDER_PHASE,
-					false);
-
-			portletURL.setParameter("historyKey", "_130_users");
-
-			_portalSettingsURL = portletURL.toString();
-		}
-		catch (PortalException pe) {
+		if (portletURL == null) {
+			return _portalSettingsUsersURL;
 		}
 
-		return _portalSettingsURL;
+		portletURL.setParameter("historyKey", "_130_users");
+
+		_portalSettingsUsersURL = portletURL.toString();
+
+		return _portalSettingsUsersURL;
 	}
 
 	public int getYoungerThan() {
@@ -105,7 +76,7 @@ public class RuleAgeDisplayContext {
 		}
 
 		_youngerThan = GetterUtil.getInteger(
-			_displayContext.get("youngerThan"), 0);
+			displayContext.get("youngerThan"), 0);
 
 		return _youngerThan;
 	}
@@ -115,7 +86,7 @@ public class RuleAgeDisplayContext {
 			return _birthdayEnabled;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_birthdayEnabled = PrefsPropsUtil.getBoolean(
@@ -126,11 +97,8 @@ public class RuleAgeDisplayContext {
 	}
 
 	private Boolean _birthdayEnabled;
-	private final Map<String, Object> _displayContext;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private Integer _olderThan;
-	private String _portalSettingsURL;
-	private final HttpServletRequest _request;
+	private String _portalSettingsUsersURL;
 	private Integer _youngerThan;
 
 }

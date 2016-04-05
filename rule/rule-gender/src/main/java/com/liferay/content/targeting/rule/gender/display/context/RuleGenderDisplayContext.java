@@ -14,21 +14,14 @@
 
 package com.liferay.content.targeting.rule.gender.display.context;
 
-import com.liferay.content.targeting.util.PortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.content.targeting.display.context.BaseRuleDisplayContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
-
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,17 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class RuleGenderDisplayContext {
+public class RuleGenderDisplayContext extends BaseRuleDisplayContext {
 
-	public RuleGenderDisplayContext(
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request) {
-
-		_liferayPortletResponse = liferayPortletResponse;
-		_request = request;
-
-		_displayContext = (Map<String, Object>)request.getAttribute(
-			"displayContext");
+	public RuleGenderDisplayContext(HttpServletRequest request) {
+		super(request);
 	}
 
 	public String getGender() {
@@ -54,48 +40,33 @@ public class RuleGenderDisplayContext {
 			return _gender;
 		}
 
-		_gender = GetterUtil.getString(_displayContext.get("gender"));
+		_gender = GetterUtil.getString(displayContext.get("gender"));
 
 		return _gender;
 	}
 
-	public String getPortalSettingsURL() {
-		if (_portalSettingsURL != null) {
-			return _portalSettingsURL;
+	public String getPortalSettingsUsersURL() {
+		if (_portalSettingsUsersURL != null) {
+			return _portalSettingsUsersURL;
 		}
 
-		_portalSettingsURL = StringPool.BLANK;
+		_portalSettingsUsersURL = StringPool.BLANK;
 
 		if (isGenderEnabled()) {
-			return _portalSettingsURL;
+			return _portalSettingsUsersURL;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		PortletURL portletURL = getPortalSettingsURL();
 
-		try {
-			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(),
-					PortletKeys.PORTAL_SETTINGS)) {
-
-				return _portalSettingsURL;
-			}
-
-			PortletURL portletURL =
-				_liferayPortletResponse.createLiferayPortletURL(
-					PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
-					PortletKeys.PORTAL_SETTINGS, PortletRequest.RENDER_PHASE,
-					false);
-
-			portletURL.setParameter("historyKey", "_130_users");
-
-			_portalSettingsURL = portletURL.toString();
-		}
-		catch (PortalException pe) {
+		if (portletURL == null) {
+			return _portalSettingsUsersURL;
 		}
 
-		return _portalSettingsURL;
+		portletURL.setParameter("historyKey", "_130_users");
+
+		_portalSettingsUsersURL = portletURL.toString();
+
+		return _portalSettingsUsersURL;
 	}
 
 	public boolean isGenderEnabled() {
@@ -103,7 +74,7 @@ public class RuleGenderDisplayContext {
 			return _genderEnabled;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_genderEnabled = PrefsPropsUtil.getBoolean(
@@ -113,11 +84,8 @@ public class RuleGenderDisplayContext {
 		return _genderEnabled;
 	}
 
-	private final Map<String, Object> _displayContext;
 	private String _gender;
 	private Boolean _genderEnabled;
-	private final LiferayPortletResponse _liferayPortletResponse;
-	private String _portalSettingsURL;
-	private final HttpServletRequest _request;
+	private String _portalSettingsUsersURL;
 
 }
