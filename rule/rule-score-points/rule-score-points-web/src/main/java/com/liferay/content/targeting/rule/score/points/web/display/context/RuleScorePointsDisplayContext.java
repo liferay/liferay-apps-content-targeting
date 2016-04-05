@@ -19,10 +19,7 @@ import com.liferay.content.targeting.display.context.BaseRuleDisplayContext;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,26 +32,6 @@ public class RuleScorePointsDisplayContext extends BaseRuleDisplayContext {
 		super(request);
 	}
 
-	public String getPortalSettingsAnalyticsURL() {
-		if (_portalSettingsAnalyticsURL != null) {
-			return _portalSettingsAnalyticsURL;
-		}
-
-		_portalSettingsAnalyticsURL = StringPool.BLANK;
-
-		PortletURL portletURL = getPortalSettingsURL();
-
-		if (portletURL == null) {
-			return _portalSettingsAnalyticsURL;
-		}
-
-		portletURL.setParameter("historyKey", "_130_contentTargetingAnalytics");
-
-		_portalSettingsAnalyticsURL = portletURL.toString();
-
-		return _portalSettingsAnalyticsURL;
-	}
-
 	public int getScorePoints() {
 		if (_scorePoints != null) {
 			return _scorePoints;
@@ -63,26 +40,6 @@ public class RuleScorePointsDisplayContext extends BaseRuleDisplayContext {
 		_scorePoints = GetterUtil.getInteger(displayContext.get("scorePoints"));
 
 		return _scorePoints;
-	}
-
-	public String getSiteSettingsAnalyticsURL() {
-		if (_siteSettingsAnalyticsURL != null) {
-			return _siteSettingsAnalyticsURL;
-		}
-
-		_siteSettingsAnalyticsURL = StringPool.BLANK;
-
-		PortletURL portletURL = getPortalSettingsURL();
-
-		if (portletURL == null) {
-			return _siteSettingsAnalyticsURL;
-		}
-
-		portletURL.setParameter("historyKey", "_165_contentTargetingAnalytics");
-
-		_siteSettingsAnalyticsURL = portletURL.toString();
-
-		return _siteSettingsAnalyticsURL;
 	}
 
 	public UserSegment getUserSegment() {
@@ -111,9 +68,7 @@ public class RuleScorePointsDisplayContext extends BaseRuleDisplayContext {
 			themeDisplay.getScopeGroupId());
 	}
 
-	private String _portalSettingsAnalyticsURL;
 	private Integer _scorePoints;
-	private String _siteSettingsAnalyticsURL;
 	private UserSegment _userSegment;
 
 }

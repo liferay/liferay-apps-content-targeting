@@ -14,64 +14,15 @@
 
 package com.liferay.content.targeting.display.context;
 
-import com.liferay.content.targeting.util.PortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Map;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-public class BaseRuleDisplayContext {
+public class BaseRuleDisplayContext extends BaseDisplayContext {
 
 	public BaseRuleDisplayContext(HttpServletRequest request) {
-		this.request = request;
-
-		displayContext = (Map<String, Object>)request.getAttribute(
-			"displayContext");
+		super(request);
 	}
-
-	public PortletURL getControlPanelURL(String portletId) {
-		if (!hasControlPanelAccessPermission(portletId)) {
-			return null;
-		}
-
-		return PortalUtil.getControlPanelPortletURL(
-			request, portletId, PortletRequest.RENDER_PHASE);
-	}
-
-	public PortletURL getPortalSettingsURL() {
-		return getControlPanelURL(PortletKeys.PORTAL_SETTINGS);
-	}
-
-	protected boolean hasControlPanelAccessPermission(String portletId) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			if (PortletPermissionUtil.hasControlPanelAccessPermission(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), portletId)) {
-
-				return true;
-			}
-		}
-		catch (PortalException pe) {
-		}
-
-		return false;
-	}
-
-	protected final Map<String, Object> displayContext;
-	protected final HttpServletRequest request;
 
 }

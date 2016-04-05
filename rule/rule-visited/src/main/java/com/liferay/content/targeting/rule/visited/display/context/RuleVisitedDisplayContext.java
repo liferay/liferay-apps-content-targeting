@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -99,46 +97,6 @@ public class RuleVisitedDisplayContext extends BaseRuleDisplayContext {
 		_friendlyURLPublicBase = getFriendlyURL(false);
 
 		return _friendlyURLPublicBase;
-	}
-
-	public String getPortalSettingsAnalyticsURL() {
-		if (_portalSettingsAnalyticsURL != null) {
-			return _portalSettingsAnalyticsURL;
-		}
-
-		_portalSettingsAnalyticsURL = StringPool.BLANK;
-
-		PortletURL portletURL = getPortalSettingsURL();
-
-		if (portletURL == null) {
-			return _portalSettingsAnalyticsURL;
-		}
-
-		portletURL.setParameter("historyKey", "_130_contentTargetingAnalytics");
-
-		_portalSettingsAnalyticsURL = portletURL.toString();
-
-		return _portalSettingsAnalyticsURL;
-	}
-
-	public String getSiteSettingsAnalyticsURL() {
-		if (_siteSettingsAnalyticsURL != null) {
-			return _siteSettingsAnalyticsURL;
-		}
-
-		_siteSettingsAnalyticsURL = StringPool.BLANK;
-
-		PortletURL portletURL = getPortalSettingsURL();
-
-		if (portletURL == null) {
-			return _siteSettingsAnalyticsURL;
-		}
-
-		portletURL.setParameter("historyKey", "_165_contentTargetingAnalytics");
-
-		_siteSettingsAnalyticsURL = portletURL.toString();
-
-		return _siteSettingsAnalyticsURL;
 	}
 
 	public boolean isPrivateLayout() {
@@ -220,8 +178,6 @@ public class RuleVisitedDisplayContext extends BaseRuleDisplayContext {
 	private String _friendlyURL;
 	private String _friendlyURLPrivateBase;
 	private String _friendlyURLPublicBase;
-	private String _portalSettingsAnalyticsURL;
 	private Boolean _privateLayout;
-	private String _siteSettingsAnalyticsURL;
 
 }
