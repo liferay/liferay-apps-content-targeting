@@ -15,11 +15,15 @@
 package com.liferay.content.targeting.display.web.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
@@ -37,6 +41,11 @@ public interface QueryRule extends Comparable<QueryRule> {
 	public long getAssetEntryId();
 
 	public String getAssetImage(PortletRequest portletRequest) throws Exception;
+
+	public Map<String, Object> getAssetSelectorIconData(
+			HttpServletRequest request,
+			AssetRendererFactory assetRendererFactory, String index)
+		throws Exception;
 
 	public String getAssetTitle();
 

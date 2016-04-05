@@ -92,6 +92,7 @@ public abstract class AssetQueryRule implements QueryRule {
 		return _assetRenderer.getThumbnailPath(portletRequest);
 	}
 
+	@Override
 	public Map<String, Object> getAssetSelectorIconData(
 			HttpServletRequest request,
 			AssetRendererFactory assetRendererFactory, String index)
