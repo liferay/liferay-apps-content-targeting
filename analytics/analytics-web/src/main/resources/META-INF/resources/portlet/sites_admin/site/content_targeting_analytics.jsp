@@ -31,9 +31,9 @@ if (liveGroup != null) {
 </p>
 
 <%
-String checkPortalAnalyticsLabel = LanguageUtil.get(locale, "content-targeting-analytics");
+String checkPortalAnalyticsLabel = LanguageUtil.get(resourceBundle, "content-targeting-analytics");
 
-String checkPortalAnalyticsOptionLabel = LanguageUtil.get(locale, "this-option-has-been-disabled-by-the-portal-administrator");
+String checkPortalAnalyticsOptionLabel = LanguageUtil.get(resourceBundle, "this-option-has-been-disabled-by-the-portal-administrator");
 
 if (PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, liveGroup.getGroupId(), PortletKeys.PORTAL_SETTINGS)) {
 	PortletURL portalSettingsURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.PORTAL_SETTINGS, PortletRequest.RENDER_PHASE);
