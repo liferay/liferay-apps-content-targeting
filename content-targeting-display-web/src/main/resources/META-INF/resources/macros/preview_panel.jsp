@@ -74,7 +74,6 @@ for (QueryRule queryRule : queryRules) {
 								</div>
 							</c:otherwise>
 						</c:choose>
-
 					</div>
 
 					<div class="content-preview-link list-group-item-content">
