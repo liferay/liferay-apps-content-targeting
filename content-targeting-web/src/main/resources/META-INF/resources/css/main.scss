@@ -299,6 +299,14 @@
 		width: auto;
 	}
 
+	.lfr-search-container-wrapper {
+		.list-group-item-content {
+			.label:first-of-type {
+				padding-left: 0;
+			}
+		}
+	}
+
 	.slider-holder {
 		display: inline-block;
 		margin: 0 2em 0 .5em;
