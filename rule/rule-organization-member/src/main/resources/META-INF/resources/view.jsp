@@ -22,7 +22,7 @@
 			<strong><liferay-ui:message key="there-are-no-organizations-available" /></strong>
 
 			<%
-			String enableLocationLabel = LanguageUtil.get(locale, "control-panel-users-and-organizations");
+			String enableLocationLabel = LanguageUtil.get(resourceBundle, "control-panel-users-and-organizations");
 
 			if (Validator.isNotNull(ruleOrganizationMemberDisplayContext.getUsersAdminURL())) {
 				enableLocationLabel = "<a href=\"" + ruleOrganizationMemberDisplayContext.getUsersAdminURL() + "\">" + enableLocationLabel + "</a>";

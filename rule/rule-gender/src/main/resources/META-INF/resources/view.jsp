@@ -21,7 +21,7 @@
 		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-the-gender-field-has-been-removed" /></strong>
 
 		<%
-		String enableLocationLabel = LanguageUtil.get(locale, "portal-settings-users");
+		String enableLocationLabel = LanguageUtil.get(resourceBundle, "portal-settings-users");
 
 		if (Validator.isNotNull(ruleGenderDisplayContext.getPortalSettingsUsersURL())) {
 			enableLocationLabel = "<a href=\"" + ruleGenderDisplayContext.getPortalSettingsUsersURL() + "\">" + enableLocationLabel + "</a>";

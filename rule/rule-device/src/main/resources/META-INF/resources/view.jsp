@@ -22,7 +22,7 @@
 	</c:if>
 
 	<%
-	String enableLocationLabel = LanguageUtil.get(request, "site-administration-mdr");
+	String enableLocationLabel = LanguageUtil.get(resourceBundle, "site-administration-mdr");
 
 	if (Validator.isNotNull(ruleDeviceDisplayContext.getMDRURL())) {
 		enableLocationLabel = "<a href=\"" + ruleDeviceDisplayContext.getMDRURL() + "\">" + enableLocationLabel + "</a>";
