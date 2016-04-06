@@ -125,8 +125,8 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 						<liferay-ui:search-container-column-text
 							colspan="<%= 2 %>"
 						>
-							<h4>
-								<a class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>" href="javascript:;"><%= reportInstance.getName(locale) %></a>
+							<h4 class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>">
+								<a href="javascript:;"><%= reportInstance.getName(locale) %></a>
 							</h4>
 
 							<p class="text-default">
@@ -146,16 +146,24 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 
 						<%
 						row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						data.put("url", viewReportURL.toString());
+						data.put("title", reportInstance.getName(locale));
 						%>
 
 						<liferay-ui:search-container-column-text>
 							<liferay-frontend:icon-vertical-card
 								actionJsp="/reports_action.jsp"
 								actionJspServletContext="<%= application %>"
+								cssClass="preview"
+								data="<%= data %>"
 								icon="reports"
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
 								title="<%= reportInstance.getName(locale) %>"
+								url="javascript:;"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
@@ -165,7 +173,10 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 							name="name"
 							truncate="<%= true %>"
 						>
-							<a class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>" href="javascript:;"><%= reportInstance.getName(locale) %></a>
+							<span class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>">
+								<a href="javascript:;"><%= reportInstance.getName(locale) %></a>
+							</span>
+
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
@@ -239,16 +250,18 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 			function(event) {
 				var currentTarget = event.currentTarget;
 
+				var parent = currentTarget.ancestor('.preview');
+
 				var urlPreview = new Liferay.UrlPreview(
 					{
-						title: currentTarget.attr('data-title'),
-						url: currentTarget.attr('data-url')
+						title: parent.attr('data-title'),
+						url: parent.attr('data-url')
 					}
 				);
 
 				urlPreview.open();
 			},
-			'.preview'
+			'.preview a'
 		);
 	</aui:script>
 </c:if>
