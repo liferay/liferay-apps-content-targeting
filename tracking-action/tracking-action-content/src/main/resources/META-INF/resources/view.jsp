@@ -32,11 +32,11 @@
 	}
 	%>
 
-	<div class="alert alert-info">
+	<p class="text-default">
 		<strong><liferay-ui:message key="this-metric-will-not-work-properly-because-content-tracking-is-not-enabled" /></strong>
 
 		<liferay-ui:message arguments="<%= new String[] {enableLocationPortalLabel, enableLocationSiteLabel} %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
-	</div>
+	</p>
 </c:if>
 
 <aui:input helpMessage="name-help" label="name" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "alias" %>' type="text" value="<%= contentTrackingActionDisplayContext.getAlias() %>">

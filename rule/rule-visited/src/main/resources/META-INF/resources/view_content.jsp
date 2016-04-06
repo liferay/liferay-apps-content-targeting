@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <c:if test="<%= !ruleVisitedDisplayContext.isTrackingContentEnabled() %>">
-	<div class="alert alert-info">
+	<p class="text-default">
 		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-page-tracking-is-not-enabled" /></strong>
 
 		<%
@@ -35,7 +35,7 @@
 		%>
 
 		<liferay-ui:message arguments="<%= new String[] {enableLocationPortalLabel, enableLocationSiteLabel} %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
-	</div>
+	</p>
 </c:if>
 
 <div class="select-asset-selector">

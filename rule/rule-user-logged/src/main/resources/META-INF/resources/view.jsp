@@ -16,6 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="alert alert-info">
+<p class="text-default">
 	<liferay-ui:message key="this-rule-will-be-matched-if-the-user-is-signed-in" />
-</div>
+</p>

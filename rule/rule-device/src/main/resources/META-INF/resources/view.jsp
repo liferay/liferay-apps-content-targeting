@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="alert alert-info">
+<p class="text-default">
 	<c:if test="<%= ListUtil.isEmpty(ruleDeviceDisplayContext.getMDRRuleGroups()) %>">
 		<strong><liferay-ui:message key="there-are-no-device-families-available" /></strong>
 	</c:if>
@@ -30,7 +30,7 @@
 	%>
 
 	<liferay-ui:message arguments="<%= enableLocationLabel %>" key="device-families-can-be-managed-in-x" />
-</div>
+</p>
 
 <c:if test="<%= ListUtil.isNotEmpty(ruleDeviceDisplayContext.getMDRRuleGroups()) %>">
 	<aui:select label="device-family" name="mdrRuleGroupId">

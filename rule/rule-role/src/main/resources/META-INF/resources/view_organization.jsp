@@ -18,7 +18,7 @@
 
 <c:choose>
 	<c:when test="<%= ListUtil.isEmpty(ruleRoleDisplayContext.getOrganizations()) %>">
-		<div class="alert alert-warning">
+		<p class="text-default">
 			<strong><liferay-ui:message key="there-are-no-organizations-available" /></strong>
 
 			<%
@@ -30,7 +30,7 @@
 			%>
 
 			<liferay-ui:message arguments="<%= enableLocationLabel %>" key="organizations-can-be-managed-in-x" />
-		</div>
+		</p>
 	</c:when>
 	<c:otherwise>
 		<aui:select label="organization" name="organizationId">

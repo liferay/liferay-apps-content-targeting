@@ -16,9 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="alert alert-info">
+<p class="text-default">
 	<liferay-ui:message arguments="<%= ruleTimeDisplayContext.getInfoMessage() %>" key="this-rule-checks-the-server-time-which-currently-is-x" />
-</div>
+</p>
 
 <aui:fieldset cssClass="time-selector" label="start-time">
 	<liferay-ui:input-time
