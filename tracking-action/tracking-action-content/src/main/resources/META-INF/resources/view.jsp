@@ -68,8 +68,8 @@
 				<liferay-ui:icon
 					cssClass="asset-selector"
 					data="<%= ContentTargetingUtil.getAssetSelectorIconData(request, assetRendererFactory, StringPool.BLANK, true) %>"
-					id='<%= ContentTargetingUtil.GUID_REPLACEMENT + "groupId_" + assetRendererFactory.getTypeName(locale, false) %>'
-					message="<%= assetRendererFactory.getTypeName(locale, false) %>"
+					id='<%= ContentTargetingUtil.GUID_REPLACEMENT + "groupId_" + assetRendererFactory.getTypeName(locale) %>'
+					message="<%= assetRendererFactory.getTypeName(locale) %>"
 					url="javascript:;"
 				/>
 
