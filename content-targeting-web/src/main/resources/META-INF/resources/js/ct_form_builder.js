@@ -1,18 +1,18 @@
 AUI.add(
 	'liferay-ct-form-builder',
 	function(A) {
-		var AVAILABLE_FIELD_LABEL_TPL = '<div class="row"><div class="field-title">{name}</div><div class="field-description">{shortDescription}</div></div>',
+		var AVAILABLE_FIELD_LABEL_TPL = '<h4 class="field-title">{name}</h4><div class="field-description small text-default">{shortDescription}</div>',
 
 			FIELD_LABEL_TPL = '{name}',
 
 			ITEM_FIELD_TPL = '<div>' +
 				'<div class="field-header toggler-header-collapsed">' +
-					'<div class="row field-info">' +
-						'<div class="field-title">{name}</div>' +
-						'<div class="field-description">' +
+					'<div class="field-info">' +
+						'<h2 class="field-title">{name}</h2>' +
+						'<p class="field-description text-default">' +
 							'<span class="field-description-alias">{description}</span>' +
 							'<span class="field-description-info"></span>' +
-						'</div>' +
+						'</p>' +
 					'</div>' +
 				'</div>' +
 				'<div class="field-editor toggler-content-collapsed">{editor}</div>' +
@@ -20,8 +20,8 @@ AUI.add(
 
 			ITEM_CATEGORY_HEADER_TPL = '<div class="category-header toggler-header toggler-header-collapsed">' +
 				'<div class="category-info"> ' +
-					'<div class="category-title">{name}</div>' +
-					'<div class="category-description">{description}</div>' +
+					'<h5 class="category-title">{name}</h5>' +
+					'<div class="category-description small text-default">{description}</div>' +
 				'</div>' +
 			'</div>',
 

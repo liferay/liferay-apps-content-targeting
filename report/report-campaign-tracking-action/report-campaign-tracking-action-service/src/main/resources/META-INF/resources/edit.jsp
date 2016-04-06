@@ -37,7 +37,7 @@
 						<div class="tab-pane">
 							<div class="hide panel-page-menu" id="formBuilderSB">
 								<div class="form-builder-search-panels">
-									<i class="icon-search"></i>
+									<aui:icon cssClass="search-icon" image="search" markupView="lexicon" />
 
 									<div class="search-panels-bar">
 										<aui:input cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
@@ -58,15 +58,15 @@
 										<li class="form-builder-field hide property-builder-field" data-icon="<%= trackingAction.getIcon() %>" data-key="<%= templateKey %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !trackingAction.isInstantiable() %>">
 											<div class="property-builder-field-label">
 												<div class="row">
-													<div class="field-title">
+													<h4 class="field-title">
 														<%= trackingAction.getName(locale) %>
-													</div>
+													</h4>
 
-													<div class="field-description">
+													<div class="field-description text-default">
 														<%= trackingAction.getDescription(locale) %>
 													</div>
 
-													<div class="field-short-description">
+													<div class="field-short-description text-default">
 														<%= trackingAction.getShortDescription(locale) %>
 													</div>
 												</div>
@@ -107,17 +107,17 @@
 										<div>
 											<div class="field-header">
 												<div class="field-info row">
-													<div class="field-title">
+													<h2 class="field-title">
 														<%= trackingAction.getName(locale) %>
-													</div>
+													</h2>
 
-													<div class="field-description">
+													<p class="field-description small text-default">
 														<%= trackingAction.getDescription(locale) %>
-													</div>
+													</p>
 
-													<div class="field-short-description">
+													<p class="field-short-description small text-default">
 														<%= trackingAction.getShortDescription(locale) %>
-													</div>
+													</p>
 												</div>4
 											</div>
 
