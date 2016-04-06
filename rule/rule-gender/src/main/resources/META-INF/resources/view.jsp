@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<c:if test="<%= ruleGenderDisplayContext.isGenderEnabled() %>">
+<c:if test="<%= !ruleGenderDisplayContext.isGenderEnabled() %>">
 	<p class="text-default">
 		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-the-gender-field-has-been-removed" /></strong>
 
