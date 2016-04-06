@@ -26,11 +26,11 @@
 	}
 	%>
 
-	<div class="alert alert-info">
+	<p class="text-default">
 		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-the-age-field-has-been-removed" /></strong>
 
 		<liferay-ui:message arguments="<%= enableLocationLabel %>" key="it-can-be-enabled-in-x" />
-	</div>
+	</p>
 </c:if>
 
 <aui:input cssClass="slider-input" inlineField="<%= true %>" maxlength="3" name="olderThan" size="3" value="<%= ruleAgeDisplayContext.getOlderThan() %>" />

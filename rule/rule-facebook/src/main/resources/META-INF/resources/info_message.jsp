@@ -18,7 +18,7 @@
 
 <c:choose>
 	<c:when test="<%= !ruleFacebookDisplayContext.isFbLoginEnabled() %>">
-		<div class="alert alert-info">
+		<p class="text-default">
 			<strong>
 				<liferay-ui:message key="this-rule-will-not-work-properly-because-login-through-facebook-is-not-enabled" />
 			</strong>
@@ -32,11 +32,11 @@
 			%>
 
 			<liferay-ui:message arguments="<%= enableLocationLabel %>" key="this-rule-will-not-work-properly-because-login-through-facebook-is-not-enabled" />
-		</div>
+		</p>
 	</c:when>
 	<c:otherwise>
-		<div class="alert alert-info">
+		<p class="text-default">
 			<liferay-ui:message key="this-information-can-only-be-obtained-from-users-who-log-in-through-facebook" />
-		</div>
+		</p>
 	</c:otherwise>
 </c:choose>

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <c:if test="<%= !ruleVisitedDisplayContext.isTrackingPageEnabled() %>">
-	<div class="alert alert-info">
+	<p class="text-default">
 		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-page-tracking-is-not-enabled" /></strong>
 
 		<%
@@ -35,7 +35,7 @@
 		%>
 
 		<liferay-ui:message arguments="<%= new String[] {enableLocationPortalLabel, enableLocationSiteLabel} %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
-	</div>
+	</p>
 </c:if>
 
 <aui:input checked="<%= !ruleVisitedDisplayContext.isPrivateLayout() %>" inlineField="<%= true %>" label="public-pages" name="privateLayout" onChange="if (this.checked) {<%= renderResponse.getNamespace() %>updateFriendlyURL('<%= HtmlUtil.escape(ruleVisitedDisplayContext.getFriendlyURLPublicBase()) %>');}" type="radio" value="<%= false %>" />

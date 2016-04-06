@@ -18,7 +18,7 @@
 
 <c:choose>
 	<c:when test="<%= ListUtil.isNull(ruleUserGroupMemberDisplayContext.getUserGroups()) %>">
-		<div class="alert alert-warning">
+		<p class="text-default">
 			<strong><liferay-ui:message key="there-are-no-user-groups-available" /></strong>
 
 			<%
@@ -30,7 +30,7 @@
 			%>
 
 			<liferay-ui:message arguments="<%= enableLocationLabel %>" key="user-groups-can-be-managed-in-x" />
-		</div>
+		</p>
 	</c:when>
 	<c:otherwise>
 		<aui:select label="" name="userGroupId">

@@ -32,11 +32,11 @@
 	}
 	%>
 
-	<div class="alert alert-info">
+	<p class="text-default">
 		<strong><liferay-ui:message key="this-metric-will-not-work-properly-because-content-tracking-is-not-enabled" /></strong>
 
 		<liferay-ui:message arguments="<%= new String[] {enableLocationPortalLabel, enableLocationSiteLabel} %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
-	</div>
+	</p>
 </c:if>
 
 <aui:input helpMessage="name-help" label="name" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "alias" %>' type="text" value="<%= contentTrackingActionDisplayContext.getAlias() %>">
@@ -44,13 +44,21 @@
 </aui:input>
 
 <div class="select-asset-selector">
+	<aui:input name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetEntryId" %>' type="hidden" value="<%= contentTrackingActionDisplayContext.getAssetEntryId() %>" />
+
+	<h4 class="text-default">
+		<liferay-ui:message key="select-the-content-to-be-tracked" />
+	</h4>
+
+	<div class="row">
+		<div class="col-md-4 <%= (contentTrackingActionDisplayContext.getAssetEntryId() <= 0) ? "hide" : StringPool.BLANK %>" id="<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT + "selectedContentPreview" %>">
+			<c:if test="<%= contentTrackingActionDisplayContext.getAssetEntryId() > 0 %>">
+				<liferay-util:include page="/asset_entry.jsp" servletContext="<%= application %>" />
+			</c:if>
+		</div>
+	</div>
+
 	<div class="edit-controls">
-		<aui:input name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetEntryId" %>' type="hidden" value="<%= contentTrackingActionDisplayContext.getAssetEntryId() %>" />
-
-		<h4 class="text-default">
-			<liferay-ui:message key="select-the-content-to-be-tracked" />
-		</h4>
-
 		<liferay-ui:icon-menu direction="right" id='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetSelector" %>' message="select-content" showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 			<%
@@ -60,8 +68,8 @@
 				<liferay-ui:icon
 					cssClass="asset-selector"
 					data="<%= ContentTargetingUtil.getAssetSelectorIconData(request, assetRendererFactory, StringPool.BLANK, true) %>"
-					id='<%= ContentTargetingUtil.GUID_REPLACEMENT + "groupId_" + assetRendererFactory.getTypeName(locale, false) %>'
-					message="<%= assetRendererFactory.getTypeName(locale, false) %>"
+					id='<%= ContentTargetingUtil.GUID_REPLACEMENT + "groupId_" + assetRendererFactory.getTypeName(locale) %>'
+					message="<%= assetRendererFactory.getTypeName(locale) %>"
 					url="javascript:;"
 				/>
 
@@ -70,14 +78,6 @@
 			%>
 
 		</liferay-ui:icon-menu>
-	</div>
-
-	<div class="row">
-		<div class="col-md-4 <%= (contentTrackingActionDisplayContext.getAssetEntryId() <= 0) ? "hide" : StringPool.BLANK %>" id="<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT + "selectedContentPreview" %>">
-			<c:if test="<%= contentTrackingActionDisplayContext.getAssetEntryId() > 0 %>">
-				<liferay-util:include page="/asset_entry.jsp" servletContext="<%= application %>" />
-			</c:if>
-		</div>
 	</div>
 </div>
 

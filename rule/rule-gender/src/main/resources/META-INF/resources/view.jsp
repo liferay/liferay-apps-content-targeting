@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <c:if test="<%= ruleGenderDisplayContext.isGenderEnabled() %>">
-	<div class="alert alert-info">
+	<p class="text-default">
 		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-the-gender-field-has-been-removed" /></strong>
 
 		<%
@@ -29,7 +29,7 @@
 		%>
 
 		<liferay-ui:message arguments="<%= enableLocationLabel %>" key="it-can-be-enabled-in-x" />
-	</div>
+	</p>
 </c:if>
 
 <aui:input checked='<%= Validator.equals(ruleGenderDisplayContext.getGender(), "male") %>' label="male" name="gender" type="radio" value="male" />

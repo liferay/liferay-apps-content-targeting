@@ -66,14 +66,19 @@ renderResponse.setTitle(contentTargetingEditUserSegmentDisplayContext.getUserSeg
 					<div class="tabbable">
 						<div class="tabbable-content">
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="javascript:;">Add node</a></li>
-								<li><a href="javascript:;">Settings</a></li>
+								<li class="active">
+									<a href="javascript:;"><liferay-ui:message key="add-node" /></a>
+								</li>
+
+								<li>
+									<a href="javascript:;"><liferay-ui:message key="settings" /></a>
+								</li>
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane">
 									<div class="hide panel-page-menu" id="formBuilderSB">
 										<div class="form-builder-search-panels">
-											<i class="icon-search"></i>
+											<aui:icon cssClass="search-icon" image="search" markupView="lexicon" />
 
 											<div class="search-panels-bar">
 												<aui:input cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
@@ -90,13 +95,18 @@ renderResponse.setTitle(contentTargetingEditUserSegmentDisplayContext.getUserSeg
 											RuleCategory ruleCategory = ruleCategoriesRegistry.getRuleCategory(rule.getRuleCategoryKey());
 										%>
 
-											<li class="form-builder-field hide property-builder-field" data-categorydescription="<%= ruleCategory.getDescription(locale) %>" data-categoryicon="<%= ruleCategory.getIcon() %>" data-categorykey="<%= ruleCategory.getCategoryKey() %>" data-categoryname="<%= ruleCategory.getName(locale) %>" data-icon="<%= rule.getIcon() %>" data-key="<%= template.getTemplateKey() %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !rule.isInstantiable() %>">
-												<span class="property-builder-field-icon icon <%= rule.getIcon() %>"></span>
+											<li class="form-builder-field hide property-builder-field" data-categorydescription="<%= ruleCategory.getDescription(locale) %>" data-categorykey="<%= ruleCategory.getCategoryKey() %>" data-categoryname="<%= ruleCategory.getName(locale) %>" data-key="<%= template.getTemplateKey() %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !rule.isInstantiable() %>">
 												<div class="property-builder-field-label">
-													<div class="row">
-														<div class="field-title"><%= rule.getName(locale) %></div>
-														<div class="field-description"><%= rule.getDescription(locale) %></div>
-														<div class="field-short-description"><%= rule.getShortDescription(locale) %></div>
+													<h4 class="field-title">
+														<%= rule.getName(locale) %>
+													</h4>
+
+													<div class="field-description small text-default">
+														<%= rule.getDescription(locale) %>
+													</div>
+
+													<div class="field-short-description small text-default">
+														<%= rule.getShortDescription(locale) %>
 													</div>
 												</div>
 											</li>
@@ -125,19 +135,26 @@ renderResponse.setTitle(contentTargetingEditUserSegmentDisplayContext.getUserSeg
 									Rule rule = template.getRule();
 								%>
 
-									<div class="component form-builder-field hide widget yui3-widget" data-icon="<%= rule.getIcon() %>" data-key="<%= template.getTemplateKey() %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !rule.isInstantiable() %>">
+									<div class="component form-builder-field hide widget yui3-widget" data-key="<%= template.getTemplateKey() %>" data-template="<%= template.getTemplate() %>" data-unique="<%= !rule.isInstantiable() %>">
 										<div>
 											<div>
 												<div class="field-header">
-													<div class="field-icon"><i class="<%= rule.getIcon() %>"></i></div>
-													<div class="field-info row">
-														<div class="field-title"><%= rule.getName(locale) %></div>
-														<div class="field-description"><%= rule.getDescription(locale) %></div>
-														<div class="field-short-description"><%= rule.getShortDescription(locale) %></div>
+													<div class="field-info">
+														<h2 class="field-title">
+															<%= rule.getName(locale) %>
+														</h2>
+
+														<p class="field-description text-default">
+															<%= rule.getDescription(locale) %>
+														</p>
+
+														<p class="field-short-description text-default">
+															<%= rule.getShortDescription(locale) %>
+														</p>
 													</div>
 												</div>
-												<div class="field-editor">
-												</div>
+
+												<div class="field-editor"></div>
 											</div>
 										</div>
 									</div>

@@ -60,7 +60,7 @@ List<QueryRule> campaignQueryRules = (List<QueryRule>)request.getAttribute("camp
 			<%
 			for (QueryRule queryRule : campaignQueryRules) {
 				if (!queryRule.isDefaultRule()) {
-					 continue;
+					continue;
 				}
 
 				int queryRule_index = campaignQueryRules.indexOf(queryRule);

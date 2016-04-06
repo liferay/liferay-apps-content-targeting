@@ -32,18 +32,18 @@
 	}
 	%>
 
-	<div class="alert alert-info">
+	<p class="text-default">
 		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-content-tracking-or-page-tracking-are-not-enabled" /></strong>
 
 		<liferay-ui:message arguments="<%= new String[] {enableLocationPortalLabel, enableLocationSiteLabel} %>" key="it-can-be-enabled-in-x-or-in-x" translateArguments="<%= false %>" />
-	</div>
+	</p>
 </c:if>
 
 <%
 UserSegment userSegment = ruleScorePointsDisplayContext.getUserSegment();
 %>
 
-<div class="alert alert-info">
+<p class="text-default">
 	<c:choose>
 		<c:when test="<%= userSegment != null %>">
 			<liferay-ui:message arguments="<%= userSegment.getName(locale) %>" key="users-will-receive-1-point-for-this-user-segment-every-time-they-visit-a-page-or-content-categorized-under-x" />
@@ -52,7 +52,7 @@ UserSegment userSegment = ruleScorePointsDisplayContext.getUserSegment();
 			<liferay-ui:message key="users-will-receive-1-point-for-this-user-segment-every-time-they-visit-a-page-or-content-categorized-under-this-user-segment" />
 		</c:otherwise>
 	</c:choose>
-</div>
+</p>
 
 <aui:input helpMessage="set-a-threshold-of-points-that-users-should-meet-in-order-to-be-assigned-to-this-user-segment" label="score-points-threshold" name="scorePoints" type="text" value="<%= ruleScorePointsDisplayContext.getScorePoints() %>">
 	<aui:validator name="number" />
