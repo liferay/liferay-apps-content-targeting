@@ -44,13 +44,21 @@
 </aui:input>
 
 <div class="select-asset-selector">
+	<aui:input name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetEntryId" %>' type="hidden" value="<%= contentTrackingActionDisplayContext.getAssetEntryId() %>" />
+
+	<h4 class="text-default">
+		<liferay-ui:message key="select-the-content-to-be-tracked" />
+	</h4>
+
+	<div class="row">
+		<div class="col-md-4 <%= (contentTrackingActionDisplayContext.getAssetEntryId() <= 0) ? "hide" : StringPool.BLANK %>" id="<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT + "selectedContentPreview" %>">
+			<c:if test="<%= contentTrackingActionDisplayContext.getAssetEntryId() > 0 %>">
+				<liferay-util:include page="/asset_entry.jsp" servletContext="<%= application %>" />
+			</c:if>
+		</div>
+	</div>
+
 	<div class="edit-controls">
-		<aui:input name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetEntryId" %>' type="hidden" value="<%= contentTrackingActionDisplayContext.getAssetEntryId() %>" />
-
-		<h4 class="text-default">
-			<liferay-ui:message key="select-the-content-to-be-tracked" />
-		</h4>
-
 		<liferay-ui:icon-menu direction="right" id='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetSelector" %>' message="select-content" showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 			<%
@@ -70,14 +78,6 @@
 			%>
 
 		</liferay-ui:icon-menu>
-	</div>
-
-	<div class="row">
-		<div class="col-md-4 <%= (contentTrackingActionDisplayContext.getAssetEntryId() <= 0) ? "hide" : StringPool.BLANK %>" id="<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT + "selectedContentPreview" %>">
-			<c:if test="<%= contentTrackingActionDisplayContext.getAssetEntryId() > 0 %>">
-				<liferay-util:include page="/asset_entry.jsp" servletContext="<%= application %>" />
-			</c:if>
-		</div>
 	</div>
 </div>
 
