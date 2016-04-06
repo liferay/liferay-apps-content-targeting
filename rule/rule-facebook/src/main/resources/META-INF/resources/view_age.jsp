@@ -22,7 +22,26 @@
 
 <span class="older slider-holder"></span>
 
-<aui:input cssClass="slider-input" inlineField="<%= true %>" label="younger-than" maxlength="3" name="fbYoungerThan" size="3" value="<%= ruleFacebookDisplayContext.getFbYoungerThan() %>" />
+<aui:input cssClass="slider-input" inlineField="<%= true %>" label="younger-than" maxlength="3" name="fbYoungerThan" size="3" value="<%= ruleFacebookDisplayContext.getFbYoungerThan() %>">
+	<aui:validator errorMessage="the-age-range-is-invalid" name="custom">
+		function(val, fieldNode, ruleValue) {
+			if (!val) {
+				return false;
+			}
+
+			var olderThan = A.one('#<portlet:namespace />fbOlderThan');
+
+			if (!olderThan.val()) {
+				return false;
+			}
+
+			var youngerThanValue = parseInt(val);
+			var olderThanValue = parseInt(olderThan.val());
+
+			return (olderThanValue < youngerThanValue);
+		}
+	</aui:validator>
+</aui:input>
 
 <span class="slider-holder younger"></span>
 
