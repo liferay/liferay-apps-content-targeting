@@ -292,6 +292,15 @@ public class UserSegmentLocalServiceImpl
 	}
 
 	@Override
+	public List<UserSegment> getUserSegments(
+			long groupId, long userId, int start, int end,
+			OrderByComparator obc)
+		throws PortalException {
+
+		return getUserSegments(new long[] {groupId}, userId, start, end, obc);
+	}
+
+	@Override
 	public List<UserSegment> getUserSegments(long[] groupIds)
 		throws PortalException {
 
@@ -304,6 +313,16 @@ public class UserSegmentLocalServiceImpl
 		throws PortalException {
 
 		return userSegmentPersistence.findByGroupId(groupIds, start, end, obc);
+	}
+
+	@Override
+	public List<UserSegment> getUserSegments(
+			long[] groupIds, long userId, int start, int end,
+			OrderByComparator obc)
+		throws PortalException {
+
+		return userSegmentPersistence.findByG_U(
+			groupIds, userId, start, end, obc);
 	}
 
 	@Override
@@ -332,9 +351,21 @@ public class UserSegmentLocalServiceImpl
 			UserSegment.class.getName());
 
 		SearchContext searchContext = buildSearchContext(
-			groupId, keywords, start, end, sort);
+			groupId, 0, keywords, start, end, sort);
 
 		return indexer.search(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<UserSegment> searchUserSegments(
+			long groupId, long userId, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			groupId, userId, keywords, start, end, sort);
+
+		return searchUserSegments(searchContext);
 	}
 
 	@Override
@@ -351,7 +382,7 @@ public class UserSegmentLocalServiceImpl
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
-			groupId, keywords, start, end, sort);
+			groupId, 0, keywords, start, end, sort);
 
 		return searchUserSegments(searchContext);
 	}
@@ -449,7 +480,8 @@ public class UserSegmentLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-			long groupId, String keywords, int start, int end, Sort sort)
+			long groupId, long userId, String keywords, int start, int end,
+			Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
@@ -463,6 +495,10 @@ public class UserSegmentLocalServiceImpl
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(start);
 		searchContext.setSorts(sort);
+
+		if (userId > 0) {
+			searchContext.setUserId(userId);
+		}
 
 		return searchContext;
 	}
