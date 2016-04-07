@@ -98,6 +98,11 @@
 			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
 
+		<finder name="G_U" return-type="Collection">
+			<finder-column name="groupId" arrayable-operator="OR" />
+			<finder-column name="userId" />
+		</finder>
+
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="Group" />
@@ -207,6 +212,11 @@
 		</finder>
 		<finder name="R_C_C" return-type="Collection">
 			<finder-column name="reportKey" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="U_C_C" return-type="Collection">
+			<finder-column name="userId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
@@ -426,6 +436,10 @@
 		</finder>
 		<finder name="AssetCategoryId" return-type="UserSegment">
 			<finder-column name="assetCategoryId" />
+		</finder>
+		<finder name="G_U" return-type="Collection">
+			<finder-column name="groupId" arrayable-operator="OR" />
+			<finder-column name="userId" />
 		</finder>
 
 		<!-- References -->
