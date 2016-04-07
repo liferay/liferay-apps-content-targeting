@@ -502,6 +502,15 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.getUserSegments(groupId, userId, start,
+			end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.getUserSegments(groupIds);
@@ -514,6 +523,15 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.getUserSegments(groupIds, start, end,
 			obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
+		long[] groupIds, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.getUserSegments(groupIds, userId,
+			start, end, obc);
 	}
 
 	/**
@@ -640,6 +658,15 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.searchUserSegments(groupId, keywords,
 			start, end, sort);
+	}
+
+	@Override
+	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.UserSegment> searchUserSegments(
+		long groupId, long userId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userSegmentLocalService.searchUserSegments(groupId, userId,
+			keywords, start, end, sort);
 	}
 
 	@Override

@@ -674,8 +674,8 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
 			}
 
 			throw new NoSuchTacticException(msg.toString());
@@ -3015,8 +3015,8 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 			Tactic tactic = (Tactic)session.get(TacticImpl.class, primaryKey);
 
 			if (tactic == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				if (_log.isDebugEnabled()) {
+					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchTacticException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
@@ -3254,8 +3254,8 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 		Tactic tactic = fetchByPrimaryKey(primaryKey);
 
 		if (tactic == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			if (_log.isDebugEnabled()) {
+				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			throw new NoSuchTacticException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +

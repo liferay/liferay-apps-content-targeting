@@ -926,6 +926,407 @@ public class UserSegmentUtil {
 	}
 
 	/**
+	* Returns all the user segments where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the matching user segments
+	*/
+	public static List<UserSegment> findByG_U(long groupId, long userId) {
+		return getPersistence().findByG_U(groupId, userId);
+	}
+
+	/**
+	* Returns a range of all the user segments where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @return the range of matching user segments
+	*/
+	public static List<UserSegment> findByG_U(long groupId, long userId,
+		int start, int end) {
+		return getPersistence().findByG_U(groupId, userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the user segments where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user segments
+	*/
+	public static List<UserSegment> findByG_U(long groupId, long userId,
+		int start, int end, OrderByComparator<UserSegment> orderByComparator) {
+		return getPersistence()
+				   .findByG_U(groupId, userId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the user segments where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching user segments
+	*/
+	public static List<UserSegment> findByG_U(long groupId, long userId,
+		int start, int end, OrderByComparator<UserSegment> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_U(groupId, userId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first user segment in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user segment
+	* @throws NoSuchUserSegmentException if a matching user segment could not be found
+	*/
+	public static UserSegment findByG_U_First(long groupId, long userId,
+		OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
+		return getPersistence()
+				   .findByG_U_First(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the first user segment in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user segment, or <code>null</code> if a matching user segment could not be found
+	*/
+	public static UserSegment fetchByG_U_First(long groupId, long userId,
+		OrderByComparator<UserSegment> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_U_First(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last user segment in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user segment
+	* @throws NoSuchUserSegmentException if a matching user segment could not be found
+	*/
+	public static UserSegment findByG_U_Last(long groupId, long userId,
+		OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
+		return getPersistence()
+				   .findByG_U_Last(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last user segment in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user segment, or <code>null</code> if a matching user segment could not be found
+	*/
+	public static UserSegment fetchByG_U_Last(long groupId, long userId,
+		OrderByComparator<UserSegment> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_U_Last(groupId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the user segments before and after the current user segment in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param userSegmentId the primary key of the current user segment
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next user segment
+	* @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
+	*/
+	public static UserSegment[] findByG_U_PrevAndNext(long userSegmentId,
+		long groupId, long userId,
+		OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
+		return getPersistence()
+				   .findByG_U_PrevAndNext(userSegmentId, groupId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the user segments that the user has permission to view where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the matching user segments that the user has permission to view
+	*/
+	public static List<UserSegment> filterFindByG_U(long groupId, long userId) {
+		return getPersistence().filterFindByG_U(groupId, userId);
+	}
+
+	/**
+	* Returns a range of all the user segments that the user has permission to view where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @return the range of matching user segments that the user has permission to view
+	*/
+	public static List<UserSegment> filterFindByG_U(long groupId, long userId,
+		int start, int end) {
+		return getPersistence().filterFindByG_U(groupId, userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the user segments that the user has permissions to view where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user segments that the user has permission to view
+	*/
+	public static List<UserSegment> filterFindByG_U(long groupId, long userId,
+		int start, int end, OrderByComparator<UserSegment> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_U(groupId, userId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the user segments before and after the current user segment in the ordered set of user segments that the user has permission to view where groupId = &#63; and userId = &#63;.
+	*
+	* @param userSegmentId the primary key of the current user segment
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next user segment
+	* @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
+	*/
+	public static UserSegment[] filterFindByG_U_PrevAndNext(
+		long userSegmentId, long groupId, long userId,
+		OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
+		return getPersistence()
+				   .filterFindByG_U_PrevAndNext(userSegmentId, groupId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the user segments that the user has permission to view where groupId = any &#63; and userId = &#63;.
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @return the matching user segments that the user has permission to view
+	*/
+	public static List<UserSegment> filterFindByG_U(long[] groupIds, long userId) {
+		return getPersistence().filterFindByG_U(groupIds, userId);
+	}
+
+	/**
+	* Returns a range of all the user segments that the user has permission to view where groupId = any &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @return the range of matching user segments that the user has permission to view
+	*/
+	public static List<UserSegment> filterFindByG_U(long[] groupIds,
+		long userId, int start, int end) {
+		return getPersistence().filterFindByG_U(groupIds, userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the user segments that the user has permission to view where groupId = any &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user segments that the user has permission to view
+	*/
+	public static List<UserSegment> filterFindByG_U(long[] groupIds,
+		long userId, int start, int end,
+		OrderByComparator<UserSegment> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_U(groupIds, userId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the user segments where groupId = any &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @return the matching user segments
+	*/
+	public static List<UserSegment> findByG_U(long[] groupIds, long userId) {
+		return getPersistence().findByG_U(groupIds, userId);
+	}
+
+	/**
+	* Returns a range of all the user segments where groupId = any &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @return the range of matching user segments
+	*/
+	public static List<UserSegment> findByG_U(long[] groupIds, long userId,
+		int start, int end) {
+		return getPersistence().findByG_U(groupIds, userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the user segments where groupId = any &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user segments
+	*/
+	public static List<UserSegment> findByG_U(long[] groupIds, long userId,
+		int start, int end, OrderByComparator<UserSegment> orderByComparator) {
+		return getPersistence()
+				   .findByG_U(groupIds, userId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the user segments where groupId = &#63; and userId = &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching user segments
+	*/
+	public static List<UserSegment> findByG_U(long[] groupIds, long userId,
+		int start, int end, OrderByComparator<UserSegment> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_U(groupIds, userId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes all the user segments where groupId = &#63; and userId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	*/
+	public static void removeByG_U(long groupId, long userId) {
+		getPersistence().removeByG_U(groupId, userId);
+	}
+
+	/**
+	* Returns the number of user segments where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the number of matching user segments
+	*/
+	public static int countByG_U(long groupId, long userId) {
+		return getPersistence().countByG_U(groupId, userId);
+	}
+
+	/**
+	* Returns the number of user segments where groupId = any &#63; and userId = &#63;.
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @return the number of matching user segments
+	*/
+	public static int countByG_U(long[] groupIds, long userId) {
+		return getPersistence().countByG_U(groupIds, userId);
+	}
+
+	/**
+	* Returns the number of user segments that the user has permission to view where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the number of matching user segments that the user has permission to view
+	*/
+	public static int filterCountByG_U(long groupId, long userId) {
+		return getPersistence().filterCountByG_U(groupId, userId);
+	}
+
+	/**
+	* Returns the number of user segments that the user has permission to view where groupId = any &#63; and userId = &#63;.
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @return the number of matching user segments that the user has permission to view
+	*/
+	public static int filterCountByG_U(long[] groupIds, long userId) {
+		return getPersistence().filterCountByG_U(groupIds, userId);
+	}
+
+	/**
 	* Caches the user segment in the entity cache if it is enabled.
 	*
 	* @param userSegment the user segment

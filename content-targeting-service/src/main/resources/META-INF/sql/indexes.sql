@@ -8,7 +8,7 @@ create index IX_6D0EF494 on CT_AnonymousUserUserSegment (anonymousUserId, userSe
 create index IX_BD1F5349 on CT_AnonymousUserUserSegment (companyId, modifiedDate, manual);
 create index IX_C34D4CBA on CT_AnonymousUserUserSegment (userSegmentId, active_);
 
-create index IX_80FBFA6 on CT_Campaign (groupId);
+create index IX_E5FE11E0 on CT_Campaign (groupId, userId);
 create index IX_E92ED278 on CT_Campaign (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_EAB996FA on CT_Campaign (uuid_[$COLUMN_LENGTH:75$], groupId);
 
@@ -26,6 +26,7 @@ create unique index IX_4DE22586 on CT_ChannelInstance (uuid_[$COLUMN_LENGTH:75$]
 
 create index IX_A3312432 on CT_ReportInstance (classNameId, classPK);
 create index IX_35DFCB93 on CT_ReportInstance (reportKey[$COLUMN_LENGTH:75$], classNameId, classPK);
+create index IX_B4EC07EC on CT_ReportInstance (userId, classNameId, classPK);
 create index IX_CDD8AA51 on CT_ReportInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_FF799113 on CT_ReportInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 
@@ -55,7 +56,7 @@ create index IX_5544BB6A on CT_TrackingActionInstance (uuid_[$COLUMN_LENGTH:75$]
 create unique index IX_D8B9146C on CT_TrackingActionInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_E2256979 on CT_UserSegment (assetCategoryId);
-create index IX_34C5416A on CT_UserSegment (groupId);
+create index IX_8E078FA4 on CT_UserSegment (groupId, userId);
 create index IX_42550D34 on CT_UserSegment (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_F86750B6 on CT_UserSegment (uuid_[$COLUMN_LENGTH:75$], groupId);
 

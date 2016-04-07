@@ -221,6 +221,20 @@ public class UserSegmentPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_U() throws Exception {
+		_persistence.countByG_U(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByG_U(0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_UArrayable() throws Exception {
+		_persistence.countByG_U(new long[] { RandomTestUtil.nextLong(), 0L },
+			RandomTestUtil.nextLong());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		UserSegment newUserSegment = addUserSegment();
 
