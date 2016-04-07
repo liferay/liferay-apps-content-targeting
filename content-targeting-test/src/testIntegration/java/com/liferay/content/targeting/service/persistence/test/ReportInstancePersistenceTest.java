@@ -232,6 +232,14 @@ public class ReportInstancePersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_C_C() throws Exception {
+		_persistence.countByU_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByU_C_C(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ReportInstance newReportInstance = addReportInstance();
 

@@ -337,6 +337,13 @@ public class CampaignLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCampaigns(groupId, userId, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
 		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCampaigns(groupIds);
@@ -347,6 +354,13 @@ public class CampaignLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCampaigns(groupIds, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+		long[] groupIds, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCampaigns(groupIds, userId, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
@@ -509,6 +523,14 @@ public class CampaignLocalServiceUtil {
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().searchCampaigns(groupId, keywords, start, end, sort);
+	}
+
+	public static com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Campaign> searchCampaigns(
+		long groupId, long userId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCampaigns(groupId, userId, keywords, start, end, sort);
 	}
 
 	public static void setUserSegmentCampaigns(long userSegmentId,

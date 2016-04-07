@@ -271,12 +271,20 @@ public interface CampaignLocalService extends BaseLocalService,
 		OrderByComparator obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Campaign> getCampaigns(long groupId, long userId, int start,
+		int end, OrderByComparator obc) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Campaign> getCampaigns(long[] groupIds)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Campaign> getCampaigns(long[] groupIds, int start, int end,
 		OrderByComparator obc) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Campaign> getCampaigns(long[] groupIds, long userId, int start,
+		int end, OrderByComparator obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Campaign> getCampaigns(long[] groupIds, long[] userSegmentIds)
@@ -400,6 +408,11 @@ public interface CampaignLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<Campaign> searchCampaigns(long groupId,
 		java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<Campaign> searchCampaigns(long groupId,
+		long userId, java.lang.String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	public void setUserSegmentCampaigns(long userSegmentId, long[] campaignIds);
