@@ -21,14 +21,14 @@
 	<%
 	String enableLocationPortalLabel = LanguageUtil.get(request, "portal-settings-content-targeting-analytics");
 
-	if (Validator.isNotNull(pageTrackingActionDisplayContext.getPortalSettingsAnalyticsURL())) {
-		enableLocationPortalLabel = "<a href=\"" + pageTrackingActionDisplayContext.getPortalSettingsAnalyticsURL() + "\">" + enableLocationPortalLabel + "</a>";
+	if (Validator.isNotNull(pageTrackingActionDisplayContext.getPortalSettingsURL())) {
+		enableLocationPortalLabel = "<a href=\"" + pageTrackingActionDisplayContext.getPortalSettingsURL() + "\">" + enableLocationPortalLabel + "</a>";
 	}
 
 	String enableLocationSiteLabel = LanguageUtil.get(request, "site-settings-content-targeting-analytics");
 
-	if (Validator.isNotNull(pageTrackingActionDisplayContext.getSiteSettingsAnalyticsURL())) {
-		enableLocationSiteLabel = "<a href=\"" + pageTrackingActionDisplayContext.getSiteSettingsAnalyticsURL() + "\">" + enableLocationSiteLabel + "</a>";
+	if (Validator.isNotNull(pageTrackingActionDisplayContext.getSiteSettingsURL())) {
+		enableLocationSiteLabel = "<a href=\"" + pageTrackingActionDisplayContext.getSiteSettingsURL() + "\">" + enableLocationSiteLabel + "</a>";
 	}
 	%>
 

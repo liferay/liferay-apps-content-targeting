@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -46,7 +44,8 @@ public class RuleAgeDisplayContext extends BaseRuleDisplayContext {
 		return _olderThan;
 	}
 
-	public String getPortalSettingsUsersURL() {
+	@Override
+	public String getPortalSettingsURL() {
 		if (_portalSettingsUsersURL != null) {
 			return _portalSettingsUsersURL;
 		}
@@ -57,15 +56,7 @@ public class RuleAgeDisplayContext extends BaseRuleDisplayContext {
 			return _portalSettingsUsersURL;
 		}
 
-		PortletURL portletURL = getPortalSettingsURL();
-
-		if (portletURL == null) {
-			return _portalSettingsUsersURL;
-		}
-
-		portletURL.setParameter("historyKey", "_130_users");
-
-		_portalSettingsUsersURL = portletURL.toString();
+		_portalSettingsUsersURL = super.getPortalSettingsURL();
 
 		return _portalSettingsUsersURL;
 	}

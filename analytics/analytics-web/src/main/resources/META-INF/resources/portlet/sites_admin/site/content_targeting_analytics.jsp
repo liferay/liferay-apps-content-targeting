@@ -38,8 +38,6 @@ String checkPortalAnalyticsOptionLabel = LanguageUtil.get(resourceBundle, "this-
 if (PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, liveGroup.getGroupId(), PortletKeys.PORTAL_SETTINGS)) {
 	PortletURL portalSettingsURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.PORTAL_SETTINGS, PortletRequest.RENDER_PHASE);
 
-	portalSettingsURL.setParameter("historyKey", "_130_contentTargetingAnalytics");
-
 	checkPortalAnalyticsLabel = "<a href=\"" + portalSettingsURL.toString() + "\">" + checkPortalAnalyticsLabel + "</a>";
 }
 %>

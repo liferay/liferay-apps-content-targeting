@@ -14,24 +14,18 @@
 
 package com.liferay.content.targeting.rule.device.display.context;
 
+import com.liferay.content.targeting.display.context.BaseRuleDisplayContext;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,17 +33,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class RuleDeviceDisplayContext {
+public class RuleDeviceDisplayContext extends BaseRuleDisplayContext {
 
-	public RuleDeviceDisplayContext(
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request) {
-
-		_liferayPortletResponse = liferayPortletResponse;
-		_request = request;
-
-		_displayContext = (Map<String, Object>)request.getAttribute(
-			"displayContext");
+	public RuleDeviceDisplayContext(HttpServletRequest request) {
+		super(request);
 	}
 
 	public long getMDRGroupId() {
@@ -57,7 +44,7 @@ public class RuleDeviceDisplayContext {
 			return _mdrGroupId;
 		}
 
-		_mdrGroupId = GetterUtil.getLong(_displayContext.get("mdrGroupId"));
+		_mdrGroupId = GetterUtil.getLong(displayContext.get("mdrGroupId"));
 
 		return _mdrGroupId;
 	}
@@ -67,7 +54,7 @@ public class RuleDeviceDisplayContext {
 			return _mdrRuleGroups;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
@@ -88,39 +75,16 @@ public class RuleDeviceDisplayContext {
 			return _mDRURL;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		PortletURL portletURL = getControlPanelURL(
+			MDRPortletKeys.MOBILE_DEVICE_RULES);
 
-		_mDRURL = StringPool.BLANK;
-
-		try {
-			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(),
-					MDRPortletKeys.MOBILE_DEVICE_RULES)) {
-
-				return _mDRURL;
-			}
-
-			PortletURL portletURL =
-				_liferayPortletResponse.createLiferayPortletURL(
-					PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
-					MDRPortletKeys.MOBILE_DEVICE_RULES,
-					PortletRequest.RENDER_PHASE, false);
-
-			_mDRURL = portletURL.toString();
-		}
-		catch (PortalException pe) {
-		}
+		_mDRURL = portletURL.toString();
 
 		return _mDRURL;
 	}
 
-	private final Map<String, Object> _displayContext;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private Long _mdrGroupId;
 	private List<MDRRuleGroup> _mdrRuleGroups;
 	private String _mDRURL;
-	private final HttpServletRequest _request;
 
 }

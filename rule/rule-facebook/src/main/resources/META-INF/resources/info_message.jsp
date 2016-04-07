@@ -26,8 +26,8 @@
 			<%
 			String enableLocationLabel = LanguageUtil.get(request, "portal-settings-authentication");
 
-			if (Validator.isNotNull(ruleFacebookDisplayContext.getPortalSettingsAuthenticationURL())) {
-				enableLocationLabel = "<a href=\"" + ruleFacebookDisplayContext.getPortalSettingsAuthenticationURL() + "\">" + enableLocationLabel + "</a>";
+			if (Validator.isNotNull(ruleFacebookDisplayContext.getPortalSettingsURL())) {
+				enableLocationLabel = "<a href=\"" + ruleFacebookDisplayContext.getPortalSettingsURL() + "\">" + enableLocationLabel + "</a>";
 			}
 			%>
 

@@ -21,8 +21,8 @@
 	<%
 	String enableLocationLabel = LanguageUtil.get(resourceBundle, "portal-settings-users");
 
-	if (Validator.isNotNull(ruleAgeDisplayContext.getPortalSettingsUsersURL())) {
-		enableLocationLabel = "<a href=\"" + ruleAgeDisplayContext.getPortalSettingsUsersURL() + "\">" + enableLocationLabel + "</a>";
+	if (Validator.isNotNull(ruleAgeDisplayContext.getPortalSettingsURL())) {
+		enableLocationLabel = "<a href=\"" + ruleAgeDisplayContext.getPortalSettingsURL() + "\">" + enableLocationLabel + "</a>";
 	}
 	%>
 

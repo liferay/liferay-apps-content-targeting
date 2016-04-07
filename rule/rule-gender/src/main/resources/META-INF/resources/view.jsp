@@ -16,15 +16,15 @@
 
 <%@ include file="/init.jsp" %>
 
-<c:if test="<%= ruleGenderDisplayContext.isGenderEnabled() %>">
+<c:if test="<%= !ruleGenderDisplayContext.isGenderEnabled() %>">
 	<p class="text-default">
 		<strong><liferay-ui:message key="this-rule-will-not-work-properly-because-the-gender-field-has-been-removed" /></strong>
 
 		<%
 		String enableLocationLabel = LanguageUtil.get(resourceBundle, "portal-settings-users");
 
-		if (Validator.isNotNull(ruleGenderDisplayContext.getPortalSettingsUsersURL())) {
-			enableLocationLabel = "<a href=\"" + ruleGenderDisplayContext.getPortalSettingsUsersURL() + "\">" + enableLocationLabel + "</a>";
+		if (Validator.isNotNull(ruleGenderDisplayContext.getPortalSettingsURL())) {
+			enableLocationLabel = "<a href=\"" + ruleGenderDisplayContext.getPortalSettingsURL() + "\">" + enableLocationLabel + "</a>";
 		}
 		%>
 
