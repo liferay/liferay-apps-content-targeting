@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -83,12 +84,17 @@ public class ReportInstanceIndexer extends BaseIndexer<ReportInstance> {
 
 	@Override
 	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, SearchContext searchContext)
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
 		throws Exception {
 
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, true);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, true);
+
+		if (searchContext.getUserId() > 0) {
+			addSearchUserId(fullQueryBooleanFilter, searchContext);
+		}
 	}
 
 	@Override
