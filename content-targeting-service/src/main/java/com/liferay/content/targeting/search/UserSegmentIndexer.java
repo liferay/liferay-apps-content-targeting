@@ -92,6 +92,10 @@ public class UserSegmentIndexer extends BaseIndexer<UserSegment> {
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, true);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, true);
+
+		if (searchContext.getUserId() > 0) {
+			addSearchUserId(fullQueryBooleanFilter, searchContext);
+		}
 	}
 
 	@Override
