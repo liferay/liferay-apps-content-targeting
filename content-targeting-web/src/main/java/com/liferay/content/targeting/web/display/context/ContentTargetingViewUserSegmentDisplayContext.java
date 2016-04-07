@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -53,6 +54,17 @@ public class ContentTargetingViewUserSegmentDisplayContext
 	@Override
 	public String[] getDisplayViews() {
 		return _USER_SEGMENTS_DISPLAY_VIEWS;
+	}
+
+	public String getNavigation() {
+		if (_navigation != null) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(
+			liferayPortletRequest, "navigation", "all");
+
+		return _navigation;
 	}
 
 	public PortletURL getPortletURL() {
@@ -103,15 +115,29 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		userSegmentSearchContainer.setOrderByComparator(orderByComparator);
 		userSegmentSearchContainer.setOrderByType(orderByType);
 
+		if (isNavigationRecent()) {
+			userSegmentSearchContainer.setOrderByCol("create-date");
+			userSegmentSearchContainer.setOrderByType(getOrderByType());
+		}
+
 		if (Validator.isNotNull(getKeywords())) {
 			Sort sort = new Sort(
 				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
 
-			BaseModelSearchResult<UserSegment> searchResults =
-				UserSegmentLocalServiceUtil.searchUserSegments(
+			BaseModelSearchResult<UserSegment> searchResults = null;
+
+			if (isNavigationMine()) {
+				searchResults = UserSegmentLocalServiceUtil.searchUserSegments(
+					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+					getKeywords(), userSegmentSearchContainer.getStart(),
+					userSegmentSearchContainer.getEnd(), sort);
+			}
+			else {
+				searchResults = UserSegmentLocalServiceUtil.searchUserSegments(
 					themeDisplay.getScopeGroupId(), getKeywords(),
 					userSegmentSearchContainer.getStart(),
 					userSegmentSearchContainer.getEnd(), sort);
+			}
 
 			userSegmentSearchContainer.setTotal(searchResults.getLength());
 			userSegmentSearchContainer.setResults(
@@ -128,11 +154,22 @@ public class ContentTargetingViewUserSegmentDisplayContext
 
 			userSegmentSearchContainer.setTotal(total);
 
-			List results = UserSegmentLocalServiceUtil.getUserSegments(
-				themeDisplay.getScopeGroupId(),
-				userSegmentSearchContainer.getStart(),
-				userSegmentSearchContainer.getEnd(),
-				userSegmentSearchContainer.getOrderByComparator());
+			List results = null;
+
+			if (isNavigationMine()) {
+				results = UserSegmentLocalServiceUtil.getUserSegments(
+					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+					userSegmentSearchContainer.getStart(),
+					userSegmentSearchContainer.getEnd(),
+					userSegmentSearchContainer.getOrderByComparator());
+			}
+			else {
+				results = UserSegmentLocalServiceUtil.getUserSegments(
+					themeDisplay.getScopeGroupId(),
+					userSegmentSearchContainer.getStart(),
+					userSegmentSearchContainer.getEnd(),
+					userSegmentSearchContainer.getOrderByComparator());
+			}
 
 			userSegmentSearchContainer.setResults(results);
 		}
@@ -174,6 +211,22 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		return _isIncludeCheckBox;
 	}
 
+	public boolean isNavigationMine() {
+		if (Validator.equals(getNavigation(), "mine")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationRecent() {
+		if (Validator.equals(getNavigation(), "recent")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isSearchEnabled() throws PortalException, PortletException {
 		if (_isSearchEnabled != null) {
 			return _isSearchEnabled;
@@ -209,6 +262,7 @@ public class ContentTargetingViewUserSegmentDisplayContext
 	private Boolean _isDisabledManagementBar;
 	private Boolean _isIncludeCheckBox;
 	private Boolean _isSearchEnabled;
+	private String _navigation;
 	private Boolean _showAddButton;
 	private SearchContainer _userSegmentSearchContainer;
 
