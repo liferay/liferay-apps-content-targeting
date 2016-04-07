@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.admin.web.constants.SiteAdminPortletKeys;
 
 import java.util.Map;
 
@@ -56,7 +57,8 @@ public class BaseDisplayContext {
 	}
 
 	public String getSiteSettingsURL() {
-		PortletURL portletURL = getControlPanelURL(PortletKeys.PORTAL_SETTINGS);
+		PortletURL portletURL = getControlPanelURL(
+			SiteAdminPortletKeys.SITE_SETTINGS);
 
 		return portletURL.toString();
 	}
