@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
@@ -50,30 +49,14 @@ public class BaseDisplayContext {
 			request, portletId, PortletRequest.RENDER_PHASE);
 	}
 
-	public String getPortalSettingsAnalyticsURL() {
-		PortletURL portletURL = getPortalSettingsURL();
-
-		if (portletURL == null) {
-			return StringPool.BLANK;
-		}
-
-		portletURL.setParameter("historyKey", "_130_contentTargetingAnalytics");
+	public String getPortalSettingsURL() {
+		PortletURL portletURL = getControlPanelURL(PortletKeys.PORTAL_SETTINGS);
 
 		return portletURL.toString();
 	}
 
-	public PortletURL getPortalSettingsURL() {
-		return getControlPanelURL(PortletKeys.PORTAL_SETTINGS);
-	}
-
-	public String getSiteSettingsAnalyticsURL() {
-		PortletURL portletURL = getPortalSettingsURL();
-
-		if (portletURL == null) {
-			return StringPool.BLANK;
-		}
-
-		portletURL.setParameter("historyKey", "_165_contentTargetingAnalytics");
+	public String getSiteSettingsURL() {
+		PortletURL portletURL = getControlPanelURL(PortletKeys.PORTAL_SETTINGS);
 
 		return portletURL.toString();
 	}

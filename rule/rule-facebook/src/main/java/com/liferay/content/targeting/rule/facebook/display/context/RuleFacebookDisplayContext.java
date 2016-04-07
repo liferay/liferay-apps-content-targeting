@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -108,7 +106,8 @@ public class RuleFacebookDisplayContext extends BaseRuleDisplayContext {
 		return _numberOfFriends;
 	}
 
-	public String getPortalSettingsAuthenticationURL() {
+	@Override
+	public String getPortalSettingsURL() {
 		if (_portalSettingsAuthenticationURL != null) {
 			return _portalSettingsAuthenticationURL;
 		}
@@ -119,15 +118,7 @@ public class RuleFacebookDisplayContext extends BaseRuleDisplayContext {
 			return _portalSettingsAuthenticationURL;
 		}
 
-		PortletURL portletURL = getPortalSettingsURL();
-
-		if (portletURL == null) {
-			return _portalSettingsAuthenticationURL;
-		}
-
-		portletURL.setParameter("historyKey", "_130_authentication");
-
-		_portalSettingsAuthenticationURL = portletURL.toString();
+		_portalSettingsAuthenticationURL = super.getPortalSettingsURL();
 
 		return _portalSettingsAuthenticationURL;
 	}

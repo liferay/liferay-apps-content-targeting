@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -45,7 +43,8 @@ public class RuleGenderDisplayContext extends BaseRuleDisplayContext {
 		return _gender;
 	}
 
-	public String getPortalSettingsUsersURL() {
+	@Override
+	public String getPortalSettingsURL() {
 		if (_portalSettingsUsersURL != null) {
 			return _portalSettingsUsersURL;
 		}
@@ -53,18 +52,10 @@ public class RuleGenderDisplayContext extends BaseRuleDisplayContext {
 		_portalSettingsUsersURL = StringPool.BLANK;
 
 		if (isGenderEnabled()) {
-			return _portalSettingsUsersURL;
+			return StringPool.BLANK;
 		}
 
-		PortletURL portletURL = getPortalSettingsURL();
-
-		if (portletURL == null) {
-			return _portalSettingsUsersURL;
-		}
-
-		portletURL.setParameter("historyKey", "_130_users");
-
-		_portalSettingsUsersURL = portletURL.toString();
+		_portalSettingsUsersURL = super.getPortalSettingsURL();
 
 		return _portalSettingsUsersURL;
 	}
