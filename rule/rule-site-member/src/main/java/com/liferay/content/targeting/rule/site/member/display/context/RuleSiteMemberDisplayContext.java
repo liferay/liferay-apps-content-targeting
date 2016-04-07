@@ -14,25 +14,21 @@
 
 package com.liferay.content.targeting.rule.site.member.display.context;
 
+import com.liferay.content.targeting.display.context.BaseRuleDisplayContext;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,17 +36,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class RuleSiteMemberDisplayContext {
+public class RuleSiteMemberDisplayContext extends BaseRuleDisplayContext {
 
-	public RuleSiteMemberDisplayContext(
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request) {
-
-		_liferayPortletResponse = liferayPortletResponse;
-		_request = request;
-
-		_displayContext = (Map<String, Object>)request.getAttribute(
-			"displayContext");
+	public RuleSiteMemberDisplayContext(HttpServletRequest request) {
+		super(request);
 	}
 
 	public long getSiteId() {
@@ -58,7 +47,7 @@ public class RuleSiteMemberDisplayContext {
 			return _siteId;
 		}
 
-		_siteId = GetterUtil.getLong(_displayContext.get("siteId"));
+		_siteId = GetterUtil.getLong(displayContext.get("siteId"));
 
 		return _siteId;
 	}
@@ -68,7 +57,7 @@ public class RuleSiteMemberDisplayContext {
 			return _sites;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		try {
@@ -94,33 +83,13 @@ public class RuleSiteMemberDisplayContext {
 			return _sitesAdminURL;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		PortletURL portletURL = getControlPanelURL(PortletKeys.SITE_ADMIN);
 
-		try {
-			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), PortletKeys.SITE_ADMIN)) {
-
-				return _sitesAdminURL;
-			}
-
-			PortletURL portletURL =
-				_liferayPortletResponse.createLiferayPortletURL(
-					PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
-					PortletKeys.SITE_ADMIN, PortletRequest.RENDER_PHASE, false);
-
-			_sitesAdminURL = portletURL.toString();
-		}
-		catch (PortalException pe) {
-		}
+		_sitesAdminURL = portletURL.toString();
 
 		return _sitesAdminURL;
 	}
 
-	private final Map<String, Object> _displayContext;
-	private final LiferayPortletResponse _liferayPortletResponse;
-	private final HttpServletRequest _request;
 	private Long _siteId;
 	private List<Group> _sites;
 	private String _sitesAdminURL;

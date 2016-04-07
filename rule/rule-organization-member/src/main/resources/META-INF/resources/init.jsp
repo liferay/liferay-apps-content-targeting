@@ -36,5 +36,5 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
-RuleOrganizationMemberDisplayContext ruleOrganizationMemberDisplayContext = new RuleOrganizationMemberDisplayContext(liferayPortletResponse, request);
+RuleOrganizationMemberDisplayContext ruleOrganizationMemberDisplayContext = new RuleOrganizationMemberDisplayContext(request);
 %>

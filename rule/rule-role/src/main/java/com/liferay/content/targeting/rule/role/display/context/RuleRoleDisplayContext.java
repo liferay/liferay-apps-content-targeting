@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.rule.role.display.context;
 
+import com.liferay.content.targeting.display.context.BaseRuleDisplayContext;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -22,15 +23,12 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -38,9 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,17 +44,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class RuleRoleDisplayContext {
+public class RuleRoleDisplayContext extends BaseRuleDisplayContext {
 
-	public RuleRoleDisplayContext(
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request) {
-
-		_liferayPortletResponse = liferayPortletResponse;
-		_request = request;
-
-		_displayContext = (Map<String, Object>)request.getAttribute(
-			"displayContext");
+	public RuleRoleDisplayContext(HttpServletRequest request) {
+		super(request);
 	}
 
 	public long getOrganizationId() {
@@ -67,7 +56,7 @@ public class RuleRoleDisplayContext {
 		}
 
 		_organizationId = GetterUtil.getLong(
-			_displayContext.get("organizationId"));
+			displayContext.get("organizationId"));
 
 		return _organizationId;
 	}
@@ -83,7 +72,7 @@ public class RuleRoleDisplayContext {
 			return _organizations;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		// See LPS-50218
@@ -104,7 +93,7 @@ public class RuleRoleDisplayContext {
 			return _roleId;
 		}
 
-		_roleId = GetterUtil.getLong(_displayContext.get("roleId"));
+		_roleId = GetterUtil.getLong(displayContext.get("roleId"));
 
 		return _roleId;
 	}
@@ -114,7 +103,7 @@ public class RuleRoleDisplayContext {
 			return _siteId;
 		}
 
-		_siteId = GetterUtil.getLong(_displayContext.get("siteId"));
+		_siteId = GetterUtil.getLong(displayContext.get("siteId"));
 
 		return _siteId;
 	}
@@ -129,7 +118,7 @@ public class RuleRoleDisplayContext {
 			return _sites;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		try {
@@ -155,26 +144,9 @@ public class RuleRoleDisplayContext {
 			return _sitesAdminURL;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		PortletURL portletURL = getControlPanelURL(PortletKeys.SITE_ADMIN);
 
-		try {
-			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), PortletKeys.SITE_ADMIN)) {
-
-				return _sitesAdminURL;
-			}
-
-			PortletURL portletURL =
-				_liferayPortletResponse.createLiferayPortletURL(
-					PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
-					PortletKeys.SITE_ADMIN, PortletRequest.RENDER_PHASE, false);
-
-			_sitesAdminURL = portletURL.toString();
-		}
-		catch (PortalException pe) {
-		}
+		_sitesAdminURL = portletURL.toString();
 
 		return _sitesAdminURL;
 	}
@@ -190,33 +162,15 @@ public class RuleRoleDisplayContext {
 			return _usersAdminURL;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		PortletURL portletURL = getControlPanelURL(PortletKeys.USERS_ADMIN);
 
-		try {
-			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), PortletKeys.USERS_ADMIN)) {
-
-				return _usersAdminURL;
-			}
-
-			PortletURL portletURL =
-				_liferayPortletResponse.createLiferayPortletURL(
-					PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
-					PortletKeys.USERS_ADMIN, PortletRequest.RENDER_PHASE,
-					false);
-
-			_usersAdminURL = portletURL.toString();
-		}
-		catch (PortalException pe) {
-		}
+		_usersAdminURL = portletURL.toString();
 
 		return _usersAdminURL;
 	}
 
 	protected List<Role> getRoles(int[] types, String name) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
@@ -236,11 +190,8 @@ public class RuleRoleDisplayContext {
 		return ListUtil.remove(roles, removeRoles);
 	}
 
-	private final Map<String, Object> _displayContext;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private Long _organizationId;
 	private List<Organization> _organizations;
-	private final HttpServletRequest _request;
 	private Long _roleId;
 	private Long _siteId;
 	private List<Group> _sites;
