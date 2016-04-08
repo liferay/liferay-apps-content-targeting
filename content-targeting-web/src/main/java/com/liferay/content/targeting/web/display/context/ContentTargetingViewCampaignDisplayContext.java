@@ -323,8 +323,7 @@ public class ContentTargetingViewCampaignDisplayContext
 			active = true;
 		}
 
-		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), liferayPortletResponse);
+		PortletURL portletURL = getPortletURL();
 
 		portletURL.setParameter("status", status);
 
