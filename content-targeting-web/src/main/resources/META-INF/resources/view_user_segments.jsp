@@ -79,7 +79,7 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
+			navigationKeys='<%= new String[] {"all", "recent", "mine"} %>'
 			portletURL="<%= contentTargetingViewUserSegmentDisplayContext.getPortletURL() %>"
 		/>
 
@@ -143,7 +143,7 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 				<c:when test="<%= contentTargetingViewUserSegmentDisplayContext.isIconView() %>">
 
 					<%
-					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					row.setCssClass("entry-card lfr-asset-item");
 					%>
 
 					<liferay-ui:search-container-column-text>

@@ -680,6 +680,344 @@ public interface CampaignPersistence extends BasePersistence<Campaign> {
 	public int filterCountByGroupId(long[] groupIds);
 
 	/**
+	* Returns all the campaigns where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the matching campaigns
+	*/
+	public java.util.List<Campaign> findByG_U(long groupId, long userId);
+
+	/**
+	* Returns a range of all the campaigns where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of campaigns
+	* @param end the upper bound of the range of campaigns (not inclusive)
+	* @return the range of matching campaigns
+	*/
+	public java.util.List<Campaign> findByG_U(long groupId, long userId,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the campaigns where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of campaigns
+	* @param end the upper bound of the range of campaigns (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching campaigns
+	*/
+	public java.util.List<Campaign> findByG_U(long groupId, long userId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the campaigns where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of campaigns
+	* @param end the upper bound of the range of campaigns (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching campaigns
+	*/
+	public java.util.List<Campaign> findByG_U(long groupId, long userId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first campaign in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching campaign
+	* @throws NoSuchCampaignException if a matching campaign could not be found
+	*/
+	public Campaign findByG_U_First(long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
+		throws NoSuchCampaignException;
+
+	/**
+	* Returns the first campaign in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching campaign, or <code>null</code> if a matching campaign could not be found
+	*/
+	public Campaign fetchByG_U_First(long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator);
+
+	/**
+	* Returns the last campaign in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching campaign
+	* @throws NoSuchCampaignException if a matching campaign could not be found
+	*/
+	public Campaign findByG_U_Last(long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
+		throws NoSuchCampaignException;
+
+	/**
+	* Returns the last campaign in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching campaign, or <code>null</code> if a matching campaign could not be found
+	*/
+	public Campaign fetchByG_U_Last(long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator);
+
+	/**
+	* Returns the campaigns before and after the current campaign in the ordered set where groupId = &#63; and userId = &#63;.
+	*
+	* @param campaignId the primary key of the current campaign
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next campaign
+	* @throws NoSuchCampaignException if a campaign with the primary key could not be found
+	*/
+	public Campaign[] findByG_U_PrevAndNext(long campaignId, long groupId,
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
+		throws NoSuchCampaignException;
+
+	/**
+	* Returns all the campaigns that the user has permission to view where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the matching campaigns that the user has permission to view
+	*/
+	public java.util.List<Campaign> filterFindByG_U(long groupId, long userId);
+
+	/**
+	* Returns a range of all the campaigns that the user has permission to view where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of campaigns
+	* @param end the upper bound of the range of campaigns (not inclusive)
+	* @return the range of matching campaigns that the user has permission to view
+	*/
+	public java.util.List<Campaign> filterFindByG_U(long groupId, long userId,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the campaigns that the user has permissions to view where groupId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of campaigns
+	* @param end the upper bound of the range of campaigns (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching campaigns that the user has permission to view
+	*/
+	public java.util.List<Campaign> filterFindByG_U(long groupId, long userId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator);
+
+	/**
+	* Returns the campaigns before and after the current campaign in the ordered set of campaigns that the user has permission to view where groupId = &#63; and userId = &#63;.
+	*
+	* @param campaignId the primary key of the current campaign
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next campaign
+	* @throws NoSuchCampaignException if a campaign with the primary key could not be found
+	*/
+	public Campaign[] filterFindByG_U_PrevAndNext(long campaignId,
+		long groupId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator)
+		throws NoSuchCampaignException;
+
+	/**
+	* Returns all the campaigns that the user has permission to view where groupId = any &#63; and userId = &#63;.
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @return the matching campaigns that the user has permission to view
+	*/
+	public java.util.List<Campaign> filterFindByG_U(long[] groupIds, long userId);
+
+	/**
+	* Returns a range of all the campaigns that the user has permission to view where groupId = any &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @param start the lower bound of the range of campaigns
+	* @param end the upper bound of the range of campaigns (not inclusive)
+	* @return the range of matching campaigns that the user has permission to view
+	*/
+	public java.util.List<Campaign> filterFindByG_U(long[] groupIds,
+		long userId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the campaigns that the user has permission to view where groupId = any &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @param start the lower bound of the range of campaigns
+	* @param end the upper bound of the range of campaigns (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching campaigns that the user has permission to view
+	*/
+	public java.util.List<Campaign> filterFindByG_U(long[] groupIds,
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator);
+
+	/**
+	* Returns all the campaigns where groupId = any &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @return the matching campaigns
+	*/
+	public java.util.List<Campaign> findByG_U(long[] groupIds, long userId);
+
+	/**
+	* Returns a range of all the campaigns where groupId = any &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @param start the lower bound of the range of campaigns
+	* @param end the upper bound of the range of campaigns (not inclusive)
+	* @return the range of matching campaigns
+	*/
+	public java.util.List<Campaign> findByG_U(long[] groupIds, long userId,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the campaigns where groupId = any &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @param start the lower bound of the range of campaigns
+	* @param end the upper bound of the range of campaigns (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching campaigns
+	*/
+	public java.util.List<Campaign> findByG_U(long[] groupIds, long userId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the campaigns where groupId = &#63; and userId = &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CampaignModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of campaigns
+	* @param end the upper bound of the range of campaigns (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching campaigns
+	*/
+	public java.util.List<Campaign> findByG_U(long[] groupIds, long userId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Campaign> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes all the campaigns where groupId = &#63; and userId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	*/
+	public void removeByG_U(long groupId, long userId);
+
+	/**
+	* Returns the number of campaigns where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the number of matching campaigns
+	*/
+	public int countByG_U(long groupId, long userId);
+
+	/**
+	* Returns the number of campaigns where groupId = any &#63; and userId = &#63;.
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @return the number of matching campaigns
+	*/
+	public int countByG_U(long[] groupIds, long userId);
+
+	/**
+	* Returns the number of campaigns that the user has permission to view where groupId = &#63; and userId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @return the number of matching campaigns that the user has permission to view
+	*/
+	public int filterCountByG_U(long groupId, long userId);
+
+	/**
+	* Returns the number of campaigns that the user has permission to view where groupId = any &#63; and userId = &#63;.
+	*
+	* @param groupIds the group IDs
+	* @param userId the user ID
+	* @return the number of matching campaigns that the user has permission to view
+	*/
+	public int filterCountByG_U(long[] groupIds, long userId);
+
+	/**
 	* Caches the campaign in the entity cache if it is enabled.
 	*
 	* @param campaign the campaign

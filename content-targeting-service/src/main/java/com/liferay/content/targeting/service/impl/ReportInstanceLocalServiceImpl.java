@@ -208,6 +208,17 @@ public class ReportInstanceLocalServiceImpl
 
 	@Override
 	public List<ReportInstance> getReportInstances(
+		long userId, String className, long classPK, int start, int end,
+		OrderByComparator obc) {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return reportInstancePersistence.findByU_C_C(
+			userId, classNameId, classPK, start, end, obc);
+	}
+
+	@Override
+	public List<ReportInstance> getReportInstances(
 		String className, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
@@ -244,6 +255,18 @@ public class ReportInstanceLocalServiceImpl
 	}
 
 	@Override
+	public BaseModelSearchResult<ReportInstance> searchReportInstances(
+			long groupId, long userId, String className, long classPK,
+			String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			groupId, userId, className, classPK, keywords, start, end, sort);
+
+		return searchReportInstances(searchContext);
+	}
+
+	@Override
 	public List<ReportInstance> searchReportInstances(
 			long groupId, String className, long classPK, String keywords,
 			int start, int end)
@@ -263,7 +286,7 @@ public class ReportInstanceLocalServiceImpl
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
-			groupId, className, classPK, keywords, start, end, sort);
+			groupId, 0, className, classPK, keywords, start, end, sort);
 
 		return searchReportInstances(searchContext);
 	}
@@ -293,8 +316,8 @@ public class ReportInstanceLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-			long groupId, String className, long classPK, String keywords,
-			int start, int end, Sort sort)
+			long groupId, long userId, String className, long classPK,
+			String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
@@ -321,6 +344,10 @@ public class ReportInstanceLocalServiceImpl
 		searchContext.setKeywords(keywords == null ? "" : keywords);
 		searchContext.setStart(start);
 		searchContext.setSorts(sort);
+
+		if (userId > 0) {
+			searchContext.setUserId(userId);
+		}
 
 		return searchContext;
 	}

@@ -451,6 +451,13 @@ public class UserSegmentLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserSegments(groupId, userId, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserSegments(groupIds);
@@ -461,6 +468,13 @@ public class UserSegmentLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserSegments(groupIds, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
+		long[] groupIds, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserSegments(groupIds, userId, start, end, obc);
 	}
 
 	/**
@@ -570,6 +584,15 @@ public class UserSegmentLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchUserSegments(groupId, keywords, start, end, sort);
+	}
+
+	public static com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.UserSegment> searchUserSegments(
+		long groupId, long userId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchUserSegments(groupId, userId, keywords, start, end,
+			sort);
 	}
 
 	public static void setCampaignUserSegments(long campaignId,

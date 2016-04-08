@@ -19,7 +19,10 @@ import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
+import com.liferay.content.targeting.web.util.comparator.CampaignCreateDateComparator;
 import com.liferay.content.targeting.web.util.comparator.CampaignModifiedDateComparator;
+import com.liferay.content.targeting.web.util.comparator.CampaignPriorityComparator;
+import com.liferay.content.targeting.web.util.comparator.CampaignStartDateComparator;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -71,35 +75,65 @@ public class ContentTargetingViewCampaignDisplayContext
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 		campaignSearchContainer.setSearch(Validator.isNotNull(getKeywords()));
 
-		String orderByType = getOrderByType();
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<Campaign> orderByComparator =
-			new CampaignModifiedDateComparator(orderByAsc);
-
-		campaignSearchContainer.setOrderByCol(getOrderByCol());
-		campaignSearchContainer.setOrderByComparator(orderByComparator);
-		campaignSearchContainer.setOrderByType(orderByType);
-
 		if (Validator.isNotNull(getKeywords())) {
-			Sort sort = new Sort(
-				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+			Sort sort = null;
 
-			BaseModelSearchResult<Campaign> searchResults =
-				CampaignLocalServiceUtil.searchCampaigns(
+			if (isNavigationRecent()) {
+				sort = new Sort(
+					Field.MODIFIED_DATE, Sort.LONG_TYPE, isOrderByAsc());
+			}
+			else {
+				sort = new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, false);
+			}
+
+			BaseModelSearchResult<Campaign> searchResults = null;
+
+			if (isNavigationMine()) {
+				searchResults = CampaignLocalServiceUtil.searchCampaigns(
 					themeDisplay.getScopeGroupId(), getKeywords(),
 					campaignSearchContainer.getStart(),
 					campaignSearchContainer.getEnd(), sort);
+			}
+			else {
+				searchResults = CampaignLocalServiceUtil.searchCampaigns(
+					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+					getKeywords(), campaignSearchContainer.getStart(),
+					campaignSearchContainer.getEnd(), sort);
+			}
 
 			campaignSearchContainer.setTotal(searchResults.getLength());
 			campaignSearchContainer.setResults(searchResults.getBaseModels());
 		}
 		else {
+			if (isNavigationRecent()) {
+				OrderByComparator<Campaign> orderByComparator =
+					new CampaignCreateDateComparator(false);
+
+				campaignSearchContainer.setOrderByCol("create-date");
+				campaignSearchContainer.setOrderByComparator(orderByComparator);
+				campaignSearchContainer.setOrderByType("desc");
+			}
+			else {
+				OrderByComparator<Campaign> orderByComparator = null;
+
+				if (Validator.equals(getOrderByCol(), "modified-date")) {
+					orderByComparator = new CampaignModifiedDateComparator(
+						isOrderByAsc());
+				}
+				else if (Validator.equals(getOrderByCol(), "priority")) {
+					orderByComparator = new CampaignPriorityComparator(
+						isOrderByAsc());
+				}
+				else if (Validator.equals(getOrderByCol(), "start-date")) {
+					orderByComparator = new CampaignStartDateComparator(
+						isOrderByAsc());
+				}
+
+				campaignSearchContainer.setOrderByCol(getOrderByCol());
+				campaignSearchContainer.setOrderByComparator(orderByComparator);
+				campaignSearchContainer.setOrderByType(getOrderByType());
+			}
+
 			if (showAddButton()) {
 				campaignSearchContainer.setEmptyResultsMessageCssClass(
 					"taglib-empty-result-message-header-has-plus-btn");
@@ -110,11 +144,22 @@ public class ContentTargetingViewCampaignDisplayContext
 
 			campaignSearchContainer.setTotal(total);
 
-			List results = CampaignLocalServiceUtil.getCampaigns(
-				themeDisplay.getScopeGroupId(),
-				campaignSearchContainer.getStart(),
-				campaignSearchContainer.getEnd(),
-				campaignSearchContainer.getOrderByComparator());
+			List<Campaign> results = null;
+
+			if (isNavigationMine()) {
+				results = CampaignLocalServiceUtil.getCampaigns(
+					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+					campaignSearchContainer.getStart(),
+					campaignSearchContainer.getEnd(),
+					campaignSearchContainer.getOrderByComparator());
+			}
+			else {
+				results = CampaignLocalServiceUtil.getCampaigns(
+					themeDisplay.getScopeGroupId(),
+					campaignSearchContainer.getStart(),
+					campaignSearchContainer.getEnd(),
+					campaignSearchContainer.getOrderByComparator());
+			}
 
 			campaignSearchContainer.setResults(results);
 		}
@@ -127,6 +172,17 @@ public class ContentTargetingViewCampaignDisplayContext
 	@Override
 	public String[] getDisplayViews() {
 		return _CAMPAIGN_DISPLAY_VIEWS;
+	}
+
+	public String getNavigation() {
+		if (_navigation != null) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(
+			liferayPortletRequest, "navigation", "all");
+
+		return _navigation;
 	}
 
 	public PortletURL getPortletURL() {
@@ -172,6 +228,22 @@ public class ContentTargetingViewCampaignDisplayContext
 		return _isIncludeCheckBox;
 	}
 
+	public boolean isNavigationMine() {
+		if (Validator.equals(getNavigation(), "mine")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationRecent() {
+		if (Validator.equals(getNavigation(), "recent")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isSearchEnabled() throws PortalException, PortletException {
 		if (_isSearchEnabled != null) {
 			return _isSearchEnabled;
@@ -201,6 +273,18 @@ public class ContentTargetingViewCampaignDisplayContext
 		return _showAddButton;
 	}
 
+	protected boolean isOrderByAsc() {
+		String orderByType = getOrderByType();
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		return orderByAsc;
+	}
+
 	private static final String[] _CAMPAIGN_DISPLAY_VIEWS =
 		new String[] {"descriptive", "icon", "list"};
 
@@ -208,6 +292,7 @@ public class ContentTargetingViewCampaignDisplayContext
 	private Boolean _isDisabledManagementBar;
 	private Boolean _isIncludeCheckBox;
 	private Boolean _isSearchEnabled;
+	private String _navigation;
 	private Boolean _showAddButton;
 
 }

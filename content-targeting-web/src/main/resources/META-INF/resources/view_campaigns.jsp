@@ -43,14 +43,14 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
+			navigationKeys='<%= new String[] {"all", "recent", "mine"} %>'
 			portletURL="<%= contentTargetingViewCampaignDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= contentTargetingViewCampaignDisplayContext.getOrderByCol() %>"
 			orderByType="<%= contentTargetingViewCampaignDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"modified-date"} %>'
+			orderColumns='<%= new String[] {"modified-date", "start-date", "priority"} %>'
 			portletURL="<%= contentTargetingViewCampaignDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -141,7 +141,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 				<c:when test="<%= contentTargetingViewCampaignDisplayContext.isIconView() %>">
 
 					<%
-					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					row.setCssClass("entry-card lfr-asset-item");
 					%>
 
 					<liferay-ui:search-container-column-text>

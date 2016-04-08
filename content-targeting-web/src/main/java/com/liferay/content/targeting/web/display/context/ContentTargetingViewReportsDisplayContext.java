@@ -27,6 +27,7 @@ import com.liferay.content.targeting.util.CampaignConstants;
 import com.liferay.content.targeting.util.UserSegmentConstants;
 import com.liferay.content.targeting.web.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.web.util.ReportInstanceRowChecker;
+import com.liferay.content.targeting.web.util.comparator.ReportInstanceCreateDateComparator;
 import com.liferay.content.targeting.web.util.comparator.ReportInstanceModifiedDateComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,9 +70,6 @@ public class ContentTargetingViewReportsDisplayContext
 	}
 
 	public PortletURL getAddReportURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL addReportURL = liferayPortletResponse.createRenderURL();
 
 		addReportURL.setParameter(
@@ -148,6 +146,17 @@ public class ContentTargetingViewReportsDisplayContext
 		return _REPORTS_DISPLAY_VIEWS;
 	}
 
+	public String getNavigation() {
+		if (_navigation != null) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(
+			liferayPortletRequest, "navigation", "all");
+
+		return _navigation;
+	}
+
 	public PortletURL getPortletURL() {
 		String className = getClassName();
 
@@ -219,6 +228,9 @@ public class ContentTargetingViewReportsDisplayContext
 			return _reportsSearchContainer;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		SearchContainer reportsSearchContainer = new SearchContainer(
 			liferayPortletRequest, getPortletURL(), null,
 			"no-reports-were-found");
@@ -228,35 +240,56 @@ public class ContentTargetingViewReportsDisplayContext
 			new ReportInstanceRowChecker(liferayPortletResponse));
 		reportsSearchContainer.setSearch(true);
 
-		boolean orderByAsc = false;
-
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<ReportInstance> orderByComparator =
-			new ReportInstanceModifiedDateComparator(orderByAsc);
-
-		reportsSearchContainer.setOrderByCol(getOrderByCol());
-		reportsSearchContainer.setOrderByComparator(orderByComparator);
-		reportsSearchContainer.setOrderByType(orderByType);
-
 		if (Validator.isNotNull(getKeywords())) {
-			Sort sort = new Sort(
-				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+			Sort sort = null;
 
-			BaseModelSearchResult<ReportInstance> searchResults =
-				ReportInstanceLocalServiceUtil.searchReportInstances(
-					getScopeGroupId(), getClassName(), getClassPK(),
-					getKeywords(), reportsSearchContainer.getStart(),
-					reportsSearchContainer.getEnd(), sort);
+			if (isNavigationRecent()) {
+				sort = new Sort(
+					Field.MODIFIED_DATE, Sort.LONG_TYPE, isOrderByAsc());
+			}
+			else {
+				sort = new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, false);
+			}
+
+			BaseModelSearchResult<ReportInstance> searchResults = null;
+
+			if (isNavigationMine()) {
+				searchResults =
+					ReportInstanceLocalServiceUtil.searchReportInstances(
+						getScopeGroupId(), themeDisplay.getUserId(),
+						getClassName(), getClassPK(), getKeywords(),
+						reportsSearchContainer.getStart(),
+						reportsSearchContainer.getEnd(), sort);
+			}
+			else {
+				searchResults =
+					ReportInstanceLocalServiceUtil.searchReportInstances(
+						getScopeGroupId(), getClassName(), getClassPK(),
+						getKeywords(), reportsSearchContainer.getStart(),
+						reportsSearchContainer.getEnd(), sort);
+			}
 
 			reportsSearchContainer.setTotal(searchResults.getLength());
 			reportsSearchContainer.setResults(searchResults.getBaseModels());
 		}
 		else {
+			if (isNavigationRecent()) {
+				OrderByComparator<ReportInstance> orderByComparator =
+					new ReportInstanceCreateDateComparator(false);
+
+				reportsSearchContainer.setOrderByCol("create-date");
+				reportsSearchContainer.setOrderByComparator(orderByComparator);
+				reportsSearchContainer.setOrderByType("desc");
+			}
+			else {
+				OrderByComparator<ReportInstance> orderByComparator =
+					new ReportInstanceModifiedDateComparator(isOrderByAsc());
+
+				reportsSearchContainer.setOrderByCol(getOrderByCol());
+				reportsSearchContainer.setOrderByComparator(orderByComparator);
+				reportsSearchContainer.setOrderByType(getOrderByType());
+			}
+
 			if (showAddButton()) {
 				reportsSearchContainer.setEmptyResultsMessageCssClass(
 					"taglib-empty-result-message-header-has-plus-btn");
@@ -267,10 +300,22 @@ public class ContentTargetingViewReportsDisplayContext
 
 			reportsSearchContainer.setTotal(total);
 
-			List results = ReportInstanceLocalServiceUtil.getReportInstances(
-				getClassName(), getClassPK(), reportsSearchContainer.getStart(),
-				reportsSearchContainer.getEnd(),
-				reportsSearchContainer.getOrderByComparator());
+			List results = null;
+
+			if (isNavigationMine()) {
+				results = ReportInstanceLocalServiceUtil.getReportInstances(
+					themeDisplay.getUserId(), getClassName(), getClassPK(),
+					reportsSearchContainer.getStart(),
+					reportsSearchContainer.getEnd(),
+					reportsSearchContainer.getOrderByComparator());
+			}
+			else {
+				results = ReportInstanceLocalServiceUtil.getReportInstances(
+					getClassName(), getClassPK(),
+					reportsSearchContainer.getStart(),
+					reportsSearchContainer.getEnd(),
+					reportsSearchContainer.getOrderByComparator());
+			}
 
 			reportsSearchContainer.setResults(results);
 		}
@@ -390,6 +435,22 @@ public class ContentTargetingViewReportsDisplayContext
 		return false;
 	}
 
+	public boolean isNavigationMine() {
+		if (Validator.equals(getNavigation(), "mine")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationRecent() {
+		if (Validator.equals(getNavigation(), "recent")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isStagingGroup() {
 		long scopeGroupId = getScopeGroupId();
 
@@ -406,6 +467,18 @@ public class ContentTargetingViewReportsDisplayContext
 		return false;
 	}
 
+	protected boolean isOrderByAsc() {
+		String orderByType = getOrderByType();
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		return orderByAsc;
+	}
+
 	private static final String[] _REPORTS_DISPLAY_VIEWS =
 		new String[] {"descriptive", "icon", "list"};
 
@@ -414,6 +487,7 @@ public class ContentTargetingViewReportsDisplayContext
 	private Long _classPK;
 	private Boolean _hasUpdatePermission;
 	private Boolean _isDisabledManagementBar;
+	private String _navigation;
 	private String _redirect;
 	private List<Report> _reports;
 	private SearchContainer _reportsSearchContainer;

@@ -19,6 +19,7 @@ import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
+import com.liferay.content.targeting.web.util.comparator.UserSegmentCreateDateComparator;
 import com.liferay.content.targeting.web.util.comparator.UserSegmentModifiedDateComparator;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -53,6 +55,17 @@ public class ContentTargetingViewUserSegmentDisplayContext
 	@Override
 	public String[] getDisplayViews() {
 		return _USER_SEGMENTS_DISPLAY_VIEWS;
+	}
+
+	public String getNavigation() {
+		if (_navigation != null) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(
+			liferayPortletRequest, "navigation", "all");
+
+		return _navigation;
 	}
 
 	public PortletURL getPortletURL() {
@@ -88,36 +101,56 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		userSegmentSearchContainer.setSearch(
 			Validator.isNotNull(getKeywords()));
 
-		boolean orderByAsc = false;
-
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<UserSegment> orderByComparator =
-			new UserSegmentModifiedDateComparator(orderByAsc);
-
-		userSegmentSearchContainer.setOrderByCol(getOrderByCol());
-		userSegmentSearchContainer.setOrderByComparator(orderByComparator);
-		userSegmentSearchContainer.setOrderByType(orderByType);
-
 		if (Validator.isNotNull(getKeywords())) {
-			Sort sort = new Sort(
-				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+			Sort sort = null;
 
-			BaseModelSearchResult<UserSegment> searchResults =
-				UserSegmentLocalServiceUtil.searchUserSegments(
+			if (isNavigationRecent()) {
+				sort = new Sort(
+					Field.MODIFIED_DATE, Sort.LONG_TYPE, isOrderByAsc());
+			}
+			else {
+				sort = new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, false);
+			}
+
+			BaseModelSearchResult<UserSegment> searchResults = null;
+
+			if (isNavigationMine()) {
+				searchResults = UserSegmentLocalServiceUtil.searchUserSegments(
+					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+					getKeywords(), userSegmentSearchContainer.getStart(),
+					userSegmentSearchContainer.getEnd(), sort);
+			}
+			else {
+				searchResults = UserSegmentLocalServiceUtil.searchUserSegments(
 					themeDisplay.getScopeGroupId(), getKeywords(),
 					userSegmentSearchContainer.getStart(),
 					userSegmentSearchContainer.getEnd(), sort);
+			}
 
 			userSegmentSearchContainer.setTotal(searchResults.getLength());
 			userSegmentSearchContainer.setResults(
 				searchResults.getBaseModels());
 		}
 		else {
+			if (isNavigationRecent()) {
+				OrderByComparator<UserSegment> orderByComparator =
+					new UserSegmentCreateDateComparator(false);
+
+				userSegmentSearchContainer.setOrderByCol("create-date");
+				userSegmentSearchContainer.setOrderByComparator(
+					orderByComparator);
+				userSegmentSearchContainer.setOrderByType("desc");
+			}
+			else {
+				OrderByComparator<UserSegment> orderByComparator =
+					new UserSegmentModifiedDateComparator(isOrderByAsc());
+
+				userSegmentSearchContainer.setOrderByCol(getOrderByCol());
+				userSegmentSearchContainer.setOrderByComparator(
+					orderByComparator);
+				userSegmentSearchContainer.setOrderByType(getOrderByType());
+			}
+
 			if (showAddButton()) {
 				userSegmentSearchContainer.setEmptyResultsMessageCssClass(
 					"taglib-empty-result-message-header-has-plus-btn");
@@ -128,11 +161,22 @@ public class ContentTargetingViewUserSegmentDisplayContext
 
 			userSegmentSearchContainer.setTotal(total);
 
-			List results = UserSegmentLocalServiceUtil.getUserSegments(
-				themeDisplay.getScopeGroupId(),
-				userSegmentSearchContainer.getStart(),
-				userSegmentSearchContainer.getEnd(),
-				userSegmentSearchContainer.getOrderByComparator());
+			List results = null;
+
+			if (isNavigationMine()) {
+				results = UserSegmentLocalServiceUtil.getUserSegments(
+					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+					userSegmentSearchContainer.getStart(),
+					userSegmentSearchContainer.getEnd(),
+					userSegmentSearchContainer.getOrderByComparator());
+			}
+			else {
+				results = UserSegmentLocalServiceUtil.getUserSegments(
+					themeDisplay.getScopeGroupId(),
+					userSegmentSearchContainer.getStart(),
+					userSegmentSearchContainer.getEnd(),
+					userSegmentSearchContainer.getOrderByComparator());
+			}
 
 			userSegmentSearchContainer.setResults(results);
 		}
@@ -174,6 +218,22 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		return _isIncludeCheckBox;
 	}
 
+	public boolean isNavigationMine() {
+		if (Validator.equals(getNavigation(), "mine")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationRecent() {
+		if (Validator.equals(getNavigation(), "recent")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isSearchEnabled() throws PortalException, PortletException {
 		if (_isSearchEnabled != null) {
 			return _isSearchEnabled;
@@ -203,12 +263,25 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		return _showAddButton;
 	}
 
+	protected boolean isOrderByAsc() {
+		String orderByType = getOrderByType();
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		return orderByAsc;
+	}
+
 	private static final String[] _USER_SEGMENTS_DISPLAY_VIEWS =
 		new String[] {"descriptive", "icon", "list"};
 
 	private Boolean _isDisabledManagementBar;
 	private Boolean _isIncludeCheckBox;
 	private Boolean _isSearchEnabled;
+	private String _navigation;
 	private Boolean _showAddButton;
 	private SearchContainer _userSegmentSearchContainer;
 

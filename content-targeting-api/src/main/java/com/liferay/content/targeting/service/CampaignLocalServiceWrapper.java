@@ -360,6 +360,15 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.getCampaigns(groupId, userId, start, end,
+			obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
 		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.getCampaigns(groupIds);
@@ -371,6 +380,15 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.getCampaigns(groupIds, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+		long[] groupIds, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.getCampaigns(groupIds, userId, start, end,
+			obc);
 	}
 
 	@Override
@@ -557,6 +575,15 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignLocalService.searchCampaigns(groupId, keywords, start,
 			end, sort);
+	}
+
+	@Override
+	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Campaign> searchCampaigns(
+		long groupId, long userId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _campaignLocalService.searchCampaigns(groupId, userId, keywords,
+			start, end, sort);
 	}
 
 	@Override

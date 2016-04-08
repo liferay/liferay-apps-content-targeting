@@ -350,12 +350,20 @@ public interface UserSegmentLocalService extends BaseLocalService,
 		OrderByComparator obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserSegment> getUserSegments(long groupId, long userId,
+		int start, int end, OrderByComparator obc) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserSegment> getUserSegments(long[] groupIds)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserSegment> getUserSegments(long[] groupIds, int start,
 		int end, OrderByComparator obc) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserSegment> getUserSegments(long[] groupIds, long userId,
+		int start, int end, OrderByComparator obc) throws PortalException;
 
 	/**
 	* Returns a range of all the user segments.
@@ -439,6 +447,11 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<UserSegment> searchUserSegments(long groupId,
 		java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<UserSegment> searchUserSegments(long groupId,
+		long userId, java.lang.String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	public void setCampaignUserSegments(long campaignId, long[] userSegmentIds);

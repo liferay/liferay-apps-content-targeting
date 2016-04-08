@@ -68,7 +68,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
+			navigationKeys='<%= new String[] {"all", "recent", "mine"} %>'
 			portletURL="<%= contentTargetingViewReportsDisplayContext.getPortletURL() %>"
 		/>
 
@@ -145,7 +145,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 					<c:when test="<%= contentTargetingViewReportsDisplayContext.isIconView() %>">
 
 						<%
-						row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+						row.setCssClass("entry-card lfr-asset-item");
 
 						Map<String, Object> data = new HashMap<String, Object>();
 
@@ -176,7 +176,6 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 							<span class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>">
 								<a href="javascript:;"><%= reportInstance.getName(locale) %></a>
 							</span>
-
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
