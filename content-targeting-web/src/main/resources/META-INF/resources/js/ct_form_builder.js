@@ -57,10 +57,10 @@ AUI.add(
 							instance._parseFields();
 
 							if (instance.get('searchBox')) {
-								//fieldsFilter = instance._createItemFilter();
+								fieldsFilter = instance._createItemFilter();
 
 								eventHandles.push(
-									//fieldsFilter.on('results', instance._onItemFilterResults, instance),
+									fieldsFilter.on('results', instance._onItemFilterResults, instance),
 									instance.on('fieldsChange', instance._onFieldsChange, instance),
 									instance.on({
 										'drag:mouseDown': instance._onDragMouseDown,
@@ -271,6 +271,9 @@ AUI.add(
 											return A.Array.map(
 												instance.get('availableFields'),
 												function(field) {
+													field.labelNode.plug(A.Plugin.ParseContent);
+													field.labelNode.setContent(field.labelNode.text());
+
 													return {
 														node: field.labelNode,
 														searchData: field.labelNode.one('.field-title').text()
