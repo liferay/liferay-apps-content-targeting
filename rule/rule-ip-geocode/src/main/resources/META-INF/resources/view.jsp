@@ -24,7 +24,7 @@
 	new Liferay.DynamicSelect(
 		[
 			{
-				select: '#<portlet:namespace />countryId',
+				select: '<portlet:namespace />countryId',
 				selectData: Liferay.Address.getCountries,
 				selectDesc: 'nameCurrentValue',
 				selectId: 'countryId',
@@ -32,7 +32,7 @@
 				selectVal: '<%= ruleIpGeocodeDisplayContext.getCountryId() %>'
 			},
 			{
-				select: '#<portlet:namespace />regionId',
+				select: '<portlet:namespace />regionId',
 				selectData: Liferay.Address.getRegions,
 				selectDesc: 'name',
 				selectId: 'regionId',
