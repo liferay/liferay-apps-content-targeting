@@ -102,11 +102,12 @@ public class UpdateReportInstanceMVCActionCommand extends BaseMVCActionCommand {
 			if (saveAndContinue) {
 				String redirect = ParamUtil.get(actionRequest, "redirect", "");
 
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName",
+					ContentTargetingMVCCommand.EDIT_REPORT);
 				actionResponse.setRenderParameter("className", className);
 				actionResponse.setRenderParameter(
 					"classPK", String.valueOf(classPK));
-				actionResponse.setRenderParameter(
-					"mvcPath", "/edit_report.jsp");
 				actionResponse.setRenderParameter("redirect", redirect);
 				actionResponse.setRenderParameter(
 					"p_p_mode", PortletMode.VIEW.toString());

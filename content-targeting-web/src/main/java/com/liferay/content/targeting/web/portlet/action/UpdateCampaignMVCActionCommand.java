@@ -133,9 +133,10 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 				String redirect = ParamUtil.get(actionRequest, "redirect", "");
 
 				actionResponse.setRenderParameter(
-					"campaignId", String.valueOf(campaign.getCampaignId()));
+					"mvcRenderCommandName",
+					ContentTargetingMVCCommand.EDIT_CAMPAIGN);
 				actionResponse.setRenderParameter(
-					"mvcPath", "/edit_campaign.jsp");
+					"campaignId", String.valueOf(campaign.getCampaignId()));
 				actionResponse.setRenderParameter(
 					"p_p_mode", PortletMode.VIEW.toString());
 				actionResponse.setRenderParameter("redirect", redirect);

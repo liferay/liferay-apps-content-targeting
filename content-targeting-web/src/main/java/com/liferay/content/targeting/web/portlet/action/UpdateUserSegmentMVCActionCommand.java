@@ -114,7 +114,8 @@ public class UpdateUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 				String redirect = ParamUtil.get(actionRequest, "redirect", "");
 
 				actionResponse.setRenderParameter(
-					"mvcPath", "/edit_user_segment.jsp");
+					"mvcRenderCommandName",
+					ContentTargetingMVCCommand.EDIT_USER_SEGMENT);
 				actionResponse.setRenderParameter("redirect", redirect);
 				actionResponse.setRenderParameter(
 					"p_p_mode", PortletMode.VIEW.toString());
