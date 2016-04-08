@@ -69,9 +69,6 @@ public class ContentTargetingViewReportsDisplayContext
 	}
 
 	public PortletURL getAddReportURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL addReportURL = liferayPortletResponse.createRenderURL();
 
 		addReportURL.setParameter(
@@ -230,12 +227,12 @@ public class ContentTargetingViewReportsDisplayContext
 			return _reportsSearchContainer;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		SearchContainer reportsSearchContainer = new SearchContainer(
 			liferayPortletRequest, getPortletURL(), null,
 			"no-reports-were-found");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		reportsSearchContainer.setId("reports");
 		reportsSearchContainer.setRowChecker(
