@@ -105,7 +105,6 @@ AUI.add(
 							A.Array.each(
 								instance.get('availableFields'),
 								function(item) {
-
 									item.labelNode.setContent(item.get('label'));
 
 									var title = item.labelNode.one('.field-title').text();
