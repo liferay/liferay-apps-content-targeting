@@ -135,7 +135,8 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 	public static final long REPORTKEY_COLUMN_BITMASK = 16L;
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long USERID_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -425,6 +426,14 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -442,6 +451,10 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 
 	@Override
 	public void setUserUuid(String userUuid) {
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -1003,6 +1016,10 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 
 		reportInstanceModelImpl._setOriginalCompanyId = false;
 
+		reportInstanceModelImpl._originalUserId = reportInstanceModelImpl._userId;
+
+		reportInstanceModelImpl._setOriginalUserId = false;
+
 		reportInstanceModelImpl._setModifiedDate = false;
 
 		reportInstanceModelImpl._originalReportKey = reportInstanceModelImpl._reportKey;
@@ -1224,6 +1241,8 @@ public class ReportInstanceModelImpl extends BaseModelImpl<ReportInstance>
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _userId;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;

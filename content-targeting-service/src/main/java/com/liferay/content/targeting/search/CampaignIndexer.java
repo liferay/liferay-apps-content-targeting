@@ -91,6 +91,10 @@ public class CampaignIndexer extends BaseIndexer<Campaign> {
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, true);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, true);
+
+		if (searchContext.getUserId() > 0) {
+			addSearchUserId(fullQueryBooleanFilter, searchContext);
+		}
 	}
 
 	@Override

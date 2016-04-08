@@ -43,14 +43,20 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
+			navigationKeys='<%= new String[] {"all", "recent", "mine"} %>'
 			portletURL="<%= contentTargetingViewCampaignDisplayContext.getPortletURL() %>"
+		/>
+
+		<liferay-frontend:management-bar-filter
+			label="status"
+			managementBarFilterItems="<%= contentTargetingViewCampaignDisplayContext.getManagementBarStatusFilterItems() %>"
+			value="<%= contentTargetingViewCampaignDisplayContext.getStatus() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= contentTargetingViewCampaignDisplayContext.getOrderByCol() %>"
 			orderByType="<%= contentTargetingViewCampaignDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"modified-date"} %>'
+			orderColumns='<%= new String[] {"modified-date", "start-date", "priority"} %>'
 			portletURL="<%= contentTargetingViewCampaignDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>

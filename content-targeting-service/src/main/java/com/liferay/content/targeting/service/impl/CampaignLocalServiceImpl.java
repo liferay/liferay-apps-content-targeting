@@ -256,6 +256,15 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Campaign> getCampaigns(
+			long groupId, long userId, int start, int end,
+			OrderByComparator obc)
+		throws PortalException {
+
+		return getCampaigns(new long[] {groupId}, userId, start, end, obc);
+	}
+
+	@Override
 	public List<Campaign> getCampaigns(long[] groupIds) throws PortalException {
 		return campaignPersistence.findByGroupId(groupIds);
 	}
@@ -266,6 +275,15 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		throws PortalException {
 
 		return campaignPersistence.findByGroupId(groupIds, start, end, obc);
+	}
+
+	@Override
+	public List<Campaign> getCampaigns(
+			long[] groupIds, long userId, int start, int end,
+			OrderByComparator obc)
+		throws PortalException {
+
+		return campaignPersistence.findByG_U(groupIds, userId, start, end, obc);
 	}
 
 	@Override
@@ -304,9 +322,21 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 			Campaign.class.getName());
 
 		SearchContext searchContext = buildSearchContext(
-			groupId, keywords, start, end, sort);
+			groupId, 0, keywords, start, end, sort);
 
 		return indexer.search(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<Campaign> searchCampaigns(
+			long groupId, long userId, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			groupId, userId, keywords, start, end, sort);
+
+		return searchCampaigns(searchContext);
 	}
 
 	@Override
@@ -322,10 +352,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 			long groupId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = buildSearchContext(
-			groupId, keywords, start, end, sort);
-
-		return searchCampaigns(searchContext);
+		return searchCampaigns(groupId, 0L, keywords, start, end, sort);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -402,7 +429,8 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	}
 
 	protected SearchContext buildSearchContext(
-			long groupId, String keywords, int start, int end, Sort sort)
+			long groupId, long userId, String keywords, int start, int end,
+			Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
@@ -415,6 +443,10 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(start);
 		searchContext.setSorts(sort);
+
+		if (userId > 0) {
+			searchContext.setUserId(userId);
+		}
 
 		return searchContext;
 	}

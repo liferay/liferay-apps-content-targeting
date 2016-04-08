@@ -286,6 +286,11 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ReportInstance> getReportInstances(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ReportInstance> getReportInstances(long userId,
+		java.lang.String className, long classPK, int start, int end,
+		OrderByComparator obc);
+
 	/**
 	* Returns all the report instances matching the UUID and company.
 	*
@@ -331,6 +336,12 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<ReportInstance> searchReportInstances(
 		long groupId, java.lang.String className, long classPK,
+		java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<ReportInstance> searchReportInstances(
+		long groupId, long userId, java.lang.String className, long classPK,
 		java.lang.String keywords, int start, int end, Sort sort)
 		throws PortalException;
 

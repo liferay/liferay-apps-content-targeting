@@ -79,7 +79,7 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
+			navigationKeys='<%= new String[] {"all", "recent", "mine"} %>'
 			portletURL="<%= contentTargetingViewUserSegmentDisplayContext.getPortletURL() %>"
 		/>
 

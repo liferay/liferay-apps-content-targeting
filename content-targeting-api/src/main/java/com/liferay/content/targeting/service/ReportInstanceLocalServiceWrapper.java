@@ -351,6 +351,14 @@ public class ReportInstanceLocalServiceWrapper
 		return _reportInstanceLocalService.getReportInstances(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
+		long userId, java.lang.String className, long classPK, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc) {
+		return _reportInstanceLocalService.getReportInstances(userId,
+			className, classPK, start, end, obc);
+	}
+
 	/**
 	* Returns all the report instances matching the UUID and company.
 	*
@@ -416,6 +424,16 @@ public class ReportInstanceLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _reportInstanceLocalService.searchReportInstances(groupId,
 			className, classPK, keywords, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.ReportInstance> searchReportInstances(
+		long groupId, long userId, java.lang.String className, long classPK,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _reportInstanceLocalService.searchReportInstances(groupId,
+			userId, className, classPK, keywords, start, end, sort);
 	}
 
 	/**

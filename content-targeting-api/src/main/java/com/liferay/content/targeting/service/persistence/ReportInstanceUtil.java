@@ -880,6 +880,202 @@ public class ReportInstanceUtil {
 	}
 
 	/**
+	* Returns all the report instances where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the matching report instances
+	*/
+	public static List<ReportInstance> findByU_C_C(long userId,
+		long classNameId, long classPK) {
+		return getPersistence().findByU_C_C(userId, classNameId, classPK);
+	}
+
+	/**
+	* Returns a range of all the report instances where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of report instances
+	* @param end the upper bound of the range of report instances (not inclusive)
+	* @return the range of matching report instances
+	*/
+	public static List<ReportInstance> findByU_C_C(long userId,
+		long classNameId, long classPK, int start, int end) {
+		return getPersistence()
+				   .findByU_C_C(userId, classNameId, classPK, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the report instances where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of report instances
+	* @param end the upper bound of the range of report instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching report instances
+	*/
+	public static List<ReportInstance> findByU_C_C(long userId,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<ReportInstance> orderByComparator) {
+		return getPersistence()
+				   .findByU_C_C(userId, classNameId, classPK, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the report instances where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of report instances
+	* @param end the upper bound of the range of report instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching report instances
+	*/
+	public static List<ReportInstance> findByU_C_C(long userId,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<ReportInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByU_C_C(userId, classNameId, classPK, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first report instance in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching report instance
+	* @throws NoSuchReportInstanceException if a matching report instance could not be found
+	*/
+	public static ReportInstance findByU_C_C_First(long userId,
+		long classNameId, long classPK,
+		OrderByComparator<ReportInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchReportInstanceException {
+		return getPersistence()
+				   .findByU_C_C_First(userId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first report instance in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching report instance, or <code>null</code> if a matching report instance could not be found
+	*/
+	public static ReportInstance fetchByU_C_C_First(long userId,
+		long classNameId, long classPK,
+		OrderByComparator<ReportInstance> orderByComparator) {
+		return getPersistence()
+				   .fetchByU_C_C_First(userId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last report instance in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching report instance
+	* @throws NoSuchReportInstanceException if a matching report instance could not be found
+	*/
+	public static ReportInstance findByU_C_C_Last(long userId,
+		long classNameId, long classPK,
+		OrderByComparator<ReportInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchReportInstanceException {
+		return getPersistence()
+				   .findByU_C_C_Last(userId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last report instance in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching report instance, or <code>null</code> if a matching report instance could not be found
+	*/
+	public static ReportInstance fetchByU_C_C_Last(long userId,
+		long classNameId, long classPK,
+		OrderByComparator<ReportInstance> orderByComparator) {
+		return getPersistence()
+				   .fetchByU_C_C_Last(userId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the report instances before and after the current report instance in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param reportInstanceId the primary key of the current report instance
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next report instance
+	* @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
+	*/
+	public static ReportInstance[] findByU_C_C_PrevAndNext(
+		long reportInstanceId, long userId, long classNameId, long classPK,
+		OrderByComparator<ReportInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchReportInstanceException {
+		return getPersistence()
+				   .findByU_C_C_PrevAndNext(reportInstanceId, userId,
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	* Removes all the report instances where userId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	*/
+	public static void removeByU_C_C(long userId, long classNameId, long classPK) {
+		getPersistence().removeByU_C_C(userId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of report instances where userId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching report instances
+	*/
+	public static int countByU_C_C(long userId, long classNameId, long classPK) {
+		return getPersistence().countByU_C_C(userId, classNameId, classPK);
+	}
+
+	/**
 	* Caches the report instance in the entity cache if it is enabled.
 	*
 	* @param reportInstance the report instance

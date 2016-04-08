@@ -148,6 +148,17 @@ public class ContentTargetingViewReportsDisplayContext
 		return _REPORTS_DISPLAY_VIEWS;
 	}
 
+	public String getNavigation() {
+		if (_navigation != null) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(
+			liferayPortletRequest, "navigation", "all");
+
+		return _navigation;
+	}
+
 	public PortletURL getPortletURL() {
 		String className = getClassName();
 
@@ -223,6 +234,9 @@ public class ContentTargetingViewReportsDisplayContext
 			liferayPortletRequest, getPortletURL(), null,
 			"no-reports-were-found");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		reportsSearchContainer.setId("reports");
 		reportsSearchContainer.setRowChecker(
 			new ReportInstanceRowChecker(liferayPortletResponse));
@@ -243,15 +257,32 @@ public class ContentTargetingViewReportsDisplayContext
 		reportsSearchContainer.setOrderByComparator(orderByComparator);
 		reportsSearchContainer.setOrderByType(orderByType);
 
+		if (isNavigationRecent()) {
+			reportsSearchContainer.setOrderByCol("create-date");
+			reportsSearchContainer.setOrderByType(getOrderByType());
+		}
+
 		if (Validator.isNotNull(getKeywords())) {
 			Sort sort = new Sort(
 				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
 
-			BaseModelSearchResult<ReportInstance> searchResults =
-				ReportInstanceLocalServiceUtil.searchReportInstances(
-					getScopeGroupId(), getClassName(), getClassPK(),
-					getKeywords(), reportsSearchContainer.getStart(),
-					reportsSearchContainer.getEnd(), sort);
+			BaseModelSearchResult<ReportInstance> searchResults = null;
+
+			if (isNavigationMine()) {
+				searchResults =
+					ReportInstanceLocalServiceUtil.searchReportInstances(
+						getScopeGroupId(), themeDisplay.getUserId(),
+						getClassName(), getClassPK(), getKeywords(),
+						reportsSearchContainer.getStart(),
+						reportsSearchContainer.getEnd(), sort);
+			}
+			else {
+				searchResults =
+					ReportInstanceLocalServiceUtil.searchReportInstances(
+						getScopeGroupId(), getClassName(), getClassPK(),
+						getKeywords(), reportsSearchContainer.getStart(),
+						reportsSearchContainer.getEnd(), sort);
+			}
 
 			reportsSearchContainer.setTotal(searchResults.getLength());
 			reportsSearchContainer.setResults(searchResults.getBaseModels());
@@ -267,10 +298,22 @@ public class ContentTargetingViewReportsDisplayContext
 
 			reportsSearchContainer.setTotal(total);
 
-			List results = ReportInstanceLocalServiceUtil.getReportInstances(
-				getClassName(), getClassPK(), reportsSearchContainer.getStart(),
-				reportsSearchContainer.getEnd(),
-				reportsSearchContainer.getOrderByComparator());
+			List results = null;
+
+			if (isNavigationMine()) {
+				results = ReportInstanceLocalServiceUtil.getReportInstances(
+					themeDisplay.getUserId(), getClassName(), getClassPK(),
+					reportsSearchContainer.getStart(),
+					reportsSearchContainer.getEnd(),
+					reportsSearchContainer.getOrderByComparator());
+			}
+			else {
+				results = ReportInstanceLocalServiceUtil.getReportInstances(
+					getClassName(), getClassPK(),
+					reportsSearchContainer.getStart(),
+					reportsSearchContainer.getEnd(),
+					reportsSearchContainer.getOrderByComparator());
+			}
 
 			reportsSearchContainer.setResults(results);
 		}
@@ -390,6 +433,22 @@ public class ContentTargetingViewReportsDisplayContext
 		return false;
 	}
 
+	public boolean isNavigationMine() {
+		if (Validator.equals(getNavigation(), "mine")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationRecent() {
+		if (Validator.equals(getNavigation(), "recent")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isStagingGroup() {
 		long scopeGroupId = getScopeGroupId();
 
@@ -414,6 +473,7 @@ public class ContentTargetingViewReportsDisplayContext
 	private Long _classPK;
 	private Boolean _hasUpdatePermission;
 	private Boolean _isDisabledManagementBar;
+	private String _navigation;
 	private String _redirect;
 	private List<Report> _reports;
 	private SearchContainer _reportsSearchContainer;
