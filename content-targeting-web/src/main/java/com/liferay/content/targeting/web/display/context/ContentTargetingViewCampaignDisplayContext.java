@@ -21,6 +21,8 @@ import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.content.targeting.util.CampaignConstants;
 import com.liferay.content.targeting.web.util.comparator.CampaignModifiedDateComparator;
+import com.liferay.content.targeting.web.util.comparator.CampaignPriorityComparator;
+import com.liferay.content.targeting.web.util.comparator.CampaignStartDateComparator;
 import com.liferay.frontend.taglib.web.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -85,8 +87,17 @@ public class ContentTargetingViewCampaignDisplayContext
 			orderByAsc = true;
 		}
 
-		OrderByComparator<Campaign> orderByComparator =
-			new CampaignModifiedDateComparator(orderByAsc);
+		OrderByComparator<Campaign> orderByComparator = null;
+
+		if (Validator.equals(getOrderByCol(), "modified-date")) {
+			orderByComparator = new CampaignModifiedDateComparator(orderByAsc);
+		}
+		else if (Validator.equals(getOrderByCol(), "priority")) {
+			orderByComparator = new CampaignPriorityComparator(orderByAsc);
+		}
+		else if (Validator.equals(getOrderByCol(), "start-date")) {
+			orderByComparator = new CampaignStartDateComparator(orderByAsc);
+		}
 
 		campaignSearchContainer.setOrderByCol(getOrderByCol());
 		campaignSearchContainer.setOrderByComparator(orderByComparator);
