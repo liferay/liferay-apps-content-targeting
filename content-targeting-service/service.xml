@@ -32,17 +32,14 @@
 			<finder-column name="anonymousUserId" />
 			<finder-column name="userSegmentId" />
 		</finder>
-
 		<finder name="AnonymousUserId" return-type="Collection">
 			<finder-column name="anonymousUserId" />
 			<finder-column name="active" />
 		</finder>
-
 		<finder name="UserSegmentIds" return-type="Collection">
 			<finder-column name="userSegmentId" arrayable-operator="OR" />
 			<finder-column name="active" />
 		</finder>
-
 		<finder name="C_LtD_M" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="modifiedDate" comparator="&lt;" />
@@ -97,7 +94,6 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
-
 		<finder name="G_U" return-type="Collection">
 			<finder-column name="groupId" arrayable-operator="OR" />
 			<finder-column name="userId" />
@@ -210,13 +206,13 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="R_C_C" return-type="Collection">
-			<finder-column name="reportKey" />
+		<finder name="U_C_C" return-type="Collection">
+			<finder-column name="userId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="U_C_C" return-type="Collection">
-			<finder-column name="userId" />
+		<finder name="R_C_C" return-type="Collection">
+			<finder-column name="reportKey" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
