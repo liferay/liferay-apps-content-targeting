@@ -176,7 +176,6 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 							<span class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>">
 								<a href="javascript:;"><%= reportInstance.getName(locale) %></a>
 							</span>
-
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
