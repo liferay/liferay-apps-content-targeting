@@ -268,7 +268,7 @@ public class ContentTargetingViewTacticsDisplayContext
 	}
 
 	private static final String[] _TACTICS_DISPLAY_VIEWS =
-		new String[] {"descriptive", "icon", "list"};
+		new String[] {"descriptive", "list"};
 
 	private Campaign _campaign;
 	private Long _campaignId;

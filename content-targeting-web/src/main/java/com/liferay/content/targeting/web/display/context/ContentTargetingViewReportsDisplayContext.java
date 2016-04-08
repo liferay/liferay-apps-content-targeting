@@ -480,7 +480,7 @@ public class ContentTargetingViewReportsDisplayContext
 	}
 
 	private static final String[] _REPORTS_DISPLAY_VIEWS =
-		new String[] {"descriptive", "icon", "list"};
+		new String[] {"descriptive", "list"};
 
 	private String _className;
 	private Long _classNameId;

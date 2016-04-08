@@ -276,7 +276,7 @@ public class ContentTargetingViewUserSegmentDisplayContext
 	}
 
 	private static final String[] _USER_SEGMENTS_DISPLAY_VIEWS =
-		new String[] {"descriptive", "icon", "list"};
+		new String[] {"descriptive", "list"};
 
 	private Boolean _isDisabledManagementBar;
 	private Boolean _isIncludeCheckBox;

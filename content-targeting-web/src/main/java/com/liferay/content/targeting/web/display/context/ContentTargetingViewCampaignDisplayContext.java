@@ -286,7 +286,7 @@ public class ContentTargetingViewCampaignDisplayContext
 	}
 
 	private static final String[] _CAMPAIGN_DISPLAY_VIEWS =
-		new String[] {"descriptive", "icon", "list"};
+		new String[] {"descriptive", "list"};
 
 	private SearchContainer _campaignSearchContainer;
 	private Boolean _isDisabledManagementBar;
