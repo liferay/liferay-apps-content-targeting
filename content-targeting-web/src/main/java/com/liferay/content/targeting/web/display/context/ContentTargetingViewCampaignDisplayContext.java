@@ -20,6 +20,7 @@ import com.liferay.content.targeting.service.permission.ContentTargetingPermissi
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.content.targeting.util.CampaignConstants;
+import com.liferay.content.targeting.web.util.comparator.CampaignCreateDateComparator;
 import com.liferay.content.targeting.web.util.comparator.CampaignModifiedDateComparator;
 import com.liferay.content.targeting.web.util.comparator.CampaignPriorityComparator;
 import com.liferay.content.targeting.web.util.comparator.CampaignStartDateComparator;
@@ -79,38 +80,16 @@ public class ContentTargetingViewCampaignDisplayContext
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 		campaignSearchContainer.setSearch(Validator.isNotNull(getKeywords()));
 
-		String orderByType = getOrderByType();
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<Campaign> orderByComparator = null;
-
-		if (Validator.equals(getOrderByCol(), "modified-date")) {
-			orderByComparator = new CampaignModifiedDateComparator(orderByAsc);
-		}
-		else if (Validator.equals(getOrderByCol(), "priority")) {
-			orderByComparator = new CampaignPriorityComparator(orderByAsc);
-		}
-		else if (Validator.equals(getOrderByCol(), "start-date")) {
-			orderByComparator = new CampaignStartDateComparator(orderByAsc);
-		}
-
-		campaignSearchContainer.setOrderByCol(getOrderByCol());
-		campaignSearchContainer.setOrderByComparator(orderByComparator);
-		campaignSearchContainer.setOrderByType(orderByType);
-
-		if (isNavigationRecent()) {
-			campaignSearchContainer.setOrderByCol("create-date");
-			campaignSearchContainer.setOrderByType(getOrderByType());
-		}
-
 		if (Validator.isNotNull(getKeywords())) {
-			Sort sort = new Sort(
-				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+			Sort sort = null;
+
+			if (isNavigationRecent()) {
+				sort = new Sort(
+					Field.MODIFIED_DATE, Sort.LONG_TYPE, isOrderByAsc());
+			}
+			else {
+				sort = new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, false);
+			}
 
 			BaseModelSearchResult<Campaign> searchResults = null;
 
@@ -145,6 +124,35 @@ public class ContentTargetingViewCampaignDisplayContext
 			campaignSearchContainer.setResults(searchResults.getBaseModels());
 		}
 		else {
+			if (isNavigationRecent()) {
+				OrderByComparator<Campaign> orderByComparator =
+					new CampaignCreateDateComparator(false);
+
+				campaignSearchContainer.setOrderByCol("create-date");
+				campaignSearchContainer.setOrderByComparator(orderByComparator);
+				campaignSearchContainer.setOrderByType("desc");
+			}
+			else {
+				OrderByComparator<Campaign> orderByComparator = null;
+
+				if (Validator.equals(getOrderByCol(), "modified-date")) {
+					orderByComparator = new CampaignModifiedDateComparator(
+						isOrderByAsc());
+				}
+				else if (Validator.equals(getOrderByCol(), "priority")) {
+					orderByComparator = new CampaignPriorityComparator(
+						isOrderByAsc());
+				}
+				else if (Validator.equals(getOrderByCol(), "start-date")) {
+					orderByComparator = new CampaignStartDateComparator(
+						isOrderByAsc());
+				}
+
+				campaignSearchContainer.setOrderByCol(getOrderByCol());
+				campaignSearchContainer.setOrderByComparator(orderByComparator);
+				campaignSearchContainer.setOrderByType(getOrderByType());
+			}
+
 			if (showAddButton()) {
 				campaignSearchContainer.setEmptyResultsMessageCssClass(
 					"taglib-empty-result-message-header-has-plus-btn");
@@ -340,6 +348,18 @@ public class ContentTargetingViewCampaignDisplayContext
 
 		return new ManagementBarFilterItem(
 			active, status, portletURL.toString());
+	}
+
+	protected boolean isOrderByAsc() {
+		String orderByType = getOrderByType();
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		return orderByAsc;
 	}
 
 	private static final String[] _CAMPAIGN_DISPLAY_VIEWS =

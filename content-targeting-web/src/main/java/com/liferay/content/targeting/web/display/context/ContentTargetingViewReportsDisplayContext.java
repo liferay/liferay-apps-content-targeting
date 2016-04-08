@@ -27,6 +27,7 @@ import com.liferay.content.targeting.util.CampaignConstants;
 import com.liferay.content.targeting.util.UserSegmentConstants;
 import com.liferay.content.targeting.web.portlet.ContentTargetingMVCCommand;
 import com.liferay.content.targeting.web.util.ReportInstanceRowChecker;
+import com.liferay.content.targeting.web.util.comparator.ReportInstanceCreateDateComparator;
 import com.liferay.content.targeting.web.util.comparator.ReportInstanceModifiedDateComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -239,29 +240,16 @@ public class ContentTargetingViewReportsDisplayContext
 			new ReportInstanceRowChecker(liferayPortletResponse));
 		reportsSearchContainer.setSearch(true);
 
-		boolean orderByAsc = false;
-
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<ReportInstance> orderByComparator =
-			new ReportInstanceModifiedDateComparator(orderByAsc);
-
-		reportsSearchContainer.setOrderByCol(getOrderByCol());
-		reportsSearchContainer.setOrderByComparator(orderByComparator);
-		reportsSearchContainer.setOrderByType(orderByType);
-
-		if (isNavigationRecent()) {
-			reportsSearchContainer.setOrderByCol("create-date");
-			reportsSearchContainer.setOrderByType(getOrderByType());
-		}
-
 		if (Validator.isNotNull(getKeywords())) {
-			Sort sort = new Sort(
-				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+			Sort sort = null;
+
+			if (isNavigationRecent()) {
+				sort = new Sort(
+					Field.MODIFIED_DATE, Sort.LONG_TYPE, isOrderByAsc());
+			}
+			else {
+				sort = new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, false);
+			}
 
 			BaseModelSearchResult<ReportInstance> searchResults = null;
 
@@ -285,6 +273,23 @@ public class ContentTargetingViewReportsDisplayContext
 			reportsSearchContainer.setResults(searchResults.getBaseModels());
 		}
 		else {
+			if (isNavigationRecent()) {
+				OrderByComparator<ReportInstance> orderByComparator =
+					new ReportInstanceCreateDateComparator(false);
+
+				reportsSearchContainer.setOrderByCol("create-date");
+				reportsSearchContainer.setOrderByComparator(orderByComparator);
+				reportsSearchContainer.setOrderByType("desc");
+			}
+			else {
+				OrderByComparator<ReportInstance> orderByComparator =
+					new ReportInstanceModifiedDateComparator(isOrderByAsc());
+
+				reportsSearchContainer.setOrderByCol(getOrderByCol());
+				reportsSearchContainer.setOrderByComparator(orderByComparator);
+				reportsSearchContainer.setOrderByType(getOrderByType());
+			}
+
 			if (showAddButton()) {
 				reportsSearchContainer.setEmptyResultsMessageCssClass(
 					"taglib-empty-result-message-header-has-plus-btn");
@@ -460,6 +465,18 @@ public class ContentTargetingViewReportsDisplayContext
 		}
 
 		return false;
+	}
+
+	protected boolean isOrderByAsc() {
+		String orderByType = getOrderByType();
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		return orderByAsc;
 	}
 
 	private static final String[] _REPORTS_DISPLAY_VIEWS =

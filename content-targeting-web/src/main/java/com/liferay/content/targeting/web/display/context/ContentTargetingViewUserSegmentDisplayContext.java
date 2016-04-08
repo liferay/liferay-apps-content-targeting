@@ -19,6 +19,7 @@ import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
+import com.liferay.content.targeting.web.util.comparator.UserSegmentCreateDateComparator;
 import com.liferay.content.targeting.web.util.comparator.UserSegmentModifiedDateComparator;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -100,29 +101,16 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		userSegmentSearchContainer.setSearch(
 			Validator.isNotNull(getKeywords()));
 
-		boolean orderByAsc = false;
-
-		String orderByType = getOrderByType();
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<UserSegment> orderByComparator =
-			new UserSegmentModifiedDateComparator(orderByAsc);
-
-		userSegmentSearchContainer.setOrderByCol(getOrderByCol());
-		userSegmentSearchContainer.setOrderByComparator(orderByComparator);
-		userSegmentSearchContainer.setOrderByType(orderByType);
-
-		if (isNavigationRecent()) {
-			userSegmentSearchContainer.setOrderByCol("create-date");
-			userSegmentSearchContainer.setOrderByType(getOrderByType());
-		}
-
 		if (Validator.isNotNull(getKeywords())) {
-			Sort sort = new Sort(
-				Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+			Sort sort = null;
+
+			if (isNavigationRecent()) {
+				sort = new Sort(
+					Field.MODIFIED_DATE, Sort.LONG_TYPE, isOrderByAsc());
+			}
+			else {
+				sort = new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, false);
+			}
 
 			BaseModelSearchResult<UserSegment> searchResults = null;
 
@@ -144,6 +132,25 @@ public class ContentTargetingViewUserSegmentDisplayContext
 				searchResults.getBaseModels());
 		}
 		else {
+			if (isNavigationRecent()) {
+				OrderByComparator<UserSegment> orderByComparator =
+					new UserSegmentCreateDateComparator(false);
+
+				userSegmentSearchContainer.setOrderByCol("create-date");
+				userSegmentSearchContainer.setOrderByComparator(
+					orderByComparator);
+				userSegmentSearchContainer.setOrderByType("desc");
+			}
+			else {
+				OrderByComparator<UserSegment> orderByComparator =
+					new UserSegmentModifiedDateComparator(isOrderByAsc());
+
+				userSegmentSearchContainer.setOrderByCol(getOrderByCol());
+				userSegmentSearchContainer.setOrderByComparator(
+					orderByComparator);
+				userSegmentSearchContainer.setOrderByType(getOrderByType());
+			}
+
 			if (showAddButton()) {
 				userSegmentSearchContainer.setEmptyResultsMessageCssClass(
 					"taglib-empty-result-message-header-has-plus-btn");
@@ -254,6 +261,18 @@ public class ContentTargetingViewUserSegmentDisplayContext
 			ActionKeys.ADD_USER_SEGMENT);
 
 		return _showAddButton;
+	}
+
+	protected boolean isOrderByAsc() {
+		String orderByType = getOrderByType();
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		return orderByAsc;
 	}
 
 	private static final String[] _USER_SEGMENTS_DISPLAY_VIEWS =
