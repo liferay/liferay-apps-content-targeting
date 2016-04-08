@@ -145,7 +145,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 					<c:when test="<%= contentTargetingViewReportsDisplayContext.isIconView() %>">
 
 						<%
-						row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+						row.setCssClass("entry-card lfr-asset-item");
 
 						Map<String, Object> data = new HashMap<String, Object>();
 
