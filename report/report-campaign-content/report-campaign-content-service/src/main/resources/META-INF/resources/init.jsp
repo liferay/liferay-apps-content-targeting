@@ -41,4 +41,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%
 CampaignContentReportDisplayContext campaignContentReportDisplayContext = new CampaignContentReportDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(campaignContentReportDisplayContext.getBackURL());
 %>
