@@ -101,7 +101,6 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 				keyProperty="reportInstanceId"
 				modelVar="reportInstance"
 			>
-
 				<portlet:renderURL var="viewReportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORT %>" />
 					<portlet:param name="className" value="<%= contentTargetingViewReportsDisplayContext.getClassName() %>" />

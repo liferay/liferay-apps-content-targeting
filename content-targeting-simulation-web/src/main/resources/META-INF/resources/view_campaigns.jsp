@@ -37,5 +37,4 @@ List<Campaign> notMatchedCampaigns = (List<Campaign>)request.getAttribute("notMa
 		<liferay-util:param name="name" value="campaign" />
 		<liferay-util:param name="showSearch" value="<%= String.valueOf(showCampaignsSearch) %>" />
 	</liferay-util:include>
-
 </div>

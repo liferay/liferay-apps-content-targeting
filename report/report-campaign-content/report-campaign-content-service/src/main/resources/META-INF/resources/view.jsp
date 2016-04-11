@@ -24,7 +24,6 @@
 			className="com.liferay.content.targeting.report.campaign.content.model.CampaignContent"
 			modelVar="campaignContent"
 		>
-
 			<liferay-ui:search-container-column-text
 				name="title"
 				value="<%= campaignContent.getTitle(locale) %>"

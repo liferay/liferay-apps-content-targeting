@@ -24,7 +24,6 @@
 			className="com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent"
 			modelVar="userSegmentContent"
 		>
-
 			<liferay-ui:search-container-column-text
 				name="title"
 				value="<%= userSegmentContent.getTitle(locale) %>"

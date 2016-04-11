@@ -166,7 +166,6 @@ renderResponse.setTitle(contentTargetingEditUserSegmentDisplayContext.getUserSeg
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</aui:fieldset>

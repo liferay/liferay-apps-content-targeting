@@ -27,7 +27,6 @@
 		refresh="<%= false %>"
 		type="tabs nav-tabs-default"
 	>
-
 		<liferay-ui:section>
 			<liferay-util:include page="/user_segment_content_display/content_selection.jsp" servletContext="<%= application %>" />
 		</liferay-ui:section>
