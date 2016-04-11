@@ -144,7 +144,8 @@ public class UpdateUserSegmentMVCActionCommand extends BaseMVCActionCommand {
 						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
 				actionResponse.setRenderParameter(
-					"mvcPath", "/edit_user_segment.jsp");
+					"mvcRenderCommandName",
+					ContentTargetingMVCCommand.EDIT_USER_SEGMENT);
 			}
 			else {
 				_log.error(e);

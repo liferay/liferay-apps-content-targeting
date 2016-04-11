@@ -194,7 +194,8 @@ public class UpdateTacticMVCActionCommand extends BaseMVCActionCommand {
 						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
 				actionResponse.setRenderParameter(
-					"mvcPath", "/edit_tactic.jsp");
+					"mvcRenderCommandName",
+					ContentTargetingMVCCommand.EDIT_TACTIC);
 			}
 			else {
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");

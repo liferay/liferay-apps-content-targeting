@@ -93,7 +93,8 @@ public class UpdateReportMVCActionCommand extends BaseMVCActionCommand {
 
 			if (e instanceof PrincipalException) {
 				actionResponse.setRenderParameter(
-					"mvcPath", "/view_report.jsp");
+					"mvcRenderCommandName",
+					ContentTargetingMVCCommand.VIEW_REPORT);
 			}
 			else {
 				_log.error("Unable to update report", e);

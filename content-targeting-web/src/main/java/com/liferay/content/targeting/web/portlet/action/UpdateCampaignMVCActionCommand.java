@@ -178,7 +178,8 @@ public class UpdateCampaignMVCActionCommand extends BaseMVCActionCommand {
 						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
 				actionResponse.setRenderParameter(
-					"mvcPath", "/edit_campaign.jsp");
+					"mvcRenderCommandName",
+					ContentTargetingMVCCommand.EDIT_CAMPAIGN);
 			}
 			else {
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
