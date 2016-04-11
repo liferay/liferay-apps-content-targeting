@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,12 +50,17 @@ public class RuleVisitedDisplayContext extends BaseRuleDisplayContext {
 		return _assetEntryId;
 	}
 
-	public List<AssetRendererFactory> getAssetRendererFactories() {
+	public List<AssetRendererFactory<?>> getAssetRendererFactories() {
 		if (_assetRendererFactories != null) {
 			return _assetRendererFactories;
 		}
 
-		_assetRendererFactories = getSelectableAssetRendererFactories();
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_assetRendererFactories =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				themeDisplay.getCompanyId(), true);
 
 		return _assetRendererFactories;
 	}
@@ -151,30 +155,8 @@ public class RuleVisitedDisplayContext extends BaseRuleDisplayContext {
 		return friendlyURL;
 	}
 
-	protected List<AssetRendererFactory> getSelectableAssetRendererFactories() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<AssetRendererFactory> selectableAssetRendererFactories =
-			new ArrayList<>();
-
-		List<AssetRendererFactory<?>> assetRendererFactories =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				themeDisplay.getCompanyId());
-
-		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
-			if (!rendererFactory.isSelectable()) {
-				continue;
-			}
-
-			selectableAssetRendererFactories.add(rendererFactory);
-		}
-
-		return selectableAssetRendererFactories;
-	}
-
 	private Long _assetEntryId;
-	private List<AssetRendererFactory> _assetRendererFactories;
+	private List<AssetRendererFactory<?>> _assetRendererFactories;
 	private String _friendlyURL;
 	private String _friendlyURLPrivateBase;
 	private String _friendlyURLPublicBase;

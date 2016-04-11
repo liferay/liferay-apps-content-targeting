@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,26 +47,12 @@ public class ContentTrackingActionDisplayContext
 		return _assetEntryId;
 	}
 
-	public List<AssetRendererFactory> getSelectableAssetRendererFactories() {
+	public List<AssetRendererFactory<?>> getAssetRendererFactories() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<AssetRendererFactory> selectableAssetRendererFactories =
-			new ArrayList<>();
-
-		List<AssetRendererFactory<?>> assetRendererFactories =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				themeDisplay.getCompanyId());
-
-		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
-			if (!rendererFactory.isSelectable()) {
-				continue;
-			}
-
-			selectableAssetRendererFactories.add(rendererFactory);
-		}
-
-		return selectableAssetRendererFactories;
+		return AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+			themeDisplay.getCompanyId(), true);
 	}
 
 	public boolean isTrackingContentEnabled() {

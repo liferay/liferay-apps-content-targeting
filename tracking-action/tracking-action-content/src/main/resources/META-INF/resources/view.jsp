@@ -62,7 +62,7 @@
 		<liferay-ui:icon-menu direction="right" id='<%= ContentTargetingUtil.GUID_REPLACEMENT + "assetSelector" %>' message="select-content" showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 			<%
-			for (AssetRendererFactory assetRendererFactory : contentTrackingActionDisplayContext.getSelectableAssetRendererFactories()) {
+			for (AssetRendererFactory assetRendererFactory : contentTrackingActionDisplayContext.getAssetRendererFactories()) {
 			%>
 
 				<liferay-ui:icon
