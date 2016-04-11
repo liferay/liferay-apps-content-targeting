@@ -16,9 +16,12 @@ package com.liferay.content.targeting.display.context;
 
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
+import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -40,6 +43,31 @@ public class BaseReportDisplayContext {
 
 		displayContext = (Map<String, Object>)request.getAttribute(
 			"displayContext");
+	}
+
+	public String getBackURL() {
+		String backURL = ParamUtil.getString(request, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			return backURL;
+		}
+
+		PortletURL backURLObject = liferayPortletResponse.createRenderURL();
+
+		backURLObject.setParameter("mvcPath", "/view_reports.jsp");
+		backURLObject.setParameter("className", getClassName());
+		backURLObject.setParameter("classPK", String.valueOf(getClassPK()));
+
+		if (Campaign.class.getName().equals(getClassName())) {
+			backURLObject.setParameter(
+				"campaignId", String.valueOf(getClassPK()));
+		}
+		else {
+			backURLObject.setParameter(
+				"userSegmentId", String.valueOf(getClassPK()));
+		}
+
+		return backURLObject.toString();
 	}
 
 	public String getClassName() {
