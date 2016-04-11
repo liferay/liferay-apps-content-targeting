@@ -19,9 +19,6 @@
 <%
 ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayContext = new ContentTargetingViewReportsDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(contentTargetingViewReportsDisplayContext.getBackURL());
-
 renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitle());
 %>
 
@@ -101,11 +98,12 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 				keyProperty="reportInstanceId"
 				modelVar="reportInstance"
 			>
-				<portlet:renderURL var="viewReportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+
+				<portlet:renderURL var="viewReportURL">
 					<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORT %>" />
 					<portlet:param name="className" value="<%= contentTargetingViewReportsDisplayContext.getClassName() %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(contentTargetingViewReportsDisplayContext.getClassPK()) %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
 					<portlet:param name="reportKey" value="<%= reportInstance.getReportKey() %>" />
 					<portlet:param name="reportInstanceId" value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>" />
 				</portlet:renderURL>
@@ -123,9 +121,10 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 
 						<liferay-ui:search-container-column-text
 							colspan="<%= 2 %>"
+							href="<%= viewReportURL.toString() %>"
 						>
-							<h4 class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>">
-								<a href="javascript:;"><%= reportInstance.getName(locale) %></a>
+							<h4>
+								<%= reportInstance.getName(locale) %>
 							</h4>
 
 							<p class="text-default">
@@ -145,11 +144,6 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 
 						<%
 						row.setCssClass("entry-card lfr-asset-item");
-
-						Map<String, Object> data = new HashMap<String, Object>();
-
-						data.put("url", viewReportURL);
-						data.put("title", reportInstance.getName(locale));
 						%>
 
 						<liferay-ui:search-container-column-text>
@@ -157,24 +151,24 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 								actionJsp="/reports_action.jsp"
 								actionJspServletContext="<%= application %>"
 								cssClass="preview"
-								data="<%= data %>"
 								icon="reports"
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
 								title="<%= reportInstance.getName(locale) %>"
-								url="javascript:;"
+								url="<%= viewReportURL.toString() %>"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
 							cssClass="content-column name-column title-column"
+							href="<%= viewReportURL.toString() %>"
 							name="name"
 							truncate="<%= true %>"
 						>
-							<span class="preview" data-title="<%= reportInstance.getName(locale) %>" data-url="<%= viewReportURL %>">
-								<a href="javascript:;"><%= reportInstance.getName(locale) %></a>
-							</span>
+							<h4>
+								<%= reportInstance.getName(locale) %>
+							</h4>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
