@@ -47,4 +47,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%
 CampaignTrackingActionReportDisplayContext campaignTrackingActionReportDisplayContext = new CampaignTrackingActionReportDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(campaignTrackingActionReportDisplayContext.getBackURL());
 %>
