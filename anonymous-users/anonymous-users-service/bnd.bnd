@@ -4,7 +4,6 @@ Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.content.targeting.anonymous.users,\
 	com.liferay.content.targeting.anonymous.users.util
-Import-Package: *;resolution:="optional"
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Anonymous Users
 Liferay-Require-SchemaVersion: 2.0.0
