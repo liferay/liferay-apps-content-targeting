@@ -28,8 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.content.targeting.report.campaign.content.display.context.CampaignContentReportDisplayContext" %><%@
 page import="com.liferay.content.targeting.report.campaign.content.model.CampaignContent" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 
 <%@ page import="java.util.List" %>
 

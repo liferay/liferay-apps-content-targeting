@@ -98,7 +98,6 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 				keyProperty="reportInstanceId"
 				modelVar="reportInstance"
 			>
-
 				<portlet:renderURL var="viewReportURL">
 					<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORT %>" />
 					<portlet:param name="className" value="<%= contentTargetingViewReportsDisplayContext.getClassName() %>" />
@@ -154,14 +153,14 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
 								title="<%= reportInstance.getName(locale) %>"
-								url="<%= viewReportURL.toString() %>"
+								url="<%= viewReportURL %>"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
 							cssClass="content-column name-column title-column"
-							href="<%= viewReportURL.toString() %>"
+							href="<%= viewReportURL %>"
 							name="name"
 							truncate="<%= true %>"
 						>
