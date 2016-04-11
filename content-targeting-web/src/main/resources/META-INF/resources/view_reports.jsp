@@ -121,10 +121,9 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 
 						<liferay-ui:search-container-column-text
 							colspan="<%= 2 %>"
-							href="<%= viewReportURL.toString() %>"
 						>
 							<h4>
-								<%= reportInstance.getName(locale) %>
+								<aui:a href="<%= viewReportURL %>"><%= reportInstance.getName(locale) %></aui:a>
 							</h4>
 
 							<p class="text-default">
