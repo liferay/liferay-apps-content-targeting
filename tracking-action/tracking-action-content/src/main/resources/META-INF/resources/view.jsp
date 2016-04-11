@@ -100,7 +100,7 @@
 	</aui:select>
 </c:if>
 
-<aui:script use="aui-base">
+<aui:script use="aui-io-request">
 	var onAssetSelectorClick = function(event) {
 		event.preventDefault();
 
@@ -122,9 +122,35 @@
 
 				var selectedContentPreview = A.one('#<%= renderResponse.getNamespace() + ContentTargetingUtil.GUID_REPLACEMENT %>selectedContentPreview');
 
-				selectedContentPreview.setContent('<p>' + event.assettitle + ', ' + event.assettype + '</p>');
+				<%
+				PortletURL previewAssetEntryURL = PortletProviderUtil.getPortletURL(request, AssetEntry.class.getName(), PortletProvider.Action.PREVIEW);
 
-				selectedContentPreview.show();
+				previewAssetEntryURL.setParameter("template", "icon");
+				previewAssetEntryURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+				String portletId = PortletProviderUtil.getPortletId(AssetEntry.class.getName(), PortletProvider.Action.PREVIEW);
+				%>
+
+				var uri = '<%= previewAssetEntryURL.toString() %>';
+
+				uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(portletId) %>className=' + event.assetclassname, uri);
+
+				uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(portletId) %>classPK=' + event.assetclasspk, uri);
+
+				A.io.request(
+					uri,
+					{
+						on: {
+							success: function(event, id, obj) {
+								var responseData = this.get('responseData');
+
+								selectedContentPreview.setContent(responseData);
+
+								selectedContentPreview.show();
+							}
+						}
+					}
+				);
 			}
 		);
 	};
