@@ -18,13 +18,12 @@
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		searchContainer="<%= userSegmentContentReportDisplayContext.getSearchContainer() %>"
+		searchContainer="<%= userSegmentContentReportDisplayContext.getSearchContainer(resourceBundle) %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent"
 			modelVar="userSegmentContent"
 		>
-
 			<liferay-ui:search-container-column-text
 				name="title"
 				value="<%= userSegmentContent.getTitle(locale) %>"

@@ -30,7 +30,7 @@
 	var ctActionTotalArray = [
 
 		<%
-		SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
+		SearchContainer searchContainer = campaignTrackingActionReportDisplayContext.getSearchContainer();
 
 		List<CTActionTotal> ctActionTotals = searchContainer.getResults();
 

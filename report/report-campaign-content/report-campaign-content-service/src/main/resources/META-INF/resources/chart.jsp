@@ -30,7 +30,7 @@
 	var campaignContentChartDataValues = [
 
 		<%
-		SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
+		SearchContainer searchContainer = campaignContentReportDisplayContext.getSearchContainer();
 
 		List<CampaignContent> campaingContents = searchContainer.getResults();
 

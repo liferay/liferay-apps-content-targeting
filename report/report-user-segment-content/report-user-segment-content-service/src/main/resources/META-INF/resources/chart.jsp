@@ -30,7 +30,7 @@
 	var userSegmentContentChartDataValues = [
 
 		<%
-		SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
+		SearchContainer searchContainer = userSegmentContentReportDisplayContext.getSearchContainer(resourceBundle);
 
 		List<UserSegmentContent> userSegmentContents = searchContainer.getResults();
 

@@ -46,14 +46,16 @@ templateContext.put("reportInstanceId", reportInstanceId);
 templateContext.put("reportKey", reportKey);
 %>
 
-<c:if test="<%= scopeGroup.isStagingGroup() %>">
-	<div class="alert alert-warning">
-		<liferay-ui:message key="the-staging-environment-is-activated-reports-data-refer-to-the-live-environment" />
-	</div>
-</c:if>
+<div class="container-fluid-1280 report-preview">
+	<c:if test="<%= scopeGroup.isStagingGroup() %>">
+		<div class="alert alert-warning">
+			<liferay-ui:message key="the-staging-environment-is-activated-reports-data-refer-to-the-live-environment" />
+		</div>
+	</c:if>
 
-<p class="text-default">
-	<%= report.getDescription(locale) %>
-</p>
+	<p class="text-default">
+		<%= report.getDescription(locale) %>
+	</p>
 
-<%= report.getHTML(reportInstance, templateContext) %>
+	<%= report.getHTML(reportInstance, templateContext) %>
+</div>

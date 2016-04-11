@@ -131,7 +131,6 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 								<%= dateFormatDateTime.format(campaign.getEndDate()) %>
 							</span>
 						</div>
-
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp

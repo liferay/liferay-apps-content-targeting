@@ -49,7 +49,6 @@
 			<liferay-ui:search-container-column-text
 				name="count"
 			>
-
 				<%= ctActionTotal.getCount() %>
 
 				<c:if test="<%= ListUtil.isNotEmpty(ctActionTotal.getViewsByUserSegment()) %>">
