@@ -15,7 +15,9 @@
 package com.liferay.content.targeting.rule.visited.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.display.context.BaseRuleDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +39,17 @@ public class RuleVisitedDisplayContext extends BaseRuleDisplayContext {
 
 	public RuleVisitedDisplayContext(HttpServletRequest request) {
 		super(request);
+	}
+
+	public AssetEntry getAssetEntry() {
+		if (_assetEntry != null) {
+			return _assetEntry;
+		}
+
+		_assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
+			getAssetEntryId());
+
+		return _assetEntry;
 	}
 
 	public long getAssetEntryId() {
@@ -155,6 +168,7 @@ public class RuleVisitedDisplayContext extends BaseRuleDisplayContext {
 		return friendlyURL;
 	}
 
+	private AssetEntry _assetEntry;
 	private Long _assetEntryId;
 	private List<AssetRendererFactory<?>> _assetRendererFactories;
 	private String _friendlyURL;

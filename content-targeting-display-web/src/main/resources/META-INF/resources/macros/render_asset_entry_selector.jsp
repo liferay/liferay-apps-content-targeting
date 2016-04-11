@@ -30,9 +30,11 @@ String index = ParamUtil.getString(request, "index");
 	<div id="<portlet:namespace /><%= "assetEntryContent" + index %>">
 		<c:choose>
 			<c:when test="<%= queryRule.hasAssetEntry() %>">
-				<liferay-util:include page="/macros/asset_entry.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="assetEntryId" value="<%= String.valueOf(queryRule.getAssetEntryId()) %>" />
-				</liferay-util:include>
+				<liferay-ui:asset-display
+					className="<%= queryRule.getAssetClassName() %>"
+					classPK="<%= queryRule.getAssetClassPK() %>"
+					template="icon"
+				/>
 			</c:when>
 			<c:otherwise>
 				<p class="text-default">

@@ -44,7 +44,10 @@
 	<div class="row">
 		<div class="col-md-4 <%= (ruleVisitedDisplayContext.getAssetEntryId() <= 0) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />assetPreview">
 			<c:if test="<%= ruleVisitedDisplayContext.getAssetEntryId() > 0 %>">
-				<liferay-util:include page="/asset_entry.jsp" servletContext="<%= application %>" />
+				<liferay-ui:asset-display
+					assetEntry="<%= ruleVisitedDisplayContext.getAssetEntry() %>"
+					template="icon"
+				/>
 			</c:if>
 		</div>
 	</div>
