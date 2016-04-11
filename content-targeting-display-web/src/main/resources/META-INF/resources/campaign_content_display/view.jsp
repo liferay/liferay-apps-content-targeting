@@ -42,8 +42,13 @@ List<CampaignQueryRule> campaignQueryRules = (List<CampaignQueryRule>)request.ge
 	<div class="full-content" id="<portlet:namespace />FullContent<%= selectedIndex %>">
 		<c:choose>
 			<c:when test="<%= isNotConfigured %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="configure-this-app-to-display-different-content-per-campaign" />
+				<div class="alert alert-info text-center">
+					<div>
+						<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
+					</div>
+					<div>
+						<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="configure-this-app-to-display-different-content-per-campaign" /></aui:a>
+					</div>
 				</div>
 			</c:when>
 			<c:when test="<%= !isNotConfigured && queryRule.hasAssetEntry() %>">
