@@ -184,7 +184,7 @@ public class ContentTargetingUtil {
 			request, assetRendererFactory.getClassName(), instantiable);
 
 		String typeName = assetRendererFactory.getTypeName(
-			themeDisplay.getLocale(), false);
+			themeDisplay.getLocale());
 
 		Map<String, Object> data = new HashMap<>();
 

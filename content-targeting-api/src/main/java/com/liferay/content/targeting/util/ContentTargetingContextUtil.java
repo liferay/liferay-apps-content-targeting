@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import freemarker.cache.ClassTemplateLoader;
 
 import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.Template;
 
 import java.util.Map;
@@ -144,12 +144,16 @@ public class ContentTargetingContextUtil {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		Configuration configuration = new Configuration();
+		Configuration configuration = new Configuration(
+			Configuration.getVersion());
 
-		configuration.setObjectWrapper(new DefaultObjectWrapper());
+		DefaultObjectWrapperBuilder defaultObjectWrapperBuilder =
+			new DefaultObjectWrapperBuilder(Configuration.getVersion());
+
+		configuration.setObjectWrapper(defaultObjectWrapperBuilder.build());
 		configuration.setTemplateLoader(
 			new ClassTemplateLoader(clazz, StringPool.SLASH));
-		configuration.setTemplateUpdateDelay(Integer.MAX_VALUE);
+		configuration.setTemplateUpdateDelayMilliseconds(Integer.MAX_VALUE);
 
 		Template freemarkerTemplate = configuration.getTemplate(templatePath);
 

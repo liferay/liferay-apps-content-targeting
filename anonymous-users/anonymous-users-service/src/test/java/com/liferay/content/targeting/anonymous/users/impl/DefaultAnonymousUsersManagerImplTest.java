@@ -14,7 +14,7 @@
 
 package com.liferay.content.targeting.anonymous.users.impl;
 
-import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import org.junit.Assert;
 import org.junit.Before;

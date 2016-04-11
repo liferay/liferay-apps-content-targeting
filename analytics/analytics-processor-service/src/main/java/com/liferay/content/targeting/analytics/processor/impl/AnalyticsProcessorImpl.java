@@ -54,8 +54,8 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 			Company company = _companyLocalService.getCompany(companyId);
 
 			String portalURL = PortalUtil.getPortalURL(
-				company.getVirtualHostname(), PortalUtil.getPortalPort(false),
-				false);
+				company.getVirtualHostname(),
+				PortalUtil.getPortalServerPort(false), false);
 
 			trackingEventURL = portalURL + _TRACK_PATH;
 

@@ -44,7 +44,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import freemarker.ext.beans.BeansWrapper;
+import freemarker.ext.beans.BeansWrapperBuilder;
 
+import freemarker.template.Configuration;
 import freemarker.template.TemplateHashModel;
 
 import java.util.Enumeration;
@@ -88,7 +90,10 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
+		BeansWrapperBuilder builder = new BeansWrapperBuilder(
+			Configuration.getVersion());
+
+		BeansWrapper wrapper = builder.build();
 
 		TemplateHashModel staticModels = wrapper.getStaticModels();
 

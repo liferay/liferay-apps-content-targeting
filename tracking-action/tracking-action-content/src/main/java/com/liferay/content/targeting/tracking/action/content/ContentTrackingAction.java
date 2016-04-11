@@ -108,9 +108,7 @@ public class ContentTrackingAction extends BaseJSPTrackingAction {
 			try {
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, trackingActionInstance,
-					trackingActionInstanceElement,
 					assetEntryReferencedStagedModel,
-					AssetEntryReferencedStagedModel.class,
 					PortletDataContext.REFERENCE_TYPE_WEAK);
 
 				return;
@@ -129,7 +127,6 @@ public class ContentTrackingAction extends BaseJSPTrackingAction {
 		portletDataContext.addReferenceElement(
 			trackingActionInstance, trackingActionInstanceElement,
 			assetEntryReferencedStagedModel,
-			AssetEntryReferencedStagedModel.class,
 			PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 		Element assetEntryReferencedStagedModelElement =

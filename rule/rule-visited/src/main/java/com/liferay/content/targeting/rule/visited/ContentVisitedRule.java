@@ -126,9 +126,8 @@ public class ContentVisitedRule extends BaseJSPRule {
 
 			try {
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, ruleInstance, ruleInstanceElement,
+					portletDataContext, ruleInstance,
 					assetEntryReferencedStagedModel,
-					AssetEntryReferencedStagedModel.class,
 					PortletDataContext.REFERENCE_TYPE_WEAK);
 
 				return;
@@ -145,7 +144,6 @@ public class ContentVisitedRule extends BaseJSPRule {
 
 		portletDataContext.addReferenceElement(
 			ruleInstance, ruleInstanceElement, assetEntryReferencedStagedModel,
-			AssetEntryReferencedStagedModel.class,
 			PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 		Element assetEntryReferencedStagedModelElement =
