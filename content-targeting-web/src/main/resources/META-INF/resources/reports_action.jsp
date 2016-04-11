@@ -40,7 +40,7 @@ ReportInstance reportInstance = (ReportInstance)row.getObject();
 
 		<liferay-ui:icon
 			message="edit"
-			url="<%= editReportURL.toString() %>"
+			url="<%= editReportURL %>"
 		/>
 
 		<liferay-portlet:actionURL name="deleteReportInstance" var="deleteReportURL">
@@ -49,7 +49,7 @@ ReportInstance reportInstance = (ReportInstance)row.getObject();
 		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			url="<%= deleteReportURL.toString() %>"
+			url="<%= deleteReportURL %>"
 		/>
 	</c:if>
 
@@ -63,6 +63,6 @@ ReportInstance reportInstance = (ReportInstance)row.getObject();
 	<liferay-ui:icon
 		message="update-report"
 		method="post"
-		url="<%= updateReportURL.toString() %>"
+		url="<%= updateReportURL %>"
 	/>
 </liferay-ui:icon-menu>

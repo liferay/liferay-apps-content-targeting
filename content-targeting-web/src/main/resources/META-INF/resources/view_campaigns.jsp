@@ -225,7 +225,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-campaign") %>' url="<%= addCampaignURL.toString() %>" />
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-campaign") %>' url="<%= addCampaignURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

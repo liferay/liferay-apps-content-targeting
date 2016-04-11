@@ -27,14 +27,14 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "user-segments");
 			<portlet:param name="tabs1" value="user-segments" />
 		</portlet:renderURL>
 
-		<aui:nav-item href="<%= userSegmentsURL.toString() %>" label="user-segments" selected='<%= tabs1.equals("user-segments") %>' />
+		<aui:nav-item href="<%= userSegmentsURL %>" label="user-segments" selected='<%= tabs1.equals("user-segments") %>' />
 
 		<portlet:renderURL var="campaignsURL">
 			<portlet:param name="mvcPath" value="/view.jsp" />
 			<portlet:param name="tabs1" value="campaigns" />
 		</portlet:renderURL>
 
-		<aui:nav-item href="<%= campaignsURL.toString() %>" label="campaigns" selected='<%= tabs1.equals("campaigns") %>' />
+		<aui:nav-item href="<%= campaignsURL %>" label="campaigns" selected='<%= tabs1.equals("campaigns") %>' />
 	</aui:nav>
 
 	<%

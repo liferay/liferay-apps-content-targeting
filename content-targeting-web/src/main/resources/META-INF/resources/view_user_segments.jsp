@@ -196,7 +196,7 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-user-segment") %>' url="<%= addUserSegmentURL.toString() %>" />
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(portletConfig.getResourceBundle(locale), "add-user-segment") %>' url="<%= addUserSegmentURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

@@ -148,7 +148,7 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 
 						Map<String, Object> data = new HashMap<String, Object>();
 
-						data.put("url", viewReportURL.toString());
+						data.put("url", viewReportURL);
 						data.put("title", reportInstance.getName(locale));
 						%>
 
