@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletConfig;
 
@@ -48,7 +49,9 @@ public class UserSegmentContentReportDisplayContext
 		_liferayPortletRequest = liferayPortletRequest;
 	}
 
-	public SearchContainer getSearchContainer() throws PortalException {
+	public SearchContainer getSearchContainer(ResourceBundle resourceBundle)
+		throws PortalException {
+
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -62,7 +65,7 @@ public class UserSegmentContentReportDisplayContext
 				JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		String emptyResultsMessage = LanguageUtil.format(
-			portletConfig.getResourceBundle(themeDisplay.getLocale()),
+			resourceBundle,
 			"there-is-not-enough-data-to-generate-a-content-views-report-for-" +
 				"the-user-segment-x",
 			getName());
