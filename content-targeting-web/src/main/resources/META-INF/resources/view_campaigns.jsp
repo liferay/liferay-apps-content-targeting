@@ -17,16 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayContext = new ContentTargetingViewCampaignDisplayContext(liferayPortletRequest, liferayPortletResponse);
+ContentTargetingViewCampaignsDisplayContext contentTargetingViewCampaignsDisplayContext = new ContentTargetingViewCampaignsDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
 <liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchEnabled" value="<%= String.valueOf(contentTargetingViewCampaignDisplayContext.isSearchEnabled()) %>" />
+	<liferay-util:param name="searchEnabled" value="<%= String.valueOf(contentTargetingViewCampaignsDisplayContext.isSearchEnabled()) %>" />
 </liferay-util:include>
 
 <liferay-frontend:management-bar
-	disabled="<%= contentTargetingViewCampaignDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= contentTargetingViewCampaignDisplayContext.isIncludeCheckBox() %>"
+	disabled="<%= contentTargetingViewCampaignsDisplayContext.isDisabledManagementBar() %>"
+	includeCheckBox="<%= contentTargetingViewCampaignsDisplayContext.isIncludeCheckBox() %>"
 	searchContainerId="campaigns"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -35,27 +35,27 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 		</liferay-portlet:actionURL>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews="<%= contentTargetingViewCampaignDisplayContext.getDisplayViews() %>"
+			displayViews="<%= contentTargetingViewCampaignsDisplayContext.getDisplayViews() %>"
 			portletURL="<%= updateDisplayStyleURL %>"
-			selectedDisplayStyle="<%= contentTargetingViewCampaignDisplayContext.getDisplayStyle() %>"
+			selectedDisplayStyle="<%= contentTargetingViewCampaignsDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all", "recent", "mine"} %>'
-			portletURL="<%= contentTargetingViewCampaignDisplayContext.getPortletURL() %>"
+			portletURL="<%= contentTargetingViewCampaignsDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= contentTargetingViewCampaignDisplayContext.getOrderByCol() %>"
-			orderByType="<%= contentTargetingViewCampaignDisplayContext.getOrderByType() %>"
+			orderByCol="<%= contentTargetingViewCampaignsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= contentTargetingViewCampaignsDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"modified-date", "start-date", "priority"} %>'
-			portletURL="<%= contentTargetingViewCampaignDisplayContext.getPortletURL() %>"
+			portletURL="<%= contentTargetingViewCampaignsDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
-	<c:if test="<%= contentTargetingViewCampaignDisplayContext.isIncludeCheckBox() %>">
+	<c:if test="<%= contentTargetingViewCampaignsDisplayContext.isIncludeCheckBox() %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteCampaigns" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
@@ -68,7 +68,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 
 <aui:form action="<%= deleteCampaignsURL %>" cssClass="container-fluid-1280" method="post" name="fmCampaigns">
 	<liferay-ui:search-container
-		searchContainer="<%= contentTargetingViewCampaignDisplayContext.getCampaignSearchContainer() %>"
+		searchContainer="<%= contentTargetingViewCampaignsDisplayContext.getCampaignSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.Campaign"
@@ -81,7 +81,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 			%>
 
 			<c:choose>
-				<c:when test="<%= contentTargetingViewCampaignDisplayContext.isDescriptiveView() %>">
+				<c:when test="<%= contentTargetingViewCampaignsDisplayContext.isDescriptiveView() %>">
 					<liferay-ui:search-container-column-icon
 						icon="campaigns"
 						toggleRowChecker="<%= true %>"
@@ -139,7 +139,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 						path="/campaign_action.jsp"
 					/>
 				</c:when>
-				<c:when test="<%= contentTargetingViewCampaignDisplayContext.isIconView() %>">
+				<c:when test="<%= contentTargetingViewCampaignsDisplayContext.isIconView() %>">
 
 					<%
 					row.setCssClass("entry-card lfr-asset-item");
@@ -217,11 +217,11 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= contentTargetingViewCampaignDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= contentTargetingViewCampaignsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= contentTargetingViewCampaignDisplayContext.showAddButton() %>">
+<c:if test="<%= contentTargetingViewCampaignsDisplayContext.showAddButton() %>">
 	<portlet:renderURL var="addCampaignURL">
 		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
 	</portlet:renderURL>
@@ -231,7 +231,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 	</liferay-frontend:add-menu>
 </c:if>
 
-<c:if test="<%= contentTargetingViewCampaignDisplayContext.isIncludeCheckBox() %>">
+<c:if test="<%= contentTargetingViewCampaignsDisplayContext.isIncludeCheckBox() %>">
 	<aui:script>
 		$('#<portlet:namespace />deleteCampaigns').on(
 			'click',
