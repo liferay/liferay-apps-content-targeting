@@ -103,8 +103,10 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 						<div class="text-default">
 							<span class="label text-default">
 								<strong>
-									<liferay-ui:message key="<%= campaign.getStatus() %>" />
+									<liferay-ui:message key="status" />:
 								</strong>
+
+								<liferay-ui:message key="<%= campaign.getStatus() %>" />
 							</span>
 
 							<span class="label text-default">
