@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.content.targeting.service
 Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.content.targeting,\
+	com.liferay.content.targeting.configuration,\
 	com.liferay.content.targeting.internal,\
 	com.liferay.content.targeting.lar,\
 	com.liferay.content.targeting.model.impl,\

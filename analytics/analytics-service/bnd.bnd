@@ -3,8 +3,10 @@ Bundle-SymbolicName: com.liferay.content.targeting.analytics.service
 Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.content.targeting.analytics,\
+	com.liferay.content.targeting.analytics.configuration,\
 	com.liferay.content.targeting.analytics.messaging,\
-	com.liferay.content.targeting.analytics.messaging.config
+	com.liferay.content.targeting.analytics.messaging.config,\
+	com.liferay.content.targeting.analytics.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Analytics
 Liferay-Require-SchemaVersion: 2.0.0

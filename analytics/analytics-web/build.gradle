@@ -18,6 +18,7 @@ dependencies {
 	provided group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided project(":apps:content-targeting:analytics:analytics-api")
+	provided project(":apps:content-targeting:analytics:analytics-service")
 	provided project(":apps:content-targeting:content-targeting-api")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 }

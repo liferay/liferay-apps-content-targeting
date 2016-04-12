@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.content.targeting.anonymous.users.service
 Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.content.targeting.anonymous.users,\
+	com.liferay.content.targeting.anonymous.users.configuration,\
 	com.liferay.content.targeting.anonymous.users.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Anonymous Users

@@ -3,12 +3,10 @@ Bundle-SymbolicName: com.liferay.content.targeting.analytics.api
 Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.content.targeting.analytics,\
-	com.liferay.content.targeting.analytics.configuration,\
 	com.liferay.content.targeting.analytics.exception,\
 	com.liferay.content.targeting.analytics.model,\
 	com.liferay.content.targeting.analytics.processor,\
 	com.liferay.content.targeting.analytics.service,\
-	com.liferay.content.targeting.analytics.service.persistence,\
-	com.liferay.content.targeting.analytics.util
+	com.liferay.content.targeting.analytics.service.persistence
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Analytics
