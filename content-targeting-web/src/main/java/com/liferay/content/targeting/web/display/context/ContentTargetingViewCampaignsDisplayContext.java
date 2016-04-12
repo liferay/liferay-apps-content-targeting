@@ -45,10 +45,10 @@ import javax.portlet.PortletURL;
 /**
  * @author Jürgen Kappler
  */
-public class ContentTargetingViewCampaignDisplayContext
+public class ContentTargetingViewCampaignsDisplayContext
 	extends BaseContentTargetingViewDisplayContext {
 
-	public ContentTargetingViewCampaignDisplayContext(
+	public ContentTargetingViewCampaignsDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
