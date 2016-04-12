@@ -121,13 +121,20 @@ List<UserSegmentQueryRule> userSegmentQueryRules = (List<UserSegmentQueryRule>)r
 
 				A.one('#<portlet:namespace />assetEntryId' + index).attr('value', event.assetentryid);
 
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.CT_USERSEGMENT_DISPLAY %>" var="previewAssetEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-					<portlet:param name="mvcPath" value="/macros/asset_entry.jsp" />
-				</liferay-portlet:renderURL>
+				<%
+				PortletURL previewAssetEntryURL = PortletProviderUtil.getPortletURL(request, AssetEntry.class.getName(), PortletProvider.Action.PREVIEW);
+
+				previewAssetEntryURL.setParameter("template", "icon");
+				previewAssetEntryURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+				String portletId = PortletProviderUtil.getPortletId(AssetEntry.class.getName(), PortletProvider.Action.PREVIEW);
+				%>
 
 				var uri = '<%= previewAssetEntryURL %>';
 
-				uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(PortletKeys.CT_USERSEGMENT_DISPLAY) %>assetEntryId=' + event.assetentryid, uri);
+				uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(portletId) %>className=' + event.assetclassname, uri);
+
+				uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(portletId) %>classPK=' + event.assetclasspk, uri);
 
 				A.io.request(
 					uri,

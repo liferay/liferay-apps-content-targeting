@@ -44,7 +44,10 @@
 	<div class="row">
 		<div class="col-md-4 <%= (ruleVisitedDisplayContext.getAssetEntryId() <= 0) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />assetPreview">
 			<c:if test="<%= ruleVisitedDisplayContext.getAssetEntryId() > 0 %>">
-				<liferay-util:include page="/asset_entry.jsp" servletContext="<%= application %>" />
+				<liferay-ui:asset-display
+					assetEntry="<%= ruleVisitedDisplayContext.getAssetEntry() %>"
+					template="icon"
+				/>
 			</c:if>
 		</div>
 	</div>
@@ -72,7 +75,7 @@
 	</div>
 </div>
 
-<aui:script use="aui-base">
+<aui:script use="aui-io-request">
 	A.getBody().delegate(
 		'click',
 		function(event) {
@@ -96,9 +99,35 @@
 
 					var assetPreview = A.one('#<portlet:namespace />assetPreview');
 
-					assetPreview.setContent('<p>' + event.assettitle + ', ' + event.assettype + '</p>');
+					<%
+					PortletURL previewAssetEntryURL = PortletProviderUtil.getPortletURL(request, AssetEntry.class.getName(), PortletProvider.Action.PREVIEW);
 
-					assetPreview.show();
+					previewAssetEntryURL.setParameter("template", "icon");
+					previewAssetEntryURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+					String portletId = PortletProviderUtil.getPortletId(AssetEntry.class.getName(), PortletProvider.Action.PREVIEW);
+					%>
+
+					var uri = '<%= previewAssetEntryURL.toString() %>';
+
+					uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(portletId) %>className=' + event.assetclassname, uri);
+
+					uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(portletId) %>classPK=' + event.assetclasspk, uri);
+
+					A.io.request(
+						uri,
+						{
+							on: {
+								success: function(event, id, obj) {
+									var responseData = this.get('responseData');
+
+									assetPreview.setContent(responseData);
+
+									assetPreview.show();
+								}
+							}
+						}
+					);
 				}
 			);
 		},

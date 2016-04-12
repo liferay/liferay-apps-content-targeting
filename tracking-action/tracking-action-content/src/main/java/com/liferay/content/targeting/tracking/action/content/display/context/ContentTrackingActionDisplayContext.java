@@ -15,14 +15,15 @@
 package com.liferay.content.targeting.tracking.action.content.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.display.context.BaseTrackingActionDisplayContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +38,17 @@ public class ContentTrackingActionDisplayContext
 		super(request);
 	}
 
+	public AssetEntry getAssetEntry() {
+		if (_assetEntry != null) {
+			return _assetEntry;
+		}
+
+		_assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
+			getAssetEntryId());
+
+		return _assetEntry;
+	}
+
 	public long getAssetEntryId() {
 		if (_assetEntryId != null) {
 			return _assetEntryId;
@@ -48,26 +60,12 @@ public class ContentTrackingActionDisplayContext
 		return _assetEntryId;
 	}
 
-	public List<AssetRendererFactory> getSelectableAssetRendererFactories() {
+	public List<AssetRendererFactory<?>> getAssetRendererFactories() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<AssetRendererFactory> selectableAssetRendererFactories =
-			new ArrayList<>();
-
-		List<AssetRendererFactory<?>> assetRendererFactories =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				themeDisplay.getCompanyId());
-
-		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
-			if (!rendererFactory.isSelectable()) {
-				continue;
-			}
-
-			selectableAssetRendererFactories.add(rendererFactory);
-		}
-
-		return selectableAssetRendererFactories;
+		return AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+			themeDisplay.getCompanyId(), true);
 	}
 
 	public boolean isTrackingContentEnabled() {
@@ -78,6 +76,7 @@ public class ContentTrackingActionDisplayContext
 			themeDisplay.getScopeGroupId());
 	}
 
+	private AssetEntry _assetEntry;
 	private Long _assetEntryId;
 
 }

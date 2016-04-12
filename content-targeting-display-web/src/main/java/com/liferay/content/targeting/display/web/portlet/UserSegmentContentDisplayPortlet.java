@@ -16,7 +16,6 @@ package com.liferay.content.targeting.display.web.portlet;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.content.targeting.display.web.util.QueryRule;
 import com.liferay.content.targeting.display.web.util.UserSegmentQueryRuleUtil;
 import com.liferay.content.targeting.util.ActionKeys;
@@ -146,8 +145,8 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 
 			renderRequest.setAttribute(
 				"assetRendererFactories",
-				getSelectableAssetRendererFactories(
-					themeDisplay.getCompanyId()));
+				AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+					themeDisplay.getCompanyId(), true));
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -182,27 +181,6 @@ public class UserSegmentContentDisplayPortlet extends ContentDisplayPortlet {
 		}
 
 		super.render(renderRequest, renderResponse);
-	}
-
-	protected List<AssetRendererFactory> getSelectableAssetRendererFactories(
-		long companyId) {
-
-		List<AssetRendererFactory> selectableAssetRendererFactories =
-			new ArrayList<>();
-
-		List<AssetRendererFactory<?>> assetRendererFactories =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				companyId);
-
-		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
-			if (!rendererFactory.isSelectable()) {
-				continue;
-			}
-
-			selectableAssetRendererFactories.add(rendererFactory);
-		}
-
-		return selectableAssetRendererFactories;
 	}
 
 	@Reference(unbind = "-")

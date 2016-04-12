@@ -15,7 +15,9 @@
 package com.liferay.content.targeting.rule.visited.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.display.context.BaseRuleDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,7 +28,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +41,17 @@ public class RuleVisitedDisplayContext extends BaseRuleDisplayContext {
 		super(request);
 	}
 
+	public AssetEntry getAssetEntry() {
+		if (_assetEntry != null) {
+			return _assetEntry;
+		}
+
+		_assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
+			getAssetEntryId());
+
+		return _assetEntry;
+	}
+
 	public long getAssetEntryId() {
 		if (_assetEntryId != null) {
 			return _assetEntryId;
@@ -51,12 +63,17 @@ public class RuleVisitedDisplayContext extends BaseRuleDisplayContext {
 		return _assetEntryId;
 	}
 
-	public List<AssetRendererFactory> getAssetRendererFactories() {
+	public List<AssetRendererFactory<?>> getAssetRendererFactories() {
 		if (_assetRendererFactories != null) {
 			return _assetRendererFactories;
 		}
 
-		_assetRendererFactories = getSelectableAssetRendererFactories();
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_assetRendererFactories =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				themeDisplay.getCompanyId(), true);
 
 		return _assetRendererFactories;
 	}
@@ -151,30 +168,9 @@ public class RuleVisitedDisplayContext extends BaseRuleDisplayContext {
 		return friendlyURL;
 	}
 
-	protected List<AssetRendererFactory> getSelectableAssetRendererFactories() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<AssetRendererFactory> selectableAssetRendererFactories =
-			new ArrayList<>();
-
-		List<AssetRendererFactory<?>> assetRendererFactories =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-				themeDisplay.getCompanyId());
-
-		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
-			if (!rendererFactory.isSelectable()) {
-				continue;
-			}
-
-			selectableAssetRendererFactories.add(rendererFactory);
-		}
-
-		return selectableAssetRendererFactories;
-	}
-
+	private AssetEntry _assetEntry;
 	private Long _assetEntryId;
-	private List<AssetRendererFactory> _assetRendererFactories;
+	private List<AssetRendererFactory<?>> _assetRendererFactories;
 	private String _friendlyURL;
 	private String _friendlyURLPrivateBase;
 	private String _friendlyURLPublicBase;
