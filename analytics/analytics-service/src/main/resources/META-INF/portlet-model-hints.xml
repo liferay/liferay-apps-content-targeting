@@ -8,7 +8,9 @@
 		<field name="anonymousUserId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="elementId" type="String" />
+		<field name="elementId" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="eventType" type="String" />
 		<field name="clientIP" type="String" />
 		<field name="userAgent" type="String">

@@ -107,7 +107,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CT_Analytics_AnalyticsEvent (analyticsEventId LONG not null primary key,companyId LONG,userId LONG,anonymousUserId LONG,classNameId LONG,classPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,clientIP VARCHAR(75) null,userAgent STRING null,languageId VARCHAR(75) null,URL STRING null,additionalInfo TEXT null,createDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_Analytics_AnalyticsEvent (analyticsEventId LONG not null primary key,companyId LONG,userId LONG,anonymousUserId LONG,classNameId LONG,classPK LONG,elementId VARCHAR(255) null,eventType VARCHAR(75) null,clientIP VARCHAR(75) null,userAgent STRING null,languageId VARCHAR(75) null,URL STRING null,additionalInfo TEXT null,createDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_Analytics_AnalyticsEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY analyticsEvent.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_Analytics_AnalyticsEvent.createDate DESC";

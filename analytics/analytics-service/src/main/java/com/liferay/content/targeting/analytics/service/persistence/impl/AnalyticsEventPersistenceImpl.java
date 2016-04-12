@@ -5133,8 +5133,8 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 					primaryKey);
 
 			if (analyticsEvent == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				if (_log.isDebugEnabled()) {
+					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchAnalyticsEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
@@ -5338,8 +5338,8 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		AnalyticsEvent analyticsEvent = fetchByPrimaryKey(primaryKey);
 
 		if (analyticsEvent == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			if (_log.isDebugEnabled()) {
+				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			throw new NoSuchAnalyticsEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +

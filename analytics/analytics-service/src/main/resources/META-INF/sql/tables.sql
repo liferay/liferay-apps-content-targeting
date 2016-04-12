@@ -29,7 +29,7 @@ create table CT_Analytics_AnalyticsEvent (
 	anonymousUserId LONG,
 	classNameId LONG,
 	classPK LONG,
-	elementId VARCHAR(75) null,
+	elementId VARCHAR(255) null,
 	eventType VARCHAR(75) null,
 	clientIP VARCHAR(75) null,
 	userAgent STRING null,
