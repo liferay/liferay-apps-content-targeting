@@ -36,6 +36,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,6 +59,21 @@ public class BaseContentTargetingCampaignDisplayContext {
 
 		themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public String getBackURL() {
+		String backURL = ParamUtil.getString(request, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			return backURL;
+		}
+
+		PortletURL backURLObject = liferayPortletResponse.createRenderURL();
+
+		backURLObject.setParameter("mvcPath", "/view.jsp");
+		backURLObject.setParameter("tabs1", "campaigns");
+
+		return backURLObject.toString();
 	}
 
 	public Campaign getCampaign() {

@@ -43,7 +43,6 @@ page import="com.liferay.content.targeting.service.ReportInstanceLocalServiceUti
 page import="com.liferay.content.targeting.service.permission.CampaignPermission" %><%@
 page import="com.liferay.content.targeting.service.permission.UserSegmentPermission" %><%@
 page import="com.liferay.content.targeting.util.ActionKeys" %><%@
-page import="com.liferay.content.targeting.util.CampaignConstants" %><%@
 page import="com.liferay.content.targeting.util.UserSegmentConstants" %><%@
 page import="com.liferay.content.targeting.web.display.context.ContentTargetingEditCampaignDisplayContext" %><%@
 page import="com.liferay.content.targeting.web.display.context.ContentTargetingEditReportDisplayContext" %><%@
