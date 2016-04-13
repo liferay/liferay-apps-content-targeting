@@ -81,7 +81,7 @@ renderResponse.setTitle(contentTargetingEditUserSegmentDisplayContext.getUserSeg
 											<aui:icon cssClass="search-icon" image="search" markupView="lexicon" />
 
 											<div class="search-panels-bar">
-												<aui:input cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
+												<aui:input cssClass="search-panels-input search-query" label="" name="searchPanel" placeholder="search" type="text" />
 											</div>
 										</div>
 									</div>
