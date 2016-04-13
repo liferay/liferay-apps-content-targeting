@@ -27,6 +27,17 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<portlet:renderURL var="campaignSummaryURL">
+		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_CAMPAIGN %>" />
+		<portlet:param name="tabs1" value="summary" />
+		<portlet:param name="campaignId" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		message="summary"
+		url="<%= campaignSummaryURL %>"
+	/>
+
 	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editCampaignURL">
 			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />
@@ -37,20 +48,6 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 			message="edit"
 			url="<%= editCampaignURL %>"
 		/>
-
-		<c:if test="<%= reportsCount > 0 %>">
-			<portlet:renderURL var="viewCampaignReportsURL">
-				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN %>" />
-				<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(Campaign.class.getName())) %>" />
-				<portlet:param name="classPK" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
-				<portlet:param name="viewType" value="<%= CampaignConstants.VIEW_TYPE %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:icon
-				message="reports"
-				url="<%= viewCampaignReportsURL %>"
-			/>
-		</c:if>
 
 		<c:if test="<%= channelsCount > 0 %>">
 			<portlet:renderURL var="viewCampaignTacticsURL">
