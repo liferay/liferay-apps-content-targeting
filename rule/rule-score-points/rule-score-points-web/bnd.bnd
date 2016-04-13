@@ -2,6 +2,6 @@ Bundle-Name: Liferay Content Targeting Score Points Rule Web
 Bundle-SymbolicName: com.liferay.content.targeting.rule.score.points.web
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Score Points Rule Web
+Liferay-Releng-Module-Group-Title: Score Points Rule
 Web-ContextPath: /rule-score-points
 -baseline: *;version="1.0.0"
