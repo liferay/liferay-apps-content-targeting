@@ -117,3 +117,24 @@
 		}
 	}
 }
+
+/* ---------- Responsive ---------- */
+
+@include respond-to(phone) {
+	.aui {
+		.content-targeting-simulator {
+			.button-holder {
+				box-sizing: border-box;
+				position: relative;
+			}
+		}
+
+		body.lfr-has-simulator {
+			padding-left: 20px;
+		}
+
+		.lfr-admin-panel {
+			margin-bottom: 5px;
+		}
+	}
+}
