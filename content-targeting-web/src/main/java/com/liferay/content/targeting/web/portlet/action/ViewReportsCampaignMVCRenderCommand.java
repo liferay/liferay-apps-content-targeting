@@ -92,7 +92,7 @@ public class ViewReportsCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 				serviceContext);
 		}
 
-		return "/view_reports.jsp";
+		return "/view_campaign.jsp";
 	}
 
 	@Reference(unbind = "-")
