@@ -47,7 +47,7 @@
 						}
 					}
 
-					&:after{
+					&:after {
 						content: "\f054";
 						font-family: "fontawesome-alloy";
 						position: absolute;
@@ -141,9 +141,14 @@
 						}
 
 						:last-child {
+							font-family: "fontawesome-alloy";
 							background: transparent;
 							border-width: 0;
 							display: inline-block;
+
+							.glyphicon-trash:before {
+								content: "\f00d";
+							}
 						}
 					}
 				}
