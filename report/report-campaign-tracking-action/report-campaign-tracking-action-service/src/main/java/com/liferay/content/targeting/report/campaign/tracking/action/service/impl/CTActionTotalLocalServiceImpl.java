@@ -122,19 +122,6 @@ public class CTActionTotalLocalServiceImpl
 	public void checkCTActionTotalEvents(long reportInstanceId)
 		throws PortalException {
 
-		Date modifiedDate = null;
-
-		ReportInstance reportInstance =
-			_reportInstanceLocalService.fetchReportInstance(reportInstanceId);
-
-		Date reportInstanceModifiedDate = reportInstance.getModifiedDate();
-
-		if ((reportInstance != null) &&
-			reportInstanceModifiedDate.after(reportInstance.getCreateDate())) {
-
-			modifiedDate = reportInstanceModifiedDate;
-		}
-
 		List<CTActionTotal> ctActionTotals =
 			ctActionTotalPersistence.findByReportInstanceId(reportInstanceId);
 
@@ -146,6 +133,24 @@ public class CTActionTotalLocalServiceImpl
 				ctActionTotalPersistence.remove(
 					ctActionTotal.getCTActionTotalId());
 			}
+		}
+
+		ReportInstance reportInstance =
+			_reportInstanceLocalService.fetchReportInstance(reportInstanceId);
+
+		if (reportInstance == null) {
+			return;
+		}
+
+		Date modifiedDate = null;
+
+		Date reportInstanceModifiedDate = reportInstance.getModifiedDate();
+
+		if (reportInstanceModifiedDate.after(reportInstance.getCreateDate())) {
+			modifiedDate = reportInstanceModifiedDate;
+		}
+		else {
+			modifiedDate = _analyticsEventLocalService.getMaxAge();
 		}
 
 		addCTActionsTotalFromAnalyticsWithElementId(

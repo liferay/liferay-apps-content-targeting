@@ -94,18 +94,23 @@ public class CampaignContentLocalServiceImpl
 	public void checkCampaignContentEvents(long campaignId)
 		throws PortalException {
 
-		Date modifiedDate = _analyticsEventLocalService.getMaxAge();
-
 		ReportInstance reportInstance =
 			_reportInstanceLocalService.fetchReportInstance(
 				"CampaignContentReport", Campaign.class.getName(), campaignId);
 
+		if (reportInstance == null) {
+			return;
+		}
+
+		Date modifiedDate = null;
+
 		Date reportInstanceModifiedDate = reportInstance.getModifiedDate();
 
-		if ((reportInstance != null) &&
-			reportInstanceModifiedDate.after(reportInstance.getCreateDate())) {
-
+		if (reportInstanceModifiedDate.after(reportInstance.getCreateDate())) {
 			modifiedDate = reportInstanceModifiedDate;
+		}
+		else {
+			modifiedDate = _analyticsEventLocalService.getMaxAge();
 		}
 
 		addCampaignContentsFromAnalytics(campaignId, modifiedDate);

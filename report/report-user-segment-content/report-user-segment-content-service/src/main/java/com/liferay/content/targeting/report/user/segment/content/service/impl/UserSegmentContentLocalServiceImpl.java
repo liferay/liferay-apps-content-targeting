@@ -98,19 +98,24 @@ public class UserSegmentContentLocalServiceImpl
 	public void checkUserSegmentContentEvents(long userSegmentId)
 		throws PortalException {
 
-		Date modifiedDate = _analyticsEventLocalService.getMaxAge();
-
 		ReportInstance reportInstance =
 			_reportInstanceLocalService.fetchReportInstance(
 				"UserSegmentContentReport", UserSegment.class.getName(),
 				userSegmentId);
 
+		if (reportInstance == null) {
+			return;
+		}
+
+		Date modifiedDate = null;
+
 		Date reportInstanceModifiedDate = reportInstance.getModifiedDate();
 
-		if ((reportInstance != null) &&
-			reportInstanceModifiedDate.after(reportInstance.getCreateDate())) {
-
+		if (reportInstanceModifiedDate.after(reportInstance.getCreateDate())) {
 			modifiedDate = reportInstanceModifiedDate;
+		}
+		else {
+			modifiedDate = _analyticsEventLocalService.getMaxAge();
 		}
 
 		addUserSegmentContentsFromAnalytics(userSegmentId, modifiedDate);
