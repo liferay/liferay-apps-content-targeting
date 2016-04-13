@@ -30,9 +30,7 @@
 	var campaignContentChartDataValues = [
 
 		<%
-		SearchContainer searchContainer = campaignContentReportDisplayContext.getSearchContainer();
-
-		List<CampaignContent> campaingContents = searchContainer.getResults();
+		List<CampaignContent> campaingContents = campaignContentSearchContainer.getResults();
 
 		for (int k = 0; k < campaingContents.size(); k++) {
 			CampaignContent campaingContent = campaingContents.get(k);

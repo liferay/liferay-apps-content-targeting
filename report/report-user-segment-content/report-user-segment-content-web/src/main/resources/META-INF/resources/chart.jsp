@@ -30,9 +30,7 @@
 	var userSegmentContentChartDataValues = [
 
 		<%
-		SearchContainer searchContainer = userSegmentContentReportDisplayContext.getSearchContainer(resourceBundle);
-
-		List<UserSegmentContent> userSegmentContents = searchContainer.getResults();
+		List<UserSegmentContent> userSegmentContents = userSegmentContentSearchContainer.getResults();
 
 		for (int k = 0; k < userSegmentContents.size(); k++) {
 			UserSegmentContent userSegmentContent = userSegmentContents.get(k);

@@ -49,4 +49,6 @@ CampaignTrackingActionReportDisplayContext campaignTrackingActionReportDisplayCo
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(campaignTrackingActionReportDisplayContext.getBackURL());
+
+SearchContainer<CTActionTotal> ctActionTotalSearchContainer = campaignTrackingActionReportDisplayContext.getSearchContainer();
 %>

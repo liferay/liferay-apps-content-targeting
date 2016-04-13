@@ -16,9 +16,14 @@
 
 <%@ include file="/init.jsp" %>
 
+<c:if test="<%= ctActionTotalSearchContainer.getTotal() > 0 %>">
+	<liferay-util:include page="/chart.jsp" servletContext="<%= application %>" />
+</c:if>
+
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		searchContainer="<%= campaignTrackingActionReportDisplayContext.getSearchContainer() %>"
+		id="ctActionTotal"
+		searchContainer="<%= ctActionTotalSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal"
@@ -79,14 +84,10 @@
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator markupView="lexicon" />
-
-		<c:if test="<%= searchContainer.getTotal() > 0 %>">
-			<liferay-util:include page="/chart.jsp" servletContext="<%= application %>" />
-		</c:if>
 	</liferay-ui:search-container>
 
 	<aui:script use="aui-base,event-hover">
-		A.one('#<portlet:namespace /><%= searchContainerReference.getId(request) %>SearchContainer').delegate(
+		A.one('#<portlet:namespace />ctActionTotalSearchContainer').delegate(
 			'hover',
 			function(event) {
 				var currentTarget = event.currentTarget;

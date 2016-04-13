@@ -43,4 +43,6 @@ UserSegmentContentReportDisplayContext userSegmentContentReportDisplayContext = 
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(userSegmentContentReportDisplayContext.getBackURL());
+
+SearchContainer<UserSegmentContent> userSegmentContentSearchContainer = userSegmentContentReportDisplayContext.getSearchContainer(resourceBundle);
 %>

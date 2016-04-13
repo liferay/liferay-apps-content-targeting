@@ -43,4 +43,6 @@ CampaignContentReportDisplayContext campaignContentReportDisplayContext = new Ca
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(campaignContentReportDisplayContext.getBackURL());
+
+SearchContainer<CampaignContent> campaignContentSearchContainer = campaignContentReportDisplayContext.getSearchContainer();
 %>

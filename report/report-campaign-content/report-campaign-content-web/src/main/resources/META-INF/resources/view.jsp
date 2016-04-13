@@ -16,9 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
+<c:if test="<%= campaignContentSearchContainer.getTotal() > 0 %>">
+	<liferay-util:include page="/chart.jsp" servletContext="<%= application %>" />
+</c:if>
+
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		searchContainer="<%= campaignContentReportDisplayContext.getSearchContainer() %>"
+		searchContainer="<%= campaignContentSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.report.campaign.content.model.CampaignContent"
@@ -51,9 +55,5 @@
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator markupView="lexicon" />
-
-		<c:if test="<%= searchContainer.getTotal() > 0 %>">
-			<liferay-util:include page="/chart.jsp" servletContext="<%= application %>" />
-		</c:if>
 	</liferay-ui:search-container>
 </div>
