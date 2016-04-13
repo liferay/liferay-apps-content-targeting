@@ -47,6 +47,8 @@ public class ContentTargetingMVCCommand {
 
 	public static final String UPDATE_USER_SEGMENT = "updateUserSegment";
 
+	public static final String VIEW_CAMPAIGN = "viewCampaign";
+
 	public static final String VIEW_REPORT = "viewReport";
 
 	public static final String VIEW_REPORTS_CAMPAIGN = "viewReportsCampaign";
