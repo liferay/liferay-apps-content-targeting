@@ -15,39 +15,28 @@
 package com.liferay.content.targeting.web.display.context;
 
 import com.liferay.content.targeting.api.model.RuleCategoriesRegistry;
-import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.web.util.RuleTemplate;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Jürgen Kappler
  */
-public class ContentTargetingEditUserSegmentDisplayContext {
+public class ContentTargetingEditUserSegmentDisplayContext
+	extends BaseContentTargetingUserSegmentDisplayContext {
 
 	public ContentTargetingEditUserSegmentDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
-
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
+		super(liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public List<RuleTemplate> getAddedRuleTemplates() {
@@ -55,20 +44,20 @@ public class ContentTargetingEditUserSegmentDisplayContext {
 			return _addedRuleTemplates;
 		}
 
-		_addedRuleTemplates = (List<RuleTemplate>)_request.getAttribute(
+		_addedRuleTemplates = (List<RuleTemplate>)request.getAttribute(
 			"addedRuleTemplates");
 
 		return _addedRuleTemplates;
 	}
 
 	public String getBackURL() {
-		String backURL = ParamUtil.getString(_request, "backURL");
+		String backURL = ParamUtil.getString(request, "backURL");
 
 		if (Validator.isNotNull(backURL)) {
 			return backURL;
 		}
 
-		PortletURL backURLObject = _renderResponse.createRenderURL();
+		PortletURL backURLObject = liferayPortletResponse.createRenderURL();
 
 		backURLObject.setParameter("mvcPath", "/view.jsp");
 		backURLObject.setParameter("tabs1", "user-segments");
@@ -95,10 +84,11 @@ public class ContentTargetingEditUserSegmentDisplayContext {
 			return _redirect;
 		}
 
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(request, "redirect");
 
 		if (Validator.isNull(redirect)) {
-			PortletURL redirectURLObject = _renderResponse.createRenderURL();
+			PortletURL redirectURLObject =
+				liferayPortletResponse.createRenderURL();
 
 			redirectURLObject.setParameter("mvcPath", "/view.jsp");
 			redirectURLObject.setParameter("tabs1", "user-segments");
@@ -116,7 +106,7 @@ public class ContentTargetingEditUserSegmentDisplayContext {
 			return _ruleCategoriesRegistry;
 		}
 
-		_ruleCategoriesRegistry = (RuleCategoriesRegistry)_request.getAttribute(
+		_ruleCategoriesRegistry = (RuleCategoriesRegistry)request.getAttribute(
 			"ruleCategoriesRegistry");
 
 		return _ruleCategoriesRegistry;
@@ -127,73 +117,16 @@ public class ContentTargetingEditUserSegmentDisplayContext {
 			return _ruleTemplates;
 		}
 
-		_ruleTemplates = (List<RuleTemplate>)_request.getAttribute(
+		_ruleTemplates = (List<RuleTemplate>)request.getAttribute(
 			"ruleTemplates");
 
 		return _ruleTemplates;
 	}
 
-	public UserSegment getUserSegment() {
-		if (_userSegment != null) {
-			return _userSegment;
-		}
-
-		long userSegmentId = getUserSegmentId();
-
-		if (userSegmentId > 0) {
-			_userSegment = UserSegmentLocalServiceUtil.fetchUserSegment(
-				userSegmentId);
-		}
-
-		return _userSegment;
-	}
-
-	public long getUserSegmentId() {
-		if (_userSegmentId != null) {
-			return _userSegmentId;
-		}
-
-		_userSegmentId = ParamUtil.getLong(_request, "userSegmentId", 0);
-
-		return _userSegmentId;
-	}
-
-	public String getUserSegmentTitle() {
-		if (Validator.isNotNull(_userSegmentTitle)) {
-			return _userSegmentTitle;
-		}
-
-		UserSegment userSegment = getUserSegment();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (userSegment != null) {
-			_userSegmentTitle = userSegment.getName(themeDisplay.getLocale());
-		}
-		else {
-			PortletConfig portletConfig =
-				(PortletConfig)_renderRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_CONFIG);
-
-			_userSegmentTitle = LanguageUtil.get(
-				portletConfig.getResourceBundle(themeDisplay.getLocale()),
-				"new-user-segment");
-		}
-
-		return _userSegmentTitle;
-	}
-
 	private List<RuleTemplate> _addedRuleTemplates;
 	private String _cssItemsClass;
 	private String _redirect;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
 	private RuleCategoriesRegistry _ruleCategoriesRegistry;
 	private List<RuleTemplate> _ruleTemplates;
-	private UserSegment _userSegment;
-	private Long _userSegmentId;
-	private String _userSegmentTitle;
 
 }
