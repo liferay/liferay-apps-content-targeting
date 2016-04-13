@@ -2,7 +2,6 @@ Bundle-Name: Liferay Content Targeting Campaign Content Report API
 Bundle-SymbolicName: com.liferay.content.targeting.report.campaign.content.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.content.targeting.report.campaign.content.configuration,\
 	com.liferay.content.targeting.report.campaign.content.exception,\
 	com.liferay.content.targeting.report.campaign.content.model,\
 	com.liferay.content.targeting.report.campaign.content.service,\

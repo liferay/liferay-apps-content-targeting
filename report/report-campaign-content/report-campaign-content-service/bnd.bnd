@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.content.targeting.report.campaign.content.servi
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.content.targeting.report.campaign.content,\
+	com.liferay.content.targeting.report.campaign.content.configuration,\
 	com.liferay.content.targeting.report.campaign.content.model.impl,\
 	com.liferay.content.targeting.report.campaign.content.service.impl
 Liferay-Releng-Module-Group-Description:

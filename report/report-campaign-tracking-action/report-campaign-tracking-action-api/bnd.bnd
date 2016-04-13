@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.content.targeting.report.campaign.tracking.acti
 Bundle-Version: 1.2.0
 Export-Package:\
 	com.liferay.content.targeting.report.campaign.tracking.action,\
-	com.liferay.content.targeting.report.campaign.tracking.action.configuration,\
 	com.liferay.content.targeting.report.campaign.tracking.action.exception,\
 	com.liferay.content.targeting.report.campaign.tracking.action.model,\
 	com.liferay.content.targeting.report.campaign.tracking.action.service,\
