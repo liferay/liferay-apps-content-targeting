@@ -113,9 +113,7 @@ public class UserSegmentPreAction extends Action {
 				WebKeys.ORIGINAL_USER_SEGMENT_IDS, originalUserSegmentIds);
 		}
 		catch (Exception e) {
-			_log.error(
-				"Some Audience Targeting services are not available. " +
-					"Please restart the server");
+			_log.error("Cannot obtain the user segments for the current user");
 		}
 
 		return userSegmentsIds;

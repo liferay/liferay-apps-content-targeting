@@ -82,18 +82,11 @@ public class CampaignContentLocalServiceImpl
 
 	@Override
 	public void checkCampaignContentEvents() throws PortalException {
-		try {
-			List<Campaign> campaigns = _campaignLocalService.getCampaigns(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<Campaign> campaigns = _campaignLocalService.getCampaigns(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			for (Campaign campaign : campaigns) {
-				checkCampaignContentEvents(campaign.getCampaignId());
-			}
-		}
-		catch (NullPointerException npe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Content Targeting API Services are not available");
-			}
+		for (Campaign campaign : campaigns) {
+			checkCampaignContentEvents(campaign.getCampaignId());
 		}
 	}
 

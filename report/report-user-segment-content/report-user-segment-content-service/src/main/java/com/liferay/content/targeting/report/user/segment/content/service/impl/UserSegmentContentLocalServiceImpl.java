@@ -85,19 +85,12 @@ public class UserSegmentContentLocalServiceImpl
 
 	@Override
 	public void checkUserSegmentContentEvents() throws PortalException {
-		try {
-			List<UserSegment> userSegments =
-				_userSegmentLocalService.getUserSegments(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<UserSegment> userSegments =
+			_userSegmentLocalService.getUserSegments(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			for (UserSegment userSegment : userSegments) {
-				checkUserSegmentContentEvents(userSegment.getUserSegmentId());
-			}
-		}
-		catch (NullPointerException npe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Content Targeting API Services are not available");
-			}
+		for (UserSegment userSegment : userSegments) {
+			checkUserSegmentContentEvents(userSegment.getUserSegmentId());
 		}
 	}
 

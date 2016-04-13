@@ -109,19 +109,12 @@ public class CTActionTotalLocalServiceImpl
 
 	@Override
 	public void checkCTActionTotalEvents() throws PortalException {
-		try {
-			List<ReportInstance> reportInstances =
-				_reportInstanceLocalService.getReportInstances(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<ReportInstance> reportInstances =
+			_reportInstanceLocalService.getReportInstances(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			for (ReportInstance reportInstance : reportInstances) {
-				checkCTActionTotalEvents(reportInstance.getReportInstanceId());
-			}
-		}
-		catch (NullPointerException npe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Content Targeting API Services are not available");
-			}
+		for (ReportInstance reportInstance : reportInstances) {
+			checkCTActionTotalEvents(reportInstance.getReportInstanceId());
 		}
 	}
 
