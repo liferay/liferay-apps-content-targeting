@@ -42,10 +42,10 @@ import javax.portlet.PortletURL;
 /**
  * @author Jürgen Kappler
  */
-public class ContentTargetingViewUserSegmentDisplayContext
+public class ContentTargetingViewUserSegmentsDisplayContext
 	extends BaseContentTargetingViewDisplayContext {
 
-	public ContentTargetingViewUserSegmentDisplayContext(
+	public ContentTargetingViewUserSegmentsDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 

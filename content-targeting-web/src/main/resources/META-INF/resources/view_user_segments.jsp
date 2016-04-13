@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDisplayContext = new ContentTargetingViewUserSegmentDisplayContext(liferayPortletRequest, liferayPortletResponse);
+ContentTargetingViewUserSegmentsDisplayContext contentTargetingViewUserSegmentsDisplayContext = new ContentTargetingViewUserSegmentsDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
 <liferay-ui:error key="com.liferay.content.targeting.exception.UsedUserSegmentException">
@@ -57,12 +57,12 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 </liferay-ui:error>
 
 <liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchEnabled" value="<%= String.valueOf(contentTargetingViewUserSegmentDisplayContext.isSearchEnabled()) %>" />
+	<liferay-util:param name="searchEnabled" value="<%= String.valueOf(contentTargetingViewUserSegmentsDisplayContext.isSearchEnabled()) %>" />
 </liferay-util:include>
 
 <liferay-frontend:management-bar
-	disabled="<%= contentTargetingViewUserSegmentDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= contentTargetingViewUserSegmentDisplayContext.isIncludeCheckBox() %>"
+	disabled="<%= contentTargetingViewUserSegmentsDisplayContext.isDisabledManagementBar() %>"
+	includeCheckBox="<%= contentTargetingViewUserSegmentsDisplayContext.isIncludeCheckBox() %>"
 	searchContainerId="userSegments"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -71,27 +71,27 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 		</liferay-portlet:actionURL>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews="<%= contentTargetingViewUserSegmentDisplayContext.getDisplayViews() %>"
+			displayViews="<%= contentTargetingViewUserSegmentsDisplayContext.getDisplayViews() %>"
 			portletURL="<%= updateDisplayStyleURL %>"
-			selectedDisplayStyle="<%= contentTargetingViewUserSegmentDisplayContext.getDisplayStyle() %>"
+			selectedDisplayStyle="<%= contentTargetingViewUserSegmentsDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all", "recent", "mine"} %>'
-			portletURL="<%= contentTargetingViewUserSegmentDisplayContext.getPortletURL() %>"
+			portletURL="<%= contentTargetingViewUserSegmentsDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= contentTargetingViewUserSegmentDisplayContext.getOrderByCol() %>"
-			orderByType="<%= contentTargetingViewUserSegmentDisplayContext.getOrderByType() %>"
+			orderByCol="<%= contentTargetingViewUserSegmentsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= contentTargetingViewUserSegmentsDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"modified-date"} %>'
-			portletURL="<%= contentTargetingViewUserSegmentDisplayContext.getPortletURL() %>"
+			portletURL="<%= contentTargetingViewUserSegmentsDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
-	<c:if test="<%= contentTargetingViewUserSegmentDisplayContext.isIncludeCheckBox() %>">
+	<c:if test="<%= contentTargetingViewUserSegmentsDisplayContext.isIncludeCheckBox() %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteUserSegments" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
@@ -105,7 +105,7 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 <aui:form action="<%= deleteUserSegmentURL %>" cssClass="container-fluid-1280" name="fmUserSegment">
 	<liferay-ui:search-container
 		id="userSegments"
-		searchContainer="<%= contentTargetingViewUserSegmentDisplayContext.getUserSegmentSearchContainer() %>"
+		searchContainer="<%= contentTargetingViewUserSegmentsDisplayContext.getUserSegmentSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.content.targeting.model.UserSegment"
@@ -118,7 +118,7 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 			%>
 
 			<c:choose>
-				<c:when test="<%= contentTargetingViewUserSegmentDisplayContext.isDescriptiveView() %>">
+				<c:when test="<%= contentTargetingViewUserSegmentsDisplayContext.isDescriptiveView() %>">
 					<liferay-ui:search-container-column-icon
 						icon="user-segments"
 						toggleRowChecker="<%= true %>"
@@ -140,7 +140,7 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 						path="/user_segments_action.jsp"
 					/>
 				</c:when>
-				<c:when test="<%= contentTargetingViewUserSegmentDisplayContext.isIconView() %>">
+				<c:when test="<%= contentTargetingViewUserSegmentsDisplayContext.isIconView() %>">
 
 					<%
 					row.setCssClass("entry-card lfr-asset-item");
@@ -186,11 +186,11 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= contentTargetingViewUserSegmentDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= contentTargetingViewUserSegmentsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= contentTargetingViewUserSegmentDisplayContext.showAddButton() %>">
+<c:if test="<%= contentTargetingViewUserSegmentsDisplayContext.showAddButton() %>">
 	<portlet:renderURL var="addUserSegmentURL">
 		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
 	</portlet:renderURL>
@@ -200,7 +200,7 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 	</liferay-frontend:add-menu>
 </c:if>
 
-<c:if test="<%= contentTargetingViewUserSegmentDisplayContext.isIncludeCheckBox() %>">
+<c:if test="<%= contentTargetingViewUserSegmentsDisplayContext.isIncludeCheckBox() %>">
 	<aui:script>
 		$('#<portlet:namespace />deleteUserSegments').on(
 			'click',
