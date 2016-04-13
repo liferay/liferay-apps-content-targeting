@@ -21,6 +21,11 @@ ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayCont
 
 String tabs1 = ParamUtil.getString(request, "tabs1");
 
+if (Validator.isNull(tabs1)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(contentTargetingViewReportsDisplayContext.getBackURL());
+}
+
 renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitle());
 %>
 

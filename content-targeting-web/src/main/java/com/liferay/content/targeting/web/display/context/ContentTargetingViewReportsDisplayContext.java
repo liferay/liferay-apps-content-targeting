@@ -169,6 +169,7 @@ public class ContentTargetingViewReportsDisplayContext
 			portletURL.setParameter(
 				"mvcRenderCommandName",
 				ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
+			portletURL.setParameter("tabs1", "reports");
 			portletURL.setParameter("viewType", CampaignConstants.VIEW_TYPE);
 		}
 		else if (className.equals(UserSegment.class.getName())) {

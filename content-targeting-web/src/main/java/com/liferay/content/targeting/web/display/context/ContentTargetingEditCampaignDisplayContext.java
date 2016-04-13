@@ -44,21 +44,6 @@ public class ContentTargetingEditCampaignDisplayContext
 			userSegmentLocalService);
 	}
 
-	public String getBackURL() {
-		String backURL = ParamUtil.getString(request, "backURL");
-
-		if (Validator.isNotNull(backURL)) {
-			return backURL;
-		}
-
-		PortletURL backURLObject = liferayPortletResponse.createRenderURL();
-
-		backURLObject.setParameter("mvcPath", "/view.jsp");
-		backURLObject.setParameter("tabs1", "campaigns");
-
-		return backURLObject.toString();
-	}
-
 	public String getRedirect() {
 		if (Validator.isNotNull(_redirect)) {
 			return _redirect;

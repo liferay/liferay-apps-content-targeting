@@ -17,45 +17,22 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayContext = new ContentTargetingViewReportsDisplayContext(liferayPortletRequest, liferayPortletResponse);
+ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayContext = new ContentTargetingViewCampaignDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-String tabs1 = ParamUtil.getString(request, "tabs1", "summary");
-
-long campaignId = ParamUtil.getLong(request, "campaignId");
-long classPK = ParamUtil.getLong(request, "classPK");
-
-if (Validator.equals(tabs1, "reports")) {
-	campaignId = ParamUtil.getLong(request, "classPK");
-}
-else {
-	classPK = campaignId;
-}
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(contentTargetingViewCampaignDisplayContext.getBackURL());
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="summaryURL">
-			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_CAMPAIGN %>" />
-			<portlet:param name="tabs1" value="summary" />
-			<portlet:param name="campaignId" value="<%= String.valueOf(campaignId) %>" />
-		</portlet:renderURL>
+		<aui:nav-item href="<%= contentTargetingViewCampaignDisplayContext.getSummaryURL() %>" label="summary" selected="<%= contentTargetingViewCampaignDisplayContext.isShowSummary() %>" />
 
-		<aui:nav-item href="<%= summaryURL %>" label="summary" selected='<%= tabs1.equals("summary") %>' />
-
-		<portlet:renderURL var="viewCampaignReportsURL">
-			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN %>" />
-			<portlet:param name="tabs1" value="reports" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(Campaign.class.getName())) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-			<portlet:param name="viewType" value="<%= CampaignConstants.VIEW_TYPE %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewCampaignReportsURL %>" label="reports" selected='<%= tabs1.equals("reports") %>' />
+		<aui:nav-item href="<%= contentTargetingViewCampaignDisplayContext.getReportsURL() %>" label="reports" selected="<%= contentTargetingViewCampaignDisplayContext.isShowReports() %>" />
 	</aui:nav>
 
-	<c:if test='<%= Validator.equals(tabs1, "reports") && !contentTargetingViewReportsDisplayContext.isDisabledManagementBar() %>'>
+	<c:if test="<%= contentTargetingViewCampaignDisplayContext.isDisabledReportsManagementBar() %>">
 		<aui:nav-bar-search>
-			<aui:form action="<%= contentTargetingViewReportsDisplayContext.getPortletURL() %>" name="searchFm">
+			<aui:form action="<%= contentTargetingViewCampaignDisplayContext.getReportsURL() %>" name="searchFm">
 				<liferay-ui:input-search markupView="lexicon" name="keywords" />
 			</aui:form>
 		</aui:nav-bar-search>
@@ -63,10 +40,10 @@ else {
 </aui:nav-bar>
 
 <c:choose>
-	<c:when test='<%= tabs1.equals("summary") %>'>
+	<c:when test="<%= contentTargetingViewCampaignDisplayContext.isShowSummary() %>">
 		<liferay-util:include page="/campaign_summary.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test='<%= tabs1.equals("reports") %>'>
+	<c:when test="<%= contentTargetingViewCampaignDisplayContext.isShowReports() %>">
 		<liferay-util:include page="/view_reports.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>

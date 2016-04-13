@@ -68,6 +68,7 @@ public class ContentTargetingEditReportDisplayContext {
 			backURLObject.setParameter(
 				"mvcRenderCommandName",
 				ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
+			backURLObject.setParameter("tabs1", "reports");
 			backURLObject.setParameter("viewType", CampaignConstants.VIEW_TYPE);
 		}
 		else {
@@ -131,6 +132,7 @@ public class ContentTargetingEditReportDisplayContext {
 				redirectURLObject.setParameter(
 					"mvcRenderCommandName",
 					ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
+				redirectURLObject.setParameter("tabs1", "reports");
 				redirectURLObject.setParameter(
 					"viewType", CampaignConstants.VIEW_TYPE);
 			}
