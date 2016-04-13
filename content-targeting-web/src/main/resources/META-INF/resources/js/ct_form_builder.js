@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ct-form-builder',
 	function(A) {
-		var AVAILABLE_FIELD_LABEL_TPL = '<h4 class="field-title">{name}</h4><div class="field-description small text-default">{shortDescription}</div>',
+		var AVAILABLE_FIELD_LABEL_TPL = '<h5 class="field-title">{name}</h5><div class="field-description small text-default">{shortDescription}</div>',
 
 			FIELD_LABEL_TPL = '{name}',
 
@@ -20,7 +20,7 @@ AUI.add(
 
 			ITEM_CATEGORY_HEADER_TPL = '<div class="category-header toggler-header toggler-header-collapsed">' +
 				'<div class="category-info"> ' +
-					'<h5 class="category-title">{name}</h5>' +
+					'<span class="category-title h4">{name}</span>' +
 					'<div class="category-description small text-default">{description}</div>' +
 				'</div>' +
 			'</div>',
