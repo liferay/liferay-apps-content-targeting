@@ -49,6 +49,7 @@ page import="com.liferay.content.targeting.web.display.context.ContentTargetingE
 page import="com.liferay.content.targeting.web.display.context.ContentTargetingEditReportDisplayContext" %><%@
 page import="com.liferay.content.targeting.web.display.context.ContentTargetingEditTacticsDisplayContext" %><%@
 page import="com.liferay.content.targeting.web.display.context.ContentTargetingEditUserSegmentDisplayContext" %><%@
+page import="com.liferay.content.targeting.web.display.context.ContentTargetingViewCampaignDisplayContext" %><%@
 page import="com.liferay.content.targeting.web.display.context.ContentTargetingViewCampaignsDisplayContext" %><%@
 page import="com.liferay.content.targeting.web.display.context.ContentTargetingViewReportsDisplayContext" %><%@
 page import="com.liferay.content.targeting.web.display.context.ContentTargetingViewTacticsDisplayContext" %><%@
@@ -69,6 +70,7 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
