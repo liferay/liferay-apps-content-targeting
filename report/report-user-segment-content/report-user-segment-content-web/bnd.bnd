@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Content Targeting User Segment Content Report Web
+Bundle-SymbolicName: com.liferay.content.targeting.report.user.segment.content.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: User Segment Content Report
+Web-ContextPath: /report-user-segment-content
+-baseline: *;version="1.0.0"

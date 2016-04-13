@@ -2,7 +2,6 @@ Bundle-Name: Liferay Content Targeting User Segment Content Report Service
 Bundle-SymbolicName: com.liferay.content.targeting.report.user.segment.content.service
 Bundle-Version: 1.1.0
 Export-Package:\
-	com.liferay.content.targeting.report.user.segment.content,\
 	com.liferay.content.targeting.report.user.segment.content.configuration,\
 	com.liferay.content.targeting.report.user.segment.content.model.impl,\
 	com.liferay.content.targeting.report.user.segment.content.service.impl
@@ -14,7 +13,6 @@ Liferay-Spring-Context: META-INF/spring
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=3.0)))"
-Web-ContextPath: /report-user-segment-content
 -baseline: *;version="1.1.0"
 
 -liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class

@@ -17,7 +17,6 @@ package com.liferay.content.targeting.report.user.segment.content.service.impl;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.report.user.segment.content.UserSegmentContentReport;
 import com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent;
 import com.liferay.content.targeting.report.user.segment.content.service.base.UserSegmentContentLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
@@ -110,8 +109,8 @@ public class UserSegmentContentLocalServiceImpl
 
 		ReportInstance reportInstance =
 			_reportInstanceLocalService.fetchReportInstance(
-				UserSegmentContentReport.class.getSimpleName(),
-				UserSegment.class.getName(), userSegmentId);
+				"UserSegmentContentReport", UserSegment.class.getName(),
+				userSegmentId);
 
 		Date reportInstanceModifiedDate = reportInstance.getModifiedDate();
 

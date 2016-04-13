@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Content Targeting Campaign Tracking Actions Report Web
+Bundle-SymbolicName: com.liferay.content.targeting.report.campaign.tracking.action.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Campaign Tracking Actions Report
+Web-ContextPath: /report-campaign-tracking-action
+-baseline: *;version="1.0.0"

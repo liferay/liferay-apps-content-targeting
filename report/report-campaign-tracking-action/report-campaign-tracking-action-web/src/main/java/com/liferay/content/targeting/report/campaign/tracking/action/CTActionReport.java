@@ -167,7 +167,7 @@ public class CTActionReport extends BaseJSPReport {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.content.targeting.report.campaign.tracking.action.service)",
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.report.campaign.tracking.action.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

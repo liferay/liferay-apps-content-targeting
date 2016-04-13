@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Content Targeting Campaign Content Report Web
+Bundle-SymbolicName: com.liferay.content.targeting.report.campaign.content.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Campaign Content Report
+Web-ContextPath: /report-campaign-content
+-baseline: *;version="1.0.0"

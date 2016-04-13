@@ -66,7 +66,7 @@ public class CampaignContentReport extends BaseJSPReport {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.content.targeting.report.campaign.content.service)",
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.report.campaign.content.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

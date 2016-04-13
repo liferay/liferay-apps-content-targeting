@@ -18,7 +18,6 @@ import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalServic
 import com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
-import com.liferay.content.targeting.report.campaign.content.CampaignContentReport;
 import com.liferay.content.targeting.report.campaign.content.model.CampaignContent;
 import com.liferay.content.targeting.report.campaign.content.service.base.CampaignContentLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.CampaignLocalService;
@@ -106,8 +105,7 @@ public class CampaignContentLocalServiceImpl
 
 		ReportInstance reportInstance =
 			_reportInstanceLocalService.fetchReportInstance(
-				CampaignContentReport.class.getSimpleName(),
-				Campaign.class.getName(), campaignId);
+				"CampaignContentReport", Campaign.class.getName(), campaignId);
 
 		Date reportInstanceModifiedDate = reportInstance.getModifiedDate();
 

@@ -59,7 +59,7 @@ public class UserSegmentContentReport extends BaseJSPReport {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.content.targeting.report.user.segment.content.service)",
+		target = "(osgi.web.symbolicname=com.liferay.content.targeting.report.user.segment.content.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
