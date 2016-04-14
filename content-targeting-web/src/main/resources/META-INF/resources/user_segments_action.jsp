@@ -25,6 +25,17 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<portlet:renderURL var="userSegmentSummaryURL">
+		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_USER_SEGMENT %>" />
+		<portlet:param name="tabs1" value="summary" />
+		<portlet:param name="userSegmentId" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		message="summary"
+		url="<%= userSegmentSummaryURL %>"
+	/>
+
 	<c:if test="<%= UserSegmentPermission.contains(permissionChecker, userSegment, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editUserSegmentURL">
 			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />
@@ -35,20 +46,6 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 			message="edit"
 			url="<%= editUserSegmentURL %>"
 		/>
-
-		<c:if test="<%= reportsCount > 0 %>">
-			<portlet:renderURL var="viewUserSegmentReportsURL">
-				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT %>" />
-				<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(UserSegment.class.getName())) %>" />
-				<portlet:param name="classPK" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
-				<portlet:param name="viewType" value="<%= UserSegmentConstants.VIEW_TYPE %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:icon
-				message="reports"
-				url="<%= viewUserSegmentReportsURL %>"
-			/>
-		</c:if>
 	</c:if>
 
 	<c:if test="<%= UserSegmentPermission.contains(permissionChecker, userSegment, ActionKeys.DELETE) %>">

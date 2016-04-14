@@ -89,7 +89,7 @@ public class ViewReportsUserSegmentMVCRenderCommand
 			}
 		}
 
-		return "/view_reports.jsp";
+		return "/view_user_segment.jsp";
 	}
 
 	@Reference(unbind = "-")
