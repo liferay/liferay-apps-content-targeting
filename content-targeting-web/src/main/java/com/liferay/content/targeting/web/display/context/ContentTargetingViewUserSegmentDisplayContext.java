@@ -14,13 +14,15 @@
 
 package com.liferay.content.targeting.web.display.context;
 
-import com.liferay.content.targeting.model.Campaign;
-import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.content.targeting.util.CampaignConstants;
+import com.liferay.content.targeting.model.UserSegment;
+import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService;
+import com.liferay.content.targeting.util.UserSegmentConstants;
+import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.content.targeting.web.portlet.ContentTargetingMVCCommand;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,40 +33,28 @@ import javax.portlet.PortletURL;
 /**
  * @author Jürgen Kappler
  */
-public class ContentTargetingViewCampaignDisplayContext
-	extends BaseContentTargetingCampaignDisplayContext {
+public class ContentTargetingViewUserSegmentDisplayContext
+	extends BaseContentTargetingUserSegmentDisplayContext {
 
-	public ContentTargetingViewCampaignDisplayContext(
+	public ContentTargetingViewUserSegmentDisplayContext(
+		AnonymousUserUserSegmentLocalService
+			anonymousUserUserSegmentLocalService,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		super(liferayPortletRequest, liferayPortletResponse, null);
+		super(liferayPortletRequest, liferayPortletResponse);
+
+		_anonymousUserUserSegmentLocalService =
+			anonymousUserUserSegmentLocalService;
 	}
 
-	public ContentTargetingViewCampaignDisplayContext(
+	public ContentTargetingViewUserSegmentDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		UserSegmentLocalService userSegmentLocalService) {
+		LiferayPortletResponse liferayPortletResponse) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse,
-			userSegmentLocalService);
-	}
+		super(liferayPortletRequest, liferayPortletResponse);
 
-	@Override
-	public long getCampaignId() {
-		if (_campaignId != null) {
-			return _campaignId;
-		}
-
-		if (Validator.equals(getTabs1(), "reports")) {
-			_campaignId = ParamUtil.getLong(request, "classPK");
-		}
-		else {
-			_campaignId = ParamUtil.getLong(request, "campaignId");
-		}
-
-		return _campaignId;
+		_anonymousUserUserSegmentLocalService = null;
 	}
 
 	public long getClassPK() {
@@ -76,10 +66,27 @@ public class ContentTargetingViewCampaignDisplayContext
 			_classPK = ParamUtil.getLong(request, "classPK");
 		}
 		else {
-			_classPK = ParamUtil.getLong(request, "campaignId");
+			_classPK = ParamUtil.getLong(request, "userSegmentId");
 		}
 
 		return _classPK;
+	}
+
+	public String getDescription() {
+		if (Validator.isNotNull(_description)) {
+			return _description;
+		}
+
+		UserSegment userSegment = getUserSegment();
+
+		if (userSegment != null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_description = userSegment.getDescription(themeDisplay.getLocale());
+		}
+
+		return _description;
 	}
 
 	public String getReportsURL() {
@@ -91,14 +98,14 @@ public class ContentTargetingViewCampaignDisplayContext
 
 		reportsURL.setParameter(
 			"mvcRenderCommandName",
-			ContentTargetingMVCCommand.VIEW_REPORTS_CAMPAIGN);
+			ContentTargetingMVCCommand.VIEW_REPORTS_USER_SEGMENT);
 		reportsURL.setParameter("tabs1", "reports");
 		reportsURL.setParameter(
 			"classNameId",
 			String.valueOf(
-				PortalUtil.getClassNameId(Campaign.class.getName())));
+				PortalUtil.getClassNameId(UserSegment.class.getName())));
 		reportsURL.setParameter("classPK", String.valueOf(getClassPK()));
-		reportsURL.setParameter("viewType", CampaignConstants.VIEW_TYPE);
+		reportsURL.setParameter("viewType", UserSegmentConstants.VIEW_TYPE);
 
 		_reportsURL = reportsURL.toString();
 
@@ -113,9 +120,11 @@ public class ContentTargetingViewCampaignDisplayContext
 		PortletURL summaryURL = liferayPortletResponse.createRenderURL();
 
 		summaryURL.setParameter(
-			"mvcRenderCommandName", ContentTargetingMVCCommand.VIEW_CAMPAIGN);
+			"mvcRenderCommandName",
+			ContentTargetingMVCCommand.VIEW_USER_SEGMENT);
 		summaryURL.setParameter("tabs1", "summary");
-		summaryURL.setParameter("campaignId", String.valueOf(getCampaignId()));
+		summaryURL.setParameter(
+			"userSegmentId", String.valueOf(getUserSegmentId()));
 
 		_summaryURL = summaryURL.toString();
 
@@ -130,6 +139,40 @@ public class ContentTargetingViewCampaignDisplayContext
 		_tabs1 = ParamUtil.getString(request, "tabs1", "summary");
 
 		return _tabs1;
+	}
+
+	@Override
+	public long getUserSegmentId() {
+		if (_userSegmentId != null) {
+			return _userSegmentId;
+		}
+
+		if (Validator.equals(getTabs1(), "reports")) {
+			_userSegmentId = ParamUtil.getLong(request, "classPK");
+		}
+		else {
+			_userSegmentId = ParamUtil.getLong(request, "userSegmentId");
+		}
+
+		return _userSegmentId;
+	}
+
+	public int getUsersNumber() throws PortalException {
+		if (_usersNumber != null) {
+			return _usersNumber;
+		}
+
+		if (_anonymousUserUserSegmentLocalService != null) {
+			_usersNumber =
+				_anonymousUserUserSegmentLocalService.
+					getAnonymousUsersByUserSegmentIdCount(
+						getUserSegmentId(), true);
+		}
+		else {
+			_usersNumber = 0;
+		}
+
+		return _usersNumber;
 	}
 
 	public boolean isDisabledReportsManagementBar()
@@ -172,11 +215,15 @@ public class ContentTargetingViewCampaignDisplayContext
 		return false;
 	}
 
-	private Long _campaignId;
+	private final AnonymousUserUserSegmentLocalService
+		_anonymousUserUserSegmentLocalService;
 	private Long _classPK;
+	private String _description;
 	private Boolean _isDisabledReportsManagementBar;
 	private String _reportsURL;
 	private String _summaryURL;
 	private String _tabs1;
+	private Long _userSegmentId;
+	private Integer _usersNumber;
 
 }

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,6 +44,21 @@ public class BaseContentTargetingUserSegmentDisplayContext {
 		this.liferayPortletResponse = liferayPortletResponse;
 
 		this.request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+	}
+
+	public String getBackURL() {
+		String backURL = ParamUtil.getString(request, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			return backURL;
+		}
+
+		PortletURL backURLObject = liferayPortletResponse.createRenderURL();
+
+		backURLObject.setParameter("mvcPath", "/view.jsp");
+		backURLObject.setParameter("tabs1", "user-segments");
+
+		return backURLObject.toString();
 	}
 
 	public UserSegment getUserSegment() {
