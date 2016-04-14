@@ -141,10 +141,10 @@
 						}
 
 						:last-child {
-							font-family: "fontawesome-alloy";
 							background: transparent;
 							border-width: 0;
 							display: inline-block;
+							font-family: "fontawesome-alloy";
 
 							.glyphicon-trash:before {
 								content: "\f00d";
