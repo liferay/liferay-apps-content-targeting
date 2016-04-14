@@ -58,4 +58,6 @@ public class ContentTargetingMVCCommand {
 
 	public static final String VIEW_TACTICS = "viewTactics";
 
+	public static final String VIEW_USER_SEGMENT = "viewUserSegment";
+
 }
