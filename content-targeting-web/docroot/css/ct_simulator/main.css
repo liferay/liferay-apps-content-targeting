@@ -6,6 +6,11 @@
 		margin-top: 0;
 		padding: 10px 15px;
 		position: fixed;
+
+		@include respond-to(phone) {
+			box-sizing: border-box;
+			position: relative;
+		}
 	}
 
 	.control-group {
@@ -118,17 +123,8 @@
 	}
 }
 
-/* ---------- Responsive ---------- */
-
 @include respond-to(phone) {
 	.aui {
-		.content-targeting-simulator {
-			.button-holder {
-				box-sizing: border-box;
-				position: relative;
-			}
-		}
-
 		body.lfr-has-simulator {
 			padding-left: 20px;
 		}
