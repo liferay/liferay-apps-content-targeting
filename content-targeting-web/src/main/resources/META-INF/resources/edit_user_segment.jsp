@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentTargetingEditUserSegmentDisplayContext contentTargetingEditUserSegmentDisplayContext = new ContentTargetingEditUserSegmentDisplayContext(renderRequest, renderResponse);
+ContentTargetingEditUserSegmentDisplayContext contentTargetingEditUserSegmentDisplayContext = new ContentTargetingEditUserSegmentDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
 RuleCategoriesRegistry ruleCategoriesRegistry = contentTargetingEditUserSegmentDisplayContext.getRuleCategoriesRegistry();
 

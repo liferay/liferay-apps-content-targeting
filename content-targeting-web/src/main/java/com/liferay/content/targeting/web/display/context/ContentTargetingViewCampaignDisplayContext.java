@@ -51,6 +51,7 @@ public class ContentTargetingViewCampaignDisplayContext
 			userSegmentLocalService);
 	}
 
+	@Override
 	public long getCampaignId() {
 		if (_campaignId != null) {
 			return _campaignId;

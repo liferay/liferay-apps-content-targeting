@@ -204,6 +204,10 @@ public class ContentTargetingUtil {
 		return data;
 	}
 
+	public static String getCategorySeparator() {
+		return _CATEGORY_SEPARATOR;
+	}
+
 	public static String getDescription(Class<?> clazz, Locale locale) {
 		String key = clazz.getName().concat(".description");
 

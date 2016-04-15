@@ -162,7 +162,7 @@ public class PageTrackingAction extends BaseJSPTrackingAction {
 
 		String friendlyURL = values.get("friendlyURL");
 		boolean privateLayout = GetterUtil.getBoolean(
-			values.get("privateLayout"), false);
+			values.get("privateLayout"));
 
 		if (Validator.isNotNull(friendlyURL)) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -244,8 +244,7 @@ public class PageTrackingAction extends BaseJSPTrackingAction {
 			alias = values.get("alias");
 			eventType = values.get("eventType");
 			friendlyURL = values.get("friendlyURL");
-			privateLayout = GetterUtil.getBoolean(
-				values.get("privateLayout"), false);
+			privateLayout = GetterUtil.getBoolean(values.get("privateLayout"));
 		}
 		else if (trackingActionInstance != null) {
 			alias = trackingActionInstance.getAlias();

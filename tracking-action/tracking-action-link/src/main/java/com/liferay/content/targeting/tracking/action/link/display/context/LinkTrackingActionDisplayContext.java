@@ -18,7 +18,6 @@ import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.display.context.BaseTrackingActionDisplayContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,8 +37,7 @@ public class LinkTrackingActionDisplayContext
 			return _elementId;
 		}
 
-		_elementId = GetterUtil.getString(
-			displayContext.get("elementId"), StringPool.BLANK);
+		_elementId = GetterUtil.getString(displayContext.get("elementId"));
 
 		return _elementId;
 	}

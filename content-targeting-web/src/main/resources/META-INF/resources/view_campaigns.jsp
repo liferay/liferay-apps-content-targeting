@@ -80,6 +80,12 @@ ContentTargetingViewCampaignsDisplayContext contentTargetingViewCampaignsDisplay
 			request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
 			%>
 
+			<portlet:renderURL var="campaignSummaryURL">
+				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_CAMPAIGN %>" />
+				<portlet:param name="tabs1" value="summary" />
+				<portlet:param name="campaignId" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
+			</portlet:renderURL>
+
 			<c:choose>
 				<c:when test="<%= contentTargetingViewCampaignsDisplayContext.isDescriptiveView() %>">
 					<liferay-ui:search-container-column-icon
@@ -91,7 +97,7 @@ ContentTargetingViewCampaignsDisplayContext contentTargetingViewCampaignsDisplay
 						colspan="<%= 2 %>"
 					>
 						<h4>
-							<%= HtmlUtil.escape(campaign.getName(locale)) %>
+							<aui:a href="<%= campaignSummaryURL.toString() %>"><%= HtmlUtil.escape(campaign.getName(locale)) %></aui:a>
 						</h4>
 
 						<c:if test="<%= Validator.isNotNull(campaign.getDescription(locale)) %>">
@@ -168,8 +174,9 @@ ContentTargetingViewCampaignsDisplayContext contentTargetingViewCampaignsDisplay
 						cssClass="content-column name-column title-column"
 						name="name"
 						truncate="<%= true %>"
-						value="<%= campaign.getName(locale) %>"
-					/>
+					>
+						<aui:a href="<%= campaignSummaryURL.toString() %>"><%= campaign.getName(locale) %></aui:a>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						cssClass="content-column description-column"

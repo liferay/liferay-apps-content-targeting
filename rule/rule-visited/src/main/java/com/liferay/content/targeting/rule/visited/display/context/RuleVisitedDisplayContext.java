@@ -122,7 +122,7 @@ public class RuleVisitedDisplayContext extends BaseRuleDisplayContext {
 		}
 
 		_privateLayout = GetterUtil.getBoolean(
-			displayContext.get("privateLayout"), false);
+			displayContext.get("privateLayout"));
 
 		return _privateLayout;
 	}

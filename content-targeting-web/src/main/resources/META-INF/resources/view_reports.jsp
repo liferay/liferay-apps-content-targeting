@@ -20,13 +20,6 @@
 ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayContext = new ContentTargetingViewReportsDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
 String tabs1 = ParamUtil.getString(request, "tabs1");
-
-if (Validator.isNull(tabs1)) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(contentTargetingViewReportsDisplayContext.getBackURL());
-}
-
-renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitle());
 %>
 
 <c:if test="<%= contentTargetingViewReportsDisplayContext.isStagingGroup() %>">
@@ -157,7 +150,6 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 							<liferay-frontend:icon-vertical-card
 								actionJsp="/reports_action.jsp"
 								actionJspServletContext="<%= application %>"
-								cssClass="preview"
 								icon="reports"
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
@@ -238,29 +230,6 @@ renderResponse.setTitle(contentTargetingViewReportsDisplayContext.getReportsTitl
 					submitForm(document.<portlet:namespace />fmReports);
 				}
 			}
-		);
-	</aui:script>
-</c:if>
-
-<c:if test="<%= contentTargetingViewReportsDisplayContext.hasReports() %>">
-	<aui:script use="aui-base,liferay-url-preview">
-		A.one('#<portlet:namespace />fmReports').delegate(
-			'click',
-			function(event) {
-				var currentTarget = event.currentTarget;
-
-				var parent = currentTarget.ancestor('.preview');
-
-				var urlPreview = new Liferay.UrlPreview(
-					{
-						title: parent.attr('data-title'),
-						url: parent.attr('data-url')
-					}
-				);
-
-				urlPreview.open();
-			},
-			'.preview a'
 		);
 	</aui:script>
 </c:if>

@@ -65,7 +65,14 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 			<h3 class="h5"><liferay-ui:message key="description" /></h3>
 
 			<div class="small text-default">
-				<%= contentTargetingViewCampaignDisplayContext.getDescription() %>
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(contentTargetingViewCampaignDisplayContext.getDescription()) %>">
+						<%= contentTargetingViewCampaignDisplayContext.getDescription() %>
+					</c:when>
+					<c:otherwise>
+						<%= StringPool.DASH %>
+					</c:otherwise>
+				</c:choose>
 			</div>
 
 			<br />
@@ -73,17 +80,29 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 			<h3 class="h5"><liferay-ui:message key="user-segments" /></h3>
 
 			<%
-			String[] userSegmentAssetCategories = StringUtil.split(contentTargetingViewCampaignDisplayContext.getUserSegmentAssetCategoryNames(), StringPool.COMMA);
-
-			for (String userSegmentAssetCategory : userSegmentAssetCategories) {
+			String[] userSegmentAssetCategories = StringUtil.split(contentTargetingViewCampaignDisplayContext.getUserSegmentAssetCategoryNames(), ContentTargetingUtil.getCategorySeparator());
 			%>
 
-				<span class="badge badge-default"><%= userSegmentAssetCategory %></span>
+			<c:choose>
+				<c:when test="<%= ArrayUtil.isNotEmpty(userSegmentAssetCategories) %>">
 
-			<%
-			}
-			%>
+					<%
+					for (String userSegmentAssetCategory : userSegmentAssetCategories) {
+					%>
 
+						<span class="badge badge-default"><%= userSegmentAssetCategory %></span>
+
+					<%
+					}
+					%>
+
+				</c:when>
+				<c:otherwise>
+					<div class="small text-default">
+						<%= StringPool.DASH %>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</aui:fieldset-group>
 </div>

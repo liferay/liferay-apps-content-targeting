@@ -101,7 +101,7 @@ public class RuleFacebookDisplayContext extends BaseRuleDisplayContext {
 		}
 
 		_numberOfFriends = GetterUtil.getInteger(
-			displayContext.get("numberOfFriends"), 0);
+			displayContext.get("numberOfFriends"));
 
 		return _numberOfFriends;
 	}

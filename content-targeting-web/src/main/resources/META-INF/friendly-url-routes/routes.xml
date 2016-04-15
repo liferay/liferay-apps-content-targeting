@@ -41,6 +41,11 @@
 		<implicit-parameter name="viewType">user-segment</implicit-parameter>
 	</route>
 	<route>
+		<pattern>/admin/user-segment/{userSegmentId:\d+}/details/{tabs1}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">viewUserSegment</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/admin/user-segment/{userSegmentId:\d+}/edit</pattern>
 		<implicit-parameter name="mvcRenderCommandName">editUserSegment</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>

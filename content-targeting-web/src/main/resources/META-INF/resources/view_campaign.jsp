@@ -21,6 +21,8 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(contentTargetingViewCampaignDisplayContext.getBackURL());
+
+renderResponse.setTitle(contentTargetingViewCampaignDisplayContext.getCampaignTitle());
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
