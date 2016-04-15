@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -130,7 +131,19 @@ public class ContentTargetingContextUtil {
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			languageId);
 
-		template.put("resourceBundle", resourceBundle);
+		ResourceBundle templateResourceBundle = (ResourceBundle)template.get(
+			"resourceBundle");
+
+		if (templateResourceBundle != null) {
+			AggregateResourceBundle aggregateResourceBundle =
+				new AggregateResourceBundle(
+					templateResourceBundle, resourceBundle);
+
+			template.put("resourceBundle", aggregateResourceBundle);
+		}
+		else {
+			template.put("resourceBundle", resourceBundle);
+		}
 
 		// Taglib support
 
