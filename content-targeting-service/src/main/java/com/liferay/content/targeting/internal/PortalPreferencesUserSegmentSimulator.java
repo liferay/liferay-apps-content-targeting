@@ -28,9 +28,11 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.kernel.util.Validator;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -47,23 +49,32 @@ public class PortalPreferencesUserSegmentSimulator
 
 		long userId = PortalUtil.getUserId(request);
 
+		String simulatorSessionId = request.getParameter(_SIMULATOR_SESSION_ID);
+
+		if (Validator.isNull(simulatorSessionId)) {
+			return;
+		}
+
 		while (true) {
 			try {
 				PortalPreferences portalPreferences = getPortalPreferences(
 					userId);
 
 				String[] simulatedUserSegmentIds = portalPreferences.getValues(
-					"content-targeting", "simulatedUserSegmentIds",
+					"content-targeting",
+					simulatorSessionId + "simulatedUserSegmentIds",
 					new String[0]);
 
 				simulatedUserSegmentIds = ArrayUtil.append(
 					simulatedUserSegmentIds, String.valueOf(userSegmentId));
 
 				portalPreferences.setValues(
-					"content-targeting", "simulatedUserSegmentIds",
+					"content-targeting",
+					simulatorSessionId + "simulatedUserSegmentIds",
 					simulatedUserSegmentIds);
 				portalPreferences.setValue(
-					"content-targeting", "simulation", String.valueOf(true));
+					"content-targeting",
+					simulatorSessionId + "simulation", String.valueOf(true));
 
 				break;
 			}
@@ -84,10 +95,17 @@ public class PortalPreferencesUserSegmentSimulator
 
 		long userId = PortalUtil.getUserId(request);
 
+		String simulatorSessionId = request.getParameter(_SIMULATOR_SESSION_ID);
+
+		if (Validator.isNull(simulatorSessionId)) {
+			return null;
+		}
+
 		PortalPreferences portalPreferences = getPortalPreferences(userId);
 
 		boolean simulation = GetterUtil.getBoolean(
-			portalPreferences.getValue("content-targeting", "simulation"));
+			portalPreferences.getValue(
+				"content-targeting", simulatorSessionId + "simulation"));
 
 		if (!simulation) {
 			return null;
@@ -95,7 +113,8 @@ public class PortalPreferencesUserSegmentSimulator
 
 		return getLongArray(
 			portalPreferences.getValues(
-				"content-targeting", "simulatedUserSegmentIds", new String[0]));
+				"content-targeting",
+				simulatorSessionId + "simulatedUserSegmentIds", new String[0]));
 	}
 
 	@Override
@@ -104,15 +123,23 @@ public class PortalPreferencesUserSegmentSimulator
 
 		long userId = PortalUtil.getUserId(request);
 
+		String simulatorSessionId = request.getParameter(_SIMULATOR_SESSION_ID);
+
+		if (Validator.isNull(simulatorSessionId)) {
+			return;
+		}
+
 		while (true) {
 			try {
 				PortalPreferences portalPreferences = getPortalPreferences(
 					userId);
 
 				portalPreferences.setValues(
-					"content-targeting", "simulatedUserSegmentIds", null);
+					"content-targeting",
+					simulatorSessionId + "simulatedUserSegmentIds", null);
 				portalPreferences.setValue(
-					"content-targeting", "simulation", String.valueOf(false));
+					"content-targeting",
+					simulatorSessionId + "simulation", null);
 
 				break;
 			}
@@ -134,26 +161,34 @@ public class PortalPreferencesUserSegmentSimulator
 
 		long userId = PortalUtil.getUserId(request);
 
+		String simulatorSessionId = request.getParameter(_SIMULATOR_SESSION_ID);
+
+		if (Validator.isNull(simulatorSessionId)) {
+			return;
+		}
+
 		while (true) {
 			try {
 				PortalPreferences portalPreferences = getPortalPreferences(
 					userId);
 
 				String[] simulatedUserSegmentIds = portalPreferences.getValues(
-					"content-targeting", "simulatedUserSegmentIds",
+					"content-targeting",
+					simulatorSessionId + "simulatedUserSegmentIds",
 					new String[0]);
 
 				simulatedUserSegmentIds = ArrayUtil.remove(
 					simulatedUserSegmentIds, String.valueOf(userSegmentId));
 
 				portalPreferences.setValues(
-					"content-targeting", "simulatedUserSegmentIds",
+					"content-targeting",
+					simulatorSessionId + "simulatedUserSegmentIds",
 					simulatedUserSegmentIds);
 
 				if (simulatedUserSegmentIds.length == 0) {
 					portalPreferences.setValue(
-						"content-targeting", "simulation",
-						String.valueOf(false));
+						"content-targeting", simulatorSessionId + "simulation",
+						null);
 				}
 
 				break;
@@ -176,16 +211,24 @@ public class PortalPreferencesUserSegmentSimulator
 
 		long userId = PortalUtil.getUserId(request);
 
+		String simulatorSessionId = request.getParameter(_SIMULATOR_SESSION_ID);
+
+		if (Validator.isNull(simulatorSessionId)) {
+			return;
+		}
+
 		while (true) {
 			try {
 				PortalPreferences portalPreferences = getPortalPreferences(
 					userId);
 
 				portalPreferences.setValues(
-					"content-targeting", "simulatedUserSegmentIds",
+					"content-targeting",
+					simulatorSessionId + "simulatedUserSegmentIds",
 					ArrayUtil.toStringArray(userSegmentIds));
 				portalPreferences.setValue(
-					"content-targeting", "simulation", String.valueOf(true));
+					"content-targeting",
+					simulatorSessionId + "simulation", String.valueOf(true));
 
 				break;
 			}
@@ -232,5 +275,5 @@ public class PortalPreferencesUserSegmentSimulator
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalPreferencesUserSegmentSimulator.class);
-
+	private static final String _SIMULATOR_SESSION_ID = "simulatorSessionId";
 }
