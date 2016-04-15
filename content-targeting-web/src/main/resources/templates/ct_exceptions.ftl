@@ -14,8 +14,10 @@
  */
 -->
 
+<@liferay_frontend.defineObjects overrideResourceBundle=resourceBundle />
+
 <#list exceptions as exception>
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<@liferay_ui["message"] key=exception.getMessage() />
 	</div>
 </#list>
