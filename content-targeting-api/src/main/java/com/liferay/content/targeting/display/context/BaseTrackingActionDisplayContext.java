@@ -16,7 +16,6 @@ package com.liferay.content.targeting.display.context;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 
@@ -36,8 +35,7 @@ public class BaseTrackingActionDisplayContext extends BaseDisplayContext {
 			return _alias;
 		}
 
-		_alias = GetterUtil.getString(
-			displayContext.get("alias"), StringPool.BLANK);
+		_alias = GetterUtil.getString(displayContext.get("alias"));
 
 		return _alias;
 	}

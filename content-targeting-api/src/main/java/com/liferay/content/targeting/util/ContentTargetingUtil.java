@@ -265,8 +265,7 @@ public class ContentTargetingUtil {
 
 		return GetterUtil.getBoolean(
 			liveGroupTypeSettings.getProperty(
-				StagingUtil.getStagedPortletId(portletId)),
-			false);
+				StagingUtil.getStagedPortletId(portletId)));
 	}
 
 	protected static PortletURL getAssetBrowserURL(
