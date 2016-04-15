@@ -7,6 +7,8 @@ AUI.add(
 
 		var SELECTOR_ELEMENT = '.element';
 
+		var SIMULATOR_SESSION_ID = "simulatorSessionId";
+
 		var SearchImpl = A.Component.create(
 			{
 				AUGMENTS: [A.AutoCompleteBase],
@@ -58,6 +60,8 @@ AUI.add(
 						var instance = this;
 
 						var elementContainer = instance.byId(instance.get('containerId'));
+
+						instance._simulatorSessionId = A.guid();
 
 						instance._elementsContainer = elementContainer;
 
@@ -191,10 +195,11 @@ AUI.add(
 						);
 
 						var namespacedUserSegments = instance.get('portletNamespace') + 'selectedUserSegmentIds';
+						var simulatorSessionId = instance.get('portletNamespace') + SIMULATOR_SESSION_ID;
 
 						var data = {};
-
 						data[namespacedUserSegments] = selectedUserSegmentIds;
+						data[simulatorSessionId] = instance._simulatorSessionId;
 
 						A.io.request(
 							portletURL,
@@ -210,7 +215,9 @@ AUI.add(
 
 											var deviceDialogWindow = Liferay.Util.getWindow(dialogId);
 
-											deviceDialogWindow.iframe.set('uri', deviceDialogWindow.iframeConfig.uri + "&t=" + Math.random());
+											var newUri = Liferay.Util.addParams("simulatorSessionId=" + instance._simulatorSessionId, deviceDialogWindow.iframeConfig.uri + "&t=" + Math.random());
+
+											deviceDialogWindow.iframe.set('uri', newUri);
 										}
 									}
 								}
@@ -261,10 +268,11 @@ AUI.add(
 						var portletURL = instance.get('portletURL');
 
 						var stopSimulation = instance.get('portletNamespace') + 'stopSimulation';
+						var simulatorSessionId = instance.get('portletNamespace') + SIMULATOR_SESSION_ID;
 
 						var data = {};
-
 						data[stopSimulation] = true;
+						data[simulatorSessionId] = instance._simulatorSessionId;
 
 						A.io.request(
 							portletURL,
