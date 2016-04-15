@@ -211,6 +211,22 @@ public abstract class BaseMVCRenderCommand implements MVCRenderCommand {
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
+	protected ResourceBundleLoader getResourceBundleLoader(
+		HttpServletRequest request, Class<?> clazz) {
+
+		ResourceBundleLoader resourceBundleLoader =
+			(ResourceBundleLoader)request.getAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER);
+
+		if (resourceBundleLoader != null) {
+			return resourceBundleLoader;
+		}
+
+		return new AggregateResourceBundleLoader(
+			new ClassResourceBundleLoader("content.Language", clazz),
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseMVCRenderCommand.class);
 
