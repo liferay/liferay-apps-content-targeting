@@ -49,6 +49,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -196,8 +197,20 @@ public class EditUserSegmentMVCRenderCommand extends BaseMVCRenderCommand {
 		RenderResponse renderResponse, Map<String, String> values,
 		List<InvalidRuleException> exceptions) {
 
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			renderRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle = getResourceBundleLoader(
+			request,
+			rule.getClass()).loadResourceBundle(themeDisplay.getLanguageId());
+
 		Map<String, Object> context = cloneRequestContext(
 			renderRequest, renderResponse);
+
+		context.put("resourceBundle", resourceBundle);
 
 		String html = StringPool.BLANK;
 
@@ -212,9 +225,6 @@ public class EditUserSegmentMVCRenderCommand extends BaseMVCRenderCommand {
 				_log.error(e);
 			}
 		}
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			renderRequest);
 
 		Map<String, List<ValidatorTag>> validatorTagsMap = new HashMap<>();
 
