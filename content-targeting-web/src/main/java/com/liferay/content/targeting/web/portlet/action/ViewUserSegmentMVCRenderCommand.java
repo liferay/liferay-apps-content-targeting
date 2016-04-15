@@ -51,6 +51,7 @@ public class ViewUserSegmentMVCRenderCommand extends BaseMVCRenderCommand {
 		ContentTargetingViewUserSegmentDisplayContext
 			contentTargetingViewUserSegmentDisplayContext =
 				new ContentTargetingViewUserSegmentDisplayContext(
+					_anonymousUserUserSegmentLocalService,
 					(LiferayPortletRequest)renderRequest,
 					(LiferayPortletResponse)renderResponse);
 
