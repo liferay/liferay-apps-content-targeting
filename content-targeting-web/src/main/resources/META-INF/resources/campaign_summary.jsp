@@ -80,7 +80,7 @@ ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayCo
 			<h3 class="h5"><liferay-ui:message key="user-segments" /></h3>
 
 			<%
-			String[] userSegmentAssetCategories = StringUtil.split(contentTargetingViewCampaignDisplayContext.getUserSegmentAssetCategoryNames(), StringPool.COMMA);
+			String[] userSegmentAssetCategories = StringUtil.split(contentTargetingViewCampaignDisplayContext.getUserSegmentAssetCategoryNames(), ContentTargetingUtil.getCategorySeparator());
 			%>
 
 			<c:choose>
