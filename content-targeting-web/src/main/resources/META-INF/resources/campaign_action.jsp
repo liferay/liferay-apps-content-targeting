@@ -22,22 +22,9 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Campaign campaign = (Campaign)row.getObject();
 
 int channelsCount = GetterUtil.getInteger(request.getAttribute("channelsCount"));
-
-int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<portlet:renderURL var="campaignSummaryURL">
-		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_CAMPAIGN %>" />
-		<portlet:param name="tabs1" value="summary" />
-		<portlet:param name="campaignId" value="<%= String.valueOf(campaign.getCampaignId()) %>" />
-	</portlet:renderURL>
-
-	<liferay-ui:icon
-		message="summary"
-		url="<%= campaignSummaryURL %>"
-	/>
-
 	<c:if test="<%= CampaignPermission.contains(permissionChecker, campaign, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editCampaignURL">
 			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_CAMPAIGN %>" />

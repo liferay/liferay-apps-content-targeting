@@ -25,17 +25,6 @@ int reportsCount = GetterUtil.getInteger(request.getAttribute("reportsCount"));
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<portlet:renderURL var="userSegmentSummaryURL">
-		<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_USER_SEGMENT %>" />
-		<portlet:param name="tabs1" value="summary" />
-		<portlet:param name="userSegmentId" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
-	</portlet:renderURL>
-
-	<liferay-ui:icon
-		message="summary"
-		url="<%= userSegmentSummaryURL %>"
-	/>
-
 	<c:if test="<%= UserSegmentPermission.contains(permissionChecker, userSegment, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editUserSegmentURL">
 			<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.EDIT_USER_SEGMENT %>" />

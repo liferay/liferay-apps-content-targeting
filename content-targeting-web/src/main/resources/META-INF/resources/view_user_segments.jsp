@@ -117,6 +117,12 @@ ContentTargetingViewUserSegmentsDisplayContext contentTargetingViewUserSegmentsD
 			request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
 			%>
 
+			<portlet:renderURL var="userSegmentSummaryURL">
+				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_USER_SEGMENT %>" />
+				<portlet:param name="tabs1" value="summary" />
+				<portlet:param name="userSegmentId" value="<%= String.valueOf(userSegment.getUserSegmentId()) %>" />
+			</portlet:renderURL>
+
 			<c:choose>
 				<c:when test="<%= contentTargetingViewUserSegmentsDisplayContext.isDescriptiveView() %>">
 					<liferay-ui:search-container-column-icon
@@ -128,7 +134,7 @@ ContentTargetingViewUserSegmentsDisplayContext contentTargetingViewUserSegmentsD
 						colspan="<%= 2 %>"
 					>
 						<h4>
-							<%= HtmlUtil.escape(userSegment.getName(locale)) %>
+							<aui:a href="<%= userSegmentSummaryURL.toString() %>"><%= HtmlUtil.escape(userSegment.getName(locale)) %></aui:a>
 						</h4>
 
 						<p class="text-default">
@@ -162,8 +168,9 @@ ContentTargetingViewUserSegmentsDisplayContext contentTargetingViewUserSegmentsD
 						cssClass="content-column name-column title-column"
 						name="name"
 						truncate="<%= true %>"
-						value="<%= userSegment.getName(locale) %>"
-					/>
+					>
+						<aui:a href="<%= userSegmentSummaryURL.toString() %>"><%= HtmlUtil.escape(userSegment.getName(locale)) %></aui:a>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						cssClass="content-column description-column"
