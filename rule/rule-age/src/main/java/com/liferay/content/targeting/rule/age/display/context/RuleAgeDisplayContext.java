@@ -66,8 +66,7 @@ public class RuleAgeDisplayContext extends BaseRuleDisplayContext {
 			return _youngerThan;
 		}
 
-		_youngerThan = GetterUtil.getInteger(
-			displayContext.get("youngerThan"), 0);
+		_youngerThan = GetterUtil.getInteger(displayContext.get("youngerThan"));
 
 		return _youngerThan;
 	}

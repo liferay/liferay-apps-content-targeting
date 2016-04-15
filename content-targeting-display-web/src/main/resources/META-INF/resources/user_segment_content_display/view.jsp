@@ -20,7 +20,7 @@
 boolean isNotConfigured = GetterUtil.getBoolean(request.getAttribute("isNotConfigured"), true);
 String portletDisplayTemplateHtml = GetterUtil.getString(request.getAttribute("portletDisplayTemplateHtml"));
 int selectedIndex = GetterUtil.getInteger(request.getAttribute("selectedIndex"));
-boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"), false);
+boolean showPreview = GetterUtil.getBoolean(request.getAttribute("showPreview"));
 
 QueryRule queryRule = (QueryRule)request.getAttribute("queryRule");
 

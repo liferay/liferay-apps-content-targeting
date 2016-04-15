@@ -184,10 +184,11 @@ public class PageVisitedRule extends BaseJSPRule {
 
 		String friendlyURL = values.get("friendlyURL");
 		boolean privateLayout = GetterUtil.getBoolean(
-			values.get("privateLayout"), false);
+			values.get("privateLayout"));
 
 		try {
 			long liveGroupId = themeDisplay.getSiteGroupIdOrLiveGroupId();
+
 			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 				liveGroupId, privateLayout, friendlyURL);
 
@@ -235,8 +236,7 @@ public class PageVisitedRule extends BaseJSPRule {
 
 		if (!values.isEmpty()) {
 			friendlyURL = values.get("friendlyURL");
-			privateLayout = GetterUtil.getBoolean(
-				values.get("privateLayout"), false);
+			privateLayout = GetterUtil.getBoolean(values.get("privateLayout"));
 		}
 		else if (ruleInstance != null) {
 			long plid = GetterUtil.getLong(ruleInstance.getTypeSettings());
