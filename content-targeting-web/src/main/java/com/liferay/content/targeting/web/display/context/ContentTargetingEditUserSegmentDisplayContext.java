@@ -50,21 +50,6 @@ public class ContentTargetingEditUserSegmentDisplayContext
 		return _addedRuleTemplates;
 	}
 
-	public String getBackURL() {
-		String backURL = ParamUtil.getString(request, "backURL");
-
-		if (Validator.isNotNull(backURL)) {
-			return backURL;
-		}
-
-		PortletURL backURLObject = liferayPortletResponse.createRenderURL();
-
-		backURLObject.setParameter("mvcPath", "/view.jsp");
-		backURLObject.setParameter("tabs1", "user-segments");
-
-		return backURLObject.toString();
-	}
-
 	public String getCssItemsClass() {
 		List<RuleTemplate> addedRuleTemplates = getAddedRuleTemplates();
 
