@@ -39,17 +39,9 @@ List<Object> notMatchedElements = (List<Object>)request.getAttribute("notMatched
 </c:if>
 
 <div class="category-wrapper">
-	<div class="category-header">
-		<div class="category-info">
-			<div class="category-title label text-default">
-				<liferay-ui:message key="matched" />
-			</div>
-		</div>
-	</div>
-
 	<div class="category-content flex-container">
 		<c:choose>
-			<c:when test="<%= ListUtil.isNotEmpty(userSegments) %>">
+			<c:when test="<%= ListUtil.isNotEmpty(elements) || ListUtil.isNotEmpty(notMatchedElements) %>">
 
 				<%
 				for (Object element : elements) {
@@ -74,6 +66,29 @@ List<Object> notMatchedElements = (List<Object>)request.getAttribute("notMatched
 
 				<%
 				}
+
+				for (Object element : notMatchedElements) {
+					long primaryKey = 0;
+					String nameWithGroup = StringPool.BLANK;
+
+					if (className.equals(Campaign.class.getName())) {
+						nameWithGroup = ((Campaign)element).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
+						primaryKey = ((Campaign)element).getPrimaryKey();
+					}
+					else {
+						nameWithGroup = ((UserSegment)element).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
+						primaryKey = ((UserSegment)element).getPrimaryKey();
+					}
+
+					nameWithGroup = StringUtil.shorten(nameWithGroup, 30);
+				%>
+
+					<div class="col-md-6 element flex-container text-center" data-elementId="<%= primaryKey %>">
+						<div class="flex-item-center text-center"><%= nameWithGroup %></div>
+					</div>
+
+				<%
+				}
 				%>
 
 			</c:when>
@@ -85,48 +100,7 @@ List<Object> notMatchedElements = (List<Object>)request.getAttribute("notMatched
 		</c:choose>
 	</div>
 
-	<div id="<portlet:namespace /><%= "paginator" + name + "MatchedContainer" %>"></div>
-</div>
-
-<div class="category-wrapper">
-	<div class="category-header">
-		<div class="category-info">
-			<div class="category-title label text-default">
-				<liferay-ui:message key="available" />
-			</div>
-		</div>
-	</div>
-
-	<div class="category-content flex-container">
-
-		<%
-		for (Object notMatchedElement : notMatchedElements) {
-			long primaryKey = 0;
-			String nameWithGroup = StringPool.BLANK;
-
-			if (className.equals(Campaign.class.getName())) {
-				nameWithGroup = ((Campaign)notMatchedElement).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
-				primaryKey = ((Campaign)notMatchedElement).getPrimaryKey();
-			}
-			else {
-				nameWithGroup = ((UserSegment)notMatchedElement).getNameWithGroupName(locale, themeDisplay.getScopeGroupId());
-				primaryKey = ((UserSegment)notMatchedElement).getPrimaryKey();
-			}
-
-			nameWithGroup = StringUtil.shorten(nameWithGroup, 30);
-		%>
-
-			<div class="col-md-6 element flex-container not-matched text-center" data-elementId="<%= primaryKey %>">
-				<div class="flex-item-center text-center"><%= nameWithGroup %></div>
-			</div>
-
-		<%
-		}
-		%>
-
-	</div>
-
-	<div id="<portlet:namespace /><%= "paginator" + name + "NotMatchedContainer" %>"></div>
+	<div id="<portlet:namespace /><%= "paginator" + name + "UserSegmentsContainer" %>"></div>
 </div>
 
 <liferay-portlet:actionURL name="simulateUserSegment" portletName="<%= PortletKeys.CT_SIMULATOR %>" var="simulateUserSegmentURL" />
