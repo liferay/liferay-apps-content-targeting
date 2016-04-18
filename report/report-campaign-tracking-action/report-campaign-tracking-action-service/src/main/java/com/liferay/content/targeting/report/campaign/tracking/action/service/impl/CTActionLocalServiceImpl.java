@@ -226,8 +226,8 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 		throws PortalException {
 
 		List<Object[]> ctActionAnalyticsList =
-			ctActionFinder.findByAnalyticsWithClassNameId
-				(reportInstanceId, date);
+			ctActionFinder.findByAnalyticsWithClassNameId(
+				reportInstanceId, date);
 
 		for (Object[] ctActionAnalytics : ctActionAnalyticsList) {
 			long userSegmentId = (Long)ctActionAnalytics[0];

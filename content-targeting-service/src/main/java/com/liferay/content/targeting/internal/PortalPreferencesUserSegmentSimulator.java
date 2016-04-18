@@ -230,6 +230,8 @@ public class PortalPreferencesUserSegmentSimulator
 		return null;
 	}
 
+	private static final String _SIMULATOR_SESSION_ID = "simulatorSessionId";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalPreferencesUserSegmentSimulator.class);
 

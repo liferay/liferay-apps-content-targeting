@@ -48,8 +48,8 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 			anonymousUserId, userSegmentId);
 
 		if (scorePoint == null) {
-			UserSegment userSegment = _userSegmentLocalService.fetchUserSegment
-				(userSegmentId);
+			UserSegment userSegment = _userSegmentLocalService.fetchUserSegment(
+				userSegmentId);
 
 			long scorePointId = counterLocalService.increment();
 

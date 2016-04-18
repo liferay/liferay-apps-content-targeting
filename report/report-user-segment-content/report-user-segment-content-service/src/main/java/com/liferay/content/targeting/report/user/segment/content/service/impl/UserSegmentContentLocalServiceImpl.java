@@ -59,8 +59,8 @@ public class UserSegmentContentLocalServiceImpl
 			userSegmentId, className, classPK, eventType);
 
 		if (userSegmentContent == null) {
-			UserSegment userSegment = _userSegmentLocalService.getUserSegment
-				(userSegmentId);
+			UserSegment userSegment = _userSegmentLocalService.getUserSegment(
+				userSegmentId);
 
 			long userSegmentContentId = counterLocalService.increment();
 
