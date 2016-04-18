@@ -20,6 +20,10 @@
 long cssLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_CSS);
 long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS);
 
+String refreshURL = GetterUtil.getString(request.getAttribute("refreshURL"));
+
+String portletNamespace = PortalUtil.getPortletNamespace(PortletKeys.CT_SIMULATOR);
+
 ServletContext simulatorServletContext = (ServletContext)request.getAttribute("simulatorServletContext");
 %>
 
@@ -33,5 +37,52 @@ ServletContext simulatorServletContext = (ServletContext)request.getAttribute("s
 <h3 class="list-group-heading"><liferay-ui:message key="user-segments" /></h3>
 
 <div class="container-fluid content-targeting-simulator">
-	<liferay-util:include page="/view_user_segments.jsp" servletContext="<%= application %>" />
+	<liferay-portlet:actionURL name="simulateUserSegment" portletName="<%= PortletKeys.CT_SIMULATOR %>" var="simulateUserSegmentURL" />
+
+	<div class="container-fluid" id="<portlet:namespace />userSegmentContainer">
+		<aui:form action="<%= simulateUserSegmentURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault();" + renderResponse.getNamespace() + "saveUserSegments();" %>'>
+			<aui:input name='<%= portletNamespace + "selectedUserSegmentIds" %>' type="hidden" useNamespace="<%= false %>" />
+			<aui:input name='<%= portletNamespace + "stopSimulation" %>' type="hidden" useNamespace="<%= false %>" value="false" />
+
+			<liferay-util:include page="/simulation_options.jsp" servletContext="<%= application %>" />
+		</aui:form>
+	</div>
+
+	<aui:script use="aui-toggler,liferay-simulator-search,liferay-util-list-fields">
+		<portlet:namespace />updateSimulation = function() {
+			document.<portlet:namespace />fm.<%= portletNamespace %>selectedUserSegmentIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm);
+
+			submitUserSegments();
+		}
+
+		submitUserSegments = function() {
+			var loadingMask = A.getBody().plug(A.LoadingMask).loadingmask;
+
+			loadingMask.show();
+
+			var fm = A.one('#<portlet:namespace />fm');
+
+			A.io.request(
+				fm.attr('action'),
+				{
+					dataType: 'JSON',
+					form: {
+						id: fm.attr('id')
+					},
+					after: {
+						success: function(event, id, obj) {
+							var response = this.get('responseData');
+
+							loadingMask.hide();
+
+							window.location.href = '<%= refreshURL %>';
+						},
+						failure: function(event) {
+							loadingMask.hide();
+						}
+					}
+				}
+			);
+		}
+	</aui:script>
 </div>

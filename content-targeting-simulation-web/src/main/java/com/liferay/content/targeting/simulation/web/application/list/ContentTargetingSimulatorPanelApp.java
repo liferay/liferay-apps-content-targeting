@@ -17,15 +17,14 @@ package com.liferay.content.targeting.simulation.web.application.list;
 import com.liferay.application.list.BaseJSPPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.content.targeting.api.model.UserSegmentSimulator;
-import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -42,6 +41,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -135,15 +135,10 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		long[] originalUserSegmentIds = (long[])request.getAttribute(
-			WebKeys.ORIGINAL_USER_SEGMENT_IDS);
+		// Reset simulation when panel is reloaded
 
-		long[] simulatedUserSegmentIds =
-			_userSegmentSimulator.getUserSegmentIds(request, response);
-
-		if (simulatedUserSegmentIds == null) {
-			simulatedUserSegmentIds = originalUserSegmentIds;
-		}
+		_userSegmentSimulator.setUserSegmentIds(
+			new long[]{}, request, response);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -151,69 +146,14 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 		long[] groupIds = ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
 			themeDisplay.getSiteGroupId());
 
-		List<Campaign> campaigns = _campaignLocalService.getCampaigns(
-			groupIds, simulatedUserSegmentIds);
-
-		request.setAttribute("campaigns", campaigns);
-
-		List<Campaign> availableCampaigns = _campaignLocalService.getCampaigns(
-			groupIds);
-
-		List<Campaign> notMatchedCampaigns = new ArrayList<>();
-
-		for (Campaign campaign : availableCampaigns) {
-			if (!campaigns.contains(campaign)) {
-				notMatchedCampaigns.add(campaign);
-			}
-		}
-
-		request.setAttribute("notMatchedCampaigns", notMatchedCampaigns);
-
-		boolean showCampaignsSearch = false;
-
-		if ((notMatchedCampaigns.size() + campaigns.size()) >
-				_SHOW_SEARCH_LIMIT) {
-
-			showCampaignsSearch = true;
-		}
-
-		request.setAttribute("showCampaignsSearch", showCampaignsSearch);
-
-		boolean isSimulatedUserSegments = GetterUtil.getBoolean(
-			request.getAttribute(WebKeys.IS_SIMULATED_USER_SEGMENTS));
-
-		request.setAttribute(
-			"isSimulatedUserSegments", isSimulatedUserSegments);
-
-		List<UserSegment> userSegments = new ArrayList<>();
-
-		if (originalUserSegmentIds != null) {
-			for (long userSegmentId : originalUserSegmentIds) {
-				userSegments.add(
-					_userSegmentLocalService.getUserSegment(userSegmentId));
-			}
-		}
+		List<UserSegment> userSegments =
+			_userSegmentLocalService.getUserSegments(groupIds);
 
 		request.setAttribute("userSegments", userSegments);
 
-		List<UserSegment> availableUserSegments =
-			_userSegmentLocalService.getUserSegments(groupIds);
-
-		List<UserSegment> notMatchedUserSegments = new ArrayList<>();
-
-		for (UserSegment userSegment : availableUserSegments) {
-			if (!userSegments.contains(userSegment)) {
-				notMatchedUserSegments.add(userSegment);
-			}
-		}
-
-		request.setAttribute("notMatchedUserSegments", notMatchedUserSegments);
-
 		boolean showUserSegmentSearch = false;
 
-		if ((notMatchedUserSegments.size() + userSegments.size()) >
-				_SHOW_SEARCH_LIMIT) {
-
+		if (userSegments.size() > _SHOW_SEARCH_LIMIT) {
 			showUserSegmentSearch = true;
 		}
 
@@ -226,13 +166,6 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 
 		request.setAttribute(
 			"simulatorServletContext", _simulatorServletContext);
-	}
-
-	@Reference(unbind = "-")
-	protected void setCampaignLocalService(
-		CampaignLocalService campaignLocalService) {
-
-		_campaignLocalService = campaignLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -260,7 +193,6 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentTargetingSimulatorPanelApp.class);
 
-	private CampaignLocalService _campaignLocalService;
 	private ServletContext _simulatorServletContext;
 	private UserSegmentLocalService _userSegmentLocalService;
 	private UserSegmentSimulator _userSegmentSimulator;

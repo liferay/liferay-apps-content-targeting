@@ -35,13 +35,13 @@ AUI.add(
 					itemsPerPage: {
 						value: 6
 					},
-					name: {
-						validator: Lang.isString
-					},
 					portletNamespace: {
 						validator: Lang.isString
 					},
 					portletURL: {
+						validator: Lang.isString
+					},
+					searchPanelName: {
 						validator: Lang.isString
 					}
 
@@ -83,13 +83,10 @@ AUI.add(
 							);
 						}
 
-						var name = instance.get('name');
+						instance._eventHandles.push(
+							instance._elementsContainer.delegate('click', instance._onElementClick, '.element', instance)
+						);
 
-						if (name == 'user-segment') {
-							instance._eventHandles.push(
-								instance._elementsContainer.delegate('click', instance._onElementClick, '.element', instance)
-							);
-						}
 
 						instance._eventHandles.push(
 							Liferay.on('SimulationMenu:closeSimulationPanel', A.bind('_stopSimulation', instance)),
@@ -120,7 +117,7 @@ AUI.add(
 							}
 						);
 
-						var searchBox = instance.byId('search' + instance.get('name') + 'Panel');
+						var searchBox = instance.byId(instance.get('searchPanelName'));
 
 						if (searchBox) {
 							instance._simulatorSearch = new SearchImpl(
