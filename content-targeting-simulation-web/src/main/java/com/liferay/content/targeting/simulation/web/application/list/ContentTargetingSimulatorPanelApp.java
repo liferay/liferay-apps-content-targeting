@@ -32,14 +32,12 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -66,6 +64,11 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 	@Override
 	public String getJspPath() {
 		return "/view.jsp";
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "category.ct");
 	}
 
 	@Override
@@ -137,8 +140,7 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 
 		// Reset simulation when panel is reloaded
 
-		_userSegmentSimulator.setUserSegmentIds(
-			new long[]{}, request, response);
+		_userSegmentSimulator.setUserSegmentIds(new long[0], request, response);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
