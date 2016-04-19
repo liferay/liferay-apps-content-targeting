@@ -224,6 +224,12 @@
 		}
 	}
 
+	.panel-body ul {
+		li[class*="col-"] {
+			margin-bottom: 20px;
+		}
+	}
+
 	.slider-holder {
 		display: inline-block;
 		margin: 0 2em 0 .5em;

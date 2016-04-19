@@ -36,6 +36,7 @@ page import="com.liferay.content.targeting.exception.InvalidNameException" %><%@
 page import="com.liferay.content.targeting.exception.UsedUserSegmentException" %><%@
 page import="com.liferay.content.targeting.model.Campaign" %><%@
 page import="com.liferay.content.targeting.model.ReportInstance" %><%@
+page import="com.liferay.content.targeting.model.RuleInstance" %><%@
 page import="com.liferay.content.targeting.model.Tactic" %><%@
 page import="com.liferay.content.targeting.model.UserSegment" %><%@
 page import="com.liferay.content.targeting.service.CampaignLocalServiceUtil" %><%@
