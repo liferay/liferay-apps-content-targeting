@@ -3,11 +3,11 @@
 
 <service-builder package-path="com.liferay.content.targeting.report.user.segment.content">
 	<namespace>CT_USCR</namespace>
-	<entity name="UserSegmentContent" local-service="true" remote-service="true">
+	<entity local-service="true" name="UserSegmentContent" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="userSegmentContentId" type="long" primary="true" />
+		<column name="userSegmentContentId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -33,12 +33,10 @@
 		<finder name="UserSegmentId" return-type="Collection">
 			<finder-column name="userSegmentId" />
 		</finder>
-
 		<finder name="C_GtD" return-type="Collection">
 			<finder-column name="userSegmentId" />
-			<finder-column name="modifiedDate" comparator="&gt;" />
+			<finder-column comparator="&gt;" name="modifiedDate" />
 		</finder>
-
 		<finder name="C_C_C_E" return-type="UserSegmentContent" unique="true">
 			<finder-column name="userSegmentId" />
 			<finder-column name="classNameId" />

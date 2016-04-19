@@ -3,11 +3,11 @@
 
 <service-builder package-path="com.liferay.content.targeting.report.campaign.content">
 	<namespace>CT_CCR</namespace>
-	<entity name="CampaignContent" local-service="true" remote-service="true">
+	<entity local-service="true" name="CampaignContent" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="campaignContentId" type="long" primary="true" />
+		<column name="campaignContentId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -33,12 +33,10 @@
 		<finder name="CampaignId" return-type="Collection">
 			<finder-column name="campaignId" />
 		</finder>
-
 		<finder name="C_GtD" return-type="Collection">
 			<finder-column name="campaignId" />
-			<finder-column name="modifiedDate" comparator="&gt;" />
+			<finder-column comparator="&gt;" name="modifiedDate" />
 		</finder>
-
 		<finder name="C_C_C_E" return-type="CampaignContent" unique="true">
 			<finder-column name="campaignId" />
 			<finder-column name="classNameId" />

@@ -3,11 +3,11 @@
 
 <service-builder package-path="com.liferay.content.targeting.report.campaign.tracking.action">
 	<namespace>CT_CTA</namespace>
-	<entity name="CTAction" local-service="true" remote-service="true">
+	<entity local-service="true" name="CTAction" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="CTActionId" type="long" primary="true" />
+		<column name="CTActionId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -37,27 +37,22 @@
 		<finder name="CampaignId" return-type="Collection">
 			<finder-column name="campaignId" />
 		</finder>
-
 		<finder name="ReportInstanceId" return-type="Collection">
 			<finder-column name="reportInstanceId" />
 		</finder>
-
 		<finder name="R_E" return-type="Collection">
 			<finder-column name="reportInstanceId" />
 			<finder-column name="elementId" />
 		</finder>
-
 		<finder name="R_GtD" return-type="Collection">
 			<finder-column name="reportInstanceId" />
-			<finder-column name="modifiedDate" comparator="&gt;" />
+			<finder-column comparator="&gt;" name="modifiedDate" />
 		</finder>
-
 		<finder name="R_R_R" return-type="Collection">
 			<finder-column name="reportInstanceId" />
 			<finder-column name="referrerClassNameId" />
 			<finder-column name="referrerClassPK" />
 		</finder>
-
 		<finder name="R_U_R_R_E_E" return-type="CTAction" unique="true">
 			<finder-column name="reportInstanceId" />
 			<finder-column name="userSegmentId" />
@@ -66,14 +61,12 @@
 			<finder-column name="elementId" />
 			<finder-column name="eventType" />
 		</finder>
-
 	</entity>
-
-	<entity name="CTActionTotal" local-service="true" remote-service="true">
+	<entity local-service="true" name="CTActionTotal" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="CTActionTotalId" type="long" primary="true" />
+		<column name="CTActionTotalId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -102,16 +95,13 @@
 		<finder name="CampaignId" return-type="Collection">
 			<finder-column name="campaignId" />
 		</finder>
-
 		<finder name="ReportInstanceId" return-type="Collection">
 			<finder-column name="reportInstanceId" />
 		</finder>
-
 		<finder name="R_GtD" return-type="Collection">
 			<finder-column name="reportInstanceId" />
-			<finder-column name="modifiedDate" comparator="&gt;" />
+			<finder-column comparator="&gt;" name="modifiedDate" />
 		</finder>
-
 		<finder name="R_R_R_E_E" return-type="CTAction" unique="true">
 			<finder-column name="reportInstanceId" />
 			<finder-column name="referrerClassNameId" />
@@ -119,6 +109,5 @@
 			<finder-column name="elementId" />
 			<finder-column name="eventType" />
 		</finder>
-
 	</entity>
 </service-builder>
