@@ -189,6 +189,10 @@ public class UserSegmentDisplayConfigurationAction
 			queryRules.add((UserSegmentQueryRule)queryRule);
 		}
 
+		if (queryRules.isEmpty()) {
+			return;
+		}
+
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
 		int[] oldQueryRulesIndexes = GetterUtil.getIntegerValues(
