@@ -14,7 +14,6 @@
 
 package com.liferay.content.targeting.web.display.context;
 
-import com.liferay.content.targeting.api.model.RuleCategoriesRegistry;
 import com.liferay.content.targeting.web.util.RuleTemplate;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -86,17 +85,6 @@ public class ContentTargetingEditUserSegmentDisplayContext
 		return _redirect;
 	}
 
-	public RuleCategoriesRegistry getRuleCategoriesRegistry() {
-		if (_ruleCategoriesRegistry != null) {
-			return _ruleCategoriesRegistry;
-		}
-
-		_ruleCategoriesRegistry = (RuleCategoriesRegistry)request.getAttribute(
-			"ruleCategoriesRegistry");
-
-		return _ruleCategoriesRegistry;
-	}
-
 	public List<RuleTemplate> getRuleTemplates() {
 		if (_ruleTemplates != null) {
 			return _ruleTemplates;
@@ -111,7 +99,6 @@ public class ContentTargetingEditUserSegmentDisplayContext
 	private List<RuleTemplate> _addedRuleTemplates;
 	private String _cssItemsClass;
 	private String _redirect;
-	private RuleCategoriesRegistry _ruleCategoriesRegistry;
 	private List<RuleTemplate> _ruleTemplates;
 
 }
