@@ -34,8 +34,6 @@ ServletContext simulatorServletContext = (ServletContext)request.getAttribute("s
 	</liferay-util:html-top>
 </c:if>
 
-<h3 class="list-group-heading"><liferay-ui:message key="user-segments" /></h3>
-
 <div class="container-fluid content-targeting-simulator">
 	<liferay-portlet:actionURL name="simulateUserSegment" portletName="<%= PortletKeys.CT_SIMULATOR %>" var="simulateUserSegmentURL" />
 
