@@ -117,6 +117,13 @@ public class BaseReportDisplayContext {
 
 		_report = (Report)displayContext.get("report");
 
+		if (_report == null) {
+			String reportKey = GetterUtil.getString(
+				displayContext.get("reportKey"));
+
+			_report = getReportsRegistry().getReport(reportKey);
+		}
+
 		return _report;
 	}
 
