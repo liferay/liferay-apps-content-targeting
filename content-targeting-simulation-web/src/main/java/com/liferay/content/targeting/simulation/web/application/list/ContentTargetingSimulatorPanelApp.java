@@ -33,13 +33,17 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
 
 import java.io.IOException;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -68,7 +72,11 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.ct");
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				LocaleUtil.toLanguageId(locale));
+
+		return LanguageUtil.get(resourceBundle, "user-segments");
 	}
 
 	@Override
@@ -122,6 +130,11 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+
+		_resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByServletContextName(
+					servletContext.getServletContextName());
 
 		_simulatorServletContext = servletContext;
 	}
@@ -195,6 +208,7 @@ public class ContentTargetingSimulatorPanelApp extends BaseJSPPanelApp {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentTargetingSimulatorPanelApp.class);
 
+	private ResourceBundleLoader _resourceBundleLoader;
 	private ServletContext _simulatorServletContext;
 	private UserSegmentLocalService _userSegmentLocalService;
 	private UserSegmentSimulator _userSegmentSimulator;
