@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
@@ -438,7 +439,7 @@ public class ContentTargetingViewReportsDisplayContext
 	}
 
 	public boolean isNavigationMine() {
-		if (Validator.equals(getNavigation(), "mine")) {
+		if (Objects.equals(getNavigation(), "mine")) {
 			return true;
 		}
 
@@ -446,7 +447,7 @@ public class ContentTargetingViewReportsDisplayContext
 	}
 
 	public boolean isNavigationRecent() {
-		if (Validator.equals(getNavigation(), "recent")) {
+		if (Objects.equals(getNavigation(), "recent")) {
 			return true;
 		}
 

@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
+
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
@@ -57,7 +59,7 @@ public class ContentTargetingViewCampaignDisplayContext
 			return _campaignId;
 		}
 
-		if (Validator.equals(getTabs1(), "reports")) {
+		if (Objects.equals(getTabs1(), "reports")) {
 			_campaignId = ParamUtil.getLong(request, "classPK");
 		}
 		else {
@@ -72,7 +74,7 @@ public class ContentTargetingViewCampaignDisplayContext
 			return _classPK;
 		}
 
-		if (Validator.equals(getTabs1(), "reports")) {
+		if (Objects.equals(getTabs1(), "reports")) {
 			_classPK = ParamUtil.getLong(request, "classPK");
 		}
 		else {
@@ -157,7 +159,7 @@ public class ContentTargetingViewCampaignDisplayContext
 	}
 
 	public boolean isShowReports() {
-		if (Validator.equals(getTabs1(), "reports")) {
+		if (Objects.equals(getTabs1(), "reports")) {
 			return true;
 		}
 
@@ -165,7 +167,7 @@ public class ContentTargetingViewCampaignDisplayContext
 	}
 
 	public boolean isShowSummary() {
-		if (Validator.equals(getTabs1(), "summary")) {
+		if (Objects.equals(getTabs1(), "summary")) {
 			return true;
 		}
 

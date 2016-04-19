@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -91,7 +93,7 @@ public class BaseContentTargetingViewDisplayContext {
 	}
 
 	public boolean isDescriptiveView() {
-		if (Validator.equals(getDisplayStyle(), "descriptive")) {
+		if (Objects.equals(getDisplayStyle(), "descriptive")) {
 			return true;
 		}
 
@@ -99,7 +101,7 @@ public class BaseContentTargetingViewDisplayContext {
 	}
 
 	public boolean isIconView() {
-		if (Validator.equals(getDisplayStyle(), "icon")) {
+		if (Objects.equals(getDisplayStyle(), "icon")) {
 			return true;
 		}
 
@@ -107,7 +109,7 @@ public class BaseContentTargetingViewDisplayContext {
 	}
 
 	public boolean isListView() {
-		if (Validator.equals(getDisplayStyle(), "list")) {
+		if (Objects.equals(getDisplayStyle(), "list")) {
 			return true;
 		}
 

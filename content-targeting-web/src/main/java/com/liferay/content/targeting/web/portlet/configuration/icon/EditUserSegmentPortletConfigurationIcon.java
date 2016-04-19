@@ -23,8 +23,9 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -91,7 +92,7 @@ public class EditUserSegmentPortletConfigurationIcon
 	public boolean isShow(PortletRequest portletRequest) {
 		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
 
-		return Validator.equals(tabs1, "summary");
+		return Objects.equals(tabs1, "summary");
 	}
 
 	public boolean isToolTip() {

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -116,15 +117,15 @@ public class ContentTargetingViewCampaignsDisplayContext
 			else {
 				OrderByComparator<Campaign> orderByComparator = null;
 
-				if (Validator.equals(getOrderByCol(), "modified-date")) {
+				if (Objects.equals(getOrderByCol(), "modified-date")) {
 					orderByComparator = new CampaignModifiedDateComparator(
 						isOrderByAsc());
 				}
-				else if (Validator.equals(getOrderByCol(), "priority")) {
+				else if (Objects.equals(getOrderByCol(), "priority")) {
 					orderByComparator = new CampaignPriorityComparator(
 						isOrderByAsc());
 				}
-				else if (Validator.equals(getOrderByCol(), "start-date")) {
+				else if (Objects.equals(getOrderByCol(), "start-date")) {
 					orderByComparator = new CampaignStartDateComparator(
 						isOrderByAsc());
 				}
@@ -229,7 +230,7 @@ public class ContentTargetingViewCampaignsDisplayContext
 	}
 
 	public boolean isNavigationMine() {
-		if (Validator.equals(getNavigation(), "mine")) {
+		if (Objects.equals(getNavigation(), "mine")) {
 			return true;
 		}
 
@@ -237,7 +238,7 @@ public class ContentTargetingViewCampaignsDisplayContext
 	}
 
 	public boolean isNavigationRecent() {
-		if (Validator.equals(getNavigation(), "recent")) {
+		if (Objects.equals(getNavigation(), "recent")) {
 			return true;
 		}
 

@@ -3,12 +3,11 @@
 
 <service-builder package-path="com.liferay.content.targeting.anonymous.users">
 	<namespace>CT_AU</namespace>
-
-	<entity name="AnonymousUser" uuid="true" local-service="true" remote-service="true">
+	<entity local-service="true" name="AnonymousUser" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="anonymousUserId" type="long" primary="true" />
+		<column name="anonymousUserId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -34,14 +33,13 @@
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
-
 		<finder name="C_LtD" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="createDate" comparator="&lt;" />
+			<finder-column comparator="&lt;" name="createDate" />
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Company" />
+		<reference entity="Company" package-path="com.liferay.portal" />
 	</entity>
 </service-builder>
