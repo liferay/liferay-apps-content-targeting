@@ -26,12 +26,14 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.text.Format;
 
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -96,6 +98,9 @@ public class TimeRule extends BaseJSPRule {
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
 		String typeSettings = ruleInstance.getTypeSettings();
 
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
 		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			_SIMPLE_DATE_FORMAT_PATTERN, locale);
 
@@ -103,7 +108,7 @@ public class TimeRule extends BaseJSPRule {
 		Calendar endCalendar = _getEndCalendar(typeSettings);
 
 		String summary = LanguageUtil.format(
-			locale, "users-browsing-the-site-from-x-to-x",
+			resourceBundle, "users-browsing-the-site-from-x-to-x",
 			new Object[] {
 				format.format(startCalendar.getTime()),
 				format.format(endCalendar.getTime())

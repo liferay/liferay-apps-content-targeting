@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.xml.Element;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -150,6 +152,9 @@ public class DeviceRule extends BaseJSPRule {
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
 		long mdrRuleGroupId = getMDRRuleGroupId(ruleInstance);
 
 		if (mdrRuleGroupId <= 0) {
@@ -172,7 +177,7 @@ public class DeviceRule extends BaseJSPRule {
 
 		StringBuilder sb = new StringBuilder(3);
 
-		sb.append(LanguageUtil.get(locale, "device-family"));
+		sb.append(LanguageUtil.get(resourceBundle, "device-family"));
 		sb.append(StringPool.COLON);
 		sb.append(StringPool.SPACE);
 		sb.append(mdrRuleGroup.getName(locale));
