@@ -14,20 +14,35 @@
 
 package com.liferay.content.targeting.web.display.context;
 
+import com.liferay.content.targeting.api.model.Rule;
+import com.liferay.content.targeting.api.model.RuleCategoriesRegistry;
+import com.liferay.content.targeting.api.model.RuleCategory;
+import com.liferay.content.targeting.api.model.RulesRegistry;
+import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService;
+import com.liferay.content.targeting.service.RuleInstanceService;
 import com.liferay.content.targeting.util.UserSegmentConstants;
 import com.liferay.content.targeting.util.WebKeys;
+import com.liferay.content.targeting.util.comparator.RuleCategoryNameComparator;
+import com.liferay.content.targeting.util.comparator.RuleInstanceNameComparator;
 import com.liferay.content.targeting.web.portlet.ContentTargetingMVCCommand;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -42,12 +57,17 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		AnonymousUserUserSegmentLocalService
 			anonymousUserUserSegmentLocalService,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		RuleCategoriesRegistry ruleCategoriesRegistry,
+		RuleInstanceService ruleInstanceService, RulesRegistry rulesRegistry) {
 
 		super(liferayPortletRequest, liferayPortletResponse);
 
 		_anonymousUserUserSegmentLocalService =
 			anonymousUserUserSegmentLocalService;
+		_ruleCategoriesRegistry = ruleCategoriesRegistry;
+		_ruleInstanceService = ruleInstanceService;
+		_rulesRegistry = rulesRegistry;
 	}
 
 	public ContentTargetingViewUserSegmentDisplayContext(
@@ -57,6 +77,9 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		super(liferayPortletRequest, liferayPortletResponse);
 
 		_anonymousUserUserSegmentLocalService = null;
+		_ruleCategoriesRegistry = null;
+		_ruleInstanceService = null;
+		_rulesRegistry = null;
 	}
 
 	public long getClassPK() {
@@ -112,6 +135,86 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		_reportsURL = reportsURL.toString();
 
 		return _reportsURL;
+	}
+
+	public Rule getRuleByRuleInstance(RuleInstance ruleInstance) {
+		if (ruleInstance == null) {
+			return null;
+		}
+
+		Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
+
+		return rule;
+	}
+
+	public List<RuleCategory> getRuleCategories() {
+		if (ListUtil.isNotEmpty(_ruleCategories)) {
+			return _ruleCategories;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<RuleInstance> ruleInstances = getRuleInstances();
+
+		List<RuleCategory> ruleCategories = new ArrayList<>();
+
+		Set<RuleCategory> ruleCategoriesSet = new HashSet<>();
+
+		for (RuleInstance ruleInstance : ruleInstances) {
+			Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
+
+			RuleCategory ruleCategory = _ruleCategoriesRegistry.getRuleCategory(
+				rule.getRuleCategoryKey());
+
+			ruleCategoriesSet.add(ruleCategory);
+		}
+
+		ruleCategories.addAll(ruleCategoriesSet);
+
+		_ruleCategories = ListUtil.sort(
+			ruleCategories,
+			new RuleCategoryNameComparator(themeDisplay.getLocale()));
+
+		return _ruleCategories;
+	}
+
+	public List<RuleInstance> getRuleInstances() {
+		if (ListUtil.isNotEmpty(_ruleInstances)) {
+			return _ruleInstances;
+		}
+
+		long userSegmentId = getUserSegmentId();
+
+		List<RuleInstance> ruleInstances = new ArrayList<>();
+
+		if (userSegmentId > 0) {
+			ruleInstances = _ruleInstanceService.getRuleInstances(
+				userSegmentId);
+		}
+
+		_ruleInstances = ruleInstances;
+
+		return _ruleInstances;
+	}
+
+	public List<RuleInstance> getRulesByCategory(String ruleCategoryKey) {
+		Map<String, List<RuleInstance>> ruleInstanceMap = _getRuleInstanceMap();
+
+		List<RuleInstance> ruleInstances = ruleInstanceMap.get(ruleCategoryKey);
+
+		if (ListUtil.isNotEmpty(ruleInstances)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			return ListUtil.sort(
+				ruleInstances,
+				new RuleInstanceNameComparator(
+					themeDisplay.getLocale(), _rulesRegistry));
+		}
+		else {
+			return new ArrayList<>();
+		}
 	}
 
 	public String getSummaryURL() {
@@ -217,12 +320,48 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		return false;
 	}
 
+	private Map<String, List<RuleInstance>> _getRuleInstanceMap() {
+		if (_ruleInstanceMap != null) {
+			return _ruleInstanceMap;
+		}
+
+		Map<String, List<RuleInstance>> ruleInstanceMap = new HashMap<>();
+
+		List<RuleInstance> ruleInstances = getRuleInstances();
+
+		for (RuleInstance ruleInstance : ruleInstances) {
+			Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
+
+			String ruleCategoryKey = rule.getRuleCategoryKey();
+
+			List<RuleInstance> ruleInstanceList = new ArrayList<>();
+
+			if (ruleInstanceMap.containsKey(ruleCategoryKey)) {
+				ruleInstanceList = ruleInstanceMap.get(ruleCategoryKey);
+			}
+
+			ruleInstanceList.add(ruleInstance);
+
+			ruleInstanceMap.put(ruleCategoryKey, ruleInstanceList);
+		}
+
+		_ruleInstanceMap = ruleInstanceMap;
+
+		return _ruleInstanceMap;
+	}
+
 	private final AnonymousUserUserSegmentLocalService
 		_anonymousUserUserSegmentLocalService;
 	private Long _classPK;
 	private String _description;
 	private Boolean _isDisabledReportsManagementBar;
 	private String _reportsURL;
+	private List<RuleCategory> _ruleCategories;
+	private final RuleCategoriesRegistry _ruleCategoriesRegistry;
+	private Map<String, List<RuleInstance>> _ruleInstanceMap;
+	private List<RuleInstance> _ruleInstances;
+	private final RuleInstanceService _ruleInstanceService;
+	private final RulesRegistry _rulesRegistry;
 	private String _summaryURL;
 	private String _tabs1;
 	private Long _userSegmentId;
