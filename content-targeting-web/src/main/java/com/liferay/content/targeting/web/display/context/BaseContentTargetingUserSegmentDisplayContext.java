@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.web.display.context;
 
+import com.liferay.content.targeting.api.model.RuleCategoriesRegistry;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -59,6 +60,17 @@ public class BaseContentTargetingUserSegmentDisplayContext {
 		backURLObject.setParameter("tabs1", "user-segments");
 
 		return backURLObject.toString();
+	}
+
+	public RuleCategoriesRegistry getRuleCategoriesRegistry() {
+		if (_ruleCategoriesRegistry != null) {
+			return _ruleCategoriesRegistry;
+		}
+
+		_ruleCategoriesRegistry = (RuleCategoriesRegistry)request.getAttribute(
+			"ruleCategoriesRegistry");
+
+		return _ruleCategoriesRegistry;
 	}
 
 	public UserSegment getUserSegment() {
@@ -116,6 +128,7 @@ public class BaseContentTargetingUserSegmentDisplayContext {
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final HttpServletRequest request;
 
+	private RuleCategoriesRegistry _ruleCategoriesRegistry;
 	private UserSegment _userSegment;
 	private Long _userSegmentId;
 	private String _userSegmentTitle;
