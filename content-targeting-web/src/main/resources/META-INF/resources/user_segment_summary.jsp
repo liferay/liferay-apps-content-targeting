@@ -18,6 +18,8 @@
 
 <%
 ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDisplayContext = (ContentTargetingViewUserSegmentDisplayContext)renderRequest.getAttribute("contentTargetingViewUserSegmentDisplayContext");
+
+RuleCategoriesRegistry ruleCategoriesRegistry = contentTargetingViewUserSegmentDisplayContext.getRuleCategoriesRegistry();
 %>
 
 <div class="container-fluid-1280" id="<portlet:namespace />summary">
@@ -67,5 +69,41 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 				</c:choose>
 			</div>
 		</div>
+
+		<%
+		for (RuleCategory ruleCategory : contentTargetingViewUserSegmentDisplayContext.getRuleCategories()) {
+		%>
+
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= ruleCategory.getName(locale) %>">
+				<div class="row">
+					<ul class="list-unstyled">
+
+						<%
+						List<RuleInstance> ruleInstances = contentTargetingViewUserSegmentDisplayContext.getRulesByCategory(ruleCategory.getCategoryKey());
+
+						for (RuleInstance ruleInstance : ruleInstances) {
+							Rule rule = contentTargetingViewUserSegmentDisplayContext.getRuleByRuleInstance(ruleInstance);
+						%>
+
+							<li class="col-md-3 small text-default">
+								<div>
+									<strong><%= rule.getName(locale) %></strong>
+								</div>
+
+								<%= rule.getSummary(ruleInstance, locale) %>
+							</li>
+
+						<%
+						}
+						%>
+
+					</ul>
+				</div>
+			</aui:fieldset>
+
+		<%
+		}
+		%>
+
 	</aui:fieldset-group>
 </div>
