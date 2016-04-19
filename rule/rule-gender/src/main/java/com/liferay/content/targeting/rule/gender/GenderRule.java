@@ -21,9 +21,11 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,6 +36,7 @@ import com.restfb.types.User;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -103,6 +105,9 @@ public class FacebookEducationRule extends BaseFacebookRule {
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
 		String typeSettings = ruleInstance.getTypeSettings();
 
 		String summary = StringPool.BLANK;
@@ -116,15 +121,17 @@ public class FacebookEducationRule extends BaseFacebookRule {
 			StringBundler sb = new StringBundler();
 
 			if (Validator.isNotNull(educationLevel)) {
-				sb.append(LanguageUtil.get(locale, "education-level"));
+				sb.append(LanguageUtil.get(resourceBundle, "education-level"));
 				sb.append(StringPool.COLON);
-				sb.append(LanguageUtil.get(locale, educationLevel));
+				sb.append(LanguageUtil.get(resourceBundle, educationLevel));
 				sb.append(StringPool.PERIOD);
 				sb.append(StringPool.SPACE);
 			}
 
 			if (Validator.isNotNull(schoolName)) {
-				sb.append(LanguageUtil.get(locale, "college-high-school-name"));
+				sb.append(
+					LanguageUtil.get(
+						resourceBundle, "college-high-school-name"));
 				sb.append(StringPool.COLON);
 				sb.append(schoolName);
 			}

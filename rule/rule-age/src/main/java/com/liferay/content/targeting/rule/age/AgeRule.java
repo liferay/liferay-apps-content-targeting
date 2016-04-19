@@ -25,12 +25,14 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -100,6 +102,9 @@ public class AgeRule extends BaseJSPRule {
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
 		String typeSettings = ruleInstance.getTypeSettings();
 
 		String summary = StringPool.BLANK;
@@ -112,16 +117,17 @@ public class AgeRule extends BaseJSPRule {
 
 			if ((youngerThan > 0) && (olderThan > 0)) {
 				summary = LanguageUtil.format(
-					locale, "users-between-x-and-x-years-old",
+					resourceBundle, "users-between-x-and-x-years-old",
 					new Object[] {olderThan, youngerThan});
 			}
 			else if (youngerThan > 0) {
 				summary = LanguageUtil.format(
-					locale, "users-younger-than-x-years-old", youngerThan);
+					resourceBundle, "users-younger-than-x-years-old",
+					youngerThan);
 			}
 			else if (olderThan > 0) {
 				summary = LanguageUtil.format(
-					locale, "users-older-than-x-years-old", olderThan);
+					resourceBundle, "users-older-than-x-years-old", olderThan);
 			}
 		}
 		catch (JSONException jsone) {

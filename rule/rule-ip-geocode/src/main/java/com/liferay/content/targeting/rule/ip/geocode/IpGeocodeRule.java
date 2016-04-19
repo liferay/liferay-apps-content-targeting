@@ -33,11 +33,13 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -153,6 +155,9 @@ public class IpGeocodeRule extends BaseJSPRule {
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
 		String typeSettings = ruleInstance.getTypeSettings();
 
 		String summary = StringPool.BLANK;
@@ -175,14 +180,15 @@ public class IpGeocodeRule extends BaseJSPRule {
 			if (country != null) {
 				if (region != null) {
 					summary = LanguageUtil.format(
-						locale, "users-from-x-x",
+						resourceBundle, "users-from-x-x",
 						new Object[] {
 							country.getName(locale), region.getName()
 						});
 				}
 				else {
 					summary = LanguageUtil.format(
-						locale, "users-from-x", country.getName(locale));
+						resourceBundle, "users-from-x",
+						country.getName(locale));
 				}
 			}
 		}
