@@ -18,10 +18,10 @@
 
 <%
 ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayContext = new ContentTargetingViewReportsDisplayContext(liferayPortletRequest, liferayPortletResponse);
+
+request.setAttribute("showSearch", !contentTargetingViewReportsDisplayContext.isDisabledManagementBar());
 %>
 
-<liferay-util:include page="/view_campaign_toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="showSearch" value="<%= String.valueOf(!contentTargetingViewReportsDisplayContext.isDisabledManagementBar()) %>" />
-</liferay-util:include>
+<liferay-util:include page="/view_campaign_toolbar.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/view_reports.jsp" servletContext="<%= application %>" />

@@ -292,7 +292,14 @@ public class ContentTargetingViewUserSegmentDisplayContext
 			return _showSearch;
 		}
 
-		_showSearch = ParamUtil.getBoolean(request, "showSearch");
+		Boolean showSearch = (Boolean)request.getAttribute("showSearch");
+
+		if (showSearch == null) {
+			_showSearch = false;
+		}
+		else {
+			_showSearch = showSearch.booleanValue();
+		}
 
 		return _showSearch;
 	}

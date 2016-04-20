@@ -20,9 +20,7 @@
 ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDisplayContext = (ContentTargetingViewUserSegmentDisplayContext)renderRequest.getAttribute("contentTargetingViewUserSegmentDisplayContext");
 %>
 
-<liferay-util:include page="/view_user_segment_toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="showSearch" value="<%= Boolean.FALSE.toString() %>" />
-</liferay-util:include>
+<liferay-util:include page="/view_user_segment_toolbar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280" id="<portlet:namespace />summary">
 	<aui:fieldset-group markupView="lexicon">

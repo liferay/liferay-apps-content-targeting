@@ -20,9 +20,7 @@
 ContentTargetingViewCampaignDisplayContext contentTargetingViewCampaignDisplayContext = (ContentTargetingViewCampaignDisplayContext)renderRequest.getAttribute("contentTargetingViewCampaignDisplayContext");
 %>
 
-<liferay-util:include page="/view_campaign_toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="showSearch" value="<%= Boolean.FALSE.toString() %>" />
-</liferay-util:include>
+<liferay-util:include page="/view_campaign_toolbar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280" id="<portlet:namespace />summary">
 	<aui:fieldset-group markupView="lexicon">
