@@ -109,16 +109,18 @@ String tabs1 = ParamUtil.getString(request, "tabs1");
 					<portlet:param name="reportInstanceId" value="<%= String.valueOf(reportInstance.getReportInstanceId()) %>" />
 				</portlet:renderURL>
 
-				<%
-				request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
-				%>
-
 				<c:choose>
 					<c:when test="<%= contentTargetingViewReportsDisplayContext.isDescriptiveView() %>">
-						<liferay-ui:search-container-column-icon
-							icon="reports"
-							toggleRowChecker="<%= true %>"
-						/>
+						<liferay-ui:search-container-column-text>
+
+							<%
+							request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
+							%>
+
+							<div class="click-selector sticker-default sticker-lg">
+								<aui:icon cssClass="text-default" image="reports" markupView="lexicon" />
+							</div>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
 							colspan="<%= 2 %>"
@@ -143,6 +145,8 @@ String tabs1 = ParamUtil.getString(request, "tabs1");
 					<c:when test="<%= contentTargetingViewReportsDisplayContext.isIconView() %>">
 
 						<%
+						request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
+
 						row.setCssClass("entry-card lfr-asset-item");
 						%>
 

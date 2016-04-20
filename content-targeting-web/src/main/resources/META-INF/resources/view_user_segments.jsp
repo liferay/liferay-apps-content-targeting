@@ -113,10 +113,6 @@ ContentTargetingViewUserSegmentsDisplayContext contentTargetingViewUserSegmentsD
 			modelVar="userSegment"
 		>
 
-			<%
-			request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
-			%>
-
 			<portlet:renderURL var="userSegmentSummaryURL">
 				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_USER_SEGMENT %>" />
 				<portlet:param name="tabs1" value="summary" />
@@ -125,10 +121,16 @@ ContentTargetingViewUserSegmentsDisplayContext contentTargetingViewUserSegmentsD
 
 			<c:choose>
 				<c:when test="<%= contentTargetingViewUserSegmentsDisplayContext.isDescriptiveView() %>">
-					<liferay-ui:search-container-column-icon
-						icon="user-segments"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-text>
+
+						<%
+						request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
+						%>
+
+						<div class="click-selector sticker-default sticker-lg">
+							<aui:icon cssClass="text-default" image="user-segments" markupView="lexicon" />
+						</div>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
@@ -149,6 +151,8 @@ ContentTargetingViewUserSegmentsDisplayContext contentTargetingViewUserSegmentsD
 				<c:when test="<%= contentTargetingViewUserSegmentsDisplayContext.isIconView() %>">
 
 					<%
+					request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
+
 					row.setCssClass("entry-card lfr-asset-item");
 					%>
 

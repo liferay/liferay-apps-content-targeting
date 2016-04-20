@@ -76,10 +76,6 @@ ContentTargetingViewCampaignsDisplayContext contentTargetingViewCampaignsDisplay
 			modelVar="campaign"
 		>
 
-			<%
-			request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
-			%>
-
 			<portlet:renderURL var="campaignSummaryURL">
 				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_CAMPAIGN %>" />
 				<portlet:param name="tabs1" value="summary" />
@@ -88,10 +84,16 @@ ContentTargetingViewCampaignsDisplayContext contentTargetingViewCampaignsDisplay
 
 			<c:choose>
 				<c:when test="<%= contentTargetingViewCampaignsDisplayContext.isDescriptiveView() %>">
-					<liferay-ui:search-container-column-icon
-						icon="campaigns"
-						toggleRowChecker="<%= true %>"
-					/>
+					<liferay-ui:search-container-column-text>
+
+						<%
+						request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
+						%>
+
+						<div class="click-selector sticker-default sticker-lg">
+							<aui:icon cssClass="text-default" image="campaigns" markupView="lexicon" />
+						</div>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
@@ -148,6 +150,8 @@ ContentTargetingViewCampaignsDisplayContext contentTargetingViewCampaignsDisplay
 				<c:when test="<%= contentTargetingViewCampaignsDisplayContext.isIconView() %>">
 
 					<%
+					request.setAttribute("aui:icon:src:ext", PortalUtil.getPathContext(request) + "/icons/audience-targeting.svg");
+
 					row.setCssClass("entry-card lfr-asset-item");
 					%>
 
