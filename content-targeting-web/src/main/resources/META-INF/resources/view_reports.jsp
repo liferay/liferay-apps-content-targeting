@@ -18,8 +18,6 @@
 
 <%
 ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayContext = new ContentTargetingViewReportsDisplayContext(liferayPortletRequest, liferayPortletResponse);
-
-String tabs1 = ParamUtil.getString(request, "tabs1");
 %>
 
 <c:if test="<%= contentTargetingViewReportsDisplayContext.isStagingGroup() %>">
@@ -30,22 +28,6 @@ String tabs1 = ParamUtil.getString(request, "tabs1");
 			<strong><liferay-ui:message key="you-must-publish-to-live-before-you-can-view-any-reports" /></strong>
 		</c:if>
 	</div>
-</c:if>
-
-<c:if test="<%= Validator.isNull(tabs1) %>">
-	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-		<aui:nav cssClass="navbar-nav">
-			<aui:nav-item href="<%= currentURL %>" label="reports" selected="<%= true %>" />
-		</aui:nav>
-
-		<c:if test="<%= !contentTargetingViewReportsDisplayContext.isDisabledManagementBar() %>">
-			<aui:nav-bar-search>
-				<aui:form action="<%= contentTargetingViewReportsDisplayContext.getPortletURL() %>" name="searchFm">
-					<liferay-ui:input-search markupView="lexicon" name="keywords" />
-				</aui:form>
-			</aui:nav-bar-search>
-		</c:if>
-	</aui:nav-bar>
 </c:if>
 
 <liferay-frontend:management-bar
