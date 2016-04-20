@@ -20,6 +20,10 @@
 ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDisplayContext = (ContentTargetingViewUserSegmentDisplayContext)renderRequest.getAttribute("contentTargetingViewUserSegmentDisplayContext");
 %>
 
+<liferay-util:include page="/view_user_segment_toolbar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="showSearch" value="<%= Boolean.FALSE.toString() %>" />
+</liferay-util:include>
+
 <div class="container-fluid-1280" id="<portlet:namespace />summary">
 	<aui:fieldset-group markupView="lexicon">
 		<div class="panel-body">
@@ -69,15 +73,17 @@ ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDis
 		</div>
 
 		<%
-		for (RuleCategory ruleCategory : contentTargetingViewUserSegmentDisplayContext.getRuleCategories()) {
+		Map<String, List<RuleInstance>> ruleCategoriesMap = contentTargetingViewUserSegmentDisplayContext.getRuleInstanceMap();
+
+		for (Map.Entry<String, List<RuleInstance>> ruleCategory : ruleCategoriesMap.entrySet()) {
 		%>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= ruleCategory.getName(locale) %>">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= ruleCategory.getKey() %>">
 				<div class="row">
 					<ul class="list-unstyled">
 
 						<%
-						List<RuleInstance> ruleInstances = contentTargetingViewUserSegmentDisplayContext.getRulesByCategory(ruleCategory.getCategoryKey());
+						List<RuleInstance> ruleInstances = ListUtil.sort(ruleCategory.getValue(), contentTargetingViewUserSegmentDisplayContext.getRuleInstancesComparator());
 
 						for (RuleInstance ruleInstance : ruleInstances) {
 							Rule rule = contentTargetingViewUserSegmentDisplayContext.getRuleByRuleInstance(ruleInstance);

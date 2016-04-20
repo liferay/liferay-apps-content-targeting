@@ -280,30 +280,6 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		return _usersNumber;
 	}
 
-	public boolean isDisabledReportsManagementBar()
-		throws PortalException, PortletException {
-
-		if (_isDisabledReportsManagementBar != null) {
-			return _isDisabledReportsManagementBar;
-		}
-
-		ContentTargetingViewReportsDisplayContext
-			contentTargetingViewReportsDisplayContext =
-				new ContentTargetingViewReportsDisplayContext(
-					liferayPortletRequest, liferayPortletResponse);
-
-		_isDisabledReportsManagementBar = false;
-
-		if (isShowReports() &&
-			!contentTargetingViewReportsDisplayContext.isDisabledManagementBar(
-				)) {
-
-			_isDisabledReportsManagementBar = true;
-		}
-
-		return _isDisabledReportsManagementBar;
-	}
-
 	public boolean isShowReports() {
 		if (Objects.equals(getTabs1(), "reports")) {
 			return true;
@@ -318,6 +294,16 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		}
 
 		return false;
+	}
+
+	public boolean showSearch() {
+		if (_showSearch != null) {
+			return _showSearch;
+		}
+
+		_showSearch = ParamUtil.getBoolean(request, "showSearch");
+
+		return _showSearch;
 	}
 
 	private Map<String, List<RuleInstance>> _getRuleInstanceMap() {
@@ -354,7 +340,6 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		_anonymousUserUserSegmentLocalService;
 	private Long _classPK;
 	private String _description;
-	private Boolean _isDisabledReportsManagementBar;
 	private String _reportsURL;
 	private List<RuleCategory> _ruleCategories;
 	private final RuleCategoriesRegistry _ruleCategoriesRegistry;
@@ -362,6 +347,7 @@ public class ContentTargetingViewUserSegmentDisplayContext
 	private List<RuleInstance> _ruleInstances;
 	private final RuleInstanceService _ruleInstanceService;
 	private final RulesRegistry _rulesRegistry;
+	private Boolean _showSearch;
 	private String _summaryURL;
 	private String _tabs1;
 	private Long _userSegmentId;

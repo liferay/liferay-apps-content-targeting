@@ -25,11 +25,18 @@ portletDisplay.setURLBack(contentTargetingViewCampaignDisplayContext.getBackURL(
 renderResponse.setTitle(contentTargetingViewCampaignDisplayContext.getCampaignTitle());
 %>
 
-<c:choose>
-	<c:when test="<%= contentTargetingViewCampaignDisplayContext.isShowSummary() %>">
-		<liferay-util:include page="/campaign_summary.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test="<%= contentTargetingViewCampaignDisplayContext.isShowReports() %>">
-		<liferay-util:include page="/view_campaign_reports.jsp" servletContext="<%= application %>" />
-	</c:when>
-</c:choose>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= contentTargetingViewCampaignDisplayContext.getSummaryURL() %>" label="summary" selected="<%= contentTargetingViewCampaignDisplayContext.isShowSummary() %>" />
+
+		<aui:nav-item href="<%= contentTargetingViewCampaignDisplayContext.getReportsURL() %>" label="reports" selected="<%= contentTargetingViewCampaignDisplayContext.isShowReports() %>" />
+	</aui:nav>
+
+	<c:if test="<%= contentTargetingViewCampaignDisplayContext.showSearch() %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= contentTargetingViewCampaignDisplayContext.getReportsURL() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" name="keywords" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
+</aui:nav-bar>

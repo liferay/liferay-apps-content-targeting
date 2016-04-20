@@ -18,7 +18,6 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.CampaignConstants;
 import com.liferay.content.targeting.web.portlet.ContentTargetingMVCCommand;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 /**
@@ -134,30 +132,6 @@ public class ContentTargetingViewCampaignDisplayContext
 		return _tabs1;
 	}
 
-	public boolean isDisabledReportsManagementBar()
-		throws PortalException, PortletException {
-
-		if (_isDisabledReportsManagementBar != null) {
-			return _isDisabledReportsManagementBar;
-		}
-
-		ContentTargetingViewReportsDisplayContext
-			contentTargetingViewReportsDisplayContext =
-				new ContentTargetingViewReportsDisplayContext(
-					liferayPortletRequest, liferayPortletResponse);
-
-		_isDisabledReportsManagementBar = false;
-
-		if (isShowReports() &&
-			!contentTargetingViewReportsDisplayContext.isDisabledManagementBar(
-				)) {
-
-			_isDisabledReportsManagementBar = true;
-		}
-
-		return _isDisabledReportsManagementBar;
-	}
-
 	public boolean isShowReports() {
 		if (Objects.equals(getTabs1(), "reports")) {
 			return true;
@@ -174,10 +148,20 @@ public class ContentTargetingViewCampaignDisplayContext
 		return false;
 	}
 
+	public boolean showSearch() {
+		if (_showSearch != null) {
+			return _showSearch;
+		}
+
+		_showSearch = ParamUtil.getBoolean(request, "showSearch");
+
+		return _showSearch;
+	}
+
 	private Long _campaignId;
 	private Long _classPK;
-	private Boolean _isDisabledReportsManagementBar;
 	private String _reportsURL;
+	private Boolean _showSearch;
 	private String _summaryURL;
 	private String _tabs1;
 

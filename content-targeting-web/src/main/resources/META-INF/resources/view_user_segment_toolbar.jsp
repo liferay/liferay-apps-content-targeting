@@ -25,11 +25,18 @@ portletDisplay.setURLBack(contentTargetingViewUserSegmentDisplayContext.getBackU
 renderResponse.setTitle(contentTargetingViewUserSegmentDisplayContext.getUserSegmentTitle());
 %>
 
-<c:choose>
-	<c:when test="<%= contentTargetingViewUserSegmentDisplayContext.isShowSummary() %>">
-		<liferay-util:include page="/user_segment_summary.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test="<%= contentTargetingViewUserSegmentDisplayContext.isShowReports() %>">
-		<liferay-util:include page="/view_user_segment_reports.jsp" servletContext="<%= application %>" />
-	</c:when>
-</c:choose>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= contentTargetingViewUserSegmentDisplayContext.getSummaryURL() %>" label="summary" selected="<%= contentTargetingViewUserSegmentDisplayContext.isShowSummary() %>" />
+
+		<aui:nav-item href="<%= contentTargetingViewUserSegmentDisplayContext.getReportsURL() %>" label="reports" selected="<%= contentTargetingViewUserSegmentDisplayContext.isShowReports() %>" />
+	</aui:nav>
+
+	<c:if test="<%= contentTargetingViewUserSegmentDisplayContext.showSearch() %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= contentTargetingViewUserSegmentDisplayContext.getReportsURL() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" name="keywords" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
+</aui:nav-bar>
