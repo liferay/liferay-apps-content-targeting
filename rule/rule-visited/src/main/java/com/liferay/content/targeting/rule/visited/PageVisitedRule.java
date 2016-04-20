@@ -140,7 +140,7 @@ public class PageVisitedRule extends BaseJSPRule {
 			return layout.getTitle(locale);
 		}
 
-		return StringPool.BLANK;
+		return StringPool.DASH;
 	}
 
 	@Override

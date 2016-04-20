@@ -10,6 +10,7 @@ Export-Package:\
 	com.liferay.content.targeting.rule.categories,\
 	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.persistence,\
-	com.liferay.content.targeting.util
+	com.liferay.content.targeting.util,\
+	com.liferay.content.targeting.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Audience Targeting

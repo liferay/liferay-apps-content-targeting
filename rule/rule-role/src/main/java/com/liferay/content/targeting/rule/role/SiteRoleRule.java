@@ -171,7 +171,7 @@ public class SiteRoleRule extends BaseJSPRule {
 			Role role = _roleLocalService.fetchRole(roleId);
 
 			if (role == null) {
-				return StringPool.BLANK;
+				return StringPool.DASH;
 			}
 
 			long siteId = jsonObj.getLong("siteId");

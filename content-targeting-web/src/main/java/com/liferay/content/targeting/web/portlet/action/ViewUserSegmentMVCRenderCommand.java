@@ -14,7 +14,10 @@
 
 package com.liferay.content.targeting.web.portlet.action;
 
+import com.liferay.content.targeting.api.model.RuleCategoriesRegistry;
+import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService;
+import com.liferay.content.targeting.service.RuleInstanceService;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.web.display.context.ContentTargetingViewUserSegmentDisplayContext;
 import com.liferay.content.targeting.web.portlet.ContentTargetingMVCCommand;
@@ -53,7 +56,9 @@ public class ViewUserSegmentMVCRenderCommand extends BaseMVCRenderCommand {
 				new ContentTargetingViewUserSegmentDisplayContext(
 					_anonymousUserUserSegmentLocalService,
 					(LiferayPortletRequest)renderRequest,
-					(LiferayPortletResponse)renderResponse);
+					(LiferayPortletResponse)renderResponse,
+					_ruleCategoriesRegistry, _ruleInstanceService,
+					_rulesRegistry);
 
 		renderRequest.setAttribute(
 			"contentTargetingViewUserSegmentDisplayContext",
@@ -71,10 +76,42 @@ public class ViewUserSegmentMVCRenderCommand extends BaseMVCRenderCommand {
 			anonymousUserUserSegmentLocalService;
 	}
 
+	@Reference
+	protected void setRuleCategoriesRegistry(
+		RuleCategoriesRegistry ruleCategoriesRegistry) {
+
+		_ruleCategoriesRegistry = ruleCategoriesRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRuleInstanceService(
+		RuleInstanceService ruleInstanceService) {
+
+		_ruleInstanceService = ruleInstanceService;
+	}
+
+	@Reference
+	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
+		_rulesRegistry = rulesRegistry;
+	}
+
+	protected void unsetRuleCategoriesRegistry(
+		RuleCategoriesRegistry ruleCategoriesRegistry) {
+
+		_ruleCategoriesRegistry = null;
+	}
+
+	protected void unsetRulesRegistry(RulesRegistry rulesRegistry) {
+		_rulesRegistry = null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewUserSegmentMVCRenderCommand.class);
 
 	private AnonymousUserUserSegmentLocalService
 		_anonymousUserUserSegmentLocalService;
+	private RuleCategoriesRegistry _ruleCategoriesRegistry;
+	private RuleInstanceService _ruleInstanceService;
+	private RulesRegistry _rulesRegistry;
 
 }

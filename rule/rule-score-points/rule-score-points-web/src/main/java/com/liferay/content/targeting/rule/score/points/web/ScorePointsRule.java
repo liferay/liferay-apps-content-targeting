@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -107,9 +109,12 @@ public class ScorePointsRule extends BaseJSPRule {
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
 		String typeSettings = ruleInstance.getTypeSettings();
 
-		String summary = StringPool.BLANK;
+		String summary = StringPool.DASH;
 
 		try {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
@@ -119,7 +124,7 @@ public class ScorePointsRule extends BaseJSPRule {
 			String userSegmentName = ruleInstance.getUserSegmentName(locale);
 
 			summary = LanguageUtil.format(
-				locale, "users-with-more-than-x-score-points-of-x",
+				resourceBundle, "users-with-more-than-x-score-points-of-x",
 				new Object[] {scorePoints, userSegmentName});
 		}
 		catch (JSONException jsone) {
