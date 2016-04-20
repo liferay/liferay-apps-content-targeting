@@ -22,7 +22,7 @@
 	for (String operatingSystem : ruleOSDisplayContext.getOperatingSystems()) {
 	%>
 
-		<aui:option label="<%= operatingSystem %>" selected="<%= Validator.equals(operatingSystem, ruleOSDisplayContext.getOs()) %>" value="<%= operatingSystem %>" />
+		<aui:option label="<%= operatingSystem %>" selected="<%= operatingSystem.equals(ruleOSDisplayContext.getOs()) %>" value="<%= operatingSystem %>" />
 
 	<%
 	}

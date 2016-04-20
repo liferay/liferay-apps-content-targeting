@@ -54,7 +54,7 @@
 		for (String curEventType : formTrackingActionDisplayContext.getEventTypes()) {
 		%>
 
-			<aui:option label="<%= curEventType %>" selected="<%= Validator.equals(formTrackingActionDisplayContext.getEventType(), curEventType) %>" value="<%= curEventType %>" />
+			<aui:option label="<%= curEventType %>" selected="<%= curEventType.equals(formTrackingActionDisplayContext.getEventType()) %>" value="<%= curEventType %>" />
 
 		<%
 		}

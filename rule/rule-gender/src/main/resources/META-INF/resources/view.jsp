@@ -32,6 +32,6 @@
 	</p>
 </c:if>
 
-<aui:input checked='<%= Validator.equals(ruleGenderDisplayContext.getGender(), "male") %>' label="male" name="gender" type="radio" value="male" />
+<aui:input checked='<%= "male".equals(ruleGenderDisplayContext.getGender()) %>' label="male" name="gender" type="radio" value="male" />
 
-<aui:input checked='<%= Validator.equals(ruleGenderDisplayContext.getGender(), "female") %>' label="female" name="gender" type="radio" value="female" />
+<aui:input checked='<%= "female".equals(ruleGenderDisplayContext.getGender()) %>' label="female" name="gender" type="radio" value="female" />

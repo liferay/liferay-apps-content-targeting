@@ -54,7 +54,7 @@
 		for (String curEventType : youtubeTrackingActionDisplayContext.getEventTypes()) {
 		%>
 
-			<aui:option label="<%= curEventType %>" selected="<%= Validator.equals(youtubeTrackingActionDisplayContext.getEventType(), curEventType) %>" value="<%= curEventType %>" />
+			<aui:option label="<%= curEventType %>" selected="<%= curEventType.equals(youtubeTrackingActionDisplayContext.getEventType()) %>" value="<%= curEventType %>" />
 
 		<%
 		}

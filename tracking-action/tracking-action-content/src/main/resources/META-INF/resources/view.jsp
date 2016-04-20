@@ -91,7 +91,7 @@
 		for (String curEventType : contentTrackingActionDisplayContext.getEventTypes()) {
 		%>
 
-			<aui:option label="<%= curEventType %>" selected="<%= Validator.equals(contentTrackingActionDisplayContext.getEventType(), curEventType) %>" value="<%= curEventType %>" />
+			<aui:option label="<%= curEventType %>" selected="<%= curEventType.equals(contentTrackingActionDisplayContext.getEventType()) %>" value="<%= curEventType %>" />
 
 		<%
 		}

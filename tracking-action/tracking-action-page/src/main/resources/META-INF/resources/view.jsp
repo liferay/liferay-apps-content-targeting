@@ -66,7 +66,7 @@ String onClickPrivateInput = "if (this.checked) {" + renderResponse.getNamespace
 		for (String curEventType : pageTrackingActionDisplayContext.getEventTypes()) {
 		%>
 
-			<aui:option label="<%= curEventType %>" selected="<%= Validator.equals(pageTrackingActionDisplayContext.getEventType(), curEventType) %>" value="<%= curEventType %>" />
+			<aui:option label="<%= curEventType %>" selected="<%= curEventType.equals(pageTrackingActionDisplayContext.getEventType()) %>" value="<%= curEventType %>" />
 
 		<%
 		}

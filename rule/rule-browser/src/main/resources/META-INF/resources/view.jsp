@@ -22,7 +22,7 @@
 	for (String curBrowser : ruleBrowserDisplayContext.getBrowsers()) {
 	%>
 
-		<aui:option label="<%= curBrowser %>" selected="<%= Validator.equals(ruleBrowserDisplayContext.getBrowser(), curBrowser) %>" value="<%= curBrowser %>" />
+		<aui:option label="<%= curBrowser %>" selected="<%= curBrowser.equals(ruleBrowserDisplayContext.getBrowser()) %>" value="<%= curBrowser %>" />
 
 	<%
 	}
