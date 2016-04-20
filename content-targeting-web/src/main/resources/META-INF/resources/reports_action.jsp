@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayContext = new ContentTargetingViewReportsDisplayContext(liferayPortletRequest, liferayPortletResponse);
+
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
 
@@ -51,6 +53,24 @@ ReportInstance reportInstance = (ReportInstance)row.getObject();
 		<liferay-ui:icon-delete
 			url="<%= deleteReportURL %>"
 		/>
+	</c:if>
+
+	<%
+	List<BaseJSPPortletConfigurationIcon> configurationIcons = contentTargetingViewReportsDisplayContext.getConfigurationIcons(reportInstance);
+	%>
+
+	<c:if test="<%= ListUtil.isNotEmpty(configurationIcons) %>">
+
+		<%
+		for (BaseJSPPortletConfigurationIcon configurationIcon : configurationIcons) {
+		%>
+
+			<liferay-util:include page="<%= configurationIcon.getJspPath() %>" servletContext="<%= configurationIcon.getServletContext() %>" />
+
+		<%
+		}
+		%>
+
 	</c:if>
 
 	<liferay-portlet:actionURL name="updateReport" var="updateReportURL">
