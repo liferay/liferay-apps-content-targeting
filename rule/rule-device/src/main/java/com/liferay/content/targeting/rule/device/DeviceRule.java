@@ -172,7 +172,7 @@ public class DeviceRule extends BaseJSPRule {
 		}
 
 		if (mdrRuleGroup == null) {
-			return StringPool.BLANK;
+			return StringPool.DASH;
 		}
 
 		StringBuilder sb = new StringBuilder(3);

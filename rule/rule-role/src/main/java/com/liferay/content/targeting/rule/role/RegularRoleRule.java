@@ -140,7 +140,7 @@ public class RegularRoleRule extends BaseJSPRule {
 		catch (SystemException se) {
 		}
 
-		return StringPool.BLANK;
+		return StringPool.DASH;
 	}
 
 	@Override

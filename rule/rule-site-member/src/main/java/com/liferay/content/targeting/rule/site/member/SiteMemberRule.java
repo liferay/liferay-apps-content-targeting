@@ -111,7 +111,7 @@ public class SiteMemberRule extends BaseJSPRule {
 			Group group = _groupLocalService.fetchGroup(siteId);
 
 			if (group == null) {
-				return StringPool.BLANK;
+				return StringPool.DASH;
 			}
 
 			return group.getDescriptiveName(locale);
