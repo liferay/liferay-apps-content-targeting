@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.web.display.context;
 
 import com.liferay.content.targeting.api.model.Report;
+import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.UserSegment;
@@ -35,6 +36,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -49,6 +52,7 @@ import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -142,6 +146,32 @@ public class ContentTargetingViewReportsDisplayContext
 		return _classPK;
 	}
 
+	public List<BaseJSPPortletConfigurationIcon> getConfigurationIcons(
+		ReportInstance reportInstance) {
+
+		List<BaseJSPPortletConfigurationIcon> configurationIcons =
+			new ArrayList<>();
+
+		Report report = getReportsRegistry().getReport(
+			reportInstance.getReportKey());
+
+		if (report != null) {
+			for (PortletConfigurationIcon portletConfigurationIcon :
+					report.getConfigurationIcons()) {
+
+				if (portletConfigurationIcon instanceof
+						BaseJSPPortletConfigurationIcon) {
+
+					configurationIcons.add(
+						(BaseJSPPortletConfigurationIcon)
+							portletConfigurationIcon);
+				}
+			}
+		}
+
+		return configurationIcons;
+	}
+
 	@Override
 	public String[] getDisplayViews() {
 		return _REPORTS_DISPLAY_VIEWS;
@@ -224,6 +254,15 @@ public class ContentTargetingViewReportsDisplayContext
 			});
 
 		return _reports;
+	}
+
+	public ReportsRegistry getReportsRegistry() {
+		if (_reportsRegistry == null) {
+			_reportsRegistry = (ReportsRegistry)request.getAttribute(
+				"reportsRegistry");
+		}
+
+		return _reportsRegistry;
 	}
 
 	public SearchContainer getReportsSearchContainer() throws PortalException {
@@ -493,6 +532,7 @@ public class ContentTargetingViewReportsDisplayContext
 	private String _navigation;
 	private String _redirect;
 	private List<Report> _reports;
+	private ReportsRegistry _reportsRegistry;
 	private SearchContainer _reportsSearchContainer;
 	private String _reportsTitle;
 	private Long _scopeGroupId;
