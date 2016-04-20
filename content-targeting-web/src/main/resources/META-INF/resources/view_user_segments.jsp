@@ -112,7 +112,6 @@ ContentTargetingViewUserSegmentsDisplayContext contentTargetingViewUserSegmentsD
 			keyProperty="userSegmentId"
 			modelVar="userSegment"
 		>
-
 			<portlet:renderURL var="userSegmentSummaryURL">
 				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_USER_SEGMENT %>" />
 				<portlet:param name="tabs1" value="summary" />

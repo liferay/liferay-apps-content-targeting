@@ -75,7 +75,6 @@ ContentTargetingViewCampaignsDisplayContext contentTargetingViewCampaignsDisplay
 			keyProperty="campaignId"
 			modelVar="campaign"
 		>
-
 			<portlet:renderURL var="campaignSummaryURL">
 				<portlet:param name="mvcRenderCommandName" value="<%= ContentTargetingMVCCommand.VIEW_CAMPAIGN %>" />
 				<portlet:param name="tabs1" value="summary" />
