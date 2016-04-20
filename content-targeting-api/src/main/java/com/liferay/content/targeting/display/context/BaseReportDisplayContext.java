@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
@@ -41,8 +42,10 @@ public class BaseReportDisplayContext {
 		this.liferayPortletResponse = liferayPortletResponse;
 		this.request = request;
 
-		displayContext = (Map<String, Object>)request.getAttribute(
-			"displayContext");
+		displayContext = request.getAttribute(
+			"displayContext") != null ?
+			(Map<String, Object>)request.getAttribute("displayContext") :
+				new HashMap<String, Object>();
 	}
 
 	public String getBackURL() {
