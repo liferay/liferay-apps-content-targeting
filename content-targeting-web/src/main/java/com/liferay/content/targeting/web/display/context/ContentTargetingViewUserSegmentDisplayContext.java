@@ -24,7 +24,6 @@ import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalServic
 import com.liferay.content.targeting.service.RuleInstanceService;
 import com.liferay.content.targeting.util.UserSegmentConstants;
 import com.liferay.content.targeting.util.WebKeys;
-import com.liferay.content.targeting.util.comparator.RuleCategoryNameComparator;
 import com.liferay.content.targeting.util.comparator.RuleInstanceNameComparator;
 import com.liferay.content.targeting.web.portlet.ContentTargetingMVCCommand;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,14 +36,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
+import java.util.TreeMap;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 /**
@@ -104,12 +102,14 @@ public class ContentTargetingViewUserSegmentDisplayContext
 
 		UserSegment userSegment = getUserSegment();
 
-		if (userSegment != null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			_description = userSegment.getDescription(themeDisplay.getLocale());
+		if (userSegment == null) {
+			return _description;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_description = userSegment.getDescription(themeDisplay.getLocale());
 
 		return _description;
 	}
@@ -142,24 +142,20 @@ public class ContentTargetingViewUserSegmentDisplayContext
 			return null;
 		}
 
-		Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
-
-		return rule;
+		return _rulesRegistry.getRule(ruleInstance.getRuleKey());
 	}
 
-	public List<RuleCategory> getRuleCategories() {
-		if (ListUtil.isNotEmpty(_ruleCategories)) {
-			return _ruleCategories;
+	public Map<String, List<RuleInstance>> getRuleInstanceMap() {
+		if (_ruleInstanceMap != null) {
+			return _ruleInstanceMap;
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		Map<String, List<RuleInstance>> ruleInstanceMap = new TreeMap<>();
+
 		List<RuleInstance> ruleInstances = getRuleInstances();
-
-		List<RuleCategory> ruleCategories = new ArrayList<>();
-
-		Set<RuleCategory> ruleCategoriesSet = new HashSet<>();
 
 		for (RuleInstance ruleInstance : ruleInstances) {
 			Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
@@ -167,16 +163,25 @@ public class ContentTargetingViewUserSegmentDisplayContext
 			RuleCategory ruleCategory = _ruleCategoriesRegistry.getRuleCategory(
 				rule.getRuleCategoryKey());
 
-			ruleCategoriesSet.add(ruleCategory);
+			String ruleCategoryName = ruleCategory.getName(
+				themeDisplay.getLocale());
+
+			List<RuleInstance> ruleInstanceList = new ArrayList<>();
+
+			if (ruleInstanceMap.containsKey(ruleCategoryName)) {
+				ruleInstanceList = ruleInstanceMap.get(ruleCategoryName);
+			}
+
+			ruleInstanceList.add(ruleInstance);
+
+			ruleInstanceMap.put(
+				ruleCategory.getName(themeDisplay.getLocale()),
+				ruleInstanceList);
 		}
 
-		ruleCategories.addAll(ruleCategoriesSet);
+		_ruleInstanceMap = ruleInstanceMap;
 
-		_ruleCategories = ListUtil.sort(
-			ruleCategories,
-			new RuleCategoryNameComparator(themeDisplay.getLocale()));
-
-		return _ruleCategories;
+		return _ruleInstanceMap;
 	}
 
 	public List<RuleInstance> getRuleInstances() {
@@ -186,35 +191,21 @@ public class ContentTargetingViewUserSegmentDisplayContext
 
 		long userSegmentId = getUserSegmentId();
 
-		List<RuleInstance> ruleInstances = new ArrayList<>();
-
-		if (userSegmentId > 0) {
-			ruleInstances = _ruleInstanceService.getRuleInstances(
-				userSegmentId);
+		if (userSegmentId <= 0) {
+			return Collections.emptyList();
 		}
 
-		_ruleInstances = ruleInstances;
+		_ruleInstances = _ruleInstanceService.getRuleInstances(userSegmentId);
 
 		return _ruleInstances;
 	}
 
-	public List<RuleInstance> getRulesByCategory(String ruleCategoryKey) {
-		Map<String, List<RuleInstance>> ruleInstanceMap = _getRuleInstanceMap();
+	public Comparator getRuleInstancesComparator() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		List<RuleInstance> ruleInstances = ruleInstanceMap.get(ruleCategoryKey);
-
-		if (ListUtil.isNotEmpty(ruleInstances)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			return ListUtil.sort(
-				ruleInstances,
-				new RuleInstanceNameComparator(
-					themeDisplay.getLocale(), _rulesRegistry));
-		}
-		else {
-			return new ArrayList<>();
-		}
+		return new RuleInstanceNameComparator(
+			themeDisplay.getLocale(), _rulesRegistry);
 	}
 
 	public String getSummaryURL() {
@@ -306,42 +297,11 @@ public class ContentTargetingViewUserSegmentDisplayContext
 		return _showSearch;
 	}
 
-	private Map<String, List<RuleInstance>> _getRuleInstanceMap() {
-		if (_ruleInstanceMap != null) {
-			return _ruleInstanceMap;
-		}
-
-		Map<String, List<RuleInstance>> ruleInstanceMap = new HashMap<>();
-
-		List<RuleInstance> ruleInstances = getRuleInstances();
-
-		for (RuleInstance ruleInstance : ruleInstances) {
-			Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
-
-			String ruleCategoryKey = rule.getRuleCategoryKey();
-
-			List<RuleInstance> ruleInstanceList = new ArrayList<>();
-
-			if (ruleInstanceMap.containsKey(ruleCategoryKey)) {
-				ruleInstanceList = ruleInstanceMap.get(ruleCategoryKey);
-			}
-
-			ruleInstanceList.add(ruleInstance);
-
-			ruleInstanceMap.put(ruleCategoryKey, ruleInstanceList);
-		}
-
-		_ruleInstanceMap = ruleInstanceMap;
-
-		return _ruleInstanceMap;
-	}
-
 	private final AnonymousUserUserSegmentLocalService
 		_anonymousUserUserSegmentLocalService;
 	private Long _classPK;
 	private String _description;
 	private String _reportsURL;
-	private List<RuleCategory> _ruleCategories;
 	private final RuleCategoriesRegistry _ruleCategoriesRegistry;
 	private Map<String, List<RuleInstance>> _ruleInstanceMap;
 	private List<RuleInstance> _ruleInstances;

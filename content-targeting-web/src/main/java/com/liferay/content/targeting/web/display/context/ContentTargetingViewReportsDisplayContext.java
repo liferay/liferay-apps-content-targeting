@@ -424,8 +424,13 @@ public class ContentTargetingViewReportsDisplayContext
 
 		SearchContainer reportsSearchContainer = getReportsSearchContainer();
 
-		_isDisabledManagementBar = (reportsSearchContainer.getTotal() <= 0) &&
-			Validator.isNull(getKeywords());
+		_isDisabledManagementBar = false;
+
+		if ((reportsSearchContainer.getTotal() <= 0) &&
+			Validator.isNull(getKeywords())) {
+
+			_isDisabledManagementBar = true;
+		}
 
 		return _isDisabledManagementBar;
 	}
