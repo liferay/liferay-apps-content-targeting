@@ -18,8 +18,6 @@
 
 <%
 ContentTargetingViewUserSegmentDisplayContext contentTargetingViewUserSegmentDisplayContext = (ContentTargetingViewUserSegmentDisplayContext)renderRequest.getAttribute("contentTargetingViewUserSegmentDisplayContext");
-
-RuleCategoriesRegistry ruleCategoriesRegistry = contentTargetingViewUserSegmentDisplayContext.getRuleCategoriesRegistry();
 %>
 
 <div class="container-fluid-1280" id="<portlet:namespace />summary">
