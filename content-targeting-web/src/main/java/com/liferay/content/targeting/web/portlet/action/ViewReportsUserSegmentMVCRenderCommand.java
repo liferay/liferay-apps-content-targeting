@@ -68,6 +68,7 @@ public class ViewReportsUserSegmentMVCRenderCommand
 			UserSegment.class.getName());
 
 		renderRequest.setAttribute("reports", new ArrayList(reports.values()));
+		renderRequest.setAttribute("reportsRegistry", _reportsRegistry);
 
 		if (userSegmentId > 0) {
 			for (Report report : reports.values()) {
