@@ -87,6 +87,7 @@
 				{
 					dialog: {
 						constrain: true,
+						destroyOnHide: true,
 						modal: true
 					},
 					eventName: 'selectContent',
