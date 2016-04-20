@@ -176,7 +176,7 @@ public class OrganizationRoleRule extends BaseJSPRule {
 			Role role = _roleLocalService.fetchRole(roleId);
 
 			if (role == null) {
-				return StringPool.BLANK;
+				return StringPool.DASH;
 			}
 
 			long organizationId = jsonObj.getLong("organizationId");

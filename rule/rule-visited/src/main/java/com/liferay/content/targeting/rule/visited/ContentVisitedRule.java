@@ -182,7 +182,7 @@ public class ContentVisitedRule extends BaseJSPRule {
 			return assetEntry.getTitle(locale);
 		}
 
-		return StringPool.BLANK;
+		return StringPool.DASH;
 	}
 
 	@Override

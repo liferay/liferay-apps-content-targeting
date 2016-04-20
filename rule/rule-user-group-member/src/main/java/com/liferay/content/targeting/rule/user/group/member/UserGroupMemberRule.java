@@ -121,7 +121,7 @@ public class UserGroupMemberRule extends BaseJSPRule {
 				userGroupId);
 
 			if (userGroup == null) {
-				return StringPool.BLANK;
+				return StringPool.DASH;
 			}
 
 			return userGroup.getName();

@@ -110,7 +110,7 @@ public class FacebookEducationRule extends BaseFacebookRule {
 
 		String typeSettings = ruleInstance.getTypeSettings();
 
-		String summary = StringPool.BLANK;
+		String summary = StringPool.DASH;
 
 		try {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);

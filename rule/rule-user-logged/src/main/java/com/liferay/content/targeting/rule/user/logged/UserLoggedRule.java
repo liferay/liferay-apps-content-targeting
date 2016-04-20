@@ -81,7 +81,7 @@ public class UserLoggedRule extends BaseJSPRule {
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
-		return StringPool.BLANK;
+		return StringPool.DASH;
 	}
 
 	@Override

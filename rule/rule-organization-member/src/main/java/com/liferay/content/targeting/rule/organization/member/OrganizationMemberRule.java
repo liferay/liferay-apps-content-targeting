@@ -125,7 +125,7 @@ public class OrganizationMemberRule extends BaseJSPRule {
 				_organizationLocalService.fetchOrganization(organizationId);
 
 			if (organization == null) {
-				return StringPool.BLANK;
+				return StringPool.DASH;
 			}
 
 			return organization.getName();
