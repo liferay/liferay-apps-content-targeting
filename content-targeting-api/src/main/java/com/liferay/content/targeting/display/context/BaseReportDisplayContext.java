@@ -42,10 +42,13 @@ public class BaseReportDisplayContext {
 		this.liferayPortletResponse = liferayPortletResponse;
 		this.request = request;
 
-		displayContext = request.getAttribute(
-			"displayContext") != null ?
-			(Map<String, Object>)request.getAttribute("displayContext") :
-				new HashMap<String, Object>();
+		if (request.getAttribute("displayContext") != null) {
+			displayContext = (Map<String, Object>)request.getAttribute(
+				"displayContext");
+		}
+		else {
+			displayContext = new HashMap<>();
+		}
 	}
 
 	public String getBackURL() {
