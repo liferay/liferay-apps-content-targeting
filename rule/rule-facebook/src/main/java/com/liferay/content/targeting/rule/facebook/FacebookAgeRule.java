@@ -118,17 +118,16 @@ public class FacebookAgeRule extends BaseFacebookRule {
 
 			if ((youngerThan > 0) && (olderThan > 0)) {
 				summary = LanguageUtil.format(
-					resourceBundle, "users-between-x-and-x-years-old",
+					locale, "between-x-and-x-years-old",
 					new Object[] {olderThan, youngerThan});
 			}
 			else if (youngerThan > 0) {
 				summary = LanguageUtil.format(
-					resourceBundle, "users-younger-than-x-years-old",
-					youngerThan);
+					locale, "younger-than-x-years-old", youngerThan);
 			}
 			else if (olderThan > 0) {
 				summary = LanguageUtil.format(
-					resourceBundle, "users-older-than-x-years-old", olderThan);
+					locale, "older-than-x-years-old", olderThan);
 			}
 		}
 		catch (JSONException jsone) {

@@ -18,8 +18,8 @@
 
 <liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
 
-<aui:input checked='<%= Validator.equals(ruleFacebookDisplayContext.getGender(), "male") %>' label="male" name="fbGender" type="radio" value="male" />
+<aui:input checked='<%= "male".equals(ruleFacebookDisplayContext.getGender()) %>' label="male" name="fbGender" type="radio" value="male" />
 
-<aui:input checked='<%= Validator.equals(ruleFacebookDisplayContext.getGender(), "female") %>' label="female" name="fbGender" type="radio" value="female" />
+<aui:input checked='<%= "female".equals(ruleFacebookDisplayContext.getGender()) %>' label="female" name="fbGender" type="radio" value="female" />
 
-<aui:input checked='<%= Validator.equals(ruleFacebookDisplayContext.getGender(), "custom") %>' label="custom-or-not-specified" name="fbGender" type="radio" value="custom" />
+<aui:input checked='<%= "custom".equals(ruleFacebookDisplayContext.getGender()) %>' label="custom-or-not-specified" name="fbGender" type="radio" value="custom" />

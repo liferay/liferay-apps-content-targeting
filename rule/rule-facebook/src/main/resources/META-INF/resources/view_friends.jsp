@@ -19,9 +19,9 @@
 <liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
 
 <aui:select inlineField="<%= true %>" inlineLabel="left" label="users-that-have" name="selector">
-	<aui:option label="more" selected='<%= Validator.equals(ruleFacebookDisplayContext.getSelector(), "more") %>' />
+	<aui:option label="more" selected='<%= "more".equals(ruleFacebookDisplayContext.getSelector()) %>' />
 
-	<aui:option label="less" selected='<%= Validator.equals(ruleFacebookDisplayContext.getSelector(), "less") %>' />
+	<aui:option label="less" selected='<%= "less".equals(ruleFacebookDisplayContext.getSelector()) %>' />
 </aui:select>
 
 <aui:input inlineField="<%= true %>" inlineLabel="left" label="than" name="numberOfFriends" suffix="friends" title="number-of-friends" type="text" value="<%= ruleFacebookDisplayContext.getNumberOfFriends() %>">

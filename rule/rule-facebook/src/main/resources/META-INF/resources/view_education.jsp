@@ -20,11 +20,11 @@
 
 <aui:fieldset>
 	<aui:select name="education">
-		<aui:option label="any" selected="<%= Validator.equals(ruleFacebookDisplayContext.getEducationLevel(), StringPool.BLANK) %>" value="<%= StringPool.BLANK %>" />
+		<aui:option label="any" selected="<%= StringPool.BLANK.equals(ruleFacebookDisplayContext.getEducationLevel()) %>" value="<%= StringPool.BLANK %>" />
 
-		<aui:option label="high-school" selected='<%= Validator.equals(ruleFacebookDisplayContext.getEducationLevel(), "high-school") %>' value="high-school" />
+		<aui:option label="high-school" selected='<%= "high-school".equals(ruleFacebookDisplayContext.getEducationLevel()) %>' value="high-school" />
 
-		<aui:option label="college" selected='<%= Validator.equals(ruleFacebookDisplayContext.getEducationLevel(), "college") %>' value="college" />
+		<aui:option label="college" selected='<%= "college".equals(ruleFacebookDisplayContext.getEducationLevel()) %>' value="college" />
 	</aui:select>
 
 	<aui:input label="college-high-school-name" name="schoolName" type="text" value="<%= ruleFacebookDisplayContext.getSchoolName() %>" />
