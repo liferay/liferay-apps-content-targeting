@@ -57,8 +57,10 @@ public interface Rule {
 	public void deleteData(RuleInstance ruleInstance) throws PortalException;
 
 	/**
-	 * Returns <code>true</code> if the user complies with the rule instance.
+	 * Returns <code>true</code> if the user complies with the rule instance in
+	 * real time. The evaluation is done right after the user makes a request.
 	 *
+	 * @param  request the Servlet Request of the User
 	 * @param  ruleInstance the rule instance with stored configuration
 	 * @param  anonymousUser the user who evaluates the rule
 	 * @return <code>true</code> if the user complies with the rule instance;
@@ -68,6 +70,24 @@ public interface Rule {
 			HttpServletRequest request, RuleInstance ruleInstance,
 			AnonymousUser anonymousUser)
 		throws Exception;
+
+	/**
+	 * Returns <code>true</code> if the user complies with the rule instance in
+	 * an offline mode. The evaluation is done without having a user request.
+	 * This will only be called if the Rule supports offline evaluation (see
+	 * method supportsOfflineEvaluation). A context map can be optionally passed
+	 * with some context variables.
+	 *
+	 * @param  context a Map of objects that can be used to evaluate the rule
+	 *         instance
+	 * @param  ruleInstance the rule instance with stored configuration
+	 * @param  anonymousUser the user who evaluates the rule
+	 * @return <code>true</code> if the user complies with the rule instance;
+	 *         <code>false</code> otherwise
+	 */
+	public boolean evaluate(
+		Map<String, Object> context, RuleInstance ruleInstance,
+		AnonymousUser anonymousUser);
 
 	/**
 	 * Exports any additional data added by this rule when the rule instance is
@@ -84,6 +104,17 @@ public interface Rule {
 			UserSegment userSegment, Element ruleInstanceElement,
 			RuleInstance ruleInstance)
 		throws Exception;
+
+	/**
+	 * Returns the time in milliseconds that the evaluation of this rule can be
+	 * cached. For example, an "Age" rule can be cached at least 1 day and a
+	 * "Geolocation" rule could be cached 5 minutes. This value can be
+	 * configurable adding Configuration to your component.
+	 * A value of 0 means that the evaluation can not be cached.
+	 *
+	 * @return the time in milliseconds
+	 */
+	public long getCacheTime();
 
 	/**
 	 * Returns the rule localized description.
@@ -206,5 +237,16 @@ public interface Rule {
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			String id, Map<String, String> values)
 		throws InvalidRuleException;
+
+	/**
+	 * Returns <code>true</code> if the rule can be evaluated offline (without
+	 * the user request in real time). If this is set to true, the method
+	 * {@link #evaluate(Map, RuleInstance, AnonymousUser)} should be
+	 * implemented.
+	 *
+	 * @return <code>true</code> if the rule can be evaluated offlie;
+	 *         <code>false</code> otherwise.
+	 */
+	public boolean supportsOfflineEvaluation();
 
 }
