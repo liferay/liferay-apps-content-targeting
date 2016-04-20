@@ -20,16 +20,6 @@
 ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayContext = new ContentTargetingViewReportsDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<c:if test="<%= contentTargetingViewReportsDisplayContext.isStagingGroup() %>">
-	<div class="alert alert-warning">
-		<liferay-ui:message key="the-staging-environment-is-activated-reports-data-refer-to-the-live-environment" />
-
-		<c:if test="<%= !contentTargetingViewReportsDisplayContext.hasReports() %>">
-			<strong><liferay-ui:message key="you-must-publish-to-live-before-you-can-view-any-reports" /></strong>
-		</c:if>
-	</div>
-</c:if>
-
 <liferay-frontend:management-bar
 	disabled="<%= contentTargetingViewReportsDisplayContext.isDisabledManagementBar() %>"
 	includeCheckBox="<%= contentTargetingViewReportsDisplayContext.isIncludeCheckBox() %>"
@@ -67,6 +57,16 @@ ContentTargetingViewReportsDisplayContext contentTargetingViewReportsDisplayCont
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 </liferay-frontend:management-bar>
+
+<c:if test="<%= contentTargetingViewReportsDisplayContext.isStagingGroup() %>">
+	<div class="alert alert-warning">
+		<liferay-ui:message key="the-staging-environment-is-activated-reports-data-refer-to-the-live-environment" />
+
+		<c:if test="<%= !contentTargetingViewReportsDisplayContext.hasReports() %>">
+			<strong><liferay-ui:message key="you-must-publish-to-live-before-you-can-view-any-reports" /></strong>
+		</c:if>
+	</div>
+</c:if>
 
 <c:if test="<%= contentTargetingViewReportsDisplayContext.hasReports() %>">
 	<portlet:actionURL name="deleteReportInstance" var="deleteReportsURL">
