@@ -19,8 +19,11 @@ import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -48,6 +51,10 @@ public abstract class BaseReport implements Report {
 
 			_log.debug("Report deactivate: " + clazz.getSimpleName());
 		}
+	}
+
+	public List<PortletConfigurationIcon> getConfigurationIcons() {
+		return new ArrayList<>();
 	}
 
 	@Override

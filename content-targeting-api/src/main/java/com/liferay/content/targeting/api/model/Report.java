@@ -15,7 +15,9 @@
 package com.liferay.content.targeting.api.model;
 
 import com.liferay.content.targeting.model.ReportInstance;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -39,6 +41,13 @@ public interface Report {
 	 * Does processing when the report is uninstalled.
 	 */
 	public void deActivate();
+
+	/**
+	 * Returns the list of configuration icons available for this report
+	 *
+	 * @return the list of available configuration icons
+	 */
+	public List<PortletConfigurationIcon> getConfigurationIcons();
 
 	/**
 	 * Returns the report localized description.

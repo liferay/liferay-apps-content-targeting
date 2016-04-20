@@ -73,6 +73,7 @@ public class ViewReportsCampaignMVCRenderCommand extends BaseMVCRenderCommand {
 			Campaign.class.getName());
 
 		renderRequest.setAttribute("reports", new ArrayList(reports.values()));
+		renderRequest.setAttribute("reportsRegistry", _reportsRegistry);
 
 		for (Report report : reports.values()) {
 			if (report.isInstantiable()) {
