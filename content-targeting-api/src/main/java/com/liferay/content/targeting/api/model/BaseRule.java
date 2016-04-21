@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.api.model;
 
+import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
@@ -59,12 +60,23 @@ public abstract class BaseRule implements Rule {
 	public void deleteData(RuleInstance ruleInstance) throws PortalException {
 	}
 
+	public boolean evaluate(
+		Map<String, Object> context, RuleInstance ruleInstance,
+		AnonymousUser anonymousUser) {
+
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public void exportData(
 			PortletDataContext portletDataContext, Element userSegmentElement,
 			UserSegment userSegment, Element ruleInstanceElement,
 			RuleInstance ruleInstance)
 		throws Exception {
+	}
+
+	public long getCacheTime() {
+		return 0;
 	}
 
 	@Override
@@ -137,6 +149,10 @@ public abstract class BaseRule implements Rule {
 	@Override
 	public boolean isVisible() {
 		return true;
+	}
+
+	public boolean supportsOfflineEvaluation() {
+		return false;
 	}
 
 	protected String getExportImportErrorMessage(
