@@ -21,10 +21,11 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_asset_
 
 String className = (String)request.getAttribute("liferay-ui:asset-categories-selector:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-selector:classPK"));
-long[] groupIds = (long[])request.getAttribute("liferay-ui:asset-categories-selector:groupIds");
-String hiddenInput = (String)request.getAttribute("liferay-ui:asset-categories-selector:hiddenInput");
 String curCategoryIds = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-categories-selector:curCategoryIds"), "");
 String curCategoryNames = StringPool.BLANK;
+long[] groupIds = (long[])request.getAttribute("liferay-ui:asset-categories-selector:groupIds");
+String hiddenInput = (String)request.getAttribute("liferay-ui:asset-categories-selector:hiddenInput");
+boolean ignoreRequestValue = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-categories-selector:ignoreRequestValue"));
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
 
 if (ArrayUtil.isEmpty(groupIds)) {
@@ -69,11 +70,13 @@ if (Validator.isNotNull(className)) {
 			curCategoryNames = ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR);
 		}
 
-		String curCategoryIdsParam = request.getParameter(hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId());
+		if (!ignoreRequestValue) {
+			String curCategoryIdsParam = request.getParameter(hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId());
 
-		if (Validator.isNotNull(curCategoryIdsParam)) {
-			curCategoryIds = curCategoryIdsParam;
-			curCategoryNames = StringPool.BLANK;
+			if (Validator.isNotNull(curCategoryIdsParam)) {
+				curCategoryIds = curCategoryIdsParam;
+				curCategoryNames = StringPool.BLANK;
+			}
 		}
 
 		String[] categoryIdsTitles = _getCategoryIdsTitles(curCategoryIds, curCategoryNames, vocabulary.getVocabularyId(), themeDisplay);
@@ -127,10 +130,12 @@ if (Validator.isNotNull(className)) {
 	}
 }
 else {
-	String curCategoryIdsParam = request.getParameter(hiddenInput);
+	if (!ignoreRequestValue) {
+		String curCategoryIdsParam = request.getParameter(hiddenInput);
 
-	if (curCategoryIdsParam != null) {
-		curCategoryIds = curCategoryIdsParam;
+		if (curCategoryIdsParam != null) {
+			curCategoryIds = curCategoryIdsParam;
+		}
 	}
 
 	String[] categoryIdsTitles = _getCategoryIdsTitles(curCategoryIds, curCategoryNames, 0, themeDisplay);
@@ -202,8 +207,6 @@ private String[] _getCategoryIdsTitles(String categoryIds, String categoryNames,
 				if (category == null) {
 					continue;
 				}
-
-				category = category.toEscapedModel();
 
 				categoryIdsSb.append(categoryId);
 				categoryIdsSb.append(StringPool.COMMA);
