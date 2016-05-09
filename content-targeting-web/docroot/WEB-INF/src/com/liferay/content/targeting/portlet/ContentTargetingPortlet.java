@@ -438,23 +438,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
-	protected InvalidTrackingActionsException
-		getInvalidTrackingActionsException(
-			PortletRequest portletRequest) {
-
-		if (SessionErrors.contains(
-				portletRequest,
-			InvalidTrackingActionsException.class.getName())) {
-
-			return (InvalidTrackingActionsException)SessionErrors.get(
-				portletRequest,
-				InvalidTrackingActionsException.class.getName());
-		}
-		else {
-			return new InvalidTrackingActionsException();
-		}
-	}
-
 	protected void deleteTrackingActionInstances(
 			List<TrackingActionInstance> trackingActionInstances)
 		throws Exception {
@@ -514,6 +497,23 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 		else {
 			return new InvalidRulesException();
+		}
+	}
+
+	protected InvalidTrackingActionsException
+		getInvalidTrackingActionsException(
+			PortletRequest portletRequest) {
+
+		if (SessionErrors.contains(
+				portletRequest,
+			InvalidTrackingActionsException.class.getName())) {
+
+			return (InvalidTrackingActionsException)SessionErrors.get(
+				portletRequest,
+				InvalidTrackingActionsException.class.getName());
+		}
+		else {
+			return new InvalidTrackingActionsException();
 		}
 	}
 
@@ -1438,27 +1438,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 	private class CampaignCallable implements Callable<Campaign> {
 
-		private CampaignCallable(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			long userId, long campaignId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
-			int priority, boolean active, long[] userSegmentIds,
-			ServiceContext serviceContext) {
-
-			_portletRequest = portletRequest;
-			_portletResponse = portletResponse;
-			_userId = userId;
-			_campaignId = campaignId;
-			_nameMap = nameMap;
-			_descriptionMap = descriptionMap;
-			_startDate = startDate;
-			_endDate = endDate;
-			_priority = priority;
-			_active = active;
-			_userSegmentIds = userSegmentIds;
-			_serviceContext = serviceContext;
-		}
-
 		@Override
 		public Campaign call() throws Exception {
 			Campaign campaign = null;
@@ -1488,36 +1467,43 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			return campaign;
 		}
 
-		private PortletRequest _portletRequest;
-		private PortletResponse _portletResponse;
-		private long _userId;
-		private long _campaignId;
-		private Map<Locale, String> _nameMap;
-		private Map<Locale, String> _descriptionMap;
-		private Date _startDate;
-		private Date _endDate;
-		private int _priority;
-		private boolean _active;
-		private long[] _userSegmentIds;
-		private ServiceContext _serviceContext;
-
-	}
-
-	private class UserSegmentCallable implements Callable<UserSegment> {
-
-		private UserSegmentCallable(
+		private CampaignCallable(
 			PortletRequest portletRequest, PortletResponse portletResponse,
-			long userId, long userSegmentId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, ServiceContext serviceContext) {
+			long userId, long campaignId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
+			int priority, boolean active, long[] userSegmentIds,
+			ServiceContext serviceContext) {
 
 			_portletRequest = portletRequest;
 			_portletResponse = portletResponse;
 			_userId = userId;
-			_userSegmentId = userSegmentId;
+			_campaignId = campaignId;
 			_nameMap = nameMap;
 			_descriptionMap = descriptionMap;
+			_startDate = startDate;
+			_endDate = endDate;
+			_priority = priority;
+			_active = active;
+			_userSegmentIds = userSegmentIds;
 			_serviceContext = serviceContext;
 		}
+
+		private boolean _active;
+		private long _campaignId;
+		private Map<Locale, String> _descriptionMap;
+		private Date _endDate;
+		private Map<Locale, String> _nameMap;
+		private PortletRequest _portletRequest;
+		private PortletResponse _portletResponse;
+		private int _priority;
+		private ServiceContext _serviceContext;
+		private Date _startDate;
+		private long _userId;
+		private long[] _userSegmentIds;
+
+	}
+
+	private class UserSegmentCallable implements Callable<UserSegment> {
 
 		@Override
 		public UserSegment call() throws Exception {
@@ -1543,13 +1529,27 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			return userSegment;
 		}
 
+		private UserSegmentCallable(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			long userId, long userSegmentId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext) {
+
+			_portletRequest = portletRequest;
+			_portletResponse = portletResponse;
+			_userId = userId;
+			_userSegmentId = userSegmentId;
+			_nameMap = nameMap;
+			_descriptionMap = descriptionMap;
+			_serviceContext = serviceContext;
+		}
+
+		private Map<Locale, String> _descriptionMap;
+		private Map<Locale, String> _nameMap;
 		private PortletRequest _portletRequest;
 		private PortletResponse _portletResponse;
+		private ServiceContext _serviceContext;
 		private long _userId;
 		private long _userSegmentId;
-		private Map<Locale, String> _nameMap;
-		private Map<Locale, String> _descriptionMap;
-		private ServiceContext _serviceContext;
 
 	}
 

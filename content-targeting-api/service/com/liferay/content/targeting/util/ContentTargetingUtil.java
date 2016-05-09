@@ -238,7 +238,8 @@ public class ContentTargetingUtil {
 
 		return GetterUtil.getBoolean(
 			liveGroupTypeSettings.getProperty(
-				StagingUtil.getStagedPortletId(portletId)), false);
+				StagingUtil.getStagedPortletId(portletId)),
+			false);
 	}
 
 	// This method already exists in 7.0

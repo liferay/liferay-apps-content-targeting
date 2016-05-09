@@ -230,7 +230,7 @@ public class PortalPreferencesUserSegmentSimulator
 		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
+	private static Log _log = LogFactoryUtil.getLog(
 		PortalPreferencesUserSegmentSimulator.class);
 
 }

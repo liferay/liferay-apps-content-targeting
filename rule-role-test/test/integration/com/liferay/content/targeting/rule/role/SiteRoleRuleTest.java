@@ -99,7 +99,6 @@ public class SiteRoleRuleTest {
 	}
 
 	protected String getTypeSettings(long roleId) throws Exception {
-
 		_group = GroupTestUtil.addGroup();
 
 		GroupLocalServiceUtil.addUserGroup(

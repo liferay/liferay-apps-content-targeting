@@ -57,8 +57,12 @@ public class HotDeployTrackerComponent {
 
 	public static class OsgiDeployContext {
 
-		private BundleContext _bundleContext;
-		private ClassLoader _classLoader;
+		public OsgiDeployContext(
+			BundleContext bundleContext, ClassLoader classLoader) {
+
+			_bundleContext = bundleContext;
+			_classLoader = classLoader;
+		}
 
 		public BundleContext getBundleContext() {
 			return _bundleContext;
@@ -68,12 +72,8 @@ public class HotDeployTrackerComponent {
 			return _classLoader;
 		}
 
-		public OsgiDeployContext(
-			BundleContext bundleContext, ClassLoader classLoader) {
-
-			_bundleContext = bundleContext;
-			_classLoader = classLoader;
-		}
+		private BundleContext _bundleContext;
+		private ClassLoader _classLoader;
 
 	}
 
