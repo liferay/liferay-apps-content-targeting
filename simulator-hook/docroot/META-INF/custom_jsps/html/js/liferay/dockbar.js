@@ -17,8 +17,6 @@ AUI.add(
 
 		var CSS_PREVIEW_CONTENT = 'lfr-has-device-preview';
 
-		var EVENT_CLICK = 'click';
-
 		var SELECTOR_NAV_ACCOUNT_CONTROLS = '.nav-account-controls';
 
 		var SELECTOR_NAV_ADD_CONTROLS = '.nav-add-controls';
@@ -77,7 +75,7 @@ AUI.add(
 
 				var panelNode = null;
 
-				var panel = Liferay.Dockbar.DOCKBAR_PANELS[panelId];
+				var panel = DOCKBAR_PANELS[panelId];
 
 				if (panel) {
 					panelNode = panel.node;
@@ -130,7 +128,7 @@ AUI.add(
 				var namespace = instance._namespace;
 
 				AObject.each(
-					Liferay.Dockbar.DOCKBAR_PANELS,
+					DOCKBAR_PANELS,
 					function(item, index, collection) {
 						var panelId = item.id;
 
@@ -138,7 +136,7 @@ AUI.add(
 
 						if (panelTrigger) {
 							panelTrigger.on(
-								EVENT_CLICK,
+								'click',
 								function(event) {
 									event.halt();
 
@@ -194,7 +192,7 @@ AUI.add(
 				var instance = this;
 
 				AObject.each(
-					Liferay.Dockbar.DOCKBAR_PANELS,
+					DOCKBAR_PANELS,
 					function(item, index, collection) {
 						if (item.id !== panelId) {
 							BODY.removeClass(item.css);
@@ -208,7 +206,7 @@ AUI.add(
 					}
 				);
 
-				var panel = Liferay.Dockbar.DOCKBAR_PANELS[panelId];
+				var panel = DOCKBAR_PANELS[panelId];
 
 				if (panel) {
 					var panelNode = panel.node;
@@ -308,7 +306,7 @@ AUI.add(
 
 				if (btnNavigation && navigation) {
 					btnNavigation.on(
-						EVENT_CLICK,
+						'tap',
 						function(event) {
 							navigation.toggleClass('open');
 						}
@@ -317,7 +315,7 @@ AUI.add(
 
 				Liferay.fire('dockbarLoaded');
 			},
-			['aui-io-request', 'liferay-node', 'liferay-store', 'node-focusmanager']
+			['aui-io-request', 'event-tap', 'liferay-node', 'liferay-store', 'node-focusmanager']
 		);
 
 		Liferay.provide(
@@ -462,8 +460,6 @@ AUI.add(
 		Liferay.Dockbar = Dockbar;
 
 		Liferay.Dockbar.ADD_PANEL = STR_ADD_PANEL;
-
-		Liferay.Dockbar.DOCKBAR_PANELS = DOCKBAR_PANELS;
 
 		Liferay.Dockbar.PREVIEW_PANEL = STR_PREVIEW_PANEL;
 	},
