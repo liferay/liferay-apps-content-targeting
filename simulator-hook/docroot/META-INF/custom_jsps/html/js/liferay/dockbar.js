@@ -17,8 +17,6 @@ AUI.add(
 
 		var CSS_PREVIEW_CONTENT = 'lfr-has-device-preview';
 
-		var EVENT_CLICK = 'click';
-
 		var SELECTOR_NAV_ACCOUNT_CONTROLS = '.nav-account-controls';
 
 		var SELECTOR_NAV_ADD_CONTROLS = '.nav-add-controls';
@@ -138,7 +136,7 @@ AUI.add(
 
 						if (panelTrigger) {
 							panelTrigger.on(
-								EVENT_CLICK,
+								'click',
 								function(event) {
 									event.halt();
 
@@ -308,7 +306,7 @@ AUI.add(
 
 				if (btnNavigation && navigation) {
 					btnNavigation.on(
-						EVENT_CLICK,
+						'tap',
 						function(event) {
 							navigation.toggleClass('open');
 						}
@@ -317,7 +315,7 @@ AUI.add(
 
 				Liferay.fire('dockbarLoaded');
 			},
-			['aui-io-request', 'liferay-node', 'liferay-store', 'node-focusmanager']
+			['aui-io-request', 'event-tap', 'liferay-node', 'liferay-store', 'node-focusmanager']
 		);
 
 		Liferay.provide(
