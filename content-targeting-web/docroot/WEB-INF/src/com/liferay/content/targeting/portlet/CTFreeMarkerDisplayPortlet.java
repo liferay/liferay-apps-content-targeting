@@ -154,7 +154,7 @@ public class CTFreeMarkerDisplayPortlet extends CTFreeMarkerPortlet {
 
 		return PortletPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), layout.getPlid(),
-			portletDisplay.getPortletName(), ActionKeys.CONFIGURATION);
+			portletDisplay.getId(), ActionKeys.CONFIGURATION);
 	}
 
 	protected void updatePreferences(
