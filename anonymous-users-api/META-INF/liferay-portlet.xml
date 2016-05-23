@@ -3,9 +3,9 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>anonysmous-user-api</portlet-name>
+		<portlet-name>anonymous-users-api</portlet-name>
 		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.content.targeting.anonymous.users.messaging.CheckAnonymousUsersMessageListener</scheduler-event-listener-class>
+			<scheduler-event-listener-class>com.liferay.content.targeting.anonymous.users.messaging.CheckAUMessageListener</scheduler-event-listener-class>
 			<trigger>
 				<simple>
 					<property-key>anonymous.users.check.interval</property-key>
