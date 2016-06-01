@@ -5,9 +5,9 @@ AUI.add(
 
 		var Node = A.Node;
 
-		var SELECTOR_CHECKBOX = '.checkbox';
-
 		var SELECTOR_ELEMENT = '.element';
+
+		var SELECTOR_LABEL = 'label';
 
 		var TPL_PAGINATION = '<div class="pagination"></div>';
 
@@ -93,7 +93,7 @@ AUI.add(
 
 						elements.slice(start, start + itemsPerPage).each(
 							function(item, index, collection) {
-								item.ancestor(SELECTOR_CHECKBOX).show();
+								item.ancestor(SELECTOR_LABEL).show();
 							}
 						);
 					},
@@ -122,7 +122,7 @@ AUI.add(
 								results.push(
 									{
 										node: item,
-										title: item.ancestor(SELECTOR_CHECKBOX).text()
+										title: item.ancestor(SELECTOR_LABEL).text()
 									}
 								);
 							}
@@ -164,7 +164,7 @@ AUI.add(
 					_hideElements: function(elements) {
 						elements.each(
 							function(item, index, collection) {
-								item.ancestor(SELECTOR_CHECKBOX).hide();
+								item.ancestor(SELECTOR_LABEL).hide();
 							}
 						);
 					},
@@ -185,7 +185,7 @@ AUI.add(
 							function(item, index, collection) {
 								var node = item.raw.node;
 
-								node.ancestor(SELECTOR_CHECKBOX).show();
+								node.ancestor(SELECTOR_LABEL).show();
 
 								if (node.hasClass('matched')) {
 									matchedElements.push(node);

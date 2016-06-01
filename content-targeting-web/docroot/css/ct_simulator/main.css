@@ -6,6 +6,11 @@
 		margin-top: 0;
 		padding: 10px 15px;
 		position: fixed;
+
+		@include respond-to(phone) {
+			box-sizing: border-box;
+			position: relative;
+		}
 	}
 
 	.control-group {
@@ -114,6 +119,18 @@
 			border-radius: 0;
 			margin-bottom: 0;
 			padding-left: 35px;
+		}
+	}
+}
+
+@include respond-to(phone) {
+	.aui {
+		body.lfr-has-simulator {
+			padding-left: 20px;
+		}
+
+		.lfr-admin-panel {
+			margin-bottom: 5px;
 		}
 	}
 }

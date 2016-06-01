@@ -454,7 +454,7 @@ AUI.add(
 								ITEM_FIELD_TPL,
 								{
 									description: field.description,
-									editor: field.editor.replace(/\{ct_field_guid\}/g, fieldId).replace(/%7Bct_field_guid%7D/g, fieldId).replace(/&#x25;7Bct_field_guid&#x25;7D/g, fieldId),
+									editor: field.editor.replace(/(_7b_|[\{%7B&#x25;]+)ct_+field_+guid(_7d_|[\}%7D&#x25;]+)/ig, fieldId),
 									icon: field.icon,
 									name: field.name,
 									shortDescription: field.shortDescription
