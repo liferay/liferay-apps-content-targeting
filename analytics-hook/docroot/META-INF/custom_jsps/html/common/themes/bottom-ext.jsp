@@ -87,7 +87,7 @@
 
 						var formId = form.attr('id');
 
-						if (!defaultFormExcludedIdsRegex.test(formId) && (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId)) && (interactedForms.indexOf(formId) === -1)) {
+						if (!defaultFormExcludedIdsRegex.test(formId) && (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId)) && (A.Array.indexOf(interactedForms, formId) === -1)) {
 							interactedForms.push(formId);
 
 							trackElementEvent('interact', formId);
