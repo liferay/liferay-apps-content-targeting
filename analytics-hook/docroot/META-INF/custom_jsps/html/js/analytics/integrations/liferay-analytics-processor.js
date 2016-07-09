@@ -73,7 +73,9 @@
 						if (A.Lang.isFunction(item)) {
 							var indexName = /^(get|is)(.*)$/.exec(index)[2];
 
-							indexName = indexName[0].toLowerCase() + indexName.slice(1);
+							var indexNameFirstCharacter = indexName.charAt(0);
+
+							indexName = indexNameFirstCharacter.toLowerCase() + indexName.slice(1);
 
 							themeDisplayData[indexName] = themeDisplay[index]();
 						}
