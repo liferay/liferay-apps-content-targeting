@@ -8315,7 +8315,7 @@ each(events, function(label) {
 	self.conversion({
 	  conversionId: id,
 	  value: revenue,
-	  label: label,
+	  label: label
 	});
 });
 };
@@ -9475,7 +9475,7 @@ each(products, function(product) {
 	  item_id: track.id() || track.sku(),
 	  desc: product.description || track.name(),
 	  quantity: track.quantity(),
-	  amount: track.price(),
+	  amount: track.price()
 	});
 });
 
@@ -10471,7 +10471,7 @@ each(products, function(product) {
 	  image_url: product.image,
 	  price: track.price(),
 	  title: track.name(),
-	  url: product.url,
+	  url: product.url
 	});
 });
 
@@ -12340,7 +12340,7 @@ each(products, function(product) {
 	  category: track.category(),
 	  quantity: track.quantity(),
 	  price: track.price(),
-	  name: track.name(),
+	  name: track.name()
 	});
 })
 
@@ -15336,7 +15336,7 @@ var name = page.name();
 var settings = {
 	event: 'refresh',
 	labels: this.labels('page', category, name),
-	qacct: this.options.pCode,
+	qacct: this.options.pCode
 };
 var user = this.analytics.user();
 if (user.id()) settings.uid = user.id();
@@ -15589,7 +15589,7 @@ var init = {
 	last_name: identify.lastName(),
 	user_image: identify.avatar(),
 	email: email,
-	user_id: id,
+	user_id: id
 };
 
 if (accountId) init.account_id = accountId;
