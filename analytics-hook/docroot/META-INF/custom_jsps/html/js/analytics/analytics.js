@@ -7450,6 +7450,8 @@ var types = exports.types = {
 }, {}],
 171: [function(require, module, exports) {
 
+var json = require('json');
+
 /**
  * Export `fmt`
  */
@@ -7460,7 +7462,7 @@ module.exports = fmt;
  * Formatters
  */
 
-fmt.o = JSON.stringify;
+fmt.o = json.stringify;
 fmt.s = String;
 fmt.d = parseInt;
 
@@ -7484,7 +7486,7 @@ return str.replace(/%([a-z])/gi, function(_, f) {
 });
 }
 
-}, {}],
+}, {"json":29}],
 174: [function(require, module, exports) {
 
 /**
