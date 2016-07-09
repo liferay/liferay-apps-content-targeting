@@ -421,7 +421,7 @@ AUI.add(
 								}
 							);
 
-							return JSON.stringify(fields);
+							return A.JSON.stringify(fields);
 						},
 
 						simulateFocusField: function(field, target) {
@@ -521,6 +521,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'aui-parse-content', 'aui-toggler', 'autocomplete-base', 'autocomplete-filters']
+		requires: ['aui-form-builder', 'aui-parse-content', 'aui-toggler', 'autocomplete-base', 'autocomplete-filters', 'json-stringify']
 	}
 );
