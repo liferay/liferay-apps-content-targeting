@@ -117,6 +117,10 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		AnonymousUser anonymousUser = _anonymousUsersManager.getAnonymousUser(
 			request, response);
 
+		if (anonymousUser.getAnonymousUserId() == 0) {
+			return;
+		}
+
 		for (int i = 0; i < eventsJSONArray.length(); ++i) {
 			Message message = new Message();
 
