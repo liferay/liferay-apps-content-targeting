@@ -92,9 +92,9 @@ public abstract class BaseRule implements Rule {
 		}
 		catch (Exception e) {
 			_log.error(
-			"Error while processing rule form template " +
-				_FORM_TEMPLATE_PATH,
-			e);
+				"Error while processing rule form template " +
+					_FORM_TEMPLATE_PATH,
+				e);
 		}
 
 		return content;

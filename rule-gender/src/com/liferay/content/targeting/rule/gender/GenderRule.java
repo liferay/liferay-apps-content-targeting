@@ -73,13 +73,8 @@ public class GenderRule extends BaseRule {
 
 		String gender = ruleInstance.getTypeSettings();
 
-		if ((user.isMale() && gender.equals("male")) ||
-			!user.isMale() && gender.equals("female")) {
-
-			return true;
-		}
-
-		return false;
+		return (user.isMale() && gender.equals("male")) ||
+				(!user.isMale() && gender.equals("female"));
 	}
 
 	@Override
@@ -99,8 +94,8 @@ public class GenderRule extends BaseRule {
 
 	@Override
 	public String processRule(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values) {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
 		return values.get("gender");
 	}

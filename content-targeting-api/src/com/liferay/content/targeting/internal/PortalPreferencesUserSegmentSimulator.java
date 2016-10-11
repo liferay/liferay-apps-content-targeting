@@ -49,19 +49,20 @@ public class PortalPreferencesUserSegmentSimulator
 
 		while (true) {
 			try {
-				PortalPreferences preferences = getPortalPreferences(userId);
+				PortalPreferences portalPreferences = getPortalPreferences(
+					userId);
 
-				String[] simulatedUserSegmentIds = preferences.getValues(
+				String[] simulatedUserSegmentIds = portalPreferences.getValues(
 					"content-targeting", "simulatedUserSegmentIds",
 					new String[0]);
 
 				simulatedUserSegmentIds = ArrayUtil.append(
 					simulatedUserSegmentIds, String.valueOf(userSegmentId));
 
-				preferences.setValues(
+				portalPreferences.setValues(
 					"content-targeting", "simulatedUserSegmentIds",
 					simulatedUserSegmentIds);
-				preferences.setValue(
+				portalPreferences.setValue(
 					"content-targeting", "simulation", String.valueOf(true));
 
 				break;
@@ -83,17 +84,17 @@ public class PortalPreferencesUserSegmentSimulator
 
 		long userId = PortalUtil.getUserId(request);
 
-		PortalPreferences preferences = getPortalPreferences(userId);
+		PortalPreferences portalPreferences = getPortalPreferences(userId);
 
 		boolean simulation = GetterUtil.getBoolean(
-			preferences.getValue("content-targeting", "simulation"));
+			portalPreferences.getValue("content-targeting", "simulation"));
 
 		if (!simulation) {
 			return null;
 		}
 
 		return getLongArray(
-			preferences.getValues(
+			portalPreferences.getValues(
 				"content-targeting", "simulatedUserSegmentIds", new String[0]));
 	}
 
@@ -105,11 +106,12 @@ public class PortalPreferencesUserSegmentSimulator
 
 		while (true) {
 			try {
-				PortalPreferences preferences = getPortalPreferences(userId);
+				PortalPreferences portalPreferences = getPortalPreferences(
+					userId);
 
-				preferences.setValues(
+				portalPreferences.setValues(
 					"content-targeting", "simulatedUserSegmentIds", null);
-				preferences.setValue(
+				portalPreferences.setValue(
 					"content-targeting", "simulation", String.valueOf(false));
 
 				break;
@@ -134,21 +136,22 @@ public class PortalPreferencesUserSegmentSimulator
 
 		while (true) {
 			try {
-				PortalPreferences preferences = getPortalPreferences(userId);
+				PortalPreferences portalPreferences = getPortalPreferences(
+					userId);
 
-				String[] simulatedUserSegmentIds = preferences.getValues(
+				String[] simulatedUserSegmentIds = portalPreferences.getValues(
 					"content-targeting", "simulatedUserSegmentIds",
 					new String[0]);
 
 				simulatedUserSegmentIds = ArrayUtil.remove(
 					simulatedUserSegmentIds, String.valueOf(userSegmentId));
 
-				preferences.setValues(
+				portalPreferences.setValues(
 					"content-targeting", "simulatedUserSegmentIds",
 					simulatedUserSegmentIds);
 
 				if (simulatedUserSegmentIds.length == 0) {
-					preferences.setValue(
+					portalPreferences.setValue(
 						"content-targeting", "simulation",
 						String.valueOf(false));
 				}
@@ -175,12 +178,13 @@ public class PortalPreferencesUserSegmentSimulator
 
 		while (true) {
 			try {
-				PortalPreferences preferences = getPortalPreferences(userId);
+				PortalPreferences portalPreferences = getPortalPreferences(
+					userId);
 
-				preferences.setValues(
+				portalPreferences.setValues(
 					"content-targeting", "simulatedUserSegmentIds",
 					ArrayUtil.toStringArray(userSegmentIds));
-				preferences.setValue(
+				portalPreferences.setValue(
 					"content-targeting", "simulation", String.valueOf(true));
 
 				break;
@@ -219,8 +223,8 @@ public class PortalPreferencesUserSegmentSimulator
 			return PortletPreferencesFactoryUtil.getPortalPreferences(
 				null, userId, userId > 0);
 		}
-		catch (SystemException e) {
-			e.printStackTrace();
+		catch (SystemException se) {
+			se.printStackTrace();
 		}
 
 		return null;

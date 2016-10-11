@@ -387,12 +387,32 @@ AUI.add(
 									contentBox.all('input, select, textarea').each(
 										function(input) {
 											if (input.attr('type') !== 'radio' || input.attr('checked')) {
-												field.data.push(
-													{
-														name: input.attr('name'),
-														value: input.val()
-													}
-												);
+												if (input.attr('type') === 'select-multiple') {
+													var val = [];
+
+													input.all('option').each(
+														function(node) {
+															if (node.attr('selected')) {
+																val.push(node.val());
+															}
+														}
+													);
+
+													field.data.push(
+														{
+															name: input.attr('name'),
+															value: val
+														}
+													);
+												}
+												else {
+													field.data.push(
+														{
+															name: input.attr('name'),
+															value: input.val()
+														}
+													);
+												}
 											}
 										}
 									);
@@ -401,7 +421,7 @@ AUI.add(
 								}
 							);
 
-							return JSON.stringify(fields);
+							return A.JSON.stringify(fields);
 						},
 
 						simulateFocusField: function(field, target) {
@@ -501,6 +521,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'aui-parse-content', 'aui-toggler', 'autocomplete-base', 'autocomplete-filters']
+		requires: ['aui-form-builder', 'aui-parse-content', 'aui-toggler', 'autocomplete-base', 'autocomplete-filters', 'json-stringify']
 	}
 );

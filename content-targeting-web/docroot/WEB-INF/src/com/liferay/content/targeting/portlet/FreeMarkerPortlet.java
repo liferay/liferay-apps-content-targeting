@@ -71,7 +71,7 @@ public class FreeMarkerPortlet
 				TemplateConstants.LANG_TYPE_FTL, resourcePath);
 		}
 		catch (TemplateException te) {
-			throw new IOException(te.getMessage());
+			throw new IOException(te);
 		}
 
 		if (!resourceExists) {

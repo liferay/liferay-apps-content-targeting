@@ -100,11 +100,7 @@ public class ContentVisitedRule extends BaseRule {
 			anonymousUser.getAnonymousUserId(), assetEntry.getClassName(),
 			assetEntry.getClassPK(), "view");
 
-		if (count > 0) {
-			return true;
-		}
-
-		return false;
+		return count > 0;
 	}
 
 	@Override
@@ -165,9 +161,8 @@ public class ContentVisitedRule extends BaseRule {
 
 		portletDataContext.addClassedModel(
 			assetEntryReferencedStagedModelElement,
-			ExportImportPathUtil.getModelPath(
-				assetEntryReferencedStagedModel),
-				assetEntryReferencedStagedModel);
+			ExportImportPathUtil.getModelPath(assetEntryReferencedStagedModel),
+			assetEntryReferencedStagedModel);
 	}
 
 	@Override

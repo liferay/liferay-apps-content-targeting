@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.messaging.Message;
 /**
  * @author Pavel Savinov
  */
-public class CheckAnonymousUsersMessageListener extends BaseMessageListener {
+public class CheckAUMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {

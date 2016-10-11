@@ -13,6 +13,8 @@ Import-Package:\
 Include-Resource:\
  	classes,\
 	WEB-INF/classes/META-INF=classes/META-INF/,\
+	WEB-INF/liferay-portlet.xml=META-INF/liferay-portlet.xml,\
+	WEB-INF/portlet.xml=META-INF/portlet.xml,\
 	WEB-INF/sql=sql,\
 	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\

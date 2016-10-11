@@ -109,7 +109,9 @@ public class ContentTargetingUtil {
 			UserSegment userSegment =
 				UserSegmentLocalServiceUtil.fetchUserSegment(userSegmentIds[i]);
 
-			assetCategoryIds[i] = userSegment.getAssetCategoryId(groupId);
+			if (userSegment != null) {
+				assetCategoryIds[i] = userSegment.getAssetCategoryId(groupId);
+			}
 		}
 
 		return assetCategoryIds;
@@ -236,7 +238,8 @@ public class ContentTargetingUtil {
 
 		return GetterUtil.getBoolean(
 			liveGroupTypeSettings.getProperty(
-				StagingUtil.getStagedPortletId(portletId)), false);
+				StagingUtil.getStagedPortletId(portletId)),
+			false);
 	}
 
 	// This method already exists in 7.0

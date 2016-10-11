@@ -83,7 +83,6 @@ public class PageVisitedRule extends BaseRule {
 			"view");
 
 		return count > 0;
-
 	}
 
 	@Override
