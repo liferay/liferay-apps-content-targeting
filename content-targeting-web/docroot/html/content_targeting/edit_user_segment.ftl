@@ -35,11 +35,11 @@
 
 	<@invalidNameException />
 
-	<@aui["input"] name="name" />
+	<@aui["input"] name="name" label='${languageUtil.get(portletConfig, locale, "name")}' />
 
-	<@aui["input"] name="description" />
+	<@aui["input"] name="description" label='${languageUtil.get(portletConfig, locale, "description")}' />
 
-	<@aui["field-wrapper"] label="rules">
+	<@aui["field-wrapper"] label='${languageUtil.get(portletConfig, locale, "rules")}'>
 		<div class="component diagram-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
 			<div class="diagram-builder-content form-builder-content" id="formBuilderCB">
 				<div class="tabbable">
