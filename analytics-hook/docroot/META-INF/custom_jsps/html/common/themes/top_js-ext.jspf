@@ -31,7 +31,7 @@
 				'LiferayAnalyticsProcessor':
 				{
 					interval: <%= PropsUtil.get("analytics.flush.interval") %>,
-					uri: '<%= PropsUtil.get("analytics.processor.uri") %>'
+					uri: '<%= PortalUtil.getPathContext() + PropsUtil.get("analytics.processor.uri") %>'
 				}
 			}
 		);
