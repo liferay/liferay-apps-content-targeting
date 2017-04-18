@@ -50,7 +50,7 @@
 
 				A.all('form').each(
 					function(item) {
-						var formId = item.attr('id');
+						var formId = item.getAttribute('id');
 
 						if (!defaultFormExcludedIdsRegex.test(formId) && (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId))) {
 							trackingForms.push(formId);
