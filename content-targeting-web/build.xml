@@ -10,14 +10,4 @@
 	<property name="import.shared" value="analytics-api,anonymous-users-api,content-targeting-api" />
 
 	<import file="../../../build-common-osgi-plugin.xml" />
-
-	<target name="jar">
-		<build-css
-			module.dir="@{module.dir}"
-		/>
-
-		<jar-macro
-			module.dir="${basedir}"
-		/>
-	</target>
 </project>
