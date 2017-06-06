@@ -16,15 +16,6 @@
 
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
-<%
-boolean showExtraInfo = ParamUtil.getBoolean(request, "showExtraInfo", true);
-%>
-
-<c:choose>
-	<c:when test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED && !showExtraInfo %>">
-		<liferay-util:include page="/html/portlet/document_library/view_file_entry_simple_view.jsp" />
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/html/portlet/document_library/view_file_entry.jsp" />
-	</c:otherwise>
-</c:choose>
+<liferay-util:include page="/html/portlet/document_library/view_file_entry.jsp">
+	<liferay-util:param name="showHistoryActions" value="<%= Boolean.FALSE.toString() %>" />
+</liferay-util:include>
