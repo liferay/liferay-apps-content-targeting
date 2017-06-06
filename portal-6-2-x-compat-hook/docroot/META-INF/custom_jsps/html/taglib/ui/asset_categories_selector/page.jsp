@@ -28,14 +28,11 @@ String hiddenInput = (String)request.getAttribute("liferay-ui:asset-categories-s
 boolean ignoreRequestValue = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-categories-selector:ignoreRequestValue"));
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
 
-Group siteGroup = themeDisplay.getSiteGroup();
-
 if (ArrayUtil.isEmpty(groupIds)) {
-	groupIds = new long[] {siteGroup.getGroupId()};
+	groupIds = _getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 }
-
-if (!ArrayUtil.contains(groupIds, themeDisplay.getCompanyGroupId())) {
-	groupIds = ArrayUtil.append(groupIds, themeDisplay.getCompanyGroupId());
+else {
+	groupIds = _getCurrentAndAncestorSiteGroupIds(groupIds);
 }
 
 groupIds = ArrayUtil.unique(groupIds);
@@ -89,8 +86,13 @@ if (Validator.isNotNull(className)) {
 			<label id="<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>">
 				<%= vocabulary.getTitle(locale) %>
 
-				<c:if test="<%= vocabulary.getGroupId() == themeDisplay.getCompanyGroupId() %>">
-					(<liferay-ui:message key="global" />)
+				<c:if test="<%= vocabulary.getGroupId() != themeDisplay.getSiteGroupId() %>">
+
+					<%
+					Group vocabularyGroup = GroupLocalServiceUtil.getGroup(vocabulary.getGroupId());
+					%>
+
+					(<%= vocabularyGroup.getDescriptiveName() %>)
 				</c:if>
 
 				<c:if test="<%= vocabulary.isRequired(classNameId) %>">
@@ -118,7 +120,7 @@ if (Validator.isNotNull(className)) {
 					portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 					singleSelect: <%= !vocabulary.isMultiValued() %>,
 					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", vocabulary.getTitle(locale), false) %>',
-					vocabularyGroupIds: '<%= vocabulary.getGroupId() %>',
+					vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
 					vocabularyIds: '<%= String.valueOf(vocabulary.getVocabularyId()) %>'
 				}
 			).render();
