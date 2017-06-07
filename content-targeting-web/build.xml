@@ -12,12 +12,10 @@
 	<import file="../../../build-common-osgi-plugin.xml" />
 
 	<target name="jar">
-		<build-css
-			module.dir="@{module.dir}"
-		/>
+		<jar-macro module.dir="${basedir}" />
 
-		<jar-macro
-			module.dir="${basedir}"
-		/>
+		<jar destfile="${plugin.file}" update="true">
+			<zipfileset dir="docroot/css" prefix="css" />
+		</jar>
 	</target>
 </project>
