@@ -2,7 +2,7 @@ Bundle-Icon: /icons/content_targeting.png;size=16
 Bundle-Localization: WEB-INF/classes/content/Language
 Bundle-Name: Content Targeting Web
 Bundle-SymbolicName: com.liferay.content.targeting.web-portlet
-Bundle-Version: 2.0.0
+Bundle-Version: 2.0.1
 DynamicImport-Package:\
 	org.apache.jasper.servlet,\
 	org.eclipse.jetty.servlet.listener
@@ -59,4 +59,4 @@ Web-ContextPath: /content-targeting-web
 	${app.server.portal.dir}/WEB-INF/lib/util-bridges.jar,\
 	${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar
--baseline: *;version="1.0.0"
+-baseline: *;version="2.0.0"
