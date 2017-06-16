@@ -35,7 +35,7 @@
 
 		<@liferay_ui["search-container-column-text"]
 			name="alias"
-			value=ctActionTotal.getAlias()
+			value=htmlUtil.escape(ctActionTotal.getAlias())
 		/>
 
 		<@liferay_ui["search-container-column-text"]

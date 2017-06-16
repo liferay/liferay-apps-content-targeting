@@ -44,7 +44,7 @@
 
 		<ul>
 			<#list errorException.getCampaigns() as campaign>
-				<li>${campaign.getName(locale)}</li>
+				<li>${htmlUtil.escape(campaign.getName(locale))}</li>
 			</#list>
 		</ul>
 	</@>

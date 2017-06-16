@@ -39,12 +39,12 @@
 
 		<@liferay_ui["search-container-column-text"]
 			name="name"
-			value=campaign.getName(locale)
+			value=htmlUtil.escape(campaign.getName(locale))
 		/>
 
 		<@liferay_ui["search-container-column-text"]
 			name="description"
-			value=campaign.getDescription(locale)
+			value=htmlUtil.escape(campaign.getDescription(locale))
 		/>
 
 		<@liferay_ui["search-container-column-date"]

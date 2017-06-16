@@ -9,7 +9,7 @@
 <@aui["script"] use="charts">
 	var ctActionChartDataValues = [
 		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as ctActionTotal>
-			{content:'${ctActionTotal.getAlias()}', count:${ctActionTotal.getCount()}}<#if ctActionTotal_has_next>,</#if>
+			{content:'${htmlUtil.escapeJS(ctActionTotal.getAlias())}', count:${ctActionTotal.getCount()}}<#if ctActionTotal_has_next>,</#if>
 		</#list>
 	];
 
