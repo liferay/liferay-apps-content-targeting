@@ -43,7 +43,7 @@
 		<@aui["option"] label="any" selected=(userSegmentId == -1) value="-1" />
 
 		<#list userSegments as userSegment>
-			<@aui["option"] label="${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" selected=(userSegmentId == userSegment.getUserSegmentId()) value="${userSegment.getUserSegmentId()}" />
+			<@aui["option"] label="${htmlUtil.escape(userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId()))}" selected=(userSegmentId == userSegment.getUserSegmentId()) value="${userSegment.getUserSegmentId()}" />
 		</#list>
 	</@>
 
@@ -78,8 +78,8 @@
 				<div class="tabbable">
 					<div class="tabbable-content">
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="javascript:;">Add node</a></li>
-							<li><a href="javascript:;">Settings</a></li>
+							<li class="active"><a href="javascript:">Add node</a></li>
+							<li><a href="javascript:">Settings</a></li>
 						</ul>
 
 						<div class="tab-content">

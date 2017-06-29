@@ -185,7 +185,11 @@ boolean showSimulatorControls = !group.isLayoutPrototype() && !group.isLayoutSet
 	</c:if>
 
 	<%
-	boolean userSetupComplete = user.isSetupComplete();
+	boolean userSetupComplete = false;
+
+	if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
+		userSetupComplete = true;
+	}
 
 	boolean portalMessageUseAnimation = GetterUtil.getBoolean(PortalMessages.get(request, PortalMessages.KEY_ANIMATION), true);
 
@@ -213,7 +217,7 @@ boolean showSimulatorControls = !group.isLayoutPrototype() && !group.isLayoutSet
 					<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 				</portlet:renderURL>
 
-				<aui:nav-item anchorId="addPanel" cssClass="site-add-controls" data-panelURL="<%= addURL %>" href="javascript:;" iconCssClass="icon-plus" label="add" />
+				<aui:nav-item anchorId="addPanel" cssClass="site-add-controls" data-panelURL="<%= addURL %>" href="javascript:" iconCssClass="icon-plus" label="add" />
 			</c:if>
 
 			<c:if test="<%= showPreviewControls %>">
@@ -221,7 +225,7 @@ boolean showSimulatorControls = !group.isLayoutPrototype() && !group.isLayoutSet
 					<portlet:param name="struts_action" value="/dockbar/preview_panel" />
 				</portlet:renderURL>
 
-				<aui:nav-item anchorId="previewPanel" cssClass="page-preview-controls" data-panelURL="<%= previewContentURL %>" href="javascript:;" iconCssClass="icon-desktop" label="preview" />
+				<aui:nav-item anchorId="previewPanel" cssClass="page-preview-controls" data-panelURL="<%= previewContentURL %>" href="javascript:" iconCssClass="icon-desktop" label="preview" />
 			</c:if>
 
 			<c:if test="<%= showEditControls %>">
@@ -231,7 +235,7 @@ boolean showSimulatorControls = !group.isLayoutPrototype() && !group.isLayoutSet
 					<portlet:param name="selPlid" value="<%= String.valueOf(plid) %>" />
 				</portlet:renderURL>
 
-				<aui:nav-item anchorId="editLayoutPanel" cssClass="page-edit-controls" data-panelURL="<%= editLayoutURL %>" href="javascript:;" iconCssClass="icon-edit" label="edit" />
+				<aui:nav-item anchorId="editLayoutPanel" cssClass="page-edit-controls" data-panelURL="<%= editLayoutURL %>" href="javascript:" iconCssClass="icon-edit" label="edit" />
 			</c:if>
 
 			<c:if test="<%= showSimulatorControls %>">
@@ -250,7 +254,7 @@ boolean showSimulatorControls = !group.isLayoutPrototype() && !group.isLayoutSet
 					<portlet:param name="mvcPath" value="html/ct_simulator/view.ftl" />
 				</liferay-portlet:renderURL>
 
-				<aui:nav-item anchorId="simulatorPanel" cssClass="<%= cssClass %>" data-panelURL="<%= simulatorURL %>" href="javascript:;" iconCssClass="icon-screenshot" label="simulator" title="simulator" />
+				<aui:nav-item anchorId="simulatorPanel" cssClass="<%= cssClass %>" data-panelURL="<%= simulatorURL %>" href="javascript:" iconCssClass="icon-screenshot" label="simulator" title="simulator" />
 			</c:if>
 
 			<c:if test="<%= showToggleControls %>">
@@ -283,7 +287,7 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 			%>
 
 				<li>
-					<a href="javascript:;">
+					<a href="javascript:">
 						<label>
 							<input name="template" type="radio" value="<%= layoutPrototype.getLayoutPrototypeId() %>" /> <%= HtmlUtil.escape(layoutPrototype.getName(user.getLanguageId())) %>
 						</label>
@@ -360,11 +364,7 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 private boolean _hasPortlets(String category, ThemeDisplay themeDisplay) throws SystemException {
 	List<Portlet> portlets = PortalUtil.getControlPanelPortlets(category, themeDisplay);
 
-	if (portlets.isEmpty()) {
-		return false;
-	}
-
-	return true;
+	return !portlets.isEmpty();
 }
 
 private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.dockbar.view_jsp");

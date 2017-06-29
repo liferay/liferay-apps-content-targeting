@@ -41,6 +41,10 @@ public class DefaultScorePointsAssignerImpl implements ScorePointsAssigner {
 			long groupId, long anonymousUserId, String className, long classPK)
 		throws Exception {
 
+		if (anonymousUserId == 0) {
+			return;
+		}
+
 		AssetEntry entry = AssetEntryLocalServiceUtil.fetchEntry(
 			className, classPK);
 

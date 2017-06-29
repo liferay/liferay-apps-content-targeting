@@ -18,7 +18,9 @@ import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
@@ -46,36 +48,41 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 			HttpServletRequest request, HttpServletResponse response)
 		throws PortalException, SystemException {
 
-		long companyId = PortalUtil.getCompanyId(request);
+		Company company = PortalUtil.getCompany(request);
 		long userId = PortalUtil.getUserId(request);
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setCompanyId(companyId);
+		serviceContext.setCompanyId(company.getCompanyId());
 
 		AnonymousUser anonymousUser = null;
 
-		String userIp = getAddressFromRequest(request);
-
 		if (userId > 0) {
 			anonymousUser = getAnonymousUser(request, userId);
-
-			if (!anonymousUser.getLastIp().equals(userIp)) {
-				AnonymousUserLocalServiceUtil.updateLastIp(
-					anonymousUser.getAnonymousUserId(), userIp);
-			}
-
-			return anonymousUser;
+		}
+		else {
+			anonymousUser = getAnonymousUserFromCookie(request);
 		}
 
-		anonymousUser = getAnonymousUserFromCookie(request);
+		String userIp = getAddressFromRequest(request);
 
 		if (anonymousUser == null) {
-			anonymousUser = AnonymousUserLocalServiceUtil.addAnonymousUser(
-				0, userIp, null, serviceContext);
+			if (PrefsPropsUtil.getBoolean(
+					company.getCompanyId(),
+					"content.targeting.anonymous.users.enabled")) {
 
-			_anonymousUsersCookieManager.addCookie(
-				request, response, anonymousUser.getAnonymousUserId());
+				anonymousUser = AnonymousUserLocalServiceUtil.addAnonymousUser(
+					0, userIp, null, serviceContext);
+
+				_anonymousUsersCookieManager.addCookie(
+					request, response, anonymousUser.getAnonymousUserId());
+			}
+			else {
+				anonymousUser =
+					AnonymousUserLocalServiceUtil.createAnonymousUser(0);
+
+				anonymousUser.setLastIp(userIp);
+			}
 		}
 		else if (!anonymousUser.getLastIp().equals(userIp)) {
 			AnonymousUserLocalServiceUtil.updateLastIp(

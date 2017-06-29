@@ -23,6 +23,8 @@
 </div>
 
 <aui:fieldset>
+	<aui:input helpMessage="anonymous-users-help" label="anonymous-users" name="settings--content.targeting.anonymous.users.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.anonymous.users.enabled", true) %>' />
+
 	<aui:input label="pages" name="settings--content.targeting.analytics.page.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") %>' />
 
 	<aui:input label="content" name="settings--content.targeting.analytics.content.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") %>' />

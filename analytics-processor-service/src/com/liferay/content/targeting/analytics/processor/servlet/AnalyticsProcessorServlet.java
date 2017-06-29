@@ -78,7 +78,7 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 
 	// Needed only for http service in 6.2
 
-	@Reference (target ="(Web-ContextPath=/o/analytics-processor)")
+	@Reference(target = "(bundle.symbolicName=com.liferay.content.targeting.analytics.processor)")
 	public void setServletContext(ServletContext servletContext) {
 	}
 
@@ -116,6 +116,10 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 
 		AnonymousUser anonymousUser = _anonymousUsersManager.getAnonymousUser(
 			request, response);
+
+		if (anonymousUser.getAnonymousUserId() == 0) {
+			return;
+		}
 
 		for (int i = 0; i < eventsJSONArray.length(); ++i) {
 			Message message = new Message();

@@ -25,6 +25,8 @@ boolean showExtraInfo = ParamUtil.getBoolean(request, "showExtraInfo", true);
 		<liferay-util:include page="/html/portlet/document_library/view_file_entry_simple_view.jsp" />
 	</c:when>
 	<c:otherwise>
-		<liferay-util:include page="/html/portlet/document_library/view_file_entry.jsp" />
+		<liferay-util:include page="/html/portlet/document_library/view_file_entry.jsp">
+			<liferay-util:param name="showHistoryActions" value="<%= Boolean.FALSE.toString() %>" />
+		</liferay-util:include>
 	</c:otherwise>
 </c:choose>
