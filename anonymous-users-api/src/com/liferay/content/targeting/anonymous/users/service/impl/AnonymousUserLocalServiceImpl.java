@@ -121,6 +121,13 @@ public class AnonymousUserLocalServiceImpl
 
 					dynamicQuery.add(companyIdProperty.eq(companyId));
 					dynamicQuery.add(createDateProperty.lt(createDate));
+
+					if (!includeUsers) {
+						Property userIdProperty = PropertyFactoryUtil.forName(
+							"userId");
+
+						dynamicQuery.add(userIdProperty.le(0L));
+					}
 				}
 
 				@Override
@@ -129,9 +136,7 @@ public class AnonymousUserLocalServiceImpl
 
 					AnonymousUser anonymousUser = (AnonymousUser)object;
 
-					if (includeUsers || (anonymousUser.getUserId() <= 0)) {
-						deleteAnonymousUser(anonymousUser);
-					}
+					deleteAnonymousUser(anonymousUser);
 				}
 
 			};
