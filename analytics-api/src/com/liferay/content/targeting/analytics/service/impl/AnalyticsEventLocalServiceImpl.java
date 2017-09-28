@@ -17,9 +17,13 @@ package com.liferay.content.targeting.analytics.service.impl;
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 import com.liferay.content.targeting.analytics.service.base.AnalyticsEventLocalServiceBaseImpl;
+import com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventActionableDynamicQuery;
 import com.liferay.content.targeting.analytics.util.PortletPropsValues;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexable;
@@ -155,15 +159,36 @@ public class AnalyticsEventLocalServiceImpl
 	}
 
 	@Override
-	public void deleteAnalyticsEvents(long companyId, Date createDate)
+	public void deleteAnalyticsEvents(
+			final long companyId, final Date createDate)
 		throws PortalException, SystemException {
 
-		List<AnalyticsEvent> analyticsEvents =
-			analyticsEventPersistence.findByC_LtD(companyId, createDate);
+		ActionableDynamicQuery actionableDynamicQuery =
+			new AnalyticsEventActionableDynamicQuery() {
 
-		for (AnalyticsEvent analyticsEvent : analyticsEvents) {
-			deleteAnalyticsEvent(analyticsEvent);
-		}
+				@Override
+				protected void addCriteria(DynamicQuery dynamicQuery) {
+					Property companyIdProperty = PropertyFactoryUtil.forName(
+						"companyId");
+					Property createDateProperty = PropertyFactoryUtil.forName(
+						"createDate");
+
+					dynamicQuery.add(companyIdProperty.eq(companyId));
+					dynamicQuery.add(createDateProperty.lt(createDate));
+				}
+
+				@Override
+				protected void performAction(Object object)
+					throws SystemException {
+
+					AnalyticsEvent analyticsEvent = (AnalyticsEvent)object;
+
+					deleteAnalyticsEvent(analyticsEvent);
+				}
+
+			};
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
