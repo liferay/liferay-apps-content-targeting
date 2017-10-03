@@ -57,12 +57,13 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		try {
-			if (!(response.containsHeader("Content-Length") ||
-					response.containsHeader("Content-Type"))) {
-						response.setContentType("text/plain");
-			}
+		if (!(response.containsHeader("Content-Length") ||
+			  response.containsHeader("Content-Type"))) {
 
+			response.setContentType("text/plain");
+		}
+
+		try {
 			processEvents(request, response);
 		}
 		catch (Exception e) {
